@@ -94,8 +94,11 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+//    compileSdkVersion rootProject.ext.compileSdkVersion
+//    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion 23
+    buildToolsVersion '23.0.3'
+    useLibrary  'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.project1"
@@ -137,7 +140,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-naver-login')
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    //noinspection GradleCompatible
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
 }
