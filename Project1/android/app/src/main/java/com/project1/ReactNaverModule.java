@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package com.project1;
+=======
+package com.naverloginexample;
+>>>>>>> 56110fbd933967bc0844828cb8775d402569ed76
 
 import android.app.Activity;
 import android.util.Log;
@@ -20,6 +24,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class ReactNaverModule extends ReactContextBaseJavaModule {
+<<<<<<< HEAD
     final String TAG = "ReactNaverModule";
 
     private ReactContext reactContext;
@@ -35,6 +40,23 @@ public class ReactNaverModule extends ReactContextBaseJavaModule {
     public String getName() {
         return "ReactNaverModule";
     }
+=======
+  final String TAG = "ReactNaverModule";
+
+  private ReactContext reactContext;
+  private OAuthLogin mOAuthLoginModule;
+
+
+  public ReactNaverModule(ReactApplicationContext reactContext) {
+    super(reactContext);
+    this.reactContext = reactContext;
+  }
+
+  @Override
+  public String getName() {
+    return "ReactNaverModule";
+  }
+>>>>>>> 56110fbd933967bc0844828cb8775d402569ed76
 
 //  @ReactMethod
 //  public void getProfile(String accessToken, final Callback cb) {
@@ -49,6 +71,7 @@ public class ReactNaverModule extends ReactContextBaseJavaModule {
 //    });
 //  }
 
+<<<<<<< HEAD
     @ReactMethod
     public void logout() {
         mOAuthLoginModule.logout(reactContext);
@@ -106,4 +129,63 @@ public class ReactNaverModule extends ReactContextBaseJavaModule {
             Log.d(TAG, "JSONException: " + je);
         }
     }
+=======
+  @ReactMethod
+  public void logout() {
+    mOAuthLoginModule.logout(reactContext);
+  }
+
+  @ReactMethod
+  public void login(String initials, final Callback cb) {
+    final Activity activity = getCurrentActivity();
+    try {
+      JSONObject jsonObject = new JSONObject(initials);
+      mOAuthLoginModule = OAuthLogin.getInstance();
+      mOAuthLoginModule.init(
+          reactContext,
+          jsonObject.getString("key"),
+          jsonObject.getString("secret"),
+          jsonObject.getString("name")
+      );
+      UiThreadUtil.runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          mOAuthLoginModule.startOauthLoginActivity(
+              activity,
+              new OAuthLoginHandler() {
+                @Override
+                public void run(boolean success) {
+                  if (success) {
+                    final String accessToken = mOAuthLoginModule.getAccessToken(reactContext);
+                    String refreshToken = mOAuthLoginModule.getRefreshToken(reactContext);
+                    long expiresAt = mOAuthLoginModule.getExpiresAt(reactContext);
+                    String tokenType = mOAuthLoginModule.getTokenType(reactContext);
+
+                    try {
+                      JSONObject response = new JSONObject();
+                      response.put("accessToken", accessToken);
+                      response.put("refreshToken", refreshToken);
+                      response.put("expiresAt", expiresAt);
+                      response.put("tokenType", tokenType);
+                      cb.invoke(null, response.toString());
+                    } catch (JSONException je) {
+                      Log.e(TAG, "JSONEXception: " + je.getMessage());
+                      cb.invoke(je.getMessage(), null);
+                    }
+
+                  } else {
+                    String errCode = mOAuthLoginModule.getLastErrorCode(reactContext).getCode();
+                    String errDesc = mOAuthLoginModule.getLastErrorDesc(reactContext);
+                    Log.e(TAG, "errCode: " + errCode + ", errDesc: " + errDesc);
+                  }
+                }
+              }
+          );
+        }
+      });
+    } catch (JSONException je) {
+      Log.d(TAG, "JSONException: " + je);
+    }
+  }
+>>>>>>> 56110fbd933967bc0844828cb8775d402569ed76
 }

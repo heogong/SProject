@@ -1,5 +1,8 @@
 package com.project1;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 56110fbd933967bc0844828cb8775d402569ed76
 /**
  * Created by hyochan on 2017. 7. 6..
  */
@@ -23,6 +26,7 @@ import static android.content.ContentValues.TAG;
  */
 
 public class ReactPackages implements ReactPackage {
+<<<<<<< HEAD
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }
@@ -38,5 +42,22 @@ public class ReactPackages implements ReactPackage {
         modules.add(new ReactNaverModule(reactContext));
         return modules;
     }
+=======
+  public List<Class<? extends JavaScriptModule>> createJSModules() {
+    return Collections.emptyList();
+  }
+
+  @Override
+  public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
+    return Collections.emptyList();
+  }
+
+  @Override
+  public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+    List<NativeModule> modules = new ArrayList<>();
+    modules.add(new ReactNaverModule(reactContext));
+    return modules;
+  }
+>>>>>>> 56110fbd933967bc0844828cb8775d402569ed76
 
 }
