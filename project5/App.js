@@ -31,6 +31,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+import Login from './Login'
 const {LoginButton, ShareDialog} = FBSDK;
 
 type Props = {};
@@ -72,12 +73,12 @@ export default class HelloFacebook extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <LoginButton />
-        <TouchableHighlight
+        <Login/>
+        {/* <TouchableHighlight
           style={styles.share}
           onPress={this.shareLinkWithShareDialog.bind(this)}>
           <Text style={styles.shareText}>Share link with ShareDialog</Text>
-        </TouchableHighlight>
+        </TouchableHighlight> */}
       </View>
     );
   }
