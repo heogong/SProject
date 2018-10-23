@@ -32,6 +32,7 @@ import {
   View,
 } from 'react-native';
 import Login from './Login'
+import NaverLogin from './NaverLogin'
 const {LoginButton, ShareDialog} = FBSDK;
 
 type Props = {};
@@ -74,6 +75,7 @@ export default class HelloFacebook extends Component<Props> {
     return (
       <View style={styles.container}>
         <Login/>
+        {/* <NaverLogin/> */}
         {/* <TouchableHighlight
           style={styles.share}
           onPress={this.shareLinkWithShareDialog.bind(this)}>
