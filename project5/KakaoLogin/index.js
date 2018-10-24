@@ -8,6 +8,8 @@ import {
 import NativeButton from 'apsl-react-native-button';
 import styles from './styles';
 
+import RNKakaoLogins  from 'react-native-kakao-logins';
+
 class KakaoLogin extends Component {
   constructor(props) {
     super(props);
