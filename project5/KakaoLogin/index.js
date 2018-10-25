@@ -44,12 +44,14 @@ class KakaoLogin extends Component {
  
   // 로그인 후 내 프로필 가져오기.
   getProfile() {
-    console.log('getKakaoProfile');
+    console.log('getKakaoProfile1111');
     RNKakaoLogins.getProfile((err, result) => {
+      console.log('11111111');
       if (err){
         console.log(err);
         return;
       }
+      console.log('22222222');
       Alert.alert('result', result);
     });
   }
