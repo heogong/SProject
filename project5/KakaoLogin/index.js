@@ -27,7 +27,8 @@ class KakaoLogin extends Component {
         console.log(err);
         return;
       }
-      Alert.alert('result', result);
+      //Alert.alert('result', result);
+      console.log(result);
     });
   }
  
@@ -38,7 +39,7 @@ class KakaoLogin extends Component {
         console.log(err);
         return;
       }
-      Alert.alert('result', result);
+      console.log(result);
     });
   }
  
@@ -46,13 +47,12 @@ class KakaoLogin extends Component {
   getProfile() {
     console.log('getKakaoProfile1111');
     RNKakaoLogins.getProfile((err, result) => {
-      console.log('11111111');
       if (err){
         console.log(err);
         return;
       }
-      console.log('22222222');
-      Alert.alert('result', result);
+      console.log(result);
+      //Alert.alert('result', result);
     });
   }
 

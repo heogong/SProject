@@ -17,6 +17,7 @@ export default class Login extends Component {
                 AccessToken.getCurrentAccessToken().then(
                   (data) => {
                     console.log(data.accessToken.toString())
+                    console.log(data)
                   }
                 )
               }

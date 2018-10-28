@@ -43,9 +43,6 @@ class Page extends Component {
       Alert.alert('로그인 실패', profileResult.message);
       return;
     }
-    this.props.navigation.navigate('Second', {
-      profileResult,
-    });
   }
 
   // 네이버 로그인 시작.

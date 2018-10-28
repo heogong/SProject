@@ -31,7 +31,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import Login from './Login'
+import FacebookLogin from './FacebookLogin/index'
 import NaverLogin from './NaverLogin'
 import KakaoLogin from './KakaoLogin'
 const {LoginButton, ShareDialog} = FBSDK;
@@ -75,7 +75,7 @@ export default class HelloFacebook extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Login/>
+        <FacebookLogin/>
         <NaverLogin/>
         <KakaoLogin/>
         {/* <TouchableHighlight
