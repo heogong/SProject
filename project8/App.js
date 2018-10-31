@@ -33,8 +33,8 @@ export default class App extends Component<Props> {
   getLocation() {
     navigator.geolocation.getCurrentPosition(
       (positon) => {
-        console.log(positon);
-        location = positon;
+        this.setState({location: positon});
+        console.log(this.state.location.coords);
       },
       (error) => {alert(error.message)},
       {enableHighAccuracy: true, timeout: 2000, maximumAge: 1000}
@@ -46,10 +46,11 @@ export default class App extends Component<Props> {
       <View style={styles.container}>
         <MapView
           provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+
           style={styles.map}
           region={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: 37.421998333333335,
+            longitude: -122.08400000000002,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}
