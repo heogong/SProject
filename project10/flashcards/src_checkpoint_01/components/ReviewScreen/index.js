@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 
 import ViewCard from "./ViewCard";
-import { MockReviews } from "./../../dataMocks";
+import { MockReviews } from "./../../data/Mocks";
 import { mkReviewSummary } from "./ReviewSummary";
 import colors from "./../../styles/colors";
 

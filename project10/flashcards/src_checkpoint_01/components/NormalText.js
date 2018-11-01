@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { fonts, scalingFactors } from "./../styles/fonts";
-import Dimensions from "Dimesions";
+import Dimensions from "Dimensions";
 let { width } = Dimensions.get("window");
 
 class NormalText extends Component {

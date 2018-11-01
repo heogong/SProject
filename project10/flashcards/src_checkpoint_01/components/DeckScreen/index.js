@@ -13,13 +13,18 @@ class DecksScreen extends Component {
         this.state = { decks : MockDecks };
     }
 
+    _review = () => {
+        console.warn("Actual reviews not implemented");
+        this.props.navigation.navigate("Review");
+    }
+
     _mkDeckViews() {
         if (!this.state.decks) {
             return null;
         }
 
         return this.state.decks.map(deck => {
-            return <Deck deck={deck} count={deck.cards.length} key={deck.id} />;
+            return <Deck deck={deck} count={deck.cards.length} key={deck.id} review={this._review} />;
         });
     }
 
