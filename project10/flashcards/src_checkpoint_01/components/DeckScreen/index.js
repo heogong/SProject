@@ -5,8 +5,8 @@ import { MockDecks } from "./../../data/Mocks";
 import Deck from "./Deck";
 import DeckCreation from "./DeckCreation";
 
-class DecksScreen extends Component {
-    static displayName = "DecksScreen";
+class DeckScreen extends Component {
+    static displayName = "DeckScreen";
 
     constructor(props) {
         super(props);
@@ -15,6 +15,7 @@ class DecksScreen extends Component {
 
     _review = () => {
         console.warn("Actual reviews not implemented");
+        //this.props.navigation.navigate("Review");
         this.props.navigation.navigate("Review");
     }
 
@@ -37,3 +38,5 @@ class DecksScreen extends Component {
         )
     }
 }
+
+export default DeckScreen;
