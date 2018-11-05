@@ -8,6 +8,7 @@ import {
   
   import Card from "../data/Card";
   import Deck from "../data/Deck";
+import { LOAD_DATA } from "./types";
   
   export const addDeck = name => {
     return { type: ADD_DECK, data: new Deck(name) };
@@ -27,4 +28,8 @@ import {
   
   export const nextReview = () => {
     return { type: NEXT_REVIEW, data: {} };
+  };
+
+  export const loadData = data => {
+      return { type: LOAD_DATA, data: data};
   };

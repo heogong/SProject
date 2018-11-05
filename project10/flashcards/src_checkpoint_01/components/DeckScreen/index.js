@@ -1,42 +1,89 @@
 import React, { Component } from "react";
 import { View } from "react-native";
 
+import { connect } from "react-redux";
+
 import { MockDecks } from "./../../data/Mocks";
+import { addDeck, reviewDeck } from "./../../actions/creators";
 import Deck from "./Deck";
 import DeckCreation from "./DeckCreation";
 
-class DeckScreen extends Component {
-    static displayName = "DeckScreen";
+class DecksScreen extends Component {
+  static displayName = "DecksScreen";
 
-    constructor(props) {
-        super(props);
-        this.state = { decks : MockDecks };
+  static navigationOptions = { title: "All Decks" };
+
+  _createDeck = name => {
+    let createDeckAction = addDeck(name);
+    this.props.createDeck(createDeckAction);
+    this.props.navigation.navigate("CardCreation", {
+      deckID: createDeckAction.data.id
+    });
+  };
+
+  _addCards = deckID => {
+    this.props.navigation.navigate("CardCreation", { deckID: deckID });
+  };
+
+  _review = deckID => {
+    this.props.reviewDeck(deckID);
+    this.props.navigation.navigate("Review");
+  };
+
+  _mkDeckViews() {
+    if (!this.props.decks) {
+      return null;
     }
 
-    _review = () => {
-        console.warn("Actual reviews not implemented");
-        //this.props.navigation.navigate("Review");
-        this.props.navigation.navigate("Review");
-    }
+    return this.props.decks.map(deck => {
+      return (
+        <Deck
+          deck={deck}
+          count={this.props.counts[deck.id]}
+          key={deck.id}
+          add={() => {
+            this._addCards(deck.id);
+          }}
+          review={() => {
+            this._review(deck.id);
+          }}
+        />
+      );
+    });
+  }
 
-    _mkDeckViews() {
-        if (!this.state.decks) {
-            return null;
-        }
-
-        return this.state.decks.map(deck => {
-            return <Deck deck={deck} count={deck.cards.length} key={deck.id} review={this._review} />;
-        });
-    }
-
-    render() {
-        return (
-            <View>
-                {this._mkDeckViews()}
-                <DeckCreation />
-            </View>
-        )
-    }
+  render() {
+    return (
+      <View>
+        {this._mkDeckViews()}
+        <DeckCreation create={this._createDeck} />
+      </View>
+    );
+  }
 }
 
-export default DeckScreen;
+const mapDispatchToProps = dispatch => {
+  return {
+    createDeck: deckAction => {
+      dispatch(deckAction);
+    },
+    reviewDeck: deckID => {
+      dispatch(reviewDeck(deckID));
+    }
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    decks: state.decks,
+    counts: state.decks.reduce(
+      (sum, deck) => {
+        sum[deck.id] = deck.cards.length;
+        return sum;
+      },
+      {}
+    )
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DecksScreen);
