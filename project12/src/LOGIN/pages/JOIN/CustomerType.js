@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Button from '../../COMMON/components/Button';
+import Button from '../../../COMMON/components/Button';
 
-export default class PageOne extends Component {
+export default class PageTwo extends Component {
   render() {
     return (
       <View style={{margin: 128}}>
-        <Button onPress={Actions.pageOne}>
+        <Text>고객 구분을 선택해 주세요.</Text>
+        <Button onPress={Actions.JoinAccountType}>
           <Text>
-              LOGIN
+              일반 사업장
           </Text>
         </Button>
-        <Button onPress={Actions.JoinCustomerType}>
+        <Button onPress={Actions.JoinAccountType}>
           <Text>
-            회원가입
+            서비스파트너
           </Text>
         </Button>
       </View>

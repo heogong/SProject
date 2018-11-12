@@ -6,7 +6,7 @@ export default class PageTwo extends Component {
   render() {
     return (
       <View style={{margin: 128}}>
-        <Text onPress={Actions.InitPage}>This is PageTwo!</Text>
+        <Text onPress={Actions.InitPage}>This is JoinOne!</Text>
       </View>
     )
   }
