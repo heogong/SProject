@@ -3,7 +3,7 @@ import { View, Text, TextInput } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Button from '../../../COMMON/components/Button';
 
-export default class PageOne extends Component {
+export default class InputPhone extends Component {
   constructor(props) {
     super(props);
     this.state = { text: '' };

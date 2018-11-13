@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Button from '../../../COMMON/components/Button';
 
-export default class PageTwo extends Component {
+export default class CustomerType extends Component {
   render() {
     return (
       <View style={{margin: 128}}>

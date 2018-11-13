@@ -5,7 +5,7 @@ import Button from '../../../COMMON/components/Button';
 
 import NaverLogin from '../../components/NaverLogin';
 
-export default class PageTwo extends Component {
+export default class AccountType extends Component {
   render() {
     return (
       <View style={{margin: 128}}>
