@@ -10,8 +10,10 @@ import { NaverLogin, getProfile } from 'react-native-naver-login';
 import styles from './styles';
 
 import { Actions } from 'react-native-router-flux';
-import { connect } from 'react-redux';
-import { setValue } from '../../../REDUX/actions';
+// import { connect } from 'react-redux';
+// import { setValue } from '../../../REDUX/actions';
+
+import LoginCheck from '../LoginCheck';
 
 const initials = {
   kConsumerKey: 'HEZ2CaOwmSPvw18HCB4c',
@@ -41,12 +43,17 @@ class Page extends Component {
   async fetchProfile() {
     const profileResult = await getProfile(this.state.theToken);
 
-    console.log(profileResult);
-    console.log(profileResult.response.email);
+    //console.log(profileResult);
 
-    this.setState({ usrId : profileResult.response.email});
-    this.props.onSetValue(this.state);
-    Actions.JoinInputName();
+    this.setState({ 
+      usrId : profileResult.response.email,
+      usrNm : profileResult.response.name
+    });
+
+    LoginCheck(profileResult);
+
+    //this.props.onSetValue(this.state);
+    //Actions.JoinInputName();
 
     if (profileResult.resultcode === '024') {
       Alert.alert('로그인 실패', profileResult.message);
@@ -96,10 +103,10 @@ class Page extends Component {
   }
 }
 
-let mapDispatchToProps = (dispatch) => {
-  return {
-      onSetValue: (value) => dispatch(setValue(value))
-  }
-}
-Page = connect(undefined, mapDispatchToProps)(Page);
+// let mapDispatchToProps = (dispatch) => {
+//   return {
+//       onSetValue: (value) => dispatch(setValue(value))
+//   }
+// }
+// Page = connect(undefined, mapDispatchToProps)(Page);
 export default Page;
