@@ -10,6 +10,8 @@ import { NaverLogin, getProfile } from 'react-native-naver-login';
 import styles from './styles';
 
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { setValue } from '../../../REDUX/actions';
 
 const initials = {
   kConsumerKey: 'HEZ2CaOwmSPvw18HCB4c',
@@ -30,15 +32,20 @@ class Page extends Component {
 
     this.state = {
       isNaverLoggingin: false,
-      theToken: 'token has not fetched'
+      theToken: 'token has not fetched',
+      usrId: ''
     };
   }
 
   // 로그인 후 내 프로필 가져오기.
   async fetchProfile() {
     const profileResult = await getProfile(this.state.theToken);
-    console.log(profileResult);
 
+    console.log(profileResult);
+    console.log(profileResult.response.email);
+
+    this.setState({ usrId : profileResult.response.email});
+    this.props.onSetValue(this.state);
     Actions.JoinInputName();
 
     if (profileResult.resultcode === '024') {
@@ -88,4 +95,11 @@ class Page extends Component {
     );
   }
 }
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+      onSetValue: (value) => dispatch(setValue(value))
+  }
+}
+Page = connect(undefined, mapDispatchToProps)(Page);
 export default Page;
