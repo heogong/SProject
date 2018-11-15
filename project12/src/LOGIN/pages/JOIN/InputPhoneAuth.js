@@ -38,8 +38,10 @@ class InputPhoneAuth extends Component {
 
   _checkSmsCertNum = () => {
     sendSmsCertNum(this.props.smsSendId, this.state.InpuCertNum).then(result => {
-      console.log(result);
+      //console.log(result);
+
       Alert.alert(result.msg);
+      
       if(result.resultCode == '0000') {
         //페이지 이동
 
