@@ -10,7 +10,7 @@ const InitialState = {
 const USER = (state = InitialState, action) => {
     switch(action.type) {
         case SET_VALUE:
-            console.log("action : ", action);
+        console.log(action);
             return Object.assign({}, state, {
                 usrId: action.user.usrId,
                 usrNm: action.user.usrNm,

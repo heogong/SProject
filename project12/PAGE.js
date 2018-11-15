@@ -8,6 +8,7 @@ import JoinAccountType from './src/LOGIN/pages/JOIN/AccountType';
 import JoinInputEmail from './src/LOGIN/pages/JOIN/InputEmail';
 import JoinInputName from './src/LOGIN/pages/JOIN/InputName';
 import JoinInputPhone from './src/LOGIN/pages/JOIN/InputPhone';
+import JoinInputPhoneAuth from './src/LOGIN/pages/JOIN/InputPhoneAuth';
 
 
 const PAGE = () => ( 
@@ -21,6 +22,7 @@ const PAGE = () => (
       <Scene key="JoinInputEmail" component={JoinInputEmail} title="이메일 가입"/>
       <Scene key="JoinInputName" component={JoinInputName} title="고객 이름"/>
       <Scene key="JoinInputPhone" component={JoinInputPhone} title="전화번호"/>
+      <Scene key="JoinInputPhoneAuth" component={JoinInputPhoneAuth} title="본인 인증"/>
     </Scene>
   </Router>
 );

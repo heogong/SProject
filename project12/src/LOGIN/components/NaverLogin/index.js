@@ -10,10 +10,8 @@ import { NaverLogin, getProfile } from 'react-native-naver-login';
 import styles from './styles';
 
 import { Actions } from 'react-native-router-flux';
-// import { connect } from 'react-redux';
-// import { setValue } from '../../../REDUX/actions';
-
-import LoginCheck from '../LoginCheck';
+import { connect } from 'react-redux';
+import { setValue } from '../../../REDUX/actions';
 
 const initials = {
   kConsumerKey: 'HEZ2CaOwmSPvw18HCB4c',
@@ -50,10 +48,7 @@ class Page extends Component {
       usrNm : profileResult.response.name
     });
 
-    LoginCheck(profileResult);
-
-    //this.props.onSetValue(this.state);
-    //Actions.JoinInputName();
+    this._LoginCheckGotoPage(this.state); // 사용자 데이터에 따른 페이지 이동
 
     if (profileResult.resultcode === '024') {
       Alert.alert('로그인 실패', profileResult.message);
@@ -61,9 +56,20 @@ class Page extends Component {
     }
   }
 
+  _LoginCheckGotoPage = (USER) => {
+    //console.log("LoginCheck USER : ", USER);
+    this.props.onSetValue(USER);
+
+    if(USER.userNm) {
+      Actions.JoinInputName();
+    } else {
+      Actions.JoinInputPhone();
+    }
+};
+
   // 네이버 로그인 시작.
   async naverLoginStart() {
-    console.log('  naverLoginStart  ed');
+    //console.log('  naverLoginStart  ed');
     NaverLogin.login(initials, (err, token) => {
       console.log(`\n\n  Token is fetched  :: ${token} \n\n`);
       this.setState({ theToken: token });
@@ -103,10 +109,10 @@ class Page extends Component {
   }
 }
 
-// let mapDispatchToProps = (dispatch) => {
-//   return {
-//       onSetValue: (value) => dispatch(setValue(value))
-//   }
-// }
-// Page = connect(undefined, mapDispatchToProps)(Page);
+let mapDispatchToProps = (dispatch) => {
+  return {
+      onSetValue: (value) => dispatch(setValue(value))
+  }
+}
+Page = connect(undefined, mapDispatchToProps)(Page);
 export default Page;
