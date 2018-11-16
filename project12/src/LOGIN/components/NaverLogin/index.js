@@ -11,7 +11,7 @@ import styles from './styles';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setValue } from '../../../REDUX/actions';
+import { setValue, setUsrId, setUsrNm } from '../../../REDUX/actions';
 
 const initials = {
   kConsumerKey: 'HEZ2CaOwmSPvw18HCB4c',
@@ -33,7 +33,8 @@ class Page extends Component {
     this.state = {
       isNaverLoggingin: false,
       theToken: 'token has not fetched',
-      usrId: ''
+      usrId: '',
+      usrNm: ''
     };
   }
 
@@ -58,14 +59,17 @@ class Page extends Component {
 
   _LoginCheckGotoPage = (USER) => {
     //console.log("LoginCheck USER : ", USER);
-    this.props.onSetValue(USER);
-
-    if(USER.userNm) {
+    //this.props.onSetValue(USER);
+    this.props.onSetUsrId(USER.usrId);
+    this.props.onSetUsrNm(USER.usrNm);
+    
+    // 이름 value 여부
+    if(USER.userNm == '') {
       Actions.JoinInputName();
     } else {
       Actions.JoinInputPhone();
     }
-};
+  };
 
   // 네이버 로그인 시작.
   async naverLoginStart() {
@@ -111,7 +115,9 @@ class Page extends Component {
 
 let mapDispatchToProps = (dispatch) => {
   return {
-      onSetValue: (value) => dispatch(setValue(value))
+      onSetValue: (value) => dispatch(setValue(value)),
+      onSetUsrId: (value) => dispatch(setUsrId(value)),
+      onSetUsrNm: (value) => dispatch(setUsrNm(value))
   }
 }
 Page = connect(undefined, mapDispatchToProps)(Page);

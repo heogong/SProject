@@ -5,7 +5,7 @@ import Button from '../../../COMMON/components/Button';
 import { Actions } from 'react-native-router-flux';
 
 import { connect } from 'react-redux';
-import { setValue } from '../../../REDUX/actions';
+import { setValue, setUsrPhoneNum } from '../../../REDUX/actions';
 
 /////////////////////////
 const API_URL = 'http://52.79.226.14:8180/coolinic/sms/sendSmsCertNum?';
@@ -20,6 +20,7 @@ function sendSmsCertNum(number) {
   return fetch(SmsCertUrl(number), {method : 'post'})
       .then(response => response.json())
       .then(responseJSON => {
+        console.log(responseJSON);
         smsSendId = (responseJSON.resultCode == '0000') ? responseJSON.data.smsSendId : '';
         certNum = (responseJSON.resultCode == '0000') ? responseJSON.data.certNum : '';
         return {
@@ -49,7 +50,8 @@ class InputPhone extends Component {
 
   _getAuthNumber = () => {
     //let phoneNumber = event.nativeEvent.text;
-    this.props.onSetValue(this.state); // 리덕스 폰번호 입력
+    //this.props.onSetValue(this.state); // 리덕스 폰번호 입력 : 밑에거 되면 삭제
+    this.props.onSetUsrPhoneNum(this.state.usrPhoneNum); // 리덕스 폰번호 입력
     
     sendSmsCertNum(this.state.usrPhoneNum).then(result => {
       this.setState({ authValues: result });
@@ -83,7 +85,8 @@ class InputPhone extends Component {
 
 let mapDispatchToProps = (dispatch) => {
   return {
-      onSetValue: (value) => dispatch(setValue(value))
+      onSetValue: (value) => dispatch(setValue(value)),
+      onSetUsrPhoneNum: (value) => dispatch(setUsrPhoneNum(value))
   }
 }
 InputPhone = connect(undefined, mapDispatchToProps)(InputPhone);

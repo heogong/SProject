@@ -3,8 +3,10 @@ import { View, Text, TextInput, Alert } from 'react-native';
 
 import Button from '../../../COMMON/components/Button';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import SignUp from '../../components/SignUp';
 
-/////////////////////////
+//////////////sms 인증///////////
 const API_URL = 'http://52.79.226.14:8180/coolinic/sms/checkSmsCertNum?';
 
 function SmsCertUrl(sendId, number) {
@@ -25,7 +27,32 @@ function sendSmsCertNum(sendId, number) {
           console.error(error);
       })
 }
-/////////////////////////
+//////////////sms 인증///////////
+
+//////////////회원가입///////////
+const API_URL2 = 'http://52.79.226.14:8180/iam/users/client?';
+
+function SignUpUrl(sendId, number) {
+  return `${API_URL2}usrId=${sendId}&usrPwd=test&usrPhoneNum=${sendId}&snsSignupYn=Y`;
+}
+
+function sendSingUp(sendId, number) {
+  return fetch(SignUpUrl(sendId, number), {method : 'post'})
+      .then(response => response.json())
+      .then(responseJSON => {
+        return {
+          code: responseJSON.resultCode,
+          msg : responseJSON.resultMsg
+        };
+        
+      })
+      .catch(error => {
+          console.error(error);
+      })
+}
+//////////////회원가입///////////
+
+
 
 class InputPhoneAuth extends Component {
   constructor(props) {
@@ -42,9 +69,13 @@ class InputPhoneAuth extends Component {
 
       Alert.alert(result.msg);
       
-      if(result.resultCode == '0000') {
-        //페이지 이동
+      if(result.code == '0000') {
+        // 회원가입
+        //sendSingUp();
+        console.log("value  :",this.props.value)
+        //SignUp(this.props.value);
 
+        // 페이지 이동
       }
     })
   };
@@ -68,5 +99,14 @@ class InputPhoneAuth extends Component {
     )
   }
 }
+
+let mapStateToProps = (state) => {
+  console.log("mapStateToProps : ",state)
+  return {
+      value: state.USER
+  };
+}
+
+InputPhoneAuth = connect(mapStateToProps)(InputPhoneAuth);
 
 export default InputPhoneAuth;
