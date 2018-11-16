@@ -11,7 +11,8 @@ import styles from './styles';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setValue, setUsrId, setUsrNm } from '../../../REDUX/actions';
+import { setUsrId, setUsrNm, setSnsSignYn } from '../../../REDUX/actions';
+import SignUp from '../../components/SignUp';
 
 const initials = {
   kConsumerKey: 'HEZ2CaOwmSPvw18HCB4c',
@@ -41,15 +42,13 @@ class Page extends Component {
   // 로그인 후 내 프로필 가져오기.
   async fetchProfile() {
     const profileResult = await getProfile(this.state.theToken);
-
-    //console.log(profileResult);
-
     this.setState({ 
       usrId : profileResult.response.email,
       usrNm : profileResult.response.name
     });
 
-    this._LoginCheckGotoPage(this.state); // 사용자 데이터에 따른 페이지 이동
+    // 사용자 데이터에 따른 페이지 이동
+    this._LoginCheckGotoPage(this.state); 
 
     if (profileResult.resultcode === '024') {
       Alert.alert('로그인 실패', profileResult.message);
@@ -58,17 +57,28 @@ class Page extends Component {
   }
 
   _LoginCheckGotoPage = (USER) => {
-    //console.log("LoginCheck USER : ", USER);
-    //this.props.onSetValue(USER);
-    this.props.onSetUsrId(USER.usrId);
-    this.props.onSetUsrNm(USER.usrNm);
+
+    this.props.onSetUsrId(USER.usrId);  // 리덕스 사용자 아이디 SET
+    this.props.onSetUsrNm(USER.usrNm);  // 리덕스 사용자 이름 SET
+    this.props.onSetSnsSignYn('Y');     // 리덕스 SNS 가입여부 SET
+
+    // 회원가입 여부 확인 (일단 회원가입 로직으로 확인)
+    SignUp(this.props.value).then(result => {
+      // 회원 중복
+      if (result.code == '0010') {
+        Alert.alert(result.msg);
+        Actions.InitPage();
+      } else {
+        // 이름 value 여부
+        if(USER.userNm == '') {
+          Actions.JoinInputName();
+        } else {
+          Actions.JoinInputPhone();
+        }
+      }
+    });
+   
     
-    // 이름 value 여부
-    if(USER.userNm == '') {
-      Actions.JoinInputName();
-    } else {
-      Actions.JoinInputPhone();
-    }
   };
 
   // 네이버 로그인 시작.
@@ -113,12 +123,18 @@ class Page extends Component {
   }
 }
 
+let mapStateToProps = (state) => {
+  return {
+      value: state.USER
+  };
+}
+
 let mapDispatchToProps = (dispatch) => {
   return {
-      onSetValue: (value) => dispatch(setValue(value)),
       onSetUsrId: (value) => dispatch(setUsrId(value)),
-      onSetUsrNm: (value) => dispatch(setUsrNm(value))
+      onSetUsrNm: (value) => dispatch(setUsrNm(value)),
+      onSetSnsSignYn: (value) => dispatch(setSnsSignYn(value))
   }
 }
-Page = connect(undefined, mapDispatchToProps)(Page);
+Page = connect(mapStateToProps, mapDispatchToProps)(Page);
 export default Page;

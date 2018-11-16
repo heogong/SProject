@@ -29,31 +29,6 @@ function sendSmsCertNum(sendId, number) {
 }
 //////////////sms 인증///////////
 
-//////////////회원가입///////////
-const API_URL2 = 'http://52.79.226.14:8180/iam/users/client?';
-
-function SignUpUrl(sendId, number) {
-  return `${API_URL2}usrId=${sendId}&usrPwd=test&usrPhoneNum=${sendId}&snsSignupYn=Y`;
-}
-
-function sendSingUp(sendId, number) {
-  return fetch(SignUpUrl(sendId, number), {method : 'post'})
-      .then(response => response.json())
-      .then(responseJSON => {
-        return {
-          code: responseJSON.resultCode,
-          msg : responseJSON.resultMsg
-        };
-        
-      })
-      .catch(error => {
-          console.error(error);
-      })
-}
-//////////////회원가입///////////
-
-
-
 class InputPhoneAuth extends Component {
   constructor(props) {
     super(props);
@@ -67,15 +42,20 @@ class InputPhoneAuth extends Component {
     sendSmsCertNum(this.props.smsSendId, this.state.InpuCertNum).then(result => {
       //console.log(result);
 
-      Alert.alert(result.msg);
+      alert(result.msg);
       
       if(result.code == '0000') {
         // 회원가입
-        //sendSingUp();
-        console.log("value  :",this.props.value)
-        //SignUp(this.props.value);
+        //console.log("value  :",this.props.value)
+        SignUp(this.props.value).then(result => {
+          if (result.code == '0000') {
+          // 페이지 이동
 
-        // 페이지 이동
+          } else {
+            Alert.alert(result.msg);
+            Actions.InitPage();
+          }
+        });
       }
     })
   };
@@ -101,7 +81,6 @@ class InputPhoneAuth extends Component {
 }
 
 let mapStateToProps = (state) => {
-  console.log("mapStateToProps : ",state)
   return {
       value: state.USER
   };
