@@ -72,13 +72,12 @@ class Page extends Component {
         // 이름 value 여부
         if(USER.userNm == '') {
           Actions.JoinInputName();
+          //Actions.popTo('JoinInputName'); // 뒤로가면서 기존페이지로 이동하는 듯;;
         } else {
           Actions.JoinInputPhone();
         }
       }
     });
-   
-    
   };
 
   // 네이버 로그인 시작.
