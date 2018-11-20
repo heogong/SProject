@@ -15,7 +15,7 @@ export default class AccountType extends Component {
               카카오톡으로 가입하기
           </Text>
         </Button>
-        <Button onPress={Actions.JoinInputEmail}>
+        <Button onPress={Actions.JoinInputName}>
           <Text>
            이메일로 가입하기
           </Text>

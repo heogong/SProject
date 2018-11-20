@@ -7,9 +7,9 @@ import {
 import { combineReducers } from 'redux';
 
 const InitialState = {
-    usrId: 'empty@empty.com',
-    usrNm: 'empty',
-    usrPhoneNum: '00000000000',
+    usrId: '',
+    usrNm: '',
+    usrPhoneNum: '',
     snsSignupYn: 'N'
 };
 

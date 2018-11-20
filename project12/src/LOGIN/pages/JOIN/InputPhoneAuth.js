@@ -34,7 +34,8 @@ class InputPhoneAuth extends Component {
     super(props);
 
     this.state = { 
-      InpuCertNum: ''
+      InpuCertNum: '',
+      SmsResultMsg: ''
     };
   }
 
@@ -42,20 +43,25 @@ class InputPhoneAuth extends Component {
     sendSmsCertNum(this.props.smsSendId, this.state.InpuCertNum).then(result => {
       //console.log(result);
 
-      alert(result.msg);
+      this.setState({SmsResultMsg : result.msg});
       
       if(result.code == '0000') {
-        // 회원가입
-        //console.log("value  :",this.props.value)
-        SignUp(this.props.value).then(result => {
-          if (result.code == '0000') {
-          // 페이지 이동
+        //SNS 가입 여부 확인
+        if(this.props.value.snsSignupYn == 'Y'){
+          // 회원가입
+          //console.log("value  :",this.props.value)
+          SignUp(this.props.value).then(result => {
+            if (result.code == '0000') {
+            // 페이지 이동
 
-          } else {
-            Alert.alert(result.msg);
-            Actions.InitPage();
-          }
-        });
+            } else {
+              Alert.alert(result.msg);
+              Actions.InitPage();
+            }
+          });
+        } else {
+          Actions.JoinInputEmail();
+        }
       }
     })
   };
@@ -66,7 +72,7 @@ class InputPhoneAuth extends Component {
         <Text>인증번호 입력</Text>
         <Text>인증ID : {this.props.smsSendId} </Text>
         <Text>인증번호 : {this.props.certNum} </Text>
-
+        
         <TextInput
           style={{height: 40, borderColor: 'gray', borderWidth: 1}}
           onChangeText={(text) => this.setState({InpuCertNum: text})}
@@ -75,6 +81,8 @@ class InputPhoneAuth extends Component {
           keyboardType='numeric'
           onSubmitEditing={this._checkSmsCertNum}
         />
+
+        <Text>{this.state.SmsResultMsg}</Text>
       </View>
     )
   }

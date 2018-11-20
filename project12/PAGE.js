@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Scene, Router, Stack, Overlay, ActionConst} from 'react-native-router-flux';
+import {Actions, Scene, Router, Stack, Overlay, ActionConst} from 'react-native-router-flux';
 import InitPage from './src/LOGIN/pages/InitPage';
 import PageOne from './src/LOGIN/pages/PageOne';
 
@@ -21,7 +21,7 @@ const PAGE = () => (
 
       <Scene key="JoinCustomerType" component={JoinCustomerType} title="고객 구분"/>
       <Scene key="JoinAccountType" component={JoinAccountType} title="가입 구분"/>
-      <Scene key="JoinInputEmail" component={JoinInputEmail} title="이메일 가입"/>
+      <Scene key="JoinInputEmail" component={JoinInputEmail} title="이메일 가입" onLeft={Actions.JoinInputName}/>
       <Scene key="JoinInputName" component={JoinInputName} title="고객 이름"/>
       <Scene key="JoinInputPhone" component={JoinInputPhone} title="전화번호"/>
       <Scene key="JoinInputPhoneAuth" component={JoinInputPhoneAuth} title="본인 인증"/>

@@ -3,12 +3,18 @@ import { View, Text, TextInput } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import { setUsrNm } from '../../../REDUX/actions';
 import Button from '../../../COMMON/components/Button';
 
 class InputName extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+    this.state = { name: '' };
+  }
+
+  _NextButton = () => {
+    this.props.onSetUsrNm(this.state.name);  // 리덕스 사용자 이름 SET
+    Actions.JoinInputPhone();
   }
   
   render() {
@@ -25,24 +31,29 @@ class InputName extends Component {
 
         <Text>VALUE: { this.props.value }</Text>
 
-        <Button onPress={Actions.JoinInputPhone}>
+        <Button onPress={this._NextButton}>
           <Text>
            NEXT
           </Text>
         </Button>
-
-
       </View>
     )
   }
 }
 
+// 나중에 제거하기
 let mapStateToProps = (state) => {
   return {
       value: state.USER.usrId
   };
 }
 
-InputName = connect(mapStateToProps)(InputName);
+let mapDispatchToProps = (dispatch) => {
+  return {
+      onSetUsrNm: (value) => dispatch(setUsrNm(value))
+  }
+}
+
+InputName = connect(mapStateToProps, mapDispatchToProps)(InputName);
 
 export default InputName;
