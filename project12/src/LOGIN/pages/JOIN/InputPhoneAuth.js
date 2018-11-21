@@ -5,6 +5,7 @@ import Button from '../../../COMMON/components/Button';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import SignUp from '../../components/SignUp';
+import CheckUsr from '../../components/CheckUsr';
 
 //////////////sms 인증///////////
 const API_URL = 'http://52.79.226.14:8180/coolinic/sms/checkSmsCertNum?';
@@ -41,27 +42,36 @@ class InputPhoneAuth extends Component {
 
   _checkSmsCertNum = () => {
     sendSmsCertNum(this.props.smsSendId, this.state.InpuCertNum).then(result => {
-      //console.log(result);
-
-      this.setState({SmsResultMsg : result.msg});
-      
+      // SMS 인증 정상 여부
       if(result.code == '0000') {
-        //SNS 가입 여부 확인
-        if(this.props.value.snsSignupYn == 'Y'){
-          // 회원가입
-          //console.log("value  :",this.props.value)
-          SignUp(this.props.value).then(result => {
-            if (result.code == '0000') {
-            // 페이지 이동
 
+        // 가입 여부 확인
+        CheckUsr(this.props.value.usrPhoneNum).then(result => {
+          if (result.code == '0000') {
+            // SNS 가입 여부 확인
+            if(this.props.value.snsSignupYn == 'Y'){
+              // 회원가입
+              SignUp(this.props.value).then(result => {
+                if (result.code == '0000') {
+                // 페이지 이동
+
+                } else {
+                  Alert.alert(result.msg);
+                  Actions.InitPage();
+                }
+              });
             } else {
-              Alert.alert(result.msg);
-              Actions.InitPage();
+              Actions.JoinInputEmail();
             }
-          });
-        } else {
-          Actions.JoinInputEmail();
-        }
+          } else {
+            Alert.alert(result.msg);
+            //Actions.popTo('JoinInputName'); // 뒤로가면서 기존페이지로 이동하는 듯;;
+            Actions.pageOne();
+          }
+        });
+        
+      } else {
+        this.setState({SmsResultMsg : result.msg});
       }
     })
   };
