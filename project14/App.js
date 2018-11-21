@@ -21,7 +21,7 @@ export default class App extends Component {
     const config = {
       hideCardIOLogo : true,
       scanInstructions : '와리가리!',
-      //suppressConfirmation  : true
+      suppressConfirmation  : true
     }
     CardIOModule
       .scanCard(config)

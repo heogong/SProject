@@ -16,7 +16,7 @@ import CardInputInfo from './src/CARD/pages/InputCardInfo';
 const PAGE = () => ( 
   <Router>
     <Scene key="root">
-      <Scene key="InitPage" component={InitPage} title="InitPage" initial type={ActionConst.RESET} />
+      {/* <Scene key="InitPage" component={InitPage} title="InitPage" initial type={ActionConst.RESET} /> */}
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
 
       <Scene key="JoinCustomerType" component={JoinCustomerType} title="고객 구분"/>
@@ -26,8 +26,8 @@ const PAGE = () => (
       <Scene key="JoinInputPhone" component={JoinInputPhone} title="전화번호"/>
       <Scene key="JoinInputPhoneAuth" component={JoinInputPhoneAuth} title="본인 인증"/>
 
-      {/* <Scene key="CardIndex" component={CardIndex} title="카드 등록 페이지" initial type={ActionConst.RESET}/>
-      <Scene key="CardInputInfo" component={CardInputInfo} title="카드 등록"/> */}
+      <Scene key="CardIndex" component={CardIndex} title="카드 등록 페이지" initial type={ActionConst.RESET}/>
+      <Scene key="CardInputInfo" component={CardInputInfo} title="카드 등록"/>
 
     </Scene>
   </Router>

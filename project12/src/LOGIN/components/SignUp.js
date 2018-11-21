@@ -1,5 +1,6 @@
+import { domain } from '../../COMMON/ApiDomain';
 
-const API_URL = 'http://52.79.226.14:8180/iam/users/client?';
+const API_URL = `${domain}iam/users/client?`;
 
 function SignUpUrl(USER) {
   return `${API_URL}usrId=${USER.usrId}&usrPwd=test&usrNm=${USER.usrNm}&usrPhoneNum=${USER.usrPhoneNum}&snsSignupYn=${USER.snsSignupYn}`;

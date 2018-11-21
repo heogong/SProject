@@ -1,6 +1,7 @@
 import axios  from 'axios';
+import { domain } from '../../COMMON/ApiDomain';
 
-const API_URL = 'http://52.79.226.14:8180/iam/users/phonenum/';
+const API_URL = `${domain}iam/users/phonenum/`;
 
 function ChkUrl(number) {
   return `${API_URL}${number}`;
@@ -18,13 +19,6 @@ async function CheckUsr(number) {
   }
 
 }
-
-
-
-
-
-
-
   // return fetch(ChkUrl(number), {method : 'get'})
   //   .then(response => response.json())
   //   .then(responseJSON => {
