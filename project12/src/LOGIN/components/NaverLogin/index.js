@@ -42,6 +42,7 @@ class Page extends Component {
   // 로그인 후 내 프로필 가져오기.
   async fetchProfile() {
     const profileResult = await getProfile(this.state.theToken);
+    
     this.setState({ 
       usrId : profileResult.response.email,
       usrNm : profileResult.response.name

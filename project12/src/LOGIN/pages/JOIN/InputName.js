@@ -3,17 +3,21 @@ import { View, Text, TextInput } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setUsrNm } from '../../../REDUX/actions';
+import { setUsrNm, setSnsSignYn } from '../../../REDUX/actions';
 import Button from '../../../COMMON/components/Button';
 
 class InputName extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: '' };
+    this.state = { usrNm: '' };
+  }
+  
+  componentDidMount () {
+    this.props.onSetSnsSignYn('N');  // 리덕스 SNS 가입여부 SET
   }
 
   _NextButton = () => {
-    this.props.onSetUsrNm(this.state.name);  // 리덕스 사용자 이름 SET
+    this.props.onSetUsrNm(this.state.usrNm);  // 리덕스 사용자 이름 SET
     Actions.JoinInputPhone();
   }
   
@@ -24,7 +28,7 @@ class InputName extends Component {
 
         <TextInput
           style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({text})}
+          onChangeText={(text) => this.setState({usrNm : text})}
           value={this.state.text}
           placeholder='홍길동'
         />
@@ -50,7 +54,8 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
   return {
-      onSetUsrNm: (value) => dispatch(setUsrNm(value))
+      onSetUsrNm: (value) => dispatch(setUsrNm(value)),
+      onSetSnsSignYn: (value) => dispatch(setSnsSignYn(value))
   }
 }
 

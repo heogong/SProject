@@ -1,6 +1,6 @@
 import axios  from 'axios';
 
-const API_URL = 'http://52.79.226.14:8180/iam/users/checkExist/';
+const API_URL = 'http://52.79.226.14:8180/iam/users/phonenum/';
 
 function ChkUrl(number) {
   return `${API_URL}${number}`;

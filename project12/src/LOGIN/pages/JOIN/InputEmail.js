@@ -1,13 +1,36 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import Button from '../../../COMMON/components/Button';
 
-export default class InputEmail extends Component {
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { setUsrId } from '../../../REDUX/actions';
+import Button from '../../../COMMON/components/Button';
+import SignUp from '../../components/SignUp';
+
+class InputEmail extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+    this.state = { usrId: '' };
   }
+
+  async _SignUsr() {
+    await this.props.onSetUsrId(this.state.usrId);  // 리덕스 사용자 ID SET (await 절차식으로 진행)
+
+    //회원가입
+    SignUp(this.props.value).then(result => {
+      alert(result.msg);
+
+      if (result.code == '0000') {
+      // 페이지 이동
+
+      } else {
+        //Alert.alert(result.msg);
+        //Actions.InitPage();
+      }
+    });
+    
+  }
+  
   
   render() {
     return (
@@ -16,14 +39,15 @@ export default class InputEmail extends Component {
 
         <TextInput
           style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({text})}
+          onChangeText={(text) => this.setState({usrId: text})}
           value={this.state.text}
           placeholder='sample@example.com'
         />
+       
 
-        <Button onPress={Actions.JoinInputName}>
+        <Button  onPress={() => this._SignUsr()}>
           <Text>
-           NEXT
+           가입
           </Text>
         </Button>
 
@@ -32,3 +56,18 @@ export default class InputEmail extends Component {
     )
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+      value: state.USER
+  };
+}
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+      onSetUsrId: (value) => dispatch(setUsrId(value))
+  }
+}
+
+InputEmail = connect(mapStateToProps, mapDispatchToProps)(InputEmail);
+export default InputEmail;
