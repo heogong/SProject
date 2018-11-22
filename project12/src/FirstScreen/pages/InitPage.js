@@ -7,7 +7,7 @@ export default class PageOne extends Component {
   render() {
     return (
       <View style={{margin: 128}}>
-        <Button onPress={Actions.pageOne}>
+        <Button onPress={Actions.LoginAccountType}>
           <Text>
               LOGIN
           </Text>

@@ -11,8 +11,9 @@ import styles from './styles';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setUsrId, setUsrNm, setSnsSignYn } from '../../../REDUX/actions';
+import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken } from '../../../REDUX/actions';
 import SignUp from '../../components/SignUp';
+import { login } from '../../components/Login';
 
 const initials = {
   kConsumerKey: 'HEZ2CaOwmSPvw18HCB4c',
@@ -28,6 +29,10 @@ const naverInit = {
 };
 
 class Page extends Component {
+  static defaultProps = {
+    name: 'NAVER LOGIN'
+  }
+
   constructor(props) {
     super(props);
 
@@ -48,7 +53,7 @@ class Page extends Component {
       usrNm : profileResult.response.name
     });
 
-    // 사용자 데이터에 따른 페이지 이동
+   
     this._LoginCheckGotoPage(this.state); 
 
     if (profileResult.resultcode === '024') {
@@ -57,6 +62,7 @@ class Page extends Component {
     }
   }
 
+   // 사용자 데이터에 따른 페이지 이동
   _LoginCheckGotoPage = (USER) => {
 
     this.props.onSetUsrId(USER.usrId);  // 리덕스 사용자 아이디 SET
@@ -64,7 +70,7 @@ class Page extends Component {
     this.props.onSetSnsSignYn('Y');     // 리덕스 SNS 가입여부 SET
 
     // 회원가입 여부 확인 (일단 회원가입 로직으로 확인)
-    SignUp(this.props.value).then(result => {
+    SignUp(this.props.usrObj).then(result => {
       // 회원 중복
       if (result.code == '0010') {
         Alert.alert(result.msg);
@@ -81,20 +87,38 @@ class Page extends Component {
     });
   };
 
+  //여기 부터 시작!!!!!!!!!!
+  async _login() {
+    const loginResult = await login(this.props.usrObj, this.props.tokenObj);
+
+  }
+
   // 네이버 로그인 시작.
   async naverLoginStart() {
     //console.log('  naverLoginStart  ed');
     NaverLogin.login(initials, (err, token) => {
       console.log(`\n\n  Token is fetched  :: ${token} \n\n`);
-      this.setState({ theToken: token });
 
-      this.fetchProfile();
+      // 로그인 페이지에서 접근 시
+      if(this.props.loginYn) {
+        this.props.onSetSnsSignYn('Y');     // 리덕스 SNS 로그인 여부 SET
+        this.props.onSetSnsToken(token);    // 리덕스 SNS TOKEN SET
+
+        this.login();
+
+      } else {
+        this.setState({ theToken: token });
+        this.fetchProfile();
+      }
+
       if (err) {
         console.log(err);
         return;
       }
     });
   }
+
+  
 
   render() {
     const { theToken } = this.state;
@@ -107,7 +131,7 @@ class Page extends Component {
             activeOpacity={0.5}
             style={styles.btnNaverLogin}
             textStyle={styles.txtNaverLogin}
-          >NAVER LOGIN</NativeButton>
+          >{this.props.name}</NativeButton>
           {/* <Text>{theToken}</Text> */}
           {/* <NativeButton
             isLoading={this.state.isNaverLoggingin}
@@ -125,7 +149,8 @@ class Page extends Component {
 
 let mapStateToProps = (state) => {
   return {
-      value: state.USER
+      usrObj: state.USER,
+      tokenObj: state.TOKEN
   };
 }
 
@@ -133,7 +158,8 @@ let mapDispatchToProps = (dispatch) => {
   return {
       onSetUsrId: (value) => dispatch(setUsrId(value)),
       onSetUsrNm: (value) => dispatch(setUsrNm(value)),
-      onSetSnsSignYn: (value) => dispatch(setSnsSignYn(value))
+      onSetSnsSignYn: (value) => dispatch(setSnsSignYn(value)),
+      onSetSnsToken: (value) => dispatch(setSnsToken(value))
   }
 }
 Page = connect(mapStateToProps, mapDispatchToProps)(Page);

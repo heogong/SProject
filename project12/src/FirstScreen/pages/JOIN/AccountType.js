@@ -7,9 +7,13 @@ import NaverLogin from '../../components/NaverLogin';
 
 export default class AccountType extends Component {
   render() {
+    const loginYn = false; // 진입 경로(로그인/회원가입) 확인
     return (
       <View style={{margin: 128}}>
-        <NaverLogin/>
+        <NaverLogin
+          loginYn={ loginYn }
+          name="NAVER 회원가입"
+        />
         <Button onPress={Actions.InitPage}>
           <Text>
               카카오톡으로 가입하기
