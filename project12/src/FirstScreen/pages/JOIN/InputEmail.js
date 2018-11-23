@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId } from '../../../REDUX/actions';
 import Button from '../../../COMMON/components/Button';
-import SignUp from '../../components/SignUp';
+import SignUp from '../../functions/SignUp';
 
 class InputEmail extends Component {
   constructor(props) {

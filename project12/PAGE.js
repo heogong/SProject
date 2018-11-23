@@ -11,6 +11,8 @@ import JoinInputPhone from './src/FirstScreen/pages/JOIN/InputPhone';
 import JoinInputPhoneAuth from './src/FirstScreen/pages/JOIN/InputPhoneAuth';
 
 import LoginAccountType from './src/FirstScreen/pages/Login/AccountType';
+import LoginInputAccount from './src/FirstScreen/pages/Login/InputAccount';
+
 
 import CardIndex from './src/CARD/pages';
 import CardInputInfo from './src/CARD/pages/InputCardInfo';
@@ -29,6 +31,7 @@ const PAGE = () => (
       <Scene key="JoinInputPhoneAuth" component={JoinInputPhoneAuth} title="본인 인증"/>
 
       <Scene key="LoginAccountType" component={LoginAccountType} title="로그인 구분"/>
+      <Scene key="LoginInputAccount" component={LoginInputAccount} title="이메이 로그인"/>
 
       {/* <Scene key="CardIndex" component={CardIndex} title="카드 등록 페이지" initial type={ActionConst.RESET}/>
       <Scene key="CardInputInfo" component={CardInputInfo} title="카드 등록"/> */}

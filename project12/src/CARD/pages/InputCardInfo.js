@@ -4,7 +4,7 @@ import { View, Text, TextInput } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Button from '../../COMMON/components/Button';
 import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
-import CardReg from '../components/CardReg';
+import CardReg from '../functions/CardReg';
 
 export default class InputCardInfo extends Component {
   constructor(props) {

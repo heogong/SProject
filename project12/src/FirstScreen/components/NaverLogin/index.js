@@ -12,8 +12,8 @@ import styles from './styles';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken } from '../../../REDUX/actions';
-import SignUp from '../../components/SignUp';
-import { login } from '../../components/Login';
+import SignUp from '../../functions/SignUp';
+import login from '../../functions/Login';
 
 const initials = {
   kConsumerKey: 'HEZ2CaOwmSPvw18HCB4c',
@@ -88,9 +88,10 @@ class Page extends Component {
   };
 
   //여기 부터 시작!!!!!!!!!!
-  async _login() {
-    const loginResult = await login(this.props.usrObj, this.props.tokenObj);
-
+  async _Login() {
+    login(this.props.usrObj, this.props.tokenObj).then(result => {
+      console.log(result);
+    });
   }
 
   // 네이버 로그인 시작.
@@ -103,8 +104,9 @@ class Page extends Component {
       if(this.props.loginYn) {
         this.props.onSetSnsSignYn('Y');     // 리덕스 SNS 로그인 여부 SET
         this.props.onSetSnsToken(token);    // 리덕스 SNS TOKEN SET
-
-        this.login();
+        
+        // 로그인
+        this._Login();
 
       } else {
         this.setState({ theToken: token });

@@ -19,7 +19,7 @@ export default class AccountType extends Component {
               카카오톡 로그인
           </Text>
         </Button>
-        <Button onPress={Actions.JoinInputName}>
+        <Button onPress={Actions.LoginInputAccount}>
           <Text>
            이메일 로그인
           </Text>

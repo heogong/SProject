@@ -1,17 +1,19 @@
 import { 
     SET_USRID, 
-    SET_USRNM, 
+    SET_USRNM,
+    SET_USRPW,
     SET_USRPHONE_NUM, 
     SET_SNS_SIGN,
     SET_SNS_TOKEN,
     SET_ACCESS_TOKEN,
-    SET_REFRESH_ATOKEN
+    SET_REFRESH_TOKEN
 } from '../actions';
 import { combineReducers } from 'redux';
 
 const InitialUserState = {
     usrId: '',
     usrNm: '',
+    usrPw: '',
     usrPhoneNum: '',
     snsSignupYn: 'N'
 };
@@ -31,6 +33,10 @@ const USER = (state = InitialUserState, action) => {
         case SET_USRNM:
             return Object.assign({}, state, {
                 usrNm: action.value
+            });
+        case SET_USRPW:
+            return Object.assign({}, state, {
+                usrPw: action.value
             });
         case SET_USRPHONE_NUM:
             return Object.assign({}, state, {
@@ -55,7 +61,7 @@ const TOKEN = (state = InitialTokenState, action) => {
             return Object.assign({}, state, {
                 accessToken: action.value
             });
-        case SET_REFRESH_ATOKEN:
+        case SET_REFRESH_TOKEN:
             return Object.assign({}, state, {
                 refreshToken: action.value
             });
