@@ -17,6 +17,12 @@ export default class PageOne extends Component {
             회원가입
           </Text>
         </Button>
+
+        <Button onPress={Actions.tab_1}>
+          <Text>
+            테스트 drawer
+          </Text>
+        </Button>
       </View>
     )
   }
