@@ -3,6 +3,7 @@ import { oauthDomain } from '../ApiDomain';
 const API_URL = `${oauthDomain}/oauth/token?grant_type=refresh_token&client_id=FREEZE_COOLINIC_APP&refresh_token=`;
 
 function TokenUrl(TOKEN) {
+  
   return `${API_URL}${TOKEN.refreshToken}`;
 }
 

@@ -24,12 +24,15 @@ import TestPage2 from './src/Main/pages/TestPage2'
 import TestPage3 from './src/Main/pages/TestPage3'
 //test
 
+//주소등록
+import InputAddress from './src/Main/pages/Address/InputAddress'
+
 
 const PAGE = () => ( 
   <Router>
     <Scene>
-      <Scene key="InitPage" component={InitPage} title="InitPage" initial type={ActionConst.RESET} />
-      <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
+      {/* <Scene key="InitPage" component={InitPage} title="InitPage" initial type={ActionConst.RESET} />
+      <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/> */}
 
       <Scene key="JoinCustomerType" component={JoinCustomerType} title="고객 구분"/>
       <Scene key="JoinAccountType" component={JoinAccountType} title="가입 구분"/>
@@ -43,6 +46,9 @@ const PAGE = () => (
 
       {/* <Scene key="CardIndex" component={CardIndex} title="카드 등록 페이지" initial type={ActionConst.RESET}/>
       <Scene key="CardInputInfo" component={CardInputInfo} title="카드 등록"/> */}
+
+      <Scene key="InputAddress" component={InputAddress} title="주소 등록" initial type={ActionConst.RESET}/>
+
 
 
       <Drawer
