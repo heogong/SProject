@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet } from 'react-native';
+import { View, Text, TextInput, FlatList, StyleSheet, TouchableHighlight } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
 import getAddress from '../../functions/AddressInfo';
@@ -9,12 +9,8 @@ class InputAddress extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      strAddress: '대방동',
-      data: [
-        // { address_name : "서울 동작구 대방동", address_type: "REGION"},
-        // { address_name : "경남 사천시 대방동", address_type: "REGION1"},
-        // { address_name : "경남 창원시 성산구 대방동", address_type: "REGION2"},
-      ]
+      strAddress: '대방동 392-14',
+      data: []
     };
   }
 
@@ -26,8 +22,18 @@ class InputAddress extends Component {
     });
   }
 
-  _renderItem = ({item}) => {
-    return <Text style={styles.row}>{item.address_name}</Text>
+  _renderItem=({item}) => (
+    <TouchableHighlight
+      onPress={() => this._onPress(item)}>
+      <View style={{backgroundColor: 'white'}}>
+        <Text>{item.address_name}</Text>
+      </View>
+    </TouchableHighlight>
+  )
+
+  _onPress = (item) => {
+    Actions.SelectMapAddress({addressInfo : item});
+    //console.log(item);
   }
   
   render() {

@@ -26,6 +26,7 @@ import TestPage3 from './src/Main/pages/TestPage3'
 
 //주소등록
 import InputAddress from './src/Main/pages/Address/InputAddress'
+import SelectMapAddress from './src/Main/pages/Address/SelectMapAddress'
 
 
 const PAGE = () => ( 
@@ -48,8 +49,7 @@ const PAGE = () => (
       <Scene key="CardInputInfo" component={CardInputInfo} title="카드 등록"/> */}
 
       <Scene key="InputAddress" component={InputAddress} title="주소 등록" initial type={ActionConst.RESET}/>
-
-
+      <Scene key="SelectMapAddress" component={SelectMapAddress} title="장소 선택" />
 
       <Drawer
         hideNavBar
