@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet} from 'react-native';
+import { View, StyleSheet} from 'react-native';
 
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 class DrawMap extends Component {
     constructor(props) {
       super(props);
+
+      this.state = {
+
+      };
     }
     render() {
         return (
@@ -14,12 +18,20 @@ class DrawMap extends Component {
                     provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                     style={styles.map}
                     region={{
-                        latitude: parseFloat(this.props.lat),
-                        longitude: parseFloat(this.props.lng),
-                        latitudeDelta: 0.015,
-                        longitudeDelta: 0.0121,
+                        latitude: Number(this.props.lat),
+                        longitude: Number(this.props.lng),
+                        latitudeDelta: 0.0043,
+                        longitudeDelta: 0.0034,
                     }}
                     >
+                    <Marker
+                        key="0"
+                        coordinate={{
+                            latitude: Number(this.props.lat),
+                            longitude: Number(this.props.lng)
+                        }}
+                        pinColor="red"
+                    />
                 </MapView>
             </View>
         )
