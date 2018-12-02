@@ -7,10 +7,14 @@ class DrawMap extends Component {
     constructor(props) {
       super(props);
 
-      this.state = {
-
-      };
+      this.state = {};
     }
+
+    static defaultProps = {
+        lat : '37.566535',
+        lng : '126.97796919999996'
+    }
+
     render() {
         return (
             <View style={styles.container}>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-// import { View, Text, StyleSheet } from 'react-native';
 
-import { Container, Text, Button, Content, Item, Input } from 'native-base';
+import { Container, Text, Button, Content, Item, Input, Label } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import { Actions } from 'react-native-router-flux';
 
 import DrawMap from '../../components/DrawMap';
 
@@ -16,35 +16,32 @@ class SetAddress extends Component {
     }
 
     componentDidMount() {
-        alert(1)
-        navigator.geolocation.getCurrentPosition(
+        navigator.geolocation.getCurrentPosition (
             (position) => {
-                console.log(position)
                 this.setState({position : position});
+                console.log(this.state.position);
             }
         )
-
     }
 
     render() {
         return (
             <Container>
                 <Grid>
-                    <Row style={{ height: 200 }}>
+                    <Row style={{ height: 150 }}>
                         <Content>
-                        <Item>
-                            <Input placeholder="Username" />
-                        </Item>
-                        <Item last>
-                            <Input placeholder="Password" />
-                        </Item>
+                            <Item fixedLabel>
+                                <Label onPress={Actions.InputAddress}>주소</Label>
+                                <Input />
+                            </Item>
+                            <Item fixedLabel>
+                                <Label>상세주소</Label>
+                                <Input />
+                            </Item>
                         </Content>
                     </Row>
-                    <Row style={{ backgroundColor: '#635DB7', height: 450 }}>
-                        {/* <DrawMap
-                            lat={this.state.coords.latitude}
-                            lng={this.state.coords.longitude}
-                        /> */}
+                    <Row style={{ backgroundColor: '#635DB7', height: 500 }}>
+                        <DrawMap makerYn={false}/>
                     </Row>
                     
                 </Grid>
