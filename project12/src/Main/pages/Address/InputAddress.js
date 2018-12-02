@@ -54,7 +54,9 @@ class InputAddress extends Component {
   );
 
   _onPress = (item) => {
-    Actions.SelectMapAddress({addressInfo : item});
+    //Actions.SelectMapAddress({addressInfo : item});
+    Actions.popTo('SetAddress', {addressInfo: item} ); // 뒤로가면서 기존페이지로 이동하는 듯;;
+    this.props.onResult({ addressInfo: item })
   }
   
   render() {

@@ -11,17 +11,37 @@ class SetAddress extends Component {
     constructor(props) {
       super(props);
 
-      this.state = { position : '' };
-      
+      this.state = {
+          lat : '',
+          lng : '' 
+        };
     }
 
     componentDidMount() {
         navigator.geolocation.getCurrentPosition (
-            (position) => {
-                this.setState({position : position});
-                console.log(this.state.position);
+            (pos) => {
+                this.setState({
+                    lng : pos.coords.longitude, 
+                    lat : pos.coords.latitude,
+                });
             }
         )
+    }
+
+    _goInputAddress = () => (
+        Actions.InputAddress({onResult : this.onResult})
+    )
+
+    // 결과는 정상인데 set이 이상함 확인 필요
+    onResult = (addressInfo) => {
+        console.log(addressInfo);
+
+        this.setState({
+            lng : addressInfo.y, 
+            lat : addressInfo.x,
+        });
+
+        console.log(this.state);
     }
 
     render() {
@@ -30,7 +50,7 @@ class SetAddress extends Component {
                 <Grid>
                     <Row style={{ height: 150 }}>
                         <Content>
-                            <ListItem onPress={Actions.InputAddress}>
+                            <ListItem onPress={this._goInputAddress}>
                                 <Body>
                                     <Text>주소</Text>
                                 </Body>
@@ -43,7 +63,11 @@ class SetAddress extends Component {
                         </Content>
                     </Row>
                     <Row style={{ backgroundColor: '#635DB7', height: 500 }}>
-                        <DrawMap makerYn={false}/>
+                        <DrawMap
+                            lat={this.state.lat}
+                            lng={this.state.lng}
+                            makerYn={false}
+                        />
                     </Row>
                     
                 </Grid>

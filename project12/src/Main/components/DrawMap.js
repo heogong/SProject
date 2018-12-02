@@ -12,7 +12,8 @@ class DrawMap extends Component {
 
     static defaultProps = {
         lat : '37.566535',
-        lng : '126.97796919999996'
+        lng : '126.97796919999996',
+        makerYn : true
     }
 
     render() {
@@ -29,12 +30,12 @@ class DrawMap extends Component {
                     }}
                     >
                     <Marker
-                        key="0"
                         coordinate={{
                             latitude: Number(this.props.lat),
                             longitude: Number(this.props.lng)
                         }}
                         pinColor="red"
+                        opacity={(this.props.makerYn == true)? Number(1) : Number(0)}
                     />
                 </MapView>
             </View>
@@ -50,6 +51,9 @@ const styles = StyleSheet.create({
     },
     map: {
         ...StyleSheet.absoluteFillObject,
+    },
+    hide: {
+        display: 'none'
     }
 });
 
