@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet, TouchableHighlight } from 'react-native';
+//import { View, Text, TextInput, FlatList, StyleSheet, TouchableHighlight } from 'react-native';
+import { 
+  Container, 
+  Header, 
+  Item, 
+  Input, 
+  Icon, 
+  Button, 
+  Text, 
+  Content, 
+  List, 
+  ListItem,
+  Body
+} from 'native-base';
 
 import { Actions } from 'react-native-router-flux';
 import getAddress from '../../functions/AddressInfo';
-import Button from '../../../COMMON/components/Button';
+//import Button from '../../../COMMON/components/Button';
 
 class InputAddress extends Component {
   constructor(props) {
@@ -22,43 +35,51 @@ class InputAddress extends Component {
     });
   }
 
-  _renderItem=({item}) => (
-    <TouchableHighlight
-      onPress={() => this._onPress(item)}>
-      <View style={{backgroundColor: 'white'}}>
+  // _renderItem=({item}) => (
+  //   <TouchableHighlight
+  //     onPress={() => this._onPress(item)}>
+  //     <View style={{backgroundColor: 'white'}}>
+  //       <Text>{item.address_name}</Text>
+  //     </View>
+  //   </TouchableHighlight>
+  // )
+
+  _renderItem = (item) => (
+    <ListItem onPress={() => this._onPress(item)}>
+      <Body>
         <Text>{item.address_name}</Text>
-      </View>
-    </TouchableHighlight>
-  )
+        <Text note>{(item.road_address != null) ? item.road_address.address_name : ''}</Text>
+      </Body>
+    </ListItem>
+  );
 
   _onPress = (item) => {
     Actions.SelectMapAddress({addressInfo : item});
-    //console.log(item);
   }
   
   render() {
     return (
-      <View style={{margin: 128}}>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({strAddress : text})}
-          value={this.state.strAddress}
-        />
-
-        <Button onPress={this._setAddressInfo}>
-          <Text>
-              검색
-          </Text>
-        </Button>
-
-        <FlatList data={this.state.data} renderItem={this._renderItem}/>
-      </View>
+      <Container>
+        <Header searchBar rounded>
+          <Item>
+            <Icon name="ios-search" />
+            <Input 
+              placeholder="장소 또는 주소 검색" 
+              value={this.state.strAddress}
+              onChangeText={(text) => this.setState({strAddress : text})}
+              onSubmitEditing={this._setAddressInfo}
+              />
+          </Item>
+        </Header>
+        {/* <Button onPress={this._setAddressInfo}>
+          <Text>Search</Text>
+        </Button> */}
+        <Content>
+          <List dataArray={this.state.data} renderRow={this._renderItem} />
+        </Content>
+      </Container>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  row: { fontSize:24, padding: 42, borderWidth: 1, borderColor: "#DDDDDD" }
-});
 
 export default InputAddress;
