@@ -29,34 +29,24 @@ class InputAddress extends Component {
 
   _setAddressInfo = () => {
      getAddress(this.state.strAddress).then(result => {
-      console.log(result.documents);
+      console.log(result.data.documents);
 
-      this.setState({data : result.documents});
+      this.setState({data : result.data.documents.filter(address => address.address_type !== "REGION")});
     });
   }
-
-  // _renderItem=({item}) => (
-  //   <TouchableHighlight
-  //     onPress={() => this._onPress(item)}>
-  //     <View style={{backgroundColor: 'white'}}>
-  //       <Text>{item.address_name}</Text>
-  //     </View>
-  //   </TouchableHighlight>
-  // )
 
   _renderItem = (item) => (
     <ListItem onPress={() => this._onPress(item)}>
       <Body>
         <Text>{item.address_name}</Text>
-        <Text note>{(item.road_address != null) ? item.road_address.address_name : ''}</Text>
+        <Text note>{item.road_address.address_name}</Text>
       </Body>
     </ListItem>
   );
 
   _onPress = (item) => {
-    //Actions.SelectMapAddress({addressInfo : item});
-    Actions.popTo('SetAddress', {addressInfo: item} ); // 뒤로가면서 기존페이지로 이동하는 듯;;
-    this.props.onResult({ addressInfo: item })
+    Actions.popTo('SetAddress'); // 뒤로가면서 기존페이지로 이동
+    this.props.onResult({ result: item })
   }
   
   render() {

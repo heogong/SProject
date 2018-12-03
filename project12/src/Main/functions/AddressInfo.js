@@ -1,10 +1,9 @@
-import { oauthDomain } from '../../COMMON/ApiDomain';
+import { domain } from '../../COMMON/ApiDomain';
 
-//const API_URL = `${oauthDomain}oauth/token?grant_type=password&client_id=FREEZE_COOLINIC_APP&`;
-const TEST_URL = 'https://dapi.kakao.com/v2/local/search/address.json?query='
+const API_URL = `${domain}/api/kakao/local/search/address?query=`;
 
 function GetAddressUrl(strAddress) {
-  return `${TEST_URL}${strAddress}`;
+  return `${API_URL}${strAddress}`;
 }
 
 const addressInfo = (strAddress) => {
@@ -12,7 +11,7 @@ const addressInfo = (strAddress) => {
   return fetch(GetAddressUrl(strAddress), {
     method: 'GET',
     headers: {
-      "Authorization": "KakaoAK c3c8b7f8fca6eeae1be100635c122fc0"
+      "Authorization": "Bearer d84851a8-9396-4a68-bbe7-5a1e5999d05a"
     }
   }).then((response) => response.json()).then((responseJson) => {
     return responseJson;

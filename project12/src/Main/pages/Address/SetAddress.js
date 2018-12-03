@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Container, Text, Button, Content, Item, Input, Label, ListItem, Body } from 'native-base';
+import { Container, Text, Button, Content, Item, Input, Label, ListItem, Body, Form } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 
@@ -13,16 +13,21 @@ class SetAddress extends Component {
 
       this.state = {
           lat : '',
-          lng : '' 
+          lng : '',
+          addressName : '',
+          makerYn : false,
+          disSaveBtn : true,
+          detailAddressName : ''
         };
     }
 
+    // 초기 데이터 1. 리덕스 값 조회 2. 현재 위치 조회 3. default 값 조회 
     componentDidMount() {
         navigator.geolocation.getCurrentPosition (
             (pos) => {
                 this.setState({
                     lng : pos.coords.longitude, 
-                    lat : pos.coords.latitude,
+                    lat : pos.coords.latitude
                 });
             }
         )
@@ -32,44 +37,52 @@ class SetAddress extends Component {
         Actions.InputAddress({onResult : this.onResult})
     )
 
-    // 결과는 정상인데 set이 이상함 확인 필요
-    onResult = (addressInfo) => {
-        console.log(addressInfo);
-
+    // 주소검색 후 결과 데이터
+    onResult = (address) => {
         this.setState({
-            lng : addressInfo.y, 
-            lat : addressInfo.x,
+            lng : address.result.x, 
+            lat : address.result.y,
+            addressName : address.result.address_name,
+            makerYn : true
         });
+    }
 
-        console.log(this.state);
+    _handleChange() {
+
     }
 
     render() {
         return (
             <Container>
                 <Grid>
-                    <Row style={{ height: 150 }}>
+                    <Row style={{ height: 250 }}>
                         <Content>
                             <ListItem onPress={this._goInputAddress}>
                                 <Body>
-                                    <Text>주소</Text>
+                                    <Label>주소</Label>
+                                    <Input disabled>{this.state.addressName}</Input>
                                 </Body>
                             </ListItem>
                             <ListItem>
                                 <Body>
                                     <Text>상세주소</Text>
+                                    {/* <Input onChangeText={(text) => this.setState({detailAddressName : text, disSaveBtn : false})}></Input> */}
+                                    <Input onChange={this._handleChange}></Input>
                                 </Body>
                             </ListItem>
+                            <Button block dark disabled={this.state.disSaveBtn}>
+                                <Text>주소 저장</Text>
+                            </Button>
                         </Content>
+
                     </Row>
-                    <Row style={{ backgroundColor: '#635DB7', height: 500 }}>
+                    <Row style={{ backgroundColor: '#635DB7', height: 350 }}>
                         <DrawMap
                             lat={this.state.lat}
                             lng={this.state.lng}
-                            makerYn={false}
+                            makerYn={this.state.makerYn}
                         />
                     </Row>
-                    
                 </Grid>
             </Container>
         )
