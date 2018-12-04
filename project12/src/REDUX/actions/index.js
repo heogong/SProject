@@ -8,6 +8,11 @@ export const SET_SNS_TOKEN = 'SET_SNS_TOKEN';
 export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 export const SET_REFRESH_TOKEN = 'SET_REFRESH_TOKEN';
 
+export const SET_BIZ_NM = 'SET_BIZ_NM';
+export const SET_BIZ_DSC = 'SET_BIZ_DSC';
+export const SET_BIZ_ADDRESS = 'SET_BIZ_ADDRESS';
+export const SET_BIZ_ADDRESS_DSC = 'SET_BIZ_ADDRESS_DSC';
+
 export function setUsrId(value) {
     return {
         type: SET_USRID,
@@ -57,3 +62,30 @@ export function setRefreshToken(value) {
         value: value
     };
 }
+
+export function setBizNm(value) {
+    return {
+        type: SET_BIZ_NM,
+        value: value
+    };
+}
+export function setBizDsc(value) {
+    return {
+        type: SET_BIZ_DSC,
+        value: value
+    };
+}
+export function setBizAddress(value) {
+    return {
+        type: SET_BIZ_ADDRESS,
+        value: value
+    };
+}
+export function setBizAddressDsc(value) {
+    return {
+        type: SET_BIZ_ADDRESS_DSC,
+        value: value
+    };
+}
+
+

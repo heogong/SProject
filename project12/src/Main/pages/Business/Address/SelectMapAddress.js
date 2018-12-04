@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Container, Text, Button, Content } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
-import DrawMap from '../../components/DrawMap';
+import DrawMap from '../../../components/DrawMap';
 
 
 class SelectMapAddress extends Component {

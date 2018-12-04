@@ -24,10 +24,12 @@ import TestPage2 from './src/Main/pages/TestPage2'
 import TestPage3 from './src/Main/pages/TestPage3'
 //test
 
-//주소등록
-import SetAddress from './src/Main/pages/Address/SetAddress'
-import InputAddress from './src/Main/pages/Address/InputAddress'
-import SelectMapAddress from './src/Main/pages/Address/SelectMapAddress'
+// 사업장 등록
+import RegBusinessPlace from './src/Main/pages/Business/RegBusinessPlace'
+// 사업장 주소등록
+import SetAddress from './src/Main/pages/Business/Address/SetAddress'
+import InputAddress from './src/Main/pages/Business/Address/InputAddress'
+import SelectMapAddress from './src/Main/pages/Business/Address/SelectMapAddress'
 
 
 const PAGE = () => ( 
@@ -49,7 +51,9 @@ const PAGE = () => (
       {/* <Scene key="CardIndex" component={CardIndex} title="카드 등록 페이지" initial type={ActionConst.RESET}/>
       <Scene key="CardInputInfo" component={CardInputInfo} title="카드 등록"/> */}
 
-      <Scene key="SetAddress" component={SetAddress} title="주소" initial type={ActionConst.RESET}/>
+
+      <Scene key="RegBusinessPlace" component={RegBusinessPlace} title="사업장 등록" initial type={ActionConst.RESET}/>
+      <Scene key="SetAddress" component={SetAddress} title="주소" />
       <Scene key="InputAddress" component={InputAddress} title="주소 등록"/>
       <Scene key="SelectMapAddress" component={SelectMapAddress} title="장소 선택" />
 

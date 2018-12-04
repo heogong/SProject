@@ -6,7 +6,11 @@ import {
     SET_SNS_SIGN,
     SET_SNS_TOKEN,
     SET_ACCESS_TOKEN,
-    SET_REFRESH_TOKEN
+    SET_REFRESH_TOKEN,
+    SET_BIZ_NM,
+    SET_BIZ_DSC,
+    SET_BIZ_ADDRESS,
+    SET_BIZ_ADDRESS_DSC
 } from '../actions';
 import { combineReducers } from 'redux';
 
@@ -22,6 +26,13 @@ const InitialTokenState = {
     snsToken: '',
     accessToken: '',
     refreshToken: ''
+};
+
+const InitialBizState = {
+    bizNm: '',
+    bizDsc: '',
+    addressObj: [],
+    addressDsc: ''
 };
 
 const USER = (state = InitialUserState, action) => {
@@ -70,9 +81,33 @@ const TOKEN = (state = InitialTokenState, action) => {
     }
 }
 
+const BIZ = (state = InitialBizState, action) => {
+    switch(action.type) {
+        case SET_BIZ_NM:
+            return Object.assign({}, state, {
+                bizNm: action.value
+            });
+        case SET_BIZ_DSC:
+            return Object.assign({}, state, {
+                bizDsc: action.value
+            });
+        case SET_BIZ_ADDRESS:
+            return Object.assign({}, state, {
+                addressObj: action.value
+            });
+        case SET_BIZ_ADDRESS_DSC:
+            return Object.assign({}, state, {
+                addressDsc: action.value
+            });
+        default:
+            return state;
+    }
+}
+
 const userInfo = combineReducers({
     USER,
-    TOKEN
+    TOKEN,
+    BIZ
 });
 
 export default userInfo;

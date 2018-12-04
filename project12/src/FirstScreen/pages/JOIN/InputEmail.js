@@ -44,8 +44,7 @@ class InputEmail extends Component {
           placeholder='sample@example.com'
         />
        
-
-        <Button  onPress={() => this._SignUsr()}>
+        <Button onPress={() => this._SignUsr()}>
           <Text>
            가입
           </Text>

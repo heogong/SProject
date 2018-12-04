@@ -15,7 +15,7 @@ import {
 } from 'native-base';
 
 import { Actions } from 'react-native-router-flux';
-import getAddress from '../../functions/AddressInfo';
+import getAddress from '../../../functions/AddressInfo';
 //import Button from '../../../COMMON/components/Button';
 
 class InputAddress extends Component {
