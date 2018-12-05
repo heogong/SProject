@@ -24,12 +24,19 @@ import TestPage2 from './src/Main/pages/TestPage2'
 import TestPage3 from './src/Main/pages/TestPage3'
 //test
 
+/**사업장 */
+// 사업장 목록
+import ListBusinessPlace from './src/Main/pages/Business/ListBusinessPlace'
 // 사업장 등록
 import RegBusinessPlace from './src/Main/pages/Business/RegBusinessPlace'
 // 사업장 주소등록
 import SetAddress from './src/Main/pages/Business/Address/SetAddress'
 import InputAddress from './src/Main/pages/Business/Address/InputAddress'
-import SelectMapAddress from './src/Main/pages/Business/Address/SelectMapAddress'
+
+// 제품 등록
+import InputProdType from './src/Main/pages/Business/Product/InputProdType'
+
+
 
 
 const PAGE = () => ( 
@@ -52,10 +59,11 @@ const PAGE = () => (
       <Scene key="CardInputInfo" component={CardInputInfo} title="카드 등록"/> */}
 
 
-      <Scene key="RegBusinessPlace" component={RegBusinessPlace} title="사업장 등록" initial type={ActionConst.RESET}/>
+      <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" onRight={() => Actions.RegBusinessPlace()} rightTitle="추가" initial type={ActionConst.RESET}/>
+      <Scene key="RegBusinessPlace" component={RegBusinessPlace} title="사업장 등록"/>
       <Scene key="SetAddress" component={SetAddress} title="주소" />
       <Scene key="InputAddress" component={InputAddress} title="주소 등록"/>
-      <Scene key="SelectMapAddress" component={SelectMapAddress} title="장소 선택" />
+      <Scene key="InputProdType" component={InputProdType} title="제품 타입 등록"/>
 
       <Drawer
         hideNavBar

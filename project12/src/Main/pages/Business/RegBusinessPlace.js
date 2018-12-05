@@ -9,26 +9,47 @@ import {
     Content,
     Text, 
     Textarea
-  } from 'native-base';
+} from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setBizNm, setBizDsc } from '../../../REDUX/actions';
   
+let propsData = false; // 데이터 유무 (조회일 경우에는 데이터 존재)
 
 class RegBusinessPlace extends Component {
     constructor(props) {
       super(props);
 
       this.state = {
-          bizNm : '테스트 사업장',
-          bizDsc : '사업장 설명입니다.'
+          bizNm : '',
+          bizDsc : ''
       };
     }
+
+    // 사업장 수정시 참고
+    // componentDidMount() {
+    //     //console.log(this.props.bizPlace);
+    //     propsData = (this.props.bizPlace !== undefined ) ? true : false;
+
+    //     if(propsData) {
+    //         this.setState({
+    //             bizNm : this.props.bizPlace.bplaceNm,
+    //             bizDsc : this.props.bizPlace.bplaceDsc
+    //         });
+    //     }
+    // }
 
     _NextButton = () => {
         this.props.onSetBizNm(this.state.bizNm);  // 리덕스 사업장 명 SET
         this.props.onSetBizDsc(this.state.bizDsc);  // 리덕스 사업장 설명 SET
+
         Actions.SetAddress();
+
+        // if(propsData) {
+        //     Actions.SetAddress({bizPlace : this.props.bizPlace});
+        // } else {
+        //     Actions.SetAddress();
+        // }
     }
 
     render() {
