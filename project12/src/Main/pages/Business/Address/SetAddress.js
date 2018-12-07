@@ -117,7 +117,7 @@ let mapStateToProps = (state) => {
     return {
         value: state.BIZ
     };
-  }
+}
 
 let mapDispatchToProps = (dispatch) => {
     return {

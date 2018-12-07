@@ -7,6 +7,7 @@ import {
     SET_SNS_TOKEN,
     SET_ACCESS_TOKEN,
     SET_REFRESH_TOKEN,
+    SET_BIZ_ID,
     SET_BIZ_NM,
     SET_BIZ_DSC,
     SET_BIZ_ADDRESS,
@@ -83,6 +84,10 @@ const TOKEN = (state = InitialTokenState, action) => {
 
 const BIZ = (state = InitialBizState, action) => {
     switch(action.type) {
+        case SET_BIZ_ID:
+            return Object.assign({}, state, {
+                bizId: action.value
+            });
         case SET_BIZ_NM:
             return Object.assign({}, state, {
                 bizNm: action.value

@@ -59,12 +59,12 @@ const PAGE = () => (
       <Scene key="CardInputInfo" component={CardInputInfo} title="카드 등록"/> */}
 
 
-      <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" onRight={() => Actions.RegBusinessPlace()} rightTitle="추가"/>
+      <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" onRight={() => Actions.RegBusinessPlace()} rightTitle="추가" initial type={ActionConst.RESET} />
       <Scene key="RegBusinessPlace" component={RegBusinessPlace} title="사업장 등록"/>
       <Scene key="SetAddress" component={SetAddress} title="주소" />
       <Scene key="InputAddress" component={InputAddress} title="주소 등록"/>
-      <Scene key="InputProdType" component={InputProdType} title="제품 타입 등록"/>
-      <Scene key="InputProdInfo" component={InputProdInfo} title="제품 등록" initial type={ActionConst.RESET} />
+      <Scene key="InputProdType" component={InputProdType} title="제품 타입 등록" />
+      <Scene key="InputProdInfo" component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
 
       <Drawer
         hideNavBar

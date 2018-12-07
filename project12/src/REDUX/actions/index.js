@@ -8,6 +8,7 @@ export const SET_SNS_TOKEN = 'SET_SNS_TOKEN';
 export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 export const SET_REFRESH_TOKEN = 'SET_REFRESH_TOKEN';
 
+export const SET_BIZ_ID = 'SET_BIZ_ID';
 export const SET_BIZ_NM = 'SET_BIZ_NM';
 export const SET_BIZ_DSC = 'SET_BIZ_DSC';
 export const SET_BIZ_ADDRESS = 'SET_BIZ_ADDRESS';
@@ -63,6 +64,12 @@ export function setRefreshToken(value) {
     };
 }
 
+export function setBizId(value) {
+    return {
+        type: SET_BIZ_ID,
+        value: value
+    };
+}
 export function setBizNm(value) {
     return {
         type: SET_BIZ_NM,

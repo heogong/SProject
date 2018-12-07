@@ -16,6 +16,9 @@ import getBizList from '../../functions/GetBizList';
 import getBizPlace from '../../functions/GetBizPlace';
 import { Actions } from 'react-native-router-flux';
 
+import { connect } from 'react-redux';
+import { setBizId } from '../../../REDUX/actions';
+
 class ListBusinessPlace extends Component {
     constructor(props) {
       super(props);
@@ -56,6 +59,7 @@ class ListBusinessPlace extends Component {
     // }
 
     _onPress = (bizPlaceId) => {
+        this.props.onSetBizId(bizPlaceId)
         Actions.InputProdType({bizPlaceId : bizPlaceId});
     }
 
@@ -71,5 +75,13 @@ class ListBusinessPlace extends Component {
         )
     }
 }
+
+let mapDispatchToProps = (dispatch) => {
+    return {
+        onSetBizId: (value) => dispatch(setBizId(value))
+    }
+}
+  
+ListBusinessPlace = connect(undefined, mapDispatchToProps)(ListBusinessPlace);
 
 export default ListBusinessPlace;
