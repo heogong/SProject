@@ -25,4 +25,4 @@ const regProdInfo = (bizObj, prodTypeId, prodObj) => {
   });
 };
 
-export default regBizPlace;
+export default regProdInfo;
