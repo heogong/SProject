@@ -33,10 +33,11 @@ import RegBusinessPlace from './src/Main/pages/Business/RegBusinessPlace'
 import SetAddress from './src/Main/pages/Business/Address/SetAddress'
 import InputAddress from './src/Main/pages/Business/Address/InputAddress'
 
-// 제품 타입등록
-import InputProdType from './src/Main/pages/Business/Product/InputProdType'
-// 제품 등록
-import InputProdInfo from './src/Main/pages/Business/Product/InputProdInfo'
+/**제품 */
+import InputProdType from './src/Main/pages/Business/Product/InputProdType' // 제품 타입등록
+import InputProdInfo from './src/Main/pages/Business/Product/InputProdInfo' // 제품 등록
+import InputProdImage from './src/Main/pages/Business/Product/InputProdImage' // 제품 이미지 등록
+
 
 const PAGE = () => ( 
   
@@ -59,12 +60,13 @@ const PAGE = () => (
       <Scene key="CardInputInfo" component={CardInputInfo} title="카드 등록"/> */}
 
 
-      <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" onRight={() => Actions.RegBusinessPlace()} rightTitle="추가" initial type={ActionConst.RESET} />
+      <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" onRight={() => Actions.RegBusinessPlace()} rightTitle="추가" />
       <Scene key="RegBusinessPlace" component={RegBusinessPlace} title="사업장 등록"/>
       <Scene key="SetAddress" component={SetAddress} title="주소" />
       <Scene key="InputAddress" component={InputAddress} title="주소 등록"/>
       <Scene key="InputProdType" component={InputProdType} title="제품 타입 등록" />
       <Scene key="InputProdInfo" component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
+      <Scene key="InputProdImage" component={InputProdImage} title="제품 이미지 등록" initial type={ActionConst.RESET} />
 
       <Drawer
         hideNavBar

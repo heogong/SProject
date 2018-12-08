@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { 
     Body,
+    Card,
+    CardItem,
     Container, 
     Content,
     Text,
@@ -35,7 +37,8 @@ class ListBusinessPlace extends Component {
         });
     }
 
-    _renderItem = (item) => (
+    // 디폴트 리스트 
+    _renderListItem = (item) => (
         <ListItem onPress={() => this._onPress(item.clientBplaceId)}>
             <Left>
                 <Body>
@@ -47,6 +50,20 @@ class ListBusinessPlace extends Component {
                 <Icon name="arrow-forward" />
             </Right>
         </ListItem>
+    );
+
+    // 카드 리스트
+    _renderCardItem = (item) => (
+        <Card>
+            <CardItem header bordered button onPress={() => this._onPress(item.clientBplaceId)}>
+                <Text>{item.bplaceNm}</Text>
+            </CardItem>
+            <CardItem bordered>
+                <Body>
+                    <Text note>{item.bplaceDsc}</Text>
+                </Body>
+            </CardItem>
+        </Card>
     );
     
     // 사업장 수정시 참고
@@ -68,8 +85,8 @@ class ListBusinessPlace extends Component {
     render() {
         return (
             <Container>
-                <Content>
-                    <List dataArray={this.state.data} renderRow={this._renderItem} />
+                <Content padder>
+                    <List dataArray={this.state.data} renderRow={this._renderCardItem} />
                 </Content>
             </Container>
         )
