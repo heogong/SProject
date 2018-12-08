@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { TouchableHighlight } from 'react-native'
 
-import { Badge, Button, Container, Content, Col, Grid, Row, Text, Thumbnail, TouchableHighlight } from "native-base";
+
+import { Badge, Button, Container, Content, Col, Grid, Row, Text, Thumbnail, List, ListItem, Icon } from "native-base";
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import getProdImageType from '../../../functions/GetProdImgType'
@@ -10,39 +12,46 @@ class InputProdImage extends Component {
       super(props);
 
       this.state = {
-          uri : "https://facebook.github.io/react-native/docs/assets/favicon.png"
+          uri : "https://facebook.github.io/react-native/docs/assets/favicon.png",
+          data : this.props.prodInfo
       };
     }
 
     componentDidMount() {
         getProdImageType().then(result => {
-            console.log(result);
+            //console.log(result);
+            //this.setState({ data : result.data});
+
+            const newData = this.state.data.map((prodInfo, idx) => {
+                return { ...prodInfo, imgType: result.data };
+                
+            });
+
+            this.setState({ data: newData});
+            //console.log(this.state.data);
         });
     }
+
+    _renderListItem = (info) => (
+        <ListItem>
+            <Content>
+                <Text>{info.clientPrdNm}</Text>
+                {info.imgType.map((type) => (
+                    <Button>
+                        <Icon name='md-camera' />
+                        <Text>{type.prdTypeImgCateNm}</Text>
+                    </Button>
+                ))}
+            </Content>
+        </ListItem>
+    );
 
     render() {
         return (
             <Container>
-                <Grid>
-                    <Row style={{ backgroundColor: '#635DB7', height: 100 }}>
-                        <Thumbnail square large source={{uri: this.state.uri}} />
-                        <Thumbnail square large source={{uri: this.state.uri}} />
-                    </Row>
-                    <Row style={{ backgroundColor: '#635DB7', height: 100 }}>
-                        <Thumbnail square large source={{uri: this.state.uri}} />
-                        <Thumbnail square large source={{uri: this.state.uri}} />
-                    </Row>
-                </Grid>
-                <Grid>
-                    <Row style={{ backgroundColor: '#635DB7', height: 100 }}>
-                        <Thumbnail square large source={{uri: this.state.uri}} />
-                        <Thumbnail square large source={{uri: this.state.uri}} />
-                    </Row>
-                    <Row style={{ backgroundColor: '#635DB7', height: 100 }}>
-                        <Thumbnail square large source={{uri: this.state.uri}} />
-                        <Thumbnail square large source={{uri: this.state.uri}} />
-                    </Row>
-                </Grid>
+                <Content padder>
+                    <List dataArray={this.state.data} renderRow={this._renderListItem} />
+                </Content>
             </Container>
         )
     }

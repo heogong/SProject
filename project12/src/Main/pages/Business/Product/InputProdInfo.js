@@ -13,7 +13,7 @@ class InputProdInfo extends Component {
 
       this.state = {
         clientPrdNm: '',
-        shareholders: [{ clientPrdNm: '' }],
+        shareholders: [{ clientPrdNm: '', imgType: [] }] // imgType : 다음 페이지 이미지 타입 초기화 값(안해주면 다음 페이지 오류)
       };
     }
 
@@ -42,7 +42,7 @@ class InputProdInfo extends Component {
     }
 
     _handleAddShareholder = () => {
-        this.setState({ shareholders: this.state.shareholders.concat([{ clientPrdNm: '' }]) });
+        this.setState({ shareholders: this.state.shareholders.concat([{ clientPrdNm: '', imgType: [] }]) });
     }
     
     _handleRemoveShareholder = (idx) => () => {
@@ -51,13 +51,14 @@ class InputProdInfo extends Component {
 
     _handleSubmit = () => {
         const { clientPrdNm, shareholders } = this.state;
-        console.log(shareholders);
-        console.log(this.props.value);
+        // console.log(shareholders);
+        // console.log(this.props.value);
 
-        regProdInfo(this.props.value, this.props.typeId, shareholders).then(result => {
-            console.log(result.data);
-            
-        });
+        // regProdInfo(this.props.value, this.props.typeId, shareholders).then(result => {
+        //     console.log(result.data);
+        // });
+
+        Actions.InputProdImage({prodInfo : shareholders});
     }
 
     render() {
