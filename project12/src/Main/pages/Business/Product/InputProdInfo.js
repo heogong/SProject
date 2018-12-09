@@ -13,7 +13,10 @@ class InputProdInfo extends Component {
 
       this.state = {
         clientPrdNm: '',
-        shareholders: [{ clientPrdNm: '', imgType: [] }] // imgType : 다음 페이지 이미지 타입 초기화 값(안해주면 다음 페이지 오류)
+        shareholders: [{ 
+            clientPrdNm: '', 
+            imgType: []     // imgType : 다음 페이지 이미지 타입 초기화 값(안해주면 다음 페이지 오류)
+        }]
       };
     }
 
