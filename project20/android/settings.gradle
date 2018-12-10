@@ -1,4 +1,4 @@
-rootProject.name = 'project15'
+rootProject.name = 'project20'
 include ':react-native-camera'
 project(':react-native-camera').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-camera/android')
 
