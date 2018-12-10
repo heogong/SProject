@@ -18,25 +18,41 @@ class mainPage extends Component {
   constructor(props) { 
     super(); 
     this.camera = null;
+
+    this.state = {
+      img : 'https://facebook.github.io/react-native/docs/assets/favicon.png'
+    };
+  }
+
+
+   onResult = (result) => {
+      console.log(result);
+      this.setState({img : result.uri});
+  }
+
+  _goCamera = () => {
+    Actions.cameraPage({onResult : this.onResult});
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={ styles.container }>
         <Button
-          onPress={Actions.cameraPage}
+          onPress={this._goCamera}
           title="카메라"
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
         />
+
+        <ImageBackground 
+          source= {{uri: this.state.img}}
+          style={{width: '100%', height: '100%'}}>
+        </ImageBackground>
         
       </View>
     );
   }
 }
-
-
-
 
 const styles = StyleSheet.create({
 container: {

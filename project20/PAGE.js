@@ -10,7 +10,7 @@ const PAGE = () => (
   <Router>
     <Stack key="root">
       <Scene key="mainPage" component={mainPage} title="메인" init type={ActionConst.RESET}/>
-      <Scene key="cameraPage" component={cameraPage} title="Register" rleftTitle={'CANCLE'}/>
+      <Scene key="cameraPage" component={cameraPage} title="Register" leftTitle={'CANCLE'} hideNavBar={true}/>
     </Stack>
   </Router>
 );
