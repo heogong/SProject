@@ -24,28 +24,20 @@ class App extends Component {
   }
 
 
-  takePicture = () => { 
-    if(this.camera) { 
-      // console.log(this.camera)
-      // const options = { quality: 0.5, base64: true };
-      // const data = this.camera.takePictureAsync(options)
-      // console.log(data.uri);
-      this.camera.capture()
-      .then((data) => console.log(data))
-      .catch(err => console.error(err));
-    } 
-  }
+  // takePicture = () => { 
+  //   if(this.camera) { 
+  //     // console.log(this.camera)
+  //     // const options = { quality: 0.5, base64: true };
+  //     // const data = this.camera.takePictureAsync(options)
+  //     // console.log(data.uri);
+  //     // this.camera.capture()
+  //     // .then((data) => console.log(data))
+  //     // .catch(err => console.error(err));
+  //   } 
+  // }
 
 
   render() {
-    // takePicture = async function() {
-    //   if (this.camera) {
-    //     const options = { quality: 0.5, base64: true };
-    //     const data = await this.camera.takePictureAsync(options)
-    //     console.log(data.uri);
-    //   }
-    // };
-
     return (
       <View style={styles.container}>
         <RNCamera
@@ -63,7 +55,7 @@ class App extends Component {
         />
         <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center',}}>
         <TouchableOpacity
-            onPress={this.takePicture}
+            onPress={this.takePicture.bind(this)}
             style = {styles.capture}
         >
             <Text style={{fontSize: 14}}> SNAP </Text>
@@ -72,6 +64,14 @@ class App extends Component {
       </View>
     );
   }
+
+  takePicture = async function() {
+    if (this.camera) {
+      const options = { quality: 0.5, base64: true };
+      const data = await this.camera.takePictureAsync(options)
+      console.log("dataURI : ", data.uri);
+    }
+  };
 }
 
 
