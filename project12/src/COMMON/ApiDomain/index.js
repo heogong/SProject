@@ -1,2 +1,2 @@
-export const domain = 'http://54.180.115.137:8180/'
-export const oauthDomain = 'http://54.180.115.137:8280/'
+export const domain = 'http://13.125.207.253:8180/'
+export const oauthDomain = 'http://13.125.207.253:8280/'

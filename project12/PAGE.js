@@ -24,6 +24,8 @@ import TestPage2 from './src/Main/pages/TestPage2'
 import TestPage3 from './src/Main/pages/TestPage3'
 //test
 
+import ReactCamera from './src/Main/components/ReactCamera';
+
 /**사업장 */
 // 사업장 목록
 import ListBusinessPlace from './src/Main/pages/Business/ListBusinessPlace'
@@ -45,7 +47,8 @@ const PAGE = () => (
     <Scene>
       {/* <Scene key="InitPage" component={InitPage} title="InitPage" initial type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/> */}
-
+      <Scene key="reactCamera" component={ReactCamera} hideNavBar={true}/>
+      
       <Scene key="JoinCustomerType" component={JoinCustomerType} title="고객 구분"/>
       <Scene key="JoinAccountType" component={JoinAccountType} title="가입 구분"/>
       <Scene key="JoinInputEmail" component={JoinInputEmail} title="이메일 가입" back onBack={() => Actions.JoinInputName()}/>

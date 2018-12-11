@@ -7,28 +7,30 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import getProdImageType from '../../../functions/GetProdImgType'
 
+import ProductImage from '../../../components/ProductImage'
+
 class InputProdImage extends Component {
     constructor(props) {
       super(props);
 
       this.state = {
-          uri : "https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png",
+          defaultImg : "https://facebook.github.io/react-native/docs/assets/favicon.png",
           //data : this.props.prodInfo
 
           data : [
             {
                 clientPrdNm : 'test1', 
                 imgType : [
-                    {prdTypeImgCateNm : '앞면', defaultImg : "https://facebook.github.io/react-native/docs/assets/favicon.png"}, 
-                    {prdTypeImgCateNm : '뒷면', defaultImg : "https://facebook.github.io/react-native/docs/assets/favicon.png"}, 
-                    {prdTypeImgCateNm : '측면', defaultImg : "https://facebook.github.io/react-native/docs/assets/favicon.png"}
+                    {prdTypeImgCateNm : '앞면', clientPrdId : 2, prdImgCateId : 2 }, 
+                    {prdTypeImgCateNm : '뒷면', clientPrdId : 2, prdImgCateId : 2 }, 
+                    {prdTypeImgCateNm : '측면', clientPrdId : 2, prdImgCateId : 2 }
                 ]
             },{
                 clientPrdNm : 'test2', 
                 imgType : [
-                    {prdTypeImgCateNm : '앞면', defaultImg : "https://facebook.github.io/react-native/docs/assets/favicon.png"}, 
-                    {prdTypeImgCateNm : '뒷면', defaultImg : "https://facebook.github.io/react-native/docs/assets/favicon.png"}, 
-                    {prdTypeImgCateNm : '측면', defaultImg : "https://facebook.github.io/react-native/docs/assets/favicon.png"}
+                    {prdTypeImgCateNm : '앞면', clientPrdId : 2, prdImgCateId : 2 }, 
+                    {prdTypeImgCateNm : '뒷면', clientPrdId : 2, prdImgCateId : 2 }, 
+                    {prdTypeImgCateNm : '측면', clientPrdId : 2, prdImgCateId : 2 }
                 ]
             },
         ]
@@ -54,38 +56,17 @@ class InputProdImage extends Component {
     //     console.log(idx);
     // }
 
-    _handleTakeImage = (pIdx, idx) => () => {
-        const newData = this.state.data.map((prodInfo, prodInx) => {
-            const newImgType = prodInfo.imgType.map((imgType, sidx) => {
-                if(pIdx == prodInx) {
-                    if(idx == sidx) { 
-                        return { ...imgType, defaultImg: this.state.uri };
-                    } else {
-                        return imgType;
-                    }
-                } else {
-                    return imgType;
-                }
-            })
-            return { ...prodInfo, imgType: newImgType };
-        });
-        this.setState({ data: newData });
-    }
-
-    _renderListItem = (info, sectionID, rowID ) => (
+    _renderListItem = (info) => (
         <ListItem>
             <Text>{info.clientPrdNm} </Text>
-            <Text>{rowID} </Text>
-            {info.imgType.map((type, idx) => (
-                <Content>
-                    <Thumbnail square large source={{uri: type.defaultImg}} />
-                    <Button onPress={this._handleTakeImage(rowID, idx)}>
-                        <Icon name='md-camera' />
-                        <Text>{type.prdTypeImgCateNm}</Text>
-                    </Button>
-                </Content>
+            {info.imgType.map((type) => (
+                <ProductImage 
+                    prdTypeImgCateNm = { type.prdTypeImgCateNm }
+                    clientPrdId = { type.clientPrdId }
+                    prdImgCateId = { type.prdImgCateId }
+                    uri = { this.state.defaultImg }
+                />
             ))}
-            
         </ListItem>
     );
 

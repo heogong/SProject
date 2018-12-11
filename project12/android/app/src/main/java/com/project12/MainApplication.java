@@ -3,6 +3,7 @@ package com.project12;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.reactnative.camera.RNCameraPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.cardio.RNCardIOPackage;
 import com.dooboolab.naverlogin.RNNaverLoginPackage;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNCameraPackage(),
             new MapsPackage(),
             new RNCardIOPackage(),
             new RNNaverLoginPackage()

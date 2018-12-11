@@ -25,7 +25,7 @@ class mainPage extends Component {
   }
 
 
-   onResult = (result) => {
+  onResult = (result) => {
       console.log(result);
       this.setState({img : result.uri});
   }

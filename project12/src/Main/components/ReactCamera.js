@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
 
 import {
@@ -21,7 +13,7 @@ import ReactTimeout from 'react-timeout'
 import { Actions } from 'react-native-router-flux';
 
 
-class cameraPage extends Component {
+class ReactCamera extends Component {
   constructor(props) { 
     super(); 
     this.camera = null;
@@ -78,8 +70,8 @@ class cameraPage extends Component {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options)
 
-      Actions.popTo('mainPage'); // 뒤로가면서 기존페이지로 이동
-      this.props.onResult({ uri: data.uri });
+      Actions.pop();
+      this.props.onResult({ data: data });
     }
   };
 }
@@ -106,4 +98,4 @@ capture: {
 }
 });
 
-export default ReactTimeout(cameraPage)
+export default ReactTimeout(ReactCamera)
