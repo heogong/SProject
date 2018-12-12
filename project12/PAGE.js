@@ -13,6 +13,9 @@ import JoinInputPhoneAuth from './src/FirstScreen/pages/JOIN/InputPhoneAuth';
 import LoginAccountType from './src/FirstScreen/pages/Login/AccountType';
 import LoginInputAccount from './src/FirstScreen/pages/Login/InputAccount';
 
+import JoinInputProdType from './src/FirstScreen/pages/JOIN/Partner/InputProdType'; // 파트너 제품타입 선택
+import JoinInputWorkHours from './src/FirstScreen/pages/JOIN/Partner/InputWorkHours'; // 파트너 근무시간 선택
+
 import CardIndex from './src/CARD/pages';
 import CardInputInfo from './src/CARD/pages/InputCardInfo';
 
@@ -55,6 +58,11 @@ const PAGE = () => (
       <Scene key="JoinInputName" component={JoinInputName} title="고객 이름"/>
       <Scene key="JoinInputPhone" component={JoinInputPhone} title="전화번호"/>
       <Scene key="JoinInputPhoneAuth" component={JoinInputPhoneAuth} title="본인 인증"/>
+      
+      {/* 파트너 회원가입 */}
+      <Scene key="JoinInputProdType" component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
+      <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} title="근무시간" initial type={ActionConst.RESET}/>
+      
 
       <Scene key="LoginAccountType" component={LoginAccountType} title="로그인 구분"/>
       <Scene key="LoginInputAccount" component={LoginInputAccount} title="이메일 로그인"/>
@@ -69,7 +77,7 @@ const PAGE = () => (
       <Scene key="InputAddress" component={InputAddress} title="주소 등록"/>
       <Scene key="InputProdType" component={InputProdType} title="제품 타입 등록" />
       <Scene key="InputProdInfo" component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
-      <Scene key="InputProdImage" component={InputProdImage} title="제품 이미지 등록" initial type={ActionConst.RESET}/>
+      <Scene key="InputProdImage" component={InputProdImage} title="제품 이미지 등록" />
 
       <Drawer
         hideNavBar
