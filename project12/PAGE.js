@@ -1,47 +1,47 @@
 import React, {Component} from 'react';
 import {Actions, Scene, Router, Stack, Overlay, ActionConst, Drawer, Tabs} from 'react-native-router-flux';
-import InitPage from './src/FirstScreen/pages/InitPage';
-import PageOne from './src/FirstScreen/pages/PageOne';
+import InitPage from './src/FirstScreen/Pages/InitPage';
+import PageOne from './src/FirstScreen/Pages/PageOne';
 
-import JoinCustomerType from './src/FirstScreen/pages/JOIN/CustomerType';
-import JoinAccountType from './src/FirstScreen/pages/JOIN/AccountType';
-import JoinInputEmail from './src/FirstScreen/pages/JOIN/InputEmail';
-import JoinInputName from './src/FirstScreen/pages/JOIN/InputName';
-import JoinInputPhone from './src/FirstScreen/pages/JOIN/InputPhone';
-import JoinInputPhoneAuth from './src/FirstScreen/pages/JOIN/InputPhoneAuth';
+import JoinCustomerType from './src/FirstScreen/Pages/Join/CustomerType';
+import JoinAccountType from './src/FirstScreen/Pages/Join/AccountType';
+import JoinInputEmail from './src/FirstScreen/Pages/Join/InputEmail';
+import JoinInputName from './src/FirstScreen/Pages/Join/InputName';
+import JoinInputPhone from './src/FirstScreen/Pages/Join/InputPhone';
+import JoinInputPhoneAuth from './src/FirstScreen/Pages/Join/InputPhoneAuth';
 
-import LoginAccountType from './src/FirstScreen/pages/Login/AccountType';
-import LoginInputAccount from './src/FirstScreen/pages/Login/InputAccount';
+import LoginAccountType from './src/FirstScreen/Pages/Login/AccountType';
+import LoginInputAccount from './src/FirstScreen/Pages/Login/InputAccount';
 
-import JoinInputProdType from './src/FirstScreen/pages/JOIN/Partner/InputProdType'; // 파트너 제품타입 선택
-import JoinInputWorkHours from './src/FirstScreen/pages/JOIN/Partner/InputWorkHours'; // 파트너 근무시간 선택
+import JoinInputProdType from './src/FirstScreen/Pages/Join/Partner/InputProdType'; // 파트너 제품타입 선택
+import JoinInputWorkHours from './src/FirstScreen/Pages/Join/Partner/InputWorkHours'; // 파트너 근무시간 선택
 
-import CardIndex from './src/CARD/pages';
-import CardInputInfo from './src/CARD/pages/InputCardInfo';
+import CardIndex from './src/Card/Pages';
+import CardInputInfo from './src/Card/Pages/InputCardInfo';
 
-import DrawerContent from './src/Main/components/DrawerContent'
-import MenuIcon from './src/Main/images/menu_burger.png'
+import DrawerContent from './src/Main/Components/DrawerContent'
+import MenuIcon from './src/Main/Images/menu_burger.png'
 //test
-import TestPage1 from './src/Main/pages/TestPage1'
-import TestPage2 from './src/Main/pages/TestPage2'
-import TestPage3 from './src/Main/pages/TestPage3'
+import TestPage1 from './src/Main/Pages/TestPage1'
+import TestPage2 from './src/Main/Pages/TestPage2'
+import TestPage3 from './src/Main/Pages/TestPage3'
 //test
 
-import ReactCamera from './src/Main/components/ReactCamera';
+import ReactCamera from './src/Main/Components/ReactCamera';
 
 /**사업장 */
 // 사업장 목록
-import ListBusinessPlace from './src/Main/pages/Business/ListBusinessPlace'
+import ListBusinessPlace from './src/Main/Pages/Business/ListBusinessPlace'
 // 사업장 등록
-import RegBusinessPlace from './src/Main/pages/Business/RegBusinessPlace'
+import RegBusinessPlace from './src/Main/Pages/Business/RegBusinessPlace'
 // 사업장 주소등록
-import SetAddress from './src/Main/pages/Business/Address/SetAddress'
-import InputAddress from './src/Main/pages/Business/Address/InputAddress'
+import SetAddress from './src/Main/Pages/Business/Address/SetAddress'
+import InputAddress from './src/Main/Pages/Business/Address/InputAddress'
 
 /**제품 */
-import InputProdType from './src/Main/pages/Business/Product/InputProdType' // 제품 타입등록
-import InputProdInfo from './src/Main/pages/Business/Product/InputProdInfo' // 제품 등록
-import InputProdImage from './src/Main/pages/Business/Product/InputProdImage' // 제품 이미지 등록
+import InputProdType from './src/Main/Pages/Business/Product/InputProdType' // 제품 타입등록
+import InputProdInfo from './src/Main/Pages/Business/Product/InputProdInfo' // 제품 등록
+import InputProdImage from './src/Main/Pages/Business/Product/InputProdImage' // 제품 이미지 등록
 
 
 const PAGE = () => ( 

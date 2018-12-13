@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, Alert } from 'react-native';
 
-import Button from '../../../COMMON/components/Button';
+import Button from '../../../Common/Components/Button';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import SignUp from '../../functions/SignUp';
-import CheckUsr from '../../functions/CheckUsr';
+import SignUp from '../../Functions/SignUp';
+import CheckUsr from '../../Functions/CheckUsr';
 
 //////////////sms 인증///////////
 const API_URL = 'http://52.79.226.14:8180/coolinic/sms/checkSmsCertNum?';

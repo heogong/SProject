@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
-import Button from '../../COMMON/components/Button';
+import Button from '../../Common/Components/Button';
 import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
-import CardReg from '../functions/CardReg';
+import CardReg from '../Functions/CardReg';
 
 export default class InputCardInfo extends Component {
   constructor(props) {

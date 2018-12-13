@@ -1,4 +1,4 @@
-import { domain } from '../../COMMON/ApiDomain';
+import { domain } from '../../Common/ApiDomain';
 
 const API_URL = `${domain}/coolinic/products/types/root`;
 

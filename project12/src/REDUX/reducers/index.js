@@ -12,7 +12,7 @@ import {
     SET_BIZ_DSC,
     SET_BIZ_ADDRESS,
     SET_BIZ_ADDRESS_DSC
-} from '../actions';
+} from '../Actions';
 import { combineReducers } from 'redux';
 
 const InitialUserState = {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import { Container, Button, Content, Text } from "native-base";
-import SelectButton from "../../../components/SelectButton";
+import { ActionSheet, Container, Button, Content, Root, Text } from "native-base";
+import SelectButton from "../../../Components/SelectButton";
 
 class InputWorkHours extends Component {
     constructor(props) {
@@ -17,48 +17,105 @@ class InputWorkHours extends Component {
               { text : "토", value : "fff" },
               { text : "일", value : "ggg" },
           ],
-          data : []
+          data : [],
+          hour : [],
+          selectIndex : 0,
+          startHourTitle : "시작시간",
+          endHourTitle : "종료시간",
         };
     }
 
+    // 시간 set
+    async componentDidMount() {
+        for(let i = 0; i < 24; i++) {
+            await this.setState({hour : this.state.hour.concat([ { text : i, value : i}]) });
+        }
+        
+    }
+
+    // 선택된 데이터 array 추가
     _addDataArray = async (value) => {
         await this.setState({ data: this.state.data.concat([{ value: value}]) });
 
         console.log("_addDataArray : ",this.state.data);
     }
     
+    // 해제된 데이터 array 제거
     _removeDataArray = async (value) => {
         await this.setState({ data: this.state.data.filter((item, sidx) => item.value !== value) });
 
         console.log("_removeDataArray : ",this.state.data);
     }
 
+    // next
     _onPress = () => {
         console.log("result : ",this.state.data);
     }
 
     render() {
         return (
-            <Container>
-                <Content padder>
-                    {this.state.mockData.map((data, idx) => (
-                        <SelectButton 
-                            value={data.value}
-                            text={data.text}
-                            addDataArray={ this._addDataArray }
-                            removeDataArray={ this._removeDataArray }
-                        />
-                    ))}
-                    <Button 
-                        rounded 
-                        success 
-                        bordered 
-                        block
-                        onPress={ this._onPress }>
-                        <Text>다음</Text>
-                    </Button>
-                </Content>
-            </Container>
+            <Root>
+                <Container>
+                    <Content padder>
+                        {this.state.mockData.map((data, idx) => (
+                            <SelectButton 
+                                value={data.value}
+                                text={data.text}
+                                addDataArray={ this._addDataArray }
+                                removeDataArray={ this._removeDataArray }
+                            />
+                        ))}
+                    </Content>
+                    <Content>
+                        <Button
+                                onPress={() =>
+                                    ActionSheet.show(
+                                    {
+                                        options: this.state.hour,
+                                        cancelButtonIndex: this.state.selectIndex,
+                                        title: "시작 시간"
+                                    },
+                                    buttonIndex => {
+                                        this.setState({ startHourTitle: this.state.hour[buttonIndex].text });
+                                        this.setState({ selectIndex : buttonIndex });
+                                        //this.setState({ selectYn : true });
+                                    }
+                                )}
+                            >
+                            <Text>{this.state.startHourTitle}</Text>
+                        </Button>
+                    </Content>
+                    <Content>
+                        <Button
+                                onPress={() =>
+                                    ActionSheet.show(
+                                    {
+                                        options: this.state.hour,
+                                        cancelButtonIndex: this.state.selectIndex,
+                                        title: "종료 시간"
+                                    },
+                                    buttonIndex => {
+                                        this.setState({ endHourTitle: this.state.hour[buttonIndex].text });
+                                        this.setState({ selectIndex : buttonIndex });
+                                        //this.setState({ selectYn : true });
+                                    }
+                                )}
+                            >
+                            <Text>{this.state.endHourTitle}</Text>
+                        </Button>
+                    </Content>
+                    <Content>
+                        <Button 
+                            rounded 
+                            success 
+                            bordered 
+                            block
+                            onPress={ this._onPress }>
+                            <Text>다음</Text>
+                        </Button>
+                    </Content>
+                </Container>
+            </Root>
         )
     }
 }

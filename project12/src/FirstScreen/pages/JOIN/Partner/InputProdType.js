@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { Container, Button, Content, Text } from "native-base";
-import SelectButton from "../../../components/SelectButton";
+import SelectButton from "../../../Components/SelectButton";
 
 class InputProdType extends Component {
     constructor(props) {
@@ -24,18 +24,21 @@ class InputProdType extends Component {
         };
     }
 
+     // 선택된 데이터 array 추가
     _addDataArray = async (value) => {
         await this.setState({ data: this.state.data.concat([{ value: value}]) });
 
         console.log("_addDataArray : ",this.state.data);
     }
     
+    // 해제된 데이터 array 제거
     _removeDataArray = async (value) => {
         await this.setState({ data: this.state.data.filter((item, sidx) => item.value !== value) });
 
         console.log("_removeDataArray : ",this.state.data);
     }
 
+    // next
     _onPress = () => {
         console.log("result : ",this.state.data);
     }

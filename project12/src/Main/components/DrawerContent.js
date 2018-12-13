@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View, ViewPropTypes } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Button from '../../COMMON/components/Button';
+import Button from '../../Common/Components/Button';
 
 class DrawerContent extends React.Component {
   static propTypes = {

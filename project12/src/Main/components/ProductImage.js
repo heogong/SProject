@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 import { Button, Content, Text, Thumbnail, Icon } from "native-base";
 import { Actions } from 'react-native-router-flux';
-import regProdImg from '../functions/RegProdImg';
+import RegProdImg from '../Functions/RegProdImg';
 
 class ProductImage extends Component {
     constructor(props) {
@@ -43,7 +43,7 @@ class ProductImage extends Component {
         //     name: 'testPhotoName'
         // });
 
-        // regProdImg(data, this.props.clientPrdId, this.props.prdImgCateId).then(result => {
+        // RegProdImg(data, this.props.clientPrdId, this.props.prdImgCateId).then(result => {
         //     console.log(result);
         // });
 

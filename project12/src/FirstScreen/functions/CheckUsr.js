@@ -1,5 +1,5 @@
 import axios  from 'axios';
-import { domain } from '../../COMMON/ApiDomain';
+import { domain } from '../../Common/ApiDomain';
 
 const API_URL = `${domain}iam/users/phonenum/`;
 

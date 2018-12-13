@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Root, Container, Button, Content, ActionSheet, Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
-import getProdType from '../../../functions/GetProdType';
+import GetProdType from '../../../Functions/GetProdType';
 
 class InputProdType extends Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class InputProdType extends Component {
     }
 
     componentDidMount() {
-        getProdType().then(result => {
+        GetProdType().then(result => {
             //console.log(result.data);
             //this.setState({BUTTONS : result.data});
 

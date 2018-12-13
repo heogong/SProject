@@ -3,8 +3,8 @@ import { View, Text, TextInput } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setUsrNm, setSnsSignYn } from '../../../REDUX/actions';
-import Button from '../../../COMMON/components/Button';
+import { setUsrNm, setSnsSignYn } from '../../../Redux/Actions';
+import Button from '../../../Common/Components/Button';
 
 class InputName extends Component {
   constructor(props) {

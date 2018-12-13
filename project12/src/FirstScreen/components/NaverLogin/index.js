@@ -11,9 +11,9 @@ import styles from './styles';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken } from '../../../REDUX/actions';
-import SignUp from '../../functions/SignUp';
-import login from '../../functions/Login';
+import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken } from '../../../Redux/Actions';
+import SignUp from '../../Functions/SignUp';
+import login from '../../Functions/Login';
 
 const initials = {
   kConsumerKey: 'HEZ2CaOwmSPvw18HCB4c',

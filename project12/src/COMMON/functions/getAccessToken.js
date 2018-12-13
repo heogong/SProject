@@ -7,7 +7,7 @@ function TokenUrl(TOKEN) {
   return `${API_URL}${TOKEN.refreshToken}`;
 }
 
-const getAccessToken = (TOKEN) => {
+const GetAccessToken = (TOKEN) => {
   return fetch(TokenUrl(TOKEN), {
     method: 'POST',
   }).then((response) => response.json()).then((responseJson) => {
@@ -18,4 +18,4 @@ const getAccessToken = (TOKEN) => {
   });
 };
 
-export default getAccessToken;
+export default GetAccessToken;

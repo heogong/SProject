@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import PAGE from './PAGE';
+import Page from './Page';
 
-import reducer from './src/REDUX/reducers';
+import reducer from './src/Redux/Reducers';
 import { createStore } from 'redux';
 import { Provider  } from 'react-redux';
 
@@ -11,7 +11,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <PAGE/>
+        <Page/>
       </Provider>
     );
   }

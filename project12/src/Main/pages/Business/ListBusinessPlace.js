@@ -14,12 +14,12 @@ import {
     Icon
 
 } from 'native-base';
-import getBizList from '../../functions/GetBizList';
-import getBizPlace from '../../functions/GetBizPlace';
+import GetBizList from '../../Functions/GetBizList';
+import GetBizPlace from '../../Functions/GetBizPlace';
 import { Actions } from 'react-native-router-flux';
 
 import { connect } from 'react-redux';
-import { setBizId } from '../../../REDUX/actions';
+import { setBizId } from '../../../Redux/Actions';
 
 class ListBusinessPlace extends Component {
     constructor(props) {
@@ -31,7 +31,7 @@ class ListBusinessPlace extends Component {
     }
 
     componentDidMount() {
-        getBizList().then(result => {
+        GetBizList().then(result => {
             //console.log(result);
             this.setState({data : result.data});
         });
@@ -68,7 +68,7 @@ class ListBusinessPlace extends Component {
     
     // 사업장 수정시 참고
     // _onPress = (bizPlaceId) => {
-    //     getBizPlace(bizPlaceId).then(result => {
+    //     GetBizPlace(bizPlaceId).then(result => {
     //         console.log(result);
     //         Actions.RegBusinessPlace({bizPlace : result.data});
     //         //this.setState({data : result.data});

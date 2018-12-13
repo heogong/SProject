@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
 
-import Button from '../../../COMMON/components/Button';
+import Button from '../../../Common/Components/Button';
 import { Actions } from 'react-native-router-flux';
 
 import { connect } from 'react-redux';
-import { setUsrPhoneNum } from '../../../REDUX/actions';
+import { setUsrPhoneNum } from '../../../Redux/Actions';
 
 /////////////////////////
 const API_URL = 'http://52.79.226.14:8180/coolinic/sms/sendSmsCertNum?';

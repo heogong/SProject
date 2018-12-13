@@ -3,9 +3,9 @@ import { View, Text, TextInput } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setUsrId, setUsrPw } from '../../../REDUX/actions';
-import Button from '../../../COMMON/components/Button';
-import login from '../../functions/Login';
+import { setUsrId, setUsrPw } from '../../../Redux/Actions';
+import Button from '../../../Common/Components/Button';
+import login from '../../Functions/Login';
 
 
 class InputAccount extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Button from '../../COMMON/components/Button';
+import Button from '../../Common/Components/Button';
 
 export default class PageOne extends Component {
   render() {

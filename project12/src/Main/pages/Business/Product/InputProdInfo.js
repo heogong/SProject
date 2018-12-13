@@ -5,7 +5,7 @@ import { Container, Button, Content, Input, Item, Icon, Text } from "native-base
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
-import regProdInfo from '../../../functions/RegProdInfo'
+import RegProdInfo from '../../../Functions/RegProdInfo'
 
 class InputProdInfo extends Component {
     constructor(props) {
@@ -57,7 +57,7 @@ class InputProdInfo extends Component {
         // console.log(shareholders);
         // console.log(this.props.value);
 
-        // regProdInfo(this.props.value, this.props.typeId, shareholders).then(result => {
+        // RegProdInfo(this.props.value, this.props.typeId, shareholders).then(result => {
         //     console.log(result.data);
         // });
 

@@ -12,7 +12,7 @@ import {
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setBizNm, setBizDsc } from '../../../REDUX/actions';
+import { setBizNm, setBizDsc } from '../../../Redux/Actions';
   
 let propsData = false; // 데이터 유무 (조회일 경우에는 데이터 존재)
 

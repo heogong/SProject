@@ -1,4 +1,4 @@
-import { oauthDomain } from '../../COMMON/ApiDomain';
+import { oauthDomain } from '../../Common/ApiDomain';
 
 const API_URL = `${oauthDomain}oauth/token?grant_type=password&client_id=FREEZE_COOLINIC_APP&`;
 

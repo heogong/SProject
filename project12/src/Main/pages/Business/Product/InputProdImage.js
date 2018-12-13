@@ -5,9 +5,9 @@ import { TouchableHighlight } from 'react-native'
 import { Badge, Button, Container, Content, Col, Grid, Row, Text, Thumbnail, List, ListItem, Icon } from "native-base";
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import getProdImageType from '../../../functions/GetProdImgType'
+import GetProdImageType from '../../../Functions/GetProdImgType'
 
-import ProductImage from '../../../components/ProductImage'
+import ProductImage from '../../../Components/ProductImage'
 
 class InputProdImage extends Component {
     constructor(props) {
@@ -38,7 +38,7 @@ class InputProdImage extends Component {
     }
 
     // componentDidMount() {
-    //     getProdImageType().then(result => {
+    //     GetProdImageType().then(result => {
     //         //console.log(result);
     //         //this.setState({ data : result.data});
 

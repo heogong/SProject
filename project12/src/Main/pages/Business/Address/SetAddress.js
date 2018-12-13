@@ -4,10 +4,10 @@ import { Container, Text, Button, Content, Item, Input, Label, ListItem, Body, F
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 
-import DrawMap from '../../../components/DrawMap';
+import DrawMap from '../../../Components/DrawMap';
 import { connect } from 'react-redux';
-import { setBizAddress, setBizAddressDsc } from '../../../../REDUX/actions';
-import regBizPlace from '../../../functions/RegBizPlace';
+import { setBizAddress, setBizAddressDsc } from '../../../../Redux/Actions';
+import RegBizPlace from '../../../Functions/RegBizPlace';
 
 const ADDRESS_DETAIL_LEN = 1;
 
@@ -68,7 +68,7 @@ class SetAddress extends Component {
         await this.props.onSetBizAddress(this.state.addressObj);  // 리덕스 주소 오브젝트 SET
         await this.props.onSetBizAddressDsc(this.state.detailAddressName);  // 리덕스 상세주소 SET
 
-        regBizPlace(this.props.value).then(result => {
+        RegBizPlace(this.props.value).then(result => {
             console.log(result);
         });
     }

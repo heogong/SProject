@@ -15,8 +15,8 @@ import {
 } from 'native-base';
 
 import { Actions } from 'react-native-router-flux';
-import getAddress from '../../../functions/AddressInfo';
-//import Button from '../../../COMMON/components/Button';
+import GetAddress from '../../../Functions/AddressInfo';
+//import Button from '../../../Common/Components/Button';
 
 class InputAddress extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class InputAddress extends Component {
   }
 
   _setAddressInfo = () => {
-     getAddress(this.state.strAddress).then(result => {
+    GetAddress(this.state.strAddress).then(result => {
       console.log(result.data.documents);
 
       this.setState({data : result.data.documents.filter(address => address.address_type !== "REGION")});
