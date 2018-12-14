@@ -1,20 +1,35 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrNm, setSnsSignYn } from '../../../Redux/Actions';
-import Button from '../../../Common/Components/Button';
 
+import { Item, Input, Form, Text } from "native-base";
+import CustomWrapper from '../../../Common/Components/CustomWrapper';
+import CustomButton from '../../../Common/Components/CustomButton';
+
+const USER_NM_LEN = 1;
 class InputName extends Component {
   constructor(props) {
     super(props);
-    this.state = { usrNm: '' };
+    this.state = { 
+      usrNm: '',
+      btnDisabled: true
+    };
   }
   
   componentDidMount () {
     this.props.onSetSnsSignYn('N');  // 리덕스 SNS 가입여부 SET
   }
+
+  // 이름 next 버튼 활성화 여부
+  _handleChange = (text) => {
+    this.setState({usrNm : text})
+
+    if(this.state.usrNm !== '') {
+        this.setState({btnDisabled : (this.state.usrNm.length > USER_NM_LEN) ? false : true})
+    }
+  } 
 
   _NextButton = () => {
     this.props.onSetUsrNm(this.state.usrNm);  // 리덕스 사용자 이름 SET
@@ -23,33 +38,32 @@ class InputName extends Component {
   
   render() {
     return (
-      <View style={{margin: 128}}>
+      <CustomWrapper>
         <Text>고객명을 입력해주세요</Text>
 
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({usrNm : text})}
-          value={this.state.text}
-          placeholder='홍길동'
-        />
+        <Form>
+          <Item fixedLabel>
+              <Input 
+                onChangeText={ this._handleChange }
+                value={ this.state.text }
+                placeholder='홍길동'
+              />
+          </Item>
+        </Form>
 
-        <Text>VALUE: { this.props.value }</Text>
-
-        <Button onPress={this._NextButton}>
+        <CustomButton
+          block={ true }
+          info={ true }
+          bordered={ true }
+          disabled={ this.state.btnDisabled }
+          onPress={this._NextButton}>
           <Text>
-           NEXT
+            NEXT
           </Text>
-        </Button>
-      </View>
+        </CustomButton>
+      </CustomWrapper>
     )
   }
-}
-
-// 나중에 제거하기
-let mapStateToProps = (state) => {
-  return {
-      value: state.USER.usrId
-  };
 }
 
 let mapDispatchToProps = (dispatch) => {
@@ -59,6 +73,6 @@ let mapDispatchToProps = (dispatch) => {
   }
 }
 
-InputName = connect(mapStateToProps, mapDispatchToProps)(InputName);
+InputName = connect(undefined, mapDispatchToProps)(InputName);
 
 export default InputName;

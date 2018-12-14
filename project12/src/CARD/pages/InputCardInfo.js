@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
-import Button from '../../Common/Components/Button';
+import Button from '../../Common/Components/CustomButton';
 import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
 import CardReg from '../Functions/CardReg';
 

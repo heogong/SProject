@@ -1,24 +1,35 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+
+import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
-import Button from '../../../Common/Components/Button';
+
+import CustomWrapper from '../../../Common/Components/CustomWrapper';
+import CustomButton from '../../../Common/Components/CustomButton';
 
 export default class CustomerType extends Component {
   render() {
     return (
-      <View style={{margin: 128}}>
+      <CustomWrapper>
         <Text>고객 구분을 선택해 주세요.</Text>
-        <Button onPress={Actions.JoinAccountType}>
+        <CustomButton 
+          block={ true } 
+          info={ true }
+          bordered={ true } 
+          onPress={Actions.JoinAccountType}>
           <Text>
               일반 사업장
           </Text>
-        </Button>
-        <Button onPress={Actions.JoinAccountType}>
+        </CustomButton>
+        <CustomButton 
+          block={ true } 
+          info={ true }
+          bordered={ true } 
+          onPress={Actions.JoinAccountType}>
           <Text>
             서비스파트너
           </Text>
-        </Button>
-      </View>
+        </CustomButton>
+      </CustomWrapper>
     )
   }
 }

@@ -4,7 +4,7 @@ import { View, Text, TextInput } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrPw } from '../../../Redux/Actions';
-import Button from '../../../Common/Components/Button';
+import Button from '../../../Common/Components/CustomButton';
 import login from '../../Functions/Login';
 
 

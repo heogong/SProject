@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  Alert,
-} from 'react-native';
 
 import NativeButton from 'apsl-react-native-button';
 import { NaverLogin, getProfile } from 'react-native-naver-login';
@@ -14,6 +9,9 @@ import { connect } from 'react-redux';
 import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken } from '../../../Redux/Actions';
 import SignUp from '../../Functions/SignUp';
 import login from '../../Functions/Login';
+
+import { Text } from "native-base";
+import CustomButton from '../../../Common/Components/CustomButton';
 
 const initials = {
   kConsumerKey: 'HEZ2CaOwmSPvw18HCB4c',
@@ -57,7 +55,7 @@ class Page extends Component {
     this._LoginCheckGotoPage(this.state); 
 
     if (profileResult.resultcode === '024') {
-      Alert.alert('로그인 실패', profileResult.message);
+      console.log('로그인 실패', profileResult.message);
       return;
     }
   }
@@ -119,32 +117,26 @@ class Page extends Component {
       }
     });
   }
-
-  
-
   render() {
     const { theToken } = this.state;
     return (
-      <View style={ styles.container }>
-        <View style={ styles.content }>
-          <NativeButton
-            isLoading={this.state.isNaverLoggingin}
-            onPress={() => this.naverLoginStart()}
-            activeOpacity={0.5}
-            style={styles.btnNaverLogin}
-            textStyle={styles.txtNaverLogin}
-          >{this.props.name}</NativeButton>
-          {/* <Text>{theToken}</Text> */}
-          {/* <NativeButton
-            isLoading={this.state.isNaverLoggingin}
-            onPress={() => this.fetchProfile()}
-            activeOpacity={0.5}
-            style={styles.btnNaverLogin}
-            textStyle={styles.txtNaverLogin}
-          >Fetch Profile</NativeButton> */}
-
-        </View>
-      </View>
+      // <View style={ styles.container }>
+      //   <View>
+      //     <NativeButton
+      //       isLoading={this.state.isNaverLoggingin}
+      //       onPress={() => this.naverLoginStart()}
+      //       >
+      //       {this.props.name}
+      //     </NativeButton>
+      //   </View>
+      // </View>
+      <CustomButton
+        block={ true }
+        info={ true }
+        bordered={ true }
+        onPress={() => this.naverLoginStart()}
+      ><Text>{this.props.name}</Text>
+      </CustomButton>
     );
   }
 }

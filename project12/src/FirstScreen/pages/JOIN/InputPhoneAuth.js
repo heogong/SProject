@@ -1,34 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, Alert } from 'react-native';
 
-import Button from '../../../Common/Components/Button';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+
+import { Item, Input, Form, Root, Text, Toast } from "native-base";
+import CustomWrapper from '../../../Common/Components/CustomWrapper';
+import CustomButton from '../../../Common/Components/CustomButton';
+
 import SignUp from '../../Functions/SignUp';
 import CheckUsr from '../../Functions/CheckUsr';
-
-//////////////sms 인증///////////
-const API_URL = 'http://52.79.226.14:8180/coolinic/sms/checkSmsCertNum?';
-
-function SmsCertUrl(sendId, number) {
-  return `${API_URL}smsSendId=${sendId}&certNum=${number}`;
-}
-
-function sendSmsCertNum(sendId, number) {
-  return fetch(SmsCertUrl(sendId, number), {method : 'post'})
-      .then(response => response.json())
-      .then(responseJSON => {
-        return {
-          code: responseJSON.resultCode,
-          msg : responseJSON.resultMsg
-        };
-        
-      })
-      .catch(error => {
-          console.error(error);
-      })
-}
-//////////////sms 인증///////////
+import CheckSmsCertNum from '../../Functions/CheckSmsCertNum';
 
 class InputPhoneAuth extends Component {
   constructor(props) {
@@ -41,22 +22,35 @@ class InputPhoneAuth extends Component {
   }
 
   _checkSmsCertNum = () => {
-    sendSmsCertNum(this.props.smsSendId, this.state.InpuCertNum).then(result => {
+    // SMS 인증 확인
+    CheckSmsCertNum(this.props.smsSendId, this.state.InpuCertNum).then(async result => {
+      const CertResultBool = await (result.resultCode == '0000') ? true : false; // API 결과 여부 확인
+
       // SMS 인증 정상 여부
-      if(result.code == '0000') {
+      if(CertResultBool) {
 
         // 가입 여부 확인
-        CheckUsr(this.props.value.usrPhoneNum).then(result => {
-          if (result.code == '0000') {
+        CheckUsr(this.props.value.usrPhoneNum).then(async result => {
+          const UsrResultBool = await (result.resultCode == '0000') ? true : false; // API 결과 여부 확인
+
+          if (UsrResultBool) {
             // SNS 가입 여부 확인
             if(this.props.value.snsSignupYn == 'Y'){
+
               // 회원가입
-              SignUp(this.props.value).then(result => {
-                if (result.code == '0000') {
-                // 페이지 이동
+              SignUp(this.props.value).then(async result => {
+                const SignUpResultBool = await (result.resultCode == '0000') ? true : false; // API 결과 여부 확인
+                if (SignUpResultBool) {
+                
+                  // 페이지 이동
 
                 } else {
-                  Alert.alert(result.msg);
+                  await Toast.show({
+                    text: result.resultMsg,
+                    type: "danger",
+                    buttonText: '확인'
+                  })
+
                   Actions.InitPage();
                 }
               });
@@ -64,36 +58,48 @@ class InputPhoneAuth extends Component {
               Actions.JoinInputEmail();
             }
           } else {
-            Alert.alert(result.msg);
+            await Toast.show({
+              text: result.resultMsg,
+              type: "danger",
+              buttonText: '확인'
+            })
             //Actions.popTo('JoinInputName'); // 뒤로가면서 기존페이지로 이동하는 듯;;
             Actions.pageOne();
           }
         });
         
       } else {
-        this.setState({SmsResultMsg : result.msg});
+        Toast.show({
+          text: result.resultMsg,
+          type: "danger",
+          buttonText: '확인'
+        })
       }
     })
   };
 
   render() {
     return (
-      <View style={{margin: 128}}>
-        <Text>인증번호 입력</Text>
-        <Text>인증ID : {this.props.smsSendId} </Text>
-        <Text>인증번호 : {this.props.certNum} </Text>
-        
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({InpuCertNum: text})}
-          value={this.state.text}
-          placeholder=''
-          keyboardType='numeric'
-          onSubmitEditing={this._checkSmsCertNum}
-        />
+      <Root>
+        <CustomWrapper>
+          {/* <Text>인증번호 입력</Text>
+          <Text>인증ID : {this.props.smsSendId} </Text>
+          <Text>인증번호 : {this.props.certNum} </Text> */}
+          
+          
+            <Item rounded >
+              <Input 
+                onChangeText={(text) => this.setState({InpuCertNum: text})}
+                value={this.state.text}
+                keyboardType='numeric'
+                onSubmitEditing={this._checkSmsCertNum}
+                placeholder='Rounded Textbox'
+              />
+            </Item>
 
-        <Text>{this.state.SmsResultMsg}</Text>
-      </View>
+          <Text>{this.state.SmsResultMsg}</Text>
+        </CustomWrapper>
+      </Root>
     )
   }
 }

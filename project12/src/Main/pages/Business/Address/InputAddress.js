@@ -16,7 +16,7 @@ import {
 
 import { Actions } from 'react-native-router-flux';
 import GetAddress from '../../../Functions/AddressInfo';
-//import Button from '../../../Common/Components/Button';
+//import Button from '../../../Common/Components/CustomButton';
 
 class InputAddress extends Component {
   constructor(props) {

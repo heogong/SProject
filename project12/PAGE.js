@@ -48,8 +48,8 @@ const PAGE = () => (
   
   <Router>
     <Scene>
-      {/* <Scene key="InitPage" component={InitPage} title="InitPage" initial type={ActionConst.RESET} />
-      <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/> */}
+      <Scene key="InitPage" component={InitPage} title="InitPage" initial type={ActionConst.RESET} />
+      <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
       <Scene key="reactCamera" component={ReactCamera} hideNavBar={true}/>
       
       <Scene key="JoinCustomerType" component={JoinCustomerType} title="고객 구분"/>
@@ -61,7 +61,7 @@ const PAGE = () => (
       
       {/* 파트너 회원가입 */}
       <Scene key="JoinInputProdType" component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
-      <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} title="근무시간" initial type={ActionConst.RESET}/>
+      <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} title="근무시간" type={ActionConst.RESET}/>
       
 
       <Scene key="LoginAccountType" component={LoginAccountType} title="로그인 구분"/>
