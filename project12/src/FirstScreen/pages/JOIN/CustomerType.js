@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
-import CustomWrapper from '../../../Common/Components/CustomWrapper';
+import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../../Common/Components/CustomButton';
 
 export default class CustomerType extends Component {
   render() {
     return (
-      <CustomWrapper>
+      <CustomBasicWrapper>
         <Text>고객 구분을 선택해 주세요.</Text>
         <CustomButton 
           block={ true } 
@@ -29,7 +29,7 @@ export default class CustomerType extends Component {
             서비스파트너
           </Text>
         </CustomButton>
-      </CustomWrapper>
+      </CustomBasicWrapper>
     )
   }
 }

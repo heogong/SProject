@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AsyncStorage, BackHandler } from "react-native"
 
 import { 
     Body,
@@ -26,13 +27,34 @@ class ListBusinessPlace extends Component {
       super(props);
 
       this.state = {
-          data: []
+          data: [],
         };
     }
 
     componentDidMount() {
-        GetBizList().then(result => {
-            //console.log(result);
+        this._getBizList();
+        // 물리버튼 뒤로가기 제어
+        BackHandler.addEventListener('hardwareBackPress', () => this._handleBackPress) // Listen for the hardware back button on Android to be pressed
+    }
+
+    // 물리버튼 뒤로가기 제어
+    componentWillUnmount () {
+        BackHandler.removeEventListener('hardwareBackPress', () => this._handleBackPress) // Remove listener
+    }
+
+    componentWillReceiveProps () {
+        this._getBizList();
+    }
+
+    _handleBackPress = () => {
+        return false;
+    }
+
+    // 사업장 목록 가져오기
+    _getBizList = async ()  => {
+        const AccessToken = await AsyncStorage.getItem('AccessToken');
+
+        GetBizList(AccessToken).then(result => {
             this.setState({data : result.data});
         });
     }
@@ -79,8 +101,6 @@ class ListBusinessPlace extends Component {
         this.props.onSetBizId(bizPlaceId)
         Actions.InputProdType({bizPlaceId : bizPlaceId});
     }
-
-
     
     render() {
         return (

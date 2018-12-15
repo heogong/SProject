@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { AsyncStorage } from "react-native"
 
-import { Container, Text, Button, Content, Item, Input, Label, ListItem, Body, Form } from 'native-base';
+import { Body, Container, Text, Button, Content, Input, Label, ListItem, Root, Toast } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 
@@ -67,48 +68,63 @@ class SetAddress extends Component {
     async _SaveButton() {
         await this.props.onSetBizAddress(this.state.addressObj);  // 리덕스 주소 오브젝트 SET
         await this.props.onSetBizAddressDsc(this.state.detailAddressName);  // 리덕스 상세주소 SET
+        const AccessToken = await AsyncStorage.getItem('AccessToken');
 
-        RegBizPlace(this.props.value).then(result => {
-            console.log(result);
+        RegBizPlace(this.props.value, AccessToken).then(async result => {
+
+            const ResultBool = await (result.error) ? false : true; // API 결과 여부 확인
+            if(ResultBool) {
+                console.log(result);
+                // Actions.popTo("ListBusinessPlace"); // 페이지 이동
+                // Actions.refresh({key: "ListBusinessPlace"}) // 페이지 새로고침
+            } else {
+                Toast.show({
+                    text: result.resultMsg,
+                    type: "danger",
+                    buttonText: '확인'
+                })
+            }
         });
     }
 
     render() {
         return (
-            <Container>
-                <Grid>
-                    <Row style={{ height: 250 }}>
-                        <Content>
-                            <ListItem onPress={this._goInputAddress}>
-                                <Body>
-                                    <Label>주소</Label>
-                                    <Input disabled>{this.state.addressName}</Input>
-                                </Body>
-                            </ListItem>
-                            <ListItem>
-                                <Body>
-                                    <Text>상세주소</Text>
-                                    <Input onChangeText={this._handleChange}></Input>
-                                </Body>
-                            </ListItem>
-                            <Button block dark 
-                                disabled={this.state.disSaveBtn} 
-                                onPress={() => this._SaveButton()}
-                                >
-                                <Text>주소 저장</Text>
-                            </Button>
-                        </Content>
+            <Root>
+                <Container>
+                    <Grid>
+                        <Row style={{ height: 250 }}>
+                            <Content>
+                                <ListItem onPress={this._goInputAddress}>
+                                    <Body>
+                                        <Label>주소</Label>
+                                        <Input disabled>{this.state.addressName}</Input>
+                                    </Body>
+                                </ListItem>
+                                <ListItem>
+                                    <Body>
+                                        <Text>상세주소</Text>
+                                        <Input onChangeText={this._handleChange}></Input>
+                                    </Body>
+                                </ListItem>
+                                <Button block dark 
+                                    disabled={this.state.disSaveBtn} 
+                                    onPress={() => this._SaveButton()}
+                                    >
+                                    <Text>주소 저장</Text>
+                                </Button>
+                            </Content>
 
-                    </Row>
-                    <Row style={{ backgroundColor: '#635DB7', height: 350 }}>
-                        <DrawMap
-                            lat={this.state.lat}
-                            lng={this.state.lng}
-                            makerYn={this.state.makerYn}
-                        />
-                    </Row>
-                </Grid>
-            </Container>
+                        </Row>
+                        <Row style={{ backgroundColor: '#635DB7', height: 350 }}>
+                            <DrawMap
+                                lat={this.state.lat}
+                                lng={this.state.lng}
+                                makerYn={this.state.makerYn}
+                            />
+                        </Row>
+                    </Grid>
+                </Container>
+            </Root>
         )
     }
 }

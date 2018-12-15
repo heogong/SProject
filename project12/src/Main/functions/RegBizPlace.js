@@ -32,13 +32,13 @@ function RegBizPlaceUrl(bizObj) {
   `;
 }
 
-const regBizPlace = (bizObj) => {
+const regBizPlace = (bizObj, AccessToken) => {
   //console.log("bizObj : ",bizObj);
   //console.log("RegBizPlaceUrl : ",RegBizPlaceUrl(bizObj))
   return fetch(RegBizPlaceUrl(bizObj), {
     method: 'POST',
     headers: {
-      "Authorization": "Bearer d84851a8-9396-4a68-bbe7-5a1e5999d05a"
+      "Authorization": "Bearer " + AccessToken
     }
   }).then((response) => response.json()).then((responseJson) => {
     return responseJson;

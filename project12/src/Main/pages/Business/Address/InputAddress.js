@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { View, Text, TextInput, FlatList, StyleSheet, TouchableHighlight } from 'react-native';
+
 import { 
   Container, 
   Header, 
@@ -27,6 +27,7 @@ class InputAddress extends Component {
     };
   }
 
+  // 주소 정보 가져오기
   _setAddressInfo = () => {
     GetAddress(this.state.strAddress).then(result => {
       console.log(result.data.documents);

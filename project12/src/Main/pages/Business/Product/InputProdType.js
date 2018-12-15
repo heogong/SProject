@@ -63,9 +63,10 @@ class InputProdType extends Component {
                         </Button>
                         <Content padder>
                             <Button rounded success bordered block 
-                            onPress={this._onPress}
-                            disabled={!this.state.selectYn}
-                            ><Text>다음</Text></Button>
+                                onPress={this._onPress}
+                                disabled={!this.state.selectYn}
+                            ><Text>다음</Text>
+                            </Button>
                         </Content>
                     </Content>
                 </Container>

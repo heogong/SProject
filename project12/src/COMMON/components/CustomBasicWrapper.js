@@ -1,21 +1,18 @@
 import React, { Component } from "react";
 
-import Layout from '../Styles/Layout';
+import Style from '../Styles/Style';
 import { Container, Content } from "native-base";
 
-class CustomWrapper extends Component {
+class CustomBasicWrapper extends Component {
     render() {
         return (
-            <Container style={Layout.align}>
-                <Content/>
-                <Content>
+            <Container style={Style.align}>
+                <Content padder>
                     {this.props.children}
                 </Content>
-                <Content/>
             </Container>
         );
     }
 }
 
-export default CustomWrapper;
-
+export default CustomBasicWrapper;

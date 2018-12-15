@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
-import CustomWrapper from '../../../Common/Components/CustomWrapper';
+import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../../Common/Components/CustomButton';
 import NaverLogin from '../../Components/NaverLogin';
 
@@ -12,7 +12,7 @@ export default class AccountType extends Component {
     const loginYn = false; // 진입 경로(로그인/회원가입) 확인
 
     return (
-      <CustomWrapper>
+      <CustomBasicWrapper>
         <NaverLogin
           loginYn={ loginYn }
           name="NAVER 회원가입"
@@ -35,7 +35,7 @@ export default class AccountType extends Component {
             이메일로 가입하기
           </Text>
         </CustomButton>
-      </CustomWrapper>
+      </CustomBasicWrapper>
     )
   }
 }

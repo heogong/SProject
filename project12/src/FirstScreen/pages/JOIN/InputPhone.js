@@ -4,25 +4,29 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrPhoneNum } from '../../../Redux/Actions';
 
-import { Item, Input, Form, Root, Text, Toast } from "native-base";
-import CustomWrapper from '../../../Common/Components/CustomWrapper';
+import { Item, Input, Root, Text, Toast } from "native-base";
+import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../../Common/Components/CustomButton';
 import SendSmsCertNum from '../../Functions/SendSmsCertNum';
 
+const USER_PHONE_LEN = 9; //최소 번호 길이
 class InputPhone extends Component {
   constructor(props) {
     super(props);
     this.state = { 
       usrPhoneNum: '',
+      btnDisabled: true
     };
   }
 
-  _handleTextChange = event => {
-    console.log(event.nativeEvent.text)
-  };
+  // 전화번호 next 버튼 활성화 여부
+  _handleNumberChange = async (text)  => {
+    await this.setState({usrPhoneNum : text})
+    this.setState({btnDisabled : (this.state.usrPhoneNum.length > USER_PHONE_LEN) ? false : true})
+  } 
 
+  // 인증번호 API 호출
   _getAuthNumber = () => {
-    console.log("_getAuthNumber");
     //let phoneNumber = event.nativeEvent.text;
     this.props.onSetUsrPhoneNum(this.state.usrPhoneNum); // 리덕스 폰번호 입력
 
@@ -33,8 +37,8 @@ class InputPhone extends Component {
       if(ResultBool) {
         // 인증페이지 이동
         Actions.JoinInputPhoneAuth({
-          smsSendId: result.smsSendId, 
-          certNum : result.certNum
+          smsSendId: result.data.smsSendId, 
+          certNum : result.data.certNum
         });
       } else {
         Toast.show({
@@ -49,29 +53,28 @@ class InputPhone extends Component {
   render() {
     return (
       <Root>
-        <CustomWrapper>
+        <CustomBasicWrapper>
           <Text>인증번호를 받을 휴대폰 번호</Text>
-          <Form>
-            <Item fixedLabel>
-                <Input 
-                  onChangeText={(text) => this.setState({usrPhoneNum : text})}
-                  value={this.state.text}
-                  placeholder='010.####.####'
-                  keyboardType='numeric'
-                  onSubmitEditing={this._getAuthNumber}
-                />
+            <Item rounded>
+              <Input 
+                onChangeText={ this._handleNumberChange }
+                value={this.state.text}
+                placeholder='010.####.####'
+                keyboardType='numeric'
+                onSubmitEditing={this._getAuthNumber}
+              />
             </Item>
-          </Form>
           <CustomButton
             block={ true }
             info={ true }
             bordered={ true }
+            disabled={ this.state.btnDisabled }
             onPress={this._getAuthNumber}>
             <Text>
               NEXT
             </Text>
           </CustomButton>
-        </CustomWrapper>
+        </CustomBasicWrapper>
       </Root>
     )
   }

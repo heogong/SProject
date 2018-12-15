@@ -1,15 +1,34 @@
 import React, { Component } from 'react';
+import { AsyncStorage } from "react-native"
 
 import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
-import CustomWrapper from '../../Common/Components/CustomWrapper';
+import CustomBasicWrapper from '../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../Common/Components/CustomButton';
 
 export default class PageOne extends Component {
+
+  // 테스트 AsyncStorage 토큰값 체크
+  async componentDidMount() {
+    try {
+      const AccessToken = await AsyncStorage.getItem('AccessToken');
+      const RefreshToken = await AsyncStorage.getItem('RefreshToken');
+      if (AccessToken !== null) {
+        // We have data!!
+        console.log(AccessToken);
+        console.log(RefreshToken);
+
+        Actions.ListBusinessPlace();
+      }
+     } catch (error) {
+       // Error retrieving data
+     }
+  }
+
   render() {
     return (
-      <CustomWrapper>
+      <CustomBasicWrapper>
         <CustomButton 
           block={ true }
           info={ true }
@@ -34,10 +53,10 @@ export default class PageOne extends Component {
           bordered={ true }
           onPress={Actions.tab_1}>
           <Text>
-            테스트 drawer
+            drawer
           </Text>
         </CustomButton>
-      </CustomWrapper>
+      </CustomBasicWrapper>
     )
   }
 }

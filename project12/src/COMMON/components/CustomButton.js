@@ -20,6 +20,7 @@ class CustomButton extends Component {
     render() {
         return (
             <Button
+                style={{ margin: 15, marginTop: 10, width: 200 }}
                 light={ this.props.light } 
                 primary={ this.props.primary } 
                 success={ this.props.success } 

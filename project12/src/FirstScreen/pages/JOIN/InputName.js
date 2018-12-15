@@ -4,8 +4,8 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrNm, setSnsSignYn } from '../../../Redux/Actions';
 
-import { Item, Input, Form, Text } from "native-base";
-import CustomWrapper from '../../../Common/Components/CustomWrapper';
+import { Item, Input, Text } from "native-base";
+import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../../Common/Components/CustomButton';
 
 const USER_NM_LEN = 1;
@@ -38,30 +38,28 @@ class InputName extends Component {
   
   render() {
     return (
-      <CustomWrapper>
-        <Text>고객명을 입력해주세요</Text>
+      <CustomBasicWrapper>
+        {/* <Text>고객명을 입력해주세요</Text> */}
 
-        <Form>
-          <Item fixedLabel>
-              <Input 
-                onChangeText={ this._handleChange }
-                value={ this.state.text }
-                placeholder='홍길동'
-              />
-          </Item>
-        </Form>
+        <Item rounded>
+            <Input
+              onChangeText={ this._handleChange }
+              value={ this.state.text }
+              placeholder='홍길동'
+            />
+        </Item>
 
         <CustomButton
           block={ true }
           info={ true }
           bordered={ true }
           disabled={ this.state.btnDisabled }
-          onPress={this._NextButton}>
+          onPress={ this._NextButton }>
           <Text>
             NEXT
           </Text>
         </CustomButton>
-      </CustomWrapper>
+      </CustomBasicWrapper>
     )
   }
 }

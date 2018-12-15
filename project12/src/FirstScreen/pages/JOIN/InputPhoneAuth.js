@@ -3,23 +3,30 @@ import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
-import { Item, Input, Form, Root, Text, Toast } from "native-base";
-import CustomWrapper from '../../../Common/Components/CustomWrapper';
+import { Item, Input, Root, Text, Toast } from "native-base";
+import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../../Common/Components/CustomButton';
 
 import SignUp from '../../Functions/SignUp';
 import CheckUsr from '../../Functions/CheckUsr';
 import CheckSmsCertNum from '../../Functions/CheckSmsCertNum';
 
+const CERT_LEN = 4
 class InputPhoneAuth extends Component {
   constructor(props) {
     super(props);
 
     this.state = { 
       InpuCertNum: '',
-      SmsResultMsg: ''
+      btnDisabled: true
     };
   }
+
+  // 인증번호 next 버튼 활성화 여부
+  _handleNumberChange = async (text)  => {
+    await this.setState({InpuCertNum : text})
+    this.setState({btnDisabled : (this.state.InpuCertNum.length > CERT_LEN) ? false : true})
+  } 
 
   _checkSmsCertNum = () => {
     // SMS 인증 확인
@@ -42,29 +49,31 @@ class InputPhoneAuth extends Component {
                 const SignUpResultBool = await (result.resultCode == '0000') ? true : false; // API 결과 여부 확인
                 if (SignUpResultBool) {
                 
-                  // 페이지 이동
+                  // 메인 페이지 이동
 
                 } else {
-                  await Toast.show({
+                  Toast.show({
                     text: result.resultMsg,
                     type: "danger",
-                    buttonText: '확인'
+                    buttonText: '확인',
+                    duration: 5000
                   })
 
-                  Actions.InitPage();
+                  //Actions.InitPage();
                 }
               });
             } else {
+              // SNS 가입 아닐경우 이메일 입력 이동
               Actions.JoinInputEmail();
             }
           } else {
-            await Toast.show({
+            Toast.show({
               text: result.resultMsg,
-              type: "danger",
-              buttonText: '확인'
+              type: "warning",
+              buttonText: "이동",
+              duration: 5000,
+              onClose : this._closeMoveAccountType
             })
-            //Actions.popTo('JoinInputName'); // 뒤로가면서 기존페이지로 이동하는 듯;;
-            Actions.pageOne();
           }
         });
         
@@ -78,27 +87,42 @@ class InputPhoneAuth extends Component {
     })
   };
 
+  // 이미 가입된 대상자 화면 이동
+  _closeMoveAccountType = () => {
+    Actions.LoginAccountType();
+  }
+
   render() {
     return (
       <Root>
-        <CustomWrapper>
-          {/* <Text>인증번호 입력</Text>
+        <CustomBasicWrapper>
+          <Text>인증번호 입력</Text>
           <Text>인증ID : {this.props.smsSendId} </Text>
-          <Text>인증번호 : {this.props.certNum} </Text> */}
+          <Text>인증번호 : {this.props.certNum} </Text>
           
           
             <Item rounded >
               <Input 
-                onChangeText={(text) => this.setState({InpuCertNum: text})}
+                onChangeText={this._handleNumberChange}
                 value={this.state.text}
                 keyboardType='numeric'
                 onSubmitEditing={this._checkSmsCertNum}
-                placeholder='Rounded Textbox'
+                placeholder='######'
+                maxLength={ CERT_LEN + 2 }
               />
             </Item>
 
-          <Text>{this.state.SmsResultMsg}</Text>
-        </CustomWrapper>
+            <CustomButton
+              block={ true }
+              info={ true }
+              bordered={ true }
+              disabled={ this.state.btnDisabled }
+              onPress={this._checkSmsCertNum}>
+              <Text>
+                NEXT
+              </Text>
+            </CustomButton>
+        </CustomBasicWrapper>
       </Root>
     )
   }

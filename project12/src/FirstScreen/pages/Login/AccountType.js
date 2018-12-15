@@ -1,30 +1,51 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import Button from '../../../Common/Components/CustomButton';
+import { BackHandler } from 'react-native';
 
+import { Text } from "native-base";
+import { Actions } from 'react-native-router-flux';
+
+import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
+import CustomButton from '../../../Common/Components/CustomButton';
 import NaverLogin from '../../Components/NaverLogin';
 
 export default class AccountType extends Component {
+  
+  componentDidMount () {
+    BackHandler.addEventListener('hardwareBackPress', () => Actions.InitPage()) // Listen for the hardware back button on Android to be pressed
+  }
+
+  componentWillUnmount () {
+    BackHandler.removeEventListener('hardwareBackPress', () => Actions.InitPage()) // Remove listener
+  }
+
   render() {
     const loginYn = true; // 진입 경로(로그인/회원가입) 확인
     return (
-      <View style={{margin: 128}}>
+      <CustomBasicWrapper>
         <NaverLogin
           loginYn={ loginYn }
           name="NAVER 로그인"
         />
-        <Button onPress={Actions.InitPage}>
+        <CustomButton
+          block={ true }
+          info={ true }
+          bordered={ true }
+          onPress={Actions.InitPage}>
           <Text>
-              카카오톡 로그인
+          카카오톡 로그인
           </Text>
-        </Button>
-        <Button onPress={Actions.LoginInputAccount}>
+        </CustomButton>
+        <CustomButton
+          block={ true }
+          info={ true }
+          bordered={ true }
+          onPress={Actions.LoginInputAccount}>
           <Text>
-           이메일 로그인
+          이메일 로그인
           </Text>
-        </Button>
-      </View>
+        </CustomButton>
+
+      </CustomBasicWrapper>
     )
   }
 }
