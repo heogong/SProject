@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, BackHandler } from "react-native"
+import { BackHandler } from "react-native"
 
 import { 
     Body,
@@ -42,22 +42,50 @@ class ListBusinessPlace extends Component {
         BackHandler.removeEventListener('hardwareBackPress', () => this._handleBackPress) // Remove listener
     }
 
-    componentWillReceiveProps () {
-        this._getBizList();
-    }
+    // componentWillReceiveProps () {
+    //     this._getBizList();
+    // }
 
     _handleBackPress = () => {
         return false;
     }
 
     // 사업장 목록 가져오기
-    _getBizList = async ()  => {
-        const AccessToken = await AsyncStorage.getItem('AccessToken');
+    _getBizList = () => {
+        GetBizList().then(async result => {
+            const TokenState = await (result == 'AccessTokenRefresh') ? true : false; // 토큰 갱신 여부
 
-        GetBizList(AccessToken).then(result => {
-            this.setState({data : result.data});
+            // 토큰 갱신됐을 경우 재귀 호출
+            if (TokenState) {
+                this._getBizList();
+            } else {
+                const ResultBool = await (result.resultCode == '0000') ? true : false; // API 결과 여부 확인
+                if(ResultBool) {
+                    this.setState({data : result.data});
+                }
+            }
+            // this._getData(result, this._getBizList).then(async resultData => {
+            //     if(resultData !== undefined) {
+            //         const ResultBool = await (resultData.resultCode == '0000') ? true : false; // API 결과 여부 확인
+            //         if(ResultBool) {
+            //             this.setState({data : resultData.data});
+            //         }
+            //     }
+            // });
+
         });
     }
+
+    // async _getData(data, selfFn) {
+    //     const TokenState = await (data == 'AccessTokenRefresh') ? true : false; // 토큰 갱신 여부
+
+    //      // 토큰 갱신됐을 경우 재귀 호출
+    //      if (TokenState) {
+    //         await selfFn();
+    //     } else {
+    //         return data;
+    //     }
+    // }
 
     // 디폴트 리스트 
     _renderListItem = (item) => (
@@ -98,7 +126,7 @@ class ListBusinessPlace extends Component {
     // }
 
     _onPress = (bizPlaceId) => {
-        this.props.onSetBizId(bizPlaceId)
+        this.props.onSetBizId(bizPlaceId); // 사업장 ID 리덕스 SET
         Actions.InputProdType({bizPlaceId : bizPlaceId});
     }
     
