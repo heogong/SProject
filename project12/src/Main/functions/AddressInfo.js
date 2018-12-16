@@ -1,6 +1,6 @@
-import { domain } from '../../Common/ApiDomain';
+import { DOMAIN } from '../../Common/Blend';
 
-const API_URL = `${domain}/api/kakao/local/search/address?query=`;
+const API_URL = `${DOMAIN}/api/kakao/local/search/address?query=`;
 
 function GetAddressUrl(strAddress) {
   return `${API_URL}${strAddress}`;

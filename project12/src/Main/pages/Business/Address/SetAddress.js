@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from "react-native"
+
+import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
 
 import { Body, Container, Text, Button, Content, Input, Label, ListItem, Root, Toast } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -7,8 +8,9 @@ import { Actions } from 'react-native-router-flux';
 
 import DrawMap from '../../../Components/DrawMap';
 import { connect } from 'react-redux';
-import { setBizAddress, setBizAddressDsc } from '../../../../Redux/Actions';
+import { setBizId, setBizAddress, setBizAddressDsc } from '../../../../Redux/Actions';
 import RegBizPlace from '../../../Functions/RegBizPlace';
+import GetCommonData from '../../../../Common/Functions/GetCommonData';
 
 const ADDRESS_DETAIL_LEN = 1;
 
@@ -64,28 +66,39 @@ class SetAddress extends Component {
         }
     }
 
-    // 사업장 저장
-    async _SaveButton() {
+    // 사업장 저장 버튼 클릭
+    _SaveButton() {
+       this._regBusiness();
+    }
+
+    // 사업장 등록
+    _regBusiness = async () => {
         await this.props.onSetBizAddress(this.state.addressObj);  // 리덕스 주소 오브젝트 SET
         await this.props.onSetBizAddressDsc(this.state.detailAddressName);  // 리덕스 상세주소 SET
-        const AccessToken = await AsyncStorage.getItem('AccessToken');
 
-        RegBizPlace(this.props.value, AccessToken).then(async result => {
-
-            const ResultBool = await (result.error) ? false : true; // API 결과 여부 확인
-            if(ResultBool) {
-                console.log(result);
-                // Actions.popTo("ListBusinessPlace"); // 페이지 이동
-                // Actions.refresh({key: "ListBusinessPlace"}) // 페이지 새로고침
-            } else {
-                Toast.show({
-                    text: result.resultMsg,
-                    type: "danger",
-                    buttonText: '확인'
-                })
-            }
+        RegBizPlace(this.props.value).then(async result => {
+            GetCommonData(result, this._regBusiness).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    if(ResultBool) {
+                        //console.log("result : ", result);
+                        //Actions.popTo("ListBusinessPlace"); // 페이지 이동
+                        //Actions.refresh({key: "ListBusinessPlace"}) // 페이지 새로고침
+                        await this.props.onSetBizId(resultData.bizPlaceId); // 사업장 ID 리덕스 SET
+                        Actions.InputProdType();
+                    } else {
+                        Toast.show({
+                            text: result.resultMsg,
+                            type: "danger",
+                            buttonText: '확인'
+                        })
+                    }
+                }
+            });
         });
     }
+
+
 
     render() {
         return (
@@ -137,6 +150,7 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
     return {
+        onSetBizId: (value) => dispatch(setBizId(value)),
         onSetBizAddress: (value) => dispatch(setBizAddress(value)),
         onSetBizAddressDsc: (value) => dispatch(setBizAddressDsc(value))
     }

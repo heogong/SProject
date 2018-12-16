@@ -1,6 +1,8 @@
-import { domain } from '../../Common/ApiDomain';
+import { AsyncStorage } from "react-native"
+import { DOMAIN, INVAILD_TOKEN } from '../../Common/Blend';
+import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${domain}/coolinic/clients/products/bplace?`;
+const API_URL = `${DOMAIN}/coolinic/clients/products/bplace?`;
 
 function RegBizPlaceUrl(bizObj) {
   return `${API_URL}bplaceNm=${bizObj.bizNm}
@@ -32,7 +34,8 @@ function RegBizPlaceUrl(bizObj) {
   `;
 }
 
-const regBizPlace = (bizObj, AccessToken) => {
+const regBizPlace = async (bizObj) => {
+  const AccessToken = await AsyncStorage.getItem('AccessToken');
   //console.log("bizObj : ",bizObj);
   //console.log("RegBizPlaceUrl : ",RegBizPlaceUrl(bizObj))
   return fetch(RegBizPlaceUrl(bizObj), {
@@ -40,9 +43,15 @@ const regBizPlace = (bizObj, AccessToken) => {
     headers: {
       "Authorization": "Bearer " + AccessToken
     }
-  }).then((response) => response.json()).then((responseJson) => {
-    return responseJson;
-  }).catch((err) => {
+  }).then((response) => response.json()).then(async (responseJson) => {
+    // 액세스 토큰 만료
+    if(responseJson.error == INVAILD_TOKEN) {
+     await GetAccessToken();
+     return "AccessTokenRefresh";
+    } else {
+      return responseJson;
+    }
+}).catch((err) => {
     console.log('ERROR');
     console.log(err);
   });

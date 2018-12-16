@@ -1,6 +1,6 @@
-import { domain } from '../../Common/ApiDomain';
+import { DOMAIN } from '../../Common/Blend';
 
-const API_URL = `${domain}/coolinic/clients/products/bplace/`;
+const API_URL = `${DOMAIN}/coolinic/clients/products/bplace/`;
 
 function GetBizPlaceUrl(bizPlaceId) {
   return `${API_URL}${bizPlaceId}`;

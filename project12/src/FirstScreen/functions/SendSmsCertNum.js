@@ -1,6 +1,6 @@
-import { domain } from '../../Common/ApiDomain';
+import { DOMAIN } from '../../Common/Blend';
 
-const API_URL = `${domain}/coolinic/sms/sendSmsCertNum?`;
+const API_URL = `${DOMAIN}/coolinic/sms/sendSmsCertNum?`;
 
 function SmsCertUrl(number) {
   return `${API_URL}usrPhoneNum=${number}`;

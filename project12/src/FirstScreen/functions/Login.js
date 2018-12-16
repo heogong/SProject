@@ -1,6 +1,6 @@
-import { oauthDomain } from '../../Common/ApiDomain';
+import { OAUTH_DOMAIN } from '../../Common/Blend';
 
-const API_URL = `${oauthDomain}oauth/token?grant_type=password&client_id=FREEZE_COOLINIC_APP&`;
+const API_URL = `${OAUTH_DOMAIN}oauth/token?grant_type=password&client_id=FREEZE_COOLINIC_APP&`;
 
 function LoginUrl(USER, TOKEN) {
   let url = '';

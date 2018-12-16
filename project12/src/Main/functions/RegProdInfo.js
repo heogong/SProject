@@ -1,6 +1,6 @@
-import { domain } from '../../Common/ApiDomain';
+import { DOMAIN } from '../../Common/Blend';
 
-const API_URL = `${domain}/coolinic/clients/products/masters?`;
+const API_URL = `${DOMAIN}/coolinic/clients/products/masters?`;
 
 function RegProdInfoUrl(bizObj, prodTypeId, prodObj) {
   return `${API_URL}

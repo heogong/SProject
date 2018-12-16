@@ -1,8 +1,8 @@
-import { domain } from '../../Common/ApiDomain';
+import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import { AsyncStorage } from "react-native"
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${domain}/coolinic/clients/products/bplaces/me`;
+const API_URL = `${DOMAIN}/coolinic/clients/products/bplaces/me`;
 
 function GetBizListUrl() {
   return `${API_URL}`;
@@ -19,9 +19,9 @@ const getBizList = async () => {
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료
-    if(responseJson.error == "invalid_token") {
+    if(responseJson.error == INVAILD_TOKEN) {
       await GetAccessToken();
-      return "AccessTokenRefresh";
+      return REFRESH_TOKEN;
     } else {
       return responseJson;
     }

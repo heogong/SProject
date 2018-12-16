@@ -74,7 +74,7 @@ const PAGE = () => (
       <Scene key="RegBusinessPlace" component={RegBusinessPlace} title="사업장 등록"/>
       <Scene key="SetAddress" component={SetAddress} title="주소" />
       <Scene key="InputAddress" component={InputAddress} title="주소 등록"/>
-      <Scene key="InputProdType" component={InputProdType} title="제품 타입 등록" />
+      <Scene key="InputProdType" component={InputProdType} title="제품 타입 등록" back onBack={() => Actions.ListBusinessPlace()} />
       <Scene key="InputProdInfo" component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" component={InputProdImage} title="제품 이미지 등록" />
 

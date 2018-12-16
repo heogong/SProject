@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { SUCCESS_RETURN_CODE } from '../../../Common/Blend';
+
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
@@ -31,14 +33,14 @@ class InputPhoneAuth extends Component {
   _checkSmsCertNum = () => {
     // SMS 인증 확인
     CheckSmsCertNum(this.props.smsSendId, this.state.InpuCertNum).then(async result => {
-      const CertResultBool = await (result.resultCode == '0000') ? true : false; // API 결과 여부 확인
+      const CertResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
 
       // SMS 인증 정상 여부
       if(CertResultBool) {
 
         // 가입 여부 확인
         CheckUsr(this.props.value.usrPhoneNum).then(async result => {
-          const UsrResultBool = await (result.resultCode == '0000') ? true : false; // API 결과 여부 확인
+          const UsrResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
 
           if (UsrResultBool) {
             // SNS 가입 여부 확인
@@ -46,7 +48,7 @@ class InputPhoneAuth extends Component {
 
               // 회원가입
               SignUp(this.props.value).then(async result => {
-                const SignUpResultBool = await (result.resultCode == '0000') ? true : false; // API 결과 여부 확인
+                const SignUpResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                 if (SignUpResultBool) {
                 
                   // 메인 페이지 이동

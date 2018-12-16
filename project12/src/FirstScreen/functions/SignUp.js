@@ -1,6 +1,6 @@
-import { domain } from '../../Common/ApiDomain';
+import { DOMAIN } from '../../Common/Blend';
 
-const API_URL = `${domain}iam/users/client?`;
+const API_URL = `${DOMAIN}iam/users/client?`;
 
 function SignUpUrl(USER) {
   return `${API_URL}usrId=${USER.usrId}&usrPwd=${USER.usrPw}&usrNm=${USER.usrNm}&usrPhoneNum=${USER.usrPhoneNum}&snsSignupYn=${USER.snsSignupYn}`;

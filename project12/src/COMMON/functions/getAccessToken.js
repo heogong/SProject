@@ -1,7 +1,7 @@
-import { oauthDomain } from '../ApiDomain';
+import { OAUTH_DOMAIN } from '../Blend';
 import { AsyncStorage } from "react-native"
 
-const API_URL = `${oauthDomain}oauth/token?grant_type=refresh_token&client_id=FREEZE_COOLINIC_APP&refresh_token=`;
+const API_URL = `${OAUTH_DOMAIN}oauth/token?grant_type=refresh_token&client_id=FREEZE_COOLINIC_APP&refresh_token=`;
 
 function TokenUrl(RefreshToken) {
   return `${API_URL}${RefreshToken}`;

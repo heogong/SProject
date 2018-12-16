@@ -1,6 +1,6 @@
-import { domain } from '../../Common/ApiDomain';
+import { DOMAIN } from '../../Common/Blend';
 
-const API_URL = `${domain}iam/users/phonenum/`;
+const API_URL = `${DOMAIN}iam/users/phonenum/`;
 
 function CheckUsrUrl(number) {
   return `${API_URL}${number}`;

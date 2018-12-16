@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
+import { SUCCESS_RETURN_CODE } from '../../../Common/Blend';
+
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrPw } from '../../../Redux/Actions';
@@ -95,7 +97,7 @@ class InputEmail extends Component {
 
       //회원가입
       SignUp(this.props.value).then(async result => {
-        const ResultBool = await (result.resultCode == '0000') ? true : false; // API 결과 여부 확인
+        const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
 
         this.setState({ spinner : false }); // 로딩 end
 

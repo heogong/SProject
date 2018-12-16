@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { BackHandler } from "react-native"
+import { AsyncStorage, BackHandler } from "react-native"
 
+import { SUCCESS_RETURN_CODE } from '../../../Common/Blend';
 import { 
     Body,
+    Button,
     Card,
     CardItem,
     Container, 
@@ -13,14 +15,14 @@ import {
     Left,
     Right,
     Icon
-
 } from 'native-base';
-import GetBizList from '../../Functions/GetBizList';
-import GetBizPlace from '../../Functions/GetBizPlace';
 import { Actions } from 'react-native-router-flux';
-
 import { connect } from 'react-redux';
 import { setBizId } from '../../../Redux/Actions';
+
+import GetBizList from '../../Functions/GetBizList';
+import GetBizPlace from '../../Functions/GetBizPlace';
+import GetCommonData from '../../../Common/Functions/GetCommonData';
 
 class ListBusinessPlace extends Component {
     constructor(props) {
@@ -34,17 +36,13 @@ class ListBusinessPlace extends Component {
     componentDidMount() {
         this._getBizList();
         // 물리버튼 뒤로가기 제어
-        BackHandler.addEventListener('hardwareBackPress', () => this._handleBackPress) // Listen for the hardware back button on Android to be pressed
+        //BackHandler.addEventListener('hardwareBackPress', () => this._handleBackPress) // Listen for the hardware back button on Android to be pressed
     }
 
     // 물리버튼 뒤로가기 제어
     componentWillUnmount () {
         BackHandler.removeEventListener('hardwareBackPress', () => this._handleBackPress) // Remove listener
     }
-
-    // componentWillReceiveProps () {
-    //     this._getBizList();
-    // }
 
     _handleBackPress = () => {
         return false;
@@ -53,39 +51,16 @@ class ListBusinessPlace extends Component {
     // 사업장 목록 가져오기
     _getBizList = () => {
         GetBizList().then(async result => {
-            const TokenState = await (result == 'AccessTokenRefresh') ? true : false; // 토큰 갱신 여부
-
-            // 토큰 갱신됐을 경우 재귀 호출
-            if (TokenState) {
-                this._getBizList();
-            } else {
-                const ResultBool = await (result.resultCode == '0000') ? true : false; // API 결과 여부 확인
-                if(ResultBool) {
-                    this.setState({data : result.data});
+            GetCommonData(result, this._getBizList).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    if(ResultBool) {
+                        this.setState({data : resultData.data});
+                    }
                 }
-            }
-            // this._getData(result, this._getBizList).then(async resultData => {
-            //     if(resultData !== undefined) {
-            //         const ResultBool = await (resultData.resultCode == '0000') ? true : false; // API 결과 여부 확인
-            //         if(ResultBool) {
-            //             this.setState({data : resultData.data});
-            //         }
-            //     }
-            // });
-
+            });
         });
     }
-
-    // async _getData(data, selfFn) {
-    //     const TokenState = await (data == 'AccessTokenRefresh') ? true : false; // 토큰 갱신 여부
-
-    //      // 토큰 갱신됐을 경우 재귀 호출
-    //      if (TokenState) {
-    //         await selfFn();
-    //     } else {
-    //         return data;
-    //     }
-    // }
 
     // 디폴트 리스트 
     _renderListItem = (item) => (
@@ -129,11 +104,27 @@ class ListBusinessPlace extends Component {
         this.props.onSetBizId(bizPlaceId); // 사업장 ID 리덕스 SET
         Actions.InputProdType({bizPlaceId : bizPlaceId});
     }
+
+    // 임시 로그아웃
+    removeItemValue = async () => {
+        try {
+          await AsyncStorage.removeItem("AccessToken");
+          await AsyncStorage.removeItem("RefreshToken");
+
+          Actions.InitPage();
+          return true;
+        }
+        catch(exception) {
+          return false;
+        }
+    }
+
     
     render() {
         return (
             <Container>
                 <Content padder>
+                    <Button onPress={ this.removeItemValue }><Text>로그아웃</Text></Button>
                     <List dataArray={this.state.data} renderRow={this._renderCardItem} />
                 </Content>
             </Container>

@@ -1,6 +1,6 @@
-import { domain } from '../../Common/ApiDomain';
+import { DOMAIN } from '../../Common/Blend';
 
-const API_URL = `${domain}coolinic/payment/card?`;
+const API_URL = `${DOMAIN}coolinic/payment/card?`;
 
 function CardRegUrl(CARD) {
   return `${API_URL}cardNumner=${CARD.cardNumber}&expiry=${CARD.vaildTerm}&birth=${CARD.birthDay}&pwd2digit=${CARD.passwd}`;
