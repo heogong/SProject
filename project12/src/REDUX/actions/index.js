@@ -2,6 +2,7 @@ export const SET_USRID = 'SET_USRID';
 export const SET_USRNM = 'SET_USRNM';
 export const SET_USRPW = 'SET_USRPW';
 export const SET_USRPHONE_NUM = 'SET_USRPHONE_NUM';
+export const SET_USR_CUSTOMER_TYPE = 'SET_USR_CUSTOMER_TYPE';
 export const SET_SNS_SIGN = 'SET_SNS_SIGN';
 
 export const SET_SNS_TOKEN = 'SET_SNS_TOKEN';
@@ -35,6 +36,12 @@ export function setUsrPw(value) {
 export function setUsrPhoneNum(value) {
     return {
         type: SET_USRPHONE_NUM,
+        value: value
+    };
+}
+export function setCustomerType(value) {
+    return {
+        type: SET_USR_CUSTOMER_TYPE,
         value: value
     };
 }

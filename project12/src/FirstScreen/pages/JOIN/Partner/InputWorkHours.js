@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { View } from "react-native"
 
 import { ActionSheet, Container, Button, Content, Root, Text } from "native-base";
 import SelectButton from "../../../Components/SelectButton";
+import CustomBasicWrapper from '../../../../Common/Components/CustomBasicWrapper';
+import CustomButton from '../../../../Common/Components/CustomButton';
 
 class InputWorkHours extends Component {
     constructor(props) {
@@ -56,18 +59,20 @@ class InputWorkHours extends Component {
         return (
             <Root>
                 <Container>
-                    <Content padder>
-                        {this.state.mockData.map((data, idx) => (
-                            <SelectButton 
-                                value={data.value}
-                                text={data.text}
-                                addDataArray={ this._addDataArray }
-                                removeDataArray={ this._removeDataArray }
-                            />
-                        ))}
-                    </Content>
-                    <Content>
-                        <Button
+                    <Content padder >
+                        <View style={{flexDirection: 'row'}}>
+                            {this.state.mockData.map((data, idx) => (
+                                <SelectButton 
+                                    value={data.value}
+                                    text={data.text}
+                                    addDataArray={ this._addDataArray }
+                                    removeDataArray={ this._removeDataArray }
+                                    key={ idx }
+                                />
+                            ))}
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <Button
                                 onPress={() =>
                                     ActionSheet.show(
                                     {
@@ -81,12 +86,10 @@ class InputWorkHours extends Component {
                                         //this.setState({ selectYn : true });
                                     }
                                 )}
-                            >
-                            <Text>{this.state.startHourTitle}</Text>
-                        </Button>
-                    </Content>
-                    <Content>
-                        <Button
+                                >
+                                <Text>{this.state.startHourTitle}</Text>
+                            </Button>
+                            <Button
                                 onPress={() =>
                                     ActionSheet.show(
                                     {
@@ -100,19 +103,21 @@ class InputWorkHours extends Component {
                                         //this.setState({ selectYn : true });
                                     }
                                 )}
-                            >
-                            <Text>{this.state.endHourTitle}</Text>
-                        </Button>
-                    </Content>
-                    <Content>
-                        <Button 
-                            rounded 
-                            success 
-                            bordered 
-                            block
-                            onPress={ this._onPress }>
-                            <Text>다음</Text>
-                        </Button>
+                                >
+                                <Text>{this.state.endHourTitle}</Text>
+                            </Button>
+                        </View>
+                    
+                        <CustomButton
+                            block={ true }
+                            info={ true }
+                            onPress={ this._nextPress }
+                            disabled={ this.state.btnDisabled }>
+                            <Text>
+                                NEXT
+                            </Text>
+                        </CustomButton>
+                        
                     </Content>
                 </Container>
             </Root>

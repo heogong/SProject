@@ -3,6 +3,7 @@ import {
     SET_USRNM,
     SET_USRPW,
     SET_USRPHONE_NUM, 
+    SET_USR_CUSTOMER_TYPE,
     SET_SNS_SIGN,
     SET_SNS_TOKEN,
     SET_ACCESS_TOKEN,
@@ -14,12 +15,14 @@ import {
     SET_BIZ_ADDRESS_DSC
 } from '../Actions';
 import { combineReducers } from 'redux';
+import { PARTNER } from '../../Common/Blend';
 
 const InitialUserState = {
     usrId: '',
     usrNm: '',
     usrPw: '',
     usrPhoneNum: '',
+    usrCustomerType: PARTNER,
     snsSignupYn: 'N'
 };
 
@@ -57,6 +60,10 @@ const USER = (state = InitialUserState, action) => {
         case SET_SNS_SIGN:
             return Object.assign({}, state, {
                 snsSignupYn: action.value
+            });
+        case SET_USR_CUSTOMER_TYPE:
+            return Object.assign({}, state, {
+                usrCustomerType: action.value
             });
         default:
             return state;

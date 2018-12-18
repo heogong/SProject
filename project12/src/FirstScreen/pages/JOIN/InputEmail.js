@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { SUCCESS_RETURN_CODE } from '../../../Common/Blend';
+import { SUCCESS_RETURN_CODE, PARTNER } from '../../../Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -102,7 +102,15 @@ class InputEmail extends Component {
         this.setState({ spinner : false }); // 로딩 end
 
         if (ResultBool) {
-        // 메인 페이지 이동
+        
+        console.log(result);
+
+        // 고객 타입에 따른 페이지 이동
+        if(this.props.value.usrCustomerType == PARTNER) {
+          Actions.JoinInputBizLicense(); // 사업장 등록 페이지
+        } else {
+          //Actions.JoinInputBizLicense(); // 메인 페이지
+        }
 
         } else {
           Toast.show({

@@ -67,7 +67,7 @@ class ProductImage extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
                         //console.log(resultData);
-                        this.setState({ uri : resultData.data.uri , deleteYn : true, insertYn : false});
+                        this.setState({ uri : resultData.data.fileUrl , deleteYn : true, insertYn : false});
                     }
                 }
             });

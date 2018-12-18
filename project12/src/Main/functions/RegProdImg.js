@@ -14,22 +14,22 @@ const regProdImg = async (imgUri, clientPrdId, prdImgCateId) => {
   const AccessToken = await AsyncStorage.getItem('AccessToken');
   const data = new FormData();
 
-  data.append('photo', {
-    uri: imgUri,
-    type: 'image/jpg', // or photo.type
-    name: 'testPhotoName'
-  });
-
   data.append('clientPrdId', clientPrdId); // you can append anyone.
   data.append('prdImgCateId', prdImgCateId); // you can append anyone.
+  data.append('photo', {
+    uri: imgUri,
+    type: 'image/jpeg', // or photo.type
+    name: imgUri
+  });
 
   console.log("data " ,data);
   
   return fetch(RegProdImgUrl(), {
     method: 'POST',
-    body: data,
+    body:  data,
     headers: {
-      "Authorization": "Bearer " + AccessToken
+      "Authorization": "Bearer " + AccessToken,
+      "Content-Type": "multipart/form-data",
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료

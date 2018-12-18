@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { BIZ } from '../../../Common/Blend';
+import { connect } from 'react-redux';
 import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
@@ -7,7 +9,17 @@ import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../../Common/Components/CustomButton';
 import NaverLogin from '../../Components/NaverLogin';
 
-export default class AccountType extends Component {
+class AccountType extends Component {
+
+  // 고객 타입 선택에 따른 페이지 이동
+  _selectCustomerTypeAndGoPage = () => {
+    if(this.props.value.usrCustomerType == BIZ) {
+      Actions.JoinInputName();
+    } else {
+      Actions.JoinInputPhone();
+    }
+  }
+
   render() {
     const loginYn = false; // 진입 경로(로그인/회원가입) 확인
 
@@ -30,7 +42,7 @@ export default class AccountType extends Component {
           block={ true }
           info={ true }
           bordered={ true }
-          onPress={Actions.JoinInputName}>
+          onPress={this._selectCustomerTypeAndGoPage}>
           <Text>
             이메일로 가입하기
           </Text>
@@ -39,3 +51,12 @@ export default class AccountType extends Component {
     )
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+      value: state.USER
+  };
+}
+
+AccountType = connect(mapStateToProps, undefined)(AccountType);
+export default AccountType;

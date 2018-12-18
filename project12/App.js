@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import Page from './Page';
+//import AppNavigator from './AppNavigator';
+import AppNavigator from './Page';
 
 import reducer from './src/Redux/Reducers';
 import { createStore } from 'redux';
@@ -11,7 +12,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Page/>
+        <AppNavigator/>
       </Provider>
     );
   }

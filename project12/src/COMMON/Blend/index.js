@@ -9,3 +9,6 @@ export const REFRESH_TOKEN = 'AccessTokenRefresh';
 // API 결과 STRING 관련
 export const SUCCESS_RETURN_CODE = '0000';
 
+// etc
+export const BIZ = "BUSINESS";
+export const PARTNER = "PARTNER";

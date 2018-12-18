@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 
+import { BIZ, PARTNER } from '../../../Common/Blend';
 import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
+
+import { connect } from 'react-redux';
+import { setCustomerType } from '../../../Redux/Actions';
 
 import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../../Common/Components/CustomButton';
 
-export default class CustomerType extends Component {
+class CustomerType extends Component {
+
+  // 고객 타입 선택 및 페이지 이동
+  _selectCustomerTypeAndGoPage = (customer) => () => {
+    this.props.onSetCustomerType(customer);  // 리덕스 고객타입 SET
+    Actions.JoinAccountType();
+  }
+
   render() {
     return (
       <CustomBasicWrapper>
@@ -15,7 +26,7 @@ export default class CustomerType extends Component {
           block={ true } 
           info={ true }
           bordered={ true } 
-          onPress={Actions.JoinAccountType}>
+          onPress={this._selectCustomerTypeAndGoPage(BIZ)}>
           <Text>
               일반 사업장
           </Text>
@@ -24,7 +35,7 @@ export default class CustomerType extends Component {
           block={ true } 
           info={ true }
           bordered={ true } 
-          onPress={Actions.JoinAccountType}>
+          onPress={this._selectCustomerTypeAndGoPage(PARTNER)}>
           <Text>
             서비스파트너
           </Text>
@@ -33,3 +44,13 @@ export default class CustomerType extends Component {
     )
   }
 }
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+      onSetCustomerType: (value) => dispatch(setCustomerType(value)),
+  }
+}
+
+CustomerType = connect(undefined, mapDispatchToProps)(CustomerType);
+
+export default CustomerType;

@@ -14,7 +14,8 @@ const getProdType = async () => {
   return fetch(GetProdTypeUrl(), {
     method: 'GET',
     headers: {
-      "Authorization": "Bearer " + AccessToken
+      //"Authorization": "Bearer " + AccessToken
+      "Authorization": "Bearer c35793b1-6f77-44ba-95cd-410abe778b69"
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료

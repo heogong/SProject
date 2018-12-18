@@ -13,6 +13,7 @@ import JoinInputPhoneAuth from './src/FirstScreen/Pages/Join/InputPhoneAuth';
 import LoginAccountType from './src/FirstScreen/Pages/Login/AccountType';
 import LoginInputAccount from './src/FirstScreen/Pages/Login/InputAccount';
 
+import JoinInputBizLicense from './src/FirstScreen/Pages/Join/Partner/InputBizLicense'; // 파트너 사업장 등록
 import JoinInputProdType from './src/FirstScreen/Pages/Join/Partner/InputProdType'; // 파트너 제품타입 선택
 import JoinInputWorkHours from './src/FirstScreen/Pages/Join/Partner/InputWorkHours'; // 파트너 근무시간 선택
 
@@ -48,7 +49,7 @@ const PAGE = () => (
   
   <Router>
     <Scene>
-      <Scene key="InitPage" component={InitPage} title="InitPage" initial type={ActionConst.RESET} />
+      <Scene key="InitPage" component={InitPage} title="InitPage" type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
       <Scene key="reactCamera" component={ReactCamera} hideNavBar={true}/>
       
@@ -60,6 +61,7 @@ const PAGE = () => (
       <Scene key="JoinInputPhoneAuth" component={JoinInputPhoneAuth} title="본인 인증"/>
       
       {/* 파트너 회원가입 */}
+      <Scene key="JoinInputBizLicense" component={JoinInputBizLicense} initial title="사업장 등록" />
       <Scene key="JoinInputProdType" component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
       <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} title="근무시간" type={ActionConst.RESET}/>
       
@@ -113,6 +115,7 @@ const PAGE = () => (
             activeBackgroundColor="#DDD"
             navigationBarStyle={{ backgroundColor: 'green' }}
             titleStyle={{ color: 'white', alignSelf: 'center' }}
+            hideNavBar
           >
             <Scene key="tab_1_1" component={TestPage1} title="Tab #1_1111" onRight={() => alert('Right button')} rightTitle="Right" />
           </Stack>

@@ -45,12 +45,9 @@ class ReactCamera extends Component {
               }}
               style = {styles.preview}
               type={RNCamera.Constants.Type.back}
-              flashMode={RNCamera.Constants.FlashMode.on}
+              flashMode={RNCamera.Constants.FlashMode.auto}
               permissionDialogTitle={'Permission to use camera'}
               permissionDialogMessage={'We need your permission to use your camera phone'}
-              onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                console.log(barcodes)
-              }}
           />
           <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center',}}>
             <TouchableOpacity
@@ -67,7 +64,12 @@ class ReactCamera extends Component {
 
   takePicture = async function() {
     if (this.camera) {
-      const options = { quality: 0.5, base64: true };
+      //const options = { quality: 0.5, base64: true };
+      const options = {
+        fixOrientation: false,
+        skipProcessing: true,
+        width: 512
+      };
       const data = await this.camera.takePictureAsync(options)
 
       Actions.pop();

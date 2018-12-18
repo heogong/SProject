@@ -1,9 +1,14 @@
-import { DOMAIN } from '../../Common/Blend';
+import { DOMAIN, BIZ } from '../../Common/Blend';
 
-const API_URL = `${DOMAIN}iam/users/client?`;
+const API_URL_BIZ = `${DOMAIN}iam/users/client?`;
+const API_URL_PARTNER = `${DOMAIN}iam/users/partner?`;
 
 function SignUpUrl(USER) {
-  return `${API_URL}usrId=${USER.usrId}&usrPwd=${USER.usrPw}&usrNm=${USER.usrNm}&usrPhoneNum=${USER.usrPhoneNum}&snsSignupYn=${USER.snsSignupYn}`;
+  if(USER.usrCustomerType == BIZ) {
+    return `${API_URL_BIZ}usrId=${USER.usrId}&usrPwd=${USER.usrPw}&usrNm=${USER.usrNm}&usrPhoneNum=${USER.usrPhoneNum}&snsSignupYn=${USER.snsSignupYn}`;
+  } else {
+    return `${API_URL_PARTNER}usrId=${USER.usrId}&usrPwd=${USER.usrPw}&usrNm=${USER.usrNm}&usrPhoneNum=${USER.usrPhoneNum}&snsSignupYn=${USER.snsSignupYn}`;
+  }
 }
 
 function SignUp(USER) {
