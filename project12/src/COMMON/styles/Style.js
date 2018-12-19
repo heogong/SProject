@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+    area: {
+      flex : 1
+    },
     align: {
-      flex: 1,
       justifyContent: 'center',
       alignItems : 'center'
     }

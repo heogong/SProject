@@ -55,7 +55,9 @@ class InputPhone extends Component {
   render() {
     return (
       <Root>
-        <CustomBasicWrapper>
+        <CustomBasicWrapper
+          title="전화번호"
+        >
           <Text>인증번호를 받을 휴대폰 번호</Text>
             <Item rounded>
               <Input 

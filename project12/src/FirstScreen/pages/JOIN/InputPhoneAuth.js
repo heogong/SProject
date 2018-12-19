@@ -97,7 +97,9 @@ class InputPhoneAuth extends Component {
   render() {
     return (
       <Root>
-        <CustomBasicWrapper>
+        <CustomBasicWrapper
+          title="본인 인증"
+        >
           <Text>인증번호 입력</Text>
           <Text>인증ID : {this.props.smsSendId} </Text>
           <Text>인증번호 : {this.props.certNum} </Text>

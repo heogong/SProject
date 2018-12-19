@@ -38,7 +38,9 @@ class InputName extends Component {
   
   render() {
     return (
-      <CustomBasicWrapper>
+      <CustomBasicWrapper
+        title="고객 이름"
+      >
         {/* <Text>고객명을 입력해주세요</Text> */}
 
         <Item rounded>

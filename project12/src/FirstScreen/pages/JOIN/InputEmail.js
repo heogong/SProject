@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { AsyncStorage, StyleSheet } from 'react-native';
 
 import { SUCCESS_RETURN_CODE, PARTNER } from '../../../Common/Blend';
 
@@ -16,6 +16,8 @@ const USER_EMAIL_LEN = 10;
 const USR_PASSWD_LEN = 1;
 const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
 
+let HISTORY_PAGE;
+
 class InputEmail extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +28,12 @@ class InputEmail extends Component {
       btnDisabled: true,
       spinner: false
     };
+  }
+
+  componentWillMount () {
+    // 고객 구분에 따른 뒤로 가기 페이지 
+    HISTORY_PAGE = (this.props.value.usrCustomerType == PARTNER) ? "JoinInputPhone" : "JoinInputName";
+
   }
 
   // 이메일 next 버튼 활성화 여부
@@ -102,8 +110,8 @@ class InputEmail extends Component {
         this.setState({ spinner : false }); // 로딩 end
 
         if (ResultBool) {
-        
-        console.log(result);
+          
+          console.log(result);
 
         // 고객 타입에 따른 페이지 이동
         if(this.props.value.usrCustomerType == PARTNER) {
@@ -127,7 +135,11 @@ class InputEmail extends Component {
   render() {
     return (
       <Root>
-        <CustomBasicWrapper>
+        <CustomBasicWrapper
+          title="이메일 가입"
+          backAction={ true }
+          actionName={ HISTORY_PAGE }
+        >
           <Text>이메일 주소를 입력해 주세요</Text>
           <Item rounded>
             <Input 

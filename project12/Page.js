@@ -49,21 +49,21 @@ const PAGE = () => (
   
   <Router>
     <Scene>
-      <Scene key="InitPage" component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" initial type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
       <Scene key="reactCamera" component={ReactCamera} hideNavBar={true}/>
       
-      <Scene key="JoinCustomerType" component={JoinCustomerType} title="고객 구분"/>
-      <Scene key="JoinAccountType" component={JoinAccountType} title="가입 구분"/>
-      <Scene key="JoinInputEmail" component={JoinInputEmail} title="이메일 가입" back onBack={() => Actions.JoinInputName()} />
-      <Scene key="JoinInputName" component={JoinInputName} title="고객 이름"/>
-      <Scene key="JoinInputPhone" component={JoinInputPhone} title="전화번호"/>
-      <Scene key="JoinInputPhoneAuth" component={JoinInputPhoneAuth} title="본인 인증"/>
+      <Scene key="JoinCustomerType" hideNavBar component={JoinCustomerType} title="고객 구분"/>
+      <Scene key="JoinAccountType" hideNavBar component={JoinAccountType} title="가입 구분"/>
+      <Scene key="JoinInputEmail" hideNavBar component={JoinInputEmail} title="이메일 가입" back onBack={() => Actions.JoinInputName()} />
+      <Scene key="JoinInputName" hideNavBar component={JoinInputName} title="고객 이름"/>
+      <Scene key="JoinInputPhone" hideNavBar component={JoinInputPhone} title="전화번호"/>
+      <Scene key="JoinInputPhoneAuth" hideNavBar component={JoinInputPhoneAuth} title="본인 인증"/>
       
       {/* 파트너 회원가입 */}
-      <Scene key="JoinInputBizLicense" component={JoinInputBizLicense} initial title="사업장 등록" />
-      <Scene key="JoinInputProdType" component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
-      <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} title="근무시간" type={ActionConst.RESET}/>
+      <Scene key="JoinInputBizLicense" hideNavBar component={JoinInputBizLicense} title="사업장 등록" type={ActionConst.RESET}/>
+      <Scene key="JoinInputProdType" hideNavBar component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
+      <Scene key="JoinInputWorkHours" hideNavBar component={JoinInputWorkHours} title="근무시간" type={ActionConst.RESET}/>
       
       <Scene key="LoginAccountType" component={LoginAccountType} title="로그인 구분" back onBack={() => Actions.InitPage()}/>
       <Scene key="LoginInputAccount" component={LoginInputAccount} title="이메일 로그인"/>

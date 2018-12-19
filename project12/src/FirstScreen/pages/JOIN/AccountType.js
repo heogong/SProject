@@ -24,7 +24,9 @@ class AccountType extends Component {
     const loginYn = false; // 진입 경로(로그인/회원가입) 확인
 
     return (
-      <CustomBasicWrapper>
+      <CustomBasicWrapper
+        title="가입 구분"
+      >
         <NaverLogin
           loginYn={ loginYn }
           name="NAVER 회원가입"

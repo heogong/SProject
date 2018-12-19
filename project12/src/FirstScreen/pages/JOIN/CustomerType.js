@@ -20,7 +20,9 @@ class CustomerType extends Component {
 
   render() {
     return (
-      <CustomBasicWrapper>
+      <CustomBasicWrapper
+        title="고객 구분"
+      >
         <Text>고객 구분을 선택해 주세요.</Text>
         <CustomButton 
           block={ true } 

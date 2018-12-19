@@ -28,7 +28,10 @@ export default class PageOne extends Component {
 
   render() {
     return (
-      <CustomBasicWrapper>
+      <CustomBasicWrapper
+        title="회원가입/로그인"
+        resetPage={ true }
+      >
         <CustomButton 
           block={ true }
           info={ true }

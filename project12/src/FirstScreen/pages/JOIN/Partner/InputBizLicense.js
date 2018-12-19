@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { Input, Item, Text } from "native-base";
+import { Button, Body, Container, Header, Left, Right, Icon, Input, Item, Title, Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
 import CustomBasicWrapper from '../../../../Common/Components/CustomBasicWrapper';
@@ -36,7 +36,10 @@ class InputBizLicense extends Component {
 
   render() {
     return (
-      <CustomBasicWrapper>
+      <CustomBasicWrapper
+        resetPage={ true }
+        title="사업자등록증 입력"
+      >
         <CustomButton
           block={ true }
           info={ true }
