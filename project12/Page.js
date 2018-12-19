@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator';
 import {Actions, Scene, Router, Stack, Overlay, ActionConst, Drawer, Tabs} from 'react-native-router-flux';
 import InitPage from './src/FirstScreen/Pages/InitPage';
 import PageOne from './src/FirstScreen/Pages/PageOne';
@@ -48,12 +49,12 @@ import InputProdImage from './src/Main/Pages/Business/Product/InputProdImage' //
 const PAGE = () => ( 
   
   <Router>
-    <Scene>
+    <Scene transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
       <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" initial type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
       <Scene key="reactCamera" component={ReactCamera} hideNavBar={true}/>
       
-      <Scene key="JoinCustomerType" hideNavBar component={JoinCustomerType} title="고객 구분"/>
+      <Scene key="JoinCustomerType" hideNavBar component={JoinCustomerType} title="고객 구분" />
       <Scene key="JoinAccountType" hideNavBar component={JoinAccountType} title="가입 구분"/>
       <Scene key="JoinInputEmail" hideNavBar component={JoinInputEmail} title="이메일 가입" back onBack={() => Actions.JoinInputName()} />
       <Scene key="JoinInputName" hideNavBar component={JoinInputName} title="고객 이름"/>
