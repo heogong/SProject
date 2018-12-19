@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View } from "react-native"
 
-import { Container, Text } from "native-base";
+import { Container, Content } from "native-base";
 import CustomHeader from './CustomHeader';
 import Style from '../Styles/Style';
 
@@ -28,10 +28,10 @@ class CustomBasicWrapper extends Component {
                     actionName={ this.props.actionName }
                 />
                 
-                <Container style={Style.align}>
-                    <View style={{flexDirection: 'column'}}>
+                <Container>
+                    <Content padder>
                         {this.props.children}
-                    </View>
+                    </Content>
                 </Container>
             </View>
         );

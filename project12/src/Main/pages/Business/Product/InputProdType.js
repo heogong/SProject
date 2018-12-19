@@ -62,7 +62,9 @@ class InputProdType extends Component {
     render() {
         return (
             <Root>
-                <CustomBasicWrapper>
+                <CustomBasicWrapper
+                    title="제품 타입 등록"
+                >
                     <CustomButton
                         onPress={() =>
                             ActionSheet.show(

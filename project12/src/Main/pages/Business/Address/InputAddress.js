@@ -46,7 +46,7 @@ class InputAddress extends Component {
   );
 
   _onPress = (item) => {
-    Actions.popTo('SetAddress'); // 뒤로가면서 기존페이지로 이동
+    Actions.pop(); // 뒤로가면서 기존페이지로 이동
     this.props.onResult({ result: item })
   }
   

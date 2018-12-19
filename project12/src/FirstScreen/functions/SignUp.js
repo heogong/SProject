@@ -16,7 +16,7 @@ function SignUp(USER) {
   return fetch(SignUpUrl(USER), {
     method : 'post'
   }).then((response) => response.json()).then(async (responseJson) => {
-
+    console.log(responseJson);
     if(responseJson.resultCode == SUCCESS_RETURN_CODE) {
       await AsyncStorage.setItem('AccessToken', responseJson.data.access_token); // AsyncStorage 토큰 저장
       await AsyncStorage.setItem('RefreshToken', responseJson.data.refresh_token); // AsyncStorage 갱신 토큰 저장

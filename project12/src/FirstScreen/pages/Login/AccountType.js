@@ -21,7 +21,9 @@ export default class AccountType extends Component {
   render() {
     const loginYn = true; // 진입 경로(로그인/회원가입) 확인
     return (
-      <CustomBasicWrapper>
+      <CustomBasicWrapper
+        title="로그인 구분"
+      >
         <NaverLogin
           loginYn={ loginYn }
           name="NAVER 로그인"

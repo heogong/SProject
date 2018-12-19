@@ -78,7 +78,9 @@ class InputAccount extends Component {
   render() {
     return (
       <Root>
-        <CustomBasicWrapper>
+        <CustomBasicWrapper
+          title="이메일 로그인"
+        >
           <Item rounded>
             <Input
               onChangeText={ this._handleEmailChange }

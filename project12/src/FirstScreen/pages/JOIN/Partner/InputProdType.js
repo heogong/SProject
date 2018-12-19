@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import { View } from 'react-native';
 
 import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
-import { Container, Button, Content, Text } from "native-base";
+import { Content, Text } from "native-base";
 import SelectButton from "../../../Components/SelectButton";
 
-import CustomBasicWrapper from '../../../../Common/Components/CustomBasicWrapper';
+import CustomHeader from '../../../../Common/Components/CustomHeader';
 import CustomButton from '../../../../Common/Components/CustomButton';
 import GetProdType from '../../../../Main/Functions/GetProdType';
 import GetCommonData from '../../../../Common/Functions/GetCommonData';
@@ -61,17 +62,27 @@ class InputProdType extends Component {
 
     render() {
         return (
-            <CustomBasicWrapper>
-                <Content padder>
-                {this.state.data.map((item, idx) => (
-                    <SelectButton 
-                        value={item.prdTypeId}
-                        text={item.prdTypeKoNm}
-                        addDataArray={ this._addDataArray }
-                        removeDataArray={ this._removeDataArray }
-                        key={ idx }
-                    />
-                ))}
+            <View style={{ flex:1 }}>
+                <CustomHeader
+                    title='제품 타입 선택'
+                    backBtn={ true }
+                    rightBtn={ false }
+                    resetPage={ false }
+                    backAction={ false }
+                    actionName=''
+                />
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', padding: 10}}>
+                    {this.state.data.map((item, idx) => (
+                        <SelectButton 
+                            value={item.prdTypeId}
+                            text={item.prdTypeKoNm}
+                            addDataArray={ this._addDataArray }
+                            removeDataArray={ this._removeDataArray }
+                            key={ idx }
+                        />
+                    ))}
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
                     <CustomButton
                         block={ true }
                         info={ true }
@@ -81,8 +92,8 @@ class InputProdType extends Component {
                             NEXT
                         </Text>
                     </CustomButton>
-                </Content>
-            </CustomBasicWrapper>
+                </View>
+            </View>
         )
     }
 }

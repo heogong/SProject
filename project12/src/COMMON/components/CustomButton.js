@@ -14,6 +14,7 @@ class CustomButton extends Component {
         bordered: false,
         rounded: false,
         block: false,
+        full: false,
         disabled: false
       }
 
@@ -33,6 +34,7 @@ class CustomButton extends Component {
                 block={ this.props.block }
                 disabled={ this.props.disabled }
                 onPress={ this.props.onPress }
+                full={ this.props.full}
             >
                 {this.props.children}
             </Button>

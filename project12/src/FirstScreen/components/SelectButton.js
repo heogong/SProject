@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button, Content, Text, Thumbnail, Icon } from "native-base";
+import { Button, Content, Text } from "native-base";
 
 class SelectButton extends Component {
     constructor(props) {
@@ -23,15 +23,13 @@ class SelectButton extends Component {
 
     render() {
         return (
-            <Content>
-                <Button
-                    bordered 
-                    light={ !this.state.btnClick }
-                    onPress={ this._handleBtnClick }
-                >
-                    <Text>{ this.props.text }</Text>
-                </Button>
-            </Content>
+            <Button
+                bordered 
+                light={ !this.state.btnClick }
+                onPress={ this._handleBtnClick }
+            >
+                <Text>{ this.props.text }</Text>
+            </Button>
         )
     }
 }

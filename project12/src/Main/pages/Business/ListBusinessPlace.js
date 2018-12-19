@@ -23,6 +23,7 @@ import { setBizId } from '../../../Redux/Actions';
 import GetBizList from '../../Functions/GetBizList';
 import GetBizPlace from '../../Functions/GetBizPlace';
 import GetCommonData from '../../../Common/Functions/GetCommonData';
+import CustomBlockWrapper from '../../../Common/Components/CustomBlockWrapper';
 
 class ListBusinessPlace extends Component {
     constructor(props) {
@@ -122,12 +123,14 @@ class ListBusinessPlace extends Component {
     
     render() {
         return (
-            <Container>
-                <Content padder>
-                    <Button onPress={ this.removeItemValue }><Text>로그아웃</Text></Button>
-                    <List dataArray={this.state.data} renderRow={this._renderCardItem} />
-                </Content>
-            </Container>
+            <CustomBlockWrapper
+                title="사업장 목록"
+                resetPage={ true }
+                rightBtn={ true }
+            >
+                <Button onPress={ this.removeItemValue }><Text>로그아웃</Text></Button>
+                <List dataArray={this.state.data} renderRow={this._renderCardItem} />
+            </CustomBlockWrapper>
         )
     }
 }

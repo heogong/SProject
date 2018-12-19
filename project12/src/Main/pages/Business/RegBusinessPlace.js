@@ -13,6 +13,8 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setBizNm, setBizDsc } from '../../../Redux/Actions';
+import CustomBlockWrapper from '../../../Common/Components/CustomBlockWrapper';
+import CustomButton from '../../../Common/Components/CustomButton';
   
 let propsData = false; // 데이터 유무 (조회일 경우에는 데이터 존재)
 
@@ -54,28 +56,31 @@ class RegBusinessPlace extends Component {
 
     render() {
         return (
-            <Container>
-                <Content>
-                    <Item rounded>
-                        <Input
-                            value={this.state.bizNm}
-                            placeholder='사업장명'
-                            onChangeText={(text) => this.setState({bizNm : text})}
-                        />
-                    </Item>
-                    <Textarea 
-                        value={this.state.bizDsc}
-                        rowSpan={5} 
-                        bordered 
-                        placeholder="사업장 설명"
-                        onChangeText={(text) => this.setState({bizDsc : text})}
+            <CustomBlockWrapper
+                title="사업장 등록"
+            >
+                <Item rounded>
+                    <Input
+                        value={this.state.bizNm}
+                        placeholder='사업장명'
+                        onChangeText={(text) => this.setState({bizNm : text})}
                     />
-                    <Button rounded block dark onPress={this._NextButton} disabled={false}>
-                        <Text>다음</Text>
-                    </Button>
-                </Content>
-                
-            </Container>
+                </Item>
+                <Textarea 
+                    value={this.state.bizDsc}
+                    rowSpan={5} 
+                    bordered 
+                    placeholder="사업장 설명"
+                    onChangeText={(text) => this.setState({bizDsc : text})}
+                />
+                <CustomButton 
+                    block={ true }
+                    info={ true }
+                    bordered={ true }
+                    onPress={this._NextButton} >
+                    <Text>다음</Text>
+                </CustomButton>
+            </CustomBlockWrapper>
         )
     }
 }
