@@ -15,13 +15,14 @@ class CustomButton extends Component {
         rounded: false,
         block: false,
         full: false,
-        disabled: false
+        disabled: false,
+        styleWidth: true
       }
 
     render() {
         return (
             <Button
-                style={{ margin: 15, marginTop: 10, width: 200 }}
+                style={ (this.props.styleWidth) ? { margin: 15, marginTop: 10, width: 200 } : { margin: 15, marginTop: 10 }}
                 light={ this.props.light } 
                 primary={ this.props.primary } 
                 success={ this.props.success } 
@@ -34,7 +35,7 @@ class CustomButton extends Component {
                 block={ this.props.block }
                 disabled={ this.props.disabled }
                 onPress={ this.props.onPress }
-                full={ this.props.full}
+                full={ this.props.full }
             >
                 {this.props.children}
             </Button>

@@ -6,7 +6,13 @@ import { Actions } from "react-native-router-flux";
 
 class CustomHeader extends Component {
     static defaultProps = {
-        
+        title : '제목없음',
+        backAction : false,
+        actionName : '',
+        resetPage : false,
+        backBtn : true,
+        rightBtn : false,
+        menuBtn : false
     }
 
     // 뒤로가기 버튼
