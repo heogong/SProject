@@ -52,7 +52,7 @@ const PAGE = () => (
   
   <Router>
     <Scene transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage"  hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
       <Scene key="reactCamera" component={ReactCamera} hideNavBar={true}/>
       
@@ -65,8 +65,8 @@ const PAGE = () => (
       
       {/* 파트너 회원가입 */}
       <Scene key="JoinInputBizLicense" hideNavBar component={JoinInputBizLicense} title="사업장 등록" type={ActionConst.RESET}/>
-      <Scene key="JoinSetPartnerAddress" hideNavBar component={JoinSetPartnerAddress} title="" />
-      <Scene key="JoinSearchPartnerAddress" initial hideNavBar component={JoinSearchPartnerAddress} title="" />
+      <Scene key="JoinSetPartnerAddress" initial hideNavBar component={JoinSetPartnerAddress} title="" />
+      <Scene key="JoinSearchPartnerAddress" hideNavBar component={JoinSearchPartnerAddress} title="" />
       <Scene key="JoinInputProdType" hideNavBar component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
       <Scene key="JoinInputWorkHours" hideNavBar component={JoinInputWorkHours} title="근무시간" type={ActionConst.RESET}/>
       

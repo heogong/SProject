@@ -7,21 +7,22 @@ class DrawMap extends Component {
     constructor(props) {
       super(props);
 
-      this.state = {};
+      this.state = {
+      };
     }
 
     static defaultProps = {
         lat : '37.566535',
         lng : '126.97796919999996',
-        makerYn : true
+        makerYn : true,
+        
     }
-
     render() {
         return (
-            <View style={styles.container}>
+            <View style={ styles.container }>
                 <MapView
                     provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                    style={styles.map}
+                    style={ styles.map }
                     region={{
                         latitude: Number(this.props.lat),
                         longitude: Number(this.props.lng),
@@ -47,13 +48,16 @@ const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
         justifyContent: 'flex-end',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     map: {
         ...StyleSheet.absoluteFillObject,
     },
     hide: {
         display: 'none'
+    },
+    show: {
+        display: 'flex'
     }
 });
 

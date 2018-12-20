@@ -3,7 +3,7 @@ import { View } from "react-native"
 
 import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
 
-import { Body, Container, Text, Button, Content, Item, Input, Label, ListItem, Root, Toast } from 'native-base';
+import { Body, Container, Text, Button, Content, Item, Input, Icon, Toast } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 
@@ -110,7 +110,7 @@ class SetAddress extends Component {
                 <CustomHeader
                     title="파트너 주소 입력"
                 />
-                <View style={{ flex : 1, padding: 10 }}>
+                <View style={{ flex : 1, padding: 5 }}>
                     <DrawMap
                         lat={this.state.lat}
                         lng={this.state.lng}
@@ -122,6 +122,7 @@ class SetAddress extends Component {
                             onPress={this._goSearchAddress}
                             style={{backgroundColor:'white'}}
                         >
+                            <Icon active name='md-home' />
                             <Input 
                                 disabled
                                 placeholder="주소"

@@ -94,7 +94,6 @@ class Page extends Component {
 
   // 네이버 로그인 시작.
   async naverLoginStart() {
-    //console.log('  naverLoginStart  ed');
     NaverLogin.login(initials, (err, token) => {
       console.log(`\n\n  Token is fetched  :: ${token} \n\n`);
 
