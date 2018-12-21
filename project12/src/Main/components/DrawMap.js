@@ -15,8 +15,8 @@ class DrawMap extends Component {
         lat : '37.566535',
         lng : '126.97796919999996',
         makerYn : true,
-        
     }
+    
     render() {
         return (
             <View style={ styles.container }>
@@ -29,6 +29,10 @@ class DrawMap extends Component {
                         latitudeDelta: 0.0043,
                         longitudeDelta: 0.0034,
                     }}
+                    onRegionChangeComplete={(region) => {
+                            this.props.onRegionChangeComplete(region);
+                        }
+                    }
                     >
                     <Marker
                         coordinate={{

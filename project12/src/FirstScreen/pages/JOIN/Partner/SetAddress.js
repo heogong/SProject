@@ -51,12 +51,15 @@ class SetAddress extends Component {
         Actions.JoinSearchPartnerAddress({onResult : this.onResult}) 
     )
 
-    // 주소검색 후 결과 데이터
-    onResult = (address) => {
+    // 주소검색/지도검색 후 결과 데이터 
+    // 주소검색/지도검색 리턴 값이 달라 분기 처리 필요
+    onResult = (region) = (address) => {
+        console.log("주소가져왔다 : ",address);
+        console.log("주소가져왔다2 : ",address.region);
         this.setState({
-            lng : address.result.x, 
-            lat : address.result.y,
-            addressName : address.result.address_name,
+            lng : (address.result.x != null) ? address.result.x : address.region.longitude, 
+            lat : (address.result.y != null) ? address.result.y : address.region.latitude,
+            addressName : address.result.address.address_name,
             makerYn : true,
             addressObj : address.result,
             disSaveBtn : (this.state.detailAddressName.length > ADDRESS_DETAIL_LEN) ? false : true
@@ -104,6 +107,9 @@ class SetAddress extends Component {
         });
     }
 
+    _onRegionChangeComplete(region) {
+    }
+
     render() {
         return (
             <View style={{ flex : 1}}>
@@ -115,6 +121,7 @@ class SetAddress extends Component {
                         lat={this.state.lat}
                         lng={this.state.lng}
                         makerYn={this.state.makerYn}
+                        onRegionChangeComplete={ this._onRegionChangeComplete }
                     />
                     <View style={{ height : 50 }}>
                         <Item 

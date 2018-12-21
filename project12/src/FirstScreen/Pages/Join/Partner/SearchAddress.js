@@ -54,6 +54,10 @@ class SearchAddress extends Component {
     Actions.pop(); // 뒤로가면서 기존페이지로 이동
     this.props.onResult({ result: item })
   }
+
+  _selectMap = () => {
+    Actions.JoinSearchPartnerMapAddress({onResult : this.props.onResult}) 
+  }
   
   render() {
     return (
@@ -86,7 +90,7 @@ class SearchAddress extends Component {
               dark={ true }
               bordered={ true }
               icon={ true }
-              onPress={() => this._SaveButton()} >
+              onPress={() => this._selectMap()} >
                 <Icon name='md-map' />
                 <Text>지도로 지정하기</Text>
             </CustomButton>
