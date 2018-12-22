@@ -9,7 +9,8 @@
   "dependencies": {
     "react": "16.6.1",
     "react-native": "0.57.5",
-    "react-native-awesome-card-io": "^0.8.1"
+    "react-native-awesome-card-io": "^0.8.1",
+    "react-native-credit-card-input": "^0.4.1"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",

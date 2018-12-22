@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import{ Alert } from 'react-native';
 
 import { SUCCESS_RETURN_CODE } from '../../../Common/Blend';
 
@@ -9,7 +10,7 @@ import { Item, Input, Root, Text, Toast } from "native-base";
 import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../../Common/Components/CustomButton';
 
-import SignUp from '../../Functions/SignUp';
+import SnsSignUp from '../../Functions/SnsSignUp';
 import CheckUsr from '../../Functions/CheckUsr';
 import CheckSmsCertNum from '../../Functions/CheckSmsCertNum';
 
@@ -39,15 +40,15 @@ class InputPhoneAuth extends Component {
       if(CertResultBool) {
 
         // 가입 여부 확인
-        CheckUsr(this.props.value.usrPhoneNum).then(async result => {
+        CheckUsr(this.props.usrObj.usrPhoneNum).then(async result => {
           const UsrResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
 
           if (UsrResultBool) {
             // SNS 가입 여부 확인
-            if(this.props.value.snsSignupYn == 'Y'){
+            if(this.props.usrObj.snsSignupYn == 'Y'){
 
               // 회원가입
-              SignUp(this.props.value).then(async result => {
+              SnsSignUp(this.props.usrObj, this.props.tokenObj).then(async result => {
                 const SignUpResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                 if (SignUpResultBool) {
                 
@@ -69,22 +70,43 @@ class InputPhoneAuth extends Component {
               Actions.JoinInputEmail();
             }
           } else {
-            Toast.show({
-              text: result.resultMsg,
-              type: "warning",
-              buttonText: "이동",
-              duration: 5000,
-              onClose : this._closeMoveAccountType
-            })
+            // Toast.show({
+            //   text: result.resultMsg,
+            //   type: "warning",
+            //   buttonText: "이동",
+            //   duration: 5000,
+            //   onClose : this._closeMoveAccountType
+            // })
+            Alert.alert(
+              '',
+              `${result.resultMsg} - 로그인 페이지로 이동하시겠습니까?`,
+              [
+                // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+                {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: '네', onPress: () => this._closeMoveAccountType},
+              ],
+              { cancelable: false }
+            )
           }
         });
         
       } else {
-        Toast.show({
-          text: result.resultMsg,
-          type: "danger",
-          buttonText: '확인'
-        })
+        // Toast.show({
+        //   text: result.resultMsg,
+        //   type: "danger",
+        //   buttonText: '확인'
+        // })
+
+        Alert.alert(
+          '',
+          result.resultMsg,
+          [
+            // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+            //{text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: '네', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        )
       }
     })
   };
@@ -104,8 +126,7 @@ class InputPhoneAuth extends Component {
           <Text>인증ID : {this.props.smsSendId} </Text>
           <Text>인증번호 : {this.props.certNum} </Text>
           
-          
-            <Item rounded >
+            <Item regular >
               <Input 
                 onChangeText={this._handleNumberChange}
                 value={this.state.text}
@@ -134,7 +155,9 @@ class InputPhoneAuth extends Component {
 
 let mapStateToProps = (state) => {
   return {
-      value: state.USER
+      usrObj: state.USER,
+      tokenObj: state.TOKEN
+
   };
 }
 

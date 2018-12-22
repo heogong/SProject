@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 
 import NativeButton from 'apsl-react-native-button';
 import { NaverLogin, getProfile } from 'react-native-naver-login';
-import styles from './styles';
 
+import { NAVER_CODE, SUCCESS_RETURN_CODE } from '../../../Common/Blend';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken } from '../../../Redux/Actions';
-import SignUp from '../../Functions/SignUp';
-import login from '../../Functions/Login';
+import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken, setSnsType } from '../../../Redux/Actions';
+import SnsLogin from '../../Functions/SnsLogin';
+import CertSnsLogInfo from '../../Functions/CertSnsLogInfo';
 
 import { Text } from "native-base";
 import CustomButton from '../../../Common/Components/CustomButton';
@@ -42,59 +42,55 @@ class Page extends Component {
     };
   }
 
-  // 로그인 후 내 프로필 가져오기.
+  // 네이버 프로필 가져오기 - 사용안함
   async fetchProfile() {
     const profileResult = await getProfile(this.state.theToken);
-    
-    this.setState({ 
-      usrId : profileResult.response.email,
-      usrNm : profileResult.response.name
-    });
-
-   
-    this._LoginCheckGotoPage(this.state); 
-
-    if (profileResult.resultcode === '024') {
-      console.log('로그인 실패', profileResult.message);
-      return;
-    }
   }
 
-   // 사용자 데이터에 따른 페이지 이동
-  _LoginCheckGotoPage = (USER) => {
-
-    this.props.onSetUsrId(USER.usrId);  // 리덕스 사용자 아이디 SET
-    this.props.onSetUsrNm(USER.usrNm);  // 리덕스 사용자 이름 SET
-    this.props.onSetSnsSignYn('Y');     // 리덕스 SNS 가입여부 SET
-
-    // 회원가입 여부 확인 (일단 회원가입 로직으로 확인)
-    SignUp(this.props.usrObj).then(result => {
-      // 회원 중복
-      if (result.code == '0010') {
-        Alert.alert(result.msg);
-        Actions.InitPage();
+  // 네이버 토큰값 - 시스템 (쿨비즈?) 로그인 하기
+  async _SystmeLogin() {
+    SnsLogin(this.props.tokenObj, NAVER_CODE).then(async result => {
+      const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+      if(ResultBool) {
+        alert("성공");
+        console.log(result);
       } else {
-        // 이름 value 여부
-        if(USER.userNm == '') {
-          Actions.JoinInputName();
-          //Actions.popTo('JoinInputName'); // 뒤로가면서 기존페이지로 이동하는 듯;;
-        } else {
-          Actions.JoinInputPhone();
-        }
+        Alert.alert(
+          '',
+          `${result.resultMsg} - 회원가입 페이지로 이동하시겠습니까?`,
+          [
+            // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+            {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: '네', onPress: () => Actions.JoinCustomerType()},
+          ],
+          { cancelable: false }
+        )
+      }
+      
+    });
+  }
+
+  // 네이버 로그인 정보 - 시스템 회원가입 여부 확인
+  _certSnsLogInfo = () => {
+    CertSnsLogInfo(this.state.theToken, NAVER_CODE).then(async result => {
+      const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+      if(ResultBool) {
+
+        this.props.onSetSnsSignYn('Y');                 // 리덕스 SNS 가입여부 SET
+        this.props.onSetSnsToken(this.state.theToken);  // 리덕스 SNS TOKEN SET
+        this.props.onSetSnsType(NAVER_CODE);            // 리덕스 SNS 타입 SET
+        
+        Actions.JoinInputName();
+        
+      } else {
+        alert(result.resultMsg);
       }
     });
-  };
-
-  //여기 부터 시작!!!!!!!!!!
-  async _Login() {
-    login(this.props.usrObj, this.props.tokenObj).then(result => {
-      console.log(result);
-    });
   }
 
-  // 네이버 로그인 시작.
+  // 네이버 로그인 시작 - 시스템 회원가입 / 시스템 로그인 로직
   async naverLoginStart() {
-    NaverLogin.login(initials, (err, token) => {
+    NaverLogin.login(initials, async (err, token) => {
       console.log(`\n\n  Token is fetched  :: ${token} \n\n`);
 
       // 로그인 페이지에서 접근 시
@@ -102,12 +98,13 @@ class Page extends Component {
         this.props.onSetSnsSignYn('Y');     // 리덕스 SNS 로그인 여부 SET
         this.props.onSetSnsToken(token);    // 리덕스 SNS TOKEN SET
         
-        // 로그인
-        this._Login();
-
+        // 시스템 로그인
+        this._SystmeLogin();
+      
+      // 시스템 회원가입
       } else {
-        this.setState({ theToken: token });
-        this.fetchProfile();
+        await this.setState({ theToken: token });
+        this._certSnsLogInfo();
       }
 
       if (err) {
@@ -116,6 +113,7 @@ class Page extends Component {
       }
     });
   }
+
   render() {
     const { theToken } = this.state;
     return (
@@ -152,7 +150,8 @@ let mapDispatchToProps = (dispatch) => {
       onSetUsrId: (value) => dispatch(setUsrId(value)),
       onSetUsrNm: (value) => dispatch(setUsrNm(value)),
       onSetSnsSignYn: (value) => dispatch(setSnsSignYn(value)),
-      onSetSnsToken: (value) => dispatch(setSnsToken(value))
+      onSetSnsToken: (value) => dispatch(setSnsToken(value)),
+      onSetSnsType: (value) => dispatch(setSnsType(value)),
   }
 }
 Page = connect(mapStateToProps, mapDispatchToProps)(Page);

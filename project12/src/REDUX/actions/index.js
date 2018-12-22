@@ -3,8 +3,9 @@ export const SET_USRNM = 'SET_USRNM';
 export const SET_USRPW = 'SET_USRPW';
 export const SET_USRPHONE_NUM = 'SET_USRPHONE_NUM';
 export const SET_USR_CUSTOMER_TYPE = 'SET_USR_CUSTOMER_TYPE';
-export const SET_SNS_SIGN = 'SET_SNS_SIGN';
 
+export const SET_SNS_SIGN = 'SET_SNS_SIGN';
+export const SET_SNS_TYPE = 'SET_SNS_TYPE';
 export const SET_SNS_TOKEN = 'SET_SNS_TOKEN';
 export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 export const SET_REFRESH_TOKEN = 'SET_REFRESH_TOKEN';
@@ -48,6 +49,12 @@ export function setCustomerType(value) {
 export function setSnsSignYn(value) {
     return {
         type: SET_SNS_SIGN,
+        value: value
+    };
+}
+export function setSnsType(value) {
+    return {
+        type: SET_SNS_TYPE,
         value: value
     };
 }

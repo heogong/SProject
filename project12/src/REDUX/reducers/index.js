@@ -6,6 +6,7 @@ import {
     SET_USR_CUSTOMER_TYPE,
     SET_SNS_SIGN,
     SET_SNS_TOKEN,
+    SET_SNS_TYPE,
     SET_ACCESS_TOKEN,
     SET_REFRESH_TOKEN,
     SET_BIZ_ID,
@@ -23,6 +24,7 @@ const InitialUserState = {
     usrPw: '',
     usrPhoneNum: '',
     usrCustomerType: PARTNER,
+    snsType: '',
     snsSignupYn: 'N'
 };
 
@@ -60,6 +62,10 @@ const USER = (state = InitialUserState, action) => {
         case SET_SNS_SIGN:
             return Object.assign({}, state, {
                 snsSignupYn: action.value
+            });
+        case SET_SNS_TYPE:
+            return Object.assign({}, state, {
+                snsType: action.value
             });
         case SET_USR_CUSTOMER_TYPE:
             return Object.assign({}, state, {

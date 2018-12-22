@@ -24,6 +24,7 @@ import JoinInputWorkHours from './src/FirstScreen/Pages/Join/Partner/InputWorkHo
 
 import CardIndex from './src/Card/Pages';
 import CardInputInfo from './src/Card/Pages/InputCardInfo';
+import CardListInfo from './src/Card/Pages/ListCardInfo';
 
 import DrawerContent from './src/Main/Components/DrawerContent'
 import MenuIcon from './src/Main/Images/menu_burger.png'
@@ -54,7 +55,7 @@ const PAGE = () => (
   
   <Router>
     <Scene transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
       <Scene key="reactCamera" component={ReactCamera} hideNavBar={true}/>
       
@@ -67,7 +68,7 @@ const PAGE = () => (
       
       {/* 파트너 회원가입 */}
       <Scene key="JoinInputBizLicense" hideNavBar component={JoinInputBizLicense} title="사업장 등록" type={ActionConst.RESET}/>
-      <Scene key="JoinSetPartnerAddress" initial hideNavBar component={JoinSetPartnerAddress} title="" />
+      <Scene key="JoinSetPartnerAddress" hideNavBar component={JoinSetPartnerAddress} title="" />
       <Scene key="JoinSearchPartnerAddress" hideNavBar component={JoinSearchPartnerAddress} title="" />
       <Scene key="JoinSearchPartnerMapAddress"  hideNavBar component={JoinSearchPartnerMapAddress} title="" />
       
@@ -77,9 +78,9 @@ const PAGE = () => (
       <Scene key="LoginAccountType" hideNavBar component={LoginAccountType} title="로그인 구분" back onBack={() => Actions.InitPage()}/>
       <Scene key="LoginInputAccount" hideNavBar component={LoginInputAccount} title="이메일 로그인"/>
 
-      {/* <Scene key="CardIndex" component={CardIndex} title="카드 등록 페이지" initial type={ActionConst.RESET}/>
-      <Scene key="CardInputInfo" component={CardInputInfo} title="카드 등록"/> */}
-
+      <Scene key="CardIndex"  hideNavBar component={CardIndex} title="카드 등록 페이지" type={ActionConst.RESET}/>
+      <Scene key="CardInputInfo" hideNavBar component={CardInputInfo} title="카드 등록" />
+      <Scene key="CardListInfo" hideNavBar component={CardListInfo} title="" />
 
       <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" type={ActionConst.RESET} onRight={() => Actions.RegBusinessPlace()} rightTitle="추가" />
       <Scene key="RegBusinessPlace" hideNavBar component={RegBusinessPlace} title="사업장 등록"/>
@@ -144,3 +145,4 @@ const PAGE = () => (
 );
 
 export default PAGE;
+

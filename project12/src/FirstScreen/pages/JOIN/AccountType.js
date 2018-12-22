@@ -8,6 +8,7 @@ import { Actions } from 'react-native-router-flux';
 import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../../Common/Components/CustomButton';
 import NaverLogin from '../../Components/NaverLogin';
+import KakaoLogin from '../../Components/KakaoLogin';
 
 class AccountType extends Component {
 
@@ -31,15 +32,10 @@ class AccountType extends Component {
           loginYn={ loginYn }
           name="NAVER 회원가입"
         />
-        <CustomButton
-          block={ true }
-          info={ true }
-          bordered={ true }
-          onPress={Actions.InitPage}>
-          <Text>
-            카카오톡으로 가입하기
-          </Text>
-        </CustomButton>
+        <KakaoLogin
+          loginYn={ loginYn }
+          name="카카오톡으로 가입하기"
+        />
         <CustomButton
           block={ true }
           info={ true }
