@@ -1,5 +1,4 @@
-import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
-import { AsyncStorage } from "react-native"
+import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
 const API_URL = `${DOMAIN}/coolinic/products/types/root`;
@@ -9,13 +8,10 @@ function GetProdTypeUrl() {
 }
 
 const getProdType = async () => {
-  const AccessToken = await AsyncStorage.getItem('AccessToken');
-
   return fetch(GetProdTypeUrl(), {
     method: 'GET',
     headers: {
-      //"Authorization": "Bearer " + AccessToken
-      "Authorization": "Bearer c35793b1-6f77-44ba-95cd-410abe778b69"
+      "Authorization": ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료

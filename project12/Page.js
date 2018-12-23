@@ -35,6 +35,7 @@ import TestPage3 from './src/Main/Pages/TestPage3'
 //test
 
 import ReactCamera from './src/Main/Components/ReactCamera';
+import ViewImage from './src/Main/Components/ViewImage';
 
 /**사업장 */
 // 사업장 목록
@@ -55,9 +56,11 @@ const PAGE = () => (
   
   <Router>
     <Scene transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage"  hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
-      <Scene key="reactCamera" component={ReactCamera} hideNavBar={true}/>
+
+      <Scene key="reactCamera" hideNavBar component={ReactCamera} />
+      <Scene key="ViewImage" hideNavBar component={ViewImage} title="제품 이미지 조회" />
       
       <Scene key="JoinCustomerType" hideNavBar component={JoinCustomerType} title="고객 구분" />
       <Scene key="JoinAccountType" hideNavBar component={JoinAccountType} title="가입 구분"/>
@@ -86,9 +89,12 @@ const PAGE = () => (
       <Scene key="RegBusinessPlace" hideNavBar component={RegBusinessPlace} title="사업장 등록"/>
       <Scene key="SetAddress" component={SetAddress} title="주소" />
       <Scene key="InputAddress" component={InputAddress} title="주소 등록"/>
-      <Scene key="InputProdType" hideNavBar component={InputProdType} title="제품 타입 등록" back onBack={() => Actions.ListBusinessPlace()} />
-      <Scene key="InputProdInfo" component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
+      <Scene key="InputProdType"  initial hideNavBar component={InputProdType} title="제품 타입 등록" back onBack={() => Actions.ListBusinessPlace()} />
+      <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" component={InputProdImage} title="제품 이미지 등록" />
+
+     
+      
 
       <Drawer
         hideNavBar

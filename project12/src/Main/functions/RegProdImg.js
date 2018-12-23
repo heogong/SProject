@@ -1,5 +1,4 @@
-import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
-import { AsyncStorage } from "react-native"
+import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
 const API_URL = `${DOMAIN}coolinic/clients/products/image`;
@@ -11,7 +10,6 @@ function RegProdImgUrl() {
 const regProdImg = async (imgUri, clientPrdId, prdImgCateId) => {
   console.log(imgUri, " // ", clientPrdId, " // ", prdImgCateId);
 
-  const AccessToken = await AsyncStorage.getItem('AccessToken');
   const data = new FormData();
 
   data.append('clientPrdId', clientPrdId); // you can append anyone.
@@ -28,7 +26,7 @@ const regProdImg = async (imgUri, clientPrdId, prdImgCateId) => {
     method: 'POST',
     body:  data,
     headers: {
-      "Authorization": "Bearer " + AccessToken,
+      "Authorization": ACCESS_TOKEN,
       "Content-Type": "multipart/form-data",
     }
   }).then((response) => response.json()).then(async (responseJson) => {

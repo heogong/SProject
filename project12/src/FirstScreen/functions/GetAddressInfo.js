@@ -1,5 +1,4 @@
-import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
-import { AsyncStorage } from "react-native"
+import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
 const API_URL = `${DOMAIN}/api/kakao/local/geo/coord2address?`;
@@ -9,12 +8,10 @@ function GetAddressInfoUrl(region) {
 }
 
 const GetAddressInfo = async (region) => {
-  const AccessToken = await AsyncStorage.getItem('AccessToken');
   return fetch(GetAddressInfoUrl(region), {
     method: 'GET',
     headers: {
-     // "Authorization": "Bearer "+ AccessToken
-     "Authorization": "Bearer d84851a8-9396-4a68-bbe7-5a1e5999d05a"
+     "Authorization": ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료

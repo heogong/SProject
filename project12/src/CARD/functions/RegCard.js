@@ -1,5 +1,4 @@
-import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
-import { AsyncStorage } from "react-native"
+import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
 const API_URL = `${DOMAIN}coolinic/payment/card?`;
@@ -12,13 +11,11 @@ function RegCardUrl(CARD) {
 }
 
 const RegCard = async (CARD) => {
-  const AccessToken = await AsyncStorage.getItem('AccessToken');
   console.log(RegCardUrl(CARD));
   return fetch(RegCardUrl(CARD), {
     method : 'post',
     headers: {
-      "Authorization": "Bearer d84851a8-9396-4a68-bbe7-5a1e5999d05a"
-      //"Authorization": "Bearer "+ AccessToken
+      "Authorization": ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료

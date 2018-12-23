@@ -1,4 +1,4 @@
-import { DOMAIN } from '../../Common/Blend';
+import { ACCESS_TOKEN, DOMAIN } from '../../Common/Blend';
 
 const API_URL = `${DOMAIN}/coolinic/clients/products/bplace/`;
 
@@ -10,7 +10,7 @@ const getBizList = (bizPlaceId) => {
   return fetch(GetBizPlaceUrl(bizPlaceId), {
     method: 'GET',
     headers: {
-      "Authorization": "Bearer d84851a8-9396-4a68-bbe7-5a1e5999d05a"
+      "Authorization": ACCESS_TOKEN
     }
   }).then((response) => response.json()).then((responseJson) => {
     return responseJson;

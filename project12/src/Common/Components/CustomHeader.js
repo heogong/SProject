@@ -45,8 +45,11 @@ class CustomHeader extends Component {
                     <Title>{ this.props.title }</Title>
                 </Body>
                 <Right style={(this.props.rightBtn) ? styles.show : styles.hide }>
-                    <Button transparent>
+                    {/* <Button transparent>
                         <Icon name='menu' />
+                    </Button> */}
+                    <Button transparent onPress={ this.props.rightAction }>
+                        <Icon name='md-checkbox-outline' />
                     </Button>
                 </Right>
             </Header>

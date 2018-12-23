@@ -1,5 +1,4 @@
-import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
-import { AsyncStorage } from "react-native"
+import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
 const API_URL = `${DOMAIN}/coolinic/clients/products/bplaces/me`;
@@ -9,13 +8,12 @@ function GetBizListUrl() {
 }
 
 const getBizList = async () => {
-  const AccessToken = await AsyncStorage.getItem('AccessToken');
   //const RefreshToken = await AsyncStorage.getItem('RefreshToken');
 
   return fetch(GetBizListUrl(), {
     method: 'GET',
     headers: {
-      "Authorization": "Bearer "+ AccessToken
+      "Authorization": ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료

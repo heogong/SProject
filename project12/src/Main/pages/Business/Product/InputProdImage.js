@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Container, Content, Text, List, ListItem } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
-import { Container, Content, Text, List, ListItem } from "native-base";
+
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import GetProdImageType from '../../../Functions/GetProdImgType'
@@ -44,9 +45,10 @@ class InputProdImage extends Component {
 
     _renderListItem = (info, idx) => (
         <ListItem key={ idx }>
-            <View>
+            <View style={ styles.boxLayout }>
+            {/* <View>
                 <Text>{info.clientPrdNm} </Text>
-            </View>
+            </View> */}
             {info.imgType.map((type, sidx) => (
                 <ProductImage 
                     prdTypeImgCateNm={ type.prdTypeImgCateNm }
@@ -56,18 +58,28 @@ class InputProdImage extends Component {
                     index={ sidx }
                 />
             ))}
+            </View>
         </ListItem>
     );
 
     render() {
         return (
-            <Container>
-                <Content padder>
+            <View style={{ flex:1, justifyContent: 'center'}}>
+                <Content>
                     <List dataArray={this.state.data} renderRow={this._renderListItem} />
                 </Content>
-            </Container>
+            </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    boxLayout : {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        padding: 5
+    }
+});
 
 export default InputProdImage;

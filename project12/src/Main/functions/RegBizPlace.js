@@ -1,5 +1,4 @@
-import { AsyncStorage } from "react-native"
-import { DOMAIN, INVAILD_TOKEN } from '../../Common/Blend';
+import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
 const API_URL = `${DOMAIN}/coolinic/clients/products/bplace?`;
@@ -35,13 +34,12 @@ function RegBizPlaceUrl(bizObj) {
 }
 
 const regBizPlace = async (bizObj) => {
-  const AccessToken = await AsyncStorage.getItem('AccessToken');
   //console.log("bizObj : ",bizObj);
   //console.log("RegBizPlaceUrl : ",RegBizPlaceUrl(bizObj))
   return fetch(RegBizPlaceUrl(bizObj), {
     method: 'POST',
     headers: {
-      "Authorization": "Bearer " + AccessToken
+      "Authorization": ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료
