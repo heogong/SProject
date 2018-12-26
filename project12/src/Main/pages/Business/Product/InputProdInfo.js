@@ -74,34 +74,44 @@ class InputProdInfo extends Component {
 
     render() {
         return (
-            <CustomBasicWrapper>
-                <Item rounded>
-                    <Input
-                        placeholder={this.props.prodTypeNm}
-                        value={this.state.clientPrdNm}
-                        onChangeText={this._handleNameChange}
-                    />
-                </Item>
-                <CustomButton
-                    rounded={ true }
-                    success={ true }
-                    onPress={this._handleAddShareholder}
-                ><Text>+</Text>
-                </CustomButton>
-                {this.state.shareholders.map((shareholder, idx) => (
-                    <View key={idx} style={(idx !== 0) ? styles.show : styles.hide }>
-                        <Item rounded >
-                            <Input
-                                placeholder={`${this.props.prodTypeNm}${idx + 1}`}
-                                value={shareholder.clientPrdNm}
-                                onChangeText={this._handleShareholderNameChange(idx)}
-                            />
-                            <Icon onPress={this._handleRemoveShareholder(idx)} active name='ios-remove-circle-outline' />
-                        </Item>
-                        {/* <Button onPress={this._handleRemoveShareholder(idx)}><Text>-</Text></Button> */}
-                    </View>
-                ))}
-                {/* <Button rounded onPress={this._handleSubmit}><Text>저장</Text></Button> */}
+            <CustomBasicWrapper
+                title="제품 등록"
+                rightBtn={ true }
+                rightAction={ this._handleSubmit }
+            >
+                <View style={{ width : 250 }}>
+                    <Item regular>
+                        <Input
+                            placeholder={this.props.prodTypeNm}
+                            value={this.state.clientPrdNm}
+                            onChangeText={this._handleNameChange}
+                        />
+                    </Item>
+                </View>
+
+                <View>
+                    <CustomButton
+                        styleWidth={ false }
+                        rounded={ true }
+                        success={ true }
+                        onPress={this._handleAddShareholder}
+                    ><Text>+</Text>
+                    </CustomButton>
+                    {this.state.shareholders.map((shareholder, idx) => (
+                        <View key={idx} style={(idx !== 0) ? styles.show : styles.hide }>
+                            <Item rounded >
+                                <Input
+                                    placeholder={`${this.props.prodTypeNm}${idx + 1}`}
+                                    value={shareholder.clientPrdNm}
+                                    onChangeText={this._handleShareholderNameChange(idx)}
+                                />
+                                <Icon onPress={this._handleRemoveShareholder(idx)} active name='ios-remove-circle-outline' />
+                            </Item>
+                            {/* <Button onPress={this._handleRemoveShareholder(idx)}><Text>-</Text></Button> */}
+                        </View>
+                    ))}
+                    {/* <Button rounded onPress={this._handleSubmit}><Text>저장</Text></Button> */}
+                </View>
             </CustomBasicWrapper>
         )
     }

@@ -1,17 +1,19 @@
 import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}/coolinic/clients/products/bplaces/me`;
+const API_URL = `${DOMAIN}coolinic/payment/card?`;
 
-function GetBizListUrl() {
-  return `${API_URL}`;
+function RegCardUrl(CARD) {
+  return `${API_URL}cardNumber=${CARD.cardNumber}
+  &expiry=20${CARD.vaildTermYear}-${CARD.vaildTermMonth}
+  &birth=${CARD.birthDay}
+  &pwd2digit=${CARD.passwd}`;
 }
 
-const getBizList = async () => {
-  //const RefreshToken = await AsyncStorage.getItem('RefreshToken');
-
-  return fetch(GetBizListUrl(), {
-    method: 'GET',
+const RegCard = async (CARD) => {
+  console.log(RegCardUrl(CARD));
+  return fetch(RegCardUrl(CARD), {
+    method : 'post',
     headers: {
       "Authorization": ACCESS_TOKEN
     }
@@ -29,4 +31,4 @@ const getBizList = async () => {
   });
 };
 
-export default getBizList;
+export default RegCard;

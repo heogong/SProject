@@ -1,90 +1,32 @@
 
-import React, {Component} from 'react';
-import { Container, Header, Item, Input, Icon, Button, Text, Content, List, ListItem, StyleProvider } from 'native-base';
+import React, { Component } from 'react';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
+import { Container, Header, Content, Card, CardItem, Text, Body, Button, Icon } from 'native-base';
 
-export default class Page1 extends Component {
-  render() {
+import CardView from 'react-native-cardview';
+import ImageOverlay from "react-native-image-overlay";
+
+export default class Example2 extends Component {
+  render () {
     return (
-      <Container>
-        <Header searchBar rounded androidStatusBarColor="#2c3e50">
-          <Item>
-            <Icon name="ios-search" />
-            <Input placeholder="Search" />
-            <Icon name="ios-people" />
-          </Item>
-          <Button transparent>
-            <Text>Search</Text>
-          </Button>
-        </Header>
-        <Content>
-          <List>
-            <ListItem>
-              <Text>Simon Mignolet</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Nathaniel Clyne</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Simon Mignolet</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Nathaniel Clyne</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Simon Mignolet</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Nathaniel Clyne</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Simon Mignolet</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Nathaniel Clyne</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Simon Mignolet</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Nathaniel Clyne</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Simon Mignolet</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Nathaniel Clyne</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Simon Mignolet</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Nathaniel Clyne</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            
-          </List>
-        </Content>
-      </Container>
-    );
+      <View>
+        <ImageOverlay 
+          source={{ uri:"https://github.com/gaddafirusli/react-native-image-overlay/raw/master/image/header.png" }} 
+          overlayAlpha={0.5}
+          contentPosition="center"
+        >
+          <View stlye={{ width : 50 }}>
+              <Button transparent bordered info style={{ marginBottom: 20, marginLeft: 10 }}>
+                <Icon active name="md-eye" />
+                <Text>조회</Text>
+              </Button>
+              <Button transparent bordered info style={{ marginBottom: 20, marginLeft: 10 }}>
+                <Icon active name="md-trash" />
+                <Text>삭제</Text>
+              </Button>
+          </View> 
+        </ImageOverlay>
+      </View>
+    )
   }
 }

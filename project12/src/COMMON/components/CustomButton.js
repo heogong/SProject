@@ -16,7 +16,8 @@ class CustomButton extends Component {
         block: false,
         full: false,
         disabled: false,
-        styleWidth: true
+        styleWidth: true,
+        icon: false
       }
 
     render() {
@@ -36,6 +37,7 @@ class CustomButton extends Component {
                 disabled={ this.props.disabled }
                 onPress={ this.props.onPress }
                 full={ this.props.full }
+                iconLeft={ this.props.icon }
             >
                 {this.props.children}
             </Button>

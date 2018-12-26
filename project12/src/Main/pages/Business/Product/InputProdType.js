@@ -45,6 +45,8 @@ class InputProdType extends Component {
                             return { ...prod, text : prod.prdTypeKoNm, typeId : prod.prdTypeId };
                         });
                         this.setState({ BUTTONS: prodSet });
+                    } else {
+                        alert(resultData.resultMsg)
                     }
                 }
             });

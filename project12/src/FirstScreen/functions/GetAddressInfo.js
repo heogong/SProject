@@ -1,17 +1,17 @@
-import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN, ACCESS_TOKEN } from '../../Common/Blend';
+import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}/coolinic/products/types/2/imgcates`;
+const API_URL = `${DOMAIN}/api/kakao/local/geo/coord2address?`;
 
-function GetProdImgTypeUrl() {
-  return `${API_URL}`;
+function GetAddressInfoUrl(region) {
+  return `${API_URL}lat=${region.latitude}&lng=${region.longitude}`;
 }
 
-const getProdImgType = async () => {
-  return fetch(GetProdImgTypeUrl(), {
+const GetAddressInfo = async (region) => {
+  return fetch(GetAddressInfoUrl(region), {
     method: 'GET',
     headers: {
-      "Authorization": ACCESS_TOKEN
+     "Authorization": ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료
@@ -27,4 +27,4 @@ const getProdImgType = async () => {
   });
 };
 
-export default getProdImgType;
+export default GetAddressInfo;

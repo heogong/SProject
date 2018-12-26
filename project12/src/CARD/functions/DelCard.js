@@ -1,15 +1,15 @@
-import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN, ACCESS_TOKEN } from '../../Common/Blend';
+import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}/coolinic/products/types/2/imgcates`;
+const API_URL = `${DOMAIN}coolinic/payment/cards/`;
 
-function GetProdImgTypeUrl() {
-  return `${API_URL}`;
+function DelCardUrl(cardId) {
+  return `${API_URL}${cardId}`;
 }
 
-const getProdImgType = async () => {
-  return fetch(GetProdImgTypeUrl(), {
-    method: 'GET',
+const DelCard = async (cardId) => {
+  return fetch(DelCardUrl(cardId), {
+    method : 'DELETE',
     headers: {
       "Authorization": ACCESS_TOKEN
     }
@@ -27,4 +27,4 @@ const getProdImgType = async () => {
   });
 };
 
-export default getProdImgType;
+export default DelCard;

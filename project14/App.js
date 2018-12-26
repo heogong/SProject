@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Text, View, TouchableOpacity, UIManager} from 'react-native';
 
 import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
+import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
+
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -15,6 +17,7 @@ export default class App extends Component {
     if (Platform.OS === 'ios') {
       CardIOUtilities.preload();
     }
+    UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 
   scanCard() {
@@ -37,6 +40,12 @@ export default class App extends Component {
   render() {
     return (
       <View>
+        <LiteCreditCardInput 
+          onChange={this._onChange} 
+          placeholders={
+            { number: "1212 4545 7878 9898", expiry: "MM/YY"}
+          }
+          />
         <TouchableOpacity onPress={this.scanCard.bind(this)}>
           <Text>Scan card!</Text>
         </TouchableOpacity>

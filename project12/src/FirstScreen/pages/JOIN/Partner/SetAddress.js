@@ -3,7 +3,7 @@ import { View } from "react-native"
 
 import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
 
-import { Body, Container, Text, Button, Content, Item, Input, Label, ListItem, Root, Toast } from 'native-base';
+import { Body, Container, Text, Button, Content, Item, Input, Icon, Toast } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 
@@ -51,12 +51,15 @@ class SetAddress extends Component {
         Actions.JoinSearchPartnerAddress({onResult : this.onResult}) 
     )
 
-    // 주소검색 후 결과 데이터
-    onResult = (address) => {
+    // 주소검색/지도검색 후 결과 데이터 
+    // 주소검색/지도검색 리턴 값이 달라 분기 처리 필요
+    onResult = (region) = (address) => {
+        console.log("주소가져왔다 : ",address);
+        console.log("주소가져왔다2 : ",address.region);
         this.setState({
-            lng : address.result.x, 
-            lat : address.result.y,
-            addressName : address.result.address_name,
+            lng : (address.result.x != null) ? address.result.x : address.region.longitude, 
+            lat : (address.result.y != null) ? address.result.y : address.region.latitude,
+            addressName : address.result.address.address_name,
             makerYn : true,
             addressObj : address.result,
             disSaveBtn : (this.state.detailAddressName.length > ADDRESS_DETAIL_LEN) ? false : true
@@ -104,17 +107,21 @@ class SetAddress extends Component {
         });
     }
 
+    _onRegionChangeComplete(region) {
+    }
+
     render() {
         return (
             <View style={{ flex : 1}}>
                 <CustomHeader
                     title="파트너 주소 입력"
                 />
-                <View style={{ flex : 1, padding: 10 }}>
+                <View style={{ flex : 1, padding: 5 }}>
                     <DrawMap
                         lat={this.state.lat}
                         lng={this.state.lng}
                         makerYn={this.state.makerYn}
+                        onRegionChangeComplete={ this._onRegionChangeComplete }
                     />
                     <View style={{ height : 50 }}>
                         <Item 
@@ -122,6 +129,7 @@ class SetAddress extends Component {
                             onPress={this._goSearchAddress}
                             style={{backgroundColor:'white'}}
                         >
+                            <Icon active name='md-home' />
                             <Input 
                                 disabled
                                 placeholder="주소"

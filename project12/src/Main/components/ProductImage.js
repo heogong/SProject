@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ImageBackground, StyleSheet, TouchableHighlight, View } from 'react-native';
+import { Text, Icon } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '../../Common/Blend';
 
-import { Button, Content, Text, Thumbnail, Icon } from "native-base";
 import { Actions } from 'react-native-router-flux';
+import ImageOverlay from "react-native-image-overlay";
 import RegProdImg from '../Functions/RegProdImg';
 import GetCommonData from '../../Common/Functions/GetCommonData';
+import CustomButton from '../../Common/Components/CustomButton';
 
 class ProductImage extends Component {
     constructor(props) {
@@ -19,8 +21,7 @@ class ProductImage extends Component {
           insertYn : true,
           modifyYn : false,
           deleteYn : false,
-          
-
+          imageTouch : true // 이미지 없을 시 터치 가능 여부
       };
     }
 
@@ -40,19 +41,14 @@ class ProductImage extends Component {
         this.setState({ uri : this.state.defaultImg , deleteYn : false, modifyYn : true });
     }
 
+    // 이미지 조회
+    _handleImageView = () => {
+        Actions.ViewImage({imageUri : this.state.uri});
+    }
+
     onResult = async (result) => {
         console.log(result.data);
-
         await this.setState({tempImgUri : result.data.uri}); // 촬영 한 이미지 임시 저장
-
-        // const data = new FormData();
-
-        // data.append('name', 'testName'); // you can append anyone.
-        // data.append('photo', {
-        //     uri: result.data.uri,
-        //     type: 'image/jpeg', // or photo.type
-        //     name: 'testPhotoName'
-        // });
 
         this._registerProdImage();
         
@@ -66,8 +62,9 @@ class ProductImage extends Component {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
-                        //console.log(resultData);
-                        this.setState({ uri : resultData.data.fileUrl , deleteYn : true, insertYn : false});
+                        console.log("이미지 url:", resultData.data.fileUrl);
+                        await this.setState({ uri : resultData.data.fileUrl , deleteYn : true, insertYn : false, imageTouch : false });
+                        //await this.setState({ uri : 'https://www.google.com/logos/doodles/2018/holidays-2018-northern-hemisphere-day-1-6271106234187776-s.png' , deleteYn : true, insertYn : false, imageTouch : false });
                     }
                 }
             });
@@ -76,9 +73,52 @@ class ProductImage extends Component {
 
     render() {
         return (
-            <View key={ this.props.index }>
-                <Thumbnail square large source={{uri: this.state.uri}} />
-                <Button 
+            <View key={ this.props.index} style={ styles.box }>
+                <View style={ [styles.box ] }>
+                    <View style={ styles.innerTitle }>
+                        <Text>{ this.props.prdTypeImgCateNm }</Text>
+                    </View>
+
+                    { (this.state.imageTouch) ? (
+                        <TouchableHighlight onPress={this._handleTakeImage}>
+                            <View style={ styles.innerImage }>
+                                <ImageBackground source={{ uri: this.state.uri }} style={{width: '100%', height: '100%'}}/>
+                            </View>
+                        </TouchableHighlight>
+                    ) : (
+                        <View style={ styles.innerImage }>
+                            <ImageOverlay 
+                                containerStyle={ styles.innerImage }
+                                source={{ uri: this.state.uri }} 
+                                overlayAlpha={0.5}
+                                contentPosition="center"
+                            >
+                                <CustomButton 
+                                    styleWidth={ false }
+                                    block={ true } 
+                                    light={ true }
+                                    bordered={ true }
+                                    onPress={ this._handleImageView }
+                                    >
+                                    <Icon active name="md-eye" />
+                                    <Text>보기</Text>
+                                </CustomButton>
+                                <CustomButton 
+                                    styleWidth={ false }
+                                    block={ true } 
+                                    light={ true }
+                                    bordered={ true }>
+                                    <Icon active name="md-trash" />
+                                    <Text>삭제</Text>
+                                </CustomButton>
+                            </ImageOverlay>
+                        </View>
+                    )
+                    } 
+
+                </View>
+                {/* <Thumbnail square large source={{uri: this.state.uri}} /> */}
+                {/* <Button 
                     onPress={this._handleTakeImage}
                     style={(this.state.insertYn) ? styles.show : styles.hide }>
                     <Icon name='md-camera' />
@@ -93,13 +133,27 @@ class ProductImage extends Component {
                     onPress={this._handleImageDelete}
                     style={(this.state.deleteYn) ? styles.show : styles.hide }>
                     <Text>삭제</Text>
-                </Button>
+                </Button> */}
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    box: {
+        width: 155, 
+        height: 155,
+        justifyContent: 'center', 
+        alignItems:'center'
+    },
+    innerTitle : {
+        width: 80, 
+        height: 20
+    },
+    innerImage : {
+        width: 130, 
+        height: 130
+    },
     hide: {
         display: 'none'
     },

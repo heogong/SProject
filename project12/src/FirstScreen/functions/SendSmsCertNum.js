@@ -7,6 +7,7 @@ function SmsCertUrl(number) {
 }
 
 function SendSmsCertNum(number) {
+    console.log(SmsCertUrl(number));
   return fetch(SmsCertUrl(number), {
         method : 'post'
     }).then((response) => response.json()).then((responseJson) => {

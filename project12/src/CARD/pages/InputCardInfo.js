@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, UIManager, Platform } from 'react-native';
+import { Input, Item, Text } from "native-base";
 
+import { SUCCESS_RETURN_CODE } from '../../Common/Blend';
 import { Actions } from 'react-native-router-flux';
-import Button from '../../Common/Components/CustomButton';
+import CustomBasicWrapper from '../../Common/Components/CustomBasicWrapper';
+import CustomButton from '../../Common/Components/CustomButton';
+import GetCommonData from '../../Common/Functions/GetCommonData';
 import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
-import CardReg from '../Functions/CardReg';
+
+import RegCard from '../Functions/RegCard';
 
 export default class InputCardInfo extends Component {
   constructor(props) {
@@ -12,30 +17,13 @@ export default class InputCardInfo extends Component {
 
     this.state = { 
         cardNumber: '',
-        vaildTerm: '',
+        vaildTermMonth: '',
+        vaildTermYear: '',
         passwd: '',
         birthDay: ''
     };
   }
   
-  
-  setCardNumber = keyIn => {
-    // let value = '';
-    // value = keyIn;
-
-    // switch(keyIn.length) {
-    //   case 4:
-    //   case 9:
-    //   case 14:
-    //   value += " ";
-    //     break;
-    //   default:
-    //     break;
-    //  }
-     
-     this.setState({cardNumber : value});
-  }
-
   scanCard() {
     const config = {
       hideCardIOLogo : true,
@@ -47,7 +35,6 @@ export default class InputCardInfo extends Component {
       .then(card => {
         // the scanned card
         console.log(card);
-        this.setCardInfo(card);
 
       })
       .catch(() => {
@@ -56,76 +43,127 @@ export default class InputCardInfo extends Component {
       })
   }
 
-  setCardInfo(cardInfo) {
-    this.setState({
-      cardNumber : cardInfo.cardNumber,
-      vaildTerm : cardInfo.expiryMonth + '/' + cardInfo.expiryMonth
+  // 카드 등록
+  _cardRegister = () => {
+    RegCard(this.state).then(result => {
+      GetCommonData(result, this._cardRegister).then(async resultData => {
+        if(resultData !== undefined) {
+          const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+          if(ResultBool) {
+            alert("등록완료");
+          } else {
+            alert(resultData.resultMsg);
+          }
+        }
+      });
     });
   }
 
-  cardRegister = () => {
-    // 카드 등록
-    CardReg(this.state).then(result => {
-      alert(result.msg);
-    });
+  // 카드 번호 입력
+  _setCardNum = (value) => {
+    let resultValue;
+
+    var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+    var matches = v.match(/\d{4,16}/g);
+    var match = matches && matches[0] || ''
+    var parts = []
+    for (i=0, len=match.length; i<len; i+=4) {
+      parts.push(match.substring(i, i+4))
+    }
+    if (parts.length) {
+      resultValue = parts.join('-');
+    } else {
+      resultValue = value;
+    }
+
+    this.setState({cardNumber : resultValue})
   }
+
+
   
   
   render() {
     return (
-      <View style={{margin: 128}}>
+      <CustomBasicWrapper
+        title="간편결제 카드 등록"
+      >
         <Text>카드번호</Text>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({cardNumber : text})}
-          //onChangeText={(text) => this.setCardNumber(text)}
-          value={this.state.cardNumber}
-          placeholder="1234 5678 1234 5678"
-          keyboardType='numeric'
-          maxLength={19}
-        />
+        <Item regular>
+          <Input
+            onChangeText={(text) => this._setCardNum(text) }
+            onKeyPress={this._handleKeyPress }
+            value={ this.state.cardNumber }
+            placeholder='1234 5678 1234 5678'
+            keyboardType='numeric'
+            maxLength={19}
+          />
+        </Item>
 
         <Text>유효기간</Text>
-        <TextInput
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-            onChangeText={(text) => this.setState({vaildTerm : text})}
-            value={this.state.vaildTerm}
-            placeholder="MM/YY"
+        <Item regular>
+          <Input
+            onChangeText={(text) => this.setState({vaildTermMonth : text})}
+            value={ this.state.vaildTerm }
+            placeholder='유효기간 / 월'
             keyboardType='numeric'
-        />
+            maxLength={2}
+          />
+        </Item>
+
+        <Item regular>
+          <Input
+            onChangeText={(text) => this.setState({vaildTermYear : text})}
+            value={ this.state.vaildTerm }
+            placeholder='유효기간 / 년'
+            keyboardType='numeric'
+            maxLength={2}
+          />
+        </Item>
 
         <Text>비밀번호</Text>
-        <TextInput
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+        <Item regular>
+          <Input
+            secureTextEntry={ true }
             onChangeText={(text) => this.setState({passwd : text})}
-            value={this.state.passwd}
-            placeholder="앞 두자리"
+            value={ this.state.passwd }
+            placeholder='앞 두자리'
             keyboardType='numeric'
-        />
+            maxLength={2}
+          />
+        </Item>
 
         <Text>생년월일</Text>
-        <TextInput
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+        <Item regular>
+          <Input
             onChangeText={(text) => this.setState({birthDay : text})}
-            value={this.state.birthDay}
-            placeholder="YYYYMMDD"
+            value={ this.state.birthDay }
+            placeholder='YY/MM/DD'
             keyboardType='numeric'
-        />
+            maxLength={6}
+          />
+        </Item>
 
-        <Button onPress={this.scanCard.bind(this)}>
+        <CustomButton
+          block={ true }
+          info={ true }
+          bordered={ true }
+          onPress={this.scanCard.bind(this)}>
           <Text>
-           카드 스캔
+            카드 스캔
           </Text>
-        </Button>
+        </CustomButton>
 
-        <Button onPress={this.cardRegister}>
+        <CustomButton
+          block={ true }
+          info={ true }
+          bordered={ true }
+          onPress={this._cardRegister}>
           <Text>
-           NEXT
+            등록
           </Text>
-        </Button>
-
-
-      </View>
+        </CustomButton>
+      </CustomBasicWrapper>
+      
     )
   }
 }

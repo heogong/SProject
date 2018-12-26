@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { View  } from "react-native"
 
 import { 
   Container, 
@@ -11,12 +12,16 @@ import {
   Content, 
   List, 
   ListItem,
-  Body
+  Body,
+  Right,
+  Left
 } from 'native-base';
 
 import { Actions } from 'react-native-router-flux';
+import DrawMap from '../../../../Main/Components/DrawMap';
 import GetAddress from '../../../../Main/Functions/AddressInfo';
-//import Button from '../../../Common/Components/CustomButton';
+import CustomHeader from '../../../../Common/Components/CustomHeader';
+import CustomButton from '../../../../Common/Components/CustomButton';
 
 class SearchAddress extends Component {
   constructor(props) {
@@ -49,25 +54,52 @@ class SearchAddress extends Component {
     Actions.pop(); // 뒤로가면서 기존페이지로 이동
     this.props.onResult({ result: item })
   }
+
+  _selectMap = () => {
+    Actions.JoinSearchPartnerMapAddress({onResult : this.props.onResult}) 
+  }
   
   render() {
     return (
-      <Container>
-        <Header searchBar rounded>
-          <Item>
-            <Icon name="ios-search" />
-            <Input 
-              placeholder="장소 또는 주소 검색" 
-              value={this.state.strAddress}
-              onChangeText={(text) => this.setState({strAddress : text})}
-              onSubmitEditing={this._setAddressInfo}
-              />
-          </Item>
-        </Header>
-        <Content>
-          <List dataArray={this.state.data} renderRow={this._renderItem} />
-        </Content>
-      </Container>
+      <View style={{ flex : 1}}>
+        <CustomHeader
+            title="주소 검색"
+        />
+        <View style={{ flex : 1, padding: 5 }}>
+          <View style={{ height : 50 }}>
+            <Item 
+              regular 
+              onPress={this._handleBackButton}
+              style={{backgroundColor:'white'}}
+            >
+              <Icon active name='search' />
+              <Input 
+                placeholder="장소 또는 주소 검색" 
+                value={this.state.strAddress}
+                onChangeText={(text) => this.setState({strAddress : text})}
+                onSubmitEditing={this._setAddressInfo}
+              > 
+                  {this.state.addressName} 
+              </Input>
+            </Item>
+          </View>
+          <View>
+            <CustomButton
+              styleWidth={ false }
+              full={ true }
+              dark={ true }
+              bordered={ true }
+              icon={ true }
+              onPress={() => this._selectMap()} >
+                <Icon name='md-map' />
+                <Text>지도로 지정하기</Text>
+            </CustomButton>
+          </View>
+          <View>
+            <List dataArray={this.state.data} renderRow={this._renderItem} />
+          </View>
+        </View>
+      </View>
     )
   }
 }

@@ -6,7 +6,8 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ImageBackground
+  ImageBackground,
+  ImageEditor
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import ReactTimeout from 'react-timeout'
@@ -71,6 +72,19 @@ class ReactCamera extends Component {
         width: 512
       };
       const data = await this.camera.takePictureAsync(options)
+    //   .then(({ uri, imageWidth, imageHeight }) => {
+    //     ImageEditor.cropImage(uri, {
+    //        offset: { x: 0, y: 0 },
+    //        size: { width: imageWidth, height: imageHeight },
+    //        displaySize: { width: '300', height: '300'},
+    //        resizeMode: 'contain'
+    //     }, (res) => {
+    //        // res == 'file:///data/.../img.jpg'
+    //     }, (err) => {
+    //        // ='(
+    //     }
+    //  )});
+    
 
       Actions.pop();
       this.props.onResult({ data: data });

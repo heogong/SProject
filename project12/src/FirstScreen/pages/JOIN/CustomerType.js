@@ -22,6 +22,8 @@ class CustomerType extends Component {
     return (
       <CustomBasicWrapper
         title="고객 구분"
+        backAction={ true }
+        actionName="InitPage"
       >
         <Text>고객 구분을 선택해 주세요.</Text>
         <CustomButton 

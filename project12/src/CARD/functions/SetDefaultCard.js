@@ -1,15 +1,16 @@
-import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN, ACCESS_TOKEN } from '../../Common/Blend';
+import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}/coolinic/products/types/2/imgcates`;
+const API_URL = `${DOMAIN}coolinic/payment/cards/`;
 
-function GetProdImgTypeUrl() {
-  return `${API_URL}`;
+function SetDefaultCardUrl(cardId) {
+  return `${API_URL}${cardId}/default`;
 }
 
-const getProdImgType = async () => {
-  return fetch(GetProdImgTypeUrl(), {
-    method: 'GET',
+const SetDefaultCard = async (cardId) => {
+  console.log(SetDefaultCardUrl(cardId));
+  return fetch(SetDefaultCardUrl(cardId), {
+    method : 'PUT',
     headers: {
       "Authorization": ACCESS_TOKEN
     }
@@ -27,4 +28,4 @@ const getProdImgType = async () => {
   });
 };
 
-export default getProdImgType;
+export default SetDefaultCard;

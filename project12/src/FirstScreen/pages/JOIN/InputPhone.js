@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
 
 import { SUCCESS_RETURN_CODE } from '../../../Common/Blend';
 
@@ -43,11 +44,21 @@ class InputPhone extends Component {
           certNum : result.data.certNum
         });
       } else {
-        Toast.show({
-          text: result.resultMsg,
-          type: "danger",
-          buttonText: '확인'
-        })
+        // Toast.show({
+        //   text: result.resultMsg,
+        //   type: "danger",
+        //   buttonText: '확인'
+        // })
+        Alert.alert(
+          '',
+          `${result.resultMsg}`,
+          [
+            // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+            //{text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: '네', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        )
       }
     })
   };
