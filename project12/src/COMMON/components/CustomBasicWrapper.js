@@ -27,6 +27,7 @@ class CustomBasicWrapper extends Component {
                     backAction={ this.props.backAction }
                     rightAction={ this.props.rightAction }
                     actionName={ this.props.actionName }
+                    menuBtn={ this.props.menuBtn }
                 />
                 
                 <Container style={Style.align}>

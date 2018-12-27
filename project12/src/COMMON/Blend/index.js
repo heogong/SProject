@@ -1,22 +1,10 @@
 import { AsyncStorage } from "react-native"
 //const AccessToken = await AsyncStorage.getItem('AccessToken');
 
-_retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('TASKS');
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
-      }
-     } catch (error) {
-       // Error retrieving data
-     }
-}
-
 // API domain 관련
-export const DOMAIN = 'http://13.209.87.118:8180/';
-export const OAUTH_DOMAIN = 'http://13.209.87.118:8280/';
-export const DEV_SNS_DOMAIN = 'http://54.180.107.38:8180/';
+export const DOMAIN = 'http://54.180.175.29:8180/';
+export const OAUTH_DOMAIN = 'http://54.180.175.29:8280/';
+export const DEV_SNS_DOMAIN = 'http://54.180.175.29:8180/';
 
 // 토큰 STRING 관련
 export const INVAILD_TOKEN = 'invalid_token';

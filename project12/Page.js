@@ -26,8 +26,12 @@ import CardIndex from './src/Card/Pages';
 import CardInputInfo from './src/Card/Pages/InputCardInfo';
 import CardListInfo from './src/Card/Pages/ListCardInfo';
 
+import Main from './src/Main/Pages';
+
 import DrawerContent from './src/Main/Components/DrawerContent'
 import MenuIcon from './src/Main/Images/menu_burger.png'
+
+
 //test
 import TestPage1 from './src/Main/Pages/TestPage1'
 import TestPage2 from './src/Main/Pages/TestPage2'
@@ -38,13 +42,14 @@ import ReactCamera from './src/Main/Components/ReactCamera';
 import ViewImage from './src/Main/Components/ViewImage';
 
 /**사업장 */
+import BusinessIndex from './src/Main/Pages/Business'
 // 사업장 목록
 import ListBusinessPlace from './src/Main/Pages/Business/ListBusinessPlace'
 // 사업장 등록
 import RegBusinessPlace from './src/Main/Pages/Business/RegBusinessPlace'
 // 사업장 주소등록
 import SetAddress from './src/Main/Pages/Business/Address/SetAddress'
-import InputAddress from './src/Main/Pages/Business/Address/InputAddress'
+import SearchAddress from './src/Main/Pages/Business/Address/SearchAddress'
 
 /**제품 */
 import InputProdType from './src/Main/Pages/Business/Product/InputProdType' // 제품 타입등록
@@ -55,8 +60,8 @@ import InputProdImage from './src/Main/Pages/Business/Product/InputProdImage' //
 const PAGE = () => ( 
   
   <Router>
-    <Scene transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage"  hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+    <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
 
       <Scene key="reactCamera" hideNavBar component={ReactCamera} />
@@ -71,31 +76,32 @@ const PAGE = () => (
       
       {/* 파트너 회원가입 */}
       <Scene key="JoinInputBizLicense" hideNavBar component={JoinInputBizLicense} title="사업장 등록" type={ActionConst.RESET}/>
-      <Scene key="JoinSetPartnerAddress" hideNavBar component={JoinSetPartnerAddress} title="" />
+      <Scene key="JoinSetPartnerAddress" initial hideNavBar component={JoinSetPartnerAddress} title="" />
       <Scene key="JoinSearchPartnerAddress" hideNavBar component={JoinSearchPartnerAddress} title="" />
       <Scene key="JoinSearchPartnerMapAddress"  hideNavBar component={JoinSearchPartnerMapAddress} title="" />
       
-      <Scene key="JoinInputProdType" hideNavBar component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
+      <Scene key="JoinInputProdType"  hideNavBar component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
       <Scene key="JoinInputWorkHours" hideNavBar component={JoinInputWorkHours} title="근무시간" type={ActionConst.RESET}/>
       
       <Scene key="LoginAccountType" hideNavBar component={LoginAccountType} title="로그인 구분" back onBack={() => Actions.InitPage()}/>
       <Scene key="LoginInputAccount" hideNavBar component={LoginInputAccount} title="이메일 로그인"/>
 
-      <Scene key="CardIndex"  hideNavBar component={CardIndex} title="카드 등록 페이지" type={ActionConst.RESET}/>
+      <Scene key="CardIndex" hideNavBar component={CardIndex} title="카드 등록 페이지" type={ActionConst.RESET}/>
       <Scene key="CardInputInfo" hideNavBar component={CardInputInfo} title="카드 등록" />
       <Scene key="CardListInfo" hideNavBar component={CardListInfo} title="" />
 
+      {/* 클라이언트 */}
+      <Scene key="BusinessIndex" hideNavBar component={BusinessIndex} type={ActionConst.RESET} />
       <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" type={ActionConst.RESET} onRight={() => Actions.RegBusinessPlace()} rightTitle="추가" />
-      <Scene key="RegBusinessPlace" hideNavBar component={RegBusinessPlace} title="사업장 등록"/>
-      <Scene key="SetAddress" component={SetAddress} title="주소" />
-      <Scene key="InputAddress" component={InputAddress} title="주소 등록"/>
-      <Scene key="InputProdType"  initial hideNavBar component={InputProdType} title="제품 타입 등록" back onBack={() => Actions.ListBusinessPlace()} />
+      <Scene key="RegBusinessPlace"  hideNavBar component={RegBusinessPlace} title="사업장 등록"/>
+      <Scene key="SetAddress" hideNavBar component={SetAddress} title="주소" />
+      <Scene key="SearchAddress" hideNavBar component={SearchAddress} title="주소 등록"/>
+      
+      <Scene key="InputProdType" hideNavBar component={InputProdType} type={ActionConst.RESET} />
       <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
-      <Scene key="InputProdImage" component={InputProdImage} title="제품 이미지 등록" />
+      <Scene key="InputProdImage" hideNavBar component={InputProdImage} type={ActionConst.RESET} />
 
      
-      
-
       <Drawer
         hideNavBar
         key="drawer"
@@ -109,7 +115,24 @@ const PAGE = () => (
         drawerImage={MenuIcon}
         drawerWidth={300}
       >
-      <Scene hideNavBar panHandlers={null}>
+      <Scene key="root" hideNavBar transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+        <Stack key="MainStack" hideNavBar>
+          <Scene key="Main" component={Main} />
+        </Stack>
+
+        {/* <Stack key="MainStack1" transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+          <Scene key="InputProdType" hideNavBar component={InputProdType}/>
+          <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
+          <Scene key="InputProdImage" component={InputProdImage} title="제품 이미지 등록" />
+        </Stack> */}
+        
+        <Stack key="MainStack2">
+          <Scene key="test2" component={TestPage2} title="Tab #2_1"/>
+        </Stack>
+
+      </Scene>
+
+      {/* <Scene hideNavBar panHandlers={null}>
         <Tabs
           key="tabbar"
           routeName="tabbar"
@@ -140,11 +163,9 @@ const PAGE = () => (
             <Scene key="tab_2_1" component={TestPage2} title="Tab #2_1"/>
           </Stack>
         </Tabs>
-      </Scene>
-
-    </Drawer>
-
-    </Scene>
+      </Scene> */}
+      </Drawer>
+    </Stack>
 
     
   </Router>

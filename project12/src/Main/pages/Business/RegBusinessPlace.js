@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
 
 import { 
     Form,
@@ -59,7 +60,7 @@ class RegBusinessPlace extends Component {
             <CustomBlockWrapper
                 title="사업장 등록"
             >
-                <Item rounded>
+                <Item regular>
                     <Input
                         value={this.state.bizNm}
                         placeholder='사업장명'
@@ -74,12 +75,14 @@ class RegBusinessPlace extends Component {
                     onChangeText={(text) => this.setState({bizDsc : text})}
                 />
                 <CustomButton 
+                    styleWidth= { false }
                     block={ true }
                     info={ true }
                     bordered={ true }
                     onPress={this._NextButton} >
                     <Text>다음</Text>
                 </CustomButton>
+                
             </CustomBlockWrapper>
         )
     }

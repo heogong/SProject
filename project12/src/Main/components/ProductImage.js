@@ -73,7 +73,7 @@ class ProductImage extends Component {
 
     render() {
         return (
-            <View key={ this.props.index} style={ styles.box }>
+            <View key={ this.props.index } style={ styles.box }>
                 <View style={ [styles.box ] }>
                     <View style={ styles.innerTitle }>
                         <Text>{ this.props.prdTypeImgCateNm }</Text>

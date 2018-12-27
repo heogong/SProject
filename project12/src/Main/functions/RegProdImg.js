@@ -7,7 +7,7 @@ function RegProdImgUrl() {
   return `${API_URL}`;
 }
 
-const regProdImg = async (imgUri, clientPrdId, prdImgCateId) => {
+const regProdImg = (imgUri, clientPrdId, prdImgCateId) => {
   console.log(imgUri, " // ", clientPrdId, " // ", prdImgCateId);
 
   const data = new FormData();

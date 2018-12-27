@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from 'react-native';
 
+import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+
 import { Container, Button, Content, Input, Item, Icon, Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -8,6 +10,7 @@ import { connect } from 'react-redux';
 import CustomBasicWrapper from '../../../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../../../Common/Components/CustomButton';
 import RegProdInfo from '../../../Functions/RegProdInfo'
+import GetCommonData from '../../../../Common/Functions/GetCommonData';
 
 class InputProdInfo extends Component {
     constructor(props) {
@@ -17,7 +20,8 @@ class InputProdInfo extends Component {
         clientPrdNm: '',
         shareholders: [{ 
             clientPrdNm: '', 
-            imgType: []     // imgType : 다음 페이지 이미지 타입 초기화 값(안해주면 다음 페이지 오류)
+            clientPrdDsc: ''
+            //imgType: []     // imgType : 다음 페이지 이미지 타입 초기화 값(안해주면 다음 페이지 오류)
         }]
       };
     }
@@ -51,7 +55,8 @@ class InputProdInfo extends Component {
 
     // input 추가
     _handleAddShareholder = () => {
-        this.setState({ shareholders: this.state.shareholders.concat([{ clientPrdNm: '', imgType: [] }]) });
+        //this.setState({ shareholders: this.state.shareholders.concat([{ clientPrdNm: '', imgType: [] }]) });
+        this.setState({ shareholders: this.state.shareholders.concat([{ clientPrdNm: '', clientPrdDsc: '' }]) });
     }
     
     // input 제거
@@ -62,20 +67,25 @@ class InputProdInfo extends Component {
     // next
     _handleSubmit = () => {
         const { clientPrdNm, shareholders } = this.state;
-        // console.log(shareholders);
-        // console.log(this.props.value);
-
-        // RegProdInfo(this.props.value, this.props.typeId, shareholders).then(result => {
-        //     console.log(result.data);
-        // });
-
-        Actions.InputProdImage({prodInfo : shareholders});
+        RegProdInfo(this.props.value.bizId, this.props.prodTypeId, shareholders).then(result => {
+            console.log(result);
+            GetCommonData(result, this._handleSubmit).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    if(ResultBool) {
+                        Actions.InputProdImage({prodInfo : shareholders});
+                    }
+                }
+            });
+        });
+        //Actions.InputProdImage({prodInfo : shareholders});
     }
 
     render() {
         return (
             <CustomBasicWrapper
                 title="제품 등록"
+                resetPage={ true }
                 rightBtn={ true }
                 rightAction={ this._handleSubmit }
             >

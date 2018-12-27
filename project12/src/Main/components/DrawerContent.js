@@ -15,12 +15,16 @@ class DrawerContent extends React.Component {
     drawer: PropTypes.object,
   };
 
+  _goPage = () => {
+    Actions.replace("MainStack1");
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Button onPress={Actions.pop}>
+        <Button onPress={Actions.MainStack}>
           <Text>
-            Back
+            Main
           </Text>
         </Button>
         <Button onPress={Actions.tab_1}>
@@ -33,14 +37,14 @@ class DrawerContent extends React.Component {
             Switch to tab2
           </Text>
         </Button>
-        <Button onPress={Actions.echo}>
+        <Button onPress={Actions.MainStack1}>
           <Text>
-          Push Clone Scene (EchoView)
+         test1
           </Text>
         </Button>
-        <Button onPress={Actions.launch}>
+        <Button onPress={Actions.MainStack2}>
           <Text>
-          Reset back to launch
+         test2
           </Text>
         </Button>
       </View>

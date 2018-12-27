@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet } from "react-native"
 
-import { Button, Body, Header, Left, Right, Icon, Title, ActionSheet } from "native-base";
+import { Button, Body, Header, Left, Right, Icon, Title, Text } from "native-base";
 import { Actions } from "react-native-router-flux";
 
 class CustomHeader extends Component {
@@ -12,7 +12,8 @@ class CustomHeader extends Component {
         resetPage : false,
         backBtn : true,
         rightBtn : false,
-        menuBtn : false
+        menuBtn : false,
+        closeBtn : false
     }
 
     // 뒤로가기 버튼
@@ -40,14 +41,17 @@ class CustomHeader extends Component {
                         style={(this.props.menuBtn) ? styles.show : styles.hide }>
                         <Icon name='menu' />
                     </Button>
+                    <Button 
+                        transparent
+                        onPress={ this.props.cancelAction }
+                        style={(this.props.closeBtn) ? styles.show : styles.hide }>
+                        <Icon name='md-close' />
+                    </Button>
                 </Left>
                 <Body>
                     <Title>{ this.props.title }</Title>
                 </Body>
                 <Right style={(this.props.rightBtn) ? styles.show : styles.hide }>
-                    {/* <Button transparent>
-                        <Icon name='menu' />
-                    </Button> */}
                     <Button transparent onPress={ this.props.rightAction }>
                         <Icon name='md-checkbox-outline' />
                     </Button>

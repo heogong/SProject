@@ -54,7 +54,7 @@ class InputProdType extends Component {
     }
 
     // 제품 타입 선택
-    _onPress = () => {
+    _nextButton = () => {
         Actions.InputProdInfo({
             prodTypeId : this.state.BUTTONS[this.state.selectIndex].typeId,
             prodTypeNm : this.state.BUTTONS[this.state.selectIndex].text
@@ -66,6 +66,7 @@ class InputProdType extends Component {
             <Root>
                 <CustomBasicWrapper
                     title="제품 타입 등록"
+                    resetPage= { true }
                 >
                     <CustomButton
                         onPress={() =>
@@ -85,7 +86,7 @@ class InputProdType extends Component {
                         <Text>{this.state.buttonTitle}</Text>
                     </CustomButton>
                     <CustomButton rounded success bordered block 
-                        onPress={this._onPress}
+                        onPress={this._nextButton}
                         disabled={!this.state.selectYn}
                     ><Text>다음</Text>
                     </CustomButton>

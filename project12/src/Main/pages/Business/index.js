@@ -4,10 +4,10 @@ import{ Alert, View, TouchableOpacity } from 'react-native';
 import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
-import CustomBasicWrapper from '../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../Common/Components/CustomButton';
+import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
+import CustomButton from '../../../Common/Components/CustomButton';
 
-export default class CardIndex extends Component {
+export default class Business extends Component {
 
   _showAlert = () => {
     Alert.alert(
@@ -16,7 +16,7 @@ export default class CardIndex extends Component {
       [
         // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
         {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: '네', onPress: () => Actions.BusinessIndex() },
+        {text: '네', onPress: () => Actions.root() },
       ],
       { cancelable: false }
     )
@@ -26,15 +26,15 @@ export default class CardIndex extends Component {
     return (
       <CustomBasicWrapper
         resetPage={ true }
-        title="간편결제 카드 등록"
+        title="사업장/제품 등록"
       >
         <CustomButton
           block={ true }
           info={ true }
           bordered={ true }
-          onPress={ Actions.CardInputInfo }>
+          onPress={ Actions.RegBusinessPlace }>
           <Text>
-            카드 등록
+            사업장/제품 등록
           </Text>
         </CustomButton>
         <View style={{ alignItems : 'center' }}> 

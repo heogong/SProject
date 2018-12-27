@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { StyleSheet } from "react-native";
 
 import { Button } from "native-base";
 
@@ -17,13 +18,15 @@ class CustomButton extends Component {
         full: false,
         disabled: false,
         styleWidth: true,
-        icon: false
+        icon: false,
+        marginSize : 15,
+        widthSize : 200
       }
 
     render() {
         return (
             <Button
-                style={ (this.props.styleWidth) ? { margin: 15, marginTop: 10, width: 200 } : { margin: 15, marginTop: 10 }}
+                style={ (this.props.styleWidth) ? { margin : this.props.marginSize, width : this.props.widthSize } : { margin : this.props.marginSize } }
                 light={ this.props.light } 
                 primary={ this.props.primary } 
                 success={ this.props.success } 

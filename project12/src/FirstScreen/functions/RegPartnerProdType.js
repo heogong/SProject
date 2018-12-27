@@ -1,22 +1,19 @@
 import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}coolinic/clients/products/masters?`;
+const API_URL = `${DOMAIN}coolinic/partners/prdtypes`;
 
-function RegProdInfoUrl() {
+function RegPartnerProdTypeUrl() {
   return `${API_URL}`;
 }
 
-const regProdInfo = (bizId, prodTypeId, prodObj) => {
-
-  console.log(prodObj);
-
+const RegPartnerProdType = (data) => {
+  console.log("selectdata : ", data);
   let details = {
-    'clientBplaceId': bizId,
-    'prdTypeId': prodTypeId,
-    'masters': JSON.stringify(prodObj)
+    'prdTypeIds': JSON.stringify(data)
   };
 
+  console.log(JSON.stringify(data));
   let formBody = [];
 
   for (let property in details) {
@@ -27,18 +24,14 @@ const regProdInfo = (bizId, prodTypeId, prodObj) => {
       formBody.push(encodedKey + "=" + encodedValue);
   }
 
-  formBody = formBody.join("&");
-  console.log(formBody);
-
-  console.log(RegProdInfoUrl());
-
-  return fetch(RegProdInfoUrl(), {
+  return fetch(RegPartnerProdTypeUrl(), {
     method: 'POST',
     headers: {
       "Authorization": ACCESS_TOKEN,
-      "Content-Type" : "application/x-www-form-urlencoded;charset=UTF-8"
+      "Content-Type" : "application/x-www-form-urlencoded"
     },
-    body: formBody
+    //body:  formBody
+    body : JSON.stringify(data)
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료
     if(responseJson.error == INVAILD_TOKEN) {
@@ -53,4 +46,4 @@ const regProdInfo = (bizId, prodTypeId, prodObj) => {
   });
 };
 
-export default regProdInfo;
+export default RegPartnerProdType;

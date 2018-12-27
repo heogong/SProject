@@ -31,21 +31,11 @@ class SetAddress extends Component {
           makerYn : false,
           disSaveBtn : true,
           detailAddressName : '',
-          addressObj : []
+          addressObj : [],
+          regionChange : false
         };
     }
 
-    // 초기 데이터 1. 리덕스 값 조회 2. 현재 위치 조회 3. default 값 조회 
-    componentDidMount() {
-        navigator.geolocation.getCurrentPosition (
-            (pos) => {
-                this.setState({
-                    lng : pos.coords.longitude, 
-                    lat : pos.coords.latitude
-                });
-            }
-        )
-    }
     // param : this.onResult => 주소 결과 값 리턴
     _goSearchAddress = () => (
         Actions.JoinSearchPartnerAddress({onResult : this.onResult}) 
@@ -55,8 +45,9 @@ class SetAddress extends Component {
     // 주소검색/지도검색 리턴 값이 달라 분기 처리 필요
     onResult = (region) = (address) => {
         console.log("주소가져왔다 : ",address);
-        console.log("주소가져왔다2 : ",address.region);
+        console.log(address.result.x,"//",address.result.y);
         this.setState({
+            regionChange : true,
             lng : (address.result.x != null) ? address.result.x : address.region.longitude, 
             lat : (address.result.y != null) ? address.result.y : address.region.latitude,
             addressName : address.result.address.address_name,
@@ -107,9 +98,6 @@ class SetAddress extends Component {
         });
     }
 
-    _onRegionChangeComplete(region) {
-    }
-
     render() {
         return (
             <View style={{ flex : 1}}>
@@ -121,7 +109,8 @@ class SetAddress extends Component {
                         lat={this.state.lat}
                         lng={this.state.lng}
                         makerYn={this.state.makerYn}
-                        onRegionChangeComplete={ this._onRegionChangeComplete }
+                        regChangeComplete={ false }
+                        regionChange={this.state.regionChange}
                     />
                     <View style={{ height : 50 }}>
                         <Item 

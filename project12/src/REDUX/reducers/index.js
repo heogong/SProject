@@ -35,6 +35,7 @@ const InitialTokenState = {
 };
 
 const InitialBizState = {
+    bizId: 1,
     bizNm: '',
     bizDsc: '',
     addressObj: [],

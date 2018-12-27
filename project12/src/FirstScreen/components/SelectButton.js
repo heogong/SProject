@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-
-import { Button, Content, Text } from "native-base";
+import { View } from 'react-native';
+import { Button, Text } from "native-base";
+import CustomButton from '../../Common/Components/CustomButton';
 
 class SelectButton extends Component {
     constructor(props) {
@@ -23,13 +24,14 @@ class SelectButton extends Component {
 
     render() {
         return (
-            <Button
-                bordered 
+            <CustomButton
+                styleWidth= { false }
                 light={ !this.state.btnClick }
                 onPress={ this._handleBtnClick }
+                marginSize={ 5 }
             >
-                <Text>{ this.props.text }</Text>
-            </Button>
+                <Text style= {{color: 'black'}}>{ this.props.text }</Text>
+            </CustomButton>
         )
     }
 }

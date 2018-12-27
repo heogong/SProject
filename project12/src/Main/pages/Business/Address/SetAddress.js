@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
+import { Text, Icon, Input, Item, Root, Toast } from 'native-base';
 
 import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
 
-import { Body, Container, Text, Button, Content, Input, Label, ListItem, Root, Toast } from 'native-base';
-import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
-
-import DrawMap from '../../../Components/DrawMap';
 import { connect } from 'react-redux';
 import { setBizId, setBizAddress, setBizAddressDsc } from '../../../../Redux/Actions';
+import DrawMap from '../../../Components/DrawMap';
 import RegBizPlace from '../../../Functions/RegBizPlace';
 import GetCommonData from '../../../../Common/Functions/GetCommonData';
+import CustomButton from '../../../../Common/Components/CustomButton';
+import CustomHeader from '../../../../Common/Components/CustomHeader';
 
 const ADDRESS_DETAIL_LEN = 1;
 
@@ -41,8 +42,8 @@ class SetAddress extends Component {
         )
     }
     // param : this.onResult => 주소 결과 값 리턴
-    _goInputAddress = () => (
-        Actions.InputAddress({onResult : this.onResult}) 
+    _goSearchAddress = () => (
+        Actions.SearchAddress({onResult : this.onResult}) 
     )
 
     // 주소검색 후 결과 데이터
@@ -98,45 +99,53 @@ class SetAddress extends Component {
         });
     }
 
-
-
     render() {
         return (
             <Root>
-                <Container>
-                    <Grid>
-                        <Row style={{ height: 250 }}>
-                            <Content>
-                                <ListItem onPress={this._goInputAddress}>
-                                    <Body>
-                                        <Label>주소</Label>
-                                        <Input disabled>{this.state.addressName}</Input>
-                                    </Body>
-                                </ListItem>
-                                <ListItem>
-                                    <Body>
-                                        <Text>상세주소</Text>
-                                        <Input onChangeText={this._handleChange}></Input>
-                                    </Body>
-                                </ListItem>
-                                <Button block dark 
-                                    disabled={this.state.disSaveBtn} 
-                                    onPress={() => this._SaveButton()}
-                                    >
-                                    <Text>주소 저장</Text>
-                                </Button>
-                            </Content>
-
-                        </Row>
-                        <Row style={{ backgroundColor: '#635DB7', height: 350 }}>
-                            <DrawMap
-                                lat={this.state.lat}
-                                lng={this.state.lng}
-                                makerYn={this.state.makerYn}
-                            />
-                        </Row>
-                    </Grid>
-                </Container>
+                <View style={{ flex : 1}}>
+                    <CustomHeader
+                        title="주소 입력"
+                    />
+                    <View style={{ flex : 1, padding: 5 }}>
+                        <DrawMap
+                            lat={this.state.lat}
+                            lng={this.state.lng}
+                            makerYn={this.state.makerYn}
+                        />
+                        <View style={{ height : 50 }}>
+                            <Item 
+                                regular 
+                                onPress={this._goSearchAddress}
+                                style={{backgroundColor:'white'}}
+                            >
+                                <Icon active name='md-home' />
+                                <Input 
+                                    disabled
+                                    placeholder="주소"
+                                > 
+                                    {this.state.addressName} 
+                                </Input>
+                            </Item>
+                            <Item 
+                                regular 
+                                onPress={this._goSearchAddress}
+                                style={{backgroundColor:'white'}}
+                            >
+                                <Input 
+                                    placeholder="상세주소" 
+                                    onChangeText={this._handleChange} />
+                            </Item>
+                            <CustomButton
+                                styleWidth={ false }
+                                full={ true }
+                                dark={ true }
+                                disabled={ this.state.disSaveBtn } 
+                                onPress={() => this._SaveButton()}>
+                                <Text>주소 저장</Text>
+                            </CustomButton>
+                        </View>
+                    </View>
+                </View>
             </Root>
         )
     }
