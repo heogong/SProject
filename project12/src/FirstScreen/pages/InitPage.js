@@ -54,7 +54,7 @@ export default class PageOne extends Component {
           block={ true }
           info={ true }
           bordered={ true }
-          onPress={Actions.root}>
+          onPress={Actions.MainStack}>
           <Text>
             drawer
           </Text>

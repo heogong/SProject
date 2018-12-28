@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
 
-import NativeButton from 'apsl-react-native-button';
 import { NaverLogin, getProfile } from 'react-native-naver-login';
 
 import { NAVER_CODE, SUCCESS_RETURN_CODE } from '../../../Common/Blend';
@@ -52,8 +52,7 @@ class Page extends Component {
     SnsLogin(this.props.tokenObj, NAVER_CODE).then(async result => {
       const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
       if(ResultBool) {
-        alert("성공");
-        console.log(result);
+        Actions.MainStack();
       } else {
         Alert.alert(
           '',

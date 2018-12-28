@@ -17,30 +17,54 @@ const ADDRESS_DETAIL_LEN = 1;
 
 class SetAddress extends Component {
     constructor(props) {
-      super(props);
+        super(props);
 
-      this.state = {
-          lat : '',
-          lng : '',
-          addressName : '',
-          makerYn : false,
-          disSaveBtn : true,
-          detailAddressName : '',
-          addressObj : []
+        this.state = {
+            addressName : '',
+            makerYn : false,
+            disSaveBtn : true,
+            detailAddressName : '',
+            addressObj : [],
+            region: {
+                latitude: 37.566535,
+                longitude: 126.97796919999996,
+                latitudeDelta: 0.0043,
+                longitudeDelta: 0.0034
+            },
+            marker:{
+                latitude: 37.566535,
+                longitude: 126.97796919999996
+            }
         };
     }
 
     // 초기 데이터 1. 리덕스 값 조회 2. 현재 위치 조회 3. default 값 조회 
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition (
-            (pos) => {
-                this.setState({
-                    lng : pos.coords.longitude, 
-                    lat : pos.coords.latitude
-                });
-            }
-        )
+        this._getLocation();
     }
+
+    // 현재 위치 조회
+    _getLocation() {
+        navigator.geolocation.getCurrentPosition(
+          (positon) => {
+            this.setState({
+              region : {
+                ...this.state.region,
+                latitude : positon.coords.latitude,
+                longitude : positon.coords.longitude
+              }
+            })
+          },
+          (error) => {alert(error.message)},
+          {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
+        );
+    }
+
+    // 맵 이동 후 좌표 값
+    _onRegionChangeComplete = (region) => {
+        this.setState({region});
+    }
+
     // param : this.onResult => 주소 결과 값 리턴
     _goSearchAddress = () => (
         Actions.SearchAddress({onResult : this.onResult}) 
@@ -49,8 +73,15 @@ class SetAddress extends Component {
     // 주소검색 후 결과 데이터
     onResult = (address) => {
         this.setState({
-            lng : address.result.x, 
-            lat : address.result.y,
+            region : {
+                ...this.state.region,
+                latitude : Number(address.result.y),
+                longitude : Number(address.result.x)
+            },
+            marker : {
+                latitude : Number(address.result.y),
+                longitude : Number(address.result.x)
+            },
             addressName : address.result.address_name,
             makerYn : true,
             addressObj : address.result,
@@ -82,10 +113,7 @@ class SetAddress extends Component {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
-                        //console.log("result : ", result);
-                        //Actions.popTo("ListBusinessPlace"); // 페이지 이동
-                        //Actions.refresh({key: "ListBusinessPlace"}) // 페이지 새로고침
-                        await this.props.onSetBizId(resultData.bizPlaceId); // 사업장 ID 리덕스 SET
+                        await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
                         Actions.InputProdType();
                     } else {
                         Toast.show({
@@ -108,9 +136,10 @@ class SetAddress extends Component {
                     />
                     <View style={{ flex : 1, padding: 5 }}>
                         <DrawMap
-                            lat={this.state.lat}
-                            lng={this.state.lng}
-                            makerYn={this.state.makerYn}
+                            region={ this.state.region }
+                            onRegionChangeComplete={ this._onRegionChangeComplete }
+                            makerYn={ this.state.makerYn }
+                            marker={ this.state.marker }
                         />
                         <View style={{ height : 50 }}>
                             <Item 

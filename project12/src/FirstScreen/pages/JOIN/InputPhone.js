@@ -55,7 +55,7 @@ class InputPhone extends Component {
           [
             // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
             //{text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: '네', onPress: () => console.log('OK Pressed')},
+            {text: '확인', onPress: () => console.log('OK Pressed')},
           ],
           { cancelable: false }
         )

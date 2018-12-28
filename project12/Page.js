@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator';
 import {Actions, Scene, Router, Stack, Overlay, ActionConst, Drawer, Tabs} from 'react-native-router-flux';
+import TabIcon from './src/Common/Components/TabIcon';
 import InitPage from './src/FirstScreen/Pages/InitPage';
 import PageOne from './src/FirstScreen/Pages/PageOne';
 
@@ -17,7 +18,6 @@ import LoginInputAccount from './src/FirstScreen/Pages/Login/InputAccount';
 import JoinInputBizLicense from './src/FirstScreen/Pages/Join/Partner/InputBizLicense'; // 파트너 사업장 등록
 import JoinSetPartnerAddress from './src/FirstScreen/Pages/Join/Partner/SetAddress'; // 파트너 주소 등록
 import JoinSearchPartnerAddress from './src/FirstScreen/Pages/Join/Partner/SearchAddress'; // 파트너 주소 검색
-import JoinSearchPartnerMapAddress from './src/FirstScreen/Pages/Join/Partner/SearchMapAddress'; // 파트너 주소 지도 검색
 
 import JoinInputProdType from './src/FirstScreen/Pages/Join/Partner/InputProdType'; // 파트너 제품타입 선택
 import JoinInputWorkHours from './src/FirstScreen/Pages/Join/Partner/InputWorkHours'; // 파트너 근무시간 선택
@@ -61,7 +61,7 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
 
       <Scene key="reactCamera" hideNavBar component={ReactCamera} />
@@ -76,9 +76,8 @@ const PAGE = () => (
       
       {/* 파트너 회원가입 */}
       <Scene key="JoinInputBizLicense" hideNavBar component={JoinInputBizLicense} title="사업장 등록" type={ActionConst.RESET}/>
-      <Scene key="JoinSetPartnerAddress" initial hideNavBar component={JoinSetPartnerAddress} title="" />
+      <Scene key="JoinSetPartnerAddress" hideNavBar component={JoinSetPartnerAddress} title="" />
       <Scene key="JoinSearchPartnerAddress" hideNavBar component={JoinSearchPartnerAddress} title="" />
-      <Scene key="JoinSearchPartnerMapAddress"  hideNavBar component={JoinSearchPartnerMapAddress} title="" />
       
       <Scene key="JoinInputProdType"  hideNavBar component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
       <Scene key="JoinInputWorkHours" hideNavBar component={JoinInputWorkHours} title="근무시간" type={ActionConst.RESET}/>
@@ -101,7 +100,7 @@ const PAGE = () => (
       <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" hideNavBar component={InputProdImage} type={ActionConst.RESET} />
 
-     
+
       <Drawer
         hideNavBar
         key="drawer"
@@ -115,61 +114,113 @@ const PAGE = () => (
         drawerImage={MenuIcon}
         drawerWidth={300}
       >
-      <Scene key="root" hideNavBar transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-        <Stack key="MainStack" hideNavBar>
-          <Scene key="Main" component={Main} />
-        </Stack>
-
-        {/* <Stack key="MainStack1" transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-          <Scene key="InputProdType" hideNavBar component={InputProdType}/>
-          <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
-          <Scene key="InputProdImage" component={InputProdImage} title="제품 이미지 등록" />
-        </Stack> */}
-        
-        <Stack key="MainStack2">
-          <Scene key="test2" component={TestPage2} title="Tab #2_1"/>
-        </Stack>
-
-      </Scene>
-
-      {/* <Scene hideNavBar panHandlers={null}>
-        <Tabs
-          key="tabbar"
-          routeName="tabbar"
-          legacy
-          backToInitial
-          onTabOnPress={() => {
-            console.log('Back to initial and also print this');
-          }}
-          swipeEnabled
-          showLabel={true}
-          activeBackgroundColor="white"
-          inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
-        >
-          <Stack
-            key="tab_1"
-            title="Tab #1"
-            tabBarLabel="TAB #1"
-            inactiveBackgroundColor="#FFF"
-            activeBackgroundColor="#DDD"
-            navigationBarStyle={{ backgroundColor: 'green' }}
-            titleStyle={{ color: 'white', alignSelf: 'center' }}
-            hideNavBar
+        <Scene hideNavBar panHandlers={null}>
+          <Tabs
+            key="tabbar"
+            routeName="tabbar"
+            backToInitial
+            onTabOnPress={() => {
+              console.log('Back to initial and also print this');
+            }}
+            swipeEnabled
+            showLabel={true}
+            activeBackgroundColor="white"
+            inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
+            tabBarPosition="bottom"
           >
-            <Scene key="tab_1_1" component={TestPage1} title="Tab #1_1111" onRight={() => alert('Right button')} rightTitle="Right" />
-          </Stack>
-
-          <Stack key="tab_2" title="Tab #2"  initial>
-            <Scene key="tab_2_1" component={TestPage2} title="Tab #2_1"/>
-          </Stack>
-        </Tabs>
-      </Scene> */}
+            <Stack key="MainStack" hideNavBar title="Stack_Title" initial icon={TabIcon}>
+              <Scene key="Main" component={Main} title="Scene_Title"/>
+            </Stack>
+            <Stack key="tab_2" title="Tab #2" icon={TabIcon}>
+              <Scene key="tab_2_1" component={TestPage2} title="Tab #2_2"/>
+            </Stack>
+            <Stack key="tab_3" title="Tab #3" icon={TabIcon}>
+              <Scene key="tab_3_1" component={TestPage3} title="Tab #2_3"/>
+            </Stack>
+          </Tabs>
+        </Scene>
       </Drawer>
-    </Stack>
+     
+      {/* <Drawer
+        hideNavBar
+        key="drawer"
+        onExit={() =>{
+          console.log('Drawer closed');
+        }}
+        onEnter={() => {
+          console.log('Drawer opened');
+        }}
+        contentComponent={DrawerContent}
+        drawerImage={MenuIcon}
+        drawerWidth={300}
+      >
+        <Scene key="root" hideNavBar transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+          <Stack key="MainStack" hideNavBar>
+            <Scene key="Main" component={Main} />
+          </Stack>
 
-    
+          <Stack key="MainStack1" transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+            <Scene key="InputProdType" hideNavBar component={InputProdType}/>
+            <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
+            <Scene key="InputProdImage" component={InputProdImage} title="제품 이미지 등록" />
+          </Stack>
+          
+          <Stack key="MainStack2">
+            <Scene key="test2" component={TestPage2} title="Tab #2_1"/>
+          </Stack>
+
+        </Scene>
+      </Drawer> */}
+    </Stack>
   </Router>
 );
+
+
+{/* 일단 남겨두기
+  <Scene hideNavBar panHandlers={null}>
+    <Tabs
+      key="tabbar"
+      routeName="tabbar"
+      legacy
+      backToInitial
+      onTabOnPress={() => {
+        console.log('Back to initial and also print this');
+      }}
+      swipeEnabled
+      showLabel={false}
+      tabBarStyle={styles.tabBarStyle}
+      activeBackgroundColor="white"
+      inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
+    >
+      <Stack
+        key="tab_1"
+        title="Tab #1"
+        tabBarLabel="TAB #1"
+        inactiveBackgroundColor="#FFF"
+        activeBackgroundColor="#DDD"
+        icon={TabIcon}
+        navigationBarStyle={{ backgroundColor: 'green' }}
+        titleStyle={{ color: 'white', alignSelf: 'center' }}
+      >
+        <Scene key="tab_1_1" component={TabView} title="Tab #1_1" onRight={() => alert('Right button')} rightTitle="Right" />
+
+        <Scene key="tab_1_2" component={TabView} title="Tab #1_2" back titleStyle={{ color: 'black', alignSelf: 'center' }} />
+      </Stack>
+
+      <Stack key="tab_2" title="Tab #2" icon={TabIcon} initial>
+        <Scene key="tab_2_1" component={TabView} title="Tab #2_1" renderRightButton={() => <Text>Right</Text>} />
+        <Scene key="tab_2_2" component={TabView} title="Tab #2_2" back onBack={() => alert('onBack button!')} hideDrawerButton backTitle="Back!" panHandlers={null} />
+      </Stack>
+
+      <Stack key="tab_3" icon={TabIcon} title="Tab #3">
+        <Scene key="tab_3_1" component={TabView} rightTitle="Reset to 'tabbar'" onRight={() => Actions.reset('tabbar')} />
+      </Stack>
+      <Scene key="tab_4_1" component={TabView} title="Tab #4" hideNavBar icon={TabIcon} />
+      <Stack key="tab_5" icon={TabIcon} title="Tab #5">
+        <Scene key="tab_5_1" component={TabView} />
+      </Stack>
+    </Tabs>
+</Scene> */}
 
 export default PAGE;
 

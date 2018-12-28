@@ -3,21 +3,22 @@ import { DEV_SNS_DOMAIN } from '../../Common/Blend';
 const API_URL = `${DEV_SNS_DOMAIN}iam/users/sns/oauth/token`;
 
 function SnsLoginUrl() {
-  return url = `${API_URL}`;
+  return `${API_URL}`;
 }
 
 const SnsLogin = (TOKEN, snsCode) => {
-  const formData = new URLSearchParams();
+  //console.log("snsToken : ", TOKEN.snsToken)
+  const data = new FormData();
 
-  formData.append('snsSiteCd', snsCode);
-  formData.append('snsSiteAccessToken', TOKEN.snsToken);
+  data.append('snsSiteCd', snsCode);
+  data.append('snsSiteAccessToken', TOKEN.snsToken);
 
   return fetch(SnsLoginUrl(), {
     method: 'POST',
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "multipart/form-data"
     },
-    body:  formData
+    body: data
   }).then((response) => response.json()).then((responseJson) => {
     return responseJson;
   }).catch((err) => {

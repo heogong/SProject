@@ -19,9 +19,11 @@ class InputProdInfo extends Component {
       this.state = {
         clientPrdNm: '',
         shareholders: [{ 
+            clientBplaceId: this.props.value.bizId, 
+            prdTypeId : this.props.prodTypeId,
             clientPrdNm: '', 
-            clientPrdDsc: ''
-            //imgType: []     // imgType : 다음 페이지 이미지 타입 초기화 값(안해주면 다음 페이지 오류)
+            clientPrdDsc: '',
+            imgType: []     // imgType : 다음 페이지 이미지 타입 초기화 값(안해주면 다음 페이지 오류)
         }]
       };
     }
@@ -55,8 +57,13 @@ class InputProdInfo extends Component {
 
     // input 추가
     _handleAddShareholder = () => {
-        //this.setState({ shareholders: this.state.shareholders.concat([{ clientPrdNm: '', imgType: [] }]) });
-        this.setState({ shareholders: this.state.shareholders.concat([{ clientPrdNm: '', clientPrdDsc: '' }]) });
+        this.setState({ shareholders: this.state.shareholders.concat([{ 
+            clientBplaceId: this.props.value.bizId, 
+            prdTypeId : this.props.prodTypeId, 
+            clientPrdNm: '', 
+            clientPrdDsc: '',
+            imgType: [] }]) 
+        });
     }
     
     // input 제거
@@ -67,18 +74,19 @@ class InputProdInfo extends Component {
     // next
     _handleSubmit = () => {
         const { clientPrdNm, shareholders } = this.state;
-        RegProdInfo(this.props.value.bizId, this.props.prodTypeId, shareholders).then(result => {
-            console.log(result);
+        RegProdInfo(shareholders).then(result => {
             GetCommonData(result, this._handleSubmit).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
                         Actions.InputProdImage({prodInfo : shareholders});
+                    } else {
+                        console.log(resultData);
+                        alert(resultData.msg);
                     }
                 }
             });
         });
-        //Actions.InputProdImage({prodInfo : shareholders});
     }
 
     render() {
@@ -109,7 +117,7 @@ class InputProdInfo extends Component {
                     </CustomButton>
                     {this.state.shareholders.map((shareholder, idx) => (
                         <View key={idx} style={(idx !== 0) ? styles.show : styles.hide }>
-                            <Item rounded >
+                            <Item regular >
                                 <Input
                                     placeholder={`${this.props.prodTypeNm}${idx + 1}`}
                                     value={shareholder.clientPrdNm}
@@ -117,10 +125,8 @@ class InputProdInfo extends Component {
                                 />
                                 <Icon onPress={this._handleRemoveShareholder(idx)} active name='ios-remove-circle-outline' />
                             </Item>
-                            {/* <Button onPress={this._handleRemoveShareholder(idx)}><Text>-</Text></Button> */}
                         </View>
                     ))}
-                    {/* <Button rounded onPress={this._handleSubmit}><Text>저장</Text></Button> */}
                 </View>
             </CustomBasicWrapper>
         )

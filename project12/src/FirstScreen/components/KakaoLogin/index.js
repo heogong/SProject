@@ -44,10 +44,8 @@ class KakaoLogin extends Component {
     SnsLogin(this.props.tokenObj, KAKAO_CODE).then(async result => {
       const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
       if(ResultBool) {
-        alert("성공");
-        console.log(result);
+        Actions.MainStack();
       } else {
-        console.log(result);
         Alert.alert(
           '',
           `${result.resultMsg} - 회원가입 페이지로 이동하시겠습니까?`,
@@ -66,10 +64,11 @@ class KakaoLogin extends Component {
   kakaoLogin() {
     console.log('   kakaoLogin   ');
     RNKakaoLogins.login(async (err, result) => {
+      console.log(`\n\n  Token is fetched  :: ${result.token} \n\n`);
       // 로그인 페이지에서 접근 시
       if(this.props.loginYn) {
         this.props.onSetSnsSignYn('Y');     // 리덕스 SNS 로그인 여부 SET
-        this.props.onSetSnsToken(result);    // 리덕스 SNS TOKEN SET
+        this.props.onSetSnsToken(result.token);    // 리덕스 SNS TOKEN SET
         
         // 시스템 로그인
         this._SystmeLogin();
@@ -77,8 +76,7 @@ class KakaoLogin extends Component {
       // 시스템 회원가입
       } else {
         //Alert.alert('result', result);
-        console.log(result);
-        await this.setState({ theToken: result });
+        await this.setState({ theToken: result.token });
         this._certSnsLogInfo();
 
       }

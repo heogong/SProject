@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from "react-native"
+import { AsyncStorage, Alert } from "react-native"
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrPw, setAccessToken, setRefreshToken } from '../../../Redux/Actions';
 
-import { Item, Input, Root, Toast, Text } from "native-base";
+import { Item, Input, Root, Text } from "native-base";
 import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../../Common/Components/CustomButton';
 import Login from '../../Functions/Login';
@@ -66,11 +66,16 @@ class InputAccount extends Component {
         Actions.ListBusinessPlace();
 
       } else {
-        Toast.show({
-          text: '사용자 정보가 올바르지 않습니다.',
-          type: "danger",
-          buttonText: '확인'
-        })
+        Alert.alert(
+          '',
+          `${result.resultMsg} - 회원가입 페이지로 이동하시겠습니까?`,
+          [
+            // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+            {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: '네', onPress: () => Actions.JoinCustomerType()},
+          ],
+          { cancelable: false }
+        )
       }
     });
   }

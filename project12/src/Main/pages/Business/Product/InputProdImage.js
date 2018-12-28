@@ -46,11 +46,11 @@ class InputProdImage extends Component {
     }
 
     _renderListItem = (info, idx) => (
-        <View style={{ flex:1, justifyContent: 'center'}}>
+        <View key={ idx } style={{ flex:1, justifyContent: 'center'}}>
             <View style={{ alignItems: 'center', paddingTop : 5 }}>
                 <Text> {info.clientPrdNm} </Text>
             </View>
-            <ListItem key={ idx }>
+            <ListItem>
                 <View style={ styles.boxLayout }>
                 {info.imgType.map((type, sidx) => (
                     <ProductImage 
@@ -72,7 +72,7 @@ class InputProdImage extends Component {
             '등록되지 않은 이미지는 어딘가에서 등록 가능 \ 제품을 추가 등록 하시겠습니까?',
             [
               // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-              {text: '아니오', onPress: () => Actions.root() },
+              {text: '아니오', onPress: () => Actions.MainStack() },
               {text: '네', onPress: () => Actions.InputProdType() },
             ],
             { cancelable: false }

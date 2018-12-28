@@ -21,8 +21,35 @@ class SearchAddress extends Component {
     this.state = { 
       strAddress: '대방동 392-14',
       data: [],
-      showMap : false
+      showMap : false,
+      region: {
+        latitude: 37.566535,
+        longitude: 126.97796919999996,
+        latitudeDelta: 0.0043,
+        longitudeDelta: 0.0034
+      }
     };
+  }
+
+  // 초기 데이터 1. 리덕스 값 조회 2. 현재 위치 조회 3. default 값 조회 
+  componentDidMount() {
+    this._getLocation();
+  }
+
+  _getLocation() {
+      navigator.geolocation.getCurrentPosition(
+        (positon) => {
+          this.setState({
+            region : {
+              ...this.state.region,
+              latitude : positon.coords.latitude,
+              longitude : positon.coords.longitude
+            }
+          })
+        },
+        (error) => {alert(error.message)},
+        {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
+    );
   }
 
   _onPress = (item) => {
@@ -61,7 +88,7 @@ class SearchAddress extends Component {
   // error : this.state 값 변경 시 맵에 좌표값 초기화로 맵 이동 불가 현상 
   _GetAddressInfo = async () => {
     console.log("_GetAddressInfo");
-    GetAddressInfo(REGION).then(result => {
+    GetAddressInfo(this.state.region).then(result => {
       GetCommonData(result, this._GetAddressInfo).then(async resultData => {
           if(resultData !== undefined) {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -77,13 +104,6 @@ class SearchAddress extends Component {
     });
   }
 
-  // 맵 드래그 시 주소값 세팅
-  _onResultReg = (region) => {
-    console.log(" _onResultReg : ",region);
-    REGION = region;
-    this._GetAddressInfo();
-  }
-
   _renderItem = (item) => (
     <ListItem onPress={() => this._onPress(item)}>
       <Body>
@@ -97,6 +117,12 @@ class SearchAddress extends Component {
     </ListItem>
   );
 
+  // 맵 이동 후 좌표 값
+  _onRegionChangeComplete = async (region) => {
+    await this.setState({region});
+    this._GetAddressInfo();
+  }
+
   render() {
     return (
       <View style={{ flex : 1}}>
@@ -105,10 +131,10 @@ class SearchAddress extends Component {
         />
         <View style={{ flex : 1, padding: 5 }}>
           <DrawMap
-              makerYn={ false }
-              showMap={ this.state.showMap }
-              regChangeComplete={ true }
-              resultReg={ this._onResultReg }
+            region={ this.state.region }
+            onRegionChangeComplete={ this._onRegionChangeComplete }
+            makerYn={ false }
+            showMap={ this.state.showMap }
           /> 
           <View style={ {height : 50} }>
             <Item 
