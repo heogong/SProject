@@ -52,6 +52,7 @@ class SetAddress extends Component {
                 ...this.state.region,
                 latitude : positon.coords.latitude,
                 longitude : positon.coords.longitude
+
               }
             })
           },
@@ -64,6 +65,7 @@ class SetAddress extends Component {
     _onRegionChangeComplete = (region) => {
         this.setState({region});
     }
+
 
     // param : this.onResult => 주소 결과 값 리턴
     _goSearchAddress = () => (
@@ -118,6 +120,10 @@ class SetAddress extends Component {
         });
     }
 
+    _onRegionChangeComplete = (region) => {
+        this.setState({region});
+    }
+
     render() {
         return (
             <View style={{ flex : 1}}>
@@ -130,6 +136,7 @@ class SetAddress extends Component {
                         onRegionChangeComplete={ this._onRegionChangeComplete }
                         makerYn={ this.state.makerYn }
                         marker={ this.state.marker }
+
                     />
                     <View style={{ height : 50 }}>
                         <Item 

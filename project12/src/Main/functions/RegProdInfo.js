@@ -6,8 +6,6 @@ const API_URL = `${DOMAIN}coolinic/clients/products/masters`;
 function RegProdInfoUrl() {
   return `${API_URL}`;
 }
-
-//const RegProdInfo = (bizId, prodTypeId, prodObj) => {
 const RegProdInfo = (prodObj) => {
   console.log(prodObj);
   return fetch(RegProdInfoUrl(), {
@@ -17,6 +15,7 @@ const RegProdInfo = (prodObj) => {
       "Content-Type" : "application/json"
     },
     body: JSON.stringify(prodObj)
+
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료
     if(responseJson.error == INVAILD_TOKEN) {

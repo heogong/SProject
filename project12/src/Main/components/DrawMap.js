@@ -13,7 +13,6 @@ class DrawMap extends Component {
         showMap : true  // 맵 보임 여부      
     }
 
-
     render() {
         return (
             <View style={ styles.container }>
