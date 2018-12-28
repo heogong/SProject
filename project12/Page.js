@@ -76,7 +76,7 @@ const PAGE = () => (
       
       {/* 파트너 회원가입 */}
       <Scene key="JoinInputBizLicense" hideNavBar component={JoinInputBizLicense} title="사업장 등록" type={ActionConst.RESET}/>
-      <Scene key="JoinSetPartnerAddress" initial hideNavBar component={JoinSetPartnerAddress} title="" />
+      <Scene key="JoinSetPartnerAddress" hideNavBar component={JoinSetPartnerAddress} title="" />
       <Scene key="JoinSearchPartnerAddress" hideNavBar component={JoinSearchPartnerAddress} title="" />
       <Scene key="JoinSearchPartnerMapAddress"  hideNavBar component={JoinSearchPartnerMapAddress} title="" />
       
@@ -97,7 +97,7 @@ const PAGE = () => (
       <Scene key="SetAddress" hideNavBar component={SetAddress} title="주소" />
       <Scene key="SearchAddress" hideNavBar component={SearchAddress} title="주소 등록"/>
       
-      <Scene key="InputProdType" hideNavBar component={InputProdType} type={ActionConst.RESET} />
+      <Scene key="InputProdType" initial hideNavBar component={InputProdType} type={ActionConst.RESET} />
       <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" hideNavBar component={InputProdImage} type={ActionConst.RESET} />
 

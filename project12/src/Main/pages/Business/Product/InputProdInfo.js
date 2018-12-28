@@ -20,8 +20,8 @@ class InputProdInfo extends Component {
         clientPrdNm: '',
         shareholders: [{ 
             clientPrdNm: '', 
-            clientPrdDsc: ''
-            //imgType: []     // imgType : 다음 페이지 이미지 타입 초기화 값(안해주면 다음 페이지 오류)
+            clientPrdDsc: '',
+            // imgType: []     // imgType : 다음 페이지 이미지 타입 초기화 값(안해주면 다음 페이지 오류)
         }]
       };
     }
@@ -55,7 +55,7 @@ class InputProdInfo extends Component {
 
     // input 추가
     _handleAddShareholder = () => {
-        //this.setState({ shareholders: this.state.shareholders.concat([{ clientPrdNm: '', imgType: [] }]) });
+        // this.setState({ shareholders: this.state.shareholders.concat([{ clientPrdNm: '', imgType: [] }]) });
         this.setState({ shareholders: this.state.shareholders.concat([{ clientPrdNm: '', clientPrdDsc: '' }]) });
     }
     
@@ -78,7 +78,7 @@ class InputProdInfo extends Component {
                 }
             });
         });
-        //Actions.InputProdImage({prodInfo : shareholders});
+        // Actions.InputProdImage({prodInfo : shareholders});
     }
 
     render() {

@@ -32,8 +32,37 @@ class SetAddress extends Component {
           disSaveBtn : true,
           detailAddressName : '',
           addressObj : [],
-          regionChange : false
+
+          region: {
+            latitude: 37.566535,
+            longitude: 126.97796919999996,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }
         };
+    }
+
+    // 초기 데이터 1. 리덕스 값 조회 2. 현재 위치 조회 3. default 값 조회 
+    componentDidMount() {
+        this.getLocation();
+    }
+
+    getLocation() {
+        navigator.geolocation.getCurrentPosition(
+          (positon) => {
+            this.setState({
+              region : {
+                ...this.state.region,
+                latitude : positon.coords.latitude,
+                longitude : positon.coords.longitude,
+                // latitude: 37.566535,
+                // longitude: 126.97796919999996,
+              }
+            })
+          },
+          (error) => {alert(error.message)},
+          {enableHighAccuracy: true, timeout: 2000, maximumAge: 1000}
+        );
     }
 
     // param : this.onResult => 주소 결과 값 리턴
@@ -98,6 +127,10 @@ class SetAddress extends Component {
         });
     }
 
+    _onRegionChangeComplete = (region) => {
+        this.setState({region});
+    }
+
     render() {
         return (
             <View style={{ flex : 1}}>
@@ -106,11 +139,9 @@ class SetAddress extends Component {
                 />
                 <View style={{ flex : 1, padding: 5 }}>
                     <DrawMap
-                        lat={this.state.lat}
-                        lng={this.state.lng}
-                        makerYn={this.state.makerYn}
-                        regChangeComplete={ false }
-                        regionChange={this.state.regionChange}
+                        region={ this.state.region }
+                        makerYn={ this.state.makerYn }
+                        onRegionChangeComplete={ this._onRegionChangeComplete }
                     />
                     <View style={{ height : 50 }}>
                         <Item 
