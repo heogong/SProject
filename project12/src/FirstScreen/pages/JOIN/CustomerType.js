@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { BIZ, PARTNER } from '../../../Common/Blend';
+import { CLIENT, PARTNER } from '../../../Common/Blend';
 import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
@@ -30,7 +30,7 @@ class CustomerType extends Component {
           block={ true } 
           info={ true }
           bordered={ true } 
-          onPress={this._selectCustomerTypeAndGoPage(BIZ)}>
+          onPress={this._selectCustomerTypeAndGoPage(CLIENT)}>
           <Text>
               일반 사업장
           </Text>

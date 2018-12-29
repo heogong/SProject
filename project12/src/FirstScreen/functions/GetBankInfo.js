@@ -1,14 +1,14 @@
 import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}api/kakao/local/geo/coord2address?`;
+const API_URL = `${DOMAIN}control/codes/groups/BANK_CD/dtls`;
 
-function GetAddressInfoUrl(region) {
-  return `${API_URL}lat=${region.latitude}&lng=${region.longitude}`;
+function GetBankInfoUrl(region) {
+  return `${API_URL}`;
 }
 
-const GetAddressInfo = async (region) => {
-  return fetch(GetAddressInfoUrl(region), {
+const GetBankInfo = async (region) => {
+  return fetch(GetBankInfoUrl(region), {
     method: 'GET',
     headers: {
      "Authorization": ACCESS_TOKEN
@@ -27,4 +27,4 @@ const GetAddressInfo = async (region) => {
   });
 };
 
-export default GetAddressInfo;
+export default GetBankInfo;

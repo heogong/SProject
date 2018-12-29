@@ -32,5 +32,5 @@ export const KAKAO_CODE = 'SNS_SITE_CD_02'; // 카카오
 export const FACE_BOOK_CODE = 'SNS_SITE_CD_03'; // 페이스북
 
 // etc
-export const BIZ = "BUSINESS";
+export const CLIENT = "CLIENT";
 export const PARTNER = "PARTNER";

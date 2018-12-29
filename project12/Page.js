@@ -21,6 +21,7 @@ import JoinSearchPartnerAddress from './src/FirstScreen/Pages/Join/Partner/Searc
 
 import JoinInputProdType from './src/FirstScreen/Pages/Join/Partner/InputProdType'; // 파트너 제품타입 선택
 import JoinInputWorkHours from './src/FirstScreen/Pages/Join/Partner/InputWorkHours'; // 파트너 근무시간 선택
+import JoinInputSettleAccount from './src/FirstScreen/Pages/Join/Partner/InputSettleAccount'; // 파트너 정산 계좌
 
 import CardIndex from './src/Card/Pages';
 import CardInputInfo from './src/Card/Pages/InputCardInfo';
@@ -61,7 +62,7 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
 
       <Scene key="reactCamera" hideNavBar component={ReactCamera} />
@@ -81,6 +82,7 @@ const PAGE = () => (
       
       <Scene key="JoinInputProdType"  hideNavBar component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
       <Scene key="JoinInputWorkHours" hideNavBar component={JoinInputWorkHours} title="근무시간" type={ActionConst.RESET}/>
+      <Scene key="JoinInputSettleAccount" initial hideNavBar component={JoinInputSettleAccount} title="계좌등록" type={ActionConst.RESET}/>
       
       <Scene key="LoginAccountType" hideNavBar component={LoginAccountType} title="로그인 구분" back onBack={() => Actions.InitPage()}/>
       <Scene key="LoginInputAccount" hideNavBar component={LoginInputAccount} title="이메일 로그인"/>
@@ -96,7 +98,7 @@ const PAGE = () => (
       <Scene key="SetAddress" hideNavBar component={SetAddress} title="주소" />
       <Scene key="SearchAddress" hideNavBar component={SearchAddress} title="주소 등록"/>
       
-      <Scene key="InputProdType" initial hideNavBar component={InputProdType} type={ActionConst.RESET} />
+      <Scene key="InputProdType" hideNavBar component={InputProdType} type={ActionConst.RESET} />
       <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" hideNavBar component={InputProdImage} type={ActionConst.RESET} />
 

@@ -1,17 +1,23 @@
 import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}api/kakao/local/geo/coord2address?`;
+const API_URL = `${DOMAIN}coolinic/partners/account/info?`;
 
-function GetAddressInfoUrl(region) {
-  return `${API_URL}lat=${region.latitude}&lng=${region.longitude}`;
+function RegSettleAccountUrl(bank, account) {
+  return `${API_URL}
+  bankCd=${bank.bankCode}
+  &accountHolder=${account.name}
+  &accountNum=${account.number}
+  &managerNm=''
+  &managerPhoneNum=''`;
 }
 
-const GetAddressInfo = async (region) => {
-  return fetch(GetAddressInfoUrl(region), {
-    method: 'GET',
+const RegSettleAccount = (bank, account) => {
+  console.log(RegSettleAccountUrl(bank, account))
+  return fetch(RegSettleAccountUrl(bank, account), {
+    method: 'POST',
     headers: {
-     "Authorization": ACCESS_TOKEN
+      "Authorization": ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료
@@ -27,4 +33,4 @@ const GetAddressInfo = async (region) => {
   });
 };
 
-export default GetAddressInfo;
+export default RegSettleAccount;

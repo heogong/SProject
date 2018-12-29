@@ -1,12 +1,12 @@
-import { DOMAIN, BIZ, SUCCESS_RETURN_CODE } from '../../Common/Blend';
+import { DOMAIN, CLIENT, SUCCESS_RETURN_CODE } from '../../Common/Blend';
 import { AsyncStorage } from "react-native"
 
-const API_URL_BIZ = `${DOMAIN}iam/users/client?`;
+const API_URL_CLIENT = `${DOMAIN}iam/users/client?`;
 const API_URL_PARTNER = `${DOMAIN}iam/users/partner?`;
 
 function SignUpUrl(USER) {
-  if(USER.usrCustomerType == BIZ) {
-    return `${API_URL_BIZ}usrId=${USER.usrId}&usrPwd=${USER.usrPw}&usrNm=${USER.usrNm}&usrPhoneNum=${USER.usrPhoneNum}&snsSignupYn=${USER.snsSignupYn}`;
+  if(USER.usrCustomerType == CLIENT) {
+    return `${API_URL_CLIENT}usrId=${USER.usrId}&usrPwd=${USER.usrPw}&usrNm=${USER.usrNm}&usrPhoneNum=${USER.usrPhoneNum}&snsSignupYn=${USER.snsSignupYn}`;
   } else {
     return `${API_URL_PARTNER}usrId=${USER.usrId}&usrPwd=${USER.usrPw}&usrNm=${USER.usrNm}&usrPhoneNum=${USER.usrPhoneNum}&snsSignupYn=${USER.snsSignupYn}`;
   }

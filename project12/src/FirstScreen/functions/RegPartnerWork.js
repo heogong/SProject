@@ -1,17 +1,28 @@
 import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}api/kakao/local/geo/coord2address?`;
+const API_URL = `${DOMAIN}coolinic/partners/work?`;
 
-function GetAddressInfoUrl(region) {
-  return `${API_URL}lat=${region.latitude}&lng=${region.longitude}`;
+function RegPartnerWorkUrl(data) {
+  return `${API_URL}
+  workStTime=${data}
+  &workEdTime=${data}
+  &monWorkYn=${data}
+  &tueWorkYn=${data}
+  &wedWorkYn=${data}
+  &thuWorkYn=${data}
+  &friWorkYn=${data}
+  &satWorkYn=${data}
+  &sunWorkYn=${data}
+  &holidayWorkYn=${data}
+  &fullWorkYn=${data}`;
 }
 
-const GetAddressInfo = async (region) => {
-  return fetch(GetAddressInfoUrl(region), {
-    method: 'GET',
+const RegPartnerWork = (data) => {
+  return fetch(RegPartnerWorkUrl(data), {
+    method: 'POST',
     headers: {
-     "Authorization": ACCESS_TOKEN
+      "Authorization": ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료
@@ -27,4 +38,4 @@ const GetAddressInfo = async (region) => {
   });
 };
 
-export default GetAddressInfo;
+export default RegPartnerWork;

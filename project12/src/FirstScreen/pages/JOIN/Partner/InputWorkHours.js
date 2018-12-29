@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { View } from "react-native"
 
-import { ActionSheet, Container, Button, Content, Root, Text } from "native-base";
+import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+
+import { ActionSheet, Container, Button, Content, Icon, Root, Text } from "native-base";
 import SelectButton from "../../../Components/SelectButton";
 import CustomBasicWrapper from '../../../../Common/Components/CustomBasicWrapper';
 import CustomButton from '../../../../Common/Components/CustomButton';
@@ -9,6 +11,8 @@ import CustomButton from '../../../../Common/Components/CustomButton';
 class InputWorkHours extends Component {
     constructor(props) {
       super(props);
+
+      this.SelectButton = [];
 
       this.state = {
           mockData : [
@@ -25,6 +29,9 @@ class InputWorkHours extends Component {
           selectIndex : 0,
           startHourTitle : "시작시간",
           endHourTitle : "종료시간",
+          fullBtnLight : true, //
+          fullBtnWarning : false,
+          fullTimeYn : false
         };
     }
 
@@ -33,26 +40,79 @@ class InputWorkHours extends Component {
         for(let i = 0; i < 24; i++) {
             await this.setState({hour : this.state.hour.concat([ { text : i, value : i}]) });
         }
-        
     }
 
     // 선택된 데이터 array 추가
     _addDataArray = async (value) => {
         await this.setState({ data: this.state.data.concat([{ value: value}]) });
 
-        console.log("_addDataArray : ",this.state.data);
+        //await console.log("_addDataArray : ",this.state.data);
+
+        this._chkFullBtn();
     }
     
     // 해제된 데이터 array 제거
     _removeDataArray = async (value) => {
         await this.setState({ data: this.state.data.filter((item, sidx) => item.value !== value) });
 
-        console.log("_removeDataArray : ",this.state.data);
+       // console.log("_removeDataArray : ",this.state.data);
+       this._chkFullBtn();
+    }
+
+
+    _chkFullBtn = () => {
+        console.log("_chkFullBtn : ",this.state.data.length);
+
+        if(this.state.data.length !== 7) {
+            this.setState({
+                fullBtnLight : true,
+                fullBtnWarning : false,
+            });
+        } else {
+            this.setState({
+                fullBtnLight : false,
+                fullBtnWarning : true,
+            });
+        }
     }
 
     // next
-    _onPress = () => {
+    _nextBtn = () => {
         console.log("result : ",this.state.data);
+        //this._regPartnerWork(); 개발중
+    }
+
+    // 파트너 근무 정보 등록
+    _regPartnerWork = () => {
+        RegPartnerWork(this.state.data).then(result => {
+            GetCommonData(result, this._regPartnerWork).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+
+                    } else {
+                        alert(resultData.resultMsg);
+                    }
+                }
+            });
+        });
+    }
+
+    // 풀타임 버튼 클릭
+    _handleFullBtnClick = () => {
+        //console.log(this.SelectButton);
+
+        this.setState({
+            fullBtnLight : (this.state.fullBtnLight) ? false : true,
+            fullBtnWarning : (this.state.fullBtnWarning) ? false : true,
+            fullTimeYn : (this.state.fullTimeYn) ? false : true
+        });
+
+        this.SelectButton.map((button) => {
+            button._handleBtnClick();
+        });
+      
     }
 
     render() {
@@ -60,7 +120,7 @@ class InputWorkHours extends Component {
             <Root>
                 <Container>
                     <Content padder >
-                        <View style={{flexDirection: 'row'}}>
+                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                             {this.state.mockData.map((data, idx) => (
                                 <SelectButton 
                                     value={data.value}
@@ -68,10 +128,14 @@ class InputWorkHours extends Component {
                                     addDataArray={ this._addDataArray }
                                     removeDataArray={ this._removeDataArray }
                                     key={ idx }
+                                    fullTime={ this.state.fullTimeYn }
+                                    ref={ ref => {
+                                        this.SelectButton[idx] = ref;
+                                    }}
                                 />
                             ))}
                         </View>
-                        <View style={{flexDirection: 'row'}}>
+                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                             <Button
                                 onPress={() =>
                                     ActionSheet.show(
@@ -106,12 +170,26 @@ class InputWorkHours extends Component {
                                 >
                                 <Text>{this.state.endHourTitle}</Text>
                             </Button>
+                            <CustomButton
+                                block={ true }
+                                light={ this.state.fullBtnLight }
+                                warning= { this.state.fullBtnWarning }
+                                icon={ true }
+                                styleWidth={ false }
+                                marginSize={ 0 }
+                                onPress={ this._handleFullBtnClick }
+                            >
+                                <Icon name='md-build' />
+                                <Text>
+                                    풀타임
+                                </Text>
+                            </CustomButton>
                         </View>
                     
                         <CustomButton
                             block={ true }
                             info={ true }
-                            onPress={ this._nextPress }
+                            onPress={ this._nextBtn }
                             disabled={ this.state.btnDisabled }>
                             <Text>
                                 NEXT

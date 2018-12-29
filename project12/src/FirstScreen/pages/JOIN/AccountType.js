@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { BIZ } from '../../../Common/Blend';
+import { CLIENT } from '../../../Common/Blend';
 import { connect } from 'react-redux';
 import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
@@ -14,7 +14,7 @@ class AccountType extends Component {
 
   // 고객 타입 선택에 따른 페이지 이동
   _selectCustomerTypeAndGoPage = () => {
-    if(this.props.value.usrCustomerType == BIZ) {
+    if(this.props.value.usrCustomerType == CLIENT) {
       Actions.JoinInputName();
     } else {
       Actions.JoinInputPhone();
