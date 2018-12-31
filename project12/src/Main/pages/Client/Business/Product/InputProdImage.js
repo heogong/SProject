@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import { Alert, StyleSheet, View } from 'react-native';
 import { Container, Content, Text, List, ListItem } from "native-base";
 
-import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import GetProdImageType from '../../../Functions/GetProdImgType'
+import GetProdImageType from '~/Main/Functions/GetProdImgType'
 
-import ProductImage from '../../../Components/ProductImage'
-import GetCommonData from '../../../../Common/Functions/GetCommonData';
-import CustomHeader from '../../../../Common/Components/CustomHeader';
+import ProductImage from '~/Main/Components/ProductImage'
+import GetCommonData from '~/Common/Functions/GetCommonData';
+import CustomHeader from '~/Common/Components/CustomHeader';
 
 
 class InputProdImage extends Component {

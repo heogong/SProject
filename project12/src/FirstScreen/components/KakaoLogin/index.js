@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { Text } from "native-base";
 
-import { KAKAO_CODE, SUCCESS_RETURN_CODE } from '../../../Common/Blend';
+import { KAKAO_CODE, SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken, setSnsType } from '../../../Redux/Actions';
+import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken, setSnsType } from '~/Redux/Actions';
 
 import RNKakaoLogins  from 'react-native-kakao-logins';
 import CertSnsLogInfo from '../../Functions/CertSnsLogInfo';
 import SnsLogin from '../../Functions/SnsLogin';
-import CustomButton from '../../../Common/Components/CustomButton';
+import CustomButton from '~/Common/Components/CustomButton';
 
 class KakaoLogin extends Component {
   constructor(props) {

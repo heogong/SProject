@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { AsyncStorage, BackHandler } from "react-native"
 
-import { SUCCESS_RETURN_CODE } from '../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
 import { 
     Body,
     Button,
@@ -18,12 +18,12 @@ import {
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setBizId } from '../../../Redux/Actions';
+import { setBizId } from '~/Redux/Actions';
 
-import GetBizList from '../../Functions/GetBizList';
-import GetBizPlace from '../../Functions/GetBizPlace';
-import GetCommonData from '../../../Common/Functions/GetCommonData';
-import CustomBlockWrapper from '../../../Common/Components/CustomBlockWrapper';
+import GetBizList from '~/Main/Functions/GetBizList';
+import GetBizPlace from '~/Main/Functions/GetBizPlace';
+import GetCommonData from '~/Common/Functions/GetCommonData';
+import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 
 class ListBusinessPlace extends Component {
     constructor(props) {
@@ -120,15 +120,19 @@ class ListBusinessPlace extends Component {
         }
     }
 
+    // 사업장 등록
+    _createBusiness = () => {
+        Actions.RegBusinessPlace();
+    }
     
     render() {
         return (
             <CustomBlockWrapper
                 title="사업장 목록"
-                resetPage={ true }
                 rightBtn={ true }
+                rightAction={ this._createBusiness }
             >
-                <Button onPress={ this.removeItemValue }><Text>로그아웃</Text></Button>
+                {/* <Button onPress={ this.removeItemValue }><Text>로그아웃</Text></Button> */}
                 <List dataArray={this.state.data} renderRow={this._renderCardItem} />
             </CustomBlockWrapper>
         )

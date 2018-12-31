@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 
-import { SUCCESS_RETURN_CODE } from '../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setUsrPhoneNum } from '../../../Redux/Actions';
+import { setUsrPhoneNum } from '~/Redux/Actions';
 
 import { Item, Input, Root, Text, Toast } from "native-base";
-import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../../Common/Components/CustomButton';
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
 import SendSmsCertNum from '../../Functions/SendSmsCertNum';
 
 const USER_PHONE_LEN = 9; //최소 번호 길이

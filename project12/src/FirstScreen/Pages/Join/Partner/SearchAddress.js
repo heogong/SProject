@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { View } from "react-native"
 import { Item, Input, Icon, Text, List, ListItem, Body } from 'native-base';
 
-import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomButton from '~/Common/Components/CustomButton';
+import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import { Actions } from 'react-native-router-flux';
 import DrawMap from '../../../../Main/Components/DrawMap';
 import GetAddress from '../../../../Main/Functions/AddressInfo';
-import CustomHeader from '../../../../Common/Components/CustomHeader';
-import CustomButton from '../../../../Common/Components/CustomButton';
-import GetCommonData from '../../../../Common/Functions/GetCommonData';
 import GetAddressInfo from '../../../Functions/GetAddressInfo';
 
 let REGION = []; // 드래그 후 좌표 데이터 변수

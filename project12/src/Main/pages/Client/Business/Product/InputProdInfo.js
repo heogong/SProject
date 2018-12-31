@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from 'react-native';
 
-import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Container, Button, Content, Input, Item, Icon, Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
-import CustomBasicWrapper from '../../../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../../../Common/Components/CustomButton';
-import RegProdInfo from '../../../Functions/RegProdInfo'
-import GetCommonData from '../../../../Common/Functions/GetCommonData';
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
+import RegProdInfo from '~/Main/Functions/RegProdInfo'
+import GetCommonData from '~/Common/Functions/GetCommonData';
 
 class InputProdInfo extends Component {
     constructor(props) {

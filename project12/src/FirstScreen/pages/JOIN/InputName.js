@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setUsrNm, setSnsSignYn } from '../../../Redux/Actions';
+import { setUsrNm, setSnsSignYn } from '~/Redux/Actions';
 
 import { Item, Input, Text } from "native-base";
-import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../../Common/Components/CustomButton';
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
 
 const USER_NM_LEN = 1;
 class InputName extends Component {

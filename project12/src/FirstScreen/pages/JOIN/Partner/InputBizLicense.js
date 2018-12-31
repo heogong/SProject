@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { connect } from 'react-redux';
 import { Input, Item, Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
-import CustomBasicWrapper from '../../../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../../../Common/Components/CustomButton';
-import GetCommonData from '../../../../Common/Functions/GetCommonData';
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
+import GetCommonData from '~/Common/Functions/GetCommonData';
 import RegPartnerBizLicense from '../../../Functions/RegPartnerBizLicense';
 
 class InputBizLicense extends Component {
@@ -27,7 +27,7 @@ class InputBizLicense extends Component {
   }
   
   onResult = async (result) => {
-    console.log(result.data);
+    console.log("result.data : ",result.data);
 
     await this.setState({ imgUri : result.data });
 

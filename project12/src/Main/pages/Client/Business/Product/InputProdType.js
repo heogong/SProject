@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { BackHandler } from 'react-native';
 
-import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import { Root, ActionSheet, Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
-import CustomBasicWrapper from '../../../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../../../Common/Components/CustomButton';
-import GetProdType from '../../../Functions/GetProdType';
-import GetCommonData from '../../../../Common/Functions/GetCommonData';
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
+import GetProdType from '~/Main/Functions/GetProdType';
+import GetCommonData from '~/Common/Functions/GetCommonData';
 
 class InputProdType extends Component {
     constructor(props) {

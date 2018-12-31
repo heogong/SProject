@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { ImageBackground, StyleSheet, TouchableHighlight, View } from 'react-native';
 import { Text, Icon } from "native-base";
 
-import { SUCCESS_RETURN_CODE } from '../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import ImageOverlay from "react-native-image-overlay";
 import RegProdImg from '../Functions/RegProdImg';
-import GetCommonData from '../../Common/Functions/GetCommonData';
-import CustomButton from '../../Common/Components/CustomButton';
+import GetCommonData from '~/Common/Functions/GetCommonData';
+import CustomButton from '~/Common/Components/CustomButton';
 
 class ProductImage extends Component {
     constructor(props) {
@@ -43,7 +43,7 @@ class ProductImage extends Component {
 
     // 이미지 조회
     _handleImageView = () => {
-        Actions.ViewImage({imageUri : this.state.uri});
+        Actions.ViewImage({imageUri : this.state.uri, title : '제품 이미지 조회'});
     }
 
     onResult = async (result) => {

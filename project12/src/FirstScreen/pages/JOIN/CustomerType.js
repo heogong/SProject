@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-import { CLIENT, PARTNER } from '../../../Common/Blend';
+import { CLIENT, PARTNER } from '~/Common/Blend';
 import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
 import { connect } from 'react-redux';
-import { setCustomerType } from '../../../Redux/Actions';
+import { setCustomerType } from '~/Redux/Actions';
 
-import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../../Common/Components/CustomButton';
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
 
 class CustomerType extends Component {
 

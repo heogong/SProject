@@ -26,6 +26,7 @@ class CustomBasicWrapper extends Component {
                     resetPage={ this.props.resetPage }
                     backAction={ this.props.backAction }
                     actionName={ this.props.actionName }
+                    rightAction={ this.props.rightAction }
                 />
                 
                 <Container>

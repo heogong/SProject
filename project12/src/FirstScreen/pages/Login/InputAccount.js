@@ -3,11 +3,11 @@ import { AsyncStorage, Alert } from "react-native"
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setUsrId, setUsrPw, setAccessToken, setRefreshToken } from '../../../Redux/Actions';
+import { setUsrId, setUsrPw, setAccessToken, setRefreshToken } from '~/Redux/Actions';
 
 import { Item, Input, Root, Text } from "native-base";
-import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../../Common/Components/CustomButton';
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
 import Login from '../../Functions/Login';
 
 const USR_EMAIL_LEN = 10;

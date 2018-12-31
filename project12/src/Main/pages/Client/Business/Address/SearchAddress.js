@@ -2,20 +2,31 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Body, List, ListItem, Icon, Input, Item, Text } from 'native-base';
 
-import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
-import GetAddress from '../../../Functions/AddressInfo';
-import GetCommonData from '../../../../Common/Functions/GetCommonData';
-import CustomHeader from '../../../../Common/Components/CustomHeader';
+import GetAddress from '~/Main/Functions/AddressInfo';
+import GetCommonData from '~/Common/Functions/GetCommonData';
+import CustomHeader from '~/Common/Components/CustomHeader';
 
 class InputAddress extends Component {
   constructor(props) {
     super(props);
+
     this.state = { 
-      strAddress: '대방동 392-14',
+      strAddress: '',
       data: []
     };
+  }
+
+  static defaultProps = {
+    addressName : '대방동 392-14'
+  }
+
+  componentDidMount () {
+    this.setState({
+      strAddress : this.props.addressName
+    })
   }
 
   // 주소 정보 가져오기
@@ -24,8 +35,8 @@ class InputAddress extends Component {
       GetCommonData(result, this._setAddressInfo).then(async resultData => {
         if(resultData !== undefined) {
           const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+          console.log(result.data);
           if(ResultBool) {
-            console.log(result.data.documents);
             this.setState({data : resultData.data.documents.filter(address => address.address_type !== "REGION")});
           } else {
             alert(resultData.resultMsg);
@@ -63,7 +74,6 @@ class InputAddress extends Component {
           <View style={{ height : 50 }}>
             <Item 
               regular 
-              onPress={this._handleBackButton}
               style={{backgroundColor:'white'}}
             >
               <Icon active name='search' />
@@ -72,9 +82,7 @@ class InputAddress extends Component {
                 value={this.state.strAddress}
                 onChangeText={(text) => this.setState({strAddress : text})}
                 onSubmitEditing={this._setAddressInfo}
-              > 
-                  {this.state.addressName} 
-              </Input>
+              /> 
             </Item>
           </View>
           <View>

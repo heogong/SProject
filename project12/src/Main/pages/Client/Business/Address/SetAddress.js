@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Text, Icon, Input, Item, Root, Toast } from 'native-base';
 
-import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setBizId, setBizAddress, setBizAddressDsc } from '../../../../Redux/Actions';
-import DrawMap from '../../../Components/DrawMap';
-import RegBizPlace from '../../../Functions/RegBizPlace';
-import GetCommonData from '../../../../Common/Functions/GetCommonData';
-import CustomButton from '../../../../Common/Components/CustomButton';
-import CustomHeader from '../../../../Common/Components/CustomHeader';
+import { setBizId, setBizAddress, setBizAddressDsc } from '~/Redux/Actions';
+import DrawMap from '~/Main/Components/DrawMap';
+
+import RegBizPlace from '~/Main/Functions/RegBizPlace';
+import EditBizPlace from '~/Main/Functions/EditBizPlace';
+import GetCommonData from '~/Common/Functions/GetCommonData';
+
+import CustomButton from '~/Common/Components/CustomButton';
+import CustomHeader from '~/Common/Components/CustomHeader';
 
 const ADDRESS_DETAIL_LEN = 1;
 
@@ -21,9 +24,9 @@ class SetAddress extends Component {
 
         this.state = {
             addressName : '',
+            detailAddressName : '',
             makerYn : false,
             disSaveBtn : true,
-            detailAddressName : '',
             addressObj : [],
             region: {
                 latitude: 37.566535,
@@ -31,16 +34,39 @@ class SetAddress extends Component {
                 latitudeDelta: 0.0043,
                 longitudeDelta: 0.0034
             },
-            marker:{
+            marker: {
                 latitude: 37.566535,
                 longitude: 126.97796919999996
             }
         };
     }
 
-    // 초기 데이터 1. 리덕스 값 조회 2. 현재 위치 조회 3. default 값 조회 
+    static defaultProps = {
+        editAddress : false // 주소 수정 페이지 여부
+    } 
+
+    // 초기 데이터 1. 기본 state 데이터 2. 현재 위치 조회 
     componentDidMount() {
-        this._getLocation();
+        // 주소 수정 페이지 접근 시
+        if (this.props.editAddress) {
+            this.setState({
+                region : {
+                  ...this.state.region,
+                  latitude  : Number(this.props.latLng.lat),
+                  longitude : Number(this.props.latLng.lng)
+                },
+                marker: {
+                    latitude: Number(this.props.latLng.lat),
+                    longitude: Number(this.props.latLng.lng)
+                },
+                addressName : this.props.address,
+                detailAddressName : this.props.detailAddress,
+                makerYn : true,
+                disSaveBtn : false
+            })
+        } else { // 주소 등록 페이지 접근 시
+            this._getLocation();
+        }
     }
 
     // 현재 위치 조회
@@ -67,11 +93,15 @@ class SetAddress extends Component {
 
     // param : this.onResult => 주소 결과 값 리턴
     _goSearchAddress = () => (
-        Actions.SearchAddress({onResult : this.onResult}) 
+        Actions.SearchAddress({
+            onResult : this.onResult, 
+            addressName : this.props.address
+        }) 
     )
 
     // 주소검색 후 결과 데이터
     onResult = (address) => {
+        console.log("this.props.editAddress :", this.props.editAddress);
         this.setState({
             region : {
                 ...this.state.region,
@@ -99,8 +129,14 @@ class SetAddress extends Component {
     }
 
     // 사업장 저장 버튼 클릭
-    _SaveButton() {
-       this._regBusiness();
+    _saveButton() {
+        // 주소 수정 페이지 접근 시
+        if (this.props.editAddress) {
+            this._editBusiness();
+
+        } else { // 주소 등록 페이지 접근 시
+            this._regBusiness();
+        }
     }
 
     // 사업장 등록
@@ -121,6 +157,26 @@ class SetAddress extends Component {
                             type: "danger",
                             buttonText: '확인'
                         })
+                    }
+                }
+            });
+        });
+    }
+
+     // 사업장 주소 수정
+     _editBusiness = async () => {
+        await this.props.onSetBizAddress(this.state.addressObj);  // 리덕스 주소 오브젝트 SET
+        await this.props.onSetBizAddressDsc(this.state.detailAddressName);  // 리덕스 상세주소 SET
+
+        EditBizPlace(this.props.value).then(async result => {
+            GetCommonData(result, this._editBusiness).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    if(ResultBool) {
+                        await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
+                        Actions.popTo("ViewBusinessPlace");
+                    } else {
+                        alert(result.resultMsg);
                     }
                 }
             });
@@ -157,19 +213,20 @@ class SetAddress extends Component {
                             </Item>
                             <Item 
                                 regular 
-                                onPress={this._goSearchAddress}
                                 style={{backgroundColor:'white'}}
                             >
                                 <Input 
                                     placeholder="상세주소" 
-                                    onChangeText={this._handleChange} />
+                                    onChangeText={this._handleChange} >
+                                    {this.state.detailAddressName} 
+                                </Input>
                             </Item>
                             <CustomButton
                                 styleWidth={ false }
                                 full={ true }
                                 dark={ true }
                                 disabled={ this.state.disSaveBtn } 
-                                onPress={() => this._SaveButton()}>
+                                onPress={() => this._saveButton()}>
                                 <Text>주소 저장</Text>
                             </CustomButton>
                         </View>

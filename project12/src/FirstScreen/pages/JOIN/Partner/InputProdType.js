@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import { StyleSheet, View } from 'react-native';
 import { Content, Text } from "native-base";
 
-import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomButton from '~/Common/Components/CustomButton';
+import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import { Actions } from "react-native-router-flux";
-
-import SelectButton from "../../../Components/SelectButton";
-import CustomHeader from '../../../../Common/Components/CustomHeader';
-import CustomButton from '../../../../Common/Components/CustomButton';
-import GetCommonData from '../../../../Common/Functions/GetCommonData';
-import GetProdType from '../../../../Main/Functions/GetProdType';
+import SelectButton from "~/Common/Components/SelectButton";
+import GetProdType from '~/Main/Functions/GetProdType';
 import RegPartnerProdType from '../../../Functions/RegPartnerProdType';
 
 class InputProdType extends Component {

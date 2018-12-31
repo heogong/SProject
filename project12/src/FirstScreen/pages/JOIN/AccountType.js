@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-import { CLIENT } from '../../../Common/Blend';
+import { CLIENT } from '~/Common/Blend';
 import { connect } from 'react-redux';
 import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
-import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../../Common/Components/CustomButton';
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
 import NaverLogin from '../../Components/NaverLogin';
 import KakaoLogin from '../../Components/KakaoLogin';
 

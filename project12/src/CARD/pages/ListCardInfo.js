@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { View, ListView  } from 'react-native';
 import { Body, Button, Icon, Left, List, ListItem, Text } from 'native-base';
 
-import { SUCCESS_RETURN_CODE } from '../../Common/Blend';
-import CustomBlockWrapper from '../../Common/Components/CustomBlockWrapper';
-import CustomButton from '../../Common/Components/CustomButton';
-import GetCommonData from '../../Common/Functions/GetCommonData';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
+import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import DelCard from '../Functions/DelCard';
 import CardList from '../Components/CardList';

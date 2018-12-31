@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Button, Text } from "native-base";
-import CustomButton from '../../Common/Components/CustomButton';
+import CustomButton from '~/Common/Components/CustomButton';
 
 class SelectButton extends Component {
     constructor(props) {

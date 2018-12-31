@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { connect } from 'react-redux';
 import { ActionSheet, Button, Input, Item, Root, Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
-import CustomBasicWrapper from '../../../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../../../Common/Components/CustomButton';
-import GetCommonData from '../../../../Common/Functions/GetCommonData';
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
+import GetCommonData from '~/Common/Functions/GetCommonData';
 import GetBankInfo from '../../../Functions/GetBankInfo';
 import RegSettleAccount from '../../../Functions/RegSettleAccount';
 

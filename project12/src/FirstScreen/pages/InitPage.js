@@ -4,8 +4,8 @@ import { AsyncStorage } from "react-native"
 import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
-import CustomBasicWrapper from '../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../Common/Components/CustomButton';
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
 
 export default class PageOne extends Component {
 
@@ -54,9 +54,9 @@ export default class PageOne extends Component {
           block={ true }
           info={ true }
           bordered={ true }
-          onPress={Actions.MainStack}>
+          onPress={Actions.ClientMain}>
           <Text>
-            drawer
+            메인_테스트
           </Text>
         </CustomButton>
       </CustomBasicWrapper>

@@ -4,9 +4,9 @@ import { Input, Item, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '../../Common/Blend';
 import { Actions } from 'react-native-router-flux';
-import CustomBasicWrapper from '../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../Common/Components/CustomButton';
-import GetCommonData from '../../Common/Functions/GetCommonData';
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
+import GetCommonData from '~/Common/Functions/GetCommonData';
 import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
 
 import RegCard from '../Functions/RegCard';

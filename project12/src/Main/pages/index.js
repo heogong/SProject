@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BackHandler, View } from 'react-native';
 import { Container, Button, Content, Input, Item, Icon, Text } from "native-base";
 
-import CustomHeader from '../../Common/Components/CustomHeader';
+import CustomHeader from '~/Common/Components/CustomHeader';
 
 export default class Main extends Component {
   constructor(props) {

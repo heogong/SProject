@@ -20,8 +20,8 @@ import {
 import { Actions } from 'react-native-router-flux';
 import DrawMap from '../../../../Main/Components/DrawMap';
 import GetAddress from '../../../../Main/Functions/AddressInfo';
-import CustomHeader from '../../../../Common/Components/CustomHeader';
-import CustomButton from '../../../../Common/Components/CustomButton';
+import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomButton from '~/Common/Components/CustomButton';
 
 class SearchAddress extends Component {
   constructor(props) {

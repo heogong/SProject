@@ -2,10 +2,14 @@ import React, {Component} from 'react';
 
 import {
   AppRegistry,
+  Button,
+  CameraRoll,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  ScrollView,
+  TouchableHighlight,
   ImageBackground,
   ImageEditor
 } from 'react-native';
@@ -25,12 +29,28 @@ class ReactCamera extends Component {
   }
 
   componentDidMount() {
-    this.props.setTimeout(this.setTimePassed, 500)
+    this.props.setTimeout(this.setTimePassed, 500);
   }
 
   setTimePassed = () => {
     this.setState({timePassed: true});
   }
+
+  // 앨범에서 사진 가져오기
+  _handleAlbumPress = () => {
+    CameraRoll.getPhotos({
+        first: 20,
+        assetType: 'Photos',
+      })
+      .then(r => {
+        console.log(r);
+        //this.setState({ photos: r.edges });
+        Actions.ReactCameraAlbum({result : this.props.onResult, photos: r.edges})
+      })
+      .catch((err) => {
+         //Error Loading Images
+    });
+  };
 
   render() {
     if (!this.state.timePassed){
@@ -58,6 +78,15 @@ class ReactCamera extends Component {
                 <Text style={{fontSize: 14}}> SNAP </Text>
             </TouchableOpacity>
           </View>
+
+          <View>
+            <TouchableHighlight onPress={this._handleAlbumPress}>
+              <View style={ {width: 130, height: 130} }>
+                  <ImageBackground source={require('../../../src/Common/Image/gallery.png')} style={{width: '100%', height: '100%'}}/>
+              </View>
+            </TouchableHighlight>
+          </View>
+
         </View>
       );
     }

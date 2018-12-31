@@ -40,32 +40,41 @@ import TestPage3 from './src/Main/Pages/TestPage3'
 //test
 
 import ReactCamera from './src/Main/Components/ReactCamera';
+import ReactCameraAlbum from './src/Main/Components/ReactCameraAlbum';
 import ViewImage from './src/Main/Components/ViewImage';
 
-/**사업장 */
-import BusinessIndex from './src/Main/Pages/Business'
+/**클라이언트 */
+
+// 사업장
+import BusinessIndex from './src/Main/Pages/Client/Business'
+// 사업장 조회
+import ViewBusinessPlace from './src/Main/Pages/Client/Business/ViewBusinessPlace'
 // 사업장 목록
-import ListBusinessPlace from './src/Main/Pages/Business/ListBusinessPlace'
+import ListBusinessPlace from './src/Main/Pages/Client/Business/ListBusinessPlace'
 // 사업장 등록
-import RegBusinessPlace from './src/Main/Pages/Business/RegBusinessPlace'
+import RegBusinessPlace from './src/Main/Pages/Client/Business/RegBusinessPlace'
 // 사업장 주소등록
-import SetAddress from './src/Main/Pages/Business/Address/SetAddress'
-import SearchAddress from './src/Main/Pages/Business/Address/SearchAddress'
+import SetAddress from './src/Main/Pages/Client/Business/Address/SetAddress'
+import SearchAddress from './src/Main/Pages/Client/Business/Address/SearchAddress'
 
 /**제품 */
-import InputProdType from './src/Main/Pages/Business/Product/InputProdType' // 제품 타입등록
-import InputProdInfo from './src/Main/Pages/Business/Product/InputProdInfo' // 제품 등록
-import InputProdImage from './src/Main/Pages/Business/Product/InputProdImage' // 제품 이미지 등록
+import InputProdType from './src/Main/Pages/Client/Business/Product/InputProdType' // 제품 타입등록
+import InputProdInfo from './src/Main/Pages/Client/Business/Product/InputProdInfo' // 제품 등록
+import InputProdImage from './src/Main/Pages/Client/Business/Product/InputProdImage' // 제품 이미지 등록
+
+// 내정보
+import ClientMyInfo from './src/Main/Pages/Client/MyInfo'
 
 
 const PAGE = () => ( 
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage"  hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
 
       <Scene key="reactCamera" hideNavBar component={ReactCamera} />
+      <Scene key="ReactCameraAlbum" hideNavBar component={ReactCameraAlbum} />
       <Scene key="ViewImage" hideNavBar component={ViewImage} title="제품 이미지 조회" />
       
       <Scene key="JoinCustomerType" hideNavBar component={JoinCustomerType} title="고객 구분" />
@@ -82,7 +91,7 @@ const PAGE = () => (
       
       <Scene key="JoinInputProdType"  hideNavBar component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
       <Scene key="JoinInputWorkHours" hideNavBar component={JoinInputWorkHours} title="근무시간" type={ActionConst.RESET}/>
-      <Scene key="JoinInputSettleAccount" initial hideNavBar component={JoinInputSettleAccount} title="계좌등록" type={ActionConst.RESET}/>
+      <Scene key="JoinInputSettleAccount"  hideNavBar component={JoinInputSettleAccount} title="계좌등록" type={ActionConst.RESET}/>
       
       <Scene key="LoginAccountType" hideNavBar component={LoginAccountType} title="로그인 구분" back onBack={() => Actions.InitPage()}/>
       <Scene key="LoginInputAccount" hideNavBar component={LoginInputAccount} title="이메일 로그인"/>
@@ -93,10 +102,13 @@ const PAGE = () => (
 
       {/* 클라이언트 */}
       <Scene key="BusinessIndex" hideNavBar component={BusinessIndex} type={ActionConst.RESET} />
-      <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" type={ActionConst.RESET} onRight={() => Actions.RegBusinessPlace()} rightTitle="추가" />
+      
       <Scene key="RegBusinessPlace"  hideNavBar component={RegBusinessPlace} title="사업장 등록"/>
       <Scene key="SetAddress" hideNavBar component={SetAddress} title="주소" />
       <Scene key="SearchAddress" hideNavBar component={SearchAddress} title="주소 등록"/>
+
+      <Scene key="ViewBusinessPlace" initial hideNavBar component={ViewBusinessPlace} title="사업장 조회"/>
+      
       
       <Scene key="InputProdType" hideNavBar component={InputProdType} type={ActionConst.RESET} />
       <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
@@ -116,7 +128,9 @@ const PAGE = () => (
         drawerImage={MenuIcon}
         drawerWidth={300}
       >
-        <Scene hideNavBar panHandlers={null}>
+        <Scene hideNavBar panHandlers={null} >
+
+          {/* 클라이언트 */}
           <Tabs
             key="tabbar"
             routeName="tabbar"
@@ -130,49 +144,48 @@ const PAGE = () => (
             inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
             tabBarPosition="bottom"
           >
-            <Stack key="MainStack" hideNavBar title="Stack_Title" initial icon={TabIcon}>
+            <Stack key="ClientMain" hideNavBar title="클라이언트 Title" initial icon={TabIcon}>
               <Scene key="Main" component={Main} title="Scene_Title"/>
             </Stack>
+
             <Stack key="tab_2" title="Tab #2" icon={TabIcon}>
               <Scene key="tab_2_1" component={TestPage2} title="Tab #2_2"/>
             </Stack>
-            <Stack key="tab_3" title="Tab #3" icon={TabIcon}>
+
+            <Stack key="ClientInfo" hideNavBar title="내정보" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+              <Scene key="ClientInfo_tab" component={ClientMyInfo}/>
+              <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" />
+              <Scene key="RegBusinessPlace"  component={RegBusinessPlace} title="사업장 등록"/>
+            </Stack>
+          </Tabs>
+
+          {/* 파트너 */}
+          <Tabs
+            key="tabbar2"
+            routeName="tabbar2"
+            backToInitial
+            onTabOnPress={() => {
+              console.log('Back to initial and also print this');
+            }}
+            swipeEnabled
+            showLabel={true}
+            activeBackgroundColor="white"
+            inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
+            tabBarPosition="bottom"
+          >
+            <Stack key="MainStack2" hideNavBar title="파트너 Title" initial icon={TabIcon}>
+              <Scene key="Main" component={Main} title="Scene_Title2"/>
+            </Stack>
+            <Stack key="tab_2" title="Tab #22222" icon={TabIcon}>
+              <Scene key="tab_2_1" component={TestPage2} title="Tab #2_2"/>
+            </Stack>
+            <Stack key="tab_3" title="Tab #33333" icon={TabIcon}>
               <Scene key="tab_3_1" component={TestPage3} title="Tab #2_3"/>
             </Stack>
           </Tabs>
+
         </Scene>
       </Drawer>
-     
-      {/* <Drawer
-        hideNavBar
-        key="drawer"
-        onExit={() =>{
-          console.log('Drawer closed');
-        }}
-        onEnter={() => {
-          console.log('Drawer opened');
-        }}
-        contentComponent={DrawerContent}
-        drawerImage={MenuIcon}
-        drawerWidth={300}
-      >
-        <Scene key="root" hideNavBar transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-          <Stack key="MainStack" hideNavBar>
-            <Scene key="Main" component={Main} />
-          </Stack>
-
-          <Stack key="MainStack1" transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-            <Scene key="InputProdType" hideNavBar component={InputProdType}/>
-            <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
-            <Scene key="InputProdImage" component={InputProdImage} title="제품 이미지 등록" />
-          </Stack>
-          
-          <Stack key="MainStack2">
-            <Scene key="test2" component={TestPage2} title="Tab #2_1"/>
-          </Stack>
-
-        </Scene>
-      </Drawer> */}
     </Stack>
   </Router>
 );

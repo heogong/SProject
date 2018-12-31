@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { AsyncStorage, StyleSheet } from 'react-native';
 
-import { SUCCESS_RETURN_CODE, PARTNER } from '../../../Common/Blend';
+import { SUCCESS_RETURN_CODE, PARTNER } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setUsrId, setUsrPw } from '../../../Redux/Actions';
+import { setUsrId, setUsrPw } from '~/Redux/Actions';
 
 import { Item, Input, Root, Spinner, Text, Toast } from "native-base";
-import CustomBasicWrapper from '../../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../../Common/Components/CustomButton';
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
 import SignUp from '../../Functions/SignUp';
 
 const USER_EMAIL_LEN = 10;

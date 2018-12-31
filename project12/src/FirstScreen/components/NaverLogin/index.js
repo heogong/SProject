@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import { NaverLogin, getProfile } from 'react-native-naver-login';
 
-import { NAVER_CODE, SUCCESS_RETURN_CODE } from '../../../Common/Blend';
+import { NAVER_CODE, SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken, setSnsType } from '../../../Redux/Actions';
@@ -11,7 +11,7 @@ import SnsLogin from '../../Functions/SnsLogin';
 import CertSnsLogInfo from '../../Functions/CertSnsLogInfo';
 
 import { Text } from "native-base";
-import CustomButton from '../../../Common/Components/CustomButton';
+import CustomButton from '~/Common/Components/CustomButton';
 
 const initials = {
   kConsumerKey: 'HEZ2CaOwmSPvw18HCB4c',

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { View } from "react-native"
 
-import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { ActionSheet, Container, Button, Content, Icon, Root, Text } from "native-base";
-import SelectButton from "../../../Components/SelectButton";
-import CustomBasicWrapper from '../../../../Common/Components/CustomBasicWrapper';
-import CustomButton from '../../../../Common/Components/CustomButton';
+import SelectButton from "~/Common/Components/SelectButton";
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
 
 class InputWorkHours extends Component {
     constructor(props) {

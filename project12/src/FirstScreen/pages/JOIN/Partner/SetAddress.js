@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { View } from "react-native"
 
-import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Text, Item, Input, Icon, Toast } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 
 import { connect } from 'react-redux';
-import { setBizId, setBizAddress, setBizAddressDsc } from '../../../../Redux/Actions';
+import { setBizId, setBizAddress, setBizAddressDsc } from '~/Redux/Actions';
 
-import DrawMap from '../../../../Main/Components/DrawMap';
-import RegBizPlace from '../../../../Main/Functions/RegBizPlace';
-import GetCommonData from '../../../../Common/Functions/GetCommonData';
+import DrawMap from '~/Main/Components/DrawMap';
+import RegBizPlace from '~/Main/Functions/RegBizPlace';
+import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import CustomBlockWrapper from '../../../../Common/Components/CustomBlockWrapper';
-import CustomButton from '../../../../Common/Components/CustomButton';
-import CustomHeader from '../../../../Common/Components/CustomHeader';
+import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
+import CustomHeader from '~/Common/Components/CustomHeader';
 
 class SetAddress extends Component {
     constructor(props) {
