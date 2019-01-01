@@ -5,7 +5,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setBizNm, setBizDsc } from '~/Redux/Actions';
+import { setBizId, setBizNm, setBizDsc } from '~/Redux/Actions';
 
 import EditBizNm from '~/Main/Functions/EditBizNm';
 import GetCommonData from '~/Common/Functions/GetCommonData';
@@ -37,9 +37,9 @@ class RegBusinessPlace extends Component {
         }
     }
 
-    _nextButton = () => {
-        this.props.onSetBizNm(this.state.bizNm);  // 리덕스 사업장 명 SET
-        this.props.onSetBizDsc(this.state.bizDsc);  // 리덕스 사업장 설명 SET
+    _nextButton = async () => {
+        await this.props.onSetBizNm(this.state.bizNm);  // 리덕스 사업장 명 SET
+        await this.props.onSetBizDsc(this.state.bizDsc);  // 리덕스 사업장 설명 SET
 
         // 사업장 수정 페이지 접근 시
         if(this.props.editBiz) {
@@ -58,7 +58,8 @@ class RegBusinessPlace extends Component {
                     console.log(result);
                     if(ResultBool) {
                         await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
-                        Actions.popTo("ViewBusinessPlace");
+                        Actions.pop();
+                        //Actions.refresh("ViewBusinessPlace");
                     } else {
                         alert(result.resultMsg);
                     }
@@ -108,6 +109,7 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
     return {
+        onSetBizId: (value) => dispatch(setBizId(value)),
         onSetBizNm: (value) => dispatch(setBizNm(value)),
         onSetBizDsc: (value) => dispatch(setBizDsc(value))
     }

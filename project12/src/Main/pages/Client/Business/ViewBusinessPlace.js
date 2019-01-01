@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ImageBackground, View } from 'react-native';
-import { Body, Button, Card, CardItem, Item, Icon, Input, Left, Text, Thumbnail } from 'native-base';
+import { Body, Button, Card, CardItem, Content, Item, Icon, Input, Left, Text, Thumbnail } from 'native-base';
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -8,11 +8,12 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 import GetCommonData from '~/Common/Functions/GetCommonData';
-import GetBizPlace from '../../../Functions/GetBizPlace';
+import GetBizPlace from '~/Main/Functions/GetBizPlace';
+import GetBizProduct from '~/Main/Functions/GetBizProduct';
 
+import DrawMap from '~/Main/Components/DrawMap';
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
-
 
 class ViewBusinessPlace extends Component {
     constructor(props) {
@@ -22,12 +23,24 @@ class ViewBusinessPlace extends Component {
             bplaceNm : '',
             bplaceDsc : '',
             addressName : '',
-            latLng : ''
+            latLng : '',
+            prodData : [],
+            region: {
+                latitude: 37.566535,
+                longitude: 126.97796919999996,
+                latitudeDelta: 0.0043,
+                longitudeDelta: 0.0034
+            },
+            marker: {
+                latitude: 37.566535,
+                longitude: 126.97796919999996
+            }
        };
     }
 
     componentDidMount() {
         this._getBizPlace();
+        this._getBizProduct();
     }
 
     // 사업장 정보 조회
@@ -43,8 +56,34 @@ class ViewBusinessPlace extends Component {
                             bplaceDsc : resultData.data.bplaceDsc,
                             addressName : resultData.data.addr.addressName,
                             detailAddress : resultData.data.detail.detailAddr1,
-                            latLng : resultData.data.latLng
+                            latLng : resultData.data.latLng,
+                            region : {
+                                ...this.state.region,
+                                latitude  : Number(resultData.data.latLng.lat),
+                                longitude : Number(resultData.data.latLng.lng)
+                              },
+                              marker: {
+                                  latitude: Number(resultData.data.latLng.lat),
+                                  longitude: Number(resultData.data.latLng.lng)
+                              },
                         });
+                    } else {
+                        alert(resultData.resultMsg)
+                    }
+                }
+            });
+        });
+    }
+
+    // 사업장 제품 정보 조회
+    _getBizProduct = () => {
+        GetBizProduct(this.props.value.bizId).then(async result => {
+            GetCommonData(result, this._getBizProduct).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+                        this.setState({prodData : resultData.data});
                     } else {
                         alert(resultData.resultMsg)
                     }
@@ -73,12 +112,20 @@ class ViewBusinessPlace extends Component {
         });
     }
 
+    // 제품 수정 페이지 이동
+    _editProduct = () => {
+        alert("제품 수정!");
+    }
+
     render() {
         return (
             <CustomBlockWrapper
                 title="사업장 조회"
             >
-                <Card style={{flex: 0}}>
+                <Card>
+                    <CardItem style={{ backgroundColor: 'skyblue'}}>
+                        <Text style={{ color: 'white'}}>사업장 정보</Text>
+                    </CardItem>
                     <CardItem>
                         <Left>
                             {/* <Thumbnail square soure={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}} /> */}
@@ -100,7 +147,14 @@ class ViewBusinessPlace extends Component {
                     </CardItem>
                     <CardItem>
                         <Body>
-                            <ImageBackground source={{uri: 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'}} style={{height: 200, width: 200, flex: 1}}/>
+                            <View style={{width:"100%", height:200}}>
+                                <DrawMap
+                                    region={ this.state.region }
+                                    onRegionChangeComplete={ this._onRegionChangeComplete }
+                                    makerYn={ true }
+                                    marker={ this.state.marker }
+                                />
+                            </View>
                             <Text>
                                 { this.state.bplaceDsc }
                             </Text>
@@ -115,6 +169,29 @@ class ViewBusinessPlace extends Component {
                         </Left>
                     </CardItem>
                 </Card>
+
+                <Card>
+                    <CardItem style={{ backgroundColor: 'skyblue'}}>
+                        <Text style={{ color: 'white'}}>사업장 제품 목록</Text>
+                    </CardItem>
+                    {this.state.prodData.map((product, index) => (
+                        <CardItem key={ index }>
+                            <Content>
+                                <CustomButton
+                                    styleWidth={ false }
+                                    info={ true }
+                                    block={ true }
+                                    marginSize={ 0 }
+                                    onPress={ this._editProduct }
+                                >
+                                    <Icon name="md-cube" />
+                                    <Text>{ product.clientPrdNm }</Text>
+                                </CustomButton>
+                            </Content>
+                        </CardItem>
+                    ))}
+                </Card>
+
             </CustomBlockWrapper>
         )
     }

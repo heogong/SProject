@@ -1,14 +1,14 @@
-import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
-import GetAccessToken from '../../Common/Functions/GetAccessToken';
+import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '~/Common/Blend';
+import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}coolinic/products/types/root`;
+const API_URL = `${DOMAIN}coolinic/clients/products/me`;
 
-function GetProdTypeUrl() {
+function GetTotalProductListUrl() {
   return `${API_URL}`;
 }
 
-const GetProdType = () => {
-  return fetch(GetProdTypeUrl(), {
+const GetTotalProductList = () => {
+  return fetch(GetTotalProductListUrl(), {
     method: 'GET',
     headers: {
       "Authorization": ACCESS_TOKEN
@@ -27,4 +27,4 @@ const GetProdType = () => {
   });
 };
 
-export default GetProdType;
+export default GetTotalProductList;

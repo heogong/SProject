@@ -36,7 +36,7 @@ const EditBizPlace = async (bizObj) => {
   //console.log("bizObj : ",bizObj);
   //console.log("RegBizPlaceUrl : ",RegBizPlaceUrl(bizObj))
   return fetch(EditBizPlaceUrl(bizObj), {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       "Authorization": ACCESS_TOKEN
     }

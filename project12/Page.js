@@ -61,6 +61,9 @@ import SearchAddress from './src/Main/Pages/Client/Business/Address/SearchAddres
 import InputProdType from './src/Main/Pages/Client/Business/Product/InputProdType' // 제품 타입등록
 import InputProdInfo from './src/Main/Pages/Client/Business/Product/InputProdInfo' // 제품 등록
 import InputProdImage from './src/Main/Pages/Client/Business/Product/InputProdImage' // 제품 이미지 등록
+import ListBusinessProduct from './src/Main/Pages/Client/Business/Product/ListBusinessProduct' // AS : 전체 제품 리스트
+import ViewBusinessProduct from './src/Main/Pages/Client/Business/Product/ViewBusinessProduct' // AS : 제품 조회
+
 
 // 내정보
 import ClientMyInfo from './src/Main/Pages/Client/MyInfo'
@@ -107,8 +110,11 @@ const PAGE = () => (
       <Scene key="SetAddress" hideNavBar component={SetAddress} title="주소" />
       <Scene key="SearchAddress" hideNavBar component={SearchAddress} title="주소 등록"/>
 
-      <Scene key="ViewBusinessPlace" initial hideNavBar component={ViewBusinessPlace} title="사업장 조회"/>
-      
+      <Scene key="ViewBusinessPlace" hideNavBar component={ViewBusinessPlace} title="사업장 조회"/>
+
+      {/* AS 신청하기 */}
+      <Scene key="ListBusinessProduct" initial hideNavBar component={ListBusinessProduct} title="전체 제품 조회 리스트"/>
+      <Scene key="ViewBusinessProduct" hideNavBar component={ViewBusinessProduct} title="제품 조회"/>
       
       <Scene key="InputProdType" hideNavBar component={InputProdType} type={ActionConst.RESET} />
       <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
