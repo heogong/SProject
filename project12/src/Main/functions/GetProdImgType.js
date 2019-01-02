@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native'
 import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN, TEST_ACCESS_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
@@ -8,10 +9,14 @@ function GetProdImgTypeUrl() {
 }
 
 const getProdImgType = async () => {
+  // 토큰값 가져오기
+  const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
+
   return fetch(GetProdImgTypeUrl(), {
     method: 'GET',
     headers: {
-      "Authorization": TEST_ACCESS_TOKEN
+      "Authorization": ACCESS_TOKEN
+      //"Authorization": TEST_ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료

@@ -48,6 +48,7 @@ class InputName extends Component {
               onChangeText={ this._handleChange }
               value={ this.state.text }
               placeholder='홍길동'
+              autoFocus={ true }
             />
         </Item>
 

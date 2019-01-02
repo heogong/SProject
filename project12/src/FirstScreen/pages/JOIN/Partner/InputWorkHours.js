@@ -7,6 +7,7 @@ import { ActionSheet, Container, Button, Content, Icon, Root, Text } from "nativ
 import SelectButton from "~/Common/Components/SelectButton";
 import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
+import { Actions } from "react-native-router-flux";
 
 class InputWorkHours extends Component {
     constructor(props) {
@@ -82,23 +83,6 @@ class InputWorkHours extends Component {
         //this._regPartnerWork(); 개발중
     }
 
-    // 파트너 근무 정보 등록
-    _regPartnerWork = () => {
-        RegPartnerWork(this.state.data).then(result => {
-            GetCommonData(result, this._regPartnerWork).then(async resultData => {
-                if(resultData !== undefined) {
-                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    console.log(resultData);
-                    if(ResultBool) {
-
-                    } else {
-                        alert(resultData.resultMsg);
-                    }
-                }
-            });
-        });
-    }
-
     // 풀타임 버튼 클릭
     _handleFullBtnClick = () => {
         //console.log(this.SelectButton);
@@ -113,6 +97,23 @@ class InputWorkHours extends Component {
             button._handleBtnClick();
         });
       
+    }
+
+    // 파트너 근무 정보 등록
+    _regPartnerWork = () => {
+        RegPartnerWork(this.state.data).then(result => {
+            GetCommonData(result, this._regPartnerWork).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+                        Actions.JoinInputSettleAccount(); // 은행계좌등록 페이지
+                    } else {
+                        alert(resultData.resultMsg);
+                    }
+                }
+            });
+        });
     }
 
     render() {

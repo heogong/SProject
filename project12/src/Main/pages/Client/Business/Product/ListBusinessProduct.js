@@ -87,7 +87,6 @@ class ListBusinessProduct extends Component {
             <View style={{ flex: 1}}>
                 <CustomHeader
                     title="A/S 신청"
-                    resetPage={ true }
                 />
                 <View>
                     <Text>쿨리닉은 빠른 AS 서비스를 준비하고 있습니다.</Text>

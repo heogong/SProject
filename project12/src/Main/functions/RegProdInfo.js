@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
@@ -6,12 +7,17 @@ const API_URL = `${DOMAIN}coolinic/clients/products/masters`;
 function RegProdInfoUrl() {
   return `${API_URL}`;
 }
-const RegProdInfo = (prodObj) => {
+const RegProdInfo = async (prodObj) => {
+
+  // 토큰값 가져오기
+  const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
   console.log(prodObj);
+  
   return fetch(RegProdInfoUrl(), {
     method: 'POST',
     headers: {
-      "Authorization": TEST_ACCESS_TOKEN,
+      "Authorization": ACCESS_TOKEN,
+      //"Authorization": TEST_ACCESS_TOKEN,
       "Content-Type" : "application/json"
     },
     body: JSON.stringify(prodObj)

@@ -77,6 +77,7 @@ class InputPhone extends Component {
                 placeholder='010.####.####'
                 keyboardType='numeric'
                 onSubmitEditing={this._getAuthNumber}
+                autoFocus={ true }
               />
             </Item>
           <CustomButton

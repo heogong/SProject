@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN } from '~/Common/Blend';
 import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
@@ -12,12 +13,15 @@ function EditBizNmUrl(bizObj) {
 }
 
 const EditBizNm = async (bizObj) => {
+  // 토큰값 가져오기
+  const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
   //console.log("bizObj : ",bizObj);
   //console.log("RegBizPlaceUrl : ",RegBizPlaceUrl(bizObj))
   return fetch(EditBizNmUrl(bizObj), {
     method: 'PUT',
     headers: {
-      "Authorization": TEST_ACCESS_TOKEN
+      "Authorization": ACCESS_TOKEN
+      //"Authorization": TEST_ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료

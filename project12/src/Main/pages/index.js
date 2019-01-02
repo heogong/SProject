@@ -3,6 +3,8 @@ import { BackHandler, View } from 'react-native';
 import { Container, Button, Content, Input, Item, Icon, Text } from "native-base";
 
 import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomButton from '~/Common/Components/CustomButton';
+import { ActionConst, Actions } from 'react-native-router-flux';
 
 export default class Main extends Component {
   constructor(props) {
@@ -37,6 +39,11 @@ export default class Main extends Component {
             </View>
             <View style={{ flex : 2, backgroundColor : 'skyblue'}}>
                 <Text>컨텐츠2</Text>
+                <CustomButton
+                  onPress={ Actions.ListBusinessProduct }
+                >
+                  <Text>A/S</Text>
+                </CustomButton>
             </View>
             <View style={{ flex : 3, backgroundColor : 'steelblue'}}>
                 <Text>컨텐츠3</Text>

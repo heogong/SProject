@@ -155,6 +155,7 @@ class InputPhoneAuth extends Component {
                 onSubmitEditing={this._checkSmsCertNum}
                 placeholder='######'
                 maxLength={ CERT_LEN + 2 }
+                autoFocus={ true }
               />
             </Item>
 

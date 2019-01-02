@@ -62,22 +62,6 @@ class ListBusinessPlace extends Component {
             });
         });
     }
-
-    // 디폴트 리스트 
-    _renderListItem = (item) => (
-        <ListItem onPress={() => this._onPress(item.clientBplaceId)}>
-            <Left>
-                <Body>
-                    <Text>{item.bplaceNm}</Text>
-                    <Text note>{item.bplaceDsc}</Text>
-                </Body>
-            </Left>
-            <Right>
-                <Icon name="arrow-forward" />
-            </Right>
-        </ListItem>
-    );
-
     // 카드 리스트
     _renderCardItem = (item) => (
         <Card>
@@ -103,7 +87,8 @@ class ListBusinessPlace extends Component {
 
     _onPress = (bizPlaceId) => {
         this.props.onSetBizId(bizPlaceId); // 사업장 ID 리덕스 SET
-        Actions.InputProdType({bizPlaceId : bizPlaceId});
+        //Actions.InputProdType({bizPlaceId : bizPlaceId});
+        Actions.ViewBusinessPlace({bizPlaceId : bizPlaceId});
     }
 
     // 임시 로그아웃

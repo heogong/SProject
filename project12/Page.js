@@ -112,10 +112,6 @@ const PAGE = () => (
 
       <Scene key="ViewBusinessPlace" hideNavBar component={ViewBusinessPlace} title="사업장 조회"/>
 
-      {/* AS 신청하기 */}
-      <Scene key="ListBusinessProduct" hideNavBar component={ListBusinessProduct} title="전체 제품 조회 리스트"/>
-      <Scene key="ViewBusinessProduct" hideNavBar component={ViewBusinessProduct} title="제품 조회"/>
-      
       <Scene key="InputProdType" hideNavBar component={InputProdType} type={ActionConst.RESET} />
       <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" hideNavBar component={InputProdImage} type={ActionConst.RESET} />
@@ -150,8 +146,12 @@ const PAGE = () => (
             inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
             tabBarPosition="bottom"
           >
-            <Stack key="ClientMain" hideNavBar title="클라이언트 Title" initial icon={TabIcon}>
+            <Stack key="ClientMain" hideNavBar title="클라이언트 Title" initial icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="Main" component={Main} title="Scene_Title"/>
+
+               {/* AS 신청하기 */}
+              <Scene key="ListBusinessProduct" hideNavBar component={ListBusinessProduct} title="전체 제품 조회 리스트"/>
+              <Scene key="ViewBusinessProduct" hideNavBar component={ViewBusinessProduct} title="제품 조회"/>
             </Stack>
 
             <Stack key="tab_2" title="Tab #2" icon={TabIcon}>

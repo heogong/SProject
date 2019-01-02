@@ -10,7 +10,7 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 import { Actions } from "react-native-router-flux";
 import SelectButton from "~/Common/Components/SelectButton";
 import GetProdType from '~/Main/Functions/GetProdType';
-import RegPartnerProdType from '../../../Functions/RegPartnerProdType';
+import RegPartnerProdType from '~/FirstScreen/Functions/RegPartnerProdType';
 
 class InputProdType extends Component {
     constructor(props) {
@@ -62,8 +62,8 @@ class InputProdType extends Component {
 
      // 선택된 데이터 array 추가
     _addDataArray = async (value) => {
-        //await this.setState({ selectData: this.state.selectData.concat([{ prdTypeIds: value }]) });
-        await this.setState({ selectData: this.state.selectData.concat([value]) });
+        await this.setState({ selectData: this.state.selectData.concat([{ prdTypeIds: value }]) });
+        //await this.setState({ selectData: this.state.selectData.concat([value]) });
 
         console.log("_addDataArray : ",this.state.selectData);
         this.setState({ btnDisabled : false })
@@ -71,8 +71,8 @@ class InputProdType extends Component {
     
     // 해제된 데이터 array 제거
     _removeDataArray = async (value) => {
-        //await this.setState({ selectData: this.state.selectData.filter((item, sidx) => item.prdTypeIds !== value) });
-        await this.setState({ selectData: this.state.selectData.filter((item, sidx) => item !== value) });
+        await this.setState({ selectData: this.state.selectData.filter((item, sidx) => item.prdTypeIds !== value) });
+        //await this.setState({ selectData: this.state.selectData.filter((item, sidx) => item !== value) });
 
         console.log("_removeDataArray : ",this.state.selectData);
 

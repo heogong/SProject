@@ -6,10 +6,12 @@ import { connect } from 'react-redux';
 import { Input, Item, Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
+import GetCommonData from '~/Common/Functions/GetCommonData';
+import RegPartnerBizLicense from '~/FirstScreen/Functions/RegPartnerBizLicense';
+
 import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
-import GetCommonData from '~/Common/Functions/GetCommonData';
-import RegPartnerBizLicense from '../../../Functions/RegPartnerBizLicense';
+
 
 class InputBizLicense extends Component {
     constructor(props) {

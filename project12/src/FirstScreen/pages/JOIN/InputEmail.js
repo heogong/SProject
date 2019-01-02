@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, StyleSheet } from 'react-native';
+import { Alert, AsyncStorage, StyleSheet } from 'react-native';
 
 import { SUCCESS_RETURN_CODE, PARTNER } from '~/Common/Blend';
 
@@ -110,23 +110,28 @@ class InputEmail extends Component {
         this.setState({ spinner : false }); // 로딩 end
 
         if (ResultBool) {
-          
           console.log(result);
 
-        // 고객 타입에 따른 페이지 이동
-        if(this.props.value.usrCustomerType == PARTNER) {
-          Actions.JoinInputBizLicense(); // 사업장 등록 페이지
-        } else {
-          Actions.BusinessIndex();
-          //Actions.JoinInputBizLicense(); // 메인 페이지
-        }
+          // 고객 타입에 따른 페이지 이동
+          if(this.props.value.usrCustomerType == PARTNER) {
+            Actions.JoinInputBizLicense(); // 사업자 등록 페이지
+            
+          } else {
+            //Actions.BusinessIndex(); // 사업장 제품 등록
+            Actions.CardIndex();
+          }
 
         } else {
-          Toast.show({
-            text: result.resultMsg,
-            type: "warning",
-            buttonText: '확인'
-          })
+          Alert.alert(
+            '',
+            result.resultMsg,
+            [
+              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+              //{text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              {text: '확인', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: false }
+          )
         }
       });
     }

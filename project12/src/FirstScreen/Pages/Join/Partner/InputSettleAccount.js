@@ -89,6 +89,7 @@ class InputSettleAccount extends Component {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
               console.log(resultData);
               if(ResultBool) {
+                Actions.partnerMain();
               } else {
                   alert(resultData.resultMsg);
               }

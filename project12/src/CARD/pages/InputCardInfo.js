@@ -48,9 +48,11 @@ export default class InputCardInfo extends Component {
     RegCard(this.state).then(result => {
       GetCommonData(result, this._cardRegister).then(async resultData => {
         if(resultData !== undefined) {
+          console.log(resultData);
           const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
           if(ResultBool) {
-            alert("등록완료");
+            await alert("등록완료");
+            await Actions.BusinessIndex(); // 사업장 제품 등록
           } else {
             alert(resultData.resultMsg);
           }
