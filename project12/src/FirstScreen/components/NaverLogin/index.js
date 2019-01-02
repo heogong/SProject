@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
+import { Text } from "native-base";
 
 import { NaverLogin, getProfile } from 'react-native-naver-login';
 
-import { NAVER_CODE, SUCCESS_RETURN_CODE } from '~/Common/Blend';
+import { NAVER_CODE, SUCCESS_RETURN_CODE, CLIENT_USER } from '~/Common/Blend';
+
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken, setSnsType } from '../../../Redux/Actions';
 import SnsLogin from '../../Functions/SnsLogin';
 import CertSnsLogInfo from '../../Functions/CertSnsLogInfo';
+import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
+import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import { Text } from "native-base";
 import CustomButton from '~/Common/Components/CustomButton';
 
 const initials = {
@@ -52,7 +55,8 @@ class Page extends Component {
     SnsLogin(this.props.tokenObj, NAVER_CODE).then(async result => {
       const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
       if(ResultBool) {
-        Actions.MainStack();
+        // 사용자 정보 가져오기
+        this._getUserInfo()
       } else {
         Alert.alert(
           '',
@@ -65,7 +69,26 @@ class Page extends Component {
           { cancelable: false }
         )
       }
-      
+    });
+  }
+
+   // 로그인(토큰값 가져온) 사용자 정보 가져오기
+   _getUserInfo = () => {
+    GetUserInfo().then(async result => {
+      GetCommonData(result, this._getUserInfo).then(async resultData => {
+          if(resultData !== undefined) {
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+
+              if(ResultBool) {
+                // 클라이언트 사용자
+                if(resultData.data.usrTypeCd == CLIENT_USER) {
+                  Actions.ClientMain();
+                } else { // 파트너 사용자
+                  Actions.PartnerMain();
+                }
+              }
+          }
+      });
     });
   }
 
@@ -75,9 +98,9 @@ class Page extends Component {
       const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
       if(ResultBool) {
 
-        this.props.onSetSnsSignYn('Y');                 // 리덕스 SNS 가입여부 SET
-        this.props.onSetSnsToken(this.state.theToken);  // 리덕스 SNS TOKEN SET
-        this.props.onSetSnsType(NAVER_CODE);            // 리덕스 SNS 타입 SET
+        await this.props.onSetSnsSignYn('Y');                 // 리덕스 SNS 가입여부 SET
+        await this.props.onSetSnsToken(this.state.theToken);  // 리덕스 SNS TOKEN SET
+        await this.props.onSetSnsType(NAVER_CODE);            // 리덕스 SNS 타입 SET
         
         Actions.JoinInputName();
         

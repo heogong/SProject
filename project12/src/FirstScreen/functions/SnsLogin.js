@@ -7,16 +7,18 @@ function SnsLoginUrl() {
 }
 
 const SnsLogin = (TOKEN, snsCode) => {
-  //console.log("snsToken : ", TOKEN.snsToken)
+  // console.log("snsToken : ", TOKEN.snsToken)
+  // console.log(snsCode);
   const data = new FormData();
 
   data.append('snsSiteCd', snsCode);
   data.append('snsSiteAccessToken', TOKEN.snsToken);
+  data.append('clientId', 'FREEZE_COOLINIC_APP');
 
   return fetch(SnsLoginUrl(), {
     method: 'POST',
     headers: {
-      "Content-Type": "multipart/form-data"
+     "Content-Type": "multipart/form-data"
     },
     body: data
   }).then((response) => response.json()).then((responseJson) => {

@@ -117,6 +117,7 @@ class InputEmail extends Component {
         if(this.props.value.usrCustomerType == PARTNER) {
           Actions.JoinInputBizLicense(); // 사업장 등록 페이지
         } else {
+          Actions.BusinessIndex();
           //Actions.JoinInputBizLicense(); // 메인 페이지
         }
 

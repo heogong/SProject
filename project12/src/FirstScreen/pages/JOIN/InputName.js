@@ -18,9 +18,9 @@ class InputName extends Component {
     };
   }
   
-  componentDidMount () {
-    this.props.onSetSnsSignYn('N');  // 리덕스 SNS 가입여부 SET
-  }
+  // componentDidMount () {
+  //   this.props.onSetSnsSignYn('N');  // 리덕스 SNS 가입여부 SET
+  // }
 
   // 이름 next 버튼 활성화 여부
   _handleChange = (text) => {

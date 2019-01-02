@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
+import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
 const API_URL = `${DOMAIN}coolinic/clients/products/image`;
@@ -26,7 +26,7 @@ const regProdImg = (imgUri, clientPrdId, prdImgCateId) => {
     method: 'POST',
     body:  data,
     headers: {
-      "Authorization": ACCESS_TOKEN,
+      "Authorization": TEST_ACCESS_TOKEN,
       "Content-Type": "multipart/form-data",
     }
   }).then((response) => response.json()).then(async (responseJson) => {

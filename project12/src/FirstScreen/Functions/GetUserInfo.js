@@ -1,17 +1,21 @@
-import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
+import { AsyncStorage } from "react-native"
+import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}coolinic/payment/cards/me`;
+const API_URL = `${DOMAIN}iam/users/me`;
 
-function ListCardUrl() {
+function GetUserInfoUrl() {
   return `${API_URL}`;
 }
 
-const ListCard = async () => {
-  return fetch(ListCardUrl(), {
-    method : 'GET',
+const GetUserInfo = async () => {
+  // 토큰값 가져오기
+  const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
+
+  return fetch(GetUserInfoUrl(), {
+    method: 'GET',
     headers: {
-      "Authorization": TEST_ACCESS_TOKEN
+     "Authorization": ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료
@@ -27,4 +31,4 @@ const ListCard = async () => {
   });
 };
 
-export default ListCard;
+export default GetUserInfo;

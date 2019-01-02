@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
+import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
 const API_URL = `${DOMAIN}coolinic/clients/products/masters`;
@@ -11,7 +11,7 @@ const RegProdInfo = (prodObj) => {
   return fetch(RegProdInfoUrl(), {
     method: 'POST',
     headers: {
-      "Authorization": ACCESS_TOKEN,
+      "Authorization": TEST_ACCESS_TOKEN,
       "Content-Type" : "application/json"
     },
     body: JSON.stringify(prodObj)

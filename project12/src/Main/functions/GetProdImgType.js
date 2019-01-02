@@ -1,4 +1,4 @@
-import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN, ACCESS_TOKEN } from '../../Common/Blend';
+import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN, TEST_ACCESS_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
 const API_URL = `${DOMAIN}/coolinic/products/types/2/imgcates`;
@@ -11,7 +11,7 @@ const getProdImgType = async () => {
   return fetch(GetProdImgTypeUrl(), {
     method: 'GET',
     headers: {
-      "Authorization": ACCESS_TOKEN
+      "Authorization": TEST_ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료

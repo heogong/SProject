@@ -9,16 +9,7 @@ export const DEV_SNS_DOMAIN = 'http://54.180.175.29:8180/';
 // 토큰 STRING 관련
 export const INVAILD_TOKEN = 'invalid_token';
 export const REFRESH_TOKEN = 'AccessTokenRefresh';
-export const ACCESS_TOKEN = 'Bearer d84851a8-9396-4a68-bbe7-5a1e5999d05a';
-// export const ACCESS_TOKEN = async () => {
-//     let AccessToken;
-//     try {
-//         AccessToken = await AsyncStorage.getItem('AccessToken');
-//     } catch (error) {
-//       console.log(error);
-//     }
-//     return `Bearer ${AccessToken}`;
-// }
+export const TEST_ACCESS_TOKEN = 'Bearer d84851a8-9396-4a68-bbe7-5a1e5999d05a';
 
 // API 결과 STRING 관련
 export const SUCCESS_RETURN_CODE = '0000';
@@ -34,3 +25,5 @@ export const FACE_BOOK_CODE = 'SNS_SITE_CD_03'; // 페이스북
 // etc
 export const CLIENT = "CLIENT";
 export const PARTNER = "PARTNER";
+export const CLIENT_USER = "USER_TYPE_CD_01";
+export const PARTNER_USER = "USER_TYPE_CD_02";

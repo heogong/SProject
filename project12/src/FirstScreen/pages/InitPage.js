@@ -14,13 +14,13 @@ export default class PageOne extends Component {
     try {
       const AccessToken = await AsyncStorage.getItem('AccessToken');
       const RefreshToken = await AsyncStorage.getItem('RefreshToken');
-      if (AccessToken !== null) {
-        // We have data!!
-        console.log(AccessToken);
-        console.log(RefreshToken);
+      // if (AccessToken !== null) {
+      //   // We have data!!
+      //   console.log(AccessToken);
+      //   console.log(RefreshToken);
 
-        Actions.ListBusinessPlace();
-      }
+      //   Actions.ListBusinessPlace();
+      // }
      } catch (error) {
        // Error retrieving data
      }

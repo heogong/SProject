@@ -73,7 +73,7 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage"  hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
 
       <Scene key="reactCamera" hideNavBar component={ReactCamera} />
@@ -113,7 +113,7 @@ const PAGE = () => (
       <Scene key="ViewBusinessPlace" hideNavBar component={ViewBusinessPlace} title="사업장 조회"/>
 
       {/* AS 신청하기 */}
-      <Scene key="ListBusinessProduct" initial hideNavBar component={ListBusinessProduct} title="전체 제품 조회 리스트"/>
+      <Scene key="ListBusinessProduct" hideNavBar component={ListBusinessProduct} title="전체 제품 조회 리스트"/>
       <Scene key="ViewBusinessProduct" hideNavBar component={ViewBusinessProduct} title="제품 조회"/>
       
       <Scene key="InputProdType" hideNavBar component={InputProdType} type={ActionConst.RESET} />
@@ -179,7 +179,7 @@ const PAGE = () => (
             inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
             tabBarPosition="bottom"
           >
-            <Stack key="MainStack2" hideNavBar title="파트너 Title" initial icon={TabIcon}>
+            <Stack key="PartnerMain" hideNavBar title="파트너 Title" initial icon={TabIcon}>
               <Scene key="Main" component={Main} title="Scene_Title2"/>
             </Stack>
             <Stack key="tab_2" title="Tab #22222" icon={TabIcon}>

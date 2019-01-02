@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Alert } from "react-native"
+import { Item, Input, Root, Text } from "native-base";
+
+import { SUCCESS_RETURN_CODE, CLIENT_USER } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrPw, setAccessToken, setRefreshToken } from '~/Redux/Actions';
 
-import { Item, Input, Root, Text } from "native-base";
+import Login from '../../Functions/Login';
+import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
+import GetCommonData from '~/Common/Functions/GetCommonData';
+
 import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
-import Login from '../../Functions/Login';
 
 const USR_EMAIL_LEN = 10;
 const USR_PASSWD_LEN = 1;
@@ -63,7 +68,7 @@ class InputAccount extends Component {
         await AsyncStorage.setItem('AccessToken', result.access_token); // AsyncStorage 토큰 저장
         await AsyncStorage.setItem('RefreshToken', result.refresh_token); // AsyncStorage 갱신 토큰 저장
 
-        Actions.ListBusinessPlace();
+        this._getUserInfo();
 
       } else {
         Alert.alert(
@@ -77,6 +82,26 @@ class InputAccount extends Component {
           { cancelable: false }
         )
       }
+    });
+  }
+
+  // 로그인(토큰값 가져온) 사용자 정보 가져오기
+  _getUserInfo = () => {
+    GetUserInfo().then(async result => {
+      GetCommonData(result, this._getUserInfo).then(async resultData => {
+          if(resultData !== undefined) {
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+
+              if(ResultBool) {
+                // 클라이언트 사용자
+                if(resultData.data.usrTypeCd == CLIENT_USER) {
+                  Actions.ClientMain();
+                } else { // 파트너 사용자
+                  Actions.PartnerMain();
+                }
+              }
+          }
+      });
     });
   }
   

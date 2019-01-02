@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import{ Alert } from 'react-native';
 
-import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, CLIENT_USER } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -13,6 +13,8 @@ import CustomButton from '~/Common/Components/CustomButton';
 import SnsSignUp from '../../Functions/SnsSignUp';
 import CheckUsr from '../../Functions/CheckUsr';
 import CheckSmsCertNum from '../../Functions/CheckSmsCertNum';
+import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
+import GetCommonData from '~/Common/Functions/GetCommonData';
 
 const CERT_LEN = 4
 class InputPhoneAuth extends Component {
@@ -44,24 +46,29 @@ class InputPhoneAuth extends Component {
           const UsrResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
 
           if (UsrResultBool) {
-            // SNS 가입 여부 확인
+            // SNS 가입 시
             if(this.props.usrObj.snsSignupYn == 'Y'){
 
               // 회원가입
               SnsSignUp(this.props.usrObj, this.props.tokenObj).then(async result => {
+                console.log(result);
                 const SignUpResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                 if (SignUpResultBool) {
                 
-                  // 메인 페이지 이동
+                  // 사용자 정보 가져오기
+                  this._getUserInfo();
 
                 } else {
-                  Toast.show({
-                    text: result.resultMsg,
-                    type: "danger",
-                    buttonText: '확인',
-                    duration: 5000
-                  })
-
+                  Alert.alert(
+                    '',
+                    `${result.resultMsg} - 로그인 페이지로 이동하시겠습니까?`,
+                    [
+                      // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+                      {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                      {text: '네', onPress: () => this._closeMoveAccountType},
+                    ],
+                    { cancelable: false }
+                  )
                   //Actions.InitPage();
                 }
               });
@@ -70,13 +77,7 @@ class InputPhoneAuth extends Component {
               Actions.JoinInputEmail();
             }
           } else {
-            // Toast.show({
-            //   text: result.resultMsg,
-            //   type: "warning",
-            //   buttonText: "이동",
-            //   duration: 5000,
-            //   onClose : this._closeMoveAccountType
-            // })
+            console.log(result);
             Alert.alert(
               '',
               `${result.resultMsg} - 로그인 페이지로 이동하시겠습니까?`,
@@ -110,6 +111,26 @@ class InputPhoneAuth extends Component {
       }
     })
   };
+
+   // 로그인(토큰값 가져온) 사용자 정보 가져오기
+   _getUserInfo = () => {
+    GetUserInfo().then(async result => {
+      GetCommonData(result, this._getUserInfo).then(async resultData => {
+          if(resultData !== undefined) {
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+
+              if(ResultBool) {
+                // 클라이언트 사용자
+                if(resultData.data.usrTypeCd == CLIENT_USER) {
+                  Actions.BusinessIndex();
+                } else { // 파트너 사용자
+                 // Actions.PartnerMain();
+                }
+              }
+          }
+      });
+    });
+  }
 
   // 이미 가입된 대상자 화면 이동
   _closeMoveAccountType = () => {

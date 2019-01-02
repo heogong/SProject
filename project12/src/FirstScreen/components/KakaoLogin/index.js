@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { Text } from "native-base";
 
-import { KAKAO_CODE, SUCCESS_RETURN_CODE } from '~/Common/Blend';
+import { KAKAO_CODE, SUCCESS_RETURN_CODE, CLIENT_USER } from '~/Common/Blend';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken, setSnsType } from '~/Redux/Actions';
@@ -10,6 +10,9 @@ import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken, setSnsType } from '~/Red
 import RNKakaoLogins  from 'react-native-kakao-logins';
 import CertSnsLogInfo from '../../Functions/CertSnsLogInfo';
 import SnsLogin from '../../Functions/SnsLogin';
+import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
+import GetCommonData from '~/Common/Functions/GetCommonData';
+
 import CustomButton from '~/Common/Components/CustomButton';
 
 class KakaoLogin extends Component {
@@ -42,9 +45,11 @@ class KakaoLogin extends Component {
   // 카카오 토큰값 - 시스템 (쿨비즈?) 로그인 하기
   _SystmeLogin() {
     SnsLogin(this.props.tokenObj, KAKAO_CODE).then(async result => {
+      console.log(result);
       const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
       if(ResultBool) {
-        Actions.MainStack();
+        // 사용자 정보 
+        this._getUserInfo();
       } else {
         Alert.alert(
           '',
@@ -60,10 +65,31 @@ class KakaoLogin extends Component {
     });
   }
 
+  // 로그인(토큰값 가져온) 사용자 정보 가져오기
+  _getUserInfo = () => {
+    GetUserInfo().then(async result => {
+      GetCommonData(result, this._getUserInfo).then(async resultData => {
+          if(resultData !== undefined) {
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+
+              if(ResultBool) {
+                // 클라이언트 사용자
+                if(resultData.data.usrTypeCd == CLIENT_USER) {
+                  Actions.ClientMain();
+                } else { // 파트너 사용자
+                  Actions.PartnerMain();
+                }
+              }
+          }
+      });
+    });
+  }
+
   // 카카오 로그인 시작.
   kakaoLogin() {
     console.log('   kakaoLogin   ');
     RNKakaoLogins.login(async (err, result) => {
+      console.log(err,'/////',result);
       console.log(`\n\n  Token is fetched  :: ${result.token} \n\n`);
       // 로그인 페이지에서 접근 시
       if(this.props.loginYn) {

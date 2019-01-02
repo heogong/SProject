@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
+import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
 const API_URL = `${DOMAIN}coolinic/partners/prdtypes`;
@@ -27,7 +27,7 @@ const RegPartnerProdType = (data) => {
   return fetch(RegPartnerProdTypeUrl(), {
     method: 'POST',
     headers: {
-      "Authorization": ACCESS_TOKEN,
+      "Authorization": TEST_ACCESS_TOKEN,
       "Content-Type" : "application/x-www-form-urlencoded"
     },
     //body:  formBody
