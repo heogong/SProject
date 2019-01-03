@@ -119,7 +119,7 @@ const PAGE = () => (
       <Scene key="InputProdImage" hideNavBar component={InputProdImage} type={ActionConst.RESET} />
 
       {/* 제품 쇼케이스  등록 */}
-      <Scene key="InputShowCase"  initial hideNavBar component={InputShowCase} type={ActionConst.RESET} />
+      <Scene key="InputShowCase" initial hideNavBar component={InputShowCase} type={ActionConst.RESET} />
 
       <Drawer
         hideNavBar

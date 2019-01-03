@@ -55,7 +55,7 @@ class InputProdType extends Component {
 
     // 제품 타입 선택
     _nextButton = () => {
-        Actions.InputProdInfo({
+        Actions.InputShowCase({
             prodTypeId : this.state.BUTTONS[this.state.selectIndex].typeId,
             prodTypeNm : this.state.BUTTONS[this.state.selectIndex].text
         })

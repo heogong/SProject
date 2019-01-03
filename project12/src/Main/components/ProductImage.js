@@ -6,8 +6,11 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import ImageOverlay from "react-native-image-overlay";
-import RegProdImg from '../Functions/RegProdImg';
+
+import RegProdImg from '~/Main/Functions/RegProdImg';
+import DelProdImage from '~/Main/Functions/DelProdImage';
 import GetCommonData from '~/Common/Functions/GetCommonData';
+
 import CustomButton from '~/Common/Components/CustomButton';
 
 class ProductImage extends Component {
@@ -21,7 +24,8 @@ class ProductImage extends Component {
           insertYn : true,
           modifyYn : false,
           deleteYn : false,
-          imageTouch : true // 이미지 없을 시 터치 가능 여부
+          imageTouch : true, // 이미지 없을 시 터치 가능 여부,
+          clientPrdImgId: null
       };
     }
 
@@ -38,7 +42,7 @@ class ProductImage extends Component {
 
     // 이미지 삭제
     _handleImageDelete = () => {
-        this.setState({ uri : this.state.defaultImg , deleteYn : false, modifyYn : true });
+        this._delProdImage();
     }
 
     // 이미지 조회
@@ -51,24 +55,53 @@ class ProductImage extends Component {
         await this.setState({tempImgUri : result.data.uri}); // 촬영 한 이미지 임시 저장
 
         this._registerProdImage();
-        
     }
 
     // 촬영한 이미지 API 전송
     _registerProdImage = () => {
-        // RegProdImg(this.state.tempImgUri, this.props.clientPrdId, this.props.prdImgCateId).then(result => {
-        //     GetCommonData(result, this._registerProdImage).then(async resultData => {
-        //         console.log("이미지 전송 리턴 :", resultData);
-        //         if(resultData !== undefined) {
-        //             const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-        //             if(ResultBool) {
-        //                 console.log("이미지 url:", resultData.data.fileUrl);
-        //                 await this.setState({ uri : resultData.data.fileUrl , deleteYn : true, insertYn : false, imageTouch : false });
-        //                 //await this.setState({ uri : 'https://www.google.com/logos/doodles/2018/holidays-2018-northern-hemisphere-day-1-6271106234187776-s.png' , deleteYn : true, insertYn : false, imageTouch : false });
-        //             }
-        //         }
-        //     });
-        // });
+        RegProdImg(this.state.tempImgUri, this.props.clientPrdId, this.props.prdImgCateId).then(result => {
+            GetCommonData(result, this._registerProdImage).then(async resultData => {
+                console.log("이미지 전송 리턴 :", resultData);
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    if(ResultBool) {
+                        console.log("이미지 url:", resultData.data.fileUrl);
+                        await this.setState({
+                            clientPrdImgId : resultData.data.clientPrdImgId,
+                            uri : resultData.data.fileUrl, 
+                            deleteYn : true, 
+                            insertYn : false, 
+                            imageTouch : false 
+                        });
+                        //await this.setState({ uri : 'https://www.google.com/logos/doodles/2018/holidays-2018-northern-hemisphere-day-1-6271106234187776-s.png' , deleteYn : true, insertYn : false, imageTouch : false });
+                    }
+                }
+            });
+        });
+    }
+
+    // 이미지 삭제
+    _delProdImage = () => {
+        DelProdImage(this.props.clientPrdId, this.state.clientPrdImgId).then(result => {
+            GetCommonData(result, this._delProdImage).then(async resultData => {
+                console.log(resultData);
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    
+                    if(ResultBool) {
+                        this.setState({ 
+                            uri : this.state.defaultImg, 
+                            deleteYn : false, 
+                            modifyYn : true, 
+                            imageTouch : true
+                        });
+                    } else {
+                        alert(resultData.resultMsg);
+                    }
+                }
+            });
+        });
+
     }
 
     render() {
@@ -108,7 +141,8 @@ class ProductImage extends Component {
                                     styleWidth={ false }
                                     block={ true } 
                                     light={ true }
-                                    bordered={ true }>
+                                    bordered={ true }
+                                    onPress={ this._handleImageDelete }>
                                     <Icon active name="md-trash" />
                                     <Text>삭제</Text>
                                 </CustomButton>

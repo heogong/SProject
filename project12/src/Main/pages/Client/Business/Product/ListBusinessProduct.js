@@ -32,6 +32,7 @@ class ListBusinessProduct extends Component {
             GetCommonData(result, this._getTotalProductList).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
                     if(ResultBool) {
                         this.setState({ 
                             productData: resultData.data,
@@ -61,7 +62,7 @@ class ListBusinessProduct extends Component {
             <Body>
                 <Text>{ info.clientPrdNm }</Text>
                 <Text note numberOfLines={1}>{ info.clientPrdDsc }</Text>
-                <Text note numberOfLines={1}>{ (info.images.length > 0) ? "이미지" : "이미지없음" }</Text>
+                {/* <Text note numberOfLines={1}>{ (info.images.length > 0) ? "이미지" : "이미지없음" }</Text> */}
             </Body>
             <Right>
                 <Icon name="arrow-forward" />

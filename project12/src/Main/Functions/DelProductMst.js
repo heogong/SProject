@@ -2,19 +2,18 @@ import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '~/Common/Blend';
 import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}coolinic/clients/products/me`;
+const API_URL = `${DOMAIN}coolinic/clients/products/`;
 
-function GetTotalProductListUrl() {
-  return `${API_URL}`;
+function DelProductMstUrl(prodId) {
+  return `${API_URL}${prodId}`;
 }
 
-const GetTotalProductList = async () => {
+const DelProductMst = async (prodId) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
-  console.log(ACCESS_TOKEN);
 
-  return fetch(GetTotalProductListUrl(), {
-    method: 'GET',
+  return fetch(DelProductMstUrl(prodId), {
+    method: 'DELETE',
     headers: {
       "Authorization": ACCESS_TOKEN
       //"Authorization": TEST_ACCESS_TOKEN
@@ -33,4 +32,4 @@ const GetTotalProductList = async () => {
   });
 };
 
-export default GetTotalProductList;
+export default DelProductMst;

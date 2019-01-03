@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, ImageBackground, View, scrollToEnd } from 'react-native';
+import { Alert, StyleSheet, ImageBackground, View, scrollToEnd } from 'react-native';
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -10,12 +10,13 @@ import { connect } from 'react-redux';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import GetProdImageType from '~/Main/Functions/GetProdImgType'
 import RegProductMst from '~/Main/Functions/RegProductMst'
+import DelProductMst from '~/Main/Functions/DelProductMst'
 import ProductImage from '~/Main/Components/ProductImage'
 
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
 
-
+let DEL_IDX = null; // 제품 삭제 인덱스
 class InputShowCase extends Component {
     constructor(props) {
       super(props);
@@ -24,12 +25,9 @@ class InputShowCase extends Component {
       this.state = {
         defaultImg : "https://i.pinimg.com/originals/b8/29/fd/b829fd8f5df3e09589575e4ca939bc9f.png",
         data : [],
-        newShowCase: []
+        newShowCase: [],
+        firstclientPrdId : null
       };
-    }
-
-    static defaultProps = {
-        prodTypeId : 2 // 테스트용
     }
 
     componentWillMount(){
@@ -42,9 +40,11 @@ class InputShowCase extends Component {
 
     // 제품 이미지 타입 가져오기
     _drawProductImageType = () => {
-        GetProdImageType(this.props.prodTypeId).then(result => {
+        //GetProdImageType(this.props.prodTypeId).then(result => {
+        GetProdImageType(2).then(result => {
             GetCommonData(result, this._drawProductImageType).then(async resultData => {
                 if(resultData !== undefined) {
+                    console.log("GetProdImageType : ",resultData);
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
                         this.setState({data : resultData.data});
@@ -57,11 +57,13 @@ class InputShowCase extends Component {
 
     // 제품 마스터 초기 등록 
     _regProductMst = () => {
-        RegProductMst(this.props.value.bizId, this.props.prodTypeId).then(result => {
+        RegProductMst(this.props.value.bizId, 2).then(result => {
             GetCommonData(result, this._regProductMst).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
+                        
+                        this.setState({firstclientPrdId : resultData.data.clientPrdId});
 
                         const newData = this.state.data.map((prodImgType, idx) => {
                             return { ...prodImgType, clientPrdId: resultData.data.clientPrdId };
@@ -94,9 +96,59 @@ class InputShowCase extends Component {
        //this.showCase.scrollToEnd();
     }
 
+    // showCase 카드 복사
+    _handleCopyShowCase = () => {
+        alert(this.state.firstclientPrdId);
+
+       // console.log(clientPrdId2);
+
+    }
+
      // showCase 카드 제거
      _handleRemoveShowCase = (idx) => () => {
-        this.setState({ newShowCase: this.state.newShowCase.filter((s, sidx) => idx !== sidx) });
+        Alert.alert(
+            '',
+            '삭제 하시겠습니까?',
+            [
+              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+              {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              {text: '네', onPress: () => {
+                DEL_IDX = idx;
+                this._delProductMst();
+                }
+              },
+            ],
+            { cancelable: false }
+        )
+    }
+
+    // 제품 삭제
+    _delProductMst = () => {
+        DelProductMst(this.state.newShowCase[DEL_IDX].clientPrdId).then(result => {
+            GetCommonData(result, this._delProductMst).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    if(ResultBool) {
+                        this.setState({ newShowCase: this.state.newShowCase.filter((s, sidx) => DEL_IDX !== sidx) })
+                    } else {
+                        alert(resultData.resultMsg);
+                    }
+                }
+            });
+        });
+    }
+
+    _nextButton = () => {
+        Alert.alert(
+            '',
+            '등록되지 않은 이미지는 어딘가에서 등록 가능 \ 제품을 추가 등록 하시겠습니까?',
+            [
+              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+              {text: '아니오', onPress: () => Actions.ClientMain() },
+              {text: '네', onPress: () => Actions.InputProdType() },
+            ],
+            { cancelable: false }
+        )
     }
 
     render() {
@@ -121,7 +173,7 @@ class InputShowCase extends Component {
                             <View style={{ flex:1, justifyContent: 'center'}}>
                                 <View style={ styles.boxLayout }>
                                 {this.state.data.map((info, idx) => (
-                                    <ProductImage 
+                                    <ProductImage
                                         prdTypeImgCateNm={ info.prdTypeImgCateNm }
                                         prdImgCateId={ info.prdTypeImgCateId }
                                         clientPrdId={ info.clientPrdId }
@@ -132,7 +184,7 @@ class InputShowCase extends Component {
                                 </View>
                             </View>
                         </CardItem>
-                        <Button>
+                        <Button onPress={ this._handleCopyShowCase }>
                             <Text>복제</Text>
                         </Button>
                     </Card>
@@ -170,6 +222,9 @@ class InputShowCase extends Component {
                                     </View>
                                 </View>
                             </CardItem>
+                            <Button onPress={ this._handleCopyShowCase }>
+                                <Text>복제</Text>
+                            </Button>
                         </Card>
                     ))}
                 </CustomBlockWrapper>
@@ -178,7 +233,7 @@ class InputShowCase extends Component {
                     <Button onPress={ this._handleAddShowCase }>
                         <Text>추가</Text>
                     </Button>
-                    <Button>
+                    <Button onPress={ this._nextButton }>
                         <Text>등록완료</Text>
                     </Button>
                 </Footer>
