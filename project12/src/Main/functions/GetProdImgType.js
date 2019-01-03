@@ -2,17 +2,17 @@ import { AsyncStorage } from 'react-native'
 import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN, TEST_ACCESS_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}/coolinic/products/types/2/imgcates`;
+const API_URL = `${DOMAIN}/coolinic/products/types/`;
 
-function GetProdImgTypeUrl() {
-  return `${API_URL}`;
+function GetProdImgTypeUrl(prodTypeId) {
+  return `${API_URL}${prodTypeId}/imgcates`;
 }
 
-const getProdImgType = async () => {
+const getProdImgType = async (prodTypeId) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  return fetch(GetProdImgTypeUrl(), {
+  return fetch(GetProdImgTypeUrl(prodTypeId), {
     method: 'GET',
     headers: {
       "Authorization": ACCESS_TOKEN

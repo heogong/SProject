@@ -37,7 +37,7 @@ class InputProdImage extends Component {
                         const newData = this.props.prodInfo.map((prodInfo, idx) => {
                             return { ...prodInfo, imgType: result.data };
                         });
-                        //console.log("newData :" ,newData);
+                        console.log("newData :" ,newData);
                         this.setState({ data: newData });
                     }
                 }

@@ -71,6 +71,15 @@ class InputProdInfo extends Component {
         this.setState({ shareholders: this.state.shareholders.filter((s, sidx) => idx !== sidx) });
     }
 
+    // 등록된 제품유형타입 의 클라이언트 아이디 set : test
+    _setslientPrdId = () => {
+        // const newShareholders = this.state.shareholders.map((shareholder, sidx) => {
+        //     return { ...shareholder, clientPrdId: text };
+        // });
+
+        // this.setState({ shareholders: newShareholders });
+    }
+
     // next
     _handleSubmit = () => {
         const { clientPrdNm, shareholders } = this.state;
@@ -78,10 +87,11 @@ class InputProdInfo extends Component {
             GetCommonData(result, this._handleSubmit).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log("inputprodinfo : ",resultData);
                     if(ResultBool) {
+
                         Actions.InputProdImage({prodInfo : shareholders});
                     } else {
-                        console.log(resultData);
                         alert(resultData.msg);
                     }
                 }

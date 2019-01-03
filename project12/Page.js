@@ -64,6 +64,8 @@ import InputProdImage from './src/Main/Pages/Client/Business/Product/InputProdIm
 import ListBusinessProduct from './src/Main/Pages/Client/Business/Product/ListBusinessProduct' // AS : 전체 제품 리스트
 import ViewBusinessProduct from './src/Main/Pages/Client/Business/Product/ViewBusinessProduct' // AS : 제품 조회
 
+import InputShowCase from './src/Main/Pages/Client/Business/Product/InputShowCase' // 쇼케이스 등록
+
 
 // 내정보
 import ClientMyInfo from './src/Main/Pages/Client/MyInfo'
@@ -73,7 +75,7 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
 
       <Scene key="reactCamera" hideNavBar component={ReactCamera} />
@@ -116,6 +118,8 @@ const PAGE = () => (
       <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" hideNavBar component={InputProdImage} type={ActionConst.RESET} />
 
+      {/* 제품 쇼케이스  등록 */}
+      <Scene key="InputShowCase"  initial hideNavBar component={InputShowCase} type={ActionConst.RESET} />
 
       <Drawer
         hideNavBar

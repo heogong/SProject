@@ -56,19 +56,19 @@ class ProductImage extends Component {
 
     // 촬영한 이미지 API 전송
     _registerProdImage = () => {
-        RegProdImg(this.state.tempImgUri, this.props.clientPrdId, this.props.prdImgCateId).then(result => {
-            GetCommonData(result, this._registerProdImage).then(async resultData => {
-                console.log("이미지 전송 리턴 :", resultData);
-                if(resultData !== undefined) {
-                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    if(ResultBool) {
-                        console.log("이미지 url:", resultData.data.fileUrl);
-                        await this.setState({ uri : resultData.data.fileUrl , deleteYn : true, insertYn : false, imageTouch : false });
-                        //await this.setState({ uri : 'https://www.google.com/logos/doodles/2018/holidays-2018-northern-hemisphere-day-1-6271106234187776-s.png' , deleteYn : true, insertYn : false, imageTouch : false });
-                    }
-                }
-            });
-        });
+        // RegProdImg(this.state.tempImgUri, this.props.clientPrdId, this.props.prdImgCateId).then(result => {
+        //     GetCommonData(result, this._registerProdImage).then(async resultData => {
+        //         console.log("이미지 전송 리턴 :", resultData);
+        //         if(resultData !== undefined) {
+        //             const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+        //             if(ResultBool) {
+        //                 console.log("이미지 url:", resultData.data.fileUrl);
+        //                 await this.setState({ uri : resultData.data.fileUrl , deleteYn : true, insertYn : false, imageTouch : false });
+        //                 //await this.setState({ uri : 'https://www.google.com/logos/doodles/2018/holidays-2018-northern-hemisphere-day-1-6271106234187776-s.png' , deleteYn : true, insertYn : false, imageTouch : false });
+        //             }
+        //         }
+        //     });
+        // });
     }
 
     render() {
@@ -76,7 +76,8 @@ class ProductImage extends Component {
             <View key={ this.props.index } style={ styles.box }>
                 <View style={ [styles.box ] }>
                     <View style={ styles.innerTitle }>
-                        <Text>{ this.props.prdTypeImgCateNm }</Text>
+                        {/* <Text>{ this.props.prdTypeImgCateNm }</Text> */}
+                        <Text>{ this.props.clientPrdId }</Text>
                     </View>
 
                     { (this.state.imageTouch) ? (
