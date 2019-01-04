@@ -11,21 +11,26 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 import GetProdImageType from '~/Main/Functions/GetProdImgType'
 import RegProductMst from '~/Main/Functions/RegProductMst'
 import DelProductMst from '~/Main/Functions/DelProductMst'
+import CopyProductMst from '~/Main/Functions/CopyProductMst'
 import ProductImage from '~/Main/Components/ProductImage'
 
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
 
 let DEL_IDX = null; // 제품 삭제 인덱스
+let CLIENT_PRODUCT_ID = null; // 제품 복제 아이디
 class InputShowCase extends Component {
     constructor(props) {
       super(props);
+
       this.showCase = null;
 
       this.state = {
         defaultImg : "https://i.pinimg.com/originals/b8/29/fd/b829fd8f5df3e09589575e4ca939bc9f.png",
-        data : [],
-        newShowCase: [],
+        data : [], // 첫번째 SHOW CASE 이미지 데이터
+        productName : false, // 제품명 입력 여부
+        addData : [], // 추가/복제 SHOW CASE 이미지 데이터
+        newShowCase: [], // 추가/복제 SHOW CASE
         firstclientPrdId : null
       };
     }
@@ -77,7 +82,10 @@ class InputShowCase extends Component {
                             const addClientPrdShowCase = this.state.newShowCase.map((showCase, sidx) => {
                                 return (sidx == this.state.newShowCase.length - 1) ? { ...showCase, clientPrdId: resultData.data.clientPrdId } : showCase;
                             });
-                            this.setState({ newShowCase: addClientPrdShowCase });
+                            this.setState({ 
+                                newShowCase: addClientPrdShowCase,
+                                addData: newData
+                            });
                         }
                     } else {
                         alert(resultData.resultMsg);
@@ -97,15 +105,14 @@ class InputShowCase extends Component {
     }
 
     // showCase 카드 복사
-    _handleCopyShowCase = () => {
-        alert(this.state.firstclientPrdId);
+    _handleCopyShowCase = (idx) => () => {
+        CLIENT_PRODUCT_ID = (idx !== undefined) ? this.state.newShowCase[idx].clientPrdId : this.state.firstclientPrdId;
 
-       // console.log(clientPrdId2);
-
+        this._copyProductMst();
     }
 
      // showCase 카드 제거
-     _handleRemoveShowCase = (idx) => () => {
+    _handleRemoveShowCase = (idx) => () => {
         Alert.alert(
             '',
             '삭제 하시겠습니까?',
@@ -138,6 +145,45 @@ class InputShowCase extends Component {
         });
     }
 
+    // 제품 복제
+    _copyProductMst = () => {
+        CopyProductMst(CLIENT_PRODUCT_ID).then(result => {
+            GetCommonData(result, this._copyProductMst).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+
+                        this.setState({ 
+                            newShowCase: this.state.newShowCase.concat([{ clientPrdId : resultData.data.clientPrdId }]),
+                            //defaultImg : "http://img.asiatoday.co.kr/file/2018y/03m/19d/20180319001047295_1521424194_1.jpg?1521424194"
+                            addData :  resultData.data.images
+                        });
+
+                    } else {
+                        alert(resultData.resultMsg);
+                    }
+                }
+            });
+        });
+    }
+
+    // 제품명 입력 여부
+    _setProductNm = (text)  => {
+        //this.setState({usrId : text});
+        console.log(text.length);
+        if(text.length > 0) {
+            this.setState({ productName : true});
+        } else{
+            this.setState({ productName : false});
+        }
+        // this.setState((text.length > 0) ? true : false);
+    } 
+
+    _submitProductNm = () => {
+        alert("onblur");
+    }
+
     _nextButton = () => {
         Alert.alert(
             '',
@@ -162,11 +208,14 @@ class InputShowCase extends Component {
                             <Thumbnail large source={{ uri: this.state.defaultImg }} />
                         </CardItem>
                         <CardItem>
-                            <Item regular>
+                            <Item error success={ this.state.productName }>
                                 <Input
                                     value={ this.state.text }
-                                    placeholder='제품명'
+                                    placeholder='제품명을 입력하세요.'
+                                    onChangeText={(text) => this._setProductNm(text) }
+                                    onBlur={this._submitProductNm}
                                 />
+                                {(this.state.productName) ? <Icon name='checkmark-circle' /> : <Icon name='close-circle' />}
                             </Item>
                         </CardItem>
                         <CardItem cardBody>
@@ -176,7 +225,7 @@ class InputShowCase extends Component {
                                     <ProductImage
                                         prdTypeImgCateNm={ info.prdTypeImgCateNm }
                                         prdImgCateId={ info.prdTypeImgCateId }
-                                        clientPrdId={ info.clientPrdId }
+                                        clientPrdId={ this.state.firstclientPrdId }
                                         uri={ this.state.defaultImg }
                                         index={ idx }
                                     />
@@ -184,7 +233,7 @@ class InputShowCase extends Component {
                                 </View>
                             </View>
                         </CardItem>
-                        <Button onPress={ this._handleCopyShowCase }>
+                        <Button onPress={ this._handleCopyShowCase() }>
                             <Text>복제</Text>
                         </Button>
                     </Card>
@@ -210,19 +259,19 @@ class InputShowCase extends Component {
                             <CardItem cardBody>
                                 <View style={{ flex:1, justifyContent: 'center'}}>
                                     <View style={ styles.boxLayout }>
-                                    {this.state.data.map((info, idx) => (
+                                    {this.state.addData.map((info, idx) => (
                                         <ProductImage 
                                             prdTypeImgCateNm={ info.prdTypeImgCateNm }
                                             clientPrdId={ showCase.clientPrdId }
                                             prdImgCateId={ info.prdTypeImgCateId }
-                                            uri={ this.state.defaultImg }
+                                            uri={ (info.fileUrl !== null) ? info.fileUrl : this.state.defaultImg }
                                             index={ idx }
                                         />
                                     ))}
                                     </View>
                                 </View>
                             </CardItem>
-                            <Button onPress={ this._handleCopyShowCase }>
+                            <Button onPress={ this._handleCopyShowCase(idx) }>
                                 <Text>복제</Text>
                             </Button>
                         </Card>
