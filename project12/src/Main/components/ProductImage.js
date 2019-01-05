@@ -20,13 +20,25 @@ class ProductImage extends Component {
       this.state = {
           tempImgUri : '', // 촬영 한 이미지 임시 이미지 데이터
           uri : this.props.uri, // API 호출 후 정상 이미지 데이터
-          defaultImg : this.props.uri, // 초기 이미지 데이터
+          defaultImg : this.props.defaultImg, // 디폴트 이미지 데이터
           insertYn : true,
           modifyYn : false,
           deleteYn : false,
           imageTouch : true, // 이미지 없을 시 터치 가능 여부,
           clientPrdImgId: null
       };
+    }
+
+    static defaultProps = {
+        imageTouch : true,
+        clientPrdImgId : null
+    }
+
+    componentDidMount() {
+        this.setState({
+            imageTouch : (this.props.imageTouch) ? true : false,
+            clientPrdImgId : this.props.clientPrdImgId
+        });
     }
 
     // 카메라 on
@@ -84,7 +96,7 @@ class ProductImage extends Component {
     _delProdImage = () => {
         DelProdImage(this.props.clientPrdId, this.state.clientPrdImgId).then(result => {
             GetCommonData(result, this._delProdImage).then(async resultData => {
-                console.log(resultData);
+                //console.log(resultData);
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     
