@@ -93,7 +93,7 @@ class RegBusinessPlace extends Component {
                     info={ true }
                     bordered={ true }
                     onPress={this._nextButton} >
-                    <Text>저장</Text>
+                    <Text>다음 단계로 이동</Text>
                 </CustomButton>
                 
             </CustomBlockWrapper>

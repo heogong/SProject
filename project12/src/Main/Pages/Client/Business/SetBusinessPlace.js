@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import{ Alert, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Card, CardItem, Text } from "native-base";
+import{ View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text } from "native-base";
 
 import {SUCCESS_RETURN_CODE} from '~/Common/Blend';
 
@@ -8,8 +8,10 @@ import { Actions } from 'react-native-router-flux';
 
 import GetBizList from '~/Main/Functions/GetBizList';
 import GetCommonData from '~/Common/Functions/GetCommonData';
+
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 import BusinessCard from '~/Main/Components/BusinessCard';
+import CustomButton from '~/Common/Components/CustomButton';
 
 export default class Business extends Component {
   constructor(props) { 
@@ -57,9 +59,16 @@ export default class Business extends Component {
             address2={business.detail.detailAddr1}
           />
         )}
-        <BusinessCard
-          btnAction={Actions.RegBusinessPlace}
-        />
+        <CustomButton
+          styleWidth={ false }
+          block={ true }
+          info={ true }
+          bordered={ true }
+          onPress={ Actions.InputProdType }>
+          <Text>
+            제품등록 하러가기
+          </Text>
+        </CustomButton>
       </CustomBlockWrapper>
     )
   }

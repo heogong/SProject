@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import{ Alert, View, TouchableOpacity } from 'react-native';
 
-import { Right, Left, List, ListItem, Icon, Text } from "native-base";
+import { Accordion, Right, Left, List, ListItem, Icon, Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
+
+const dataArray = [
+    { title: "사업장", content: "Lorem ipsum dolor sit amet" },
+    { title: "Second Element", content: "Lorem ipsum dolor sit amet" },
+    { title: "Third Element", content: "Lorem ipsum dolor sit amet" }
+];
 
 export default class MyInfo extends Component {
     constructor(props) {
@@ -20,6 +26,7 @@ export default class MyInfo extends Component {
         return (
         <CustomBlockWrapper
             title="내 정보"
+            padder={ false }
         >
             <List>
                 <ListItem selected onPress={ this._onPress }>
@@ -39,6 +46,10 @@ export default class MyInfo extends Component {
                     </Right>
                 </ListItem>
             </List>
+
+            {/* <Accordion
+                dataArray={dataArray}
+            /> */}
         </CustomBlockWrapper>
         )
     }

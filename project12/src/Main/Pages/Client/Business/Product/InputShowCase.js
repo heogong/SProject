@@ -19,12 +19,9 @@ import CustomButton from '~/Common/Components/CustomButton';
 
 let DEL_IDX = null; // 제품 삭제 인덱스
 let CLIENT_PRODUCT_ID = null; // 제품 복제 아이디
-
 class InputShowCase extends Component {
     constructor(props) {
       super(props);
-
-      this.showCase = null;
 
       this.state = {
         defaultImg : "https://i.pinimg.com/originals/b8/29/fd/b829fd8f5df3e09589575e4ca939bc9f.png",
@@ -36,6 +33,7 @@ class InputShowCase extends Component {
             clientPrdNm : null,
             clientPrdImgId : null
         }], // 추가/복제 SHOW CASE
+        clientPrdArray : [], //추가/복제 제품아이디 (뒤로가기 버튼 시 제품 한번에 삭제)
         btnAddAction : true // 추가/복제 여부
       };
     }
@@ -74,6 +72,13 @@ class InputShowCase extends Component {
                         const newData = this.state.data.map((prodImgType, idx) => {
                             return { ...prodImgType, clientPrdId: resultData.data.clientPrdId, fileUrl : null };
                         });
+
+                        // 제품 아이디 array 추가
+                        this.setState({
+                            clientPrdArray : this.state.clientPrdArray.concat([{
+                                clientPrdId : resultData.data.clientPrdId
+                            }])
+                        })
 
                         // 화면 로드 시 초기 생성된 카드 clientPrdId 세팅
                         if(this.state.newShowCase.length == 0 ) {
@@ -115,7 +120,10 @@ class InputShowCase extends Component {
                                 clientPrdNm : resultData.data.clientPrdNm
                             }]),
                             //defaultImg : "http://img.asiatoday.co.kr/file/2018y/03m/19d/20180319001047295_1521424194_1.jpg?1521424194"
-                            copyData :  resultData.data.images
+                            copyData :  resultData.data.images,
+                            clientPrdArray : this.state.clientPrdArray.concat([{
+                                clientPrdId : resultData.data.clientPrdId
+                            }])
                         });
 
                     } else {
@@ -133,13 +141,33 @@ class InputShowCase extends Component {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
-                        this.setState({ newShowCase: this.state.newShowCase.filter((s, sidx) => DEL_IDX !== sidx) })
+                        this.setState({ 
+                            newShowCase: this.state.newShowCase.filter((s, sidx) => DEL_IDX !== sidx),
+                            clientPrdArray : this.state.clientPrdArray.filter((s, sidx) => DEL_IDX !== sidx),
+                        })
                     } else {
                         alert(resultData.resultMsg);
                     }
                 }
             });
         });
+    }
+
+    // 제품 array 삭제(등록된 제품 뒤로가기 시 한번에 삭제)
+    _delArrayProductMst = async () => {
+        await this.state.clientPrdArray.map((client) => {
+            DelProductMst(client.clientPrdId).then(result => {
+                GetCommonData(result, this._delArrayProductMst).then(async resultData => {
+                    if(resultData !== undefined) {
+                        const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                        if(!ResultBool) {
+                            alert(resultData.resultMsg);
+                        }
+                    }
+                });
+            });
+        });
+        await Actions.InputProdType();
     }
 
    // showCase 카드 추가
@@ -181,8 +209,6 @@ class InputShowCase extends Component {
         )
     }
 
-    
-
     _nextButton = () => {
         Alert.alert(
             '',
@@ -196,11 +222,26 @@ class InputShowCase extends Component {
         )
     }
 
+    // 뒤로 가기 버튼 클릭 시 등록된 제품 모두 삭제 하기 위함
+    _handleBackAction = () => {
+        Alert.alert(
+            '',
+            '제품 등록을 취소 하시겠습니까?',
+            [
+              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+              {text: '아니오', onPress: () => console.log('cancle') },
+              {text: '네', onPress: () => this._delArrayProductMst() },
+            ],
+            { cancelable: false }
+        )
+    }
+
     render() {
         return (
             <Container>
                 <CustomBlockWrapper
                     title="제품 등록"
+                    customAction={this._handleBackAction}
                 >
                     {this.state.newShowCase.map((showCase, idx) =>(
                         <ProductShowCase

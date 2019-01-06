@@ -150,7 +150,7 @@ class SetAddress extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
                         await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
-                        Actions.InputProdType();
+                        Actions.SetBusinessPlace();
                     } else {
                         Toast.show({
                             text: result.resultMsg,
@@ -227,7 +227,7 @@ class SetAddress extends Component {
                                 dark={ true }
                                 disabled={ this.state.disSaveBtn } 
                                 onPress={() => this._saveButton()}>
-                                <Text>주소 저장</Text>
+                                <Text>다음 단계로 이동</Text>
                             </CustomButton>
                         </View>
                     </View>

@@ -13,7 +13,8 @@ class CustomHeader extends Component {
         backBtn : true,
         rightBtn : false,
         menuBtn : false,
-        closeBtn : false
+        closeBtn : false,
+        customAction: null
     }
 
     // 뒤로가기 버튼
@@ -21,7 +22,12 @@ class CustomHeader extends Component {
         if(this.props.backAction) {
             Actions.popTo(this.props.actionName);
         } else {
-            Actions.pop();
+            if(this.props.customAction !== null) {
+                this.props.customAction();
+            } else {
+                Actions.pop();
+            }
+            
         }
     }
 

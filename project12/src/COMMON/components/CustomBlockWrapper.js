@@ -14,7 +14,11 @@ class CustomBasicWrapper extends Component {
         resetPage : false,
         backBtn : true,
         rightBtn : false,
-        menuBtn : false
+        menuBtn : false,
+        padder : true,
+        padderLeftSize : 0,
+        padderRightSize : 0,
+        customAction : null
     }
     render() {
         return (
@@ -27,10 +31,15 @@ class CustomBasicWrapper extends Component {
                     backAction={ this.props.backAction }
                     actionName={ this.props.actionName }
                     rightAction={ this.props.rightAction }
+                    customAction={ this.props.customAction }
                 />
                 
                 <Container>
-                    <Content padder>
+                    <Content padder={ this.props.padder } 
+                        style={{ 
+                            paddingLeft : this.props.padderLeftSize, 
+                            paddingRight: this.props.padderRightSize
+                        }}>
                         {this.props.children}
                     </Content>
                 </Container>

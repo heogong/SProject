@@ -1,26 +1,23 @@
 import React, { Component } from "react";
-import { BackHandler } from 'react-native';
+import { BackHandler, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
-import { Root, ActionSheet, Text } from "native-base";
-import { Actions } from 'react-native-router-flux';
 
-import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
-import CustomButton from '~/Common/Components/CustomButton';
+import { Actions } from 'react-native-router-flux';
 import GetProdType from '~/Main/Functions/GetProdType';
 import GetCommonData from '~/Common/Functions/GetCommonData';
+
+import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
+import BusinessCard from '~/Main/Components/BusinessCard';
 
 class InputProdType extends Component {
     constructor(props) {
       super(props);
 
       this.state = {
-          buttonTitle : '유형 선택',
-          selectIndex : 0,
-          selectYn : false, // 제품 타입 선택 여부
-          BUTTONS : [
-              { text : "데이터가 없습니다.", typeId : ''}
-          ]
+          data : []
         };
     }
 
@@ -39,12 +36,9 @@ class InputProdType extends Component {
             GetCommonData(result, this._drawProductType).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                   // console.log(resultData);
+                    console.log(resultData);
                     if(ResultBool) {
-                        const prodSet = resultData.data.map((prod) => {
-                            return { ...prod, text : prod.prdTypeKoNm, typeId : prod.prdTypeId };
-                        });
-                        this.setState({ BUTTONS: prodSet });
+                        this.setState({ data : resultData.data});
                     } else {
                         alert(resultData.resultMsg)
                     }
@@ -54,46 +48,56 @@ class InputProdType extends Component {
     }
 
     // 제품 타입 선택
-    _nextButton = () => {
+    _nextButton = (prodTypeId, prodTypeNm) => () => {
         Actions.InputShowCase({
-            prodTypeId : this.state.BUTTONS[this.state.selectIndex].typeId,
-            prodTypeNm : this.state.BUTTONS[this.state.selectIndex].text
+            prodTypeId : prodTypeId,
+            prodTypeNm : prodTypeNm
         })
     }
 
     render() {
         return (
-            <Root>
-                <CustomBasicWrapper
-                    title="제품 타입 등록"
-                    resetPage= { true }
-                >
-                    <CustomButton
-                        onPress={() =>
-                            ActionSheet.show(
-                            {
-                                options: this.state.BUTTONS,
-                                cancelButtonIndex: this.state.selectIndex,
-                                title: "제품유형"
-                            },
-                            buttonIndex => {
-                                this.setState({ buttonTitle: this.state.BUTTONS[buttonIndex].text });
-                                this.setState({ selectIndex : buttonIndex });
-                                this.setState({ selectYn : true });
-                            }
-                        )}
-                    >
-                        <Text>{this.state.buttonTitle}</Text>
-                    </CustomButton>
-                    <CustomButton rounded success bordered block 
-                        onPress={this._nextButton}
-                        disabled={!this.state.selectYn}
-                    ><Text>다음</Text>
-                    </CustomButton>
-                </CustomBasicWrapper>
-            </Root>
+            <CustomBlockWrapper
+                title="제품 타입 등록"
+                resetPage= { true }
+            >
+                <View style={ {flex: 1, justifyContent:'center'} }>
+                    <View style={{
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                        padding: 5
+                    }}>
+                    {this.state.data.map((productType, idx) => 
+                        <TouchableOpacity key={idx} 
+                            onPress={this._nextButton(productType.prdTypeId, productType.prdTypeKoNm)}
+                        >
+                            <View style={styles.slide}>
+                                <Text style={styles.title}>{productType.prdTypeKoNm}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                    </View>
+                </View>
+            
+                
+            </CustomBlockWrapper>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    slide: { 
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 100,
+        height: 150,
+        width: 150,
+        backgroundColor: '#d6d7da',
+    },
+    title: { color: 'black', fontSize: 20 },
+});
+
+
 
 export default InputProdType;

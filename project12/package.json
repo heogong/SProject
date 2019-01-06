@@ -12,6 +12,7 @@
     "native-base": "^2.8.1",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
+    "react-native-animated-swiper": "0.0.23",
     "react-native-awesome-card-io": "^0.8.1",
     "react-native-camera": "^1.5.1",
     "react-native-extended-stylesheet": "^0.10.0",

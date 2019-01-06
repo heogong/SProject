@@ -5,12 +5,10 @@ import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
 import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
 
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import SwipeableViews from 'react-swipeable-views-native';
+
+import Swiper from './Swiper';
+
 
 export default class App extends Component {
   componentWillMount() {
@@ -39,17 +37,68 @@ export default class App extends Component {
   }
   render() {
     return (
-      <View>
-        <LiteCreditCardInput 
-          onChange={this._onChange} 
-          placeholders={
-            { number: "1212 4545 7878 9898", expiry: "MM/YY"}
-          }
-          />
-        <TouchableOpacity onPress={this.scanCard.bind(this)}>
-          <Text>Scan card!</Text>
-        </TouchableOpacity>
+      // <View>
+      //   <LiteCreditCardInput 
+      //     onChange={this._onChange} 
+      //     placeholders={
+      //       { number: "1212 4545 7878 9898", expiry: "MM/YY"}
+      //     }
+      //     />
+      //   <TouchableOpacity onPress={this.scanCard.bind(this)}>
+      //     <Text>Scan card!</Text>
+      //   </TouchableOpacity>
+      // </View>
+      <View style={{flex:1}}>
+       <SwipeableViews style={styles.slideContainer}>
+        <View style={[styles.slide, styles.slide1]}>
+          <Text style={styles.text}>
+            slide n°1
+          </Text>
+        </View>
+        <View style={[styles.slide, styles.slide2]}>
+          <Text style={styles.text}>
+            slide n°2
+          </Text>
+        </View>
+        <View style={[styles.slide, styles.slide3]}>
+          <Text style={styles.text}>
+            slide n°3
+          </Text>
+        </View>
+     </SwipeableViews>
+
+     <View style={styles.container}>
+        <Swiper/>
       </View>
+     </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container : {
+    flex : 1,
+    justifyContent : 'center',
+    alignItems : 'center'
+},
+  slideContainer: {
+    height: 100,
+  },
+  slide: {
+    padding: 15,
+    height: 100,
+  },
+  slide1: {
+    backgroundColor: '#FEA900',
+  },
+  slide2: {
+    backgroundColor: '#B3DC4A',
+  },
+  slide3: {
+    backgroundColor: '#6AC0FF',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 16,
+  },
+});
