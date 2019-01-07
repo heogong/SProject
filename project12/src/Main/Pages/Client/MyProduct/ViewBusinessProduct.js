@@ -1,13 +1,19 @@
 import React, { Component } from "react";
-import { Alert, ImageBackground, StyleSheet, View } from 'react-native';
-import { Button, Body, Card, CardItem, Text, Left, Thumbnail, Container } from "native-base";
+import { Alert, StyleSheet, ImageBackground, View, scrollToEnd } from 'react-native';
+import { Button, Container,  Footer, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
-import GetProduct from '~/Main/Functions/GetProduct'
+import { connect } from 'react-redux';
+
 import GetCommonData from '~/Common/Functions/GetCommonData';
-import GetBizPlace from '~/Main/Functions/GetBizPlace'
+import GetProdImageType from '~/Main/Functions/GetProdImgType'
+import RegProductMst from '~/Main/Functions/RegProductMst'
+import DelProductMst from '~/Main/Functions/DelProductMst'
+import CopyProductMst from '~/Main/Functions/CopyProductMst'
+import ProductShowCase from '~/Main/Components/ProductShowCase'
+import GetProduct from '~/Main/Functions/GetProduct'
 
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
@@ -18,7 +24,7 @@ class ViewBusinessProduct extends Component {
 
       this.state = {
         defaultImg : "https://i.pinimg.com/originals/b8/29/fd/b829fd8f5df3e09589575e4ca939bc9f.png",
-        productData : [],
+        data : [],
         productImage : [],
         clientBplaceNm : ''
       };
@@ -26,7 +32,6 @@ class ViewBusinessProduct extends Component {
 
     componentDidMount() {
         this._getProduct();
-        this._getBizPlace();
     }
 
     // 제품 조회
@@ -38,26 +43,8 @@ class ViewBusinessProduct extends Component {
                     console.log(resultData);
                     if(ResultBool) {
                         this.setState({ 
-                            productData: resultData.data,
-                            productImage: resultData.data.images
+                            data: resultData.data,
                         });
-                    } else {
-                        alert(resultData.resultMsg);
-                    }
-                }
-            });
-        });
-    }
-
-    // 사업장 정보
-    _getBizPlace = () => {
-        GetBizPlace(this.props.clientBplaceId).then(result => {
-            GetCommonData(result, this._getBizPlace).then(async resultData => {
-                if(resultData !== undefined) {
-                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                   // console.log(resultData);
-                    if(ResultBool) {
-                        this.setState({clientBplaceNm : resultData.data.bplaceNm});
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -81,45 +68,34 @@ class ViewBusinessProduct extends Component {
 
     render() {
         return (
-            <CustomBlockWrapper
-                title="A/S 신청"
-            >
-                <Card>
-                    <CardItem>
-                        <Left>
-                            <Thumbnail square source={{ uri: this.state.defaultImg }} />
-                        </Left>
-                        <Body>
-                            <Text>{ this.state.productData.clientPrdNm }</Text>
-                        </Body>
-                    </CardItem>
+            <Container>
+                <CustomBlockWrapper
+                    title="제품 수정"
+                    customAction={this._handleBackAction}
+                >
+                    {/* {this.state.data.map((showCase, idx) =>(
+                        <ProductShowCase
+                            defaultImg={ this.state.defaultImg }
+                            data={ (this.state.btnAddAction) ? this.state.addData : this.state.copyData }
+                            clientPrdId={ showCase.clientPrdId }
+                            clientPrdNm={ showCase.clientPrdNm } 
+                            clientPrdImgId={ showCase.clientPrdImgId } 
+                            handleCopyShowCase={ this._handleCopyShowCase }
+                            handleRemoveShowCase={ this._handleRemoveShowCase }
+                            index={ idx }
+                        />
+                    ))} */}
+                </CustomBlockWrapper>
 
-                    <CardItem>
-                        <View style={{ flex:1, justifyContent: 'center'}}>
-                            <View style={ styles.boxLayout }>
-                                { this.state.productImage.map((productImg, sidx) => (
-                                    <View style={ styles.box }>
-                                        <ImageBackground source={{ uri: productImg.fileUrl }} style={{width: '100%', height: '100%'}}/>
-                                    </View>
-                                ))}
-                            </View>
-                        </View>
-                    </CardItem>
-                </Card>
-
-                <View>
-                    <Text>{ this.state.clientBplaceNm }</Text>
-                </View>
-                <Container>
-                    <CustomButton
-                        styleWidth={ false }
-                        block={ true }
-                        info={ true }
-                    >
-                        <Text>A/S 신청하기</Text>
-                    </CustomButton>
-                </Container>
-            </CustomBlockWrapper>
+                <Footer>
+                    <Button onPress={ this._handleAddShowCase }>
+                        <Text>추가</Text>
+                    </Button>
+                    <Button onPress={ this._nextButton }>
+                        <Text>등록완료</Text>
+                    </Button>
+                </Footer>
+            </Container>
         )
     }
 }

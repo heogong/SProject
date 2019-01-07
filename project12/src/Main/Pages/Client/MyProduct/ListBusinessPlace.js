@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { setBizId } from '~/Redux/Actions';
 
 import GetBizList from '~/Main/Functions/GetBizList';
 import GetCommonData from '~/Common/Functions/GetCommonData';
@@ -50,6 +52,7 @@ class ListBusinessPlace extends Component {
 
     // 제품 리스트 페이지 이동
     _nextPage = (bizId) => () => {
+      this.props.onSetBizId(bizId);  // 리덕스 사업장 ID SET
       Actions.ListBusinessProductType({bizId : bizId});
     }
     
@@ -77,4 +80,11 @@ class ListBusinessPlace extends Component {
     }
 }
 
+let mapDispatchToProps = (dispatch) => {
+  return {
+      onSetBizId: (value) => dispatch(setBizId(value))
+  }
+}
+
+ListBusinessPlace = connect(undefined, mapDispatchToProps)(ListBusinessPlace);
 export default ListBusinessPlace;

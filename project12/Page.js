@@ -78,6 +78,8 @@ import ViewBusinessProduct from './src/Main/Pages/Client/MyProduct/ViewBusinessP
 import ListBusinessPlace from './src/Main/Pages/Client/MyProduct/ListBusinessPlace'
 import ListBusinessProductType from './src/Main/Pages/Client/MyProduct/ListBusinessProductType'
 import ListBusinessProduct from './src/Main/Pages/Client/MyProduct/ListBusinessProduct'
+import InputBusinessProdType from './src/Main/Pages/Client/MyProduct/InputProdType'
+import InputBusinessShowCase from './src/Main/Pages/Client/MyProduct/InputShowCase'
 
 
 // 더보기
@@ -178,6 +180,9 @@ const PAGE = () => (
               <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" />
               <Scene key="ListBusinessProductType" component={ListBusinessProductType} title="사업장 제품 타입 목록" />
               <Scene key="ListBusinessProduct" component={ListBusinessProduct} title="사업장 제품 목록" />
+              <Scene key="InputBusinessProdType" component={InputBusinessProdType} title="제품 타입 선택" />
+              <Scene key="InputBusinessShowCase" component={InputBusinessShowCase} title="제품 쇼케이스 등록" />
+              <Scene key="ViewBusinessProduct" component={ViewBusinessProduct} title="제품 쇼케이스 조회 수정" />
             </Stack>
 
             <Stack key="ClientMore" hideNavBar title="더보기" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>

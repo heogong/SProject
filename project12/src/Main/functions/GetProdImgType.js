@@ -8,7 +8,7 @@ function GetProdImgTypeUrl(prodTypeId) {
   return `${API_URL}${prodTypeId}/imgcates`;
 }
 
-const getProdImgType = async (prodTypeId) => {
+const GetProdImgType = async (prodTypeId) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
@@ -32,4 +32,4 @@ const getProdImgType = async (prodTypeId) => {
   });
 };
 
-export default getProdImgType;
+export default GetProdImgType;

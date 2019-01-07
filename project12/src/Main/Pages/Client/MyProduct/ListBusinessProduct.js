@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -25,7 +25,7 @@ class ListBusinessProduct extends Component {
 
     // 사업장 제품 조회
     _getBizProduct = () => {
-        GetBizProduct(this.props.bizId).then(result => {
+        GetBizProduct(this.props.bizId, this.props.prodTypeId).then(result => {
             GetCommonData(result, this._getBizProduct).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -42,20 +42,15 @@ class ListBusinessProduct extends Component {
         });
     }
     
+    // 제품 등록
     _addButton = () => {
-        alert("제품 추가 페이지 이동");
-        // Actions.InputShowCase({
-        //     prodTypeId : prodTypeId
-        // })
+        Actions.InputBusinessProdType();
     }
 
 
     // 제품 수정
-    _editButton = (prodTypeId) => () => {
-        alert(prodTypeId);
-        // Actions.InputShowCase({
-        //     prodTypeId : prodTypeId
-        // })
+    _editButton = (clientPrdId) => () => {
+        Actions.ViewBusinessProduct({clientPrdId : clientPrdId})
     }
 
     render() {
@@ -71,21 +66,21 @@ class ListBusinessProduct extends Component {
                     <View style={ styles.container }>
                     {this.state.data.map((productType, idx) => 
                         <TouchableOpacity key={idx} 
-                            onPress={this._editButton(productType.prdTypeId)}
+                            onPress={this._editButton(productType.clientPrdId)}
                         >
                             <View style={styles.slide}>
                                 <ImageBackground source={{ uri: productType.prdTypeImg.fileUrl }} style={{width: '100%', height: '100%'}}/>
                             </View>
-                            <Text style={styles.title}>{productType.prdType.prdTypeKoNm}</Text>
+                            <Text style={styles.title}>{productType.clientPrdNm}</Text>
                         </TouchableOpacity>
                     )}
-                        <TouchableOpacity 
+                        {/* <TouchableOpacity 
                             onPress= {this._addButton }
                         >
                             <View style={styles.slide}>
                                 <Text>+</Text>
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                 </View>
             </CustomBlockWrapper>

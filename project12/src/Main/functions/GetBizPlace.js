@@ -2,6 +2,7 @@ import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '~/Common/Blend';
 import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
+// 사업장 단건 조회
 const API_URL = `${DOMAIN}/coolinic/clients/products/bplace/`;
 
 function GetBizPlaceUrl(bizPlaceId) {

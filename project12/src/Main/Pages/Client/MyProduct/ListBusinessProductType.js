@@ -42,7 +42,7 @@ class ListBusinessProductType extends Component {
         });
     }
     
-   // A/S 제품 타입 선택
+   // 제품 타입 선택에 따른 제품 조회
    _nextButton = (bizId, prodTypeId) => () => {
         Actions.ListBusinessProduct({
             bizId : bizId,
@@ -50,9 +50,11 @@ class ListBusinessProductType extends Component {
         })
     }
 
+    // 제품 등록
     _addButton = () => {
-        alert("추가")
+        Actions.InputBusinessProdType();
     }
+
 
     render() {
         return (
