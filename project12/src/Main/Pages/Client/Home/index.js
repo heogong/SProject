@@ -59,9 +59,9 @@ export default class Main extends Component {
                 menuBtn={ true }
             />
             <View style={{ flex : 1}}>
+            
               <ServiceRequestSwiper
                 bizList={ this.state.data }
-                ListBusinessProduct={ Actions.ListBusinessProduct }
               />
             </View>
             <View style={{ flex : 1, backgroundColor : 'skyblue'}}>

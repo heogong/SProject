@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+
+import { Actions } from 'react-native-router-flux';
+
 import Swiper from 'react-native-animated-swiper';
 
 class ServiceRequestSwiper extends Component {
     constructor(props) { 
         super(props); 
+
+        this.onPress = this._nextPage.bind(this);
     
         this.state = {};
+    }
+
+    _nextPage = (bizId) => {
+        Actions.AfterServiceProdTypeList({bizId : bizId});
     }
 
     render() {
@@ -23,7 +32,7 @@ class ServiceRequestSwiper extends Component {
                     <Text>{business.addr.addressName}</Text>
                     <Text>{business.detail.detailAddr1}</Text>
                     <TouchableOpacity
-                        onPress={this.props.ListBusinessProduct}
+                        onPress={() => this._nextPage(business.clientBplaceId) }
                     >
                         <View style={styles.slide}>
                             <Text style={styles.title}>A/S신청</Text>

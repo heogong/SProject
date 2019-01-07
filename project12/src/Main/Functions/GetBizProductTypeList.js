@@ -2,17 +2,17 @@ import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '~/Common/Blend';
 import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}coolinic/clients/products/bplace/`;
+const API_URL = `${DOMAIN}coolinic/clients/products/types/bplace/`;
 
-function GetBizProductUrl(bizId) {
-  return `${API_URL}${bizId}`;
+function GetBizProductTypeListUrl(bizId) {
+  return `${API_URL}${bizId}/me`;
 }
 
-const GetBizProduct = async (bizId) => {
+const GetBizProductTypeList = async (bizId) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  return fetch(GetBizProductUrl(bizId), {
+  return fetch(GetBizProductTypeListUrl(bizId), {
     method: 'GET',
     headers: {
       "Authorization": ACCESS_TOKEN
@@ -32,4 +32,4 @@ const GetBizProduct = async (bizId) => {
   });
 };
 
-export default GetBizProduct;
+export default GetBizProductTypeList;

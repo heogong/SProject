@@ -47,27 +47,37 @@ import ViewImage from './src/Main/Components/ViewImage';
 /**클라이언트 */
 
 // 사업장
-import BusinessIndex from './src/Main/Pages/Client/Business'
+import BusinessIndex from './src/FirstScreen/Pages/Join/Client'
 // 사업장 조회
-import ViewBusinessPlace from './src/Main/Pages/Client/Business/ViewBusinessPlace'
-// 사업장 목록
-import ListBusinessPlace from './src/Main/Pages/Client/Business/ListBusinessPlace'
+import ViewBusinessPlace from './src/FirstScreen/Pages/Join/Client/ViewBusinessPlace'
+
 // 사업장 등록
-import RegBusinessPlace from './src/Main/Pages/Client/Business/RegBusinessPlace'
-import SetBusinessPlace from './src/Main/Pages/Client/Business/SetBusinessPlace'
+import RegBusinessPlace from './src/FirstScreen/Pages/Join/Client/RegBusinessPlace'
+import SetBusinessPlace from './src/FirstScreen/Pages/Join/Client/SetBusinessPlace'
 
 // 사업장 주소등록
-import SetAddress from './src/Main/Pages/Client/Business/Address/SetAddress'
-import SearchAddress from './src/Main/Pages/Client/Business/Address/SearchAddress'
+import SetAddress from './src/FirstScreen/Pages/Join/Client/Address/SetAddress'
+import SearchAddress from './src/FirstScreen/Pages/Join/Client/Address/SearchAddress'
 
 /**제품 */
-import InputProdType from './src/Main/Pages/Client/Business/Product/InputProdType' // 제품 타입등록
-import InputProdInfo from './src/Main/Pages/Client/Business/Product/InputProdInfo' // 제품 등록
-import InputProdImage from './src/Main/Pages/Client/Business/Product/InputProdImage' // 제품 이미지 등록
-import ListBusinessProduct from './src/Main/Pages/Client/Business/Product/ListBusinessProduct' // AS : 전체 제품 리스트
-import ViewBusinessProduct from './src/Main/Pages/Client/Business/Product/ViewBusinessProduct' // AS : 제품 조회
+import InputProdType from './src/FirstScreen/Pages/Join/Client/Product/InputProdType' // 제품 타입등록
+import InputProdInfo from './src/FirstScreen/Pages/Join/Client/Product/InputProdInfo' // 제품 등록
+import InputProdImage from './src/FirstScreen/Pages/Join/Client/Product/InputProdImage' // 제품 이미지 등록
 
-import InputShowCase from './src/Main/Pages/Client/Business/Product/InputShowCase' // 쇼케이스 등록
+
+ // 쇼케이스 등록
+import InputShowCase from './src/FirstScreen/Pages/Join/Client/Product/InputShowCase'
+
+ // 메인 AS : 등록된 사업장별 제품 타입
+import AfterServiceProdTypeList from './src/Main/Pages/Client/AfterService/ListBusinessProductType'
+ // AS : 전체 제품 리스트
+
+import ViewBusinessProduct from './src/Main/Pages/Client/MyProduct/ViewBusinessProduct'
+
+// 메인 나의제품 : 사업장 목록
+import ListBusinessPlace from './src/Main/Pages/Client/MyProduct/ListBusinessPlace'
+import ListBusinessProductType from './src/Main/Pages/Client/MyProduct/ListBusinessProductType'
+import ListBusinessProduct from './src/Main/Pages/Client/MyProduct/ListBusinessProduct'
 
 
 // 더보기
@@ -78,7 +88,7 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage" initialhideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
 
       <Scene key="reactCamera" hideNavBar component={ReactCamera} />
@@ -118,7 +128,7 @@ const PAGE = () => (
 
       <Scene key="ViewBusinessPlace" hideNavBar component={ViewBusinessPlace} title="사업장 조회"/>
 
-      <Scene key="InputProdType" initial hideNavBar component={InputProdType} type={ActionConst.RESET} />
+      <Scene key="InputProdType" hideNavBar component={InputProdType} type={ActionConst.RESET} />
       <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" hideNavBar component={InputProdImage} type={ActionConst.RESET} />
 
@@ -158,17 +168,21 @@ const PAGE = () => (
               <Scene key="ClientHome" component={ClientHome} title="Scene_Title"/>
 
                {/* AS 신청하기 */}
-              <Scene key="ListBusinessProduct" hideNavBar component={ListBusinessProduct} title="전체 제품 조회 리스트"/>
+              {/* <Scene key="ListBusinessProduct" hideNavBar component={ListBusinessProduct} title="전체 제품 조회 리스트"/>  */}
               <Scene key="ViewBusinessProduct" hideNavBar component={ViewBusinessProduct} title="제품 조회"/>
+              <Scene key="AfterServiceProdTypeList" hideNavBar component={AfterServiceProdTypeList} title="제품 조회"/>
             </Stack>
 
-            <Stack key="tab_2" title="Tab #2" icon={TabIcon}>
-              <Scene key="tab_2_1" component={TestPage2} title="Tab #2_2"/>
+            {/* 나의제품 */}
+            <Stack key="clientMyProduct" hideNavBar title="나의제품" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+              <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" />
+              <Scene key="ListBusinessProductType" component={ListBusinessProductType} title="사업장 제품 타입 목록" />
+              <Scene key="ListBusinessProduct" component={ListBusinessProduct} title="사업장 제품 목록" />
             </Stack>
 
             <Stack key="ClientMore" hideNavBar title="더보기" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ClientInfo_tab" component={ClientMoreInfo}/>
-              <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" />
+              
               <Scene key="RegBusinessPlace"  component={RegBusinessPlace} title="사업장 등록"/>
             </Stack>
           </Tabs>
