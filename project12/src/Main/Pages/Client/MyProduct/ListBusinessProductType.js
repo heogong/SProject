@@ -44,7 +44,7 @@ class ListBusinessProductType extends Component {
     
    // 제품 타입 선택에 따른 제품 조회
    _nextButton = (bizId, prodTypeId) => () => {
-        Actions.ListBusinessProduct({
+        Actions.ListBusinessShowCase({
             bizId : bizId,
             prodTypeId : prodTypeId
         })

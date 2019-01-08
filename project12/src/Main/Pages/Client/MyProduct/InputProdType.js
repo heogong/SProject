@@ -9,8 +9,6 @@ import GetProdType from '~/Main/Functions/GetProdType';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
-import CustomButton from '~/Common/Components/CustomButton';
-import BusinessCard from '~/Main/Components/BusinessCard';
 
 class InputProdType extends Component {
     constructor(props) {
@@ -44,7 +42,7 @@ class InputProdType extends Component {
 
     // 제품 타입 선택
     _nextButton = (prodTypeId, prodTypeNm) => () => {
-        Actions.InputBusinessShowCase({
+        Actions.RegBusinessShowCase({
             prodTypeId : prodTypeId,
             prodTypeNm : prodTypeNm
         })

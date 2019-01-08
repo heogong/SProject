@@ -41,7 +41,7 @@ class ListBusinessPlace extends Component {
                   const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                   //console.log(resultData);
                   if(ResultBool) {
-                      this.setState({data : resultData.data});
+                    this.setState({data : resultData.data});
                   } else {
                     alert(resultData.resultMsg);
                   }
@@ -51,7 +51,7 @@ class ListBusinessPlace extends Component {
     }
 
     // 제품 리스트 페이지 이동
-    _nextPage = (bizId) => () => {
+    _nextProdPage = (bizId) => () => {
       this.props.onSetBizId(bizId);  // 리덕스 사업장 ID SET
       Actions.ListBusinessProductType({bizId : bizId});
     }
@@ -69,7 +69,7 @@ class ListBusinessPlace extends Component {
                 businessName={business.bplaceNm}
                 address1={business.addr.addressName}
                 address2={business.detail.detailAddr1}
-                btnAction={this._nextPage(business.clientBplaceId)}
+                btnAction={this._nextProdPage(business.clientBplaceId)}
               />
             )}
             <BusinessCard

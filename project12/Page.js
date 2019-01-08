@@ -49,7 +49,7 @@ import ViewImage from './src/Main/Components/ViewImage';
 // 사업장
 import BusinessIndex from './src/FirstScreen/Pages/Join/Client'
 // 사업장 조회
-import ViewBusinessPlace from './src/FirstScreen/Pages/Join/Client/ViewBusinessPlace'
+// import ViewBusinessPlace from './src/FirstScreen/Pages/Join/Client/ViewBusinessPlace'
 
 // 사업장 등록
 import RegBusinessPlace from './src/FirstScreen/Pages/Join/Client/RegBusinessPlace'
@@ -72,15 +72,15 @@ import InputShowCase from './src/FirstScreen/Pages/Join/Client/Product/InputShow
 import AfterServiceProdTypeList from './src/Main/Pages/Client/AfterService/ListBusinessProductType'
  // AS : 전체 제품 리스트
 
-import ViewBusinessProduct from './src/Main/Pages/Client/MyProduct/ViewBusinessProduct'
+// import ViewBusinessProduct from './src/Main/Pages/Client/MyProduct/ViewBusinessProduct'
 
 // 메인 나의제품 : 사업장 목록
 import ListBusinessPlace from './src/Main/Pages/Client/MyProduct/ListBusinessPlace'
 import ListBusinessProductType from './src/Main/Pages/Client/MyProduct/ListBusinessProductType'
-import ListBusinessProduct from './src/Main/Pages/Client/MyProduct/ListBusinessProduct'
+import ListBusinessShowCase from './src/Main/Pages/Client/MyProduct/ListBusinessShowCase'
 import InputBusinessProdType from './src/Main/Pages/Client/MyProduct/InputProdType'
-import InputBusinessShowCase from './src/Main/Pages/Client/MyProduct/InputShowCase'
-
+import RegBusinessShowCase from './src/Main/Pages/Client/MyProduct/RegBusinessShowCase'
+import RegBusinessAddress from './src/Main/Pages/Client/MyProduct/RegBusinessAddress'
 
 // 더보기
 import ClientMoreInfo from './src/Main/Pages/Client/MoreInfo'
@@ -128,7 +128,7 @@ const PAGE = () => (
       <Scene key="SetAddress" hideNavBar component={SetAddress} title="주소" />
       <Scene key="SearchAddress" hideNavBar component={SearchAddress} title="주소 등록"/>
 
-      <Scene key="ViewBusinessPlace" hideNavBar component={ViewBusinessPlace} title="사업장 조회"/>
+      {/* <Scene key="ViewBusinessPlace" hideNavBar component={ViewBusinessPlace} title="사업장 조회"/> */}
 
       <Scene key="InputProdType" hideNavBar component={InputProdType} type={ActionConst.RESET} />
       <Scene key="InputProdInfo" hideNavBar component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
@@ -171,7 +171,7 @@ const PAGE = () => (
 
                {/* AS 신청하기 */}
               {/* <Scene key="ListBusinessProduct" hideNavBar component={ListBusinessProduct} title="전체 제품 조회 리스트"/>  */}
-              <Scene key="ViewBusinessProduct" hideNavBar component={ViewBusinessProduct} title="제품 조회"/>
+              {/* <Scene key="ViewBusinessProduct" hideNavBar component={ViewBusinessProduct} title="제품 조회"/> */}
               <Scene key="AfterServiceProdTypeList" hideNavBar component={AfterServiceProdTypeList} title="제품 조회"/>
             </Stack>
 
@@ -179,16 +179,15 @@ const PAGE = () => (
             <Stack key="clientMyProduct" hideNavBar title="나의제품" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" />
               <Scene key="ListBusinessProductType" component={ListBusinessProductType} title="사업장 제품 타입 목록" />
-              <Scene key="ListBusinessProduct" component={ListBusinessProduct} title="사업장 제품 목록" />
+              <Scene key="ListBusinessShowCase" component={ListBusinessShowCase} title="사업장 제품 목록" />
               <Scene key="InputBusinessProdType" component={InputBusinessProdType} title="제품 타입 선택" />
-              <Scene key="InputBusinessShowCase" component={InputBusinessShowCase} title="제품 쇼케이스 등록" />
-              <Scene key="ViewBusinessProduct" component={ViewBusinessProduct} title="제품 쇼케이스 조회 수정" />
+              <Scene key="RegBusinessPlace" component={RegBusinessPlace} title="사업장 등록" />
+              <Scene key="SetAddress" component={RegBusinessAddress} title="사업장 주소 등록" />
+              <Scene key="RegBusinessShowCase" component={RegBusinessShowCase} title="제품 쇼케이스 등록" />
             </Stack>
 
             <Stack key="ClientMore" hideNavBar title="더보기" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ClientInfo_tab" component={ClientMoreInfo}/>
-              
-              <Scene key="RegBusinessPlace"  component={RegBusinessPlace} title="사업장 등록"/>
             </Stack>
           </Tabs>
 

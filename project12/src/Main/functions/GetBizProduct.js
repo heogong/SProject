@@ -13,6 +13,7 @@ const GetBizProduct = async (bizId, prodType) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
+  console.log(GetBizProductUrl(bizId, prodType));
   return fetch(GetBizProductUrl(bizId, prodType), {
     method: 'GET',
     headers: {
