@@ -212,6 +212,10 @@ class ViewBusinessProduct extends Component {
         )
     }
 
+    _nextButton = () => {
+        Actions.popTo("clientMyProduct");
+    }
+
     render() {
         return (
             <Container>

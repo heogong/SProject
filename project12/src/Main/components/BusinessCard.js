@@ -3,7 +3,7 @@ import{ Alert, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Card, CardItem, Text } from "native-base";
 
 import { Actions } from 'react-native-router-flux';
-import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomButton from '~/Common/Components/CustomButton';
 
 class BusinessCard extends Component {
   constructor(props) { 
@@ -16,13 +16,35 @@ class BusinessCard extends Component {
     index: null,
     businessName: '+',
     address1: '주소',
-    address2: ''
-    }
+    address2: '',
+    editDel: false
+  }
 
   render() {
       return (
         <Card key={this.props.index}>
-          <CardItem style={styles.itemColor}></CardItem>
+            {(this.props.editDel) ? (
+              <CardItem style={styles.itemColor}>
+                <CustomButton
+                  block={ true }
+                  info={ true }
+                  bordered={ true }
+                  onPress={this.props.btnEditAction}
+                  widthSize={100}>
+                  <Text>수정</Text>
+                </CustomButton>
+                <CustomButton
+                  block={ true }
+                  info={ true }
+                  bordered={ true }
+                  onPress={this._cardRegister}
+                  widthSize={100}>
+                  <Text>삭제</Text>
+                </CustomButton>
+              </CardItem>
+            ) : (
+              <CardItem style={styles.itemColor}></CardItem>
+            )}
           <CardItem cardBody style={styles.itemColor}>
             <View style={{ flex:1, justifyContent: 'center'}}>
               <View style={{alignItems: 'center'}} >

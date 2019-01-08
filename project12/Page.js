@@ -181,7 +181,12 @@ const PAGE = () => (
               <Scene key="ListBusinessProductType" component={ListBusinessProductType} title="사업장 제품 타입 목록" />
               <Scene key="ListBusinessShowCase" component={ListBusinessShowCase} title="사업장 제품 목록" />
               <Scene key="InputBusinessProdType" component={InputBusinessProdType} title="제품 타입 선택" />
-              <Scene key="RegBusinessPlace" component={RegBusinessPlace} title="사업장 등록" />
+              
+              {/*join 페이지 공통 사용*/}
+              <Scene key="RegBusinessPlace" component={RegBusinessPlace} title="사업장 등록" /> 
+              {/*join 페이지 공통 사용*/}
+              <Scene key="SearchAddress" hideNavBar component={SearchAddress} title="주소 검색"/> 
+
               <Scene key="SetAddress" component={RegBusinessAddress} title="사업장 주소 등록" />
               <Scene key="RegBusinessShowCase" component={RegBusinessShowCase} title="제품 쇼케이스 등록" />
             </Stack>

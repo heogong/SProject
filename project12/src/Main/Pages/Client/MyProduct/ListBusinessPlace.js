@@ -20,15 +20,6 @@ class ListBusinessPlace extends Component {
         };
     }
 
-    // 사업장 수정시 참고
-    // _onPress = (bizPlaceId) => {
-    //     GetBizPlace(bizPlaceId).then(result => {
-    //         console.log(result);
-    //         Actions.RegBusinessPlace({bizPlace : result.data});
-    //         //this.setState({data : result.data});
-    //     });
-    // }
-
     componentDidMount () {
       this._getBizList();
     }
@@ -55,6 +46,12 @@ class ListBusinessPlace extends Component {
       this.props.onSetBizId(bizId);  // 리덕스 사업장 ID SET
       Actions.ListBusinessProductType({bizId : bizId});
     }
+
+    // 사업장 수정 페이지 이동
+    _onEditPress = (bizId) => () => {
+      this.props.onSetBizId(bizId);  // 리덕스 사업장 ID SET
+      Actions.RegBusinessPlace({editBiz : true});
+    }
     
     render() {
         return (
@@ -70,6 +67,8 @@ class ListBusinessPlace extends Component {
                 address1={business.addr.addressName}
                 address2={business.detail.detailAddr1}
                 btnAction={this._nextProdPage(business.clientBplaceId)}
+                btnEditAction={this._onEditPress(business.clientBplaceId)}
+                editDel={ true }
               />
             )}
             <BusinessCard

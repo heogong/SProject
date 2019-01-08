@@ -60,6 +60,8 @@ class ListBusinessProductType extends Component {
         return (
             <CustomBlockWrapper
                 title="제품 타입 선택"
+                backAction={ true }
+                actionName="ListBusinessPlace"
             >
                 <View style={ {flex: 1, justifyContent:'center'} }>
                     <View style={ styles.container }>
