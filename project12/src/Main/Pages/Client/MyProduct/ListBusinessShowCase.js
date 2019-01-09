@@ -47,7 +47,7 @@ class ViewBusinessProduct extends Component {
             GetCommonData(result, this._getBizProduct).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    //console.log(resultData);
+                    console.log(resultData);
                     if(ResultBool) {
                         this.setState({ newShowCase:  resultData.data });
                     } else {
@@ -213,7 +213,8 @@ class ViewBusinessProduct extends Component {
     }
 
     _nextButton = () => {
-        Actions.popTo("clientMyProduct");
+        //Actions.replace("clientMyProduct");
+        Actions.reset('tabbar')
     }
 
     render() {

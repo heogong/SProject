@@ -2,10 +2,13 @@ import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN } from '~/Common/Blend';
 import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
+// 사업장 수정
 const API_URL = `${DOMAIN}/coolinic/clients/products/bplace?`;
 
 function EditBizPlaceUrl(bizObj) {
   return `${API_URL}clientBplaceId=${bizObj.bizId}
+  &bplaceNm=${bizObj.bizNm}
+  &bplaceDsc=${bizObj.bizDsc}
   &addr.addressName=${bizObj.addressObj.address_name}
   &addr.region1depthName=${bizObj.addressObj.address.region_1depth_name}
   &addr.region2depthName=${bizObj.addressObj.address.region_2depth_name}

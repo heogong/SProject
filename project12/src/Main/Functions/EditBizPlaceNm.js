@@ -2,23 +2,21 @@ import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN } from '~/Common/Blend';
 import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
-// 사업장 수정 - 사업장 명, 사업장 상세 변경
 const API_URL = `${DOMAIN}/coolinic/clients/products/bplace?`;
 
-function EditBizNmUrl(bizObj) {
-  console.log(bizObj);
+// 사업장 수정 - 상세주소만 변경
+function EditBizPlaceNmUrl(bizObj) {
   return `${API_URL}clientBplaceId=${bizObj.bizId}
-  &bplaceNm=${bizObj.bizNm}
-  &bplaceDsc=${bizObj.bizDsc}
+  &detail.detailAddr1=${bizObj.addressDsc}
   `;
 }
 
-const EditBizNm = async (bizObj) => {
-  // 토큰값 가져오기
-  const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
+const EditBizPlaceNm = async (bizObj) => {
+   // 토큰값 가져오기
+   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
   //console.log("bizObj : ",bizObj);
   //console.log("RegBizPlaceUrl : ",RegBizPlaceUrl(bizObj))
-  return fetch(EditBizNmUrl(bizObj), {
+  return fetch(EditBizPlaceNmUrl(bizObj), {
     method: 'PUT',
     headers: {
       "Authorization": ACCESS_TOKEN
@@ -38,4 +36,4 @@ const EditBizNm = async (bizObj) => {
   });
 };
 
-export default EditBizNm;
+export default EditBizPlaceNm;

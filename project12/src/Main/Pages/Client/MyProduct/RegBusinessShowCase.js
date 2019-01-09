@@ -212,11 +212,11 @@ class InputShowCase extends Component {
     _nextButton = () => {
         Alert.alert(
             '',
-            '등록되지 않은 이미지는 어딘가에서 등록 가능 \ 제품을 추가 등록 하시겠습니까?',
+            '제품을 추가 등록 하시겠습니까?',
             [
               // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-              {text: '아니오', onPress: () => Actions.ClientMain() },
-              {text: '네', onPress: () => Actions.InputBusinessProdType() },
+              {text: '아니오', onPress: () => Actions.reset('tabbar') },
+              {text: '네', onPress: () => Actions.popTo('InputBusinessProdType') },
             ],
             { cancelable: false }
         )

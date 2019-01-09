@@ -19,6 +19,10 @@ class ProductShowCase extends Component {
         };
     }
 
+    static defaultProps = {
+        copyBtn : true // 복사버튼 사용 여부
+    }
+
     componentDidMount() {
         if(this.props.clientPrdNm !== null) {
             this.setState({ setProductName : true});
@@ -100,9 +104,15 @@ class ProductShowCase extends Component {
                         </View>
                     </View>
                 </CardItem>
-                <Button onPress={ this.props.handleCopyShowCase(this.props.index) }>
-                    <Text>복제</Text>
-                </Button>
+                {(this.props.copyBtn) ? (
+                    <Button onPress={ this.props.handleCopyShowCase(this.props.index) }>
+                        <Text>복제</Text>
+                    </Button>
+                ) : (
+                    <View></View>
+                )
+                }
+                
             </Card>
         );
     }

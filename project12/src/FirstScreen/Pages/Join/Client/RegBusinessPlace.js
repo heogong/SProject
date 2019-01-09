@@ -43,8 +43,7 @@ class RegBusinessPlace extends Component {
 
         // 수정 시
         if(this.props.editBiz) {
-            Actions.SetAddress({
-                editAddress : true, 
+            Actions.EditBusinessAddress({
                 bizData : this.state.bizData
             }); 
         } else {

@@ -5,7 +5,7 @@ import { Text } from "native-base";
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
-import GetBizProductTypeList from '~/Main/Functions/GetBizProductTypeList'
+import GetBizProduct from '~/Main/Functions/GetBizProduct'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
@@ -20,13 +20,13 @@ class ListBusinessProductType extends Component {
     }
 
     componentDidMount() {
-        this._getBizProductTypeList();
+        this._getBizProduct();
     }
 
-    // 등록된 사업장 제품 타입 조회
-    _getBizProductTypeList = () => {
-        GetBizProductTypeList(this.props.bizId).then(result => {
-            GetCommonData(result, this._getBizProductTypeList).then(async resultData => {
+    // 등록된 사업장 제품 조회
+    _getBizProduct = () => {
+        GetBizProduct(this.props.bizId, this.props.prodTypeId).then(result => {
+            GetCommonData(result, this._getBizProduct).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
@@ -40,12 +40,9 @@ class ListBusinessProductType extends Component {
         });
     }
     
-   // A/S 제품 타입 선택
-   _nextButton = (prodTypeId) => () => {
-        Actions.AfterServiceProdList({
-            bizId : this.props.bizId,
-            prodTypeId : prodTypeId
-        })
+   // A/S 제품 선택
+   _nextButton = (clientPrdId) => () => {
+        Actions.AfterServiceApplyProduct({ clientPrdId : clientPrdId})
     }
 
     render() {
@@ -60,14 +57,14 @@ class ListBusinessProductType extends Component {
                         justifyContent: 'center',
                         padding: 5
                     }}>
-                    {this.state.data.map((productType, idx) => 
+                    {this.state.data.map((product, idx) => 
                         <TouchableOpacity key={idx} 
-                            onPress={this._nextButton(productType.prdTypeId)}
+                            onPress={this._nextButton(product.clientPrdId)}
                         >
                             <View style={styles.slide}>
-                                <ImageBackground source={{ uri: productType.prdTypeImg.fileUrl }} style={{width: '100%', height: '100%'}}/>
+                                <ImageBackground source={{ uri: product.prdTypeImg.fileUrl }} style={{width: '100%', height: '100%'}}/>
                             </View>
-                            <Text style={styles.title}>{productType.prdType.prdTypeKoNm}</Text>
+                            <Text style={styles.title}>{product.clientPrdNm}</Text>
                         </TouchableOpacity>
                     )}
                     </View>
