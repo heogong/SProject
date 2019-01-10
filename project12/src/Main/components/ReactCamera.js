@@ -28,6 +28,10 @@ class ReactCamera extends Component {
     };
   }
 
+  static defaultProps = {
+    galleryBtn : false
+  }
+
   componentDidMount() {
     this.props.setTimeout(this.setTimePassed, 500);
   }
@@ -79,13 +83,18 @@ class ReactCamera extends Component {
             </TouchableOpacity>
           </View>
 
-          <View>
-            <TouchableHighlight onPress={this._handleAlbumPress}>
-              <View style={ {width: 130, height: 130} }>
-                  <ImageBackground source={require('../../../src/Common/Image/gallery.png')} style={{width: '100%', height: '100%'}}/>
-              </View>
-            </TouchableHighlight>
-          </View>
+          {(this.props.galleryBtn) ? (
+            <View>
+              <TouchableHighlight onPress={this._handleAlbumPress}>
+                <View style={ {width: 130, height: 130} }>
+                    <ImageBackground source={require('../../../src/Common/Image/gallery.png')} style={{width: '100%', height: '100%'}}/>
+                </View>
+              </TouchableHighlight>
+            </View>
+          ) : (
+            <View/>
+          )}
+          
 
         </View>
       );

@@ -2,24 +2,29 @@ import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '~/Common/Blend';
 import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
-// 고객 제품 AS 증상 목록 조회
-const API_URL = `${DOMAIN}coolinic/clients/products/`;
+// 회원 AS 접수
+const API_URL = `${DOMAIN}coolinic/as/recv/master/member`;
 
-function GetAfterServiceCaseUrl(clientPrdId) {
-  return `${API_URL}${clientPrdId}/asitems`;
+function RegAfterServiceUrl() {
+  return `${API_URL}`;
 }
-
-const GetAfterServiceCase = async (clientPrdId) => {
+const RegAfterService = async (clientPrdId, asItemId, asRecvDsc, etcComment) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  console.log(GetAfterServiceCaseUrl(clientPrdId));
+  const data = new FormData();
+  data.append('clientPrdId', clientPrdId); 
+  data.append('asItemId', asItemId);
+  data.append('asRecvDsc', asRecvDsc);
+  data.append('etcComment', etcComment);
 
-  return fetch(GetAfterServiceCaseUrl(clientPrdId), {
-    method: 'GET',
+  return fetch(RegAfterServiceUrl(), {
+    method: 'POST',
+    body:  data,
     headers: {
-      "Authorization": ACCESS_TOKEN
-      // "Authorization": TEST_ACCESS_TOKEN
+      "Authorization": ACCESS_TOKEN,
+      // "Authorization": TEST_ACCESS_TOKEN,
+      "Content-Type": "multipart/form-data",
     }
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료
@@ -35,4 +40,4 @@ const GetAfterServiceCase = async (clientPrdId) => {
   });
 };
 
-export default GetAfterServiceCase;
+export default RegAfterService;

@@ -20,7 +20,8 @@ class ProductShowCase extends Component {
     }
 
     static defaultProps = {
-        copyBtn : true // 복사버튼 사용 여부
+        copyBtn : true, // 복사버튼 사용 여부
+        viewProduct : false // 단순 조회 여부
     }
 
     componentDidMount() {
@@ -72,18 +73,30 @@ class ProductShowCase extends Component {
                     }
                 </CardItem>
                 <CardItem>
-                    <Item error success={ this.state.setProductName }>
-                        <Input
-                            value={ this.props.productName }
-                            placeholder='제품명을 입력하세요.'
-                            onChangeText={(text) => this._setProductNm(text) }
-                            onBlur={this._submitProductNm}
-                            // autoFocus={ true }
-                        >
-                            {this.props.clientPrdNm}
-                        </Input>
-                        {(this.state.setProductName) ? <Icon name='checkmark-circle' /> : <Icon name='close-circle' />}
-                    </Item>
+                    {(this.props.viewProduct) ? (
+                        <Item>
+                            <Input
+                                value={ this.props.productName }
+                                disabled={ true }
+                            >
+                                {this.props.clientPrdNm}
+                            </Input>
+                        </Item>
+
+                    ):(
+                        <Item error success={ this.state.setProductName }>
+                            <Input
+                                value={ this.props.productName }
+                                placeholder='제품명을 입력하세요.'
+                                onChangeText={(text) => this._setProductNm(text) }
+                                onBlur={this._submitProductNm}
+                                // autoFocus={ true }
+                            >
+                                {this.props.clientPrdNm}
+                            </Input>
+                            {(this.state.setProductName) ? <Icon name='checkmark-circle' /> : <Icon name='close-circle' />}
+                        </Item>
+                    )}
                 </CardItem>
                 <CardItem cardBody>
                     <View style={{ flex:1, justifyContent: 'center'}}>
@@ -98,6 +111,7 @@ class ProductShowCase extends Component {
                                     defaultImg={ this.props.defaultImg }
                                     imageTouch={ (info.fileUrl !== null) ? false : true }
                                     index={ idx }
+                                    viewProduct={ this.props.viewProduct }
                                 />
                             ))}
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -31,38 +32,40 @@ class InputName extends Component {
     }
   } 
 
-  _NextButton = () => {
+  _nextButton = () => {
     this.props.onSetUsrNm(this.state.usrNm);  // 리덕스 사용자 이름 SET
     Actions.JoinInputPhone();
   }
   
   render() {
     return (
-      <CustomBasicWrapper
-        title="고객 이름"
-      >
-        {/* <Text>고객명을 입력해주세요</Text> */}
+      <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
+        <CustomBasicWrapper
+          title="고객 이름"
+        >
+          {/* <Text>고객명을 입력해주세요</Text> */}
 
-        <Item rounded>
-            <Input
-              onChangeText={ this._handleChange }
-              value={ this.state.text }
-              placeholder='홍길동'
-              autoFocus={ true }
-            />
-        </Item>
+          <Item regular>
+              <Input
+                onChangeText={ this._handleChange }
+                value={ this.state.text }
+                placeholder='홍길동'
+                autoFocus={ true }
+              />
+          </Item>
 
-        <CustomButton
-          block={ true }
-          info={ true }
-          bordered={ true }
-          disabled={ this.state.btnDisabled }
-          onPress={ this._NextButton }>
-          <Text>
-            NEXT
-          </Text>
-        </CustomButton>
-      </CustomBasicWrapper>
+          <CustomButton
+            block={ true }
+            info={ true }
+            bordered={ true }
+            disabled={ this.state.btnDisabled }
+            onPress={ this._nextButton }>
+            <Text>
+            다음 단계로 이동(2/4)
+            </Text>
+          </CustomButton>
+        </CustomBasicWrapper>
+      </KeyboardAvoidingView>
     )
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Alert } from 'react-native';
 import { Icon, Picker, Text, Textarea } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -7,6 +7,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import GetProduct from '~/Main/Functions/GetProduct'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import GetAfterServiceCase from '~/Main/Functions/GetAfterServiceCase';
+import RegAfterService from '~/Main/Functions/RegAfterService';
 
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
@@ -17,11 +18,15 @@ class ApplyBusinessProduct extends Component {
       super(props);
 
       this.state = {
-        data : [], // 제품 데이터
-        images : [], // 제품 이미지 데이터
+        data : {
+            prdTypeImg : {
+                fileUrl : null
+            },
+            images : [] // 제품 이미지 데이터
+        }, // 제품 데이터
         asRecvDsc : null,
         etcComment : null,
-        asCaseData: [],
+        asCaseData: [], // 제품 증상 데이터
         selected2: undefined
       };
     }
@@ -31,9 +36,12 @@ class ApplyBusinessProduct extends Component {
             selected2: value
         });
     }
+
+    componentWillMount() {
+        this._getProduct();
+    }
    
     componentDidMount() {
-        this._getProduct();
         this._getAfterServiceCase();
     }
 
@@ -43,11 +51,10 @@ class ApplyBusinessProduct extends Component {
             GetCommonData(result, this._getProduct).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    //console.log(resultData);
+                    console.log(resultData);
                     if(ResultBool) {
                         this.setState({ 
                             data: resultData.data,
-                            images : resultData.data.images
                         });
                     } else {
                         alert(resultData.resultMsg);
@@ -59,11 +66,11 @@ class ApplyBusinessProduct extends Component {
 
     // AS 제품 증상 조회
     _getAfterServiceCase = () => {
-        GetAfterServiceCase(this.props.clientPrdId).then(result => {
+        GetAfterServiceCase(207).then(result => {
+        //GetAfterServiceCase(this.props.clientPrdId).then(result => {
             GetCommonData(result, this._getProduct).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    console.log(resultData);
                     if(ResultBool) {
                         this.setState({asCaseData : resultData.data});
                     } else {
@@ -74,9 +81,39 @@ class ApplyBusinessProduct extends Component {
         });
     }
 
-    // 입력완료
-    _submitAfterService = () => {
+    //clientPrdId, asItemId, asRecvDsc, etcComment    
+    // AS 신청 API 호출
+    _regAfterService = () => {
+        RegAfterService(
+            this.props.clientPrdId,
+            this.state.selected2,
+            this.state.asRecvDsc, 
+            this.state.etcComment).then(result => {
+            GetCommonData(result, this._regAfterService).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+                    } else {
+                        alert(resultData.resultMsg);
+                    }
+                }
+            });
+        });
+    }
 
+    // 입력 완료 버튼
+    _submitAfterService = () => {
+        Alert.alert(
+            '',
+            '입력하신 사항이 정확한가요?',
+            [
+              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+              {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              {text: '네', onPress: () => this._regAfterService() },
+            ],
+            { cancelable: false }
+        )
     }
 
     render() {
@@ -85,12 +122,13 @@ class ApplyBusinessProduct extends Component {
                 title="A/S 제품"
             >
                 <ProductShowCase
-                    defaultImg={ this.state.defaultImg }
-                    data={ this.state.images }
+                    defaultImg={ this.state.data.prdTypeImg.fileUrl }
+                    data={ this.state.data.images }
                     clientPrdId={ this.state.data.clientPrdId }
                     clientPrdNm={ this.state.data.clientPrdNm } 
                     index={ 0 }
-                    copyBtn= { false }
+                    copyBtn={ false }
+                    viewProduct={ true }
                 />
 
                 <Picker

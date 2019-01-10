@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import { Alert, KeyboardAvoidingView } from 'react-native';
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -65,7 +65,7 @@ class InputPhone extends Component {
 
   render() {
     return (
-      <Root>
+      <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
         <CustomBasicWrapper
           title="전화번호"
         >
@@ -87,11 +87,11 @@ class InputPhone extends Component {
             disabled={ this.state.btnDisabled }
             onPress={this._getAuthNumber}>
             <Text>
-              NEXT
+            다음 단계로 이동(3/4)
             </Text>
           </CustomButton>
         </CustomBasicWrapper>
-      </Root>
+      </KeyboardAvoidingView>
     )
   }
 }

@@ -31,6 +31,7 @@ class ProductImage extends Component {
 
     static defaultProps = {
         imageTouch : true,
+        viewProduct : false, // 단순 조회 여부
         clientPrdImgId : null
     }
 
@@ -125,43 +126,57 @@ class ProductImage extends Component {
                         <Text>{ this.props.clientPrdId }</Text>
                     </View>
 
-                    { (this.state.imageTouch) ? (
-                        <TouchableHighlight onPress={this._handleTakeImage}>
+                    { (this.state.imageTouch) ? ( // 이미지 여부를 통해 이미지 등록 상태(디폴트 이미지로 표시)
+                        (this.props.viewProduct) ? ( // 단순 이미지 조회 여부 확인
                             <View style={ styles.innerImage }>
                                 <ImageBackground source={{ uri: this.state.uri }} style={{width: '100%', height: '100%'}}/>
                             </View>
-                        </TouchableHighlight>
+                        ) : (
+                            <TouchableHighlight onPress={this._handleTakeImage}>
+                                <View style={ styles.innerImage }>
+                                    <ImageBackground source={{ uri: this.state.uri }} style={{width: '100%', height: '100%'}}/>
+                                </View>
+                            </TouchableHighlight>
+                        )
                     ) : (
                         <View style={ styles.innerImage }>
-                            <ImageOverlay 
-                                containerStyle={ styles.innerImage }
-                                source={{ uri: this.state.uri }} 
-                                overlayAlpha={0.5}
-                                contentPosition="center"
-                            >
-                                <CustomButton 
-                                    styleWidth={ false }
-                                    block={ true } 
-                                    light={ true }
-                                    bordered={ true }
-                                    onPress={ this._handleImageView }
-                                    >
-                                    <Icon active name="md-eye" />
-                                    <Text>보기</Text>
-                                </CustomButton>
-                                <CustomButton 
-                                    styleWidth={ false }
-                                    block={ true } 
-                                    light={ true }
-                                    bordered={ true }
-                                    onPress={ this._handleImageDelete }>
-                                    <Icon active name="md-trash" />
-                                    <Text>삭제</Text>
-                                </CustomButton>
-                            </ImageOverlay>
+                            {(this.props.viewProduct) ? ( // 단순 이미지 조회 여부 확인
+                                <TouchableHighlight onPress={this._handleImageView}>
+                                    <View style={ styles.innerImage }>
+                                        <ImageBackground source={{ uri: this.state.uri }} style={{width: '100%', height: '100%'}}/>
+                                    </View>
+                                </TouchableHighlight>
+                            ) : (
+                                <ImageOverlay 
+                                    containerStyle={ styles.innerImage }
+                                    source={{ uri: this.state.uri }} 
+                                    overlayAlpha={0.5}
+                                    contentPosition="center"
+                                >
+                                    <CustomButton 
+                                        styleWidth={ false }
+                                        block={ true } 
+                                        light={ true }
+                                        bordered={ true }
+                                        onPress={ this._handleImageView }
+                                        >
+                                        <Icon active name="md-eye" />
+                                        <Text>보기</Text>
+                                    </CustomButton>
+                                    <CustomButton 
+                                        styleWidth={ false }
+                                        block={ true } 
+                                        light={ true }
+                                        bordered={ true }
+                                        onPress={ this._handleImageDelete }>
+                                        <Icon active name="md-trash" />
+                                        <Text>삭제</Text>
+                                    </CustomButton>
+                                </ImageOverlay>
+                            )}
+
                         </View>
-                    )
-                    } 
+                    )} 
 
                 </View>
                 {/* <Thumbnail square large source={{uri: this.state.uri}} /> */}

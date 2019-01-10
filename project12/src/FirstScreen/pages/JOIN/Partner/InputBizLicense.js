@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { CameraRoll, ImageBackground, View } from 'react-native';
+import { Input, Item, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
-import { connect } from 'react-redux';
-import { Input, Item, Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
 import GetCommonData from '~/Common/Functions/GetCommonData';
@@ -12,16 +12,15 @@ import RegPartnerBizLicense from '~/FirstScreen/Functions/RegPartnerBizLicense';
 import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
 
-
 class InputBizLicense extends Component {
     constructor(props) {
         super(props);
         this.state = {
             bizLicense : '',
             btnDisabled : true,
-            imgUri : ''
+            imgUri : 'https://i.pinimg.com/originals/b8/29/fd/b829fd8f5df3e09589575e4ca939bc9f.png'
         };
-      }
+    }
 
   // 카메라 on
   _handleTakeLicense = () => {
@@ -36,9 +35,21 @@ class InputBizLicense extends Component {
     this._regBizLicense();
   }
 
-  _inputBizLicense = (text) => {
-    this.setState({bizLicense : text, btnDisabled : false});
-  }
+  // 앨범에서 사진 가져오기
+  _handleAlbumPress = () => {
+    CameraRoll.getPhotos({
+        first: 20,
+        assetType: 'Photos',
+      })
+      .then(r => {
+        console.log(r);
+        //this.setState({ photos: r.edges });
+        Actions.ReactCameraAlbum({result : this.onResult, photos: r.edges})
+      })
+      .catch((err) => {
+         //Error Loading Images
+    });
+  };
 
   // NEXT : 파트너 제품 선택
   _nextPress = () => {
@@ -68,6 +79,18 @@ class InputBizLicense extends Component {
         resetPage={ true }
         title="사업자등록증 입력"
       >
+        <View style={{flex:1}}>
+          <ImageBackground source={{ uri: this.state.imgUri }} style={{width: '100%', height: '100%'}}/>
+        </View>
+        <CustomButton
+          block={ true }
+          info={ true }
+          bordered={ true }
+          onPress={ this._handleAlbumPress }>
+          <Text>
+            앨범에서 선택
+          </Text>
+        </CustomButton>
         <CustomButton
           block={ true }
           info={ true }
@@ -77,21 +100,13 @@ class InputBizLicense extends Component {
             사업자등록증 스캔
           </Text>
         </CustomButton>
-        <Item regular>
-            <Input 
-              onChangeText={ this._inputBizLicense }
-              value={ this.state.bizLicense }
-              placeholder='사업자 번호'
-              keyboardType='numeric'
-            />
-        </Item>
         <CustomButton
           block={ true }
           info={ true }
           onPress={ this._nextPress }
           disabled={ this.state.btnDisabled }>
           <Text>
-            NEXT
+            다음단계로 이동 (1/5)
           </Text>
         </CustomButton>
       </CustomBasicWrapper>

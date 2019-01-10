@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, AsyncStorage, StyleSheet } from 'react-native';
+import { Alert, KeyboardAvoidingView , StyleSheet } from 'react-native';
 
 import { SUCCESS_RETURN_CODE, PARTNER } from '~/Common/Blend';
 
@@ -7,7 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrPw } from '~/Redux/Actions';
 
-import { Item, Input, Root, Spinner, Text, Toast } from "native-base";
+import { Item, Input, Root, Text, Toast } from "native-base";
 import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
 import SignUp from '../../Functions/SignUp';
@@ -26,15 +26,14 @@ class InputEmail extends Component {
       usrPw: '',
       usrPw2: '',
       btnDisabled: true,
-      spinner: false
     };
   }
 
-  componentWillMount () {
-    // 고객 구분에 따른 뒤로 가기 페이지 
-    HISTORY_PAGE = (this.props.value.usrCustomerType == PARTNER) ? "JoinInputPhone" : "JoinInputName";
+  // componentWillMount () {
+  //   // 고객 구분에 따른 뒤로 가기 페이지 
+  //   HISTORY_PAGE = (this.props.value.usrCustomerType == PARTNER) ? "JoinInputPhone" : "JoinInputName";
 
-  }
+  // }
 
   // 이메일 next 버튼 활성화 여부
   _handleEmailChange = async (text)  => {
@@ -66,97 +65,99 @@ class InputEmail extends Component {
   //이메일 유효성 체크
   _checkUsrEmail = () => {
     if (!emailPattern.test(this.state.usrId)) {
-      Toast.show({
-        text: "유효하지 않은 이메일 입력입니다.",
-        type: "danger",
-        buttonText: '확인'
-      })
-      return true;
-    } else {
+      Alert.alert(
+        '',
+        "유효하지 않은 이메일 입력입니다.",
+        [
+          {text: '확인', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
       return false;
+    } else {
+      return true;
     }
   } 
 
   // 비밀번호 체크 여부
   _checkUsrPasswd = () => {
     if(this.state.usrPw !== this.state.usrPw2) {
-      Toast.show({
-        text: "비밀번호가 동일하지 않습니다.",
-        type: "danger",
-        buttonText: '확인'
-      })
-      return true;
-    } else {
+      Alert.alert(
+        '',
+        "비밀번호가 동일하지 않습니다.",
+        [
+          {text: '확인', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
       return false;
+    } else {
+      return true;
     }
   }
 
   // 회원 가입 프로세스
   async _SignUsr() {
     //이메일 유효성 체크
-    const emailVaild = await (this._checkUsrEmail()) ? true : false;
-    const passwdVaild = await (this._checkUsrPasswd()) ? true : false;
+    const emailVaild = await (this._checkUsrEmail());
+    const passwdVaild = await (this._checkUsrPasswd());
 
-    if (!emailVaild && !passwdVaild) {
-      this.setState({ spinner : true }); // 로딩 start
+    if (emailVaild && passwdVaild) {
 
       await this.props.onSetUsrId(this.state.usrId);  // 리덕스 사용자 ID SET (await 절차식으로 진행)
       await this.props.onSetUsrPw(this.state.usrPw2);  // 리덕스 사용자 비밀번호 SET (await 절차식으로 진행)
 
+      // 기획서에 따른 이름 입력
+      Actions.JoinInputName();
+
       //회원가입
-      SignUp(this.props.value).then(async result => {
-        const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+      // SignUp(this.props.value).then(async result => {
+      //   const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
 
-        this.setState({ spinner : false }); // 로딩 end
+      //   if (ResultBool) {
+      //     console.log(result);
 
-        if (ResultBool) {
-          console.log(result);
-
-          // 고객 타입에 따른 페이지 이동
-          if(this.props.value.usrCustomerType == PARTNER) {
-            Actions.JoinInputBizLicense(); // 사업자 등록 페이지
+      //     // 고객 타입에 따른 페이지 이동
+      //     if(this.props.value.usrCustomerType == PARTNER) {
+      //       Actions.JoinInputBizLicense(); // 사업자 등록 페이지
             
-          } else {
-            //Actions.BusinessIndex(); // 사업장 제품 등록
-            Actions.CardIndex();
-          }
+      //     } else {
+      //       //Actions.BusinessIndex(); // 사업장 제품 등록
+      //       Actions.CardIndex();
+      //     }
 
-        } else {
-          Alert.alert(
-            '',
-            result.resultMsg,
-            [
-              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-              //{text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-              {text: '확인', onPress: () => console.log('OK Pressed')},
-            ],
-            { cancelable: false }
-          )
-        }
-      });
+      //   } else {
+      //     Alert.alert(
+      //       '',
+      //       result.resultMsg,
+      //       [
+      //         {text: '확인', onPress: () => console.log('OK Pressed')},
+      //       ],
+      //       { cancelable: false }
+      //     )
+      //   }
+      // });
     }
   }
   
   
   render() {
     return (
-      <Root>
+      <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
         <CustomBasicWrapper
           title="이메일 가입"
-          backAction={ true }
-          actionName={ HISTORY_PAGE }
         >
           <Text>이메일 주소를 입력해 주세요</Text>
-          <Item rounded>
+          <Item regular>
             <Input 
               onChangeText={this._handleEmailChange}
               value={this.state.text}
               placeholder='sample@example.com'
               autoFocus={ true }
-              onBlur={ this._checkUsrEmail }
+              // onBlur={ this._checkUsrEmail }
             />
           </Item>
-          <Item rounded>
+          <Item regular>
             <Input
               secureTextEntry={ true }
               onChangeText={ this._handlePasswdChange }
@@ -164,7 +165,7 @@ class InputEmail extends Component {
               placeholder='비밀번호'
             />
           </Item>
-          <Item rounded>
+          <Item regular>
             <Input
               secureTextEntry={ true }
               onChangeText={ this._handleChkPasswdChange }
@@ -180,14 +181,11 @@ class InputEmail extends Component {
             disabled={ this.state.btnDisabled }
             onPress={() => this._SignUsr()}>
             <Text>
-              NEXT
+              다음 단계로 이동(1/4)
             </Text>
           </CustomButton>
-
-          <Spinner color='blue' style={(this.state.spinner) ? styles.show : styles.hide } />
-
         </CustomBasicWrapper>
-      </Root>
+      </KeyboardAvoidingView>
     )
   }
 }

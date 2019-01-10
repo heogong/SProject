@@ -7,7 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
 
-export default class Business extends Component {
+export default class Partner extends Component {
   constructor(props) { 
     super(props); 
   }
@@ -16,24 +16,15 @@ export default class Business extends Component {
     return (
       <CustomBasicWrapper
         resetPage={ true }
-        title="가입완료"
+        title="쿨리닉 회원가입"
       >
         <CustomButton
           block={ true }
           info={ true }
           bordered={ true }
-          onPress={ Actions.ListBusinessPlace }>
+          onPress={ Actions.JoinInputBizLicense }>
           <Text>
-            제품등록 하러가기
-          </Text>
-        </CustomButton>
-        <CustomButton
-          block={ true }
-          info={ true }
-          bordered={ true }
-          onPress={ Actions.ClientMain }>
-          <Text>
-            메인화면으로 이동
+            사업자정보 등록하기
           </Text>
         </CustomButton>
         

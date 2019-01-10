@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import{ Alert } from 'react-native';
+import{ Alert, KeyboardAvoidingView } from 'react-native';
 
-import { SUCCESS_RETURN_CODE, CLIENT_USER } from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, CLIENT_USER, PARTNER } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -10,9 +10,10 @@ import { Item, Input, Root, Text, Toast } from "native-base";
 import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
 
-import SnsSignUp from '../../Functions/SnsSignUp';
-import CheckUsr from '../../Functions/CheckUsr';
-import CheckSmsCertNum from '../../Functions/CheckSmsCertNum';
+import SnsSignUp from '~/FirstScreen/Functions/SnsSignUp';
+import SignUp from '~/FirstScreen/Functions/SignUp';
+import CheckUsr from '~/FirstScreen/Functions/CheckUsr';
+import CheckSmsCertNum from '~/FirstScreen/Functions/CheckSmsCertNum';
 import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
@@ -74,10 +75,36 @@ class InputPhoneAuth extends Component {
               });
             } else {
               // SNS 가입 아닐경우 이메일 입력 이동
-              Actions.JoinInputEmail();
+              //Actions.JoinInputEmail();
+
+              //회원가입
+              SignUp(this.props.usrObj).then(async result => {
+                const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+
+                if (ResultBool) {
+                  // console.log(result);
+
+                  // 고객 타입에 따른 페이지 이동
+                  if(this.props.usrObj.usrCustomerType == PARTNER) {
+                    Actions.PartnerIndex(); // 사업자 등록 페이지
+                  } else {
+                    Actions.CardIndex(); // 클라이언트 카드 정보 입력
+                  }
+
+                } else {
+                  Alert.alert(
+                    '',
+                    result.resultMsg,
+                    [
+                      {text: '확인', onPress: () => console.log('OK Pressed')},
+                    ],
+                    { cancelable: false }
+                  )
+                }
+              });
             }
           } else {
-            console.log(result);
+            // console.log(result);
             Alert.alert(
               '',
               `${result.resultMsg} - 로그인 페이지로 이동하시겠습니까?`,
@@ -92,12 +119,6 @@ class InputPhoneAuth extends Component {
         });
         
       } else {
-        // Toast.show({
-        //   text: result.resultMsg,
-        //   type: "danger",
-        //   buttonText: '확인'
-        // })
-
         Alert.alert(
           '',
           result.resultMsg,
@@ -122,9 +143,9 @@ class InputPhoneAuth extends Component {
               if(ResultBool) {
                 // 클라이언트 사용자
                 if(resultData.data.usrTypeCd == CLIENT_USER) {
-                  Actions.BusinessIndex();
+                  Actions.CardIndex(); // 클라이언트 카드 정보 입력
                 } else { // 파트너 사용자
-                 // Actions.PartnerMain();
+                  Actions.PartnerIndex();
                 }
               }
           }
@@ -139,7 +160,7 @@ class InputPhoneAuth extends Component {
 
   render() {
     return (
-      <Root>
+      <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
         <CustomBasicWrapper
           title="본인 인증"
         >
@@ -166,11 +187,11 @@ class InputPhoneAuth extends Component {
               disabled={ this.state.btnDisabled }
               onPress={this._checkSmsCertNum}>
               <Text>
-                NEXT
+              다음 단계로 이동(4/4)
               </Text>
             </CustomButton>
         </CustomBasicWrapper>
-      </Root>
+      </KeyboardAvoidingView>
     )
   }
 }

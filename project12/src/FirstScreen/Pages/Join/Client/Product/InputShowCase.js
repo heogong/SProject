@@ -48,8 +48,7 @@ class InputShowCase extends Component {
 
     // 제품 이미지 타입 가져오기
     _drawProductImageType = () => {
-        //GetProdImageType(this.props.prodTypeId).then(result => {
-        GetProdImageType(2).then(result => {
+        GetProdImageType(this.props.prodTypeId).then(result => {
             GetCommonData(result, this._drawProductImageType).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -63,7 +62,7 @@ class InputShowCase extends Component {
 
     // 제품 마스터 초기 등록 
     _regProductMst = () => {
-        RegProductMst(this.props.value.bizId, 2).then(result => {
+        RegProductMst(this.props.value.bizId, this.props.prodTypeId).then(result => {
             GetCommonData(result, this._regProductMst).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인

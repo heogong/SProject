@@ -14,11 +14,14 @@ class AccountType extends Component {
 
   // 고객 타입 선택에 따른 페이지 이동
   _selectCustomerTypeAndGoPage = () => {
-    if(this.props.value.usrCustomerType == CLIENT) {
-      Actions.JoinInputName();
-    } else {
-      Actions.JoinInputPhone();
-    }
+    // if(this.props.value.usrCustomerType == CLIENT) {
+    //   Actions.JoinInputName();
+    // } else {
+    //   Actions.JoinInputPhone();
+    // }
+
+    // 기획서에 따른 이메일 입력 우선
+    Actions.JoinInputEmail();
   }
 
   render() {
