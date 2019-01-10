@@ -1,104 +1,172 @@
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TouchableOpacity, UIManager} from 'react-native';
+/** @format */
 
-import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
-import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
+import React from 'react';
+import {
+  AppRegistry,
+  Image,
+  PixelRatio,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 
+export default class App extends React.Component {
+  state = {
+    avatarSource: null,
+    videoSource: null,
+  };
 
-import SwipeableViews from 'react-swipeable-views-native';
+  constructor(props) {
+    super(props);
 
-import Swiper from './Swiper';
-
-
-export default class App extends Component {
-  componentWillMount() {
-    if (Platform.OS === 'ios') {
-      CardIOUtilities.preload();
-    }
-    UIManager.setLayoutAnimationEnabledExperimental(true);
+    this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
+    this.selectPhotoTapped2 = this.selectPhotoTapped2.bind(this);
+    
+    this.selectVideoTapped = this.selectVideoTapped.bind(this);
   }
 
-  scanCard() {
-    const config = {
-      hideCardIOLogo : true,
-      scanInstructions : '와리가리!',
-      suppressConfirmation  : true
-    }
-    CardIOModule
-      .scanCard(config)
-      .then(card => {
-        // the scanned card
-        console.log(card);
-      })
-      .catch(() => {
-        // the user cancelled
-        console.log("exit");
-      })
+  selectPhotoTapped() {
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true,
+      },
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled photo picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        let source = { uri: response.uri };
+
+        // You can also display the image using data:
+        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+        this.setState({
+          avatarSource: source,
+        });
+      }
+    });
   }
+
+  selectPhotoTapped2() {
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true,
+      },
+    };
+
+
+  ImagePicker.launchImageLibrary(options, (response) => {
+    console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled photo picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        let source = { uri: response.uri };
+
+        // You can also display the image using data:
+        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+        this.setState({
+          avatarSource: source,
+        });
+    }
+  })};
+
+  selectVideoTapped() {
+    const options = {
+      title: 'Video Picker',
+      takePhotoButtonTitle: 'Take Video...',
+      mediaType: 'video',
+      videoQuality: 'medium',
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled video picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        this.setState({
+          videoSource: response.uri,
+        });
+      }
+    });
+  }
+
   render() {
     return (
-      // <View>
-      //   <LiteCreditCardInput 
-      //     onChange={this._onChange} 
-      //     placeholders={
-      //       { number: "1212 4545 7878 9898", expiry: "MM/YY"}
-      //     }
-      //     />
-      //   <TouchableOpacity onPress={this.scanCard.bind(this)}>
-      //     <Text>Scan card!</Text>
-      //   </TouchableOpacity>
-      // </View>
-      <View style={{flex:1}}>
-       <SwipeableViews style={styles.slideContainer}>
-        <View style={[styles.slide, styles.slide1]}>
-          <Text style={styles.text}>
-            slide n°1
-          </Text>
-        </View>
-        <View style={[styles.slide, styles.slide2]}>
-          <Text style={styles.text}>
-            slide n°2
-          </Text>
-        </View>
-        <View style={[styles.slide, styles.slide3]}>
-          <Text style={styles.text}>
-            slide n°3
-          </Text>
-        </View>
-     </SwipeableViews>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+          <View
+            style={[
+              styles.avatar,
+              styles.avatarContainer,
+              { marginBottom: 20 },
+            ]}
+          >
+            {this.state.avatarSource === null ? (
+              <Text>Select a Photo</Text>
+            ) : (
+              <Image style={styles.avatar} source={this.state.avatarSource} />
+            )}
+          </View>
+        </TouchableOpacity>
 
-     <View style={styles.container}>
-        <Swiper/>
+        <TouchableOpacity onPress={this.selectVideoTapped.bind(this)}>
+          <View style={[styles.avatar, styles.avatarContainer]}>
+            <Text>Select a Video</Text>
+          </View>
+        </TouchableOpacity>
+
+        {this.state.videoSource && (
+          <Text style={{ margin: 8, textAlign: 'center' }}>
+            {this.state.videoSource}
+          </Text>
+        )}
       </View>
-     </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container : {
-    flex : 1,
-    justifyContent : 'center',
-    alignItems : 'center'
-},
-  slideContainer: {
-    height: 100,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   },
-  slide: {
-    padding: 15,
-    height: 100,
+  avatarContainer: {
+    borderColor: '#9B9B9B',
+    borderWidth: 1 / PixelRatio.get(),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  slide1: {
-    backgroundColor: '#FEA900',
-  },
-  slide2: {
-    backgroundColor: '#B3DC4A',
-  },
-  slide3: {
-    backgroundColor: '#6AC0FF',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 16,
+  avatar: {
+    borderRadius: 75,
+    width: 150,
+    height: 150,
   },
 });

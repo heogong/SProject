@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, ImageBackground, StyleSheet } from 'react-native';
+import { View, ImageBackground, Image, StyleSheet } from 'react-native';
 import { Text } from "native-base";
 
 import { Actions } from 'react-native-router-flux';
@@ -27,7 +27,9 @@ class ViewImage extends Component {
         //     rightBtn={ this.props.rightBtn }
         //     rightAction={ this.props.rightAction }
         // >
-            <ImageBackground source={{uri : this.state.imgUri}} style={styles.container}/>
+        <View>
+          <Image source={{uri : this.state.imgUri}} style={styles.container}/>
+        </View>
       // </CustomBasicWrapper>
     );
   }
@@ -38,8 +40,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: 'center',
-    width: null,
-    height: null,
+    width: '100%',
+    height: '100%',
   }
 });
 

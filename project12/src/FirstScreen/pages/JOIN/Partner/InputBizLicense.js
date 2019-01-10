@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { CameraRoll, ImageBackground, View } from 'react-native';
+import { CameraRoll, ImageBackground, View, Image,
+  PixelRatio,
+  StyleSheet,
+  TouchableOpacity } from 'react-native';
 import { Input, Item, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
+import ImagePicker from 'react-native-image-picker';
 
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import RegPartnerBizLicense from '~/FirstScreen/Functions/RegPartnerBizLicense';
@@ -14,12 +18,15 @@ import CustomButton from '~/Common/Components/CustomButton';
 
 class InputBizLicense extends Component {
     constructor(props) {
-        super(props);
-        this.state = {
-            bizLicense : '',
-            btnDisabled : true,
-            imgUri : 'https://i.pinimg.com/originals/b8/29/fd/b829fd8f5df3e09589575e4ca939bc9f.png'
-        };
+      super(props);
+
+      this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
+      
+      this.state = {
+          bizLicense : '',
+          btnDisabled : true,
+          avatarSource : null
+      };
     }
 
   // 카메라 on
@@ -35,21 +42,6 @@ class InputBizLicense extends Component {
     this._regBizLicense();
   }
 
-  // 앨범에서 사진 가져오기
-  _handleAlbumPress = () => {
-    CameraRoll.getPhotos({
-        first: 20,
-        assetType: 'Photos',
-      })
-      .then(r => {
-        console.log(r);
-        //this.setState({ photos: r.edges });
-        Actions.ReactCameraAlbum({result : this.onResult, photos: r.edges})
-      })
-      .catch((err) => {
-         //Error Loading Images
-    });
-  };
 
   // NEXT : 파트너 제품 선택
   _nextPress = () => {
@@ -73,20 +65,55 @@ class InputBizLicense extends Component {
     });
   }
 
+
+  // 앨범에서 사진 가져오기
+  selectPhotoTapped() {
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true,
+      },
+    };
+
+    ImagePicker.launchImageLibrary(options, (response) => {
+      console.log('Response = ', response);
+  
+        if (response.didCancel) {
+          console.log('User cancelled photo picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          let source = { uri: response.uri };
+  
+          // You can also display the image using data:
+          // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+  
+          this.setState({
+            avatarSource: source,
+          });
+      }
+    })
+  };
+
+
   render() {
     return (
       <CustomBasicWrapper
         resetPage={ true }
         title="사업자등록증 입력"
       >
-        <View style={{flex:1}}>
-          <ImageBackground source={{ uri: this.state.imgUri }} style={{width: '100%', height: '100%'}}/>
+        <View style={styles.container}>
+          <Image style={styles.avatar} source={this.state.avatarSource} />
         </View>
         <CustomButton
           block={ true }
           info={ true }
           bordered={ true }
-          onPress={ this._handleAlbumPress }>
+          onPress={ this.selectPhotoTapped.bind(this) }>
           <Text>
             앨범에서 선택
           </Text>
@@ -113,5 +140,24 @@ class InputBizLicense extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  avatarContainer: {
+    borderColor: '#9B9B9B',
+    borderWidth: 1 / PixelRatio.get(),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatar: {
+    width: 300,
+    height: 300,
+  },
+});
 
 export default InputBizLicense;
