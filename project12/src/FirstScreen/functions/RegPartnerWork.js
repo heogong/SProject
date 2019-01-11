@@ -14,8 +14,8 @@ const RegPartnerWork = async (work) => {
 
   const data = new FormData();
 
-  data.append('workStTime', work.workStTime);
-  data.append('workEdTime', work.workEdTime );
+  data.append('workStTime', `${work.stHour}${work.stMin}`);
+  data.append('workEdTime', `${work.edHour}${work.edMin}`);
   data.append('monWorkYn', work.monWorkYn);
   data.append('tueWorkYn', work.tueWorkYn);
   data.append('wedWorkYn', work.wedWorkYn);

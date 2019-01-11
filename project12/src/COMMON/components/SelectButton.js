@@ -11,18 +11,7 @@ class SelectButton extends Component {
           btnClick : false
       };
     }
-
-    static defaultProps = {
-        fullTime : false
-    }
-
     _handleBtnClick = async () => {
-        // console.log("fullTime : ", this.props.fullTime)
-        // if(this.props.fullTime) {
-        //     this.setState({btnClick : true});
-        // } else {
-        // }
-        
         await this.setState({btnClick : (this.state.btnClick) ? false : true});
 
         if(this.state.btnClick) {
@@ -31,6 +20,17 @@ class SelectButton extends Component {
             this.props.removeDataArray(this.props.value);
         }
         
+    }
+
+    _handleFullAddBtn = async () => {
+        await this.setState({btnClick : true});
+        await this.props.removeDataArray(this.props.value);
+        await this.props.addDataArray(this.props.value);
+    }
+
+    _handleFullRemoveBtn = async () => {
+        await this.setState({btnClick : false});
+        this.props.removeDataArray(this.props.value);
     }
 
     render() {

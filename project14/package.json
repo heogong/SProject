@@ -13,6 +13,8 @@
     "react-native-awesome-card-io": "^0.8.1",
     "react-native-credit-card-input": "^0.4.1",
     "react-native-image-picker": "^0.28.0",
+    "react-native-loading-spinner-overlay": "^1.0.1",
+    "react-native-modal-datetime-picker": "^6.0.0",
     "react-swipeable-views-native": "^0.13.2"
   },
   "devDependencies": {
