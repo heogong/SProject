@@ -17,7 +17,9 @@ import LoginInputAccount from './src/FirstScreen/Pages/Login/InputAccount';
 
 // 파트너
 import PartnerIndex from './src/FirstScreen/Pages/Join/Partner'; // 파트너 사업장 등록
-import JoinInputBizLicense from './src/FirstScreen/Pages/Join/Partner/InputBizLicense'; // 파트너 사업장 등록
+import JoinInputBizLicense from './src/FirstScreen/Pages/Join/Partner/InputBizLicense'; // 파트너 사업자등록증 등록
+import JoinInputPartnerInfo from './src/FirstScreen/Pages/Join/Partner/InputPartnerInfo'; // 파트너 사업자등록증 등록2
+
 import JoinSetPartnerAddress from './src/FirstScreen/Pages/Join/Partner/SetAddress'; // 파트너 주소 등록
 import JoinSearchPartnerAddress from './src/FirstScreen/Pages/Join/Partner/SearchAddress'; // 파트너 주소 검색
 
@@ -43,7 +45,6 @@ import TestPage3 from './src/Main/Pages/TestPage3'
 //test
 
 import ReactCamera from './src/Main/Components/ReactCamera';
-import ReactCameraAlbum from './src/Main/Components/ReactCameraAlbum';
 import ViewImage from './src/Main/Components/ViewImage';
 
 /**클라이언트 */
@@ -96,11 +97,10 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
 
       <Scene key="reactCamera" hideNavBar component={ReactCamera} />
-      <Scene key="ReactCameraAlbum" hideNavBar component={ReactCameraAlbum} />
       <Scene key="ViewImage" hideNavBar component={ViewImage} title="제품 이미지 조회" />
       
       <Scene key="JoinCustomerType" hideNavBar component={JoinCustomerType} title="고객 구분" />
@@ -112,13 +112,14 @@ const PAGE = () => (
       
       {/* 파트너 회원가입 */}
       <Scene key="PartnerIndex" hideNavBar component={PartnerIndex} title="사업자정보 등록" type={ActionConst.RESET}/>
-      <Scene key="JoinInputBizLicense" initial hideNavBar component={JoinInputBizLicense} title="사업장 등록" type={ActionConst.RESET}/>
+      <Scene key="JoinInputBizLicense" hideNavBar component={JoinInputBizLicense} title="사업장 등록" type={ActionConst.RESET}/>
+      <Scene key="JoinInputPartnerInfo" hideNavBar component={JoinInputPartnerInfo} title="사업장 등록2" />
       <Scene key="JoinSetPartnerAddress" hideNavBar component={JoinSetPartnerAddress} title="" />
       <Scene key="JoinSearchPartnerAddress" hideNavBar component={JoinSearchPartnerAddress} title="" />
       
       <Scene key="JoinInputProdType"  hideNavBar component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
       <Scene key="JoinInputWorkHours" hideNavBar component={JoinInputWorkHours} title="근무시간" type={ActionConst.RESET}/>
-      <Scene key="JoinInputSettleAccount"  hideNavBar component={JoinInputSettleAccount} title="계좌등록" type={ActionConst.RESET}/>
+      <Scene key="JoinInputSettleAccount" hideNavBar component={JoinInputSettleAccount} title="계좌등록" type={ActionConst.RESET}/>
       
       <Scene key="LoginAccountType" hideNavBar component={LoginAccountType} title="로그인 구분" back onBack={() => Actions.InitPage()}/>
       <Scene key="LoginInputAccount" hideNavBar component={LoginInputAccount} title="이메일 로그인"/>

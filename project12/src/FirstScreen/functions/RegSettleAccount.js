@@ -5,10 +5,7 @@ import GetAccessToken from '../../Common/Functions/GetAccessToken';
 const API_URL = `${DOMAIN}coolinic/partners/account/info?`;
 
 function RegSettleAccountUrl(bank, account) {
-  return `${API_URL}
-  bankCd=${bank.bankCode}
-  &accountHolder=${account.name}
-  &accountNum=${account.number}
+  return `${API_URL}bankCd=${bank.bankCode}&accountHolder=${account.name}&accountNum=${account.number}
   &managerNm=''
   &managerPhoneNum=''`;
 }

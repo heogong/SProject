@@ -28,10 +28,6 @@ class ReactCamera extends Component {
     };
   }
 
-  static defaultProps = {
-    galleryBtn : false
-  }
-
   componentDidMount() {
     this.props.setTimeout(this.setTimePassed, 500);
   }
@@ -39,22 +35,6 @@ class ReactCamera extends Component {
   setTimePassed = () => {
     this.setState({timePassed: true});
   }
-
-  // 앨범에서 사진 가져오기
-  _handleAlbumPress = () => {
-    CameraRoll.getPhotos({
-        first: 20,
-        assetType: 'Photos',
-      })
-      .then(r => {
-        console.log(r);
-        //this.setState({ photos: r.edges });
-        Actions.ReactCameraAlbum({result : this.props.onResult, photos: r.edges})
-      })
-      .catch((err) => {
-         //Error Loading Images
-    });
-  };
 
   render() {
     if (!this.state.timePassed){
@@ -82,20 +62,6 @@ class ReactCamera extends Component {
                 <Text style={{fontSize: 14}}> SNAP </Text>
             </TouchableOpacity>
           </View>
-
-          {(this.props.galleryBtn) ? (
-            <View>
-              <TouchableHighlight onPress={this._handleAlbumPress}>
-                <View style={ {width: 130, height: 130} }>
-                    <ImageBackground source={require('../../../src/Common/Image/gallery.png')} style={{width: '100%', height: '100%'}}/>
-                </View>
-              </TouchableHighlight>
-            </View>
-          ) : (
-            <View/>
-          )}
-          
-
         </View>
       );
     }

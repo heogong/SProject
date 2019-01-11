@@ -32,8 +32,13 @@ class SearchAddress extends Component {
   }
 
   // 초기 데이터 1. 리덕스 값 조회 2. 현재 위치 조회 3. default 값 조회 
-  componentDidMount() {
-    this._getLocation();
+  async componentDidMount() {
+    if(this.props.addressName !== '') {
+      await this.setState({strAddress : this.props.addressName});
+      await this._setAddressInfoMap();
+    } else {
+      this._getLocation();
+    }
   }
 
   _getLocation() {
@@ -47,13 +52,13 @@ class SearchAddress extends Component {
             }
           })
         },
-        (error) => {alert(error.message)},
+        (error) => {console.log(error.message)},
         {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
     );
   }
 
   _onPress = (item) => {
-    console.log(item);
+    //console.log(item);
 
     Actions.pop(); // 뒤로가면서 기존페이지로 이동
     this.props.onResult({ result: item })
@@ -72,14 +77,28 @@ class SearchAddress extends Component {
     this.setState({ showMap: false });
   }
 
-  // 주소 정보 가져오기
+  // 주소 정보 가져오기 : 주소 정보 리스트 그리기
   _setAddressInfo = () => {
     GetAddress(this.state.strAddress).then(result => {
       //console.log(result.data.documents);
 
       this.setState({
-        data : result.data.documents.filter(address => address.address_type !== "REGION"),
+        //data : result.data.documents.filter(address => address.address_type !== "REGION"),
+        data : result.data.documents,
         showMap : false
+      })
+    })
+  }
+
+  // 주소 정보 가져오기 : 초기(주소값이 존재 할 경우) 백단 좌표 그려놓기
+  _setAddressInfoMap = () => {
+    GetAddress(this.state.strAddress).then(result => {
+      this.setState({
+        region : {
+          ...this.state.region,
+          latitude : Number(result.data.documents[0].y),
+          longitude : Number(result.data.documents[0].x)
+        }
       })
     })
   }
@@ -87,7 +106,7 @@ class SearchAddress extends Component {
   // 좌표값으로 주소 호출
   // error : this.state 값 변경 시 맵에 좌표값 초기화로 맵 이동 불가 현상 
   _GetAddressInfo = async () => {
-    console.log("_GetAddressInfo");
+    //console.log("_GetAddressInfo");
     GetAddressInfo(this.state.region).then(result => {
       GetCommonData(result, this._GetAddressInfo).then(async resultData => {
           if(resultData !== undefined) {

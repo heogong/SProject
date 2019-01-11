@@ -89,7 +89,7 @@ class InputSettleAccount extends Component {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
               console.log(resultData);
               if(ResultBool) {
-                Actions.partnerMain();
+                Actions.PartnerMain();
               } else {
                   alert(resultData.resultMsg);
               }
@@ -97,7 +97,6 @@ class InputSettleAccount extends Component {
       });
     });
   }
-
 
   render() {
     return (
@@ -146,7 +145,7 @@ class InputSettleAccount extends Component {
             onPress={ this._nextPress }
             disabled={ this.state.btnDisabled }>
             <Text>
-              NEXT
+              등록완료
             </Text>
           </CustomButton>
         </CustomBasicWrapper>

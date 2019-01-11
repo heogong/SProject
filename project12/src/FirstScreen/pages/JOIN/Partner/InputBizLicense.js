@@ -14,6 +14,7 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 import RegPartnerBizLicense from '~/FirstScreen/Functions/RegPartnerBizLicense';
 
 import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
 
 class InputBizLicense extends Component {
@@ -21,6 +22,7 @@ class InputBizLicense extends Component {
       super(props);
 
       this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
+      this.takePhotoTapped = this.takePhotoTapped.bind(this);
       
       this.state = {
           bizLicense : '',
@@ -29,34 +31,20 @@ class InputBizLicense extends Component {
       };
     }
 
-  // 카메라 on
-  _handleTakeLicense = () => {
-    Actions.reactCamera({onResult : this.onResult});
-  }
-  
-  onResult = async (result) => {
-    console.log("result.data : ",result.data);
-
-    await this.setState({ imgUri : result.data });
-
+  // NEXT : 파트너 제품 선택
+  _nextPress = () => {
     this._regBizLicense();
   }
 
-
-  // NEXT : 파트너 제품 선택
-  _nextPress = () => {
-    Actions.JoinInputProdType();
-  }
-
-  // 사업장 등록 API 호출
+  // 사업자등록증 API 호출
   _regBizLicense = () => {
-    RegPartnerBizLicense(this.state.imgUri).then(result => {
+    RegPartnerBizLicense(this.state.avatarSource.uri).then(result => {
       GetCommonData(result, this._regBizLicense).then(async resultData => {
         if(resultData !== undefined) {
           const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
           console.log(resultData);
           if(ResultBool) {
-            this.setState({ bizLicense : resultData.companyBusinessNum, btnDisabled : false });
+            Actions.JoinInputPartnerInfo({data : resultData.data});
           } else {
             alert(resultData.resultMsg);
           }
@@ -64,7 +52,6 @@ class InputBizLicense extends Component {
       });
     });
   }
-
 
   // 앨범에서 사진 가져오기
   selectPhotoTapped() {
@@ -94,11 +81,45 @@ class InputBizLicense extends Component {
   
           this.setState({
             avatarSource: source,
+            btnDisabled : false
           });
       }
     })
   };
 
+  // 촬영
+  takePhotoTapped() {
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true,
+      },
+    };
+
+    ImagePicker.launchCamera(options, (response) => {
+      console.log('Response = ', response);
+  
+        if (response.didCancel) {
+          console.log('User cancelled photo picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          let source = { uri: response.uri };
+  
+          // You can also display the image using data:
+          // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+  
+          this.setState({
+            avatarSource: source,
+            btnDisabled : false
+          });
+      }
+    })
+  };
 
   render() {
     return (
@@ -107,7 +128,7 @@ class InputBizLicense extends Component {
         title="사업자등록증 입력"
       >
         <View style={styles.container}>
-          <Image style={styles.avatar} source={this.state.avatarSource} />
+          <Image  resizeMode="contain" style={styles.avatar} source={this.state.avatarSource} />
         </View>
         <CustomButton
           block={ true }
@@ -122,7 +143,7 @@ class InputBizLicense extends Component {
           block={ true }
           info={ true }
           bordered={ true }
-          onPress={ this._handleTakeLicense }>
+          onPress={ this.takePhotoTapped.bind(this) }>
           <Text>
             사업자등록증 스캔
           </Text>
@@ -148,15 +169,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  avatarContainer: {
-    borderColor: '#9B9B9B',
-    borderWidth: 1 / PixelRatio.get(),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   avatar: {
-    width: 300,
-    height: 300,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
   },
 });
 

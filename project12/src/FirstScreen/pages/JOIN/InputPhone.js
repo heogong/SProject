@@ -70,7 +70,7 @@ class InputPhone extends Component {
           title="전화번호"
         >
           <Text>인증번호를 받을 휴대폰 번호</Text>
-            <Item rounded>
+            <Item regular>
               <Input 
                 onChangeText={ this._handleNumberChange }
                 value={this.state.text}

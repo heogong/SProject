@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { View } from "react-native"
+import { ActionSheet, Container, Button, Content, Item, Input, Icon, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
-import { ActionSheet, Container, Button, Content, Icon, Root, Text } from "native-base";
-import SelectButton from "~/Common/Components/SelectButton";
+import { Actions } from "react-native-router-flux";
+
+import GetCommonData from '~/Common/Functions/GetCommonData';
+import RegPartnerWork from '~/FirstScreen/Functions/RegPartnerWork';
+
 import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
-import { Actions } from "react-native-router-flux";
+import SelectButton from "~/Common/Components/SelectButton";
 
 class InputWorkHours extends Component {
     constructor(props) {
@@ -17,49 +21,69 @@ class InputWorkHours extends Component {
 
       this.state = {
           mockData : [
-              { text : "월", value : "aaaa" },
-              { text : "화", value : "bbb" },
-              { text : "수", value : "ccc" },
-              { text : "목", value : "ddd" },
-              { text : "금", value : "eee" },
-              { text : "토", value : "fff" },
-              { text : "일", value : "ggg" },
+              { text : "월", value : "mon" },
+              { text : "화", value : "tue" },
+              { text : "수", value : "wed" },
+              { text : "목", value : "thu" },
+              { text : "금", value : "fri" },
+              { text : "토", value : "sat" },
+              { text : "일", value : "sun" },
           ],
-          data : [],
-          hour : [],
-          selectIndex : 0,
-          startHourTitle : "시작시간",
-          endHourTitle : "종료시간",
+          data :[],
           fullBtnLight : true, //
           fullBtnWarning : false,
-          fullTimeYn : false
+          fullTimeYn : false,
+          workStTime : '0000',
+          workEdTime : '2400',
+          monWorkYn : 'N',
+          tueWorkYn : 'N',
+          wedWorkYn : 'N',
+          thuWorkYn : 'N',
+          friWorkYn : 'N',
+          satWorkYn : 'N',
+          sunWorkYn : 'N',
+          holidayWorkYn : 'N',
+          fullWorkYn : 'N'
         };
     }
 
-    // 시간 set
-    async componentDidMount() {
-        for(let i = 0; i < 24; i++) {
-            await this.setState({hour : this.state.hour.concat([ { text : i, value : i}]) });
+
+    // 선택된 데이터 값 변경 - 요일:Y
+    _setData = async (value) => {
+
+        switch (value) {
+            case 'mon' : this.setState({monWorkYn : 'Y'}); break;
+            case 'tue' : this.setState({tueWorkYn : 'Y'}); break;
+            case 'wed' : this.setState({wedWorkYn : 'Y'}); break;
+            case 'thu' : this.setState({thuWorkYn : 'Y'}); break;
+            case 'fri' : this.setState({friWorkYn : 'Y'}); break;
+            case 'sat' : this.setState({satWorkYn : 'Y'}); break;
+            case 'sun' : this.setState({sunWorkYn : 'Y'}); break;
+            default : this.setState({monWorkYn : 'Y'}); break;
         }
-    }
 
-    // 선택된 데이터 array 추가
-    _addDataArray = async (value) => {
         await this.setState({ data: this.state.data.concat([{ value: value}]) });
-
-        //await console.log("_addDataArray : ",this.state.data);
 
         this._chkFullBtn();
     }
     
-    // 해제된 데이터 array 제거
-    _removeDataArray = async (value) => {
+    // 해제된 데이터 값 변경 - 요일:N
+    _cancleData = async (value) => {
+        switch (value) {
+            case 'mon' : this.setState({monWorkYn : 'N'}); break;
+            case 'tue' : this.setState({tueWorkYn : 'N'}); break;
+            case 'wed' : this.setState({wedWorkYn : 'N'}); break;
+            case 'thu' : this.setState({thuWorkYn : 'N'}); break;
+            case 'fri' : this.setState({friWorkYn : 'N'}); break;
+            case 'sat' : this.setState({satWorkYn : 'N'}); break;
+            case 'sun' : this.setState({sunWorkYn : 'N'}); break;
+            default : this.setState({monWorkYn : 'N'}); break;
+        }
+
         await this.setState({ data: this.state.data.filter((item, sidx) => item.value !== value) });
 
-       // console.log("_removeDataArray : ",this.state.data);
        this._chkFullBtn();
     }
-
 
     _chkFullBtn = () => {
         console.log("_chkFullBtn : ",this.state.data.length);
@@ -79,8 +103,7 @@ class InputWorkHours extends Component {
 
     // next
     _nextBtn = () => {
-        console.log("result : ",this.state.data);
-        //this._regPartnerWork(); 개발중
+        this._regPartnerWork();
     }
 
     // 풀타임 버튼 클릭
@@ -90,7 +113,8 @@ class InputWorkHours extends Component {
         this.setState({
             fullBtnLight : (this.state.fullBtnLight) ? false : true,
             fullBtnWarning : (this.state.fullBtnWarning) ? false : true,
-            fullTimeYn : (this.state.fullTimeYn) ? false : true
+            fullTimeYn : (this.state.fullTimeYn) ? false : true,
+            fullWorkYn : (this.state.fullWorkYn == 'Y') ? 'N' : 'Y'
         });
 
         this.SelectButton.map((button) => {
@@ -101,7 +125,7 @@ class InputWorkHours extends Component {
 
     // 파트너 근무 정보 등록
     _regPartnerWork = () => {
-        RegPartnerWork(this.state.data).then(result => {
+        RegPartnerWork(this.state).then(result => {
             GetCommonData(result, this._regPartnerWork).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -118,88 +142,72 @@ class InputWorkHours extends Component {
 
     render() {
         return (
-            <Root>
-                <Container>
-                    <Content padder >
-                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                            {this.state.mockData.map((data, idx) => (
-                                <SelectButton 
-                                    value={data.value}
-                                    text={data.text}
-                                    addDataArray={ this._addDataArray }
-                                    removeDataArray={ this._removeDataArray }
-                                    key={ idx }
-                                    fullTime={ this.state.fullTimeYn }
-                                    ref={ ref => {
-                                        this.SelectButton[idx] = ref;
-                                    }}
-                                />
-                            ))}
-                        </View>
-                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                            <Button
-                                onPress={() =>
-                                    ActionSheet.show(
-                                    {
-                                        options: this.state.hour,
-                                        cancelButtonIndex: this.state.selectIndex,
-                                        title: "시작 시간"
-                                    },
-                                    buttonIndex => {
-                                        this.setState({ startHourTitle: this.state.hour[buttonIndex].text });
-                                        this.setState({ selectIndex : buttonIndex });
-                                        //this.setState({ selectYn : true });
-                                    }
-                                )}
-                                >
-                                <Text>{this.state.startHourTitle}</Text>
-                            </Button>
-                            <Button
-                                onPress={() =>
-                                    ActionSheet.show(
-                                    {
-                                        options: this.state.hour,
-                                        cancelButtonIndex: this.state.selectIndex,
-                                        title: "종료 시간"
-                                    },
-                                    buttonIndex => {
-                                        this.setState({ endHourTitle: this.state.hour[buttonIndex].text });
-                                        this.setState({ selectIndex : buttonIndex });
-                                        //this.setState({ selectYn : true });
-                                    }
-                                )}
-                                >
-                                <Text>{this.state.endHourTitle}</Text>
-                            </Button>
-                            <CustomButton
-                                block={ true }
-                                light={ this.state.fullBtnLight }
-                                warning= { this.state.fullBtnWarning }
-                                icon={ true }
-                                styleWidth={ false }
-                                marginSize={ 0 }
-                                onPress={ this._handleFullBtnClick }
-                            >
-                                <Icon name='md-build' />
-                                <Text>
-                                    풀타임
-                                </Text>
-                            </CustomButton>
-                        </View>
-                    
+            <Container>
+                <Content padder >
+                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                        {this.state.mockData.map((data, idx) => (
+                            <SelectButton 
+                                value={data.value}
+                                text={data.text}
+                                addDataArray={ this._setData }
+                                removeDataArray={ this._cancleData }
+                                key={ idx }
+                                fullTime={ this.state.fullTimeYn }
+                                ref={ ref => {
+                                    this.SelectButton[idx] = ref;
+                                }}
+                            />
+                        ))}
+                    </View>
+                    {/* <View style={{flexDirection: 'row', justifyContent: 'center'}}> */}
+
+                        <Item regular>
+                            <Input 
+                                onChangeText={ (text) => this.setState({workStTime : text}) }
+                                value={this.state.text}
+                                placeholder='00'
+                                keyboardType='numeric'
+                                maxLength={4}
+                            />
+                        </Item>
+                        <Item regular>
+                            <Input 
+                                onChangeText={ (text) => this.setState({workEdTime : text}) }
+                                value={this.state.text}
+                                placeholder='24'
+                                keyboardType='numeric'
+                                maxLength={4}
+                            />
+                        </Item>
+
                         <CustomButton
                             block={ true }
-                            info={ true }
-                            onPress={ this._nextBtn }
-                            disabled={ this.state.btnDisabled }>
+                            light={ this.state.fullBtnLight }
+                            warning= { this.state.fullBtnWarning }
+                            icon={ true }
+                            styleWidth={ false }
+                            marginSize={ 0 }
+                            onPress={ this._handleFullBtnClick }
+                        >
+                            <Icon name='md-build' />
                             <Text>
-                                NEXT
+                                풀타임
                             </Text>
                         </CustomButton>
-                        
-                    </Content>
-                </Container>
-            </Root>
+                    {/* </View> */}
+                
+                    <CustomButton
+                        block={ true }
+                        info={ true }
+                        onPress={ this._nextBtn }
+                        disabled={ this.state.btnDisabled }>
+                        <Text>
+                            다음단계로 이동 (4/5)
+                        </Text>
+                    </CustomButton>
+                    
+                </Content>
+            </Container>
         )
     }
 }

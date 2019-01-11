@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { setBizId, setBizAddress, setBizAddressDsc } from '~/Redux/Actions';
 
 import DrawMap from '~/Main/Components/DrawMap';
-import RegBizPlace from '~/Main/Functions/RegBizPlace';
+import RegPartnerPlace from '~/FirstScreen/Functions/RegPartnerPlace';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
@@ -56,7 +56,7 @@ class SetAddress extends Component {
               }
             })
           },
-          (error) => {alert(error.message)},
+          (error) => {console.log(error.message)},
           {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
         );
     }
@@ -69,7 +69,10 @@ class SetAddress extends Component {
 
     // param : this.onResult => 주소 결과 값 리턴
     _goSearchAddress = () => (
-        Actions.JoinSearchPartnerAddress({onResult : this.onResult}) 
+        Actions.JoinSearchPartnerAddress({
+            onResult : this.onResult, 
+            addressName : this.state.addressName
+        }) 
     )
 
     // 주소검색 후 결과 데이터 
@@ -91,29 +94,28 @@ class SetAddress extends Component {
         });
     }
 
-    // 사업장 저장 버튼 클릭
+    // 파트너 사업장 버튼 클릭
     _saveButton() {
-       this._regBusiness();
+       this._regPartnerPlace();
     }
 
     // 사업장 등록
-    _regBusiness = async () => {
+    _regPartnerPlace = async () => {
         await this.props.onSetBizAddress(this.state.addressObj);  // 리덕스 주소 오브젝트 SET
         //await this.props.onSetBizAddressDsc(this.state.detailAddressName);  // 리덕스 상세주소 SET
 
-        RegBizPlace(this.props.value).then(async result => {
+        console.log(this.props.value);
+
+        RegPartnerPlace(this.props.value).then(async result => {
             GetCommonData(result, this._regBusiness).then(async resultData => {
                 if(resultData !== undefined) {
+                    console.log(resultData.data);
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
                         await this.props.onSetBizId(resultData.bizPlaceId); // 사업장 ID 리덕스 SET
-                        Actions.InputProdType();
+                         Actions.JoinInputProdType();
                     } else {
-                        Toast.show({
-                            text: result.resultMsg,
-                            type: "danger",
-                            buttonText: '확인'
-                        })
+                       alert(resultData.resultMsg);
                     }
                 }
             });

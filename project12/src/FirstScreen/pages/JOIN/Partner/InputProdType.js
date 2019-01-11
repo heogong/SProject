@@ -50,8 +50,8 @@ class InputProdType extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        //Actions.JoinInputWorkHours();
-                        Actions.JoinSetPartnerAddress();
+                        Actions.JoinInputWorkHours();
+                        // Actions.JoinSetPartnerAddress();
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -62,7 +62,8 @@ class InputProdType extends Component {
 
      // 선택된 데이터 array 추가
     _addDataArray = async (value) => {
-        await this.setState({ selectData: this.state.selectData.concat([{ prdTypeIds: value }]) });
+        await this.setState({ selectData: this.state.selectData.concat([{ prdTypeId : value }]) 
+        });
         //await this.setState({ selectData: this.state.selectData.concat([value]) });
 
         console.log("_addDataArray : ",this.state.selectData);
@@ -71,7 +72,7 @@ class InputProdType extends Component {
     
     // 해제된 데이터 array 제거
     _removeDataArray = async (value) => {
-        await this.setState({ selectData: this.state.selectData.filter((item, sidx) => item.prdTypeIds !== value) });
+        await this.setState({ selectData: this.state.selectData.filter((item, sidx) => item.prdTypeId !== value) });
         //await this.setState({ selectData: this.state.selectData.filter((item, sidx) => item !== value) });
 
         console.log("_removeDataArray : ",this.state.selectData);
@@ -118,7 +119,7 @@ class InputProdType extends Component {
                         onPress={ this._nextPress }
                         disabled={ this.state.btnDisabled }>
                         <Text>
-                            NEXT
+                            다음단계로 이동 (3/5)
                         </Text>
                     </CustomButton>
                 </View>

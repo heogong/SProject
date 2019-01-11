@@ -27,3 +27,4 @@ export const CLIENT = "CLIENT";
 export const PARTNER = "PARTNER";
 export const CLIENT_USER = "USER_TYPE_CD_01";
 export const PARTNER_USER = "USER_TYPE_CD_02";
+export const COMPANY_TYPE_CD = "PATR_TYPE_CD_01";

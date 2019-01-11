@@ -14,6 +14,8 @@ export default class PageOne extends Component {
     try {
       const AccessToken = await AsyncStorage.getItem('AccessToken');
       const RefreshToken = await AsyncStorage.getItem('RefreshToken');
+
+      console.log(AccessToken);
       // if (AccessToken !== null) {
       //   // We have data!!
       //   console.log(AccessToken);
