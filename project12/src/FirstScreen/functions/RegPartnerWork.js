@@ -8,7 +8,7 @@ function RegPartnerWorkUrl() {
   return `${API_URL}`
 }
 
-const RegPartnerWork = async (work) => {
+const RegPartnerWork = async (work, businessDay) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
@@ -16,15 +16,15 @@ const RegPartnerWork = async (work) => {
 
   data.append('workStTime', `${work.stHour}${work.stMin}`);
   data.append('workEdTime', `${work.edHour}${work.edMin}`);
-  data.append('monWorkYn', work.monWorkYn);
-  data.append('tueWorkYn', work.tueWorkYn);
-  data.append('wedWorkYn', work.wedWorkYn);
-  data.append('thuWorkYn', work.thuWorkYn);
-  data.append('friWorkYn', work.friWorkYn);
-  data.append('satWorkYn', work.satWorkYn);
-  data.append('sunWorkYn', work.sunWorkYn);
-  data.append('holidayWorkYn', work.holidayWorkYn);
-  data.append('fullWorkYn', work.fullWorkYn);
+  data.append('monWorkYn', businessDay.monWorkYn);
+  data.append('tueWorkYn', businessDay.tueWorkYn);
+  data.append('wedWorkYn', businessDay.wedWorkYn);
+  data.append('thuWorkYn', businessDay.thuWorkYn);
+  data.append('friWorkYn', businessDay.friWorkYn);
+  data.append('satWorkYn', businessDay.satWorkYn);
+  data.append('sunWorkYn', businessDay.sunWorkYn);
+  data.append('holidayWorkYn', businessDay.holidayWorkYn);
+  data.append('fullWorkYn', businessDay.fullWorkYn);
 
   return fetch(RegPartnerWorkUrl(), {
     method: 'POST',

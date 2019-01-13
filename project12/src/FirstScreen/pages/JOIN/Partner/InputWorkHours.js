@@ -18,98 +18,101 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 const ST_TYPE = 'work_st'; // 시작 시간 클릭 여부
 const ED_TYPE = 'work_ed'; // 종료 시간 클릭 여부
+const MOCK_DATA = [
+    { text : "월", value : "mon" },
+    { text : "화", value : "tue" },
+    { text : "수", value : "wed" },
+    { text : "목", value : "thu" },
+    { text : "금", value : "fri" },
+    { text : "토", value : "sat" },
+    { text : "일", value : "sun" },
+]
+let BUSINESS_DAY = {
+    monWorkYn : 'N',
+    tueWorkYn : 'N',
+    wedWorkYn : 'N',
+    thuWorkYn : 'N',
+    friWorkYn : 'N',
+    satWorkYn : 'N',
+    sunWorkYn : 'N',
+    holidayWorkYn : 'N',
+    fullWorkYn : 'N'
+}
+
+let TIME_TYPE = ST_TYPE;
+let SELECT_BUTTON = []; // 요일 버튼 객체 배열 
+let SELECT_DATA = []; // 선택된 날짜 배열
 
 class InputWorkHours extends Component {
     constructor(props) {
       super(props);
 
       this.DateTimePicker = null;
-      this.onPress = this._showDateTimePicker.bind(this);
+      this._showDateTimePicker = this._showDateTimePicker.bind(this);
+      this._handleFullBtnClick = this._handleFullBtnClick.bind(this);
 
-      this.SelectButton = []; // 선택된 요일
+    //   this.SelectButton = []; // 선택된 요일
 
       this.state = {
-          mockData : [
-              { text : "월", value : "mon" },
-              { text : "화", value : "tue" },
-              { text : "수", value : "wed" },
-              { text : "목", value : "thu" },
-              { text : "금", value : "fri" },
-              { text : "토", value : "sat" },
-              { text : "일", value : "sun" },
-          ],
-          data :[],
           fullBtnLight : true, // 풀타임 비활성화
           fullBtnWarning : false, // 풀타임 활성화
           btnDisabled : true, // 다음단계 버튼 활성화 여부
-          monWorkYn : 'N',
-          tueWorkYn : 'N',
-          wedWorkYn : 'N',
-          thuWorkYn : 'N',
-          friWorkYn : 'N',
-          satWorkYn : 'N',
-          sunWorkYn : 'N',
-          holidayWorkYn : 'N',
-          fullWorkYn : 'N',
           isDateTimePickerVisible: false, // 타임 picker 보임 여부
           setTime : '01/01/0000 09:00:00', // 타임 picker 기본 데이터
           stHour : '09',
           stMin : '00',
           edHour : '18',
           edMin : '00',
-          timeType : ST_TYPE, // 시작시간, 종료시간 구분 값
           spinner: false // 로딩
         };
     }
 
     // 선택된 데이터 값 변경 - 요일:Y
-    _setData = async (value) => {
+    _setData = (value) => {
 
         switch (value) {
-            case 'mon' : this.setState({monWorkYn : 'Y'}); break;
-            case 'tue' : this.setState({tueWorkYn : 'Y'}); break;
-            case 'wed' : this.setState({wedWorkYn : 'Y'}); break;
-            case 'thu' : this.setState({thuWorkYn : 'Y'}); break;
-            case 'fri' : this.setState({friWorkYn : 'Y'}); break;
-            case 'sat' : this.setState({satWorkYn : 'Y'}); break;
-            case 'sun' : this.setState({sunWorkYn : 'Y'}); break;
-            default : this.setState({monWorkYn : 'Y'}); break;
+            case 'mon' : BUSINESS_DAY.monWorkYn = 'Y'; break;
+            case 'tue' : BUSINESS_DAY.tueWorkYn = 'Y'; break;
+            case 'wed' : BUSINESS_DAY.wedWorkYn = 'Y'; break;
+            case 'thu' : BUSINESS_DAY.thuWorkYn = 'Y'; break;
+            case 'fri' : BUSINESS_DAY.friWorkYn = 'Y'; break;
+            case 'sat' : BUSINESS_DAY.satWorkYn = 'Y'; break;
+            case 'sun' : BUSINESS_DAY.sunWorkYn = 'Y'; break;
+            default : BUSINESS_DAY.monWorkYn = 'Y'; break;
         }
 
-        await this.setState({ data: this.state.data.concat([{ value: value}]) });
-
+        SELECT_DATA = SELECT_DATA.concat([{ value: value}]);
         this._chkFullBtn();
     }
     
     // 해제된 데이터 값 변경 - 요일:N
-    _cancleData = async (value) => {
+    _cancleData = (value) => {
         switch (value) {
-            case 'mon' : this.setState({monWorkYn : 'N'}); break;
-            case 'tue' : this.setState({tueWorkYn : 'N'}); break;
-            case 'wed' : this.setState({wedWorkYn : 'N'}); break;
-            case 'thu' : this.setState({thuWorkYn : 'N'}); break;
-            case 'fri' : this.setState({friWorkYn : 'N'}); break;
-            case 'sat' : this.setState({satWorkYn : 'N'}); break;
-            case 'sun' : this.setState({sunWorkYn : 'N'}); break;
-            default : this.setState({monWorkYn : 'N'}); break;
+            case 'mon' : BUSINESS_DAY.monWorkYn = 'N'; break;
+            case 'tue' : BUSINESS_DAY.tueWorkYn = 'N'; break;
+            case 'wed' : BUSINESS_DAY.wedWorkYn = 'N'; break;
+            case 'thu' : BUSINESS_DAY.thuWorkYn = 'N'; break;
+            case 'fri' : BUSINESS_DAY.friWorkYn = 'N'; break;
+            case 'sat' : BUSINESS_DAY.satWorkYn = 'N'; break;
+            case 'sun' : BUSINESS_DAY.sunWorkYn = 'N'; break;
+            default : BUSINESS_DAY.monWorkYn = 'N'; break;
         }
-
-        await this.setState({ data: this.state.data.filter((item, sidx) => item.value !== value) });
+        SELECT_DATA = SELECT_DATA.filter((item, sidx) => item.value !== value);
         this._chkFullBtn();
     }
 
     // 요일 풀타임 여부 확인
     _chkFullBtn = () => {
-        //console.log("_chkFullBtn : ",this.state.data.length);
+        // console.log("_chkFullBtn : ",SELECT_DATA.length);
 
-        if(this.state.data.length == 7) {
+        if(SELECT_DATA.length == 7) {
             this.setState({
                 fullBtnLight : false,
                 fullBtnWarning : true,
                 btnDisabled : false
             });
         } else {
-            if(this.state.data.length == 0) {
+            if(SELECT_DATA.length == 0) {
                 this.setState({
                     btnDisabled : true
                 });
@@ -124,34 +127,33 @@ class InputWorkHours extends Component {
     }
 
     // 풀타임 버튼 클릭
-    _handleFullBtnClick = () => {
-        // console.log(this.SelectButton);
-        //this.setState({spinner : true});
-
-        const {fullBtnLight, fullBtnWarning, fullWorkYn, holidayWorkYn} = this.state;
+    _handleFullBtnClick() {
+        // this.setState({spinner : true });
+        const { fullBtnLight, fullBtnWarning } = this.state;
 
         this.setState({
             fullBtnLight : (fullBtnLight) ? false : true,
             fullBtnWarning : (fullBtnWarning) ? false : true,
-            fullWorkYn : (fullWorkYn == 'Y') ? 'N' : 'Y',
-            holidayWorkYn : (holidayWorkYn == 'Y') ? 'N' : 'Y',
             stHour : '00',
             stMin : '00',
             edHour : '24',
             edMin : '00',
         });
 
+        BUSINESS_DAY.fullWorkYn = ( BUSINESS_DAY.fullWorkYn == 'Y') ? 'N' : 'Y';
+        BUSINESS_DAY.holidayWorkYn = ( BUSINESS_DAY.holidayWorkYn == 'Y') ? 'N' : 'Y';
+
         if(this.state.fullBtnWarning) {
-            this.SelectButton.map((button) => {
+            SELECT_BUTTON.map((button) => {
                 button._handleFullRemoveBtn();
             });
         } else {
-            this.SelectButton.map((button) => {
+            SELECT_BUTTON.map((button) => {
                 button._handleFullAddBtn();
             });
         }
 
-        //this.setState({spinner : false });
+        // this.setState({spinner : false });
     }
 
     // 타임 picker 표시
@@ -163,15 +165,16 @@ class InputWorkHours extends Component {
           this.setState({ 
             isDateTimePickerVisible: true,
             setTime : `01/01/0000 ${stHour}:${stMin}:00`,
-            timeType : type
+            // timeType : type
           });
         } else { // 종료 시간 클릭 시
           this.setState({ 
             isDateTimePickerVisible: true,
             setTime : `01/01/0000 ${edHour}:${edMin}:00`,
-            timeType : type
+            // timeType : type
           });
         }
+        TIME_TYPE = type;
     }
 
     // 타임 picker 숨김
@@ -202,8 +205,10 @@ class InputWorkHours extends Component {
 
     // 파트너 근무 정보 등록
     _regPartnerWork = () => {
-        console.log(this.state);
-        RegPartnerWork(this.state).then(result => {
+        //console.log(this.state);
+        console.log(BUSINESS_DAY);
+        
+        RegPartnerWork(this.state, BUSINESS_DAY).then(result => {
             GetCommonData(result, this._regPartnerWork).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -234,7 +239,7 @@ class InputWorkHours extends Component {
             <Container>
                 <Content padder >
                     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                        {this.state.mockData.map((data, idx) => (
+                        { MOCK_DATA.map((data, idx) => (
                             <SelectButton 
                                 value={data.value}
                                 text={data.text}
@@ -242,7 +247,7 @@ class InputWorkHours extends Component {
                                 removeDataArray={ this._cancleData }
                                 key={ idx }
                                 ref={ ref => {
-                                    this.SelectButton[idx] = ref;
+                                    SELECT_BUTTON[idx] = ref;
                                 }}
                             />
                         ))}
@@ -305,7 +310,7 @@ class InputWorkHours extends Component {
                     datePickerModeAndroid='spinner'
                     is24Hour={true}
                     date={ new Date(this.state.setTime) }
-                    type={this.state.timeType}
+                    type={ TIME_TYPE }
                     ref={ref => {
                         this.DateTimePicker = ref;
                     }}

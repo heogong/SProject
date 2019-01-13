@@ -7,11 +7,11 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import GetProduct from '~/Main/Functions/GetProduct'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import GetAfterServiceCase from '~/Main/Functions/GetAfterServiceCase';
-import RegAfterService from '~/Main/Functions/RegAfterService';
 
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 import ProductShowCase from '~/Main/Components/ProductShowCase';
+import { Actions } from "react-native-router-flux";
 
 class ApplyBusinessProduct extends Component {
     constructor(props) {
@@ -27,13 +27,13 @@ class ApplyBusinessProduct extends Component {
         asRecvDsc : null,
         etcComment : null,
         asCaseData: [], // 제품 증상 데이터
-        selected2: undefined
+        selected: undefined
       };
     }
 
-    onValueChange2(value) {
+    onValueChange(value) {
         this.setState({
-            selected2: value
+            selected: value
         });
     }
 
@@ -81,39 +81,18 @@ class ApplyBusinessProduct extends Component {
         });
     }
 
-    //clientPrdId, asItemId, asRecvDsc, etcComment    
-    // AS 신청 API 호출
-    _regAfterService = () => {
-        RegAfterService(
-            this.props.clientPrdId,
-            this.state.selected2,
-            this.state.asRecvDsc, 
-            this.state.etcComment).then(result => {
-            GetCommonData(result, this._regAfterService).then(async resultData => {
-                if(resultData !== undefined) {
-                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    console.log(resultData);
-                    if(ResultBool) {
-                    } else {
-                        alert(resultData.resultMsg);
-                    }
-                }
-            });
-        });
-    }
-
     // 입력 완료 버튼
-    _submitAfterService = () => {
-        Alert.alert(
-            '',
-            '입력하신 사항이 정확한가요?',
-            [
-              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-              {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-              {text: '네', onPress: () => this._regAfterService() },
-            ],
-            { cancelable: false }
-        )
+    _nextPress = () => {
+        const {asCaseData, selected, asRecvDsc, etcComment} = this.state
+        asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm
+
+        Actions.AfterServiceApplyProductCheck({
+            clientPrdId: this.props.clientPrdId,
+            asItemNm : asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm,
+            asItemId : selected,
+            asRecvDsc : asRecvDsc,
+            etcComment : etcComment
+        });
     }
 
     render() {
@@ -138,8 +117,8 @@ class ApplyBusinessProduct extends Component {
                     placeholder="Select your SIM"
                     placeholderStyle={{ color: "#bfc6ea" }}
                     placeholderIconColor="#007aff"
-                    selectedValue={this.state.selected2}
-                    onValueChange={this.onValueChange2.bind(this)}
+                    selectedValue={this.state.selected}
+                    onValueChange={this.onValueChange.bind(this)}
                 >
                 {this.state.asCaseData.map((asCase) => 
                     <Picker.Item label={asCase.asItemNm} value={asCase.asItemId} />
@@ -166,7 +145,7 @@ class ApplyBusinessProduct extends Component {
                     block={ true }
                     info={ true }
                     bordered={ true }
-                    onPress={this._submitAfterService}>
+                    onPress={this._nextPress}>
                     <Text>
                         입력완료
                     </Text>

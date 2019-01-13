@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Alert } from "react-native"
+import { AsyncStorage, Alert, KeyboardAvoidingView } from "react-native"
 import { Item, Input, Root, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE, CLIENT_USER } from '~/Common/Blend';
@@ -107,11 +107,11 @@ class InputAccount extends Component {
   
   render() {
     return (
-      <Root>
+      <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
         <CustomBasicWrapper
           title="이메일 로그인"
         >
-          <Item rounded>
+          <Item regular>
             <Input
               onChangeText={ this._handleEmailChange }
               value={ this.state.text }
@@ -119,7 +119,7 @@ class InputAccount extends Component {
               autoFocus={ true }
             />
           </Item>
-          <Item rounded>
+          <Item regular>
             <Input
               secureTextEntry={ true }
               onChangeText={ this._handlePasswdChange }
@@ -138,7 +138,7 @@ class InputAccount extends Component {
             </Text>
           </CustomButton>
         </CustomBasicWrapper>
-      </Root>
+      </KeyboardAvoidingView>
     )
   }
 }
