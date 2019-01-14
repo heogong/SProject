@@ -39,11 +39,11 @@ class ApplyBusinessProduct extends Component {
     }
 
     componentWillMount() {
-        this._getProduct();
+        this._getAfterServiceCase();
     }
    
     componentDidMount() {
-        this._getAfterServiceCase();
+        this._getProduct();
     }
 
     // 등록된 사업장 제품 조회
@@ -72,6 +72,7 @@ class ApplyBusinessProduct extends Component {
             GetCommonData(result, this._getProduct).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData.data);
                     if(ResultBool) {
                         this.setState({asCaseData : resultData.data});
                     } else {
@@ -141,9 +142,10 @@ class ApplyBusinessProduct extends Component {
                     selectedValue={this.state.selected}
                     onValueChange={this.onValueChange.bind(this)}
                 >
-                {this.state.asCaseData.map((asCase) => 
-                    <Picker.Item label={asCase.asItemNm} value={asCase.asItemId} />
-                )}
+                    <Picker.Item label=" == 증상 선택 == " value={ -1 } />
+                    {this.state.asCaseData.map((asCase) => 
+                        <Picker.Item label={asCase.asItemNm} value={asCase.asItemId} />
+                    )}
                 </Picker>
 
                 <Textarea 
@@ -166,6 +168,7 @@ class ApplyBusinessProduct extends Component {
                     block={ true }
                     info={ true }
                     bordered={ true }
+                    disabled={ (this.state.selected == -1) ? true : false }
                     onPress={this._regAfterService}>
                     <Text>
                         입력완료

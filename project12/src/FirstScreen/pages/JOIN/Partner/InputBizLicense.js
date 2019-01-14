@@ -128,7 +128,7 @@ class InputBizLicense extends Component {
         title="사업자등록증 입력"
       >
         <View style={styles.container}>
-          <Image  resizeMode="contain" style={styles.avatar} source={this.state.avatarSource} />
+          <Image resizeMode="contain" style={styles.avatar} source={this.state.avatarSource} />
         </View>
         <CustomButton
           block={ true }

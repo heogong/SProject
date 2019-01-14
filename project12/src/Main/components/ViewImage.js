@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import { View, ImageBackground, Image, StyleSheet } from 'react-native';
-import { Text } from "native-base";
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Icon, Text } from "native-base";
 
 import { Actions } from 'react-native-router-flux';
-import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
-
 
 class ViewImage extends Component {
   constructor(props) { 
@@ -22,15 +20,16 @@ class ViewImage extends Component {
 
   render() {
     return (
-        // <CustomBasicWrapper
-        //     title={ this.props.title }
-        //     rightBtn={ this.props.rightBtn }
-        //     rightAction={ this.props.rightAction }
-        // >
-        <View>
-          <Image source={{uri : this.state.imgUri}} style={styles.container}/>
-        </View>
-      // </CustomBasicWrapper>
+      <View style={{flex: 1, backgroundColor: '#fc0', flexDirection: 'column',}}>
+        <Image
+            resizeMode={'cover'}
+            style={{ width: '100%', height: '100%', backgroundColor: 'red'} }
+            source={{uri: this.state.imgUri}}
+        /> 
+        <TouchableOpacity style={ styles.exitButton } onPress={() => Actions.pop() } >
+          <Icon name="md-close"  />
+        </TouchableOpacity>
+      </View>
     );
   }
 }
@@ -38,10 +37,23 @@ class ViewImage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
-    height: '100%',
+    backgroundColor: '#F5FCFF',
+  },
+  avatar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
+  },
+  exitButton: {
+    position: 'absolute',
+    left: 10,
+    right: 0,
+    top: 7,
+    bottom: 0
   }
 });
 
