@@ -4,24 +4,29 @@ import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
 const API_URL = `${DOMAIN}coolinic/payment/card?`;
 
-function RegCardUrl(CARD) {
-  return `${API_URL}cardNumber=${CARD.cardNumber}
-  &expiry=20${CARD.vaildTermYear}-${CARD.vaildTermMonth}
-  &birth=${CARD.birthDay}
-  &pwd2digit=${CARD.passwd}`;
+function RegCardUrl() {
+  return `${API_URL}`;
 }
 
 const RegCard = async (CARD) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  console.log(RegCardUrl(CARD));
-  return fetch(RegCardUrl(CARD), {
+  const data = new FormData();
+
+  data.append('cardNumber', CARD.cardNumber);
+  data.append('expiry', `20${CARD.vaildTermYear}-${CARD.vaildTermMonth}`);
+  data.append('birth', CARD.birthDay);
+  data.append('pwd2digit', CARD.passwd);
+
+  return fetch(RegCardUrl(), {
     method : 'post',
     headers: {
-      "Authorization": ACCESS_TOKEN
+      "Authorization": ACCESS_TOKEN,
       //"Authorization": TEST_ACCESS_TOKEN
-    }
+      "Content-Type": "multipart/form-data"
+    },
+    body: data
   }).then((response) => response.json()).then(async (responseJson) => {
     // 액세스 토큰 만료
     if(responseJson.error == INVAILD_TOKEN) {

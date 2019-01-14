@@ -7,6 +7,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import GetProduct from '~/Main/Functions/GetProduct'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import GetAfterServiceCase from '~/Main/Functions/GetAfterServiceCase';
+import RegAfterService from '~/Main/Functions/RegAfterService';
 
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
@@ -81,17 +82,37 @@ class ApplyBusinessProduct extends Component {
         });
     }
 
-    // 입력 완료 버튼
-    _nextPress = () => {
+    // AS 신청 API 호출
+    _regAfterService = () => {
         const {asCaseData, selected, asRecvDsc, etcComment} = this.state
-        asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm
 
-        Actions.AfterServiceApplyProductCheck({
-            clientPrdId: this.props.clientPrdId,
-            asItemNm : asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm,
-            asItemId : selected,
-            asRecvDsc : asRecvDsc,
-            etcComment : etcComment
+        RegAfterService(
+            this.props.clientPrdId,
+            selected,
+            asRecvDsc, 
+            etcComment).then(result => {
+            GetCommonData(result, this._regAfterService).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+                        // 증상내역 text
+                        asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm;
+                        // 신청 내역 확인 페이지 이동
+                        Actions.AfterServiceApplyProductCheck({
+                            clientPrdId: this.props.clientPrdId,
+                            asItemNm : asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm,
+                            asItemId : selected,
+                            asRecvDsc : asRecvDsc,
+                            etcComment : etcComment,
+                            asRecvId : resultData.data.asRecvId
+                        });
+                       
+                    } else {
+                        alert(resultData.resultMsg);
+                    }
+                }
+            });
         });
     }
 
@@ -145,7 +166,7 @@ class ApplyBusinessProduct extends Component {
                     block={ true }
                     info={ true }
                     bordered={ true }
-                    onPress={this._nextPress}>
+                    onPress={this._regAfterService}>
                     <Text>
                         입력완료
                     </Text>

@@ -77,7 +77,7 @@ import AfterServiceProdTypeList from './src/Main/Pages/Client/AfterService/ListB
 import AfterServiceProdList from './src/Main/Pages/Client/AfterService/ListBusinessProduct'
 import AfterServiceApplyProduct from './src/Main/Pages/Client/AfterService/ApplyBusinessProduct'
 import AfterServiceApplyProductCheck from './src/Main/Pages/Client/AfterService/ApplyCheckAfterService'
-
+import AfterServiceApplyProductComplete from './src/Main/Pages/Client/AfterService/ApplyAfterServiceComplete'
 
 // import ViewBusinessProduct from './src/Main/Pages/Client/MyProduct/ViewBusinessProduct'
 
@@ -184,6 +184,7 @@ const PAGE = () => (
               <Scene key="AfterServiceProdList" hideNavBar component={AfterServiceProdList} title="제품 조회"/>
               <Scene key="AfterServiceApplyProduct" hideNavBar component={AfterServiceApplyProduct} title="AS 신청"/>
               <Scene key="AfterServiceApplyProductCheck" hideNavBar component={AfterServiceApplyProductCheck} title="AS 신청 확인"/>
+              <Scene key="AfterServiceApplyProductComplete" hideNavBar component={AfterServiceApplyProductComplete} title="AS 신청 완료"/>
             </Stack>
 
             {/* 나의제품 */}

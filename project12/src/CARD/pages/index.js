@@ -16,7 +16,7 @@ export default class CardIndex extends Component {
       [
         // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
         {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: '네', onPress: () => Actions.BusinessIndex() },
+        {text: '네', onPress: () => Actions.ClientIndex() },
       ],
       { cancelable: false }
     )

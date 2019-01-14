@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 import { Text } from "native-base";
 
 import { KAKAO_CODE, SUCCESS_RETURN_CODE, CLIENT_USER } from '~/Common/Blend';
@@ -45,9 +45,11 @@ class KakaoLogin extends Component {
   // 카카오 토큰값 - 시스템 (쿨비즈?) 로그인 하기
   _SystmeLogin() {
     SnsLogin(this.props.tokenObj, KAKAO_CODE).then(async result => {
-      console.log(result);
       const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
       if(ResultBool) {
+        await AsyncStorage.setItem('AccessToken', result.data.access_token); // AsyncStorage 토큰 저장
+        await AsyncStorage.setItem('RefreshToken', result.data.refresh_token); // AsyncStorage 갱신 토큰 저장
+
         // 사용자 정보 
         this._getUserInfo();
       } else {

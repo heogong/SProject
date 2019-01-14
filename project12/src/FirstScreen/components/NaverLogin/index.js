@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 import { Text } from "native-base";
 
 import { NaverLogin, getProfile } from 'react-native-naver-login';
@@ -54,7 +54,11 @@ class Page extends Component {
   async _SystmeLogin() {
     SnsLogin(this.props.tokenObj, NAVER_CODE).then(async result => {
       const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+      console.log(result);
       if(ResultBool) {
+        await AsyncStorage.setItem('AccessToken', result.data.access_token); // AsyncStorage 토큰 저장
+        await AsyncStorage.setItem('RefreshToken', result.data.refresh_token); // AsyncStorage 갱신 토큰 저장
+
         // 사용자 정보 가져오기
         this._getUserInfo()
       } else {

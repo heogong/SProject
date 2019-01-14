@@ -23,6 +23,10 @@ export default class InputCardInfo extends Component {
         birthDay: ''
     };
   }
+
+  static defaultProps = {
+    regAsCard : false // as신청시 카드 등록 여부 
+  }
   
   scanCard() {
     const config = {
@@ -51,8 +55,15 @@ export default class InputCardInfo extends Component {
           console.log(resultData);
           const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
           if(ResultBool) {
-            await alert("등록완료");
-            await Actions.BusinessIndex(); // 사업장 제품 등록
+            if(this.props.regAsCard) {
+              // Actions.pop({ refresh: { data: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' }})
+              // Actions.pop({ refresh: { data: 'Data after pop', title: 'title after pop' }, key: 'AfterServiceApplyProductCheck' });
+              // Actions.popTo("AfterServiceApplyProductCheck");
+              this.props.getListCard();
+              Actions.pop();
+            } else{
+              Actions.ClientIndex(); // 사업장 제품 등록
+            }
           } else {
             alert(resultData.resultMsg);
           }
@@ -80,9 +91,6 @@ export default class InputCardInfo extends Component {
 
     this.setState({cardNumber : resultValue})
   }
-
-
-  
   
   render() {
     return (
