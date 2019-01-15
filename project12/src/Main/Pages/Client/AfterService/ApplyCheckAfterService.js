@@ -122,77 +122,77 @@ class ApplyCheckAfterService extends Component {
     render() {
         return (
             <Root>
-            <CustomBlockWrapper
-                title="A/S 신청내역 확인"
-            >
-                <View>
-                    <Text>사업장 : {this.state.data.bplace.bplaceNm}</Text>
-                    <Text>주소 : {this.state.data.bplace.addr.addressName}</Text>
-                </View>
+                <CustomBlockWrapper
+                    title="A/S 신청내역 확인"
+                >
+                    <View>
+                        <Text>사업장 : {this.state.data.bplace.bplaceNm}</Text>
+                        <Text>주소 : {this.state.data.bplace.addr.addressName}</Text>
+                    </View>
 
-                <ProductShowCase
-                    defaultImg={ this.state.data.prdTypeImg.fileUrl }
-                    data={ this.state.data.images }
-                    clientPrdId={ this.state.data.clientPrdId }
-                    clientPrdNm={ this.state.data.clientPrdNm } 
-                    index={ 0 }
-                    copyBtn={ false }
-                    viewProduct={ true }
-                />
+                    <ProductShowCase
+                        defaultImg={ this.state.data.prdTypeImg.fileUrl }
+                        data={ this.state.data.images }
+                        clientPrdId={ this.state.data.clientPrdId }
+                        clientPrdNm={ this.state.data.clientPrdNm } 
+                        index={ 0 }
+                        copyBtn={ false }
+                        viewProduct={ true }
+                    />
 
-                <Item regular>
-                    <Input
-                        value={ this.props.asItemNm }
+                    <Item regular>
+                        <Input
+                            value={ this.props.asItemNm }
+                            disabled
+                        />
+                    </Item>
+
+                    <Textarea 
+                        value={ this.props.asRecvDsc }
+                        rowSpan={2} 
+                        bordered 
                         disabled
                     />
-                </Item>
 
-                <Textarea 
-                    value={ this.props.asRecvDsc }
-                    rowSpan={2} 
-                    bordered 
-                    disabled
-                />
-
-                <CustomButton
-                    styleWidth={ false }
-                    block={ true }
-                    info={ true }
-                    bordered={ true }
-                    onPress={() =>
-                        ActionSheet.show(
-                            {
-                                options: this.state.cardData,
-                                cancelButtonIndex: this.state.cardData.length - 1,
-                                title: "결제카드"
-                            },
-                            buttonIndex => {
-                                this.setState({ buttonTitle: this.state.cardData[buttonIndex].text });
-                                //this.setState({ selectIndex : buttonIndex });
-                                SELECT_INDEX = buttonIndex;
-                                
-                                if(this.state.cardData[buttonIndex].billingKeyId > 0) {
-                                    this._paymentAfterService();
-                                } else if(this.state.cardData[buttonIndex].billingKeyId == -1) {
-                                    Actions.CardInputInfo({regAsCard : true, getListCard: this._getListCard});
-                                }
-                            })
-                    }>
-                    <Text>
-                        예
-                    </Text>
-                </CustomButton>
-                <CustomButton
-                    styleWidth={ false }
-                    block={ true }
-                    info={ true }
-                    bordered={ true }
-                    onPress={Actions.pop}>
-                    <Text>
-                        아니오
-                    </Text>
-                </CustomButton>
-            </CustomBlockWrapper>
+                    <CustomButton
+                        styleWidth={ false }
+                        block={ true }
+                        info={ true }
+                        bordered={ true }
+                        onPress={() =>
+                            ActionSheet.show(
+                                {
+                                    options: this.state.cardData,
+                                    cancelButtonIndex: this.state.cardData.length - 1,
+                                    title: "결제카드"
+                                },
+                                buttonIndex => {
+                                    this.setState({ buttonTitle: this.state.cardData[buttonIndex].text });
+                                    //this.setState({ selectIndex : buttonIndex });
+                                    SELECT_INDEX = buttonIndex;
+                                    
+                                    if(this.state.cardData[buttonIndex].billingKeyId > 0) {
+                                        this._paymentAfterService();
+                                    } else if(this.state.cardData[buttonIndex].billingKeyId == -1) {
+                                        Actions.CardInputInfo({regAsCard : true, getListCard: this._getListCard});
+                                    }
+                                })
+                        }>
+                        <Text>
+                            예
+                        </Text>
+                    </CustomButton>
+                    <CustomButton
+                        styleWidth={ false }
+                        block={ true }
+                        info={ true }
+                        bordered={ true }
+                        onPress={Actions.pop}>
+                        <Text>
+                            아니오
+                        </Text>
+                    </CustomButton>
+                </CustomBlockWrapper>
             </Root>
         )
     }

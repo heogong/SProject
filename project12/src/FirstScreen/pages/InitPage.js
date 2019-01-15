@@ -58,7 +58,16 @@ export default class PageOne extends Component {
           bordered={ true }
           onPress={Actions.ClientMain}>
           <Text>
-            메인_테스트
+            메인_테스트 (클라이언트)
+          </Text>
+        </CustomButton>
+        <CustomButton
+          block={ true }
+          info={ true }
+          bordered={ true }
+          onPress={Actions.PartnerMain}>
+          <Text>
+            메인_테스트 (파트너)
           </Text>
         </CustomButton>
       </CustomBasicWrapper>

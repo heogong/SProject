@@ -31,8 +31,9 @@ import CardIndex from './src/Card/Pages';
 import CardInputInfo from './src/Card/Pages/InputCardInfo';
 import CardListInfo from './src/Card/Pages/ListCardInfo';
 
+import ListAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ListAfterServiceMatch';
 import Main from './src/Main/Pages';
-import ClientHome from './src/Main/Pages/Client/Home'; // 클라이언트 HOME
+
 
 import DrawerContent from './src/Main/Components/DrawerContent'
 import MenuIcon from './src/Main/Images/menu_burger.png'
@@ -48,6 +49,8 @@ import ReactCamera from './src/Main/Components/ReactCamera';
 import ViewImage from './src/Main/Components/ViewImage';
 
 /**클라이언트 */
+
+import ClientHome from './src/Main/Pages/Client/Home'; // 클라이언트 HOME
 
 // 사업장
 import ClientIndex from './src/FirstScreen/Pages/Join/Client'
@@ -229,8 +232,8 @@ const PAGE = () => (
             <Stack key="PartnerMain" hideNavBar title="파트너 Title" initial icon={TabIcon}>
               <Scene key="Main" component={Main} title="Scene_Title2"/>
             </Stack>
-            <Stack key="tab_2" title="Tab #22222" icon={TabIcon}>
-              <Scene key="tab_2_1" component={TestPage2} title="Tab #2_2"/>
+            <Stack key="PartnerAfterService" hideNavBar title="A/S 매칭" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+              <Scene key="AfterServiceMatch" component={ListAfterServiceMatch} title="A/S 매칭"/>
             </Stack>
             <Stack key="tab_3" title="Tab #33333" icon={TabIcon}>
               <Scene key="tab_3_1" component={TestPage3} title="Tab #2_3"/>
