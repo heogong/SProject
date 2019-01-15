@@ -20,14 +20,14 @@ class ViewImage extends Component {
 
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: '#fc0', flexDirection: 'column',}}>
+      <View style={{flex: 1, backgroundColor: '#fc0', flexDirection: 'column'}}>
         <Image
-            resizeMode={'cover'}
+            resizeMode={'center'}
             style={{ width: '100%', height: '100%', backgroundColor: 'red'} }
             source={{uri: this.state.imgUri}}
         /> 
         <TouchableOpacity style={ styles.exitButton } onPress={() => Actions.pop() } >
-          <Icon name="md-close"  />
+          <Icon name="ios-arrow-dropleft" />
         </TouchableOpacity>
       </View>
     );
@@ -51,9 +51,8 @@ const styles = StyleSheet.create({
   exitButton: {
     position: 'absolute',
     left: 10,
-    right: 0,
     top: 7,
-    bottom: 0
+    padding : 10
   }
 });
 
