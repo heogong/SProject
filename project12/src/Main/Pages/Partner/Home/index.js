@@ -8,6 +8,7 @@ import { ActionConst, Actions } from 'react-native-router-flux';
 
 import GetAfterService from '~/Main/Functions/GetAfterService';
 import RegAfterServiceMatch from '~/Main/Functions/RegAfterServiceMatch';
+import DepartureAfterService from '~/Main/Functions/DepartureAfterService';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
@@ -19,7 +20,9 @@ export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        data : []
+        data : [],
+        latitude : null,
+        longitude : null,
     };
   }
 
@@ -63,7 +66,8 @@ export default class Main extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        Actions.ViewAfterServiceMatch({asRecvId : data[SELECT_INDEX].asRecvId});
+                        //Actions.ViewAfterServiceMatch({asRecvId : data[SELECT_INDEX].asRecvId});
+                        this._departureAfterServiceConfirm();
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -72,8 +76,42 @@ export default class Main extends Component {
         });
     }
 
+    // 업체 AS 매칭(진행) 출발
+    _departureAfterService = () => {
+        const {data, latitude, longitude} = this.state;
+        
+        DepartureAfterService(data[SELECT_INDEX].asPrgsId, latitude, longitude).then(result => {
+            GetCommonData(result, this._departureAfterService).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+                        Actions.ViewAfterServiceMatch({
+                            asRecvId : data[SELECT_INDEX].asRecvId})
+                    } else {
+                        alert(resultData.resultMsg);
+                    }
+                }
+            });
+        });
+    }
+
+     // 현재 위치 조회
+     _getLocation() {
+        navigator.geolocation.getCurrentPosition(
+        (positon) => {
+            this.setState({
+                latitude : positon.coords.latitude,
+                longitude : positon.coords.longitude
+            })
+        },
+        (error) => {console.log(error.message)},
+        {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
+        );
+    }
+
     // A/S 선택
-    _selectAfterService = (idx) => () => {
+    _selectAfterServiceConfirm = (idx) => () => {
         SELECT_INDEX = idx;
 
         Alert.alert(
@@ -83,6 +121,21 @@ export default class Main extends Component {
               // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
               {text: '취소', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
               {text: '수락', onPress: () => this._regAfterServiceMatch()},
+            ],
+            { cancelable: false }
+        )
+    }
+
+    // A/S 출발 선택
+    _departureAfterServiceConfirm = () => {
+        this._getLocation();
+
+        Alert.alert(
+            '',
+            `${this.state.data[SELECT_INDEX].bplaceNm} 으로 A/S 출발하시겠습니까?`,
+            [
+              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+              {text: '예', onPress: () => this._departureAfterService()},
             ],
             { cancelable: false }
         )
@@ -109,7 +162,7 @@ export default class Main extends Component {
                                 <Text>{AS.bplaceAddr}</Text>
                                 <Text>{AS.prdTypeKoNm}</Text>
                                 <TouchableOpacity
-                                    onPress={ this._selectAfterService(idx) }
+                                    onPress={ this._selectAfterServiceConfirm(idx) }
                                 >
                                     <View style={styles.slide}>
                                         <Text style={styles.title}>A/S신청</Text>

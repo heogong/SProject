@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Alert, View } from 'react-native';
-import { Body, Button, Card, CardItem, Text,Thumbnail } from "native-base";
+import { Alert, TouchableOpacity, View } from 'react-native';
+import { Body, Button, Card, CardItem, Text, Thumbnail } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -89,24 +89,30 @@ class ListAfterServiceMatch extends Component {
                 title="A/S 매칭"
             >
                 {this.state.data.map((AS, idx) => 
-                    <Card key={idx}>
-                        <CardItem>
-                            <Thumbnail large source={{ uri: this.props.defaultImg }} />
-                            <Text>{ AS.prdTypeKoNm }</Text>
-                            <View>
-                                <Text>{ AS.bplaceNm }</Text>
-                                <Text>{ AS.bplaceAddr }</Text>
-                                <Text>{ AS.bplaceAddrDtl }</Text>
-                            </View>
-                        </CardItem>
-                        <CardItem bordered>
-                            <Body>
-                                <CustomButton onPress={ this._selectAfterService(idx) }>
-                                    <Text>A/S 매칭 수락하기</Text>
-                                </CustomButton>
-                            </Body>
-                        </CardItem>
-                    </Card>
+                    <TouchableOpacity 
+                        onPress={ () => Actions.ViewAfterServiceMatch({
+                            asRecvId : this.state.data[SELECT_INDEX].asRecvId
+                        })} 
+                        activeOpacity={0.7}>
+                        <Card key={idx}>
+                            <CardItem>
+                                <Thumbnail large source={{ uri: this.props.defaultImg }} />
+                                <Text>{ AS.prdTypeKoNm }</Text>
+                                <View>
+                                    <Text>{ AS.bplaceNm }</Text>
+                                    <Text>{ AS.bplaceAddr }</Text>
+                                    <Text>{ AS.bplaceAddrDtl }</Text>
+                                </View>
+                            </CardItem>
+                            <CardItem bordered>
+                                <Body>
+                                    <CustomButton onPress={ this._selectAfterService(idx) }>
+                                        <Text>A/S 매칭 수락하기</Text>
+                                    </CustomButton>
+                                </Body>
+                            </CardItem>
+                        </Card>
+                    </TouchableOpacity>
                 )}
                
             </CustomBlockWrapper>
