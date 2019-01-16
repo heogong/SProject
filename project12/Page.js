@@ -31,9 +31,9 @@ import CardIndex from './src/Card/Pages';
 import CardInputInfo from './src/Card/Pages/InputCardInfo';
 import CardListInfo from './src/Card/Pages/ListCardInfo';
 
+import PartnerMain from './src/Main/Pages/Partner/Home';
 import ListAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ListAfterServiceMatch';
-import Main from './src/Main/Pages';
-
+import ViewAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ViewAfterServiceMatch';
 
 import DrawerContent from './src/Main/Components/DrawerContent'
 import MenuIcon from './src/Main/Images/menu_burger.png'
@@ -219,7 +219,7 @@ const PAGE = () => (
           <Tabs
             key="tabbar2"
             routeName="tabbar2"
-            backToInitial
+            // backToInitial
             onTabOnPress={() => {
               console.log('Back to initial and also print this');
             }}
@@ -229,12 +229,20 @@ const PAGE = () => (
             inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
             tabBarPosition="bottom"
           >
-            <Stack key="PartnerMain" hideNavBar title="파트너 Title" initial icon={TabIcon}>
-              <Scene key="Main" component={Main} title="Scene_Title2"/>
+            <Stack key="PartnerMain" hideNavBar title="파트너 Title" initial icon={TabIcon}
+              tabBarOnPress={() => Actions.Main({type:ActionConst.RESET})}
+              transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+              <Scene key="Main" component={PartnerMain} title="Scene_Title2"/>
             </Stack>
-            <Stack key="PartnerAfterService" hideNavBar title="A/S 매칭" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+
+            {/* A/S 매칭 */}
+            <Stack key="PartnerAfterService" hideNavBar title="A/S 매칭" icon={TabIcon} 
+              tabBarOnPress={() => Actions.AfterServiceMatch({type:ActionConst.RESET})}
+              transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="AfterServiceMatch" component={ListAfterServiceMatch} title="A/S 매칭"/>
+              <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} title="A/S 매칭 조회"/>
             </Stack>
+
             <Stack key="tab_3" title="Tab #33333" icon={TabIcon}>
               <Scene key="tab_3_1" component={TestPage3} title="Tab #2_3"/>
             </Stack>

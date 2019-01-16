@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Alert, View } from 'react-native';
-import { Body, Button, Card, CardItem, Text,Thumbnail } from "native-base";
+import { Alert, StyleSheet, View } from 'react-native';
+import { Body, Button, Card, CardItem, Text, Thumbnail } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -10,14 +10,27 @@ import GetAfterServiceDetail from '~/Main/Functions/GetAfterServiceDetail'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
-import ProductShowCase from '~/Main/Components/ProductShowCase';
+import ProductImage from '~/Main/Components/ProductImage';
+import DrawMap from '~/Main/Components/DrawMap';
 
 class ViewAfterServiceMatch extends Component {
     constructor(props) {
       super(props);
 
       this.state = {
-        data : []
+        data : {
+            clientPrdImgs : [] // 제품 이미지 데이터
+        },
+        region: {
+            latitude: 37.566535,
+            longitude: 126.97796919999996,
+            latitudeDelta: 0.0043,
+            longitudeDelta: 0.0034
+        },
+        marker: {
+            latitude: 37.566535,
+            longitude: 126.97796919999996
+        }
       };
     }
 
@@ -31,13 +44,25 @@ class ViewAfterServiceMatch extends Component {
 
     // AS 접수 상세 내용 조회
     _getAfterServiceDetail = () => {
-        GetAfterServiceDetail().then(result => {
+        // GetAfterServiceDetail(96).then(result => {
+        GetAfterServiceDetail(this.props.asRecvId).then(result => {
             GetCommonData(result, this._getAfterServiceDetail).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        this.setState({ data: resultData.data });
+                        this.setState({ 
+                            data: resultData.data,
+                            region : {
+                                ...this.state.region,
+                                latitude  : Number(resultData.data.bplaceAddrLat),
+                                longitude : Number(resultData.data.bplaceAddrLng)
+                              },
+                              marker: {
+                                  latitude: Number(resultData.data.bplaceAddrLat),
+                                  longitude: Number(resultData.data.bplaceAddrLng)
+                              },
+                        });
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -52,21 +77,39 @@ class ViewAfterServiceMatch extends Component {
                 title="A/S 매칭 상세정보"
             >
                 <View>
-                    <Text>사업장 : {this.state.data.bplace.bplaceNm}</Text>
-                    <Text>주소 : {this.state.data.bplace.addr.addressName}</Text>
+                    <Thumbnail large source={{ uri: this.state.data.prdTypeImgUrl }} />
+                    <Text>사업장 : {this.state.data.bplaceNm}</Text>
+                    <Text>주소 : {this.state.data.bplaceAddr} {this.state.data.bplaceAddrDtl}</Text>
                 </View>
 
-                <ProductShowCase
-                    defaultImg={ this.state.data.prdTypeImg.fileUrl }
-                    data={ this.state.data.images }
-                    clientPrdId={ this.state.data.clientPrdId }
-                    clientPrdNm={ this.state.data.clientPrdNm } 
-                    index={ 0 }
-                    copyBtn={ false }
-                    viewProduct={ true }
-                />
+                <View style={{width:"100%", height:200}}>
+                    <DrawMap
+                        region={ this.state.region }
+                        // onRegionChangeComplete={ this._onRegionChangeComplete }
+                        makerYn={ true }
+                        marker={ this.state.marker }
+                    />
+                </View>
 
-                <Item regular>
+                <View style={{ flex:1, justifyContent: 'center'}}>
+                    <View style={ styles.boxLayout }>
+                        {this.state.data.clientPrdImgs.map((info, idx) => (
+                            <ProductImage 
+                                key={idx}
+                                prdTypeImgCateNm={ info.prdTypeImgCateNm }
+                                clientPrdId={ this.state.data.clientPrdId }
+                                clientPrdImgId={ info.clientPrdImgId }
+                                prdImgCateId={ info.prdTypeImgCateId }
+                                uri={ (info.fileUrl !== null) ? info.fileUrl : this.props.defaultImg }
+                                defaultImg={ this.props.defaultImg }
+                                imageTouch={ (info.fileUrl !== null) ? false : true }
+                                viewProduct={ true }
+                            />
+                        ))}
+                    </View>
+                </View>
+
+                {/* <Item regular>
                     <Input
                         value={ this.props.asItemNm }
                         disabled
@@ -78,10 +121,20 @@ class ViewAfterServiceMatch extends Component {
                     rowSpan={2} 
                     bordered 
                     disabled
-                />
+                /> */}
             </CustomBlockWrapper>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    boxLayout : {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        padding: 5
+    }
+});
+
 
 export default ViewAfterServiceMatch;

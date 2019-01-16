@@ -5,15 +5,15 @@ import GetAccessToken from '~/Common/Functions/GetAccessToken';
 // AS 접수 상세 내용 조회
 const API_URL = `${DOMAIN}coolinic/as/recv/`;
 
-function GetAfterServiceDetailUrl(clientPrdId) {
-  return `${API_URL}${clientPrdId}/client/prdinfo`;
+function GetAfterServiceDetailUrl(asRecvId) {
+  return `${API_URL}${asRecvId}/client/prdinfo`;
 }
 
-const GetAfterServiceDetail = async (clientPrdId) => {
+const GetAfterServiceDetail = async (asRecvId) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  return fetch(GetAfterServiceDetailUrl(clientPrdId), {
+  return fetch(GetAfterServiceDetailUrl(asRecvId), {
     method: 'GET',
     headers: {
       "Authorization": ACCESS_TOKEN

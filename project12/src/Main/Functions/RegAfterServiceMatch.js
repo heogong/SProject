@@ -2,18 +2,18 @@ import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}coolinic/as/prgs/match/`;
+const API_URL = `${DOMAIN}coolinic/as/prgs/match/confirm?asPrgsId=`;
 
-// AS 진행 의사 등록(파트너)
-function RegAfterServiceMatchUrl(clientPrdId) {
-  return `${API_URL}${clientPrdId}/confirm?asPossYn=Y`;
+// 업체 AS 매칭(진행) 수락
+function RegAfterServiceMatchUrl(asPrgsId) {
+  return `${API_URL}${asPrgsId}&asPossYn=Y`;
 }
 
-const RegAfterServiceMatch = async (clientPrdId) => {
+const RegAfterServiceMatch = async (asPrgsId) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  return fetch(RegAfterServiceMatchUrl(clientPrdId), {
+  return fetch(RegAfterServiceMatchUrl(asPrgsId), {
     method: 'POST',
     headers: {
       "Authorization": ACCESS_TOKEN

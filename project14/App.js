@@ -1,71 +1,40 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import React, {Component} from 'react';
+import {Modal, Platform, StyleSheet, Text, View} from 'react-native';
 
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu'
-});
-
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
   state = {
-    spinner: false
+    index: 0,
+    modalVisible: true,
+    images : [{
+      url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460',
+      props: {
+        // headers: ...
+      }
+    },{
+      url : 'https://i.pinimg.com/originals/b8/29/fd/b829fd8f5df3e09589575e4ca939bc9f.png'
+      // props: {
+      //     // Or you can set source directory.
+      //     source: require('../background.png')
+      // }
+    }]
   };
-
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        spinner: !this.state.spinner
-      });
-    }, 3000);
-  }
 
   render() {
     return (
-      <View >
-        
-        <Spinner
-          visible={this.state.spinner}
-          textContent={'Loading...'}
-          textStyle={styles.spinnerTextStyle}
-        />
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+      <View
+        style={{
+          padding: 10
+        }}
+      >
+        <Modal visible={true} transparent={true} onRequestClose={() => this.setState({ modalVisible: false })}>
+          <ImageViewer 
+            index={this.state.index}
+            imageUrls={this.state.images}
+            />
+        </Modal>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  spinnerTextStyle: {
-    color: '#FFF'
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
-  }
-});

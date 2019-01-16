@@ -11,6 +11,7 @@ import RegAfterServiceMatch from '~/Main/Functions/RegAfterServiceMatch'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
 
 let SELECT_INDEX = null; // 선택된 A/S
 class ListAfterServiceMatch extends Component {
@@ -47,17 +48,17 @@ class ListAfterServiceMatch extends Component {
         });
     }
 
-    // AS 진행 의사 등록(파트너)
+    // 업체 AS 매칭(진행) 수락
     _regAfterServiceMatch = () => {
         const { data } = this.state;
 
-        RegAfterServiceMatch(data[SELECT_INDEX].clientPrdId).then(result => {
+        RegAfterServiceMatch(data[SELECT_INDEX].asPrgsId).then(result => {
             GetCommonData(result, this._regAfterServiceMatch).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        alert(resultData.resultMsg);
+                        Actions.ViewAfterServiceMatch({asRecvId : data[SELECT_INDEX].asRecvId});
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -87,19 +88,27 @@ class ListAfterServiceMatch extends Component {
             <CustomBlockWrapper
                 title="A/S 매칭"
             >
-                <Card>
-                    <CardItem>
-                        <Thumbnail large source={{ uri: this.props.defaultImg }} />
-                            <Button onPress={ this._selectAfterService(1) }>
-                                <Text>A/S 매칭 수락하기</Text>
-                            </Button>
-                    </CardItem>
-                    <CardItem bordered>
-                        <Body>
-                            <Text>ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</Text>
-                        </Body>
-                    </CardItem>
-                </Card>
+                {this.state.data.map((AS, idx) => 
+                    <Card key={idx}>
+                        <CardItem>
+                            <Thumbnail large source={{ uri: this.props.defaultImg }} />
+                            <Text>{ AS.prdTypeKoNm }</Text>
+                            <View>
+                                <Text>{ AS.bplaceNm }</Text>
+                                <Text>{ AS.bplaceAddr }</Text>
+                                <Text>{ AS.bplaceAddrDtl }</Text>
+                            </View>
+                        </CardItem>
+                        <CardItem bordered>
+                            <Body>
+                                <CustomButton onPress={ this._selectAfterService(idx) }>
+                                    <Text>A/S 매칭 수락하기</Text>
+                                </CustomButton>
+                            </Body>
+                        </CardItem>
+                    </Card>
+                )}
+               
             </CustomBlockWrapper>
         )
     }
