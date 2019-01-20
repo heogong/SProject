@@ -34,12 +34,12 @@ export default class App extends Component {
       startOnBoot: false,
       stopOnTerminate: true,
       locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
-      interval: 60000,
-      fastestInterval: 120000,
-      activitiesInterval: 100000,
-      // interval: 10000,
-      // fastestInterval: 5000,
-      // activitiesInterval: 10000,
+      // interval: 60000,
+      // fastestInterval: 120000,
+      // activitiesInterval: 100000,
+      interval: 10000,
+      fastestInterval: 5000,
+      activitiesInterval: 10000,
       stopOnStillActivity: false,
       url: 'http://192.168.81.15:3000/location',
       httpHeaders: {
@@ -147,11 +147,9 @@ export default class App extends Component {
     BackgroundGeolocation.checkStatus(({ isRunning, locationServicesEnabled, authorization }) => {
       console.log("isRunning : ",isRunning);
       if (isRunning) {
+
+        setTimeout(() => BackgroundGeolocation.stop(), 2000);
         
-        setTimeout(() => {
-          console.log("ddddddddddddddddddddddddddddddddddddddd")
-          BackgroundGeolocation.stop()
-        }, 1000)
         // BackgroundGeolocation.stop()
         
       } else {
@@ -209,7 +207,7 @@ export default class App extends Component {
         <Text style={styles.instructions}>{instructions}</Text>
 
         <Button onPress={this.toggleTracking}
-        title={(this.state.isRunning) ? "중지" : "추적"}>
+        title={(this.state.isRunning) ? "추적" : "중지"}>
           <Text>start/stop</Text>
         </Button>
       </View>
