@@ -23,11 +23,12 @@ BackgroundTask.define(() => {
   BackgroundTask.finish()
 })
 
-
 export default class App extends Component {
   componentDidMount() {
     BackgroundTask.schedule()
   }
+
+
   render() {
     return (
       <View style={styles.container}>

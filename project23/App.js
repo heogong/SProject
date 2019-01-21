@@ -10,6 +10,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import Radar from 'react-native-radar';
 
+
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -30,6 +31,7 @@ export default class App extends Component{
 
 
   componentDidMount() {
+
     // identify the user and request permissions
     Radar.setUserId(this.state.userId);
     Radar.setPlacesProvider('facebook');
@@ -63,7 +65,7 @@ export default class App extends Component{
 
 // receive events
 Radar.on('events', (result) => {
-  onsole.log(result);
+  console.log(result);
   // do something with result.events, result.user
 });
 
