@@ -91,7 +91,7 @@ class ListAfterServiceMatch extends Component {
                 {this.state.data.map((AS, idx) => 
                     <TouchableOpacity 
                         onPress={ () => Actions.ViewAfterServiceMatch({
-                            asRecvId : this.state.data[SELECT_INDEX].asRecvId
+                            asRecvId : this.state.data[idx].asRecvId
                         })} 
                         activeOpacity={0.7}>
                         <Card key={idx}>
