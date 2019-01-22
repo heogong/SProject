@@ -58,7 +58,10 @@ class ListAfterServiceMatch extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        Actions.ViewAfterServiceMatch({asRecvId : data[SELECT_INDEX].asRecvId});
+                        Actions.ViewAfterServiceState({
+                            asRecvId : data[SELECT_INDEX].asRecvId,
+                            asPrgsId : data[SELECT_INDEX].asPrgsId
+                        });
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -92,9 +95,10 @@ class ListAfterServiceMatch extends Component {
                     <TouchableOpacity 
                         onPress={ () => Actions.ViewAfterServiceMatch({
                             asRecvId : this.state.data[idx].asRecvId
-                        })} 
+                        })}
+                        key={idx} 
                         activeOpacity={0.7}>
-                        <Card key={idx}>
+                        <Card>
                             <CardItem>
                                 <Thumbnail large source={{ uri: this.props.defaultImg }} />
                                 <Text>{ AS.prdTypeKoNm }</Text>

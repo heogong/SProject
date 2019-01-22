@@ -56,8 +56,8 @@ class SetAddress extends Component {
               }
             })
           },
-          (error) => {alert(error.message)},
-          {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
+        //   (error) => {alert(error.message)},
+        //   {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
         );
     }
 

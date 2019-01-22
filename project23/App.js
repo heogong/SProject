@@ -25,10 +25,15 @@ export default class App extends Component{
     super(props);
 
     this.state = {
-      userId : 'some-user-id123'
+      userId : 'some-user-id123',
+      latitude : null,
+      longitude : null
     }
   }
 
+  componentWillMount() {
+    this._getLocation();
+  }
 
   componentDidMount() {
 
@@ -50,6 +55,20 @@ export default class App extends Component{
     Radar.startTracking();
   }
 
+   // 현재 위치 조회
+   _getLocation() {
+      navigator.geolocation.getCurrentPosition(
+      (positon) => {
+          this.setState({
+              latitude : positon.coords.latitude,
+              longitude : positon.coords.longitude
+          })
+      },
+      // (error) => {alert(error.message)},
+      // {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
+      );
+  }
+
 
 
   render() {
@@ -58,6 +77,8 @@ export default class App extends Component{
         <Text style={styles.welcome}>Welcome to React Native!</Text>
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
+        <Text style={styles.instructions}>{this.state.latitude}</Text>
+        <Text style={styles.instructions}>{this.state.longitude}</Text>
       </View>
     );
   }

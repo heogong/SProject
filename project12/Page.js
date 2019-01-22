@@ -32,8 +32,13 @@ import CardInputInfo from './src/Card/Pages/InputCardInfo';
 import CardListInfo from './src/Card/Pages/ListCardInfo';
 
 import PartnerMain from './src/Main/Pages/Partner/Home';
+// A/S 신청 리스트
 import ListAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ListAfterServiceMatch';
+// A/S 신청 업체 상세
 import ViewAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ViewAfterServiceMatch';
+// A/S 매칭 후 상태정보
+import ViewAfterServiceState from './src/Main/Pages/Partner/AfterService/ViewAfterServiceState';
+
 
 import DrawerContent from './src/Main/Components/DrawerContent'
 import MenuIcon from './src/Main/Images/menu_burger.png'
@@ -101,7 +106,11 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      
+      {/* 테스트 후 삭제 */}
+      {/* <Scene key="ViewAfterServiceState" initial hideNavBar component={ViewAfterServiceState} title="InitPage"/> */}
+      
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
 
       <Scene key="reactCamera" hideNavBar component={ReactCamera} />
@@ -240,7 +249,8 @@ const PAGE = () => (
               tabBarOnPress={() => Actions.AfterServiceMatch({type:ActionConst.RESET})}
               transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="AfterServiceMatch" component={ListAfterServiceMatch} title="A/S 매칭"/>
-              <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} title="A/S 매칭 조회"/>
+              <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} title="A/S 매칭 상세"/>
+              <Scene key="ViewAfterServiceState" component={ViewAfterServiceState} title="A/S 매칭 후 상태"/>
             </Stack>
 
             <Stack key="tab_3" title="Tab #33333" icon={TabIcon}>

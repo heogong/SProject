@@ -2,18 +2,18 @@ import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '~/Common/Blend';
 import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
-// 업체 AS 매칭(진행) 출발
-const API_URL = `${DOMAIN}coolinic/as/prgs/match/departure?asPrgsId=`;
+// 업체 AS 매칭(진행) 도착
+const API_URL = `${DOMAIN}coolinic/as/prgs/match/arrival?asPrgsId=`;
 
-function DepartureAfterServiceUrl(asPrgsId, lat, lng) {
+function ArriveAfterServiceUrl(asPrgsId, lat, lng) {
   return `${API_URL}${asPrgsId}&lat=${lat}&lng=${lng}`;
 }
 
-const DepartureAfterService = async (asPrgsId, lat, lng) => {
+const ArriveAfterService = async (asPrgsId, lat, lng) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  return fetch(DepartureAfterServiceUrl(asPrgsId, lat, lng), {
+  return fetch(ArriveAfterServiceUrl(asPrgsId, lat, lng), {
     method: 'POST',
     headers: {
       "Authorization": ACCESS_TOKEN
@@ -33,4 +33,4 @@ const DepartureAfterService = async (asPrgsId, lat, lng) => {
   });
 };
 
-export default DepartureAfterService;
+export default ArriveAfterService;
