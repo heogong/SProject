@@ -165,6 +165,7 @@ class ViewAfterServiceState extends Component {
         return (
             <CustomBlockWrapper
                 title="A/S 출발중"
+                resetPage={true}
             >
                 <View>
                     <Thumbnail large source={{ uri: this.state.data.prdTypeImgUrl }} />
@@ -180,6 +181,10 @@ class ViewAfterServiceState extends Component {
 
                 <CustomButton onPress={ this._completeAfterServiceConfirm }>
                     <Text>A/S 완료</Text>
+                </CustomButton>
+
+                <CustomButton onPress={ Actions.AfterServiceReport }>
+                    <Text>보고서 작성</Text>
                 </CustomButton>
             </CustomBlockWrapper>
         )

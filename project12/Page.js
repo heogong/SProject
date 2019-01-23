@@ -32,12 +32,19 @@ import CardInputInfo from './src/Card/Pages/InputCardInfo';
 import CardListInfo from './src/Card/Pages/ListCardInfo';
 
 import PartnerMain from './src/Main/Pages/Partner/Home';
+import AfterServiceState from './src/Main/Pages/Partner/AfterService';
 // A/S 신청 리스트
 import ListAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ListAfterServiceMatch';
 // A/S 신청 업체 상세
 import ViewAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ViewAfterServiceMatch';
 // A/S 매칭 후 상태정보
 import ViewAfterServiceState from './src/Main/Pages/Partner/AfterService/ViewAfterServiceState';
+
+// A/S 보고서
+import AfterServiceReport from './src/Main/Pages/Partner/Report';
+
+// 추가 A/S 내역
+import RegAfterServiceAdd from './src/Main/Pages/Partner/Report/RegAfterServiceAdd';
 
 
 import DrawerContent from './src/Main/Components/DrawerContent'
@@ -246,15 +253,19 @@ const PAGE = () => (
 
             {/* A/S 매칭 */}
             <Stack key="PartnerAfterService" hideNavBar title="A/S 매칭" icon={TabIcon} 
-              tabBarOnPress={() => Actions.AfterServiceMatch({type:ActionConst.RESET})}
+              tabBarOnPress={() => Actions.AfterServiceState({type:ActionConst.RESET})}
               transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+              <Scene key="AfterServiceState" component={AfterServiceState} title="A/S 상태 체크"/>
               <Scene key="AfterServiceMatch" component={ListAfterServiceMatch} title="A/S 매칭"/>
               <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} title="A/S 매칭 상세"/>
               <Scene key="ViewAfterServiceState" component={ViewAfterServiceState} title="A/S 매칭 후 상태"/>
             </Stack>
 
-            <Stack key="tab_3" title="Tab #33333" icon={TabIcon}>
-              <Scene key="tab_3_1" component={TestPage3} title="Tab #2_3"/>
+            <Stack key="PartnerReport" hideNavBar title="보고서" icon={TabIcon}
+              tabBarOnPress={() => Actions.AfterServiceState({type:ActionConst.RESET})}
+              transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+              <Scene key="AfterServiceReport" component={AfterServiceReport} title="A/S 보고서"/>
+              <Scene key="RegAfterServiceAdd" component={RegAfterServiceAdd} title="추가 A/S"/>
             </Stack>
           </Tabs>
 
