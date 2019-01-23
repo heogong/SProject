@@ -46,7 +46,7 @@ class App extends Component {
               jobKey: regularJobKey,
               notificationTitle: "Notification title",
               notificationText: "Notification text",
-              period: 1500
+              period: 150
             });
           }}
         >

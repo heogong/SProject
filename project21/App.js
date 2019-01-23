@@ -30,13 +30,10 @@ export default class App extends Component {
       distanceFilter: 50,
       notificationTitle: 'Background tracking',
       notificationText: 'enabled',
-      debug: false,
+      debug: true,
       startOnBoot: false,
       stopOnTerminate: true,
       locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
-      // interval: 60000,
-      // fastestInterval: 120000,
-      // activitiesInterval: 100000,
       interval: 10000,
       fastestInterval: 5000,
       activitiesInterval: 10000,
@@ -148,7 +145,7 @@ export default class App extends Component {
       console.log("isRunning : ",isRunning);
       if (isRunning) {
 
-        setTimeout(() => BackgroundGeolocation.stop(), 2000);
+        setTimeout(() => BackgroundGeolocation.stop(), 5000);
         
         // BackgroundGeolocation.stop()
         
