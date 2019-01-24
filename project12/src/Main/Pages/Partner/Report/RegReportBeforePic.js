@@ -13,29 +13,38 @@ import AfterServiceImage from '~/Main/Components/AfterServiceImage';
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
 
+const BEFORE_IMG_CNT = 3; // A/S 조치전 이미지 카운트
+
 class RegReportBeforePic extends Component {
     constructor(props) {
       super(props);
 
       this.state =  {
         data : [],
-        btnDisabled : true
+        btnDisabled : true,
+        asImgCnt : BEFORE_IMG_CNT
       };
     }
 
-    componentDidMount() {
-        // this._getAfterServiceBeforeImg();
+    componentWillMount() {
+        this._getAfterServiceBeforeImg();
     }
 
     // AS 조지전 사진 조회
     _getAfterServiceBeforeImg = () => {
-        GetAfterServiceBeforeImg(this.props.asPrgsId).then(result => {
+        GetAfterServiceBeforeImg(5).then(result => {
+        //GetAfterServiceBeforeImg(this.props.asPrgsId).then(result => {
             GetCommonData(result, this._getAfterServiceBeforeImg).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        this.setState({data : resultData.data});
+                        
+                        this.setState({
+                            data : resultData.data,
+                            asImgCnt : this.state.asImgCnt - resultData.data.length
+                        });
+
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -44,14 +53,29 @@ class RegReportBeforePic extends Component {
         });
     }
 
+    // A/S 이미지 뷰어
+    _createBeforeAsImg = () => {
+        let table = []
+    
+        for (let i = 0; i < this.state.asImgCnt; i++) {
+            table.push(<AfterServiceImage/>); 
+        }
+
+        return table;
+    }
+
     render() {
         return (
             <CustomBlockWrapper
                 title="A/S 조치 전"
             >
-                <AfterServiceImage/>
-                <AfterServiceImage/>
-                <AfterServiceImage/>
+                {this.state.data.map((beforeImg, idx) => 
+                    <AfterServiceImage
+                        key={idx}
+                    />
+                )}
+
+                {this._createBeforeAsImg()}
 
                 <CustomButton 
                     //disabled={ this.state.btnDisabled }
