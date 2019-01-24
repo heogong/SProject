@@ -105,8 +105,8 @@ export default class Main extends Component {
                 longitude : positon.coords.longitude
             })
         },
-        (error) => {console.log(error.message)},
-        {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
+        // (error) => {console.log(error.message)},
+        // {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
         );
     }
 

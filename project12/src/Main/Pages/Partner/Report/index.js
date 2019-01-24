@@ -22,6 +22,19 @@ class Report extends Component {
         //this._getLocation();
     }
 
+    // A/S 출발 선택
+    _completeAfterServiceConfirm = () => {
+        Alert.alert(
+            '',
+            `A/S 완료??\n 보고서 작성 고고`,
+            [
+                { text: '나중에 작성', onPress: () =>  Actions.reset('tabbar2') },
+                { text: '지금 작성', onPress: () => Actions.RegReportBeforePic() },
+            ],
+            { cancelable: false }
+        )
+    }
+
     render() {
         return (
             <CustomBlockWrapper
@@ -36,15 +49,15 @@ class Report extends Component {
                     <Text>추가 A/S 진행</Text>
                 </CustomButton>
 
-                <CustomButton onPress={ () => alert("A/S 전") }>
+                {/* <CustomButton onPress={ () => alert("A/S 전") }>
                     <Text>A/S 전</Text>
                 </CustomButton>
 
                 <CustomButton onPress={ () => alert("A/S 후") }>
                     <Text>A/S 후</Text>
-                </CustomButton>
+                </CustomButton> */}
 
-                <CustomButton onPress={ () => alert("A/S 완료") }>
+                <CustomButton onPress={ this._completeAfterServiceConfirm }>
                     <Text>A/S 완료</Text>
                 </CustomButton>
             </CustomBlockWrapper>

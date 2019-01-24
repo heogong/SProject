@@ -114,7 +114,6 @@ class ProductImage extends Component {
                 }
             });
         });
-
     }
 
     render() {
