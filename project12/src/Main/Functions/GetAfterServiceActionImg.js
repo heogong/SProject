@@ -2,21 +2,23 @@ import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '~/Common/Blend';
 import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
-// 업체 AS 매칭(진행) 완료
-const API_URL = `${DOMAIN}coolinic/as/prgs/match/complete?asPrgsId=`;
+// AS 조지전/후 사진 조회
+const BEFORE_API_URL = `${DOMAIN}coolinic/as/prgs/report/images/before?asPrgsId=`;
+const AFTER_API_URL = `${DOMAIN}coolinic/as/prgs/report/images/after?asPrgsId=`;
 
-function CompleteAfterServiceUrl(asPrgsId) {
-  return `${API_URL}${asPrgsId}`;
+function GetAfterServiceActionImgUrl(isBefore, asPrgsId) {
+  return (isBefore) ? `${BEFORE_API_URL}${asPrgsId}` : `${AFTER_API_URL}${asPrgsId}`;
 }
 
-const CompleteAfterService = async (asPrgsId) => {
+const GetAfterServiceActionImg = async (isBefore, asPrgsId) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  return fetch(CompleteAfterServiceUrl(asPrgsId), {
-    method: 'POST',
+  console.log(GetAfterServiceActionImgUrl(isBefore, asPrgsId));
+  return fetch(GetAfterServiceActionImgUrl(isBefore, asPrgsId), {
+    method: 'GET',
     headers: {
-      "Authorization": ACCESS_TOKEN
+      "Authorization": ACCESS_TOKEN,
       //"Authorization": TEST_ACCESS_TOKEN
     }
   }).then((response) => response.json()).then(async (responseJson) => {
@@ -33,4 +35,4 @@ const CompleteAfterService = async (asPrgsId) => {
   });
 };
 
-export default CompleteAfterService;
+export default GetAfterServiceActionImg;

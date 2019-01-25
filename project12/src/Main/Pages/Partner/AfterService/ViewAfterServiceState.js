@@ -30,7 +30,8 @@ class ViewAfterServiceState extends Component {
     }
 
     static defaultProps = {
-        defaultImg : 'https://i.pinimg.com/originals/b8/29/fd/b829fd8f5df3e09589575e4ca939bc9f.png'
+        defaultImg : 'https://i.pinimg.com/originals/b8/29/fd/b829fd8f5df3e09589575e4ca939bc9f.png',
+        isProcess : true // true : A/S 매칭 후 조회 화면 호출 시, false : A/S진행 중일 경우 A/S 매칭 탭 클릭 시 조회
     }
 
     componentWillMount() {
@@ -38,7 +39,10 @@ class ViewAfterServiceState extends Component {
     }
 
     componentDidMount() {
-        this.props.setTimeout(this._departureAfterService, 500);
+        if(this.props.isProcess) {
+            this.props.setTimeout(this._departureAfterService, 500);
+        }
+        
         this._getAfterServiceDetail();
     }
 
@@ -124,7 +128,7 @@ class ViewAfterServiceState extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        alert(resultData.resultMsg);
+                        this._regReportAfterServiceConfirm();
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -161,6 +165,19 @@ class ViewAfterServiceState extends Component {
         )
     }
 
+    // 보고서 작성 선택
+    _regReportAfterServiceConfirm = () => {
+        Alert.alert(
+            '',
+            `A/S 완료??\n 보고서 작성 고고`,
+            [
+                { text: '나중에 작성', onPress: () =>  Actions.reset('tabbar2') },
+                { text: '지금 작성', onPress: () => Actions.RegReportBeforePic({asPrgsId : this.props.asPrgsId}) },
+            ],
+            { cancelable: false }
+        )
+    }
+
     render() {
         return (
             <CustomBlockWrapper
@@ -179,13 +196,17 @@ class ViewAfterServiceState extends Component {
                 <Text> {this.state.latitude}</Text>
                 <Text> {this.state.longitude}</Text>
 
+                <CustomButton onPress={ Actions.RegAfterServiceAdd }>
+                    <Text>추가 A/S 진행</Text>
+                </CustomButton>
+
                 <CustomButton onPress={ this._completeAfterServiceConfirm }>
                     <Text>A/S 완료</Text>
                 </CustomButton>
 
-                <CustomButton onPress={ Actions.AfterServiceReport }>
+                {/* <CustomButton onPress={ () => Actions.AfterServiceReport({asPrgsId : this.props.asPrgsId}) }>
                     <Text>보고서 작성</Text>
-                </CustomButton>
+                </CustomButton> */}
             </CustomBlockWrapper>
         )
     }

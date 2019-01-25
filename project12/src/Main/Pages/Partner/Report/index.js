@@ -45,15 +45,11 @@ class Report extends Component {
                     <Text>업체전화연결</Text>
                 </CustomButton>
 
-                <CustomButton onPress={ Actions.RegAfterServiceAdd }>
-                    <Text>추가 A/S 진행</Text>
+                <CustomButton onPress={ () => Actions.RegReportBeforePic({asPrgsId : this.props.asPrgsId}) }>
+                    <Text>보고서 작성</Text>
                 </CustomButton>
 
-                {/* <CustomButton onPress={ () => alert("A/S 전") }>
-                    <Text>A/S 전</Text>
-                </CustomButton>
-
-                <CustomButton onPress={ () => alert("A/S 후") }>
+                {/* <CustomButton onPress={ () => alert("A/S 후") }>
                     <Text>A/S 후</Text>
                 </CustomButton> */}
 

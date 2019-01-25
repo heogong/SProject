@@ -5,6 +5,7 @@ import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
 
 export default class RegAfterServiceAdd extends Component {
+
   render() {
     return (
       <CustomBlockWrapper

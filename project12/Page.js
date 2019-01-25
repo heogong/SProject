@@ -39,16 +39,15 @@ import ListAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ListAft
 import ViewAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ViewAfterServiceMatch';
 // A/S 매칭 후 상태정보
 import ViewAfterServiceState from './src/Main/Pages/Partner/AfterService/ViewAfterServiceState';
+// 추가 A/S 내역
+import RegAfterServiceAdd from './src/Main/Pages/Partner/AfterService/RegAfterServiceAdd';
 
 // A/S 보고서
 import AfterServiceReport from './src/Main/Pages/Partner/Report';
+import ListInCompleteReport from './src/Main/Pages/Partner/Report/ListInCompleteReport';
 import RegReportBeforePic from './src/Main/Pages/Partner/Report/RegReportBeforePic';
 import RegReportAfterPic from './src/Main/Pages/Partner/Report/RegReportAfterPic';
-
-// 추가 A/S 내역
-import RegAfterServiceAdd from './src/Main/Pages/Partner/Report/RegAfterServiceAdd';
-
-
+import RegReportSymptomFix from './src/Main/Pages/Partner/Report/RegReportSymptomFix';
 
 import DrawerContent from './src/Main/Components/DrawerContent'
 import MenuIcon from './src/Main/Images/menu_burger.png'
@@ -116,11 +115,13 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       
       {/* 테스트 후 삭제 */}
-      <Scene key="RegReportBeforePic" initial hideNavBar component={RegReportBeforePic}/>
+      {/* <Scene key="ListInCompleteReport" initial hideNavBar component={ListInCompleteReport}/>
+      <Scene key="RegReportBeforePic" hideNavBar component={RegReportBeforePic}/>
       <Scene key="RegReportAfterPic" hideNavBar component={RegReportAfterPic}/>
+      <Scene key="RegReportSymptomFix" hideNavBar component={RegReportSymptomFix}/> */}
       {/* 테스트 후 삭제 */}
       
       <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
@@ -264,16 +265,17 @@ const PAGE = () => (
               <Scene key="AfterServiceMatch" component={ListAfterServiceMatch} title="A/S 매칭"/>
               <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} title="A/S 매칭 상세"/>
               <Scene key="ViewAfterServiceState" component={ViewAfterServiceState} title="A/S 매칭 후 상태"/>
+              <Scene key="RegAfterServiceAdd" component={RegAfterServiceAdd} title="추가 A/S"/>
             </Stack>
 
             <Stack key="PartnerReport" hideNavBar title="보고서" icon={TabIcon}
-              tabBarOnPress={() => Actions.AfterServiceReport({type:ActionConst.RESET})}
+              tabBarOnPress={() => Actions.ListInCompleteReport({type:ActionConst.RESET})}
               transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+              <Scene key="ListInCompleteReport" component={ListInCompleteReport} title="미 완료 보고서 리스트"/>
               <Scene key="AfterServiceReport" component={AfterServiceReport} title="A/S 보고서"/>
               <Scene key="RegReportBeforePic" component={RegReportBeforePic} title="A/S 보고서 조치 전"/>
               <Scene key="RegReportAfterPic" component={RegReportAfterPic} title="A/S 보고서 조치 후"/>
-              <Scene key="RegAfterServiceAdd" component={RegAfterServiceAdd} title="추가 A/S"/>
-              
+              <Scene key="RegReportSymptomFix" component={RegReportSymptomFix} title="A/S 조치 증상 및 수리"/>
             </Stack>
           </Tabs>
 

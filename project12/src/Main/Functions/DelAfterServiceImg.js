@@ -16,6 +16,7 @@ const DelAfterServiceImg = async (isBefore, imgId, asPrgsId) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
+  console.log(DelAfterServiceImgUrl(isBefore, imgId, asPrgsId));
   return fetch(DelAfterServiceImgUrl(isBefore, imgId, asPrgsId), {
     method: 'DELETE',
     headers: {

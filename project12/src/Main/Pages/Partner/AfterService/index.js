@@ -33,7 +33,8 @@ class AfterService extends Component {
                         if(resultData.data.asPrgsYn == 'Y') {
                             Actions.ViewAfterServiceState({
                                 asRecvId : resultData.data.asPrgsMst.asRecvId,
-                                asPrgsId : resultData.data.asPrgsMst.asPrgsId
+                                asPrgsId : resultData.data.asPrgsMst.asPrgsId,
+                                isProcess : false
                             });
                         } else {
                             Actions.AfterServiceMatch();

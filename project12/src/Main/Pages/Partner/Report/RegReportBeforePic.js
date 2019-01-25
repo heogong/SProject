@@ -6,7 +6,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 
-import GetAfterServiceBeforeImg from '~/Main/Functions/GetAfterServiceBeforeImg';
+import GetAfterServiceActionImg from '~/Main/Functions/GetAfterServiceActionImg';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import AfterServiceImage from '~/Main/Components/AfterServiceImage';
@@ -32,8 +32,8 @@ class RegReportBeforePic extends Component {
 
     // AS 조지전 사진 조회
     _getAfterServiceBeforeImg = () => {
-        GetAfterServiceBeforeImg(5).then(result => {
-        //GetAfterServiceBeforeImg(this.props.asPrgsId).then(result => {
+        // GetAfterServiceActionImg(true, 5).then(result => {
+        GetAfterServiceActionImg(true, this.props.asPrgsId).then(result => {
             GetCommonData(result, this._getAfterServiceBeforeImg).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -55,13 +55,13 @@ class RegReportBeforePic extends Component {
 
     // A/S 이미지 뷰어
     _createBeforeAsImg = () => {
-        let table = []
-    
+        let imageCompArray = [];
+
         for (let i = 0; i < this.state.asImgCnt; i++) {
-            table.push(<AfterServiceImage/>); 
+            imageCompArray.push(<AfterServiceImage asPrgsId={ this.props.asPrgsId }/>); 
         }
 
-        return table;
+        return imageCompArray;
     }
 
     render() {
@@ -71,15 +71,16 @@ class RegReportBeforePic extends Component {
             >
                 {this.state.data.map((beforeImg, idx) => 
                     <AfterServiceImage
-                        key={idx}
+                        index={ idx }
+                        imgUrl={ beforeImg.fileUrl }
+                        imgId={ beforeImg.imgId }
+                        asPrgsId={ this.props.asPrgsId }
                     />
                 )}
-
                 {this._createBeforeAsImg()}
-
                 <CustomButton 
                     //disabled={ this.state.btnDisabled }
-                    onPress={ Actions.RegReportAfterPic }>
+                    onPress={ () => Actions.RegReportAfterPic({asPrgsId : this.props.asPrgsId}) }>
                     <Text>다음</Text>
                 </CustomButton>
             </CustomBlockWrapper>

@@ -20,14 +20,16 @@ class AfterServiceImage extends Component {
         this.takePhotoTapped = this.takePhotoTapped.bind(this);
 
         this.state = {
-            avatarSource : null,
-            isImage : false,
-            imgId : null
+            avatarSource : { uri: this.props.imgUrl },
+            isImage : (this.props.imgUrl) ? true : false,
+            imgId : this.props.imgId
         };
     }
 
     static defaultProps = {
-        beforeAction : true,
+        beforeAction : true, // 조치전/후 여부
+        imgUrl : null,
+        imgId : null,
         asPrgsId : 5, //test
     }
 
@@ -119,7 +121,7 @@ class AfterServiceImage extends Component {
 
     render() {
         return (
-            <View>
+            <View key={this.props.index}>
                 { (this.state.isImage) ? (
                     <Card>
                         <CardItem cardBody>
