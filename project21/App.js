@@ -27,22 +27,17 @@ export default class App extends Component {
     BackgroundGeolocation.configure({
       desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
       stationaryRadius: 50,
-      distanceFilter: 50,
+      distanceFilter: 500,
       notificationTitle: 'Background tracking',
       notificationText: 'enabled',
-      debug: true,
+      debug: false,
       startOnBoot: false,
       stopOnTerminate: true,
       locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
-      interval: 10000,
-      fastestInterval: 5000,
+      interval: 300000,
+      fastestInterval: 120000,
       activitiesInterval: 10000,
       stopOnStillActivity: false,
-      url: 'http://192.168.81.15:3000/location',
-      httpHeaders: {
-        'X-FOO': 'bar'
-      },
-      // customize post properties
       postTemplate: {
         lat: '@latitude',
         lon: '@longitude',
@@ -79,7 +74,7 @@ export default class App extends Component {
 
     BackgroundGeolocation.on('stop', () => {
       console.log('[INFO] BackgroundGeolocation service has been stopped');
-      this.setState({ isRunning: false });
+      // this.setState({ isRunning: false });
     });
 
     BackgroundGeolocation.on('authorization', (status) => {
@@ -134,9 +129,9 @@ export default class App extends Component {
 
 
   componentWillUnmount() {
-    console.log("removeAllListeners");
-    // unregister all event listeners
-    BackgroundGeolocation.removeAllListeners();
+    BackgroundGeolocation.events.forEach(event =>
+      BackgroundGeolocation.removeAllListeners(event)
+    );
   }
 
 
@@ -195,6 +190,20 @@ export default class App extends Component {
     })
   }
 
+  _startTracking = () => {
+    console.log("start");
+      BackgroundGeolocation.start();
+
+  }
+
+  _stopTracking = () => {
+    BackgroundGeolocation.checkStatus(({ isRunning, locationServicesEnabled, authorization }) => {
+      console.log("stop");
+      BackgroundGeolocation.stop();
+      return false;
+    });
+  }
+
 
   render() {
     return (
@@ -203,9 +212,14 @@ export default class App extends Component {
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
 
-        <Button onPress={this.toggleTracking}
-        title={(this.state.isRunning) ? "추적" : "중지"}>
-          <Text>start/stop</Text>
+        <Button 
+          onPress={this._startTracking}
+          title="추적" >
+        </Button>
+
+        <Button 
+          onPress={this._stopTracking}
+          title="중지">
         </Button>
       </View>
     );

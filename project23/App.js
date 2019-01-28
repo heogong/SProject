@@ -44,9 +44,11 @@ export default class App extends Component{
 
     // track the user's location once in the foreground
     Radar.trackOnce().then((result) => {
+      alert("result");
       console.log(result)
       // do something with result.events, result.user.geofences
     }).catch((err) => {
+      alert("err");
       console.log(err)
       // optionally, do something with err
     });
@@ -86,18 +88,21 @@ export default class App extends Component{
 
 // receive events
 Radar.on('events', (result) => {
+  alert("events");
   console.log(result);
   // do something with result.events, result.user
 });
 
 // receive location updates
 Radar.on('location', (result) => {
+  alert("location");
   console.log(result);
   // do something with result.location, result.user
 });
 
 // receive errors
 Radar.on('error', (err) => {
+  alert("error");
   console.log(err);
   // do something with err
 });
