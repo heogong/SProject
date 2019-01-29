@@ -34,7 +34,7 @@ export default class App extends Component {
       startOnBoot: false,
       stopOnTerminate: true,
       locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
-      interval: 300000,
+      interval: 120000,
       fastestInterval: 120000,
       activitiesInterval: 10000,
       stopOnStillActivity: false,
@@ -47,6 +47,15 @@ export default class App extends Component {
 
     BackgroundGeolocation.on('location', (location) => {
       console.log(location);
+
+      var currentDate = new Date();
+
+      var msg = "현재 시간:"+currentDate.getHours()+"시"
+      msg += currentDate.getMinutes()+"분";
+      msg += currentDate.getSeconds()+"초";
+      console.log(msg);
+
+
       // handle your locations here
       // to perform long running operation on iOS
       // you need to create background task
@@ -58,24 +67,24 @@ export default class App extends Component {
       });
     });
 
-    BackgroundGeolocation.on('stationary', (stationaryLocation) => {
-      // handle stationary locations here
-      Actions.sendLocation(stationaryLocation);
-    });
+    // BackgroundGeolocation.on('stationary', (stationaryLocation) => {
+    //   // handle stationary locations here
+    //   Actions.sendLocation(stationaryLocation);
+    // });
 
-    BackgroundGeolocation.on('error', (error) => {
-      console.log('[ERROR] BackgroundGeolocation error:', error);
-    });
+    // BackgroundGeolocation.on('error', (error) => {
+    //   console.log('[ERROR] BackgroundGeolocation error:', error);
+    // });
 
-    BackgroundGeolocation.on('start', () => {
-      console.log('[INFO] BackgroundGeolocation service has been started');
-      this.setState({ isRunning: true });
-    });
+    // BackgroundGeolocation.on('start', () => {
+    //   console.log('[INFO] BackgroundGeolocation service has been started');
+    //   this.setState({ isRunning: true });
+    // });
 
-    BackgroundGeolocation.on('stop', () => {
-      console.log('[INFO] BackgroundGeolocation service has been stopped');
-      // this.setState({ isRunning: false });
-    });
+    // BackgroundGeolocation.on('stop', () => {
+    //   console.log('[INFO] BackgroundGeolocation service has been stopped');
+    //   // this.setState({ isRunning: false });
+    // });
 
     BackgroundGeolocation.on('authorization', (status) => {
       console.log('[INFO] BackgroundGeolocation authorization status: ' + status);
@@ -89,46 +98,43 @@ export default class App extends Component {
       }
     });
 
-    BackgroundGeolocation.on('background', () => {
-      console.log('[INFO] App is in background');
-    });
+    // BackgroundGeolocation.on('background', () => {
+    //   console.log('[INFO] App is in background');
+    // });
 
-    BackgroundGeolocation.on('foreground', () => {
-      console.log('[INFO] App is in foreground');
-    });
+    // BackgroundGeolocation.on('foreground', () => {
+    //   console.log('[INFO] App is in foreground');
+    // });
 
-    BackgroundGeolocation.on('abort_requested', () => {
-      console.log('[INFO] Server responded with 285 Updates Not Required');
+    // BackgroundGeolocation.on('abort_requested', () => {
+    //   console.log('[INFO] Server responded with 285  Not RequUpdatesired');
 
-      // Here we can decide whether we want stop the updates or not.
-      // If you've configured the server to return 285, then it means the server does not require further update.
-      // So the normal thing to do here would be to `BackgroundGeolocation.stop()`.
-      // But you might be counting on it to receive location updates in the UI, so you could just reconfigure and set `url` to null.
-    });
+    //   // Here we can decide whether we want stop the updates or not.
+    //   // If you've configured the server to return 285, then it means the server does not require further update.
+    //   // So the normal thing to do here would be to `BackgroundGeolocation.stop()`.
+    //   // But you might be counting on it to receive location updates in the UI, so you could just reconfigure and set `url` to null.
+    // });
 
-    BackgroundGeolocation.on('http_authorization', () => {
-      console.log('[INFO] App needs to authorize the http requests');
-    });
+    // BackgroundGeolocation.on('http_authorization', () => {
+    //   console.log('[INFO] App needs to authorize the http requests');
+    // });
 
-    BackgroundGeolocation.checkStatus(status => {
-      console.log(status);
-      console.log('[INFO] BackgroundGeolocation service is running', status.isRunning);
-      console.log('[INFO] BackgroundGeolocation services enabled', status.locationServicesEnabled);
-      console.log('[INFO] BackgroundGeolocation auth status: ' + status.authorization);
+    // BackgroundGeolocation.checkStatus(status => {
+    //   console.log(status);
+    //   console.log('[INFO] BackgroundGeolocation service is running', status.isRunning);
+    //   console.log('[INFO] BackgroundGeolocation services enabled', status.locationServicesEnabled);
+    //   console.log('[INFO] BackgroundGeolocation auth status: ' + status.authorization);
 
-      // you don't need to check status before start (this is just the example)
-      if (!status.isRunning) {
-        // BackgroundGeolocation.start(); //triggers start on start event
-        BackgroundGeolocation.start(); //triggers start on start event
-      }
-    });
-
-    // you can also just start without checking for status
-    // BackgroundGeolocation.start();
+    //   // you don't need to check status before start (this is just the example)
+    //   if (!status.isRunning) {
+    //     BackgroundGeolocation.start(); //triggers start on start event
+    //   }
+    // });
   }
 
 
   componentWillUnmount() {
+    console.log("componentWillUnmount");
     BackgroundGeolocation.events.forEach(event =>
       BackgroundGeolocation.removeAllListeners(event)
     );
@@ -139,69 +145,27 @@ export default class App extends Component {
     BackgroundGeolocation.checkStatus(({ isRunning, locationServicesEnabled, authorization }) => {
       console.log("isRunning : ",isRunning);
       if (isRunning) {
-
         setTimeout(() => BackgroundGeolocation.stop(), 5000);
-        
         // BackgroundGeolocation.stop()
-        
       } else {
         BackgroundGeolocation.start();
       }
-
-      // if (!locationServicesEnabled) {
-      //   Alert.alert(
-      //     'Location services disabled',
-      //     'Would you like to open location settings?',
-      //     [
-      //       {
-      //         text: 'Yes',
-      //         onPress: () => BackgroundGeolocation.showLocationSettings()
-      //       },
-      //       {
-      //         text: 'No',
-      //         onPress: () => console.log('No Pressed'),
-      //         style: 'cancel'
-      //       }
-      //     ]
-      //   );
-      //   return false;
-      // }
-
-    //   if (authorization == 99) {
-    //     // authorization yet to be determined
-    //     BackgroundGeolocation.start();
-    //   } else if (authorization == BackgroundGeolocation.AUTHORIZED) {
-    //     // calling start will also ask user for permission if needed
-    //     // permission error will be handled in permisision_denied event
-    //     BackgroundGeolocation.start();
-    //   } else {
-    //     Alert.alert(
-    //       'App requires location tracking',
-    //       'Please grant permission',
-    //       [
-    //         {
-    //           text: 'Ok',
-    //           onPress: () => BackgroundGeolocation.start()
-    //         }
-    //       ]
-    //     );
-    //   }
-    // });
     })
   }
 
   _startTracking = () => {
     console.log("start");
+    BackgroundGeolocation.checkStatus(({ isRunning, locationServicesEnabled, authorization }) => {
+      console.log("isRunning : ", isRunning);
       BackgroundGeolocation.start();
+    });
 
   }
 
   _stopTracking = () => {
-    BackgroundGeolocation.checkStatus(({ isRunning, locationServicesEnabled, authorization }) => {
-      console.log("stop");
-      BackgroundGeolocation.stop();
-      return false;
-    });
+    console.log("stop");
+    BackgroundGeolocation.stop();
+    return false;
   }
 
 

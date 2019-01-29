@@ -6,9 +6,11 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import ReactTimeout from 'react-timeout'
+import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 
 import GetAfterServiceDetail from '~/Main/Functions/GetAfterServiceDetail';
 import DepartureAfterService from '~/Main/Functions/DepartureAfterService';
+import MoveAfterService from '~/Main/Functions/MoveAfterService';
 import ArriveAfterService from '~/Main/Functions/ArriveAfterService';
 import CompleteAfterService from '~/Main/Functions/CompleteAfterService';
 import GetCommonData from '~/Common/Functions/GetCommonData';
@@ -39,14 +41,21 @@ class ViewAfterServiceState extends Component {
     }
 
     componentDidMount() {
-        if(this.props.isProcess) {
-            this.props.setTimeout(this._departureAfterService, 500);
-        }
-        
-        this._getAfterServiceDetail();
+        // if(this.props.isProcess) {
+        //     this.props.setTimeout(this._departureAfterService, 500);
+        // }
+        // this._getAfterServiceDetail();
+        this._moveAfterServiceBackground();
     }
 
-    // 현재 위치 조회
+    componentWillUnmount() {
+        console.log("componentWillUnmount");
+        BackgroundGeolocation.events.forEach(event =>
+          BackgroundGeolocation.removeAllListeners(event)
+        );
+    }
+
+       // 현재 위치 조회
     _getLocation() {
         navigator.geolocation.getCurrentPosition (
             (positon) => {
@@ -58,6 +67,80 @@ class ViewAfterServiceState extends Component {
         // (error) => {console.log(error.message)},
         // {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
         );
+    }
+
+    // 백그라운드 세팅
+    _moveAfterServiceBackground() {
+        BackgroundGeolocation.configure({
+            desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
+            stationaryRadius: 50,
+            distanceFilter: 500,
+            notificationTitle: 'Background tracking',
+            notificationText: 'enabled',
+            debug: false,
+            startOnBoot: false,
+            stopOnTerminate: true,
+            locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
+            interval: 120000,
+            fastestInterval: 120000,
+            activitiesInterval: 10000,
+            stopOnStillActivity: false,
+            postTemplate: {
+              lat: '@latitude',
+              lon: '@longitude',
+              foo: 'bar' // you can also add your own properties
+            }
+        });
+
+        BackgroundGeolocation.on('location', (location) => {
+            console.log(location);
+
+            this.setState({
+                latitude : location.latitude,
+                longitude :location.longitude
+            });
+
+            var currentDate = new Date();
+            var msg = "현재 시간:"+currentDate.getHours()+"시"
+            msg += currentDate.getMinutes()+"분";
+            msg += currentDate.getSeconds()+"초";
+            console.log(msg);
+      
+            BackgroundGeolocation.startTask(taskKey => {
+                // 백그라운드 좌표 전송 task
+                // this._moveAfterService();
+
+                BackgroundGeolocation.endTask(taskKey);
+            });
+        });
+
+        BackgroundGeolocation.checkStatus(({ isRunning, locationServicesEnabled, authorization }) => {
+            console.log("isRunning : ", isRunning);
+
+            if (!locationServicesEnabled) {
+                Alert.alert(
+                  'Location services disabled',
+                  'Would you like to open location settings?',
+                  [
+                    {
+                      text: 'Yes',
+                      onPress: () => BackgroundGeolocation.showLocationSettings()
+                    },
+                    {
+                      text: 'No',
+                      onPress: () => console.log('No Pressed'),
+                      style: 'cancel'
+                    }
+                  ]
+                );
+                return false;
+            }
+
+            if(!isRunning) {
+                console.log("start");
+                BackgroundGeolocation.start();
+            }
+        });
     }
 
     // 업체 AS 매칭(진행) 출발
@@ -99,8 +182,27 @@ class ViewAfterServiceState extends Component {
         });
     }
 
-     // 업체 AS 매칭(진행) 도착
-     _arriveAfterService = () => {
+    // 업체 AS 매칭(진행) 이동
+    _moveAfterService = () => {
+        const {latitude, longitude} = this.state;
+
+        MoveAfterService(this.props.asPrgsId, latitude, longitude).then(result => {
+            GetCommonData(result, this._moveAfterService).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+                        alert(resultData.resultMsg);
+                    } else {
+                        alert(resultData.resultMsg);
+                    }
+                }
+            });
+        });
+    }
+
+    // 업체 AS 매칭(진행) 도착
+    _arriveAfterService = () => {
         const {latitude, longitude} = this.state;
 
         ArriveAfterService(this.props.asPrgsId, latitude, longitude).then(result => {
@@ -110,8 +212,23 @@ class ViewAfterServiceState extends Component {
                     console.log(resultData);
                     if(ResultBool) {
                         alert(resultData.resultMsg);
+
+                        // ===== 백그라운드 종료 =====
+                        BackgroundGeolocation.events.forEach(event =>
+                            BackgroundGeolocation.removeAllListeners(event)
+                        );
+                        BackgroundGeolocation.stop();
+                        // ===== 백그라운드 종료 =====
+
                     } else {
                         alert(resultData.resultMsg);
+
+                         // ===== 백그라운드 종료 (test)=====
+                         BackgroundGeolocation.events.forEach(event =>
+                            BackgroundGeolocation.removeAllListeners(event)
+                         );
+                         BackgroundGeolocation.stop();
+                         // ===== 백그라운드 종료 =====
                     }
                 }
             });

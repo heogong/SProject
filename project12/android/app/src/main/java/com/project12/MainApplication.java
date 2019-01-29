@@ -3,6 +3,7 @@ package com.project12;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.marianhello.bgloc.react.BackgroundGeolocationPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.dooboolab.kakaologins.RNKakaoLoginsPackage;
 import org.reactnative.camera.RNCameraPackage;
@@ -40,6 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new BackgroundGeolocationPackage(),
             new ImagePickerPackage(),
             new RNKakaoLoginsPackage(),
             new RNCameraPackage(),
