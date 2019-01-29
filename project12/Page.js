@@ -122,7 +122,7 @@ const PAGE = () => (
       <Scene key="RegReportBeforePic" hideNavBar component={RegReportBeforePic}/>
       <Scene key="RegReportAfterPic" hideNavBar component={RegReportAfterPic}/>
       <Scene key="RegReportSymptomFix" hideNavBar component={RegReportSymptomFix}/> */}
-      {/* <Scene key="ViewAfterServiceState" initial hideNavBar component={ViewAfterServiceState}/> */}
+      <Scene key="ViewAfterServiceState" initial hideNavBar component={ViewAfterServiceState}/>
       
       {/* 테스트 후 삭제 */}
       

@@ -114,6 +114,11 @@ class ViewAfterServiceState extends Component {
             });
         });
 
+        BackgroundGeolocation.on('activity', (Activity) => {
+            console.log('[INFO] BackgroundGeolocation Activity', Activity);
+            // this.setState({ isRunning: false });
+        });
+
         BackgroundGeolocation.checkStatus(({ isRunning, locationServicesEnabled, authorization }) => {
             console.log("isRunning : ", isRunning);
 
