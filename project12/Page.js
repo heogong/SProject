@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator';
 import {Actions, Scene, Router, Stack, Overlay, ActionConst, Drawer, Tabs} from 'react-native-router-flux';
 import TabIcon from './src/Common/Components/TabIcon';
+import IndexPage from './src';
 import InitPage from './src/FirstScreen/Pages/InitPage';
 import PageOne from './src/FirstScreen/Pages/PageOne';
 
@@ -115,14 +116,15 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="IndexPage" initial hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       
       {/* 테스트 후 삭제 */}
       {/* <Scene key="ListInCompleteReport" initial hideNavBar component={ListInCompleteReport}/>
       <Scene key="RegReportBeforePic" hideNavBar component={RegReportBeforePic}/>
       <Scene key="RegReportAfterPic" hideNavBar component={RegReportAfterPic}/>
       <Scene key="RegReportSymptomFix" hideNavBar component={RegReportSymptomFix}/> */}
-      <Scene key="ViewAfterServiceState" initial hideNavBar component={ViewAfterServiceState}/>
+      {/* <Scene key="ViewAfterServiceState" initial hideNavBar component={ViewAfterServiceState}/> */}
       
       {/* 테스트 후 삭제 */}
       

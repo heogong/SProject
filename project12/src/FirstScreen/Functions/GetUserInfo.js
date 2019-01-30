@@ -1,8 +1,10 @@
 import { AsyncStorage } from "react-native"
-import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
-import GetAccessToken from '../../Common/Functions/GetAccessToken';
+import { DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '~/Common/Blend';
+import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
 const API_URL = `${DOMAIN}iam/users/me`;
+
+// 로그인 사용자 정보 조회
 
 function GetUserInfoUrl() {
   return `${API_URL}`;
