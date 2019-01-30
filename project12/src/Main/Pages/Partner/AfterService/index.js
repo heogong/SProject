@@ -4,6 +4,8 @@ import { View } from 'react-native';
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
+import Spinner from 'react-native-loading-spinner-overlay';
+import ReactTimeout from 'react-timeout'
 
 import GetAfterServiceState from '~/Main/Functions/GetAfterServiceState'
 import GetCommonData from '~/Common/Functions/GetCommonData';
@@ -13,11 +15,12 @@ class AfterService extends Component {
       super(props);
 
       this.state = {
-        data : []
+        spinner : false
       };
     }
 
     componentWillMount() {
+        this.setState({spinner : true});
         this._getAfterServiceState();
     }
 
@@ -29,13 +32,16 @@ class AfterService extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        //this.setState({ data: resultData.data });
+
                         if(resultData.data.asPrgsYn == 'Y') {
-                            Actions.ViewAfterServiceState({
-                                asRecvId : resultData.data.asPrgsMst.asRecvId,
-                                asPrgsId : resultData.data.asPrgsMst.asPrgsId,
-                                isProcess : false
-                            });
+                            setTimeout(() => {
+                                Actions.ViewAfterServiceState({
+                                    asRecvId : resultData.data.asPrgsMst.asRecvId,
+                                    asPrgsId : resultData.data.asPrgsMst.asPrgsId,
+                                    isProcess : false
+                                })
+                                this.setState({spinner : false});
+                            }, 700);
                         } else {
                             Actions.AfterServiceMatch();
                         }
@@ -48,9 +54,16 @@ class AfterService extends Component {
     }
 
     render() {
-        return (<View></View>)
+        return (
+            <View>
+                {/* 로딩 */}
+                <Spinner
+                    visible={this.state.spinner}
+                    textContent={'파트너 A/S 상태를 확인중입니다.'}
+                    style={{color: '#FFF'}}
+                />
+            </View>
+        )
     }
 }
-
-
-export default AfterService;
+export default ReactTimeout(AfterService)
