@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, BackHandler, TouchableOpacity, View } from 'react-native';
+import { Alert, BackHandler, TouchableOpacity, StyleSheet, View } from 'react-native';
 import { Container, Button, Content, Input, Item, Icon, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -9,6 +9,7 @@ import { ActionConst, Actions } from 'react-native-router-flux';
 import GetAfterService from '~/Main/Functions/GetAfterService';
 import RegAfterServiceMatch from '~/Main/Functions/RegAfterServiceMatch';
 import DepartureAfterService from '~/Main/Functions/DepartureAfterService';
+import GetAfterServiceIncomplete from '~/Main/Functions/GetAfterServiceIncomplete';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
@@ -21,6 +22,7 @@ export default class Main extends Component {
     super(props);
     this.state = {
         data : [],
+        reportCount : 0,
         latitude : null,
         longitude : null,
     };
@@ -29,6 +31,7 @@ export default class Main extends Component {
     componentDidMount () {
         BackHandler.addEventListener('hardwareBackPress', () => this.handleBackPress) // Listen for the hardware back button on Android to be pressed
         this._getAfterService();
+        this._getAfterServiceIncomplete();
     }
 
     componentWillUnmount () {
@@ -37,6 +40,21 @@ export default class Main extends Component {
 
     handleBackPress = () => {
         return false;
+    }
+
+    
+     // 현재 위치 조회
+     _getLocation() {
+        navigator.geolocation.getCurrentPosition(
+        (positon) => {
+            this.setState({
+                latitude : positon.coords.latitude,
+                longitude : positon.coords.longitude
+            })
+        },
+        // (error) => {console.log(error.message)},
+        // {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
+        );
     }
 
     // 나의 AS 매칭 목록 조회
@@ -95,19 +113,26 @@ export default class Main extends Component {
             });
         });
     }
+    
 
-     // 현재 위치 조회
-     _getLocation() {
-        navigator.geolocation.getCurrentPosition(
-        (positon) => {
-            this.setState({
-                latitude : positon.coords.latitude,
-                longitude : positon.coords.longitude
-            })
-        },
-        // (error) => {console.log(error.message)},
-        // {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
-        );
+    // 파트너 미작성 보고서 목록 조회 : 미완성 보고서 박스 보임 여부
+    _getAfterServiceIncomplete = () => {
+        GetAfterServiceIncomplete().then(result => {
+            GetCommonData(result, this._getAfterServiceIncomplete).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+                        this.setState({ 
+                            // reportCount : resultData.data.length
+                            reportCount : 3 // test
+                        });
+                    } else {
+                        alert(resultData.resultMsg);
+                    }
+                }
+            });
+        });
     }
 
     // A/S 선택
@@ -181,12 +206,29 @@ export default class Main extends Component {
                         <Text>A/S</Text>
                     </CustomButton>
                 </View>
+
+                {/* 미완성 보고서 박스 */}
+                <View style={ styles.reportBox }>
+                    <View style={[(this.state.reportCount > 0) ? styles.show : styles.hide, 
+                        {padding : 10, backgroundColor: 'steelblue'}]}>
+                        <Text>작성되지 않은 보고서가 있어요!</Text>
+                        <Text>지금 보고서를 완료하고 정산받으세요!</Text>
+                        <CustomButton 
+                            info={ true }
+                            bordered={ true }
+                            onPress={ Actions.PartnerReport }
+                        >
+                            <Text>{this.state.reportCount}개 지금작성하러 가기</Text>
+                        </CustomButton>
+                    </View>
+                </View>
+
             </View>
         )
     }
 }
 
-const styles = {
+const styles = StyleSheet.create({
     slides: { backgroundColor: '#F5FCFF'},
     slide: { 
         alignItems: 'center',
@@ -196,5 +238,22 @@ const styles = {
         width: 100,
         backgroundColor: 'pink'
       },
-    title: { color: 'black', fontSize: 20 }
-  };
+    title: { 
+        color: 'black', 
+        fontSize: 20 
+    },
+    reportBox : {
+        zIndex : 1, 
+        position: 'absolute', 
+        left:0, 
+        bottom:0, 
+        width: '100%',
+        height: 150
+    },
+    hide: {
+        display: 'none'
+    },
+    show: {
+        display: 'flex'
+    }
+});

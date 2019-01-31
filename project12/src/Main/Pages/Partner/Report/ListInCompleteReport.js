@@ -22,13 +22,13 @@ class ListInCompleteReport extends Component {
     }
 
     componentDidMount() {
-        this._getAfterServiceAfterImg();
+        this._getAfterServiceIncomplete();
     }
 
     // 파트너 미작성 보고서 목록 조회
-    _getAfterServiceAfterImg = () => {
+    _getAfterServiceIncomplete = () => {
         GetAfterServiceIncomplete().then(result => {
-            GetCommonData(result, this._getAfterServiceAfterImg).then(async resultData => {
+            GetCommonData(result, this._getAfterServiceIncomplete).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);

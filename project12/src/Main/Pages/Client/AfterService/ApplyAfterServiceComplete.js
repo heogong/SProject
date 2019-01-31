@@ -7,6 +7,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import { Actions } from "react-native-router-flux";
 
 import FindAfterServicePartner from '~/Main/Functions/FindAfterServicePartner'
+import CancleAfterServicePartner from '~/Main/Functions/CancleAfterServicePartner'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomButton from '~/Common/Components/CustomButton';
@@ -18,7 +19,10 @@ class ApplyAfterServiceComplete extends Component {
     constructor(props) {
       super(props);
 
-      this.state = {};
+      this.state = {
+        result : "매칭 중",
+        asPrgsId : null
+      };
     }
 
     componentWillMount() {
@@ -32,7 +36,32 @@ class ApplyAfterServiceComplete extends Component {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
+
                     if(ResultBool) {
+                        this.setState({asPrgsId : result.data.asPrgsId});
+                        setTimeout(() => {
+                            this.setState({result : "매칭 완료"});
+                        }, 10000);
+                        
+                    } else {
+                        alert(resultData.resultMsg);
+                        this.setState({result : "매칭 실패"});
+                    }
+                }
+            });
+        });
+    }
+
+    // 고객 AS 매칭(진행)중 취소
+    _cancleAfterServicePartner = () => {
+        CancleAfterServicePartner(this.state.asPrgsId).then(result => {
+            GetCommonData(result, this._cancleAfterServicePartner).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+
+                    if(ResultBool) {
+                        alert(resultData.resultMsg);
                         
                     } else {
                         alert(resultData.resultMsg);
@@ -40,6 +69,21 @@ class ApplyAfterServiceComplete extends Component {
                 }
             });
         });
+    }
+
+
+    // 고객 AS 매칭(진행)중 취소 선택
+    _cancleAfterServicePartnerConfirm = () => {
+        Alert.alert(
+            '',
+            'A/S 매칭을 취소??',
+            [
+              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+              {text: '취소', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              {text: '수락', onPress: () => this._cancleAfterServicePartner()},
+            ],
+            { cancelable: false }
+        )
     }
 
     render() {
@@ -50,8 +94,18 @@ class ApplyAfterServiceComplete extends Component {
                 <View>
                     <Text>매칭 신청이 완료되었습니다.</Text>
                     <Text>A/S 업체와 연결을 시작합니다.</Text>
+                    <Text>{this.state.result}</Text>
+
                 </View>
-               
+                <CustomButton
+                    block={ true }
+                    info={ true }
+                    bordered={ true }
+                    onPress={ this._cancleAfterServicePartnerConfirm }>
+                    <Text>
+                        매칭 취소
+                    </Text>
+                </CustomButton>
             </CustomBlockWrapper>
         )
     }

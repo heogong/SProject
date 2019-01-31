@@ -4,7 +4,11 @@ import {Actions, Scene, Router, Stack, Overlay, ActionConst, Drawer, Tabs} from 
 import TabIcon from './src/Common/Components/TabIcon';
 import IndexPage from './src';
 import InitPage from './src/FirstScreen/Pages/InitPage';
-import PageOne from './src/FirstScreen/Pages/PageOne';
+import ServiceInfo from './src/FirstScreen/Pages/ServiceInfo';
+
+import AgreeTermsService from './src/FirstScreen/Pages/Join/AgreeTermsService';
+import ClientTermsService from './src/FirstScreen/Pages/Join/Client/SuccessTermsService';
+import PartnerTermsService from './src/FirstScreen/Pages/Join/Partner/SuccessTermsService';
 
 import JoinCustomerType from './src/FirstScreen/Pages/Join/CustomerType';
 import JoinAccountType from './src/FirstScreen/Pages/Join/AccountType';
@@ -116,8 +120,8 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="IndexPage" initial hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
-      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="IndexPage" hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       
       {/* 테스트 후 삭제 */}
       {/* <Scene key="ListInCompleteReport" initial hideNavBar component={ListInCompleteReport}/>
@@ -128,7 +132,12 @@ const PAGE = () => (
       
       {/* 테스트 후 삭제 */}
       
-      <Scene key="pageOne" component={PageOne} title="PageOne!!!" back onBack={() => Actions.InitPage()}/>
+      {/* 안내페이지 */}
+      <Scene key="ServiceInfo" hideNavBar component={ServiceInfo} />
+      {/* 약관동의 */}
+      <Scene key="AgreeTermsService"  hideNavBar component={AgreeTermsService} />
+      <Scene key="ClientTermsService" hideNavBar component={ClientTermsService} />
+      <Scene key="PartnerTermsService" hideNavBar component={PartnerTermsService} />
 
       <Scene key="reactCamera" hideNavBar component={ReactCamera} />
       <Scene key="ViewImage" hideNavBar component={ViewImage} title="제품 이미지 조회" />
