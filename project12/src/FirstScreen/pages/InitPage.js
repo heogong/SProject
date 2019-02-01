@@ -70,6 +70,15 @@ export default class PageOne extends Component {
             메인_테스트 (파트너)
           </Text>
         </CustomButton>
+        <CustomButton
+          block={ true }
+          info={ true }
+          bordered={ true }
+          onPress={Actions.NonMemberNoticeInfoService}>
+          <Text>
+            비회원으로 A/S 신청하기
+          </Text>
+        </CustomButton>
       </CustomBasicWrapper>
     )
   }

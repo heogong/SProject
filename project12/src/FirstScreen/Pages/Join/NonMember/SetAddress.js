@@ -41,32 +41,9 @@ class SetAddress extends Component {
         };
     }
 
-    static defaultProps = {
-        editAddress : false // 주소 수정 페이지 여부
-    } 
-
     // 초기 데이터 1. 기본 state 데이터 2. 현재 위치 조회 
     componentDidMount() {
-        // 주소 수정 페이지 접근 시
-        if (this.props.editAddress) {
-            this.setState({
-                region : {
-                  ...this.state.region,
-                  latitude  : Number(this.props.latLng.lat),
-                  longitude : Number(this.props.latLng.lng)
-                },
-                marker: {
-                    latitude: Number(this.props.latLng.lat),
-                    longitude: Number(this.props.latLng.lng)
-                },
-                addressName : this.props.address,
-                detailAddressName : this.props.detailAddress,
-                makerYn : true,
-                disSaveBtn : false
-            })
-        } else { // 주소 등록 페이지 접근 시
-            this._getLocation();
-        }
+        this._getLocation();
     }
 
     // 현재 위치 조회
@@ -128,13 +105,7 @@ class SetAddress extends Component {
 
     // 사업장 저장 버튼 클릭
     _saveButton() {
-        // 주소 수정 페이지 접근 시
-        if (this.props.editAddress) {
-            this._editBusiness();
-
-        } else { // 주소 등록 페이지 접근 시
-            this._regBusiness();
-        }
+        this._regBusiness();
     }
 
     // 사업장 등록
@@ -148,31 +119,8 @@ class SetAddress extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
                         await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
-                        Actions.SetBusinessPlace();
-                    } else {
-                        Toast.show({
-                            text: result.resultMsg,
-                            type: "danger",
-                            buttonText: '확인'
-                        })
-                    }
-                }
-            });
-        });
-    }
-
-     // 사업장 주소 수정
-     _editBusiness = async () => {
-        await this.props.onSetBizAddress(this.state.addressObj);  // 리덕스 주소 오브젝트 SET
-        await this.props.onSetBizAddressDsc(this.state.detailAddressName);  // 리덕스 상세주소 SET
-
-        EditBizPlace(this.props.value).then(async result => {
-            GetCommonData(result, this._editBusiness).then(async resultData => {
-                if(resultData !== undefined) {
-                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    if(ResultBool) {
-                        await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
-                        Actions.popTo("ViewBusinessPlace");
+                        
+                        //Actions.SetBusinessPlace();
                     } else {
                         alert(result.resultMsg);
                     }

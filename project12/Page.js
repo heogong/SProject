@@ -20,6 +20,9 @@ import JoinInputPhoneAuth from './src/FirstScreen/Pages/Join/InputPhoneAuth';
 import LoginAccountType from './src/FirstScreen/Pages/Login/AccountType';
 import LoginInputAccount from './src/FirstScreen/Pages/Login/InputAccount';
 
+// 비회원
+import NonMemberNoticeInfoService from './src/FirstScreen/Pages/Join/NonMember/NoticeInfoService';
+
 // 파트너
 import PartnerIndex from './src/FirstScreen/Pages/Join/Partner'; // 파트너 사업장 등록
 import JoinInputBizLicense from './src/FirstScreen/Pages/Join/Partner/InputBizLicense'; // 파트너 사업자등록증 등록
@@ -32,9 +35,9 @@ import JoinInputProdType from './src/FirstScreen/Pages/Join/Partner/InputProdTyp
 import JoinInputWorkHours from './src/FirstScreen/Pages/Join/Partner/InputWorkHours'; // 파트너 근무시간 선택
 import JoinInputSettleAccount from './src/FirstScreen/Pages/Join/Partner/InputSettleAccount'; // 파트너 정산 계좌
 
-import CardIndex from './src/Card/Pages';
-import CardInputInfo from './src/Card/Pages/InputCardInfo';
-import CardListInfo from './src/Card/Pages/ListCardInfo';
+import CardIndex from './src/FirstScreen/Pages/Card';
+import CardInputInfo from './src/FirstScreen/Pages/Card/InputCardInfo';
+import CardListInfo from './src/FirstScreen/Pages/Card/ListCardInfo';
 
 import PartnerMain from './src/Main/Pages/Partner/Home';
 import AfterServiceState from './src/Main/Pages/Partner/AfterService';
@@ -134,6 +137,8 @@ const PAGE = () => (
       
       {/* 안내페이지 */}
       <Scene key="ServiceInfo" hideNavBar component={ServiceInfo} />
+      <Scene key="NonMemberNoticeInfoService" hideNavBar component={NonMemberNoticeInfoService} />
+      
       {/* 약관동의 */}
       <Scene key="AgreeTermsService"  hideNavBar component={AgreeTermsService} />
       <Scene key="ClientTermsService" hideNavBar component={ClientTermsService} />

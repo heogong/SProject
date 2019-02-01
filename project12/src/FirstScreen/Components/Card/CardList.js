@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { Body, Button, Icon, Left, List, ListItem, Text } from 'native-base';
 
-import { SUCCESS_RETURN_CODE } from '../../Common/Blend';
-
-import SetDefaultCard from '../Functions/SetDefaultCard';
-import GetCommonData from '../../Common/Functions/GetCommonData';
-
 export default class ListCardInfo extends Component {
     constructor(props) {
         super(props);

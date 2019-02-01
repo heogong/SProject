@@ -19,8 +19,8 @@ import LoginInputAccount from './src/FirstScreen/Pages/Login/InputAccount';
 import JoinInputProdType from './src/FirstScreen/Pages/Join/Partner/InputProdType'; // 파트너 제품타입 선택
 import JoinInputWorkHours from './src/FirstScreen/Pages/Join/Partner/InputWorkHours'; // 파트너 근무시간 선택
 
-import CardIndex from './src/Card/Pages';
-import CardInputInfo from './src/Card/Pages/InputCardInfo';
+import CardIndex from './src/FirstScreen/Pages/Card';
+import CardInputInfo from './src/FirstScreen/Pages/Card/InputCardInfo';
 
 import DrawerContent from './src/Main/Components/DrawerContent'
 import MenuIcon from './src/Main/Images/menu_burger.png'

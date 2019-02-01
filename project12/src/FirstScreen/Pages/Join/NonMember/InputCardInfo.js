@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { View, UIManager, Platform } from 'react-native';
 import { Input, Item, Text } from "native-base";
 
-import { SUCCESS_RETURN_CODE } from '../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+
 import { Actions } from 'react-native-router-flux';
-import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
-import CustomButton from '~/Common/Components/CustomButton';
-import GetCommonData from '~/Common/Functions/GetCommonData';
 import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
 
-import RegCard from '../Functions/RegCard';
+import RegCard from '~/FirstScreen/Functions/Card/RegCard';
+import GetCommonData from '~/Common/Functions/GetCommonData';
+
+import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomButton from '~/Common/Components/CustomButton';
 
 export default class InputCardInfo extends Component {
   constructor(props) {
@@ -24,10 +26,6 @@ export default class InputCardInfo extends Component {
     };
   }
 
-  static defaultProps = {
-    regAsCard : false // as신청시 카드 등록 여부 
-  }
-  
   scanCard() {
     const config = {
       hideCardIOLogo : true,
@@ -55,15 +53,7 @@ export default class InputCardInfo extends Component {
           console.log(resultData);
           const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
           if(ResultBool) {
-            if(this.props.regAsCard) {
-              // Actions.pop({ refresh: { data: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' }})
-              // Actions.pop({ refresh: { data: 'Data after pop', title: 'title after pop' }, key: 'AfterServiceApplyProductCheck' });
-              // Actions.popTo("AfterServiceApplyProductCheck");
-              this.props.getListCard();
-              Actions.pop();
-            } else{
-              Actions.ClientIndex(); // 사업장 제품 등록
-            }
+
           } else {
             alert(resultData.resultMsg);
           }
@@ -80,7 +70,8 @@ export default class InputCardInfo extends Component {
     var matches = v.match(/\d{4,16}/g);
     var match = matches && matches[0] || ''
     var parts = []
-    for (i=0, len=match.length; i<len; i+=4) {
+
+    for (i = 0, len = match.length; i < len; i+=4) {
       parts.push(match.substring(i, i+4))
     }
     if (parts.length) {
@@ -169,7 +160,7 @@ export default class InputCardInfo extends Component {
           bordered={ true }
           onPress={this._cardRegister}>
           <Text>
-            등록
+            다음 단계로 이동(7/9)
           </Text>
         </CustomButton>
       </CustomBasicWrapper>
