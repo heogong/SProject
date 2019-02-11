@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
 
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setBizId } from '~/Redux/Actions';
 
@@ -21,6 +21,7 @@ class ListBusinessPlace extends Component {
     }
 
     componentDidMount () {
+      clearInterval();
       this._getBizList();
     }
     

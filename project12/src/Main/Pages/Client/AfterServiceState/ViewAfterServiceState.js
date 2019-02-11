@@ -48,7 +48,7 @@ export default class ViewAfterServiceState extends Component {
   // 현재 나의(고객) AS 진행 상태 체크
   _getClientAfterServiceState = () => {
     GetClientAfterServiceState().then(async result => {
-      GetCommonData(result, this._getBizList).then(async resultData => {
+      GetCommonData(result, this._getClientAfterServiceState).then(async resultData => {
           if(resultData !== undefined) {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
               console.log(resultData);

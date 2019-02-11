@@ -71,8 +71,7 @@ class ListInCompleteReport extends Component {
                             </CustomButton>
                         </CardItem>
                     </Card>
-                )
-            }
+                )}
             </CustomBlockWrapper>
         )
     }

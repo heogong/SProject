@@ -115,8 +115,11 @@ import RegBusinessShowCase from './src/Main/Pages/Client/MyProduct/RegBusinessSh
 import RegBusinessAddress from './src/Main/Pages/Client/MyProduct/RegBusinessAddress'
 import EditBusinessAddress from './src/Main/Pages/Client/MyProduct/EditBusinessAddress'
 
+// 메인 A/S 현황
 import ClientAfterServiceState from './src/Main/Pages/Client/AfterServiceState'
 import ClientViewAfterServiceState from './src/Main/Pages/Client/AfterServiceState/ViewAfterServiceState'
+import AfterServiceHistory from './src/Main/Pages/Client/AfterServiceState/ListAfterServiceHistory'
+
 
 // 더보기
 import ClientMoreInfo from './src/Main/Pages/Client/MoreInfo'
@@ -235,7 +238,7 @@ const PAGE = () => (
 
             {/* 나의제품 */}
             <Stack key="clientMyProduct" hideNavBar title="나의제품" icon={TabIcon}
-              tabBarOnPress={() => Actions.ListBusinessPlace({type:ActionConst.RESET})}
+              tabBarOnPress={() => Actions.ListBusinessPlace({type:ActionConst.RESET}) }
               transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" />
               <Scene key="ListBusinessProductType" component={ListBusinessProductType} title="사업장 제품 타입 목록" />
@@ -258,6 +261,7 @@ const PAGE = () => (
               transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ClientAfterServiceState" component={ClientAfterServiceState}/>
               <Scene key="ViewAfterServiceState" component={ClientViewAfterServiceState}/>
+              <Scene key="AfterServiceHistory" component={AfterServiceHistory}/>
             </Stack>
 
             <Stack key="ClientMore" hideNavBar title="더보기" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>

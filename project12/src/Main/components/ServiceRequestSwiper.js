@@ -14,6 +14,10 @@ class ServiceRequestSwiper extends Component {
         this.state = {};
     }
 
+    static defaultProps = {
+        interverId : 0 // interver 삭제 
+    }
+
     _nextPage = (bizId) => {
         Actions.AfterServiceProdTypeList({bizId : bizId});
     }
@@ -32,7 +36,10 @@ class ServiceRequestSwiper extends Component {
                     <Text>{business.addr.addressName}</Text>
                     <Text>{business.detail.detailAddr1}</Text>
                     <TouchableOpacity
-                        onPress={() => this._nextPage(business.clientBplaceId) }
+                        onPress={() => {
+                            this._nextPage(business.clientBplaceId); 
+                            clearInterval(this.props.interverId)} 
+                        }
                     >
                         <View style={styles.slide}>
                             <Text style={styles.title}>A/S신청</Text>

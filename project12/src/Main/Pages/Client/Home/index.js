@@ -15,6 +15,8 @@ import {
   MOVE
 } from '~/Common/Blend';
 
+import ReactTimeout from 'react-timeout'
+
 import GetBizList from '~/Main/Functions/GetBizList';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
 import GetCommonData from '~/Common/Functions/GetCommonData';
@@ -24,7 +26,7 @@ import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
 
 let INTEVER_ID = 0;
-export default class Main extends Component {
+class ClientHome extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -56,12 +58,16 @@ export default class Main extends Component {
     // A/S 상태 갱신
     INTEVER_ID = setInterval(() => {
       this._getClientAfterServiceState();
-    }, 60000);
+    }, 10000);
+
+    console.log("생성 :", INTEVER_ID);
   }
 
   componentWillUnmount () {
     BackHandler.removeEventListener('hardwareBackPress', () => this.handleBackPress) // Remove listener
+
     clearInterval(INTEVER_ID);
+    console.log("componentWillUnmount :", INTEVER_ID);
   }
 
   handleBackPress = () => {
@@ -136,6 +142,7 @@ export default class Main extends Component {
               ):(
                 <ServiceRequestSwiper
                   bizList={ this.state.data }
+                  interverId={ INTEVER_ID }
                 />
               ) }
 
@@ -182,3 +189,5 @@ const styles = StyleSheet.create({
   },
   title: { color: 'black', fontSize: 20 }
 });
+
+export default ClientHome;
