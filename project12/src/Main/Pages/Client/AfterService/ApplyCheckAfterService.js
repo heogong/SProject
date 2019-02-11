@@ -8,7 +8,7 @@ import { Actions } from "react-native-router-flux";
 
 import GetProduct from '~/Main/Functions/GetProduct'
 import GetCommonData from '~/Common/Functions/GetCommonData';
-import ListCard from '~/Card/Functions/ListCard';
+import ListCard from '~/FirstScreen/Functions/Card/ListCard';
 import PaymentAfterService from '~/Main/Functions/PaymentAfterService';
 
 import CustomButton from '~/Common/Components/CustomButton';

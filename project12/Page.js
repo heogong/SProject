@@ -115,6 +115,9 @@ import RegBusinessShowCase from './src/Main/Pages/Client/MyProduct/RegBusinessSh
 import RegBusinessAddress from './src/Main/Pages/Client/MyProduct/RegBusinessAddress'
 import EditBusinessAddress from './src/Main/Pages/Client/MyProduct/EditBusinessAddress'
 
+import ClientAfterServiceState from './src/Main/Pages/Client/AfterServiceState'
+import ClientViewAfterServiceState from './src/Main/Pages/Client/AfterServiceState/ViewAfterServiceState'
+
 // 더보기
 import ClientMoreInfo from './src/Main/Pages/Client/MoreInfo'
 
@@ -248,6 +251,13 @@ const PAGE = () => (
               <Scene key="EditBusinessAddress" component={EditBusinessAddress} title="사업장 주소 수정" />
               
               <Scene key="RegBusinessShowCase" component={RegBusinessShowCase} title="제품 쇼케이스 등록" />
+            </Stack>
+
+            <Stack key="AfterServiceState" hideNavBar title="A/S 현황" icon={TabIcon} 
+              tabBarOnPress={() => Actions.ClientAfterServiceState({type:ActionConst.RESET})}
+              transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+              <Scene key="ClientAfterServiceState" component={ClientAfterServiceState}/>
+              <Scene key="ViewAfterServiceState" component={ClientViewAfterServiceState}/>
             </Stack>
 
             <Stack key="ClientMore" hideNavBar title="더보기" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>

@@ -73,7 +73,7 @@ export default class InputCardInfo extends Component {
 
     for (i = 0, len = match.length; i < len; i+=4) {
       parts.push(match.substring(i, i+4))
-    }
+    }3
     if (parts.length) {
       resultValue = parts.join('-');
     } else {

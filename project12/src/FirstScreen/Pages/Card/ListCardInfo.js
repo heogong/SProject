@@ -7,7 +7,7 @@ import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import DelCard from '~/FirstScreen/Functions/Card/DelCardlCard';
+import DelCard from '~/FirstScreen/Functions/Card/DelCard';
 import CardList from '~/FirstScreen/Components/Card/CardList';
 
 const datas = [

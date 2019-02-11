@@ -22,6 +22,17 @@ export const NAVER_CODE = 'SNS_SITE_CD_01'; // 네이버
 export const KAKAO_CODE = 'SNS_SITE_CD_02'; // 카카오
 export const FACE_BOOK_CODE = 'SNS_SITE_CD_03'; // 페이스북
 
+// A/S 상태 정보
+export const MATCH = {'TEXT' : '업체 매칭 중', 'VALUE' : 'AS_PRGS_STAT_CD_01'};
+export const UN_MATCH = {'TEXT' : '매칭 취소', 'VALUE' : 'AS_PRGS_STAT_CD_02'};
+export const COMPLETE_MATCH = {'TEXT' : '업체매칭완료', 'VALUE' : 'AS_PRGS_STAT_CD_03'};
+export const FAIL_MATCH = {'TEXT' : '업체매칭실패', 'VALUE' : 'AS_PRGS_STAT_CD_04'};
+export const DEPARTURE = {'TEXT' : '업체출발', 'VALUE' : 'AS_PRGS_STAT_CD_05'};'AS_PRGS_STAT_CD_05';
+export const ARRIVE = {'TEXT' : '업체도착', 'VALUE' : 'AS_PRGS_STAT_CD_06'};
+export const ADD_AS = {'TEXT' : '추가 AS 진행', 'VALUE' : 'AS_PRGS_STAT_CD_07'};
+export const COMPLETE_AS = {'TEXT' : 'AS 완료', 'VALUE' : 'AS_PRGS_STAT_CD_08'};
+export const MOVE = {'TEXT' : '업체이동중', 'VALUE' : 'AS_PRGS_STAT_CD_09'};
+
 // etc
 export const CLIENT = "CLIENT";
 export const PARTNER = "PARTNER";
