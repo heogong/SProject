@@ -4,18 +4,24 @@ import { View } from 'react-native';
 import { SUCCESS_RETURN_CODE} from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { setIsAfterService } from '~/Redux/Actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-export default class AfterServiceState extends Component {
+class AfterServiceState extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   componentWillMount () {
+    clearInterval(this.props.afterService.intervalId); // 탭 이동 시 Interval 클리어
+  }
+
+  componentDidMount() {
     this.setState({spinner : true});
     this._getClientAfterServiceState();
   }
@@ -30,6 +36,8 @@ export default class AfterServiceState extends Component {
               
               if(ResultBool) {
                   if(resultData.data.asPrgsYn == 'Y') {
+                    this.props.onSetIsAfterService(true);
+
                     setTimeout(() => {
                         Actions.ViewAfterServiceState();
                         this.setState({spinner : false});
@@ -63,3 +71,18 @@ export default class AfterServiceState extends Component {
     )
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+      afterService: state.AFTERSERVICE
+  };
+}
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+      onSetIsAfterService: (value) => dispatch(setIsAfterService(value))
+  }
+}
+
+AfterServiceState = connect(mapStateToProps, mapDispatchToProps)(AfterServiceState);
+export default AfterServiceState;

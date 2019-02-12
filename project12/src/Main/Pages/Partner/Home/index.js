@@ -124,8 +124,8 @@ export default class Main extends Component {
                     console.log(resultData);
                     if(ResultBool) {
                         this.setState({ 
-                            // reportCount : resultData.data.length
-                            reportCount : 3 // test
+                            reportCount : resultData.data.length
+                            // reportCount : 3 // test
                         });
                     } else {
                         alert(resultData.resultMsg);

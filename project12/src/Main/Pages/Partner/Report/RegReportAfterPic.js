@@ -21,6 +21,7 @@ class RegReportAfterPic extends Component {
 
       this.state =  {
         data : [],
+        asActionDsc : null,
         btnDisabled : true,
         asImgCnt : AFTER_IMG_CNT
       };
@@ -79,6 +80,14 @@ class RegReportAfterPic extends Component {
                     />
                 )}
                 {this._createBeforeAsImg()}
+
+                <Textarea 
+                    // value={this.state.bizDsc}
+                    rowSpan={5} 
+                    bordered 
+                    placeholder="수리한 내역"
+                    onChangeText={(text) => this.setState({asActionDsc : text})}
+                />
 
                 <CustomButton 
                     //disabled={ this.state.btnDisabled }

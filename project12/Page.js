@@ -119,6 +119,7 @@ import EditBusinessAddress from './src/Main/Pages/Client/MyProduct/EditBusinessA
 import ClientAfterServiceState from './src/Main/Pages/Client/AfterServiceState'
 import ClientViewAfterServiceState from './src/Main/Pages/Client/AfterServiceState/ViewAfterServiceState'
 import AfterServiceHistory from './src/Main/Pages/Client/AfterServiceState/ListAfterServiceHistory'
+import ViewAfterServiceHistory from './src/Main/Pages/Client/AfterServiceState/ViewAfterServiceHistory'
 
 
 // 더보기
@@ -129,8 +130,8 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="IndexPage" hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
-      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="IndexPage"  hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
+      <Scene key="InitPage"  initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       
       {/* 테스트 후 삭제 */}
       {/* <Scene key="ListInCompleteReport" initial hideNavBar component={ListInCompleteReport}/>
@@ -262,6 +263,7 @@ const PAGE = () => (
               <Scene key="ClientAfterServiceState" component={ClientAfterServiceState}/>
               <Scene key="ViewAfterServiceState" component={ClientViewAfterServiceState}/>
               <Scene key="AfterServiceHistory" component={AfterServiceHistory}/>
+              <Scene key="ViewAfterServiceHistory" component={ViewAfterServiceHistory}/>
             </Stack>
 
             <Stack key="ClientMore" hideNavBar title="더보기" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
@@ -291,9 +293,9 @@ const PAGE = () => (
 
             {/* A/S 매칭 */}
             <Stack key="PartnerAfterService" hideNavBar title="A/S 매칭" icon={TabIcon} 
-              tabBarOnPress={() => Actions.AfterServiceState({type:ActionConst.RESET})}
+              tabBarOnPress={() => Actions.PAfterServiceState({type:ActionConst.RESET})}
               transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-              <Scene key="AfterServiceState" component={AfterServiceState} title="A/S 상태 체크"/>
+              <Scene key="PAfterServiceState" component={AfterServiceState} title="A/S 상태 체크"/>
               <Scene key="AfterServiceMatch" component={ListAfterServiceMatch} title="A/S 매칭"/>
               <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} title="A/S 매칭 상세"/>
               <Scene key="ViewAfterServiceState" component={ViewAfterServiceState} title="A/S 매칭 후 상태"/>

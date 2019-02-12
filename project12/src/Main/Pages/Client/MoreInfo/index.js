@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import{ Alert, View, TouchableOpacity } from 'react-native';
-
 import { Accordion, Right, Left, List, ListItem, Icon, Text } from "native-base";
+
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 
 import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 
@@ -12,10 +13,14 @@ const dataArray = [
     { title: "Third Element", content: "Lorem ipsum dolor sit amet" }
 ];
 
-export default class MyInfo extends Component {
+class MyInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {};
+    }
+
+    componentWillMount () {
+        clearInterval(this.props.afterService.intervalId); // 탭 이동 시 Interval 클리어
     }
 
     _onPress = () => {
@@ -54,3 +59,12 @@ export default class MyInfo extends Component {
         )
     }
 }
+
+let mapStateToProps = (state) => {
+    return {
+        afterService: state.AFTERSERVICE
+    };
+}
+  
+MyInfo = connect(mapStateToProps, undefined)(MyInfo);
+export default MyInfo;

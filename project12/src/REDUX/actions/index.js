@@ -16,6 +16,9 @@ export const SET_BIZ_DSC = 'SET_BIZ_DSC';
 export const SET_BIZ_ADDRESS = 'SET_BIZ_ADDRESS';
 export const SET_BIZ_ADDRESS_DSC = 'SET_BIZ_ADDRESS_DSC';
 
+export const SET_INTERVAL_ID = 'SET_INTERVAL_ID';
+export const SET_IS_AS = 'SET_IS_AS';
+
 export function setUsrId(value) {
     return {
         type: SET_USRID,
@@ -109,4 +112,15 @@ export function setBizAddressDsc(value) {
     };
 }
 
-
+export function setIntervalId(value) {
+    return {
+        type: SET_INTERVAL_ID,
+        value: value
+    };
+}
+export function setIsAfterService(value) {
+    return {
+        type: SET_IS_AS,
+        value: value
+    };
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { SUCCESS_RETURN_CODE } from '../../../../Common/Blend';
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -20,8 +20,11 @@ class ListBusinessPlace extends Component {
         };
     }
 
+    componentWillMount() {
+      clearInterval(this.props.afterService.intervalId); // 탭 이동 시 Interval 클리어
+    }
+
     componentDidMount () {
-      clearInterval();
       this._getBizList();
     }
     
@@ -63,6 +66,7 @@ class ListBusinessPlace extends Component {
           >
             {this.state.data.map((business, idx) =>
               <BusinessCard
+                key={idx}
                 index={idx}
                 businessName={business.bplaceNm}
                 address1={business.addr.addressName}
@@ -80,11 +84,17 @@ class ListBusinessPlace extends Component {
     }
 }
 
+let mapStateToProps = (state) => {
+  return {
+      afterService: state.AFTERSERVICE
+  };
+}
+
 let mapDispatchToProps = (dispatch) => {
   return {
       onSetBizId: (value) => dispatch(setBizId(value))
   }
 }
 
-ListBusinessPlace = connect(undefined, mapDispatchToProps)(ListBusinessPlace);
+ListBusinessPlace = connect(mapStateToProps, mapDispatchToProps)(ListBusinessPlace);
 export default ListBusinessPlace;

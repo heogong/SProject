@@ -5,6 +5,8 @@ import { ActionSheet, Item, Input, Root, Text, Textarea } from "native-base";
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from "react-native-router-flux";
+import { connect } from 'react-redux';
+import { setIsAfterService } from '~/Redux/Actions';
 
 import FindAfterServicePartner from '~/Main/Functions/FindAfterServicePartner'
 import CancleAfterServicePartner from '~/Main/Functions/CancleAfterServicePartner'
@@ -39,9 +41,13 @@ class ApplyAfterServiceComplete extends Component {
 
                     if(ResultBool) {
                         this.setState({asPrgsId : result.data.asPrgsId});
-                        setTimeout(() => {
-                            this.setState({result : "매칭 완료"});
-                        }, 10000);
+                        this.props.onSetIsAfterService(true); // A/S 신청 확인 - interval 최소화 하기위함
+
+                        // 타임아웃 clear 필요할듯
+                        // setTimeout(() => {
+                        //     this.setState({result : "매칭 완료"});
+                        // }, 10000);
+                        
                         
                     } else {
                         alert(resultData.resultMsg);
@@ -111,4 +117,12 @@ class ApplyAfterServiceComplete extends Component {
     }
 }
 
+
+let mapDispatchToProps = (dispatch) => {
+    return {
+        onSetIsAfterService: (value) => dispatch(setIsAfterService(value)),
+    }
+}
+  
+ApplyAfterServiceComplete = connect(undefined, mapDispatchToProps)(ApplyAfterServiceComplete);
 export default ApplyAfterServiceComplete;

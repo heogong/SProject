@@ -47,34 +47,42 @@ class ListAfterServiceHistory extends Component {
             <CustomBlockWrapper
                 title="A/S 내역"
             >
-                {this.state.data.map((afterService, idx) => 
-                    <Card key={ idx }>
-                        <CardItem body>
-                            <Thumbnail large source={{ uri: afterService.prdTypeFileUrl }} />
-                        </CardItem>
-                        <CardItem>
-                            <View>
-                                <Text>
-                                    사업장 : {afterService.bplaceNm}
-                                </Text>
-                                <Text>
-                                    날짜 : {afterService.regDt}
-                                </Text>
-                                <Text>
-                                    증상 : {afterService.evalDsc}
-                                </Text>
-                                <Text>
-                                    만족도 : {afterService.evalPoint}
-                                </Text>
-                            </View>
-                        </CardItem>
-                        <CardItem>
-                            <CustomButton onPress={ () => alert("작성") }>
-                                <Text>작성</Text>
-                            </CustomButton>
-                        </CardItem>
-                    </Card>
-                )}
+                { 
+                    (this.state.data.length > 0) ? (
+                        this.state.data.map((afterService, idx) => 
+                        <Card key={ idx }>
+                            <CardItem body>
+                                <Thumbnail large source={{ uri: afterService.prdTypeFileUrl }} />
+                            </CardItem>
+                            <CardItem>
+                                <View>
+                                    <Text>
+                                        사업장 : {afterService.bplaceNm}
+                                    </Text>
+                                    <Text>
+                                        날짜 : {afterService.regDt}
+                                    </Text>
+                                    <Text>
+                                        증상 : {afterService.evalDsc}
+                                    </Text>
+                                    <Text>
+                                        만족도 : {afterService.evalPoint}
+                                    </Text>
+                                </View>
+                            </CardItem>
+                            <CardItem>
+                                <CustomButton onPress={ () => Actions.ViewAfterServiceHistory({asPrgsId : afterService.asPrgsId}) }>
+                                    <Text>조회</Text>
+                                </CustomButton>
+                            </CardItem>
+                        </Card>
+                        )
+                    ) : (
+                        <View> 
+                            <Text>A/S 서비스를 받은 내역이 없습니다.</Text>
+                        </View>
+                    )
+                }
             </CustomBlockWrapper>
         )
     }

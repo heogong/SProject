@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { StyleSheet } from 'react-native';
-import { Text } from "native-base";
+import { Text, Textarea } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 
 import GetAfterServiceActionImg from '~/Main/Functions/GetAfterServiceActionImg';
+import GetAfterServiceActionInfo from '~/Main/Functions/GetAfterServiceActionInfo';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import AfterServiceImage from '~/Main/Components/AfterServiceImage';
@@ -21,6 +22,8 @@ class RegReportBeforePic extends Component {
 
       this.state =  {
         data : [],
+        data2 : [],
+        asCauseDsc : null,
         btnDisabled : true,
         asImgCnt : BEFORE_IMG_CNT
       };
@@ -28,6 +31,7 @@ class RegReportBeforePic extends Component {
 
     componentWillMount() {
         this._getAfterServiceBeforeImg();
+        this._getAfterServiceBeforeInfo();
     }
 
     // AS 조지전 사진 조회
@@ -52,6 +56,28 @@ class RegReportBeforePic extends Component {
             });
         });
     }
+
+    // AS 조치전 정보 조회
+    _getAfterServiceBeforeInfo = () => {
+        GetAfterServiceActionInfo(true, this.props.asPrgsId).then(result => {
+            GetCommonData(result, this._getAfterServiceBeforeInfo).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+                        this.setState({
+                            data2 : resultData.data,
+                        });
+
+                    } else {
+                        alert(resultData.resultMsg);
+                    }
+                }
+            });
+        });
+    }
+
+
 
     // A/S 이미지 뷰어
     _createBeforeAsImg = () => {
@@ -78,6 +104,14 @@ class RegReportBeforePic extends Component {
                     />
                 )}
                 {this._createBeforeAsImg()}
+
+                <Textarea 
+                    // value={this.state.bizDsc}
+                    rowSpan={5} 
+                    bordered 
+                    placeholder="조치전 증상(파악한 문제 또는 증상)"
+                    onChangeText={(text) => this.setState({asCauseDsc : text})}
+                />
                 <CustomButton 
                     //disabled={ this.state.btnDisabled }
                     onPress={ () => Actions.RegReportAfterPic({asPrgsId : this.props.asPrgsId}) }>

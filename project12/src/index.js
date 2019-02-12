@@ -5,16 +5,15 @@ import { Text } from 'native-base';
 import { SUCCESS_RETURN_CODE, PARTNER_USER} from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { setIsAfterService } from '~/Redux/Actions';
 
 import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
 import GetAfterServiceState from '~/Main/Functions/GetAfterServiceState';
-
+import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
-import CustomButton from '~/Common/Components/CustomButton';
-
-export default class IndexPage extends Component {
+class IndexPage extends Component {
     constructor(props) {
         super(props);
         
@@ -52,7 +51,7 @@ export default class IndexPage extends Component {
             if(resultData.data.usrTypeCd == PARTNER_USER) {
               this._getAfterServiceState(); // 파트너
             } else {
-              Actions.ClientMain(); // 클라이언트
+              this._getClientAfterServiceState(); // 클라이언트
             }
             
           } else {
@@ -63,7 +62,7 @@ export default class IndexPage extends Component {
     });
   }
 
-  // 현재 나의(업체) AS 진행 상태 체크
+  // 현재 나의(파트너) AS 진행 상태 체크
   _getAfterServiceState = () => {
     GetAfterServiceState().then(result => {
         GetCommonData(result, this._getAfterServiceState).then(async resultData => {
@@ -83,9 +82,28 @@ export default class IndexPage extends Component {
             }
         });
     });
-}
+  } 
 
-
+  // 현재 나의(클라이언트) AS 진행 상태 체크
+  _getClientAfterServiceState = () => {
+    GetClientAfterServiceState().then(async result => {
+      GetCommonData(result, this._getClientAfterServiceState).then(async resultData => {
+          if(resultData !== undefined) {
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+              console.log(resultData);
+              
+              if(ResultBool) {
+                if(resultData.data.asPrgsMst !== null) {
+                  this.props.onSetIsAfterService(true);
+                }
+                Actions.ClientMain();
+              } else {
+                alert(resultData.resultMsg);
+              }
+          }
+      });
+    });
+  }
 
   render() {
     return (
@@ -110,4 +128,13 @@ const styles = StyleSheet.create({
       bottom: 0,
       right: 0,
     },
-  });
+});
+
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+      onSetIsAfterService: (value) => dispatch(setIsAfterService(value))
+  }
+}
+IndexPage = connect(undefined, mapDispatchToProps)(IndexPage);
+export default IndexPage;

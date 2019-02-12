@@ -15,6 +15,9 @@ import {
   MOVE
 } from '~/Common/Blend';
 
+import { connect } from 'react-redux';
+import { setIntervalId, setIsAfterService } from '~/Redux/Actions';
+
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
@@ -22,8 +25,7 @@ import ServiceRequestSwiper from '~/Main/Components/ServiceRequestSwiper';
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
 
-let INTEVER_ID = 0;
-export default class ViewAfterServiceState extends Component {
+class ViewAfterServiceState extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -38,11 +40,17 @@ export default class ViewAfterServiceState extends Component {
   componentDidMount () {
     this._getClientAfterServiceState();
 
-    // A/S 상태 갱신
-    INTEVER_ID = setInterval(() => {
-      this._getClientAfterServiceState();
-    }, 60000);
+    // AS 신청 여부 확인
+    if(this.props.afterService.isAfterService) {
+      console.log("인터벌 확인")
 
+      // A/S 상태 갱신
+      const INTERVAL_ID = setInterval(() => {
+        this._getClientAfterServiceState();
+      }, 60000);
+
+      this.props.onSetIntervalId(INTERVAL_ID);
+    }
   }
 
   // 현재 나의(고객) AS 진행 상태 체크
@@ -64,6 +72,9 @@ export default class ViewAfterServiceState extends Component {
                     asPrgsStatNm : resultData.data.asPrgsMst.asPrgsStatNm,
                     asPrgsStatDSC : resultData.data.asPrgsMst.asPrgsStatDSC,
                   });
+                } else {
+                  this.props.onSetIsAfterService(false);
+                  clearInterval(this.props.afterService.intervalId);
                 }
               } else {
                 alert(resultData.resultMsg);
@@ -114,7 +125,6 @@ export default class ViewAfterServiceState extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   reportBox : {
       zIndex : 1, 
@@ -140,3 +150,19 @@ const styles = StyleSheet.create({
   },
   title: { color: 'black', fontSize: 20 }
 });
+
+let mapStateToProps = (state) => {
+  return {
+      afterService: state.AFTERSERVICE
+  };
+}
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+    onSetIntervalId: (value) => dispatch(setIntervalId(value)),
+    onSetIsAfterService: (value) => dispatch(setIsAfterService(value))
+  }
+}
+
+ViewAfterServiceState = connect(mapStateToProps, mapDispatchToProps)(ViewAfterServiceState);
+export default ViewAfterServiceState;

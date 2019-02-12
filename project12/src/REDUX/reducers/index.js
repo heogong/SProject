@@ -13,10 +13,14 @@ import {
     SET_BIZ_NM,
     SET_BIZ_DSC,
     SET_BIZ_ADDRESS,
-    SET_BIZ_ADDRESS_DSC
+    SET_BIZ_ADDRESS_DSC,
+    SET_INTERVAL_ID,
+    SET_IS_AS
 } from '../Actions';
 import { combineReducers } from 'redux';
 import { PARTNER } from '../../Common/Blend';
+
+import { AsyncStorage } from "react-native"
 
 const InitialUserState = {
     usrId: '',
@@ -41,6 +45,12 @@ const InitialBizState = {
     addressObj: [],
     addressDsc: ''
 };
+
+const InitialASState = {
+    intervalId: 0,
+    isAfterService: false,
+};
+
 
 const USER = (state = InitialUserState, action) => {
     switch(action.type) {
@@ -123,10 +133,26 @@ const BIZ = (state = InitialBizState, action) => {
     }
 }
 
+const AFTERSERVICE = (state = InitialASState, action) => {
+    switch(action.type) {
+        case SET_INTERVAL_ID:
+            return Object.assign({}, state, {
+                intervalId: action.value
+            });
+        case SET_IS_AS:
+            return Object.assign({}, state, {
+                isAfterService: action.value
+            });
+        default:
+            return state;
+    }
+}
+
 const userInfo = combineReducers({
     USER,
     TOKEN,
-    BIZ
+    BIZ,
+    AFTERSERVICE
 });
 
 export default userInfo;

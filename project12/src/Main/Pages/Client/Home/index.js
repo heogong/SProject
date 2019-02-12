@@ -15,7 +15,8 @@ import {
   MOVE
 } from '~/Common/Blend';
 
-import ReactTimeout from 'react-timeout'
+import { connect } from 'react-redux';
+import { setIntervalId, setIsAfterService } from '~/Redux/Actions';
 
 import GetBizList from '~/Main/Functions/GetBizList';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
@@ -49,25 +50,31 @@ class ClientHome extends Component {
     };
   }
 
-  componentDidMount () {
+  async componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.handleBackPress) // Listen for the hardware back button on Android to be pressed
 
     this._getBizList();
     this._getClientAfterServiceState();
 
-    // A/S 상태 갱신
-    INTEVER_ID = setInterval(() => {
-      this._getClientAfterServiceState();
-    }, 10000);
+    // AS 신청 여부 확인
+    console.log("AS 신청 여부 확인!!!! : ", this.props.afterService.isAfterService);
+    if(this.props.afterService.isAfterService) {
+      console.log("인터벌 확인")
 
-    console.log("생성 :", INTEVER_ID);
+      // A/S 상태 갱신
+      const INTERVAL_ID = setInterval(() => {
+        this._getClientAfterServiceState();
+      }, 10000);
+      
+      this.props.onSetIntervalId(INTERVAL_ID);
+    }
   }
 
   componentWillUnmount () {
     BackHandler.removeEventListener('hardwareBackPress', () => this.handleBackPress) // Remove listener
 
-    clearInterval(INTEVER_ID);
-    console.log("componentWillUnmount :", INTEVER_ID);
+    clearInterval(this.props.afterService.intervalId);
+    console.log("componentWillUnmount :", this.props.afterService.intervalId);
   }
 
   handleBackPress = () => {
@@ -82,7 +89,7 @@ class ClientHome extends Component {
                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                 console.log(resultData);
                 if(ResultBool) {
-                    this.setState({data : resultData.data});
+                  this.setState({data : resultData.data});
                 }
             }
         });
@@ -92,7 +99,7 @@ class ClientHome extends Component {
   // 현재 나의(고객) AS 진행 상태 체크
   _getClientAfterServiceState = () => {
     GetClientAfterServiceState().then(async result => {
-      GetCommonData(result, this._getBizList).then(async resultData => {
+      GetCommonData(result, this._getClientAfterServiceState).then(async resultData => {
           if(resultData !== undefined) {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
               console.log(resultData);
@@ -109,6 +116,9 @@ class ClientHome extends Component {
                     asPrgsStatDSC : resultData.data.asPrgsMst.asPrgsStatDSC,
                     clinePrdInfo : resultData.data.clinePrdInfo
                   });
+                } else {
+                  this.props.onSetIsAfterService(false);
+                  clearInterval(this.props.afterService.intervalId);
                 }
               } else {
                 alert(resultData.resultMsg);
@@ -190,4 +200,19 @@ const styles = StyleSheet.create({
   title: { color: 'black', fontSize: 20 }
 });
 
+
+let mapStateToProps = (state) => {
+  return {
+      afterService: state.AFTERSERVICE
+  };
+}
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+      onSetIntervalId: (value) => dispatch(setIntervalId(value)),
+      onSetIsAfterService: (value) => dispatch(setIsAfterService(value))
+  }
+}
+
+ClientHome = connect(mapStateToProps, mapDispatchToProps)(ClientHome);
 export default ClientHome;
