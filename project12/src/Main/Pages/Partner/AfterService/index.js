@@ -44,6 +44,7 @@ class AfterService extends Component {
                             }, 700);
                         } else {
                             Actions.AfterServiceMatch();
+                            this.setState({spinner : false});
                         }
                     } else {
                         alert(resultData.resultMsg);

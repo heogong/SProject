@@ -40,6 +40,13 @@ class ViewAfterServiceState extends Component {
         this._getLocation();
     }
 
+    componentWillUnmount() {
+        console.log("componentWillUnmount");
+        BackgroundGeolocation.events.forEach(event =>
+          BackgroundGeolocation.removeAllListeners(event)
+        );
+    }
+
     componentDidMount() {
         // if(this.props.isProcess) {
         //     this.props.setTimeout(this._departureAfterService, 500);
@@ -48,14 +55,7 @@ class ViewAfterServiceState extends Component {
         this._moveAfterServiceBackground();
     }
 
-    componentWillUnmount() {
-        console.log("componentWillUnmount");
-        BackgroundGeolocation.events.forEach(event =>
-          BackgroundGeolocation.removeAllListeners(event)
-        );
-    }
-
-       // 현재 위치 조회
+    // 현재 위치 조회
     _getLocation() {
         navigator.geolocation.getCurrentPosition (
             (positon) => {
