@@ -50,6 +50,8 @@ class AfterServiceStateCard extends Component {
                     } else {
                         alert(resultData.resultMsg);
                     }
+
+                    this.props.arriveAction();
                 }
             });
         });

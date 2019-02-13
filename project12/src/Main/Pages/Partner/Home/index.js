@@ -5,9 +5,9 @@ import { Text, Thumbnail } from "native-base";
 import { SUCCESS_RETURN_CODE, ARRIVE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
+import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 
 import GetAfterService from '~/Main/Functions/GetAfterService';
-
 import RegAfterServiceMatch from '~/Main/Functions/RegAfterServiceMatch';
 import DepartureAfterService from '~/Main/Functions/DepartureAfterService';
 import GetAfterServiceState from '~/Main/Functions/GetAfterServiceState';
@@ -39,6 +39,10 @@ export default class Main extends Component {
 
     componentWillUnmount () {
         BackHandler.removeEventListener('hardwareBackPress', () => this.handleBackPress) // Remove listener
+
+        BackgroundGeolocation.events.forEach(event =>
+            BackgroundGeolocation.removeAllListeners(event)
+        );
     }
 
     componentDidMount () {
@@ -64,6 +68,85 @@ export default class Main extends Component {
         // (error) => {console.log(error.message)},
         // {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
         );
+    }
+
+    // 백그라운드 세팅
+    _moveAfterServiceBackground() {
+        BackgroundGeolocation.configure({
+            desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
+            stationaryRadius: 50,
+            distanceFilter: 500,
+            notificationTitle: 'Background tracking',
+            notificationText: 'enabled',
+            debug: false,
+            startOnBoot: false,
+            stopOnTerminate: true,
+            locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
+            interval: 120000,
+            fastestInterval: 120000,
+            activitiesInterval: 10000,
+            stopOnStillActivity: false,
+            postTemplate: {
+              lat: '@latitude',
+              lon: '@longitude',
+              foo: 'bar' // you can also add your own properties
+            }
+        });
+
+        BackgroundGeolocation.on('location', (location) => {
+            console.log(location);
+
+            this.setState({
+                latitude : location.latitude,
+                longitude :location.longitude
+            });
+
+            var currentDate = new Date();
+            var msg = "현재 시간:"+currentDate.getHours()+"시"
+            msg += currentDate.getMinutes()+"분";
+            msg += currentDate.getSeconds()+"초";
+            console.log(msg);
+      
+            BackgroundGeolocation.startTask(taskKey => {
+                // 백그라운드 좌표 전송 task
+                // this._moveAfterService();
+
+                BackgroundGeolocation.endTask(taskKey);
+            });
+        });
+
+        BackgroundGeolocation.on('activity', (Activity) => {
+            console.log('[INFO] BackgroundGeolocation Activity', Activity);
+            // this.setState({ isRunning: false });
+        });
+
+        BackgroundGeolocation.checkStatus(({ isRunning, locationServicesEnabled, authorization }) => {
+            console.log("isRunning : ", isRunning);
+
+            if (!locationServicesEnabled) {
+                Alert.alert(
+                  'Location services disabled',
+                  'Would you like to open location settings?',
+                  [
+                    {
+                      text: 'Yes',
+                      onPress: () => BackgroundGeolocation.showLocationSettings()
+                    },
+                    {
+                      text: 'No',
+                      onPress: () => console.log('No Pressed'),
+                      style: 'cancel'
+                    }
+                  ]
+                );
+                return false;
+            }
+
+            if(!isRunning) {
+                console.log("start");
+                BackgroundGeolocation.start();
+            } 
+        });
     }
 
     // 나의 AS 매칭 목록 조회
@@ -108,6 +191,8 @@ export default class Main extends Component {
         const {data, latitude, longitude} = this.state;
         
         DepartureAfterService(data[SELECT_INDEX].asPrgsId, latitude, longitude).then(result => {
+        // DepartureAfterService(AS_PRGS_ID, latitude, longitude).then(result => {
+            
             GetCommonData(result, this._departureAfterService).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -115,6 +200,8 @@ export default class Main extends Component {
                     if(ResultBool) {
                         AS_RECV_ID = data[SELECT_INDEX].asRecvId;
                         this._getAfterServiceDetail();
+                        this._moveAfterServiceBackground();
+                        
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -160,6 +247,8 @@ export default class Main extends Component {
                         this.setState({ 
                             afterServiceData: resultData.data
                         });
+
+                        AS_PRGS_ID = resultData.data.asPrgsId;
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -188,6 +277,16 @@ export default class Main extends Component {
         });
     }
 
+    _departureAfterServiceBackgroundStop = () => {
+        console.log("BackgroundGeolocation.stop");
+        
+        BackgroundGeolocation.events.forEach(event =>
+            BackgroundGeolocation.removeAllListeners(event)
+        );
+
+        BackgroundGeolocation.stop();
+    }
+
     // A/S 선택
     _selectAfterServiceConfirm = (idx) => () => {
         SELECT_INDEX = idx;
@@ -210,7 +309,7 @@ export default class Main extends Component {
 
         Alert.alert(
             '',
-            `${this.state.data[SELECT_INDEX].bplaceNm} 으로 A/S 출발하시겠습니까?`,
+            `A/S 출발하시겠습니까?`,
             [
                 {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                 {text: '예', onPress: () => this._departureAfterService()},
@@ -254,9 +353,14 @@ export default class Main extends Component {
                     <Text>컨텐츠2</Text>
                     
                     <CustomButton 
-                        onPress={ Actions.ListBusinessProduct }
+                        onPress={ () => this._moveAfterServiceBackground() }
                     >
-                        <Text>A/S</Text>
+                        <Text>TEST 출발</Text>
+                    </CustomButton>
+                    <CustomButton 
+                        onPress={ () => this._departureAfterServiceBackgroundStop() }
+                    >
+                        <Text>TEST 도착</Text>
                     </CustomButton>
                 </View>
 
@@ -266,13 +370,14 @@ export default class Main extends Component {
                         data={ this.state.afterServiceData }
                         asPrgsId={ AS_PRGS_ID }
                         asStateBtn={ this.state.asStateBtn }
+                        arriveAction={ this._departureAfterServiceBackgroundStop }
                     />
                 ) : (
                     <View></View>
                 )}
 
                 {/* 미완성 보고서 박스 */}
-                <View style={ styles.reportBox }>
+                {/* <View style={ styles.reportBox }>
                     <View style={[(this.state.reportCount > 0) ? styles.show : styles.hide, 
                         {padding : 10, backgroundColor: 'steelblue'}]}>
                         <Text>작성되지 않은 보고서가 있어요!</Text>
@@ -285,7 +390,7 @@ export default class Main extends Component {
                             <Text>{this.state.reportCount}개 지금작성하러 가기</Text>
                         </CustomButton>
                     </View>
-                </View>
+                </View> */}
             </View>
         )
     }
