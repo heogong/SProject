@@ -87,7 +87,7 @@ class ClientHome extends Component {
         GetCommonData(result, this._getBizList).then(async resultData => {
             if(resultData !== undefined) {
                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                console.log(resultData);
+                console.log("클라이언트 : 사업장 목록 가져오기", resultData);
                 if(ResultBool) {
                   this.setState({data : resultData.data});
                 }
@@ -102,7 +102,7 @@ class ClientHome extends Component {
       GetCommonData(result, this._getClientAfterServiceState).then(async resultData => {
           if(resultData !== undefined) {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-              console.log(resultData);
+              console.log("클라이언트 : AS 진행 상태 체크 : ", resultData);
               
               if(ResultBool) {
                 this.setState({ 

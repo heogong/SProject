@@ -39,7 +39,7 @@ import CardIndex from './src/FirstScreen/Pages/Card';
 import CardInputInfo from './src/FirstScreen/Pages/Card/InputCardInfo';
 import CardListInfo from './src/FirstScreen/Pages/Card/ListCardInfo';
 
-import PartnerMain from './src/Main/Pages/Partner/Home';
+import PartnerHome from './src/Main/Pages/Partner/Home';
 import AfterServiceState from './src/Main/Pages/Partner/AfterService';
 // A/S 신청 리스트
 import ListAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ListAfterServiceMatch';
@@ -55,7 +55,6 @@ import AfterServiceReport from './src/Main/Pages/Partner/Report';
 import ListInCompleteReport from './src/Main/Pages/Partner/Report/ListInCompleteReport';
 import RegReportBeforePic from './src/Main/Pages/Partner/Report/RegReportBeforePic';
 import RegReportAfterPic from './src/Main/Pages/Partner/Report/RegReportAfterPic';
-import RegReportSymptomFix from './src/Main/Pages/Partner/Report/RegReportSymptomFix';
 
 import DrawerContent from './src/Main/Components/DrawerContent'
 import MenuIcon from './src/Main/Images/menu_burger.png'
@@ -130,17 +129,8 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="IndexPage"  hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
-      <Scene key="InitPage"  initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
-      
-      {/* 테스트 후 삭제 */}
-      {/* <Scene key="ListInCompleteReport" initial hideNavBar component={ListInCompleteReport}/>
-      <Scene key="RegReportBeforePic" hideNavBar component={RegReportBeforePic}/>
-      <Scene key="RegReportAfterPic" hideNavBar component={RegReportAfterPic}/>
-      <Scene key="RegReportSymptomFix" hideNavBar component={RegReportSymptomFix}/> */}
-      {/* <Scene key="ViewAfterServiceState" initial hideNavBar component={ViewAfterServiceState}/> */}
-      
-      {/* 테스트 후 삭제 */}
+      <Scene key="IndexPage" initial hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       
       {/* 안내페이지 */}
       <Scene key="ServiceInfo" hideNavBar component={ServiceInfo} />
@@ -197,6 +187,10 @@ const PAGE = () => (
       {/* 제품 쇼케이스  등록 */}
       <Scene key="InputShowCase" hideNavBar component={InputShowCase} />
 
+      {/* 파트너 - A/S 보고서 등록 */}
+      <Scene key="RegAsBeforeReport" hideNavBar component={RegReportBeforePic} />
+      <Scene key="RegAsAfterReport" hideNavBar component={RegReportAfterPic} />
+
       <Drawer
         hideNavBar
         key="drawer"
@@ -226,7 +220,7 @@ const PAGE = () => (
             inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
             tabBarPosition="bottom"
           >
-            <Stack key="ClientMain" hideNavBar title="클라이언트 Title" initial icon={TabIcon} 
+            <Stack key="ClientMain" hideNavBar title="클라이언트 Title" icon={TabIcon} 
             tabBarOnPress={() => Actions.ClientHome({type:ActionConst.RESET})}
             transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ClientHome" component={ClientHome} title="Scene_Title"/>
@@ -270,50 +264,51 @@ const PAGE = () => (
               <Scene key="ClientInfo_tab" component={ClientMoreInfo}/>
             </Stack>
           </Tabs>
+        </Scene>
 
+        <Scene hideNavBar panHandlers={null} >
           {/* 파트너 */}
           <Tabs
-            key="tabbar2"
-            routeName="tabbar2"
-            // backToInitial
-            onTabOnPress={() => {
-              console.log('Back to initial and also print this');
-            }}
-            swipeEnabled
-            showLabel={true}
-            activeBackgroundColor="white"
-            inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
-            tabBarPosition="bottom"
-          >
-            <Stack key="PartnerMain" hideNavBar title="파트너 Title" initial icon={TabIcon}
-              tabBarOnPress={() => Actions.Main({type:ActionConst.RESET})}
-              transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-              <Scene key="Main" component={PartnerMain} title="Scene_Title2"/>
-            </Stack>
+              key="tabbar2"
+              routeName="tabbar2"
+              // backToInitial
+              onTabOnPress={() => {
+                console.log('Back to initial and also print this');
+              }}
+              swipeEnabled
+              showLabel={true}
+              activeBackgroundColor="white"
+              inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
+              tabBarPosition="bottom"
+            >
+              <Stack key="PartnerMain" hideNavBar title="파트너 Title" initial icon={TabIcon}
+                tabBarOnPress={() => Actions.PartnerHome({type:ActionConst.RESET})}
+                transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                <Scene key="PartnerHome" component={PartnerHome} title=""/>
+              </Stack>
 
-            {/* A/S 매칭 */}
-            <Stack key="PartnerAfterService" hideNavBar title="A/S 매칭" icon={TabIcon} 
-              tabBarOnPress={() => Actions.PAfterServiceState({type:ActionConst.RESET})}
-              transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-              <Scene key="PAfterServiceState" component={AfterServiceState} title="A/S 상태 체크"/>
-              <Scene key="AfterServiceMatch" component={ListAfterServiceMatch} title="A/S 매칭"/>
-              <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} title="A/S 매칭 상세"/>
-              <Scene key="ViewAfterServiceState" component={ViewAfterServiceState} title="A/S 매칭 후 상태"/>
-              <Scene key="RegAfterServiceAdd" component={RegAfterServiceAdd} title="추가 A/S"/>
-            </Stack>
+              {/* A/S 매칭 */}
+              <Stack key="PartnerAfterService" hideNavBar title="A/S 매칭" icon={TabIcon} 
+                tabBarOnPress={() => Actions.PAfterServiceState({type:ActionConst.RESET})}
+                transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                <Scene key="PAfterServiceState" component={AfterServiceState} title="A/S 상태 체크"/>
+                <Scene key="AfterServiceMatch" component={ListAfterServiceMatch} title="A/S 매칭"/>
+                <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} title="A/S 매칭 상세"/>
+                <Scene key="ViewAfterServiceState" component={ViewAfterServiceState} title="A/S 매칭 후 상태"/>
+                <Scene key="RegAfterServiceAdd" component={RegAfterServiceAdd} title="추가 A/S"/>
+              </Stack>
 
-            <Stack key="PartnerReport" hideNavBar title="보고서" icon={TabIcon}
-              tabBarOnPress={() => Actions.ListInCompleteReport({type:ActionConst.RESET})}
-              transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-              <Scene key="ListInCompleteReport" component={ListInCompleteReport} title="미 완료 보고서 리스트"/>
-              <Scene key="AfterServiceReport" component={AfterServiceReport} title="A/S 보고서"/>
-              <Scene key="RegReportBeforePic" component={RegReportBeforePic} title="A/S 보고서 조치 전"/>
-              <Scene key="RegReportAfterPic" component={RegReportAfterPic} title="A/S 보고서 조치 후"/>
-              <Scene key="RegReportSymptomFix" component={RegReportSymptomFix} title="A/S 조치 증상 및 수리"/>
-            </Stack>
-          </Tabs>
-
+              <Stack key="PartnerReport" hideNavBar title="보고서" icon={TabIcon}
+                tabBarOnPress={() => alert("개발중")}
+                transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                <Scene key="ListInCompleteReport" component={ListInCompleteReport} title="미 완료 보고서 리스트"/>
+                <Scene key="AfterServiceReport" component={AfterServiceReport} title="A/S 보고서"/>
+                <Scene key="RegReportBeforePic" component={RegReportBeforePic} title="A/S 보고서 조치 전"/>
+                <Scene key="RegReportAfterPic" component={RegReportAfterPic} title="A/S 보고서 조치 후"/>
+              </Stack>
+            </Tabs>
         </Scene>
+
       </Drawer>
     </Stack>
   </Router>

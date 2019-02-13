@@ -8,13 +8,12 @@ const API_URL = `${DOMAIN}coolinic/as/prgs/report/info?asPrgsId=`;
 function RegAfterServiceReportUrl(asPrgsId, asCauseDsc, asActionDsc) {
   return `${API_URL}${asPrgsId}&asCauseDsc=${asCauseDsc}&asActionDsc=${asActionDsc}`;
 }
-const RegAfterServiceReport = async (asPrgsId, asCauseDsc, asActionDsc) => {
-
+const RegAfterServiceReport = async (asPrgsId, asCauseDsc, asActionDsc, methodType) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
-  
+
   return fetch(RegAfterServiceReportUrl(asPrgsId, asCauseDsc, asActionDsc), {
-    method: 'POST',
+    method: methodType,
     headers: {
       "Authorization": ACCESS_TOKEN,
       //"Authorization": TEST_ACCESS_TOKEN,

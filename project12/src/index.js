@@ -49,7 +49,8 @@ class IndexPage extends Component {
 
             // 사용자 구분 페이지 이동
             if(resultData.data.usrTypeCd == PARTNER_USER) {
-              this._getAfterServiceState(); // 파트너
+              // this._getAfterServiceState(); // 파트너 - 파트너 index 에서 체크로 인해 주석 처리
+              Actions.PartnerMain(); // 파트너
             } else {
               this._getClientAfterServiceState(); // 클라이언트
             }

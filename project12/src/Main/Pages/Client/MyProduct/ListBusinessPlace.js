@@ -25,6 +25,7 @@ class ListBusinessPlace extends Component {
     }
 
     componentDidMount () {
+      console.log("클라이언트 : ListBusinessPlace!!!");
       this._getBizList();
     }
     
