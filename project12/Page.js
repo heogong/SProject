@@ -129,8 +129,8 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="IndexPage" initial hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
-      <Scene key="InitPage" hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="IndexPage"  hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
+      <Scene key="InitPage"  hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       
       {/* 안내페이지 */}
       <Scene key="ServiceInfo" hideNavBar component={ServiceInfo} />
@@ -145,7 +145,7 @@ const PAGE = () => (
       <Scene key="ViewImage" hideNavBar component={ViewImage} title="제품 이미지 조회" />
       
       <Scene key="JoinCustomerType" hideNavBar component={JoinCustomerType} title="고객 구분" />
-      <Scene key="JoinAccountType" hideNavBar component={JoinAccountType} title="가입 구분"/>
+      <Scene key="JoinAccountType" initial hideNavBar component={JoinAccountType} title="가입 구분"/>
       <Scene key="JoinInputEmail" hideNavBar component={JoinInputEmail} title="이메일 가입" back onBack={() => Actions.JoinInputName()} />
       <Scene key="JoinInputName" hideNavBar component={JoinInputName} title="고객 이름"/>
       <Scene key="JoinInputPhone" hideNavBar component={JoinInputPhone} title="전화번호"/>
