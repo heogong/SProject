@@ -65,7 +65,7 @@ class Header2 extends Component {
             <CheckBox checked={this.state.checkBox} color='#28c8f5' onPress={ 
               () => this.setState({
                 checkBox : (this.state.checkBox) ? false : true
-              });
+              })
             }/>
           </View>
 

@@ -59,13 +59,6 @@ import RegReportAfterPic from './src/Main/Pages/Partner/Report/RegReportAfterPic
 import DrawerContent from './src/Main/Components/DrawerContent'
 import MenuIcon from './src/Main/Images/menu_burger.png'
 
-
-//test
-import TestPage1 from './src/Main/Pages/TestPage1'
-import TestPage2 from './src/Main/Pages/TestPage2'
-import TestPage3 from './src/Main/Pages/TestPage3'
-//test
-
 import ReactCamera from './src/Main/Components/ReactCamera';
 import ViewImage from './src/Main/Components/ViewImage';
 
@@ -130,7 +123,7 @@ const PAGE = () => (
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
       <Scene key="IndexPage"  hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
-      <Scene key="InitPage"  hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
       
       {/* 안내페이지 */}
       <Scene key="ServiceInfo" hideNavBar component={ServiceInfo} />
@@ -145,7 +138,7 @@ const PAGE = () => (
       <Scene key="ViewImage" hideNavBar component={ViewImage} title="제품 이미지 조회" />
       
       <Scene key="JoinCustomerType" hideNavBar component={JoinCustomerType} title="고객 구분" />
-      <Scene key="JoinAccountType" initial hideNavBar component={JoinAccountType} title="가입 구분"/>
+      <Scene key="JoinAccountType" hideNavBar component={JoinAccountType} title="가입 구분"/>
       <Scene key="JoinInputEmail" hideNavBar component={JoinInputEmail} title="이메일 가입" back onBack={() => Actions.JoinInputName()} />
       <Scene key="JoinInputName" hideNavBar component={JoinInputName} title="고객 이름"/>
       <Scene key="JoinInputPhone" hideNavBar component={JoinInputPhone} title="전화번호"/>
