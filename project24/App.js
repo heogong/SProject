@@ -50,18 +50,21 @@ componentWillMount() {
         <View>
         {/* <!--// page start --> */}
         
-          <View style={[member.memberWrap, member.select]}>
-            <View style={member.memberWrapselectlogo}>
-              <Image
-                source={require('./intro-logo.png')}
-              />
+          <View style={[member.memberWrapSelect]}>
+            <View style={[member.memberWrapsSelectLogo]}>
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <Image
+                    style={[member.memberWrapsSelectLogoImg]}
+                    source={require('./intro-logo.png')}
+                  />
+              </View>
             </View>
+            
             <View>
               <View>
                 <View>
                     <Text style={common.cred}>USER · 유저</Text>
                     <Text style={member.stxt}>A/S 서비스를 이용하시겠어요?</Text>
-
                 </View>
               </View>
 

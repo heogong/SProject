@@ -8,7 +8,7 @@ import pageThree from './Page3'
 const PAGE = () => (
     <Router>
         <Stack key="root">
-            <Scene key="pageOne" component={pageOne} title="pageOne" initial type={ActionConst.RESET}/>
+            <Scene key="pageOne" hideNavBar component={pageOne} title="pageOne" initial type={ActionConst.RESET}/>
             <Scene key="pageTwo" component={pageTwo} title="pageTwo"/>
             <Scene key="pageThree" component={pageThree}/>
         </Stack>
