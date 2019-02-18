@@ -12,6 +12,8 @@ import HistoryAfterServiceChk from './HistoryAfterServiceChk';
 import HistoryAfterServiceChk2 from './HistoryAfterServiceChk2';
 import ReportAfterService from './ReportAfterService';
 import SelectUserType from './SelectUserType';
+import UserLogin from './UserLogin';
+import InvaildId from './InvaildId';
 
 
 import pageOne from './Page1'
@@ -31,7 +33,9 @@ const PAGE = () => (
             <Scene key="HistoryAfterServiceChk" hideNavBar component={HistoryAfterServiceChk} type={ActionConst.RESET}/>
             <Scene key="HistoryAfterServiceChk2" hideNavBar component={HistoryAfterServiceChk2} type={ActionConst.RESET}/>
             <Scene key="ReportAfterService" hideNavBar component={ReportAfterService} type={ActionConst.RESET}/>
-            <Scene key="SelectUserType" hideNavBar component={SelectUserType} initial type={ActionConst.RESET}/>
+            <Scene key="SelectUserType" hideNavBar component={SelectUserType} type={ActionConst.RESET}/>
+            <Scene key="UserLogin" hideNavBar component={UserLogin} type={ActionConst.RESET}/>
+            <Scene key="InvaildId" hideNavBar component={InvaildId} initial type={ActionConst.RESET}/>
             
 
 

@@ -204,8 +204,9 @@ class ReportAfterService extends Component {
   }
 }
 
+const layCount = 3;
 const viewportWidth = Dimensions.get('window').width;
-const imageSize = viewportWidth / 3;
+const imageSize = viewportWidth / layCount;
 
 const styles = StyleSheet.create({
   container: {

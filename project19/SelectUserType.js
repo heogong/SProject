@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, Image, ImageBackground, ScrollView, StyleSheet, View } from 'react-native'
+import { Dimensions, Image, ImageBackground, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import {
   Container,
   H1,
@@ -39,26 +39,49 @@ class SelectUserTypejs extends Component {
   render() {
     return (
       <Container style={styles.container}>
-        <View style={{flex:1}}>
-          <View style={{flex:1}}>
-            <Image source={require('./img/intro-logo.png')} style={{width: '100%', height: '100%'}} />
-          </View>
-          <View style={{flex:1}}>
+        <ScrollView style={{flex:1}}>
 
+          <View style={{flex:1, alignItems:'center'}}>
+            <Image source={require('./img/intro-logo.png')} resizeMode='center' />
           </View>
-        </View>
+
+          <View style={{flex:1, marginRight : 30, marginLeft:30, justifyContent : 'center', alignItems : 'center'}}>
+
+            <TouchableOpacity  style={[styles.mb10, styles.typeBox]} onPress={ () => alert("USER")}>
+              <View style={{alignItems : 'center'}}>
+                <H1 style={{color:'#fff', fontWeight:'900'}}>USER</H1>
+                <Text style={{color:'#fff', fontSize : 15}}>A/S 서비스를 이용하시겠어요?</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity  style={[styles.mb20, styles.typeBox]} onPress={ () => alert("PARTNER")}>
+              <View style={{alignItems : 'center'}}>
+                <H1 style={{color:'#fff', fontWeight:'900'}}>PARTNER</H1>
+                <Text style={{color:'#fff', fontSize : 15}}>제품을 수리 하시겠어요?</Text>
+              </View>
+            </TouchableOpacity>
+
+            <View>
+              <TouchableOpacity onPress={ () => alert("비 회원으로 A/S 신청하기")}>
+                <Text style={{color : '#28c8f5', fontSize : 15}}>비 회원으로 A/S 신청하기</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          
+        </ScrollView>
 
       </Container>
     );
   }
 }
 
-const viewportWidth = Dimensions.get('window').width;
-const imageSize = viewportWidth / 3;
+const layoutCount = 2;
+const viewportHeight = Dimensions.get('window').height;
+const itemHeight = (viewportHeight / layoutCount) * 0.25;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#28c8f5"
+    backgroundColor: "#fff"
   },
   content : {
     marginLeft : 10,
@@ -85,6 +108,12 @@ const styles = StyleSheet.create({
   greyFont : {
     color : '#BDBDBD',
     fontSize : 15
+  },
+  typeBox : {
+    justifyContent : 'center', 
+    height : itemHeight, 
+    width : '100%', 
+    backgroundColor : '#28c8f5'
   }
 });
 
