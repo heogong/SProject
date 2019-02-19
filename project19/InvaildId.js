@@ -30,13 +30,16 @@ import {
   CheckBox
 } from "native-base";
 
+import InvaildPasswd from './InvaildPasswd';
+
 class InvaildId extends Component {
   constructor(props) {
     super(props);
     this.state = {
       checkBox : false,
       findId : false,
-      tabIndex : 0
+      tabIndex : 0,
+      passwdStatus : 0
     };
   }
 
@@ -137,57 +140,13 @@ class InvaildId extends Component {
                 tabStyle={{ backgroundColor:'#d6f1ff'}}
                 textStyle={{color:'#28c8f5'}}
                 activeTextStyle={{color:'#fff'}}>
-                <View style={[styles.pd20, {flex :1, paddingTop : 35, backgroundColor : '#28c8f5'}] }>
-                  <Item regular style={[styles.mb15, {backgroundColor:'#fff', borderColor : '#fff', height : inputHeight}]}>
-                    <Input 
-                      style={{fontSize : 12}}
-                      placeholder="이메일 아이디" 
-                    />
-                  </Item>
-                  <Item regular style={[styles.mb15, {backgroundColor:'#fff', borderColor : '#fff', height : inputHeight}]}>
-                    <Input 
-                      style={{fontSize : 12}}
-                      placeholder="이름" 
-                    />
-                  </Item>
-                  <Item regular style={[styles.mb15, {backgroundColor:'#fff', borderColor : '#fff', height : inputHeight}]}>
-                    <Input 
-                      style={{fontSize : 12}}
-                      placeholder="핸드폰번호(하이픈 -제외하고 입력)" 
-                    />
-                  </Item>
 
-                  <View style={{flexDirection : 'row'}}>
-                    <View style={{width : '60%', paddingRight : 10}}>
-                      <Item regular style={{backgroundColor:'#fff', borderColor : '#fff', height : inputHeight}}>
-                        <Input 
-                          style={{fontSize : 12}}
-                          placeholder="인증번호입력" />
-                      </Item>
-                    </View>
-                    <View style={{width: '40%'}}>
-                      <Button block info 
-                        onPress={ () => alert("인증번호전송")}
-                        style={{
-                          height : inputHeight,
-                          borderColor : '#fff',
-                          borderTopWidth : 1,
-                          borderBottomWidth : 1,
-                          borderLeftWidth : 1,
-                          borderRightWidth : 1, 
-                          elevation:0
-                        }} >
-                        <Text style={{fontSize : 12}}>인증번호전송</Text>
-                      </Button>
-                    </View>
-                  </View>
+                <InvaildPasswd
+                  status={ this.state.passwdStatus }
+                />
 
-                  <View>
-                    <Text style={styles.whiteFont}>유효한 인증번호입니다.</Text>
-                  </View>
-
-                </View>
               </Tab>
+
             </Tabs>
           </View>
 
@@ -205,7 +164,7 @@ class InvaildId extends Component {
                 </Button>
               ) : (
                 <Button block info bordered 
-                  onPress={ () => this.setState({findId : false})}
+                  onPress={ () => alert("로그인하기") }
                   style={{
                     elevation:0
                   }} >
@@ -213,13 +172,36 @@ class InvaildId extends Component {
                 </Button>
               )
             ) : (
-              <Button block info bordered 
-                onPress={ () => alert("비밀번호 확인")}
-                style={{
-                  elevation:0
-                }} >
-                <Text>비밀번호 확인</Text>
-              </Button>
+              (this.state.passwdStatus == 0 ) ? (
+                <Button block info bordered 
+                  onPress={ () => this.setState({passwdStatus : 1})}
+                  style={{
+                    elevation:0
+                  }} >
+                  <Text>비밀번호 확인</Text>
+                </Button>
+              ) : (
+                (this.state.passwdStatus == 1 ) ? (
+                  <Button block info bordered 
+                    onPress={ () => this.setState({passwdStatus : 2})}
+                    style={{
+                      elevation:0
+                    }} >
+                    <Text>비밀번호 설정</Text>
+                  </Button>
+                ) : (
+                  <Button block info bordered 
+                    onPress={ () => alert("로그인하기")}
+                    style={{
+                      elevation:0
+                    }} >
+                    <Text>로그인하기</Text>
+                  </Button>
+
+                )
+
+              )
+              
             )
           }
            </View>

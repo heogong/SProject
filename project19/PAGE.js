@@ -14,6 +14,13 @@ import ReportAfterService from './ReportAfterService';
 import SelectUserType from './SelectUserType';
 import UserLogin from './UserLogin';
 import InvaildId from './InvaildId';
+import SelectJoinType from './SelectJoinType';
+import JoinEmail from './JoinEmail';
+import JoinName from './JoinName';
+import JoinPhone from './JoinPhone';
+import JoinPhoneAuth from './JoinPhoneAuth';
+import JoinSuccess from './JoinSuccess';
+import RegCard from './RegCard';
 
 
 import pageOne from './Page1'
@@ -35,7 +42,13 @@ const PAGE = () => (
             <Scene key="ReportAfterService" hideNavBar component={ReportAfterService} type={ActionConst.RESET}/>
             <Scene key="SelectUserType" hideNavBar component={SelectUserType} type={ActionConst.RESET}/>
             <Scene key="UserLogin" hideNavBar component={UserLogin} type={ActionConst.RESET}/>
-            <Scene key="InvaildId" hideNavBar component={InvaildId} initial type={ActionConst.RESET}/>
+            <Scene key="InvaildId" hideNavBar component={InvaildId} type={ActionConst.RESET}/>
+            <Scene key="SelectJoinType" hideNavBar component={SelectJoinType} type={ActionConst.RESET}/>
+            <Scene key="JoinEmail" hideNavBar component={JoinEmail} type={ActionConst.RESET}/>
+            <Scene key="JoinName" hideNavBar component={JoinName} type={ActionConst.RESET}/>
+            <Scene key="JoinPhoneAuth" hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
+            <Scene key="JoinSuccess" hideNavBar component={JoinSuccess} type={ActionConst.RESET}/>
+            <Scene key="RegCard" hideNavBar component={RegCard} initial type={ActionConst.RESET}/>
             
 
 
