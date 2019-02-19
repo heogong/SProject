@@ -28,7 +28,10 @@ import {
   CheckBox
 } from "native-base";
 
-class JoinEmail extends Component {
+import { styles, viewportHeight, viewportWidth } from './css/common';
+import { color } from './css/color';
+
+class AgreeTermsService extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,54 +54,40 @@ class JoinEmail extends Component {
           <Right style={{flex:1}}></Right>
         </Header>
 
-        <View style={[styles.mg10, {flex:1}]}>
+        <View style={[styles.mg20, {flex:1}]}>
 
           <View style={{flex:1}}>
             <View style={[styles.mb10, {flexDirection : 'row'}]}>
               <View style={{flex:1}}>
-                <H1>이메일 주소와</H1>
-                <H1>비밀번호를</H1>
-                <H1>입력해주세요</H1>
+                <H1>쿨리닉</H1>
+                <H1>이용약관의</H1>
+                <H1>동의해주세요</H1>
               </View>
               <View style={{flex:1, alignItems : 'flex-end', justifyContent : 'flex-end'}}>
-                <H1 style={{color:'#28c8f5'}}>01</H1>
+                <H1 style={{color:color.defaultColor}}>03</H1>
               </View>
             </View>
 
             <View style={{flexDirection : 'row'}}>
               <View style={{flex:1}}>
-                <View style={{height : 10, backgroundColor : '#28c8f5'}} />
+                <View style={{height : 10, backgroundColor : color.defaultBackColor}} />
               </View>
               <View style={{flex:1}}>
-                <View style={{height : 10, backgroundColor : '#d6f1ff'}} />
+                <View style={{height : 10, backgroundColor : color.defaultBackColor}} />
               </View>
               <View style={{flex:1}}>
-               <View style={{height : 10, backgroundColor : '#d6f1ff'}} />
+                <View style={{height : 10, backgroundColor : color.defaultColor}} />
               </View>
-              
             </View>
-            
           </View>
 
           <View style={{flex:2, justifyContent:'center'}}>
-            <Item regular style={[styles.mb15, {height : 50}]}>
-              <Input placeholder="이메일" />
-            </Item>
-
-            <Item regular style={[styles.mb15, {height : 50}]}>
-              <Input placeholder="비밀번호(영문,숫자,특수문자8-15자)" />
-            </Item>
-
-            <Item regular style={{height : 50}}>
-              <Input placeholder="비밀번호 확인" />
-              <IconNB name="ios-checkmark-circle" style={{color:'#28c8f5'}}/>
-            </Item>
-            <Text style={[styles.redFont, {paddingLeft : 5}]}>비밀번호가 맞지 않습니다.</Text>
+            
           </View>
 
           <View style={{flex:1, justifyContent:'center'}}>
             <Button block info style={{elevation:0}}>
-              <Text>다음단계로</Text>
+              <Text>약관동의완료</Text>
             </Button>
           </View>
         </View>
@@ -108,43 +97,4 @@ class JoinEmail extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff"
-  },
-  content : {
-    marginLeft : 10,
-    marginRight : 10
-  },
-  mb10: {
-    marginBottom: 10
-  },
-  mb15: {
-    marginBottom: 15
-  },
-  mb20: {
-    marginBottom: 20
-  },
-  mg5 : {
-    marginTop : 5,
-    marginBottom : 5,
-    marginLeft : 5,
-    marginRight : 5
-  },
-  mg10 : {
-    marginTop : 10,
-    marginBottom : 10,
-    marginLeft : 10,
-    marginRight : 10
-  },
-  greyFont : {
-    color : '#BDBDBD',
-    fontSize : 15
-  },
-  redFont : {
-    color : '#FF0000',
-    fontSize : 15
-  }
-});
-
-export default JoinEmail;
+export default AgreeTermsService;

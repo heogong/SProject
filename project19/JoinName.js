@@ -87,7 +87,7 @@ class JoinName extends Component {
           </View>
 
           <View style={{flex:1, justifyContent:'center'}}>
-            <Button block info>
+            <Button block info style={{elevation:0}}>
               <Text>입력완료</Text>
             </Button>
           </View>

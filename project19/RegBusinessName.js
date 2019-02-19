@@ -28,7 +28,10 @@ import {
   CheckBox
 } from "native-base";
 
-class JoinPhone extends Component {
+import { styles, viewportHeight, viewportWidth } from './css/common';
+import { color } from './css/color';
+
+class RegBusinessName extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,32 +60,20 @@ class JoinPhone extends Component {
             <View style={[styles.mb10, {flexDirection : 'row'}]}>
               <View style={{flex:1}}>
                 <H1>귀하의</H1>
-                <H1>연락처를</H1>
+                <H1>상호명을</H1>
                 <H1>입력해주세요</H1>
               </View>
               <View style={{flex:1, alignItems : 'flex-end', justifyContent : 'flex-end'}}>
-                <H1 style={{color:'#28c8f5'}}>01</H1>
+                <H1 style={{color : color.defaultColor}}>03</H1>
               </View>
             </View>
-
-            <View style={{flexDirection : 'row'}}>
-              <View style={{flex:1}}>
-                <View style={{height : 10, backgroundColor : '#28c8f5'}} />
-              </View>
-              <View style={{flex:1}}>
-                <View style={{height : 10, backgroundColor : '#d6f1ff'}} />
-              </View>
-              <View style={{flex:1}}>
-               <View style={{height : 10, backgroundColor : '#d6f1ff'}} />
-              </View>
-              
-            </View>
+            <View style={{height : 10, backgroundColor : color.defaultColor}} />
             
           </View>
 
           <View style={{flex:2, justifyContent:'center'}}>
             <Item regular style={[styles.mb15, {height : 50}]}>
-              <Input placeholder="핸드폰번호(하이픈 - 빼고 입력)" />
+              <Input placeholder="상호명 입력" />
             </Item>
           </View>
 
@@ -98,43 +89,4 @@ class JoinPhone extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff"
-  },
-  content : {
-    marginLeft : 10,
-    marginRight : 10
-  },
-  mb10: {
-    marginBottom: 10
-  },
-  mb15: {
-    marginBottom: 15
-  },
-  mb20: {
-    marginBottom: 20
-  },
-  mg5 : {
-    marginTop : 5,
-    marginBottom : 5,
-    marginLeft : 5,
-    marginRight : 5
-  },
-  mg10 : {
-    marginTop : 10,
-    marginBottom : 10,
-    marginLeft : 10,
-    marginRight : 10
-  },
-  greyFont : {
-    color : '#BDBDBD',
-    fontSize : 15
-  },
-  redFont : {
-    color : '#FF0000',
-    fontSize : 15
-  }
-});
-
-export default JoinPhone;
+export default RegBusinessName;

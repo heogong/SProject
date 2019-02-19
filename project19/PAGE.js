@@ -22,6 +22,15 @@ import JoinPhoneAuth from './JoinPhoneAuth';
 import JoinSuccess from './JoinSuccess';
 import RegCard from './RegCard';
 import ManageCard from './ManageCard';
+import RegSuccessCard from './RegSuccessCard';
+import AgreeTermsService from './AgreeTermsService';
+import RegSuccessTerm from './RegSuccessTerm';
+import RegBusinessPlace from './RegBusinessPlace';
+import RegBusinessName from './RegBusinessName';
+
+
+
+
 
 
 
@@ -51,7 +60,14 @@ const PAGE = () => (
             <Scene key="JoinPhoneAuth" hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
             <Scene key="JoinSuccess" hideNavBar component={JoinSuccess} type={ActionConst.RESET}/>
             <Scene key="RegCard" hideNavBar component={RegCard} type={ActionConst.RESET}/>
-            <Scene key="ManageCard" hideNavBar component={ManageCard} initial type={ActionConst.RESET}/>
+            <Scene key="ManageCard" hideNavBar component={ManageCard} type={ActionConst.RESET}/>
+            <Scene key="RegSuccessCard" hideNavBar component={RegSuccessCard} type={ActionConst.RESET}/>
+            <Scene key="AgreeTermsService" hideNavBar component={AgreeTermsService} type={ActionConst.RESET}/>
+            <Scene key="RegSuccessTerm" hideNavBar component={RegSuccessTerm}  type={ActionConst.RESET}/>
+            <Scene key="RegBusinessPlace" hideNavBar component={RegBusinessPlace} type={ActionConst.RESET}/>
+            <Scene key="RegBusinessName" hideNavBar component={RegBusinessName} initial type={ActionConst.RESET}/>
+            
+            
 
 
             <Scene key="pageOne" hideNavBar component={pageOne} title="pageOne" type={ActionConst.RESET}/>
