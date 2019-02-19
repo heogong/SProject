@@ -39,42 +39,42 @@ class RegCard extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={{flex:1}}>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+              <Image source={require('./images/btn_back_arrow.png')} width="30" height="30" />
             </Button>
           </Left>
-          <Body style={{flex:1, alignItems: 'center'}}>
-            <Title></Title>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
           </Body>
-          <Right style={{flex:1}}></Right>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <View style={[styles.mg10, {flex:1}]}>
+        <View style={styles.contentWrap}>
 
-          <View style={{flex:1}}>
-            <View style={[styles.mb10, {flexDirection : 'row'}]}>
-              <View style={{flex:1}}>
-                <H1>쿨리닉</H1>
-                <H1>결제카드를</H1>
-                <H1>등록해주세요</H1>
+          <View>
+            <View style={styles.fxDirRow}>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>쿨리닉</Text>
+                <Text style={styles.leftGuideTxt}>결제카드를</Text>
+                <Text style={styles.leftGuideTxt}>등록해주세요</Text>
               </View>
-              <View style={{flex:1, alignItems : 'flex-end', justifyContent : 'flex-end'}}>
-                <H1 style={{color:'#28c8f5'}}>02</H1>
+              <View style={styles.rightStepNumWrap}>
+                <Text style={styles.rightStepNum}>02</Text>
               </View>
             </View>
 
-            <View style={{flexDirection : 'row'}}>
-              <View style={{flex:1}}>
-                <View style={{height : 10, backgroundColor : '#28c8f5'}} />
+            <View style={styles.fxDirRow}>
+              <View style={{flex: 1}}>
+                <View style={styles.procBarOn} />
               </View>
-              <View style={{flex:1}}>
-                <View style={{height : 10, backgroundColor : '#28c8f5'}} />
+              <View style={{flex: 1}}>
+                <View style={styles.procBarOn} />
               </View>
-              <View style={{flex:1}}>
-               <View style={{height : 10, backgroundColor : '#d6f1ff'}} />
+              <View style={{flex: 1}}>
+               <View style={styles.procBarOff} />
               </View>
             </View>
             
@@ -206,6 +206,126 @@ const styles = StyleSheet.create({
   redFont : {
     color : '#FF0000',
     fontSize : 15
+  },
+
+  // ----------------------------
+  // YOO
+  // ----------------------------
+  contentWrap: {
+    flex: 1
+  },
+  leftGuideTxtWrap: {
+    flex: 1
+  },
+  leftGuideTxt: {
+    fontSize: 26,
+    letterSpacing: -1
+  },
+  rightStepNumWrap: {
+    flex: 1,
+    alignItems : "flex-end",
+    justifyContent : "flex-end",
+    marginTop: 20
+
+  },
+  rightStepNum: {
+    fontSize: 72,
+    color: "#28c8f5"
+  },
+  footerBtnWrap: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  procBarOn: {
+    height : 10,
+    backgroundColor : '#28c8f5'
+  },
+  procBarOff: {
+    height : 10,
+    backgroundColor : '#d6f1ff'
+  },
+  // ----------------------------
+  // containerInnerPd
+  // ----------------------------
+  containerInnerPd: {
+    flex: 1,
+    backgroundColor: "#FFF",
+    paddingLeft: 26,
+    paddingRight: 26,
+  },
+  // 상세 헤더
+  header: {
+    height: 105,
+    paddingTop : 0,
+    elevation: 0,
+    alignItems: "center"
+  },
+  headerLeftWrap: {
+    flex: 1,
+    paddingLeft: 0
+  },
+  headerCenterWrap: {
+    flex: 4
+  },
+  headerTitleTxt: {
+    fontSize: 26,
+    marginLeft: "auto",
+    marginRight: "auto"
+  },
+  headerRrightWrap: {
+    flex: 1
+  },
+  // ----------------------------
+  // 공통 Style
+  // ----------------------------
+  // Button Style
+  btnDefault: {
+    height: 48,
+    borderRadius: 0,
+    elevation: 0,
+    width: "100%"
+  },
+  btnDefaultTxt: {
+    fontSize: 18,
+    flex: 1,
+    textAlign: "center",
+    fontWeight: "500"
+  },
+  btnDefaultNoFill: {
+    backgroundColor: "#FFF",
+    borderWidth: 1,
+    borderColor: "#28c8f5"
+  },
+  btnDefaultNoFillTxt: {
+    color: "#28c8f5",
+    flex: 1,
+    textAlign: "center"
+  },
+  btnDefaultFill: {
+    backgroundColor: "#28c8f5",
+    borderWidth: 1,
+    borderColor: "#28c8f5"
+  },
+  btnDefaultFillTxt: {
+    color: "#FFF",
+    flex: 1,
+    textAlign: "center"
+  },
+  // 축약 Style
+  mb5: {
+    marginBottom: 5
+  },
+  noPadding: {
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 0,
+    paddingBottom: 0
+  },
+  fxDirRow: {
+    flexDirection : "row"
+  },
+  colorDefault: {
+    color: "#28c8f5"
   }
 });
 

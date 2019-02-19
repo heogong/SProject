@@ -42,28 +42,28 @@ class ApplyAfterService extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={{flex:1}}>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+              <Image source={require('./images/btn_back_arrow.png')} width="30" height="30" />
             </Button>
           </Left>
-          <Body style={{flex:1, alignItems: 'center'}}>
-            <Title>육류용냉장고</Title>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}>육류용냉장고</Title>
           </Body>
-          <Right style={{flex:1}}></Right>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <View style={[styles.mg10, {flex:1}]}>
+        <View style={styles.contentWrap}>
 
-          <View style={{flex:2, justifyContent:'center'}}>
+          <View style={{flex: 2, justifyContent: 'center'}}>
             
-            <View style={[styles.mb20, {flexDirection : 'row'}]}>
-              <View style={{flex:1}}>
-                <H2>증상 및</H2>
-                <H2>상세 정보를 </H2>
-                <H2>입력해주세요</H2>
+            <View style={{flexDirection : 'row'}}>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>증상 및</Text>
+                <Text style={styles.leftGuideTxt}>상세 정보를 </Text>
+                <Text style={styles.leftGuideTxt}>입력해주세요</Text>
               </View>
 
               <View style={{flex:1, alignItems : 'flex-end'}}>
@@ -101,12 +101,12 @@ class ApplyAfterService extends Component {
             <Text>aaaaaaaaaaaaaaaa</Text>
           </View>
 
-          <View style={{flex:1, justifyContent:'center'}}>
-            <Button block info bordered style={{marginBottom : 5}}>
-              <Text>결제카드선택</Text>
+          <View style={styles.footerBtnWrap}>
+            <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mb5]}>
+              <Text style={[styles.btnDefaultTxt, styles.btnDefaultNoFillTxt]}>결제카드선택</Text>
             </Button>
-            <Button block info style={{elevation:0}}>
-              <Text>입력 완료</Text>
+            <Button block info style={[styles.btnDefault, styles.btnDefaultFill]}>
+              <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>입력 완료</Text>
             </Button>
           </View>
         </View>
@@ -117,18 +117,94 @@ class ApplyAfterService extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#FFF"
+  contentWrap: {
+    flex: 1
   },
-  mb20: {
-    marginBottom: 20
+  leftGuideTxt: {
+    fontSize: 26,
+    letterSpacing: -1
   },
-  mg10 : {
-    marginTop : 10,
-    marginBottom : 10,
-    marginLeft : 10,
-    marginRight : 10
+  footerBtnWrap: {
+    flex: 1,
+    justifyContent: "center"
   },
+  // ----------------------------
+  // containerInnerPd
+  // ----------------------------
+  containerInnerPd: {
+    flex: 1,
+    backgroundColor: "#FFF",
+    paddingLeft: 26,
+    paddingRight: 26,
+  },
+  // 상세 헤더
+  header: {
+    height: 105,
+    paddingTop : 0,
+    elevation: 0,
+    alignItems: "center"
+  },
+  headerLeftWrap: {
+    flex: 1,
+    paddingLeft: 0
+  },
+  headerCenterWrap: {
+    flex: 4
+  },
+  headerTitleTxt: {
+    fontSize: 26,
+    marginLeft: "auto",
+    marginRight: "auto"
+  },
+  headerRrightWrap: {
+    flex: 1
+  },
+  // ----------------------------
+  // 공통 Style
+  // ----------------------------
+  // Button Style
+  btnDefault: {
+    height: 48,
+    borderRadius: 0,
+    elevation: 0,
+    width: "100%"
+  },
+  btnDefaultTxt: {
+    fontSize: 18,
+    flex: 1,
+    textAlign: "center",
+    fontWeight: "500"
+  },
+  btnDefaultNoFill: {
+    backgroundColor: "#FFF",
+    borderWidth: 1,
+    borderColor: "#28c8f5"
+  },
+  btnDefaultNoFillTxt: {
+    color: "#28c8f5",
+    flex: 1,
+    textAlign: "center"
+  },
+  btnDefaultFill: {
+    backgroundColor: "#28c8f5",
+    borderWidth: 1,
+    borderColor: "#28c8f5"
+  },
+  btnDefaultFillTxt: {
+    color: "#FFF",
+    flex: 1,
+    textAlign: "center"
+  },
+  // 축약 Style
+  mb5: {
+    marginBottom: 5
+  },
+  noPadding: {
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 0,
+    paddingBottom: 0
+  }
 });
 
 export default ApplyAfterService;
