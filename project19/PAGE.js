@@ -21,6 +21,8 @@ import JoinPhone from './JoinPhone';
 import JoinPhoneAuth from './JoinPhoneAuth';
 import JoinSuccess from './JoinSuccess';
 import RegCard from './RegCard';
+import ManageCard from './ManageCard';
+
 
 
 import pageOne from './Page1'
@@ -48,8 +50,8 @@ const PAGE = () => (
             <Scene key="JoinName" hideNavBar component={JoinName} type={ActionConst.RESET}/>
             <Scene key="JoinPhoneAuth" hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
             <Scene key="JoinSuccess" hideNavBar component={JoinSuccess} type={ActionConst.RESET}/>
-            <Scene key="RegCard" hideNavBar component={RegCard} initial type={ActionConst.RESET}/>
-            
+            <Scene key="RegCard" hideNavBar component={RegCard} type={ActionConst.RESET}/>
+            <Scene key="ManageCard" hideNavBar component={ManageCard} initial type={ActionConst.RESET}/>
 
 
             <Scene key="pageOne" hideNavBar component={pageOne} title="pageOne" type={ActionConst.RESET}/>
