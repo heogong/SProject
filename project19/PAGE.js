@@ -27,9 +27,12 @@ import AgreeTermsService from './AgreeTermsService';
 import RegSuccessTerm from './RegSuccessTerm';
 import RegBusinessPlace from './RegBusinessPlace';
 import RegBusinessName from './RegBusinessName';
-
-
-
+import RegBusinessAddress from './RegBusinessAddress';
+import RegBusinessAddressDetail from './RegBusinessAddressDetail';
+import FindBusinessAddress from './FindBusinessAddress';
+import SuccessBusinessPlace from './SuccessBusinessPlace';
+import RegProduct from './RegProduct';
+import RegProductInfo from './RegProductInfo';
 
 
 
@@ -59,16 +62,22 @@ const PAGE = () => (
             <Scene key="JoinName" hideNavBar component={JoinName} type={ActionConst.RESET}/>
             <Scene key="JoinPhoneAuth" hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
             <Scene key="JoinSuccess" hideNavBar component={JoinSuccess} type={ActionConst.RESET}/>
-            <Scene key="RegCard" hideNavBar component={RegCard} type={ActionConst.RESET}/>
+            <Scene key="RegCard" hideNavBar component={RegCard} initial  type={ActionConst.RESET}/>
             <Scene key="ManageCard" hideNavBar component={ManageCard} type={ActionConst.RESET}/>
             <Scene key="RegSuccessCard" hideNavBar component={RegSuccessCard} type={ActionConst.RESET}/>
             <Scene key="AgreeTermsService" hideNavBar component={AgreeTermsService} type={ActionConst.RESET}/>
             <Scene key="RegSuccessTerm" hideNavBar component={RegSuccessTerm}  type={ActionConst.RESET}/>
             <Scene key="RegBusinessPlace" hideNavBar component={RegBusinessPlace} type={ActionConst.RESET}/>
-            <Scene key="RegBusinessName" hideNavBar component={RegBusinessName} initial type={ActionConst.RESET}/>
-            
+            <Scene key="RegBusinessName" hideNavBar component={RegBusinessName} type={ActionConst.RESET}/>
+            <Scene key="RegBusinessAddress" hideNavBar component={RegBusinessAddress} type={ActionConst.RESET}/>
+            <Scene key="FindBusinessAddress" hideNavBar component={FindBusinessAddress} type={ActionConst.RESET}/>
+            <Scene key="RegBusinessAddressDetail" hideNavBar component={RegBusinessAddressDetail} type={ActionConst.RESET}/>
+            <Scene key="SuccessBusinessPlace" hideNavBar component={SuccessBusinessPlace} type={ActionConst.RESET}/>
+            <Scene key="RegProduct" hideNavBar component={RegProduct} type={ActionConst.RESET}/>
+            <Scene key="RegProductInfo" hideNavBar component={RegProductInfo} type={ActionConst.RESET}/>
             
 
+            
 
             <Scene key="pageOne" hideNavBar component={pageOne} title="pageOne" type={ActionConst.RESET}/>
             <Scene key="pageTwo" component={pageTwo} title="pageTwo"/>
