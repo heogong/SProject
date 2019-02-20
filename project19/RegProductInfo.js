@@ -34,38 +34,24 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 export const ENTRIES1 = [
   {
-      title: 'Beautiful and dramatic Antelope Canyon',
-      subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-      illustration: 'https://i.imgur.com/UYiroysl.jpg'
+    title: '업소용냉장고'
   },
   {
-      title: 'Earlier this morning, NYC',
-      subtitle: 'Lorem ipsum dolor sit amet',
-      illustration: 'https://i.imgur.com/UPrs1EWl.jpg'
+    title: '쇼케이스'
   },
   {
-      title: 'White Pocket Sunset',
-      subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
-      illustration: 'https://i.imgur.com/MABUbpDl.jpg'
+    title: '업소용냉장고'
   },
   {
-      title: 'Acrocorinth, Greece',
-      subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-      illustration: 'https://i.imgur.com/KZsmUi2l.jpg'
-  },
-  {
-      title: 'The lone tree, majestic landscape of New Zealand',
-      subtitle: 'Lorem ipsum dolor sit amet',
-      illustration: 'https://i.imgur.com/2nCt3Sbl.jpg'
-  },
-  {
-      title: 'Middle Earth, Germany',
-      subtitle: 'Lorem ipsum dolor sit amet',
-      illustration: 'https://i.imgur.com/lceHsT6l.jpg'
-  }
-];
+    title: '쇼케이스'
+  }];
 
 const SLIDER_1_FIRST_ITEM = 0;
+
+function pad(n, width) {
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+}
 
 class RegProductInfo extends Component {
   constructor(props) {
@@ -77,50 +63,59 @@ class RegProductInfo extends Component {
 
   _renderItem ({item, index}) {
     return (
-      <View style={[styles.pd10, {backgroundColor : color.defaultColor, height : '100%'}]}>
-        <Text>{ item.title }</Text>
+      <View style={[styles.pd15, {backgroundColor : color.defaultColor, height : '100%'}]}>
+        <View style={styles.fx1}>
+          <H1 style={{color : color.whiteColor}}>{ item.title }</H1>
+        </View>
+        <View style={[styles.fx2, styles.fxDirRow]}>
+
+          <View style={[styles.fx1, styles.justiConEnd]}>
+            <H1 style={{color : color.whiteColor}}>
+              { pad(++index, 2) }
+            </H1>
+          </View>
+          <View style={[styles.fx2, styles.justiConEnd, styles.alignItemsEnd]}>
+            <Image source={require("./img/license-depart02.png")} style={{height : itemWidth/2, width : itemWidth/2}} />
+          </View>
+
+        </View>
       </View>
     );
   }
 
-
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={{flex:1}}>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
             </Button>
           </Left>
-          <Body style={{flex:1, alignItems: 'center'}}>
-            <Title></Title>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
           </Body>
-          <Right style={{flex:1}}></Right>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <View style={[styles.mg20, {flex:1}]}>
+        <View style={styles.fx1}>
 
-          <View style={{flex:1}}>
-            <View style={[styles.mb10, {flexDirection : 'row'}]}>
-              <View style={{flex:1}}>
+          <View style={styles.fx1}>
+            <View style={[styles.mb10, styles.fxDirRow]}>
+              <View style={styles.fx1}>
                 <H1>등록할</H1>
                 <H1>제품정보를</H1>
                 <H1>선택해주세요</H1>
               </View>
-              <View style={{flex:1, alignItems : 'flex-end', justifyContent : 'flex-end'}}>
-                <H1 style={{color:'#28c8f5'}}>03</H1>
+              <View style={[styles.fx1, styles.alignItemsEnd, styles.justiConEnd]}>
+                <H1 style={{color:color.defaultColor}}>03</H1>
               </View>
             </View>
-
             <View style={{height : 10, backgroundColor : color.defaultColor }} />
-
           </View>
 
-          <View style={{flex:2}}>
-          
-            <View style={{flex:1, justifyContent : 'flex-start', alignItems : 'flex-start'}}>
-              {/* <View style={{height : 3, backgroundColor : color.defaultColor}} /> */}
+          <View style={styles.fx2}>
+            <View style={[styles.fx1, styles.alignItemsStart, {justifyContent : 'flex-start'}]}>
               <Pagination
                 dotsLength={ENTRIES1.length}
                 activeDotIndex={this.state.slider1ActiveSlide}
@@ -132,11 +127,10 @@ class RegProductInfo extends Component {
                 inactiveDotScale={0.6}
                 carouselRef={this._slider1Ref}
                 tappableDots={!!this._slider1Ref}
-                activeSlideAlignment={'start'}
               />
             </View>
 
-            <View style={ {flex:5}}>
+            <View style={{flex:5}}>
                <Carousel
                 ref={c => this._slider1Ref = c}
                 renderItem={this._renderItem}
