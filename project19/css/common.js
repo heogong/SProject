@@ -3,7 +3,7 @@ import { color } from './color';
 
 export const styles = StyleSheet.create({
     container: {
-      backgroundColor: "#fff"
+      backgroundColor: color.whiteColor
     },
     contentWrap: {
       flex: 1
@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
     // ----------------------------
     containerInnerPd: {
       flex: 1,
-      backgroundColor: "#FFF",
+      backgroundColor: color.whiteColor,
       paddingLeft: 26,
       paddingRight: 26,
       paddingBottom: 26
@@ -95,9 +95,9 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // Button Style
     btnNoneStyle: {
-      backgroundColor: "#fff",
+      backgroundColor: color.whiteColor,
       flex: 1,
-      borderColor: "#fff",
+      borderColor: color.whiteColor,
       height: 13,
       borderRadius: 0,
       elevation: 0
@@ -115,22 +115,22 @@ export const styles = StyleSheet.create({
       fontWeight: "500"
     },
     btnDefaultNoFill: {
-      backgroundColor: "#FFF",
+      backgroundColor: color.whiteColor,
       borderWidth: 1,
-      borderColor: "#28c8f5"
+      borderColor: color.defaultColor
     },
     btnDefaultNoFillTxt: {
-      color: "#28c8f5",
+      color: color.defaultColor,
       flex: 1,
       textAlign: "center"
     },
     btnDefaultFill: {
-      backgroundColor: "#28c8f5",
+      backgroundColor: color.defaultColor,
       borderWidth: 1,
-      borderColor: "#28c8f5"
+      borderColor: color.defaultColor
     },
     btnDefaultFillTxt: {
-      color: "#FFF",
+      color: color.whiteColor,
       flex: 1,
       textAlign: "center"
     },
