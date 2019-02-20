@@ -24,10 +24,9 @@ import {
   FooterTab,
   Form,
   Item,
-  Input,
-  IconNB,
-  CheckBox
+  Input
 } from "native-base";
+import { CheckBox } from 'react-native-elements'
 
 class RegCard extends Component {
   constructor(props) {
@@ -39,120 +38,135 @@ class RegCard extends Component {
 
   render() {
     return (
-      <Container style={styles.containerInnerPd}>
-        <Header style={[styles.header, styles.noPadding]}>
-          <Left style={styles.headerLeftWrap}>
-            <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
-              <Image source={require('./images/btn_back_arrow.png')} width="30" height="30" />
+      <Container style={stl.containerInnerPd}>
+        <Header style={[stl.header, stl.noPadding]}>
+          <Left style={stl.headerLeftWrap}>
+            <Button style={stl.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
             </Button>
           </Left>
-          <Body style={styles.headerCenterWrap}>
-            <Title style={styles.headerTitleTxt}></Title>
+          <Body style={stl.headerCenterWrap}>
+            <Title style={stl.headerTitleTxt}></Title>
           </Body>
-          <Right style={styles.headerRightWrap}></Right>
+          <Right style={stl.headerRightWrap}></Right>
         </Header>
 
-        <View style={styles.contentWrap}>
+        <View style={stl.contentWrap}>
 
           <View>
-            <View style={styles.fxDirRow}>
-              <View style={styles.leftGuideTxtWrap}>
-                <Text style={styles.leftGuideTxt}>쿨리닉</Text>
-                <Text style={styles.leftGuideTxt}>결제카드를</Text>
-                <Text style={styles.leftGuideTxt}>등록해주세요</Text>
+            <View style={stl.fxDirRow}>
+              <View style={stl.leftGuideTxtWrap}>
+                <Text style={stl.leftGuideTxt}>쿨리닉</Text>
+                <Text style={stl.leftGuideTxt}>결제카드를</Text>
+                <Text style={stl.leftGuideTxt}>등록해주세요</Text>
               </View>
-              <View style={styles.rightStepNumWrap}>
-                <Text style={styles.rightStepNum}>02</Text>
+              <View style={stl.rightStepNumWrap}>
+                <Text style={stl.rightStepNum}>02</Text>
               </View>
             </View>
 
-            <View style={styles.fxDirRow}>
-              <View style={{flex: 1}}>
-                <View style={styles.procBarOn} />
+            <View style={stl.procBarWrap}>
+              <View style={stl.fx1}>
+                <View style={stl.procBarOn} />
               </View>
-              <View style={{flex: 1}}>
-                <View style={styles.procBarOn} />
+              <View style={stl.fx1}>
+                <View style={stl.procBarOn} />
               </View>
-              <View style={{flex: 1}}>
-               <View style={styles.procBarOff} />
+              <View style={stl.fx1}>
+               <View style={stl.procBarOff} />
               </View>
             </View>
             
           </View>
 
-          <View style={{flex:3, justifyContent:'flex-end'}}>
-            <Item regular style={[styles.mb15, {height : inputHeight, borderColor : '#28c8f5'}]}>
-              <Input placeholder="카드번호16자리" />
-              <IconNB name="ios-camera" style={{color:'#28c8f5'}}/>
+          <View style={stl.inputWrap}>
+            <Item regular style={[stl.mb10, stl.inputStyle]}>
+              <Input placeholder="카드번호 16자리" placeholderTextColor="#777" fontSize="14"/>
+              <Icon name="ios-camera" style={stl.inputIcon} />
             </Item>
-            <View style={{flexDirection : 'row'}}>
-              <View style={{flex:1}}>
-                <Item regular style={[styles.mb15, {height : inputHeight, borderColor : '#28c8f5'}]}>
-                  <Input placeholder="MM" />
+            <View style={[stl.mb10, stl.fxDirRow]}>
+              <View style={stl.fx1}>
+                <Item regular style={[stl.inputStyle, stl.mr7]}>
+                  <Input placeholder="MM" placeholderTextColor="#777" fontSize="14" style={{textAlign: "center"}}/>
                 </Item>
               </View>
-              <View style={{flex:1}}>
-                <Item regular style={[styles.mb15, {height : inputHeight, borderColor : '#28c8f5'}]}>
-                  <Input placeholder="YY" />
+              <View style={stl.fx1}>
+                <Item regular style={[stl.inputStyle, stl.mr7]}>
+                  <Input placeholder="YY" placeholderTextColor="#777" fontSize="14" style={{textAlign: "center"}}/>
                 </Item>
               </View>
-              <View style={{flex:1}}>
-                <Item regular style={[styles.mb15,  {height : inputHeight, borderColor : '#28c8f5'}]}>
-                  <Input placeholder="비밀번호2자리" />
+              <View style={stl.fx2}>
+                <Item regular style={stl.inputStyle}>
+                  <Input placeholder="비밀번호 앞2자리" placeholderTextColor="#777" fontSize="14" style={{textAlign: "center"}}/>
                 </Item>
               </View>
             </View>
             <View>
-              <Item regular style={[styles.mb15, {height : inputHeight, borderColor : '#28c8f5'}]}>
-                <Input placeholder="주민등록번호6자리" />
+              <Item regular style={stl.inputStyle}>
+                <Input placeholder="생년월일(YYMMDD)" placeholderTextColor="#777" fontSize="14"/>
               </Item>
             </View>
 
-            <View style={{flexDirection : 'row'}}>
-              <View style={{flex:1}}>
-                <Text style={[styles.greyFont, styles.mb5]}>전자금융거래 이용약관</Text>
-                <Text style={[styles.greyFont, styles.mb5]}>개인정보 수집 및 이용안내</Text>
-                <Text style={[styles.greyFont, styles.mb5]}>전자금융거래 이용약관</Text>
-                <Text style={[styles.greyFont, styles.mb5]}>개인정보 수집 및 이용안내</Text>
+            <View style={stl.termsWrap}>
+              <View style={[stl.fx2, stl.alignItemsStart, stl.justiConBetween]}>
+                <Text style={[stl.greyFont, stl.mb5]}>전자금융거래 이용약관</Text>
+                <Text style={[stl.greyFont, stl.mb5]}>개인정보 수집 및 이용안내</Text>
+                <Text style={[stl.greyFont, stl.mb5]}>전자금융거래 이용약관</Text>
+                <Text style={[stl.greyFont, stl.mb5]}>개인정보 수집 및 이용안내</Text>
               </View>
 
-              <View style={{flex:1, flexDirection : 'row'}}>
-                <View style={{flex:1, alignItems : 'flex-end', justifyContent : 'space-between'}}>
-                  <CheckBox
-                    checked={this.state.checkBox}
-                    onPress={ () => this.setState({checkBox : (this.state.checkBox) ? false : true})}
-                  />
-                  <CheckBox 
-                    style={{paddingBottom : 1}} 
-                    checked={this.state.checkBox}
-                    onPress={ () => this.setState({checkBox : (this.state.checkBox) ? false : true})}
-                  />
-                  <CheckBox 
-                    style={{paddingBottom : 1}} 
-                    checked={this.state.checkBox}
-                    onPress={ () => this.setState({checkBox : (this.state.checkBox) ? false : true})}
-                  />
-                  <CheckBox 
-                    checked={this.state.checkBox}
-                    onPress={ () => this.setState({checkBox : (this.state.checkBox) ? false : true})}
-                  />
-                </View>
-                <View style={{flex:1, alignItems : 'flex-end', justifyContent : 'space-between'}}>
-                  <Text style={styles.greyFont}>전체동의</Text>
-                  <Text style={styles.greyFont}>동의</Text>
-                  <Text style={styles.greyFont}>동의</Text>
-                  <Text style={styles.greyFont}>동의</Text>
+              <View style={[stl.fx1, stl.fxDirRow]}>
+                <View style={[stl.fx1, stl.alignItemsEnd, stl.justiConBetween]}>
+                  <View style={stl.fx1}>
+                    <CheckBox
+                      title="전체동의"
+                      containerStyle={[stl.noBackNBorderColor, stl.noPadding, stl.noMargin]}
+                      textStyle={{fontSize: 14}}
+                      checkedIcon={<Image source={require("./images/btn_check_box_on.png")} />}
+                      uncheckedIcon={<Image source={require("./images/btn_check_box_off.png")} />}
+                      checked={this.state.checked}
+                      onPress={() => this.setState({checked: !this.state.checked})}
+                    />
+                  </View>
+                  <View style={stl.fx1}>
+                    <CheckBox
+                      title="동의"
+                      containerStyle={[stl.noBackNBorderColor, stl.noPadding, stl.noMargin]}
+                      checkedIcon={<Image source={require("./images/btn_check_box_on.png")} />}
+                      uncheckedIcon={<Image source={require("./images/btn_check_box_off.png")} />}
+                      checked={this.state.checked}
+                      onPress={() => this.setState({checked: !this.state.checked})}
+                    />
+                  </View>
+                  <View style={stl.fx1}>
+                    <CheckBox
+                      title="동의"
+                      containerStyle={[stl.noBackNBorderColor, stl.noPadding, stl.noMargin]}
+                      checkedIcon={<Image source={require("./images/btn_check_box_on.png")} />}
+                      uncheckedIcon={<Image source={require("./images/btn_check_box_off.png")} />}
+                      checked={this.state.checked}
+                      onPress={() => this.setState({checked: !this.state.checked})}
+                    />
+                  </View>
+                  <View style={stl.fx1}>
+                    <CheckBox
+                      title="동의"
+                      containerStyle={[stl.noBackNBorderColor, stl.noPadding, stl.noMargin]}
+                      checkedIcon={<Image source={require("./images/btn_check_box_on.png")} />}
+                      uncheckedIcon={<Image source={require("./images/btn_check_box_off.png")} />}
+                      checked={this.state.checked}
+                      onPress={() => this.setState({checked: !this.state.checked})}
+                    />
+                  </View>
                 </View>
               </View>
 
             </View>
           </View>
 
-          <View style={{flex:1, justifyContent:'center'}}>
-            <Button block info
-              onPress={ () => alert("등록완료")}
-            >
-              <Text>입력완료</Text>
+          <View style={stl.footerBtnWrap}>
+            <Button style={[stl.btnDefault, stl.btnDefaultFill, stl.mb5]}>
+              <Text style={[stl.btnDefaultTxt, stl.btnDefaultFillTxt]}>등록완료</Text>
             </Button>
           </View>
 
@@ -167,49 +181,9 @@ const viewportHeight = Dimensions.get('window').height;
 
 const inputHeight = (viewportHeight / layoutCount) * 0.3;
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff"
-  },
-  content : {
-    marginLeft : 10,
-    marginRight : 10
-  },
-  mb5: {
-    marginBottom: 5
-  },
-  mb10: {
-    marginBottom: 10
-  },
-  mb15: {
-    marginBottom: 15
-  },
-  mb20: {
-    marginBottom: 20
-  },
-  mg5 : {
-    marginTop : 5,
-    marginBottom : 5,
-    marginLeft : 5,
-    marginRight : 5
-  },
-  mg10 : {
-    marginTop : 10,
-    marginBottom : 10,
-    marginLeft : 10,
-    marginRight : 10
-  },
-  greyFont : {
-    color : '#BDBDBD',
-    fontSize : 15
-  },
-  redFont : {
-    color : '#FF0000',
-    fontSize : 15
-  },
-
+const stl = StyleSheet.create({
   // ----------------------------
-  // YOO
+  // YOO Jung Hyun
   // ----------------------------
   contentWrap: {
     flex: 1
@@ -224,17 +198,21 @@ const styles = StyleSheet.create({
   rightStepNumWrap: {
     flex: 1,
     alignItems : "flex-end",
-    justifyContent : "flex-end",
-    marginTop: 20
+    justifyContent : "flex-end"
 
   },
   rightStepNum: {
     fontSize: 72,
-    color: "#28c8f5"
+    color: "#28c8f5",
+    height: 76
   },
   footerBtnWrap: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "flex-end",
+  },
+  procBarWrap: {
+    flexDirection : "row",
+    marginTop: 18
   },
   procBarOn: {
     height : 10,
@@ -244,6 +222,17 @@ const styles = StyleSheet.create({
     height : 10,
     backgroundColor : '#d6f1ff'
   },
+  inputWrap: {
+    marginTop: 32
+  },
+  termsWrap: {
+    marginTop: 27,
+    flexDirection : "row"
+  },
+  greyFont : {
+    color : '#BDBDBD',
+    fontSize : 14
+  },
   // ----------------------------
   // containerInnerPd
   // ----------------------------
@@ -252,12 +241,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     paddingLeft: 26,
     paddingRight: 26,
+    paddingBottom: 26
   },
   // 상세 헤더
   header: {
     height: 105,
     paddingTop : 0,
     elevation: 0,
+    shadowOpacity: 0,
     alignItems: "center"
   },
   headerLeftWrap: {
@@ -279,6 +270,14 @@ const styles = StyleSheet.create({
   // 공통 Style
   // ----------------------------
   // Button Style
+  btnNoneStyle: {
+    backgroundColor: "#fff",
+    flex: 1,
+    borderColor: "#fff",
+    height: 13,
+    borderRadius: 0,
+    elevation: 0
+  },
   btnDefault: {
     height: 48,
     borderRadius: 0,
@@ -312,21 +311,29 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   // 축약 Style
-  mb5: {
-    marginBottom: 5
+  inputStyle: {
+    height : 48,
+    borderColor : "#28c8f5"
   },
-  noPadding: {
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: 0,
-    paddingBottom: 0
+  inputIcon: {
+    color: "#28c8f5",
+    fontSize: 32,
+    marginRight: 5
   },
-  fxDirRow: {
-    flexDirection : "row"
-  },
-  colorDefault: {
-    color: "#28c8f5"
-  }
+  mb5: {marginBottom: 5},
+  mb10: {marginBottom: 10},
+  mr7: {marginRight: 7},
+  fx1: {flex: 1}, 
+  fx2: {flex: 2}, 
+  fxDirRow: {flexDirection : "row"},
+  colorBlue: {color: "#28c8f5"},
+  alignItemsEnd: {alignItems : 'flex-end'},
+  alignItemsStart: {alignItems : 'flex-start'},
+  justiConBetween: {justifyContent : 'space-between'},
+  justiConEnd: {justifyContent : 'flex-end'},
+  noPadding: {paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0},
+  noMargin: {marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0},
+  noBackNBorderColor: {backgroundColor: "#fff", borderColor: "#fff"}
 });
 
 export default RegCard;
