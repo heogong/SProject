@@ -62,7 +62,7 @@ const PAGE = () => (
             <Scene key="JoinName" hideNavBar component={JoinName} type={ActionConst.RESET}/>
             <Scene key="JoinPhoneAuth" hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
             <Scene key="JoinSuccess" hideNavBar component={JoinSuccess} type={ActionConst.RESET}/>
-            <Scene key="RegCard" hideNavBar component={RegCard} type={ActionConst.RESET}/>
+            <Scene key="RegCard" hideNavBar initial component={RegCard} type={ActionConst.RESET}/>
             <Scene key="ManageCard" hideNavBar component={ManageCard} type={ActionConst.RESET}/>
             <Scene key="RegSuccessCard" hideNavBar component={RegSuccessCard} type={ActionConst.RESET}/>
             <Scene key="AgreeTermsService" hideNavBar component={AgreeTermsService} type={ActionConst.RESET}/>
@@ -74,7 +74,7 @@ const PAGE = () => (
             <Scene key="RegBusinessAddressDetail" hideNavBar component={RegBusinessAddressDetail} type={ActionConst.RESET}/>
             <Scene key="SuccessBusinessPlace" hideNavBar component={SuccessBusinessPlace} type={ActionConst.RESET}/>
             <Scene key="RegProduct" hideNavBar component={RegProduct} type={ActionConst.RESET}/>
-            <Scene key="RegProductInfo" hideNavBar component={RegProductInfo} initial type={ActionConst.RESET}/>
+            <Scene key="RegProductInfo" hideNavBar component={RegProductInfo} type={ActionConst.RESET}/>
             
 
             
