@@ -35,6 +35,8 @@ import RegProduct from './RegProduct';
 import RegProductInfo from './RegProductInfo';
 import SuccessRegProduct from './SuccessRegProduct';
 import RegProductDetail from './RegProductDetail';
+import TakeProductImage from './TakeProductImage';
+
 
 
 
@@ -79,6 +81,8 @@ const PAGE = () => (
             <Scene key="RegProductInfo" hideNavBar component={RegProductInfo} type={ActionConst.RESET}/>
             <Scene key="SuccessRegProduct" hideNavBar component={SuccessRegProduct} type={ActionConst.RESET}/>
             <Scene key="RegProductDetail" hideNavBar component={RegProductDetail} initial type={ActionConst.RESET}/>
+            <Scene key="TakeProductImage" hideNavBar component={TakeProductImage} type={ActionConst.RESET}/>
+            
             
             
 

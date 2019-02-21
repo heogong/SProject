@@ -48,6 +48,47 @@ export const ENTRIES1 = [
 ];
 const SLIDER_1_FIRST_ITEM = 0;
 
+_cameraCard = () => (
+  <View style={[styles.pd10, styles.mg5, {width : cameraSize, height : cameraSize, backgroundColor : color.whiteColor}]}>
+    <View style={styles.fx1} />
+    <View style={[styles.fx1, {alignItems : 'center', justifyContent:'center'}]}>
+        <TouchableOpacity onPress={ () => alert("사진 촬영")}>
+          <Image source={require("./img/ico-camera.png")} resizeMode="center"/>
+        </TouchableOpacity>
+    </View>
+    <View style={styles.fx1} />
+  </View>
+);
+
+_imgCard = () => (
+  <View style={[styles.mg5, {width : cameraSize, height : cameraSize}]}>
+    <View>
+      <ImageBackground 
+        style={{width: '100%', height: '100%'}}
+        source={{uri: 'https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg'}}
+      >
+        <View style={[styles.pd10, styles.fx2]}>
+          <TouchableOpacity onPress={ () => alert("사진 삭제")}>
+            <Image source={require("./img/check-on2.png")} />
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity 
+          style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter, {backgroundColor : 'rgba(40, 200, 245, 0.6)'}]}
+          onPress={ () => alert("재등록하기")}>
+          <View>
+            <Text style={[styles.whiteFont, {fontWeight : '500'}]}>재등록하기</Text>
+          </View>
+        </TouchableOpacity>
+      </ImageBackground>
+      
+    </View>
+  </View>
+);
+
+
+
+
 class RegProductDetail extends Component {
   constructor(props) {
     super(props);
@@ -55,6 +96,7 @@ class RegProductDetail extends Component {
         slider1ActiveSlide: SLIDER_1_FIRST_ITEM
     };
   }
+
 
   _renderItem ({item, index}) {
     return (
@@ -106,61 +148,11 @@ class RegProductDetail extends Component {
                 <View style={[styles.pd10, styles.fx1, {justifyContent : 'center'}]}>
                     <View style={[styles.fxDirRow, {flexWrap : 'wrap', justifyContent : 'center'}]}>
 
-                        <View style={[styles.pd10, styles.mg5, {width : cameraSize, height : cameraSize, backgroundColor : color.whiteColor}]}>
-                            <View style={[styles.fx1, ]}>
-                                <TouchableOpacity onPress={ () => alert("사진 삭제")}>
-                                    <Image source={require("./img/check-on2.png")} />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={[styles.fx1, {alignItems : 'center', justifyContent:'center'}]}>
-                                <TouchableOpacity onPress={ () => alert("사진 촬영")}>
-                                    <Image source={require("./img/ico-camera.png")} resizeMode="center"/>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.fx1} />
-                        </View>
-
-                        <View style={[styles.pd10, styles.mg5, {width : cameraSize, height : cameraSize, backgroundColor : color.whiteColor}]}>
-                            <View style={[styles.fx1, ]}>
-                                <TouchableOpacity onPress={ () => alert("사진 삭제")}>
-                                    <Image source={require("./img/check-on2.png")} />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={[styles.fx1, {alignItems : 'center', justifyContent:'center'}]}>
-                                <TouchableOpacity onPress={ () => alert("사진 촬영")}>
-                                    <Image source={require("./img/ico-camera.png")} resizeMode="center"/>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.fx1} />
-                        </View>
-
-                        <View style={[styles.pd10, styles.mg5, {width : cameraSize, height : cameraSize, backgroundColor : color.whiteColor}]}>
-                            <View style={[styles.fx1, ]}>
-                                <TouchableOpacity onPress={ () => alert("사진 삭제")}>
-                                    <Image source={require("./img/check-on2.png")} />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={[styles.fx1, {alignItems : 'center', justifyContent:'center'}]}>
-                                <TouchableOpacity onPress={ () => alert("사진 촬영")}>
-                                    <Image source={require("./img/ico-camera.png")} resizeMode="center"/>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.fx1} />
-                        </View>
-
-                        <View style={[styles.pd10, styles.mg5, {width : cameraSize, height : cameraSize, backgroundColor : color.whiteColor}]}>
-                            <View style={[styles.fx1, ]}>
-                                <TouchableOpacity onPress={ () => alert("사진 삭제")}>
-                                    <Image source={require("./img/check-on2.png")} />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={[styles.fx1, {alignItems : 'center', justifyContent:'center'}]}>
-                                <TouchableOpacity onPress={ () => alert("사진 촬영")}>
-                                    <Image source={require("./img/ico-camera.png")} resizeMode="center"/>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.fx1} />
-                        </View>
+                      { this._cameraCard() }
+                      { this._imgCard() }
+                      { this._cameraCard() }
+                      { this._cameraCard() }
+                        
                     </View>
                 </View>
             </View>
