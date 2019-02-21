@@ -29,6 +29,7 @@ import {
 import { CheckBox } from 'react-native-elements'
 
 import { styles, viewportHeight, viewportWidth } from './css/common';
+import { stylesReg } from './css/stylesReg';
 import { color } from './css/color';
 
 class RegCard extends Component {
@@ -58,31 +59,31 @@ class RegCard extends Component {
 
           <View>
             <View style={styles.fxDirRow}>
-              <View style={styles.leftGuideTxtWrap}>
-                <Text style={styles.leftGuideTxt}>쿨리닉</Text>
-                <Text style={styles.leftGuideTxt}>결제카드를</Text>
-                <Text style={styles.leftGuideTxt}>등록해주세요</Text>
+              <View style={stylesReg.leftGuideTxtWrap}>
+                <Text style={stylesReg.leftGuideTxt}>쿨리닉</Text>
+                <Text style={stylesReg.leftGuideTxt}>결제카드를</Text>
+                <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
               </View>
-              <View style={styles.rightStepNumWrap}>
-                <Text style={styles.rightStepNum}>02</Text>
+              <View style={stylesReg.rightStepNumWrap}>
+                <Text style={stylesReg.rightStepNum}>02</Text>
               </View>
             </View>
 
-            <View style={styles.procBarWrap}>
+            <View style={stylesReg.procBarWrap}>
               <View style={styles.fx1}>
-                <View style={styles.procBarOn} />
+                <View style={stylesReg.procBarOn} />
               </View>
               <View style={styles.fx1}>
-                <View style={styles.procBarOn} />
+                <View style={stylesReg.procBarOn} />
               </View>
               <View style={styles.fx1}>
-               <View style={styles.procBarOff} />
+               <View style={stylesReg.procBarOff} />
               </View>
             </View>
             
           </View>
 
-          <View style={styles.inputWrap}>
+          <View style={stylesReg.inputWrap}>
             <Item regular style={[styles.mb10, styles.inputStyle]}>
               <Input placeholder="카드번호 16자리" placeholderTextColor="#777" fontSize="14"/>
               <Icon name="ios-camera" style={styles.inputIcon} />
@@ -110,7 +111,7 @@ class RegCard extends Component {
               </Item>
             </View>
 
-            <View style={styles.termsWrap}>
+            <View style={stylesReg.termsWrap}>
               <View style={[styles.fx2, styles.alignItemsStart, styles.justiConBetween]}>
                 <Text style={[styles.greyFont, styles.mb5]}>전자금융거래 이용약관</Text>
                 <Text style={[styles.greyFont, styles.mb5]}>개인정보 수집 및 이용안내</Text>
