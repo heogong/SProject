@@ -184,27 +184,27 @@ maching = () => (
             {this.maching()}
 
             <View style={{backgroundColor : '#EAEAEA'}}>
-                <View style={ localStyles.secondBox }>
-                    <Text style={{textAlign:'center', color: color.defaultColor}}>매칭된 A/S 업체가 출발했어요.</Text>
+                <View style={localStyles.secondBox}>
+                    <Text style={[styles.mb10, {textAlign:'center', color: color.defaultColor}]}>매칭된 A/S 업체가 출발했어요.</Text>
                     <View style={styles.fxDirRow}>
-                        <View style={styles.fx1}>
-                            <Image source={require("./img/input-able.png")} resizeMode="center"  />
+                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
+                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
                             <Text style={{fontSize : 12}}>A/S 대기</Text>
                         </View>
-                        <View style={styles.fx1}>
-                            <Image source={require("./img/input-able.png")} resizeMode="center"  />
+                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
+                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
                             <Text style={{fontSize : 12}}>A/S 출발</Text>
                         </View>
-                        <View style={styles.fx1}>
-                            <Image source={require("./img/input-able.png")} resizeMode="center"  />
+                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
+                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
                             <Text style={{fontSize : 12}}>A/S 도착</Text>
                         </View>
-                        <View style={styles.fx1}>
-                            <Image source={require("./img/input-able.png")} resizeMode="center"  />
+                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
+                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
                             <Text style={{fontSize : 12}}>A/S 진행</Text>
                         </View>
-                        <View style={styles.fx1}>
-                            <Image source={require("./img/input-able.png")} resizeMode="center"  />
+                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
+                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
                             <Text style={{fontSize : 12}}>A/S 완료</Text>
                         </View>
                     </View>
@@ -253,6 +253,7 @@ function wp (percentage, space) {
   }
   
 const afterServiceBtnSize = wp(33, 30);
+const stateImgSize = wp(10, 52);
 
 const localStyles = StyleSheet.create({
     customSwiperContainer : {

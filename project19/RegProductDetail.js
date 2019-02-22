@@ -211,7 +211,7 @@ class RegProductDetail extends Component {
             
         </ScrollView>
 
-        <Footer style={{paddingRight : 26}}>
+        <Footer style={{paddingRight : 26, elevation: 0}}>
           <FooterTab>
             <Button 
               style={[styles.btnDefault, {marginTop : 5}]}
