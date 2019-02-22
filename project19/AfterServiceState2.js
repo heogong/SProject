@@ -62,7 +62,7 @@ class AfterServiceState extends Component {
           <Right style={{flex:1}}></Right>
         </Header>
 
-        <ScrollView style={{flex:1}}>
+        <View style={{flex:1}}>
             <View style={ [styles.basicBackgroundColor, {flex : 2}] }>
                 <View style={[styles.stateBox, {flexDirection : 'row', height : '51%', zIndex : 1}]}>
 
@@ -110,7 +110,7 @@ class AfterServiceState extends Component {
                 <View style={[styles.serviceBox, {backgroundColor : '#FFF'}]}>
                 </View>
             </View>
-        </ScrollView>
+        </View>
 
         <Footer>
             <FooterTab>

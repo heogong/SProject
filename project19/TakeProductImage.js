@@ -78,9 +78,9 @@ class TakeProductImage extends Component {
             </TouchableOpacity>
 
             <View style={[styles.fx1, styles.fxDirRow]}>
-              <View style={{flex:1, borderColor : color.defaultColor, borderLeftWidth : edgeSize, borderBottomWidth : edgeSize }} />
+              <View style={[styles.fx1, {borderColor : color.defaultColor, borderLeftWidth : edgeSize, borderBottomWidth : edgeSize }]} />
               <View style={{flex:9}} />
-              <View style={{flex:1, borderColor : color.defaultColor, borderRightWidth : edgeSize, borderBottomWidth : edgeSize}} />
+              <View style={[styles.fx1, {flex:1, borderColor : color.defaultColor, borderRightWidth : edgeSize, borderBottomWidth : edgeSize}]} />
             </View>
           </View>
           

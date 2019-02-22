@@ -36,7 +36,8 @@ import RegProductInfo from './RegProductInfo';
 import SuccessRegProduct from './SuccessRegProduct';
 import RegProductDetail from './RegProductDetail';
 import TakeProductImage from './TakeProductImage';
-
+import TakeProductGuide1 from './TakeProductGuide1';
+import TakeProductGuide2 from './TakeProductGuide2';
 
 
 
@@ -49,12 +50,12 @@ const PAGE = () => (
     <Router>
         <Stack key="root">
             <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
-            <Scene key="SelectProduct" hideNavBar component={SelectProduct} type={ActionConst.RESET}/>
-            <Scene key="SelectProduct2" hideNavBar component={SelectProduct2} type={ActionConst.RESET}/>
+            <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
+            <Scene key="SelectProduct2" hideNavBar component={SelectProduct2}  type={ActionConst.RESET}/>
             <Scene key="ApplyAfterService" hideNavBar component={ApplyAfterService} type={ActionConst.RESET}/>
             <Scene key="HistoryAfterService" hideNavBar component={HistoryAfterService} type={ActionConst.RESET}/>
-            <Scene key="AfterServiceState" hideNavBar component={AfterServiceState} type={ActionConst.RESET}/>
-            <Scene key="AfterServiceState2" hideNavBar component={AfterServiceState2} type={ActionConst.RESET}/>
+            <Scene key="AfterServiceState" hideNavBar component={AfterServiceState}  type={ActionConst.RESET}/>
+            <Scene key="AfterServiceState2" hideNavBar component={AfterServiceState2} initial type={ActionConst.RESET}/>
             <Scene key="HistoryAfterServiceChk" hideNavBar component={HistoryAfterServiceChk} type={ActionConst.RESET}/>
             <Scene key="HistoryAfterServiceChk2" hideNavBar component={HistoryAfterServiceChk2} type={ActionConst.RESET}/>
             <Scene key="ReportAfterService" hideNavBar component={ReportAfterService} type={ActionConst.RESET}/>
@@ -80,9 +81,10 @@ const PAGE = () => (
             <Scene key="RegProduct" hideNavBar component={RegProduct} type={ActionConst.RESET}/>
             <Scene key="RegProductInfo" hideNavBar component={RegProductInfo} type={ActionConst.RESET}/>
             <Scene key="SuccessRegProduct" hideNavBar component={SuccessRegProduct} type={ActionConst.RESET}/>
-            <Scene key="RegProductDetail" hideNavBar component={RegProductDetail} initial type={ActionConst.RESET}/>
+            <Scene key="RegProductDetail" hideNavBar component={RegProductDetail}  type={ActionConst.RESET}/>
             <Scene key="TakeProductImage" hideNavBar component={TakeProductImage} type={ActionConst.RESET}/>
-            
+            <Scene key="TakeProductGuide1" hideNavBar component={TakeProductGuide1} type={ActionConst.RESET}/>
+            <Scene key="TakeProductGuide2" hideNavBar component={TakeProductGuide2} type={ActionConst.RESET}/>
             
             
 
