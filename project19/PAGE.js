@@ -45,9 +45,9 @@ import SelectWorkTime from './SelectWorkTime';
 import RegPassBook1 from './RegPassBook1';
 import RegPassBook2 from './RegPassBook2';
 import RegPassBook3 from './RegPassBook3';
-
-
-
+import PartnerMain from './PartnerMain';
+import ListApplyAfterService from './ListApplyAfterService';
+import DetailApplyAfterService from './DetailApplyAfterService';
 
 
 
@@ -102,9 +102,13 @@ const PAGE = () => (
             <Scene key="SelectWorkTime" hideNavBar component={SelectWorkTime} type={ActionConst.RESET}/>
             <Scene key="RegPassBook1" hideNavBar component={RegPassBook1} type={ActionConst.RESET}/>
             <Scene key="RegPassBook2" hideNavBar component={RegPassBook2} type={ActionConst.RESET}/>
-            <Scene key="RegPassBook3" hideNavBar component={RegPassBook3} initial type={ActionConst.RESET}/>
+            <Scene key="RegPassBook3" hideNavBar component={RegPassBook3} type={ActionConst.RESET}/>
+            <Scene key="PartnerMain" hideNavBar component={PartnerMain} type={ActionConst.RESET}/>
+            <Scene key="ListApplyAfterService" hideNavBar component={ListApplyAfterService} type={ActionConst.RESET}/>
+            <Scene key="DetailApplyAfterService" hideNavBar component={DetailApplyAfterService} initial type={ActionConst.RESET}/>
             
             
+
             
             
             
