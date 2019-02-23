@@ -62,26 +62,19 @@ class BusinessRegistration2 extends Component {
           </View>
 
           <View style={[styles.fx3, {marginLeft : 50, marginRight : 50, marginBottom : 50}]}>
-
-            <View style={[styles.fx1, styles.fxDirRow]}>
-              <View style={[styles.fx1, {borderColor : color.defaultColor, borderLeftWidth : edgeSize, borderTopWidth : edgeSize}]} />
-              <View style={{flex:9}} />
-              <View style={[styles.fx1, {borderColor : color.defaultColor, borderRightWidth : edgeSize, borderTopWidth : edgeSize}]} />
-            </View>
-
-            <View style={[{flex:9, marginLeft : 30, marginRight : 30, borderColor : color.greyColor, borderWidth : 2, elevation: 2}]}>
-              <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
-                <Image source={require("./img/license-bg02.png")} style={{height:'100%', width : '100%'}}/>
+            <ImageBackground
+              source={require("./img/license-bg01.png")} 
+              resizeMode="contain"
+              style={[styles.alignItemsCenter, styles.justiConCenter, {height : '100%', width : '100%'}]}
+            > 
+              <View style={{height:'80%', width : '70%', borderColor : color.greyColor, borderWidth : 2, elevation: 2}}> 
+                <Image source={require("./img/license-bg02.png")} 
+                  style={{height:'100%', width : '100%'}}
+                  resizeMode="contain"
+                />
               </View>
-            </View>
-
-            <View style={[styles.fx1, styles.fxDirRow]}>
-              <View style={[styles.fx1, {borderColor : color.defaultColor, borderLeftWidth : edgeSize, borderBottomWidth : edgeSize }]} />
-              <View style={{flex:9}} />
-              <View style={[styles.fx1, {borderColor : color.defaultColor, borderRightWidth : edgeSize, borderBottomWidth : edgeSize}]} />
-            </View>
+            </ImageBackground>
           </View>
-          
 
           <View style={styles.footerBtnWrap}>
             <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mb5]}>
@@ -97,8 +90,6 @@ class BusinessRegistration2 extends Component {
     );
   }
 }
-
-const edgeSize = 3.5; // 테두리 두께
 
 export default BusinessRegistration2;
 

@@ -61,27 +61,27 @@ class TakeProductImage extends Component {
             <Text style={styles.greyFont}>제품의 특징들이 잘 드러나게 촬영해주세요</Text>
           </View>
 
-          <View style={[styles.fx3, {marginLeft : 45, marginRight : 45, marginBottom : 40}]}>
-            <View style={[styles.fx1, styles.fxDirRow]}>
-              <View style={[styles.fx1, {borderColor : color.defaultColor, borderLeftWidth : edgeSize, borderTopWidth : edgeSize}]} />
-              <View style={{flex:9}} />
-              <View style={[styles.fx1, {borderColor : color.defaultColor, borderRightWidth : edgeSize, borderTopWidth : edgeSize}]} />
-            </View>
+          <View style={[styles.fx3, {marginLeft : 50, marginRight : 50, marginBottom : 50}]}>
+            <ImageBackground
+              source={require("./img/license-bg01.png")} 
+              resizeMode="contain"
+              style={[styles.alignItemsCenter, styles.justiConCenter, {height : '100%', width : '100%'}]}
+            >
 
-            <TouchableOpacity 
-              style={[{flex:9, marginLeft : 25, marginRight : 25, borderColor : color.defaultColor, borderWidth : 2, elevation: 2}]}
-              onPress={ () => alert("사진 촬영")}>
-              <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
+              <TouchableOpacity 
+                onPress={ () => alert("사진 촬영")}
+                style={[styles.justiConCenter, {
+                  height:'80%', width : '70%', 
+                  borderColor : color.defaultColor, 
+                  borderWidth : 2, 
+                  elevation: 2
+                }]}>
+              <View style={[styles.alignItemsCenter]}>
                 <H1 style={{color:color.defaultColor}}>촬영가이드</H1>
                 <H1 style={{color:color.defaultColor}}>보러가기</H1>
               </View>
-            </TouchableOpacity>
-
-            <View style={[styles.fx1, styles.fxDirRow]}>
-              <View style={[styles.fx1, {borderColor : color.defaultColor, borderLeftWidth : edgeSize, borderBottomWidth : edgeSize }]} />
-              <View style={{flex:9}} />
-              <View style={[styles.fx1, {flex:1, borderColor : color.defaultColor, borderRightWidth : edgeSize, borderBottomWidth : edgeSize}]} />
-            </View>
+              </TouchableOpacity>
+            </ImageBackground>
           </View>
           
 
@@ -99,8 +99,6 @@ class TakeProductImage extends Component {
     );
   }
 }
-
-const edgeSize = 3.5;
 
 export default TakeProductImage;
 
