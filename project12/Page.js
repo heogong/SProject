@@ -3,6 +3,7 @@ import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackV
 import {Actions, Scene, Router, Stack, Overlay, ActionConst, Drawer, Tabs} from 'react-native-router-flux';
 import TabIcon from './src/Common/Components/TabIcon';
 import IndexPage from './src';
+import TestInitPage from './src/FirstScreen/Pages/TestInitPage';
 import InitPage from './src/FirstScreen/Pages/InitPage';
 import ServiceInfo from './src/FirstScreen/Pages/ServiceInfo';
 
@@ -123,7 +124,9 @@ const PAGE = () => (
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
       <Scene key="IndexPage"  hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
-      <Scene key="InitPage" initial hideNavBar component={InitPage} title="InitPage" type={ActionConst.RESET} />
+
+      <Scene key="TestInitPage" hideNavBar component={TestInitPage} type={ActionConst.RESET} />
+      <Scene key="InitPage" initial hideNavBar component={InitPage} type={ActionConst.RESET} />
       
       {/* 안내페이지 */}
       <Scene key="ServiceInfo" hideNavBar component={ServiceInfo} />

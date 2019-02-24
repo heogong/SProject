@@ -28,6 +28,10 @@ import {
   CheckBox
 } from "native-base";
 
+import { styles, viewportHeight, viewportWidth } from './css/common';
+import { stylesReg } from './css/stylesReg';
+import { color } from './css/color';
+
 class UserLogin extends Component {
   constructor(props) {
     super(props);
@@ -38,27 +42,26 @@ class UserLogin extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={{flex:1}}>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
             </Button>
           </Left>
-          <Body style={{flex:1, alignItems: 'center'}}>
-            <Title></Title>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
           </Body>
-          <Right style={{flex:1}}></Right>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
-        <View style={{flex:1}}>
 
-          <View style={{flex:1, alignItems:'center'}}>
+        <View style={styles.fx1}>
+
+          <View style={[styles.fx1, styles.alignItemsCenter]}>
             <Image source={require('./img/logo-partner.png')} resizeMode='center' style={{height : logoHeight}} />
           </View>
 
-          <View style={{
-            flex:2,
-            alignItems : 'center',
+          <View style={[styles.fx2, styles.alignItemsCenter,{
             marginRight : 10, 
             marginLeft:10, 
             marginBottom:10, 
@@ -66,14 +69,16 @@ class UserLogin extends Component {
             paddingBottom : 30,
             paddingRight : 30, 
             paddingLeft: 30,
-            backgroundColor : '#28c8f5'}}>
+            backgroundColor : color.defaultColor
+            }]
+          }>
 
-            <Item regular style={[styles.mb15, {backgroundColor:'#fff', borderColor : '#fff', height : 50}]}>
+            <Item regular style={[styles.mb15, {backgroundColor: color.whiteColor, borderColor : color.whiteColor, height : 50}]}>
               <Icon active name="mail" style={{color:'#dbdbe9'}}/>
               <Input placeholder="이메일" />
             </Item>
 
-            <Item regular style={[styles.mb15, {backgroundColor:'#fff', borderColor : '#fff', height : 50}]}>
+            <Item regular style={[styles.mb15, {backgroundColor: color.whiteColor, borderColor : color.whiteColor, height : 50}]}>
               <Icon active name="lock" style={{color:'#dbdbe9'}}/>
               <Input placeholder="비밀번호(영문,숫자,특수문자8-15자)" />
             </Item>
@@ -130,14 +135,14 @@ class UserLogin extends Component {
               <View style={{flexDirection : 'row'}}>
 
                 <View style={{flex:1, alignItems : 'flex-end', paddingRight : 20}}>
-                  <View style={[styles.snsIcon]}>
+                  <View style={[localStyles.snsIcon]}>
                     <Image square small source={require('./img/ico-kakao.png')} 
                     style={{height : snsIconSize, width : snsIconSize}}/>
                   </View>
                 </View>
 
                 <View style={{flex:1}}>
-                  <View style={[styles.snsIcon]}>
+                  <View style={[localStyles.snsIcon]}>
                     <Image square small source={require('./img/ico-naver.png')} 
                     style={{height : snsIconSize, width : snsIconSize}}/>
                   </View>
@@ -147,9 +152,7 @@ class UserLogin extends Component {
               
             </View>
           </View>
-          
         </View>
-
       </Container>
     );
   }
@@ -158,46 +161,11 @@ class UserLogin extends Component {
 const layoutCount = 4; // 화면 분할 개수 사이즈
 const snsDivideCount = 12;
 
-const viewportHeight = Dimensions.get('window').height;
-const viewportWidth = Dimensions.get('window').width;
-
 const logoHeight = (viewportHeight / layoutCount);
 const snsIconSize = (viewportWidth / snsDivideCount);
 
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff"
-  },
-  content : {
-    marginLeft : 10,
-    marginRight : 10
-  },
-  mb10: {
-    marginBottom: 10
-  },
-  mb15: {
-    marginBottom: 15
-  },
-  mb20: {
-    marginBottom: 20
-  },
-  mg5 : {
-    marginTop : 5,
-    marginBottom : 5,
-    marginLeft : 5,
-    marginRight : 5
-  },
-  mg10 : {
-    marginTop : 10,
-    marginBottom : 10,
-    marginLeft : 10,
-    marginRight : 10
-  },
-  greyFont : {
-    color : '#BDBDBD',
-    fontSize : 15
-  },
+const localStyles = StyleSheet.create({
   snsIcon : {
     justifyContent : 'center',
     alignItems : 'center',

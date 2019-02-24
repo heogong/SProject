@@ -69,7 +69,7 @@ const PAGE = () => (
             <Scene key="HistoryAfterServiceChk" hideNavBar component={HistoryAfterServiceChk} type={ActionConst.RESET}/>
             <Scene key="HistoryAfterServiceChk2" hideNavBar component={HistoryAfterServiceChk2} type={ActionConst.RESET}/>
             <Scene key="ReportAfterService" hideNavBar component={ReportAfterService} type={ActionConst.RESET}/>
-            <Scene key="SelectUserType" hideNavBar component={SelectUserType} type={ActionConst.RESET}/>
+            <Scene key="SelectUserType" hideNavBar initial component={SelectUserType} type={ActionConst.RESET}/>
             <Scene key="UserLogin" hideNavBar component={UserLogin} type={ActionConst.RESET}/>
             <Scene key="InvaildId" hideNavBar component={InvaildId} type={ActionConst.RESET}/>
             <Scene key="SelectJoinType" hideNavBar component={SelectJoinType} type={ActionConst.RESET}/>
@@ -101,7 +101,7 @@ const PAGE = () => (
             <Scene key="SelectSpecialty" hideNavBar component={SelectSpecialty} type={ActionConst.RESET}/>
             <Scene key="SelectWorkTime" hideNavBar component={SelectWorkTime} type={ActionConst.RESET}/>
             <Scene key="RegPassBook1" hideNavBar component={RegPassBook1} type={ActionConst.RESET}/>
-            <Scene key="RegPassBook2" hideNavBar component={RegPassBook2} initial type={ActionConst.RESET}/>
+            <Scene key="RegPassBook2" hideNavBar component={RegPassBook2} type={ActionConst.RESET}/>
             <Scene key="RegPassBook3" hideNavBar component={RegPassBook3} type={ActionConst.RESET}/>
             <Scene key="PartnerMain" hideNavBar component={PartnerMain} type={ActionConst.RESET}/>
             <Scene key="ListApplyAfterService" hideNavBar component={ListApplyAfterService} type={ActionConst.RESET}/>

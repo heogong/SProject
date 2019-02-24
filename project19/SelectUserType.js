@@ -28,6 +28,9 @@ import {
   CheckBox
 } from "native-base";
 
+import { styles, viewportHeight, viewportWidth } from './css/common';
+import { color } from './css/color';
+
 class SelectUserTypejs extends Component {
   constructor(props) {
     super(props);
@@ -38,32 +41,32 @@ class SelectUserTypejs extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <ScrollView style={{flex:1}}>
+      <Container style={styles.containerInnerPd}>
+        <ScrollView style={styles.fx1}>
 
-          <View style={{flex:1, alignItems:'center'}}>
-            <Image source={require('./img/intro-logo.png')} resizeMode='center' />
+          <View style={[styles.fx1, styles.alignItemsCenter]}>
+            <Image source={require('./img/intro-logo.png')} resizeMode='contain' style={{width : logoImageSize}} />
           </View>
 
-          <View style={{flex:1, marginRight : 30, marginLeft:30, justifyContent : 'center', alignItems : 'center'}}>
+          <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
 
-            <TouchableOpacity  style={[styles.mb10, styles.typeBox]} onPress={ () => alert("USER")}>
-              <View style={{alignItems : 'center'}}>
-                <H1 style={{color:'#fff', fontWeight:'900'}}>USER</H1>
-                <Text style={{color:'#fff', fontSize : 15}}>A/S 서비스를 이용하시겠어요?</Text>
+            <TouchableOpacity  style={[styles.mb10, localStyles.typeBox]} onPress={ () => alert("USER")}>
+              <View style={styles.alignItemsCenter}>
+                <H1 style={{color:color.whiteColor, fontWeight:'900'}}>USER</H1>
+                <Text style={{color:color.whiteColor, fontSize : 15}}>A/S 서비스를 이용하시겠어요?</Text>
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity  style={[styles.mb20, styles.typeBox]} onPress={ () => alert("PARTNER")}>
-              <View style={{alignItems : 'center'}}>
-                <H1 style={{color:'#fff', fontWeight:'900'}}>PARTNER</H1>
-                <Text style={{color:'#fff', fontSize : 15}}>제품을 수리 하시겠어요?</Text>
+            <TouchableOpacity  style={[styles.mb20, localStyles.typeBox]} onPress={ () => alert("PARTNER")}>
+              <View style={styles.alignItemsCenter}>
+                <H1 style={{color: color.whiteColor, fontWeight:'900'}}>PARTNER</H1>
+                <Text style={{color:color.whiteColor, fontSize : 15}}>제품을 수리 하시겠어요?</Text>
               </View>
             </TouchableOpacity>
 
             <View>
               <TouchableOpacity onPress={ () => alert("비 회원으로 A/S 신청하기")}>
-                <Text style={{color : '#28c8f5', fontSize : 15}}>비 회원으로 A/S 신청하기</Text>
+                <Text style={{color : color.defaultColor, fontSize : 15}}>비 회원으로 A/S 신청하기</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -75,45 +78,29 @@ class SelectUserTypejs extends Component {
   }
 }
 
-const layoutCount = 2;
-const viewportHeight = Dimensions.get('window').height;
-const itemHeight = (viewportHeight / layoutCount) * 0.25;
+function wp (percentage, space) {
+  const value = (percentage * (viewportWidth - space)) / 100;
+  return Math.round(value);
+}
 
-const styles = StyleSheet.create({
+function hp (percentage) {
+  const value = (percentage * viewportHeight) / 100;
+  return Math.round(value);
+}
+
+const itemHeight = hp(13);
+const logoImageSize = wp(30, (styles.containerInnerPd.paddingLeft * 2));
+
+const localStyles = StyleSheet.create({
   container: {
     backgroundColor: "#fff"
   },
-  content : {
-    marginLeft : 10,
-    marginRight : 10
-  },
-  mb10: {
-    marginBottom: 10
-  },
-  mb20: {
-    marginBottom: 20
-  },
-  mg5 : {
-    marginTop : 5,
-    marginBottom : 5,
-    marginLeft : 5,
-    marginRight : 5
-  },
-  mg10 : {
-    marginTop : 10,
-    marginBottom : 10,
-    marginLeft : 10,
-    marginRight : 10
-  },
-  greyFont : {
-    color : '#BDBDBD',
-    fontSize : 15
-  },
+  
   typeBox : {
     justifyContent : 'center', 
     height : itemHeight, 
     width : '100%', 
-    backgroundColor : '#28c8f5'
+    backgroundColor : color.defaultColor
   }
 });
 
