@@ -2,12 +2,22 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native"
 import { Container, H1, Text } from "native-base";
 
+import { CLIENT, PARTNER } from '~/Common/Blend';
+
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { setCustomerType } from '~/Redux/Actions';
 
 import { styles, viewportHeight, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
-export default class PageOne extends Component {
+class InitPage extends Component {
+  
+   // 고객 타입 선택 및 페이지 이동
+   _selectCustomerTypeAndGoPage = (customer) => () => {
+      this.props.onSetCustomerType(customer);  // 리덕스 고객타입 SET
+      Actions.LoginAccountType();
+    }
 
   render() {
     return (
@@ -20,14 +30,14 @@ export default class PageOne extends Component {
 
           <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
 
-            <TouchableOpacity  style={[styles.mb10, localStyles.typeBox]} onPress={ Actions.LoginAccountType }>
+            <TouchableOpacity  style={[styles.mb10, localStyles.typeBox]} onPress={this._selectCustomerTypeAndGoPage(CLIENT)}>
               <View style={styles.alignItemsCenter}>
                 <H1 style={{color:color.whiteColor, fontWeight:'900'}}>USER</H1>
                 <Text style={{color:color.whiteColor, fontSize : 15}}>A/S 서비스를 이용하시겠어요?</Text>
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity  style={[styles.mb20, localStyles.typeBox]} onPress={ Actions.LoginAccountType }>
+            <TouchableOpacity  style={[styles.mb20, localStyles.typeBox]} onPress={this._selectCustomerTypeAndGoPage(PARTNER)}>
               <View style={styles.alignItemsCenter}>
                 <H1 style={{color: color.whiteColor, fontWeight:'900'}}>PARTNER</H1>
                 <Text style={{color:color.whiteColor, fontSize : 15}}>제품을 수리 하시겠어요?</Text>
@@ -44,7 +54,6 @@ export default class PageOne extends Component {
         </View>
 
       </Container>
-      
     )
   }
 }
@@ -74,3 +83,12 @@ const localStyles = StyleSheet.create({
     backgroundColor : color.defaultColor
   }
 });
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+      onSetCustomerType: (value) => dispatch(setCustomerType(value)),
+  }
+}
+
+InitPage = connect(undefined, mapDispatchToProps)(InitPage);
+export default InitPage;

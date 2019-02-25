@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Alert } from 'react-native';
+import { AsyncStorage, Alert, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from "native-base";
 
 import { NaverLogin, getProfile } from 'react-native-naver-login';
@@ -14,7 +14,8 @@ import CertSnsLogInfo from '../../Functions/CertSnsLogInfo';
 import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import CustomButton from '~/Common/Components/CustomButton';
+import { styles, viewportWidth } from '~/Common/Styles/common';
+import { color } from '~/Common/Styles/colors';
 
 const initials = {
   kConsumerKey: 'HEZ2CaOwmSPvw18HCB4c',
@@ -143,26 +144,45 @@ class Page extends Component {
   render() {
     const { theToken } = this.state;
     return (
-      // <View style={ styles.container }>
-      //   <View>
-      //     <NativeButton
-      //       isLoading={this.state.isNaverLoggingin}
-      //       onPress={() => this.naverLoginStart()}
-      //       >
-      //       {this.props.name}
-      //     </NativeButton>
-      //   </View>
-      // </View>
-      <CustomButton
-        block={ true }
-        info={ true }
-        bordered={ true }
-        onPress={() => this.naverLoginStart()}
-      ><Text>{this.props.name}</Text>
-      </CustomButton>
+      <TouchableOpacity onPress={ () => this.naverLoginStart()}>
+       {(this.props.loginYn) ? (
+        <View style={[localStyles.snsIcon]}>
+          <Image source={require('~/Common/Image/ico-naver.png')} 
+            resizeMode="contain"
+            style={{height : snsIconSize, width : snsIconSize}}
+          />
+        </View>
+        ) : (
+          <View>
+            <Image source={require('~/Common/Image/ico-naver.png')} resizeMode='contain' style={{height : itemSize - 60, width : itemSize - 60}} />
+            <Text style={[styles.whiteFont, {marginTop : 10}]}>네이버</Text>
+          </View>
+        )}
+      </TouchableOpacity>
     );
   }
 }
+
+
+function wp (percentage) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
+}
+
+const itemSize = wp(28);
+const snsDivideCount = 12;
+const snsIconSize = (viewportWidth / snsDivideCount);
+
+const localStyles = StyleSheet.create({
+  snsIcon : {
+    justifyContent : 'center',
+    alignItems : 'center',
+    borderColor : color.whiteColor,
+    borderWidth : 1,
+    height : snsIconSize + 20, width : snsIconSize + 20,
+    borderRadius : 5
+  }
+});
 
 let mapStateToProps = (state) => {
   return {

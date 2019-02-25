@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Alert } from 'react-native';
+import { AsyncStorage, Alert, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from "native-base";
 
 import { KAKAO_CODE, SUCCESS_RETURN_CODE, CLIENT_USER } from '~/Common/Blend';
@@ -13,7 +13,8 @@ import SnsLogin from '../../Functions/SnsLogin';
 import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import CustomButton from '~/Common/Components/CustomButton';
+import { styles, viewportWidth } from '~/Common/Styles/common';
+import { color } from '~/Common/Styles/colors';
 
 class KakaoLogin extends Component {
   constructor(props) {
@@ -142,16 +143,43 @@ class KakaoLogin extends Component {
 
   render() {
     return (
-        <CustomButton
-            block={ true }
-            info={ true }
-            bordered={ true }
-            onPress={() => this.kakaoLogin()}>
-            <Text>{this.props.name}</Text>
-        </CustomButton>
+        <TouchableOpacity onPress={ () => this.kakaoLogin()}>
+          {(this.props.loginYn) ? (
+            <View style={[localStyles.snsIcon]}>
+              <Image source={require('~/Common/Image/ico-kakao.png')} 
+                resizeMode="contain"
+                style={{height : snsIconSize, width : snsIconSize}}/>
+            </View>
+          ) : (
+            <View>
+              <Image source={require('~/Common/Image/ico-kakao.png')} resizeMode='contain' style={{height : itemSize - 60, width : itemSize - 60}} />
+              <Text style={[styles.whiteFont, {marginTop : 10}]}>카카오</Text>
+            </View>
+          )}
+        </TouchableOpacity>
     );
   }
 }
+
+function wp (percentage) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
+}
+
+const itemSize = wp(28);
+const snsDivideCount = 12;
+const snsIconSize = (viewportWidth / snsDivideCount);
+
+const localStyles = StyleSheet.create({
+  snsIcon : {
+    justifyContent : 'center',
+    alignItems : 'center',
+    borderColor : color.whiteColor,
+    borderWidth : 1,
+    height : snsIconSize + 20, width : snsIconSize + 20,
+    borderRadius : 5
+  }
+});
 
 let mapStateToProps = (state) => {
   return {

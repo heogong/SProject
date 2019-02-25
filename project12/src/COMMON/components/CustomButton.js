@@ -16,15 +16,17 @@ class CustomButton extends Component {
         rounded: false,
         block: false,
         full: false,
-        disabled: false,
         styleWidth: true,
         icon: false,
         marginSize : 15,
         widthSize : 200,
         
         //2019.02.24
+        disabled: false,
         edgeFill : false,
-        fillTxt : false
+        whiteFill : false,
+        fillTxt : false,
+        textStyle : null
       }
 
     render() {
@@ -49,16 +51,20 @@ class CustomButton extends Component {
             //     {this.props.children}
             // </Button>
 
-            <Button 
+            <Button
+                info
                 onPress={ this.props.onPress }
+                disabled={ this.props.disabled } 
                 style={[
                     styles.btnDefault, 
                     styles.mb5,
-                    (this.props.edgeFill) ? styles.btnDefaultEdgeFill : styles.btnDefaultNoFill // 화이트 테두리 여부
+                    (this.props.edgeFill) ? 
+                    (this.props.whiteFill) ? styles.btnDefaultWhiteEdgeFill : styles.btnDefaultFill 
+                    : styles.btnDefaultNoFill // 화이트 테두리 여부
                 ]}
             >
                 <Text style={[
-                    styles.btnDefaultTxt, 
+                    (this.props.textStyle !== null ) ? this.props.textStyle : styles.btnDefaultTxt, 
                     (this.props.fillTxt) ? styles.btnDefaultFillTxt : styles.btnDefaultNoFillTxt // 글자배경 채움 여부
                 ]}>
                     {this.props.children}

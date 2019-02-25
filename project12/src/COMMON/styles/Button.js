@@ -36,13 +36,12 @@ export const styles = StyleSheet.create({
     textAlign: "center"
   },
   btnDefaultFill: {
-    backgroundColor: color.defaultColor,
     borderWidth: 1,
     borderColor: color.defaultColor,
     elevation: 0,
     shadowOpacity: 0
   },
-  btnDefaultEdgeFill : {
+  btnDefaultWhiteEdgeFill : {
     backgroundColor: color.defaultColor,
     borderWidth: 1,
     borderColor: color.whiteColor,

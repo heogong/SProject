@@ -126,7 +126,7 @@ const PAGE = () => (
       <Scene key="IndexPage"  hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
 
       <Scene key="TestInitPage" hideNavBar component={TestInitPage} type={ActionConst.RESET} />
-      <Scene key="InitPage" initial hideNavBar component={InitPage} type={ActionConst.RESET} />
+      <Scene key="InitPage"  hideNavBar component={InitPage} type={ActionConst.RESET} />
       
       {/* 안내페이지 */}
       <Scene key="ServiceInfo" hideNavBar component={ServiceInfo} />
@@ -143,9 +143,9 @@ const PAGE = () => (
       <Scene key="JoinCustomerType" hideNavBar component={JoinCustomerType} title="고객 구분" />
       <Scene key="JoinAccountType" hideNavBar component={JoinAccountType} title="가입 구분"/>
       <Scene key="JoinInputEmail" hideNavBar component={JoinInputEmail} title="이메일 가입" back onBack={() => Actions.JoinInputName()} />
-      <Scene key="JoinInputName" hideNavBar component={JoinInputName} title="고객 이름"/>
-      <Scene key="JoinInputPhone" hideNavBar component={JoinInputPhone} title="전화번호"/>
-      <Scene key="JoinInputPhoneAuth" hideNavBar component={JoinInputPhoneAuth} title="본인 인증"/>
+      <Scene key="JoinInputName"  hideNavBar component={JoinInputName} title="고객 이름"/>
+      <Scene key="JoinInputPhone"  hideNavBar component={JoinInputPhone} title="전화번호"/>
+      <Scene key="JoinInputPhoneAuth" initial hideNavBar component={JoinInputPhoneAuth} title="본인 인증"/>
       
       {/* 파트너 회원가입 */}
       <Scene key="PartnerIndex" hideNavBar component={PartnerIndex} title="사업자정보 등록" type={ActionConst.RESET}/>
