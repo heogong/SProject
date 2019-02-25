@@ -1,38 +1,55 @@
-import React, { Component } from 'react';
-import { View, Text, TextInput, BackHandler } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import React, {Component} from 'react';
+import { Image, TouchableOpacity, Keyboard, ScrollView, View } from 'react-native';
+import { Container, Icon, Text, Item, Input } from "native-base";
+import { viewportHeight } from '~/Common/Styles/common';
 
 export default class PageOne extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { text: 'Useless Placeholder' };
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      this._keyboardDidShow,
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      this._keyboardDidHide,
+    );
   }
 
-  componentDidMount () {
-    BackHandler.addEventListener('hardwareBackPress', () => this.backAndroid()) // Listen for the hardware back button on Android to be pressed
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
   }
 
-  componentWillUnmount () {
-    BackHandler.removeEventListener('hardwareBackPress', () => this.backAndroid()) // Remove listener
+  _keyboardDidShow(e) {
+    console.log(e);
+    alert(viewportHeight);
   }
 
-  backAndroid () {
-    Actions.InitPage() // Return to previous screen
-    return true // Needed so BackHandler knows that you are overriding the default action and that it should not close the app
+  _keyboardDidHide() {
+    alert('Keyboard Hidden');
+    alert(viewportHeight);
   }
 
-  
   render() {
     return (
-      <View style={{margin: 128}}>
-        <Text onPress={Actions.pageTwo}>This is PageOne!</Text>
+      <Container style={{flex: 1,
+        paddingLeft: 26,
+        paddingRight: 26,
+        paddingBottom: 26}}>
 
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
-        />
-      </View>
+              <Input 
+                keyboardType='numeric'
+                maxLength={19}
+                placeholder="카드번호 16자리" 
+                placeholderTextColor="#777" 
+                fontSize="14"
+                onSubmitEditing={Keyboard.dismiss}
+              />
+
+
+      </Container>
+     
     )
+    
   }
 }

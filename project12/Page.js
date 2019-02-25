@@ -2,8 +2,12 @@ import React, {Component} from 'react';
 import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator';
 import {Actions, Scene, Router, Stack, Overlay, ActionConst, Drawer, Tabs} from 'react-native-router-flux';
 import TabIcon from './src/Common/Components/TabIcon';
-import IndexPage from './src';
+
 import TestInitPage from './src/FirstScreen/Pages/TestInitPage';
+import TestPageOne from './src/FirstScreen/Pages/PageOne';
+
+
+import IntroPage from './src';
 import InitPage from './src/FirstScreen/Pages/InitPage';
 import ServiceInfo from './src/FirstScreen/Pages/ServiceInfo';
 
@@ -123,9 +127,10 @@ const PAGE = () => (
   
   <Router>
     <Stack transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-      <Scene key="IndexPage"  hideNavBar component={IndexPage} title="IndexPage" type={ActionConst.RESET} />
-
       <Scene key="TestInitPage" hideNavBar component={TestInitPage} type={ActionConst.RESET} />
+      <Scene key="TestPageOne"  hideNavBar component={TestPageOne} title="TestPageOne" type={ActionConst.RESET} />
+
+      <Scene key="IntroPage"  hideNavBar component={IntroPage} title="IntroPage" type={ActionConst.RESET} />
       <Scene key="InitPage"  hideNavBar component={InitPage} type={ActionConst.RESET} />
       
       {/* 안내페이지 */}
@@ -145,7 +150,7 @@ const PAGE = () => (
       <Scene key="JoinInputEmail" hideNavBar component={JoinInputEmail} title="이메일 가입" back onBack={() => Actions.JoinInputName()} />
       <Scene key="JoinInputName"  hideNavBar component={JoinInputName} title="고객 이름"/>
       <Scene key="JoinInputPhone"  hideNavBar component={JoinInputPhone} title="전화번호"/>
-      <Scene key="JoinInputPhoneAuth" initial hideNavBar component={JoinInputPhoneAuth} title="본인 인증"/>
+      <Scene key="JoinInputPhoneAuth"  hideNavBar component={JoinInputPhoneAuth} title="본인 인증"/>
       
       {/* 파트너 회원가입 */}
       <Scene key="PartnerIndex" hideNavBar component={PartnerIndex} title="사업자정보 등록" type={ActionConst.RESET}/>
@@ -162,7 +167,7 @@ const PAGE = () => (
       <Scene key="LoginInputAccount" hideNavBar component={LoginInputAccount} title="이메일 로그인"/>
 
       <Scene key="CardIndex" hideNavBar component={CardIndex} title="카드 등록 페이지" type={ActionConst.RESET}/>
-      <Scene key="CardInputInfo" hideNavBar component={CardInputInfo} title="카드 등록" />
+      <Scene key="CardInputInfo" initial hideNavBar component={CardInputInfo} title="카드 등록" />
       <Scene key="CardListInfo" hideNavBar component={CardListInfo} title="" />
 
       {/* 클라이언트 */}

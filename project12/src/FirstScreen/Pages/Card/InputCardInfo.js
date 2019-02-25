@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
-import { View, UIManager, Platform } from 'react-native';
-import { Input, Item, Text } from "native-base";
+import { Image, TouchableOpacity, Keyboard, ScrollView, View } from 'react-native';
+import { Container, Icon, Text, Item, Input } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
-import { Actions } from 'react-native-router-flux';
-import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
-import CustomButton from '~/Common/Components/CustomButton';
-import GetCommonData from '~/Common/Functions/GetCommonData';
-import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
 
+import { Actions } from 'react-native-router-flux';
+import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
+import { CheckBox } from 'react-native-elements'
+
+import GetCommonData from '~/Common/Functions/GetCommonData';
 import RegCard from '~/FirstScreen/Functions/Card/RegCard';
 
+import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomButton from '~/Common/Components/CustomButton';
+import { styles, viewportHeight } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from '~/Common/Styles/colors';
+
+
+let viewSize = viewportHeight;
 export default class InputCardInfo extends Component {
   constructor(props) {
     super(props);
@@ -94,86 +102,178 @@ export default class InputCardInfo extends Component {
   
   render() {
     return (
-      <CustomBasicWrapper
-        title="간편결제 카드 등록"
-      >
-        <Text>카드번호</Text>
-        <Item regular>
-          <Input
-            onChangeText={(text) => this._setCardNum(text) }
-            onKeyPress={this._handleKeyPress }
-            value={ this.state.cardNumber }
-            placeholder='1234 5678 1234 5678'
-            keyboardType='numeric'
-            maxLength={19}
-          />
-        </Item>
 
-        <Text>유효기간</Text>
-        <Item regular>
-          <Input
-            onChangeText={(text) => this.setState({vaildTermMonth : text})}
-            value={ this.state.vaildTerm }
-            placeholder='유효기간 / 월'
-            keyboardType='numeric'
-            maxLength={2}
-          />
-        </Item>
+      <Container style={styles.containerInnerPd}>
+        <CustomHeader />
+          <View style={styles.fxDirRow}>
+            <View style={stylesReg.leftGuideTxtWrap}>
+              <Text style={stylesReg.leftGuideTxt}>쿨리닉</Text>
+              <Text style={stylesReg.leftGuideTxt}>결제카드를</Text>
+              <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
+            </View>
+            <View style={stylesReg.rightStepNumWrap}>
+              <Text style={stylesReg.rightStepNum}>02</Text>
+            </View>
+          </View>
 
-        <Item regular>
-          <Input
-            onChangeText={(text) => this.setState({vaildTermYear : text})}
-            value={ this.state.vaildTerm }
-            placeholder='유효기간 / 년'
-            keyboardType='numeric'
-            maxLength={2}
-          />
-        </Item>
+          <View style={stylesReg.procBarWrap}>
+            <View style={styles.fx1}>
+              <View style={stylesReg.procBarOn} />
+            </View>
+            <View style={styles.fx1}>
+              <View style={stylesReg.procBarOn} />
+            </View>
+            <View style={styles.fx1}>
+              <View style={stylesReg.procBarOff} />
+            </View>
+          </View>
 
-        <Text>비밀번호</Text>
-        <Item regular>
-          <Input
-            secureTextEntry={ true }
-            onChangeText={(text) => this.setState({passwd : text})}
-            value={ this.state.passwd }
-            placeholder='앞 두자리'
-            keyboardType='numeric'
-            maxLength={2}
-          />
-        </Item>
+          <View style={stylesReg.inputWrap}>
+            <Item regular style={[styles.mb10, styles.inputStyle]}>
+              <Input 
+                onChangeText={(text) => this._setCardNum(text) }
+                onKeyPress={this._handleKeyPress }
+                value={ this.state.cardNumber }
+                keyboardType='numeric'
+                maxLength={19}
+                placeholder="카드번호 16자리" 
+                placeholderTextColor="#777" 
+                fontSize="14"
+              />
+              <TouchableOpacity onPress={this.scanCard.bind(this)}>
+                <Icon name="ios-camera" style={styles.inputIcon} />
+              </TouchableOpacity>
+            </Item>
+            <View style={[styles.mb10, styles.fxDirRow]}>
+              <View style={styles.fx1}>
+                <Item regular style={[styles.inputStyle, styles.mr7]}>
+                  <Input 
+                    onChangeText={(text) => this.setState({vaildTermMonth : text})}
+                    value={ this.state.vaildTerm }
+                    keyboardType='numeric'
+                    maxLength={2}
+                    placeholder="MM" 
+                    placeholderTextColor={color.deepGreyColor} 
+                    fontSize="14" 
+                    style={{textAlign: "center"}}
+                  />
+                </Item>
+              </View>
+              <View style={styles.fx1}>
+                <Item regular style={[styles.inputStyle, styles.mr7]}>
+                  <Input 
+                    onChangeText={(text) => this.setState({vaildTermYear : text})}
+                    value={ this.state.vaildTerm }
+                    keyboardType='numeric'
+                    maxLength={2}
+                    placeholder="YY" 
+                    placeholderTextColor="#777" 
+                    fontSize="14" 
+                    style={{textAlign: "center"}}
+                  />
+                </Item>
+              </View>
+              <View style={styles.fx2}>
+                <Item regular style={styles.inputStyle}>
+                  <Input 
+                    secureTextEntry={ true }
+                    onChangeText={(text) => this.setState({passwd : text})}
+                    value={ this.state.passwd }
+                    keyboardType='numeric'
+                    maxLength={2}
+                    placeholder="비밀번호 앞2자리" 
+                    placeholderTextColor="#777" 
+                    fontSize="14" 
+                    style={{textAlign: "center"}}
+                  />
+                </Item>
+              </View>
+            </View>
+            <View>
+              <Item regular style={styles.inputStyle}>
+                <Input 
+                  onChangeText={(text) => this.setState({birthDay : text})}
+                  value={ this.state.birthDay }
+                  keyboardType='numeric'
+                  maxLength={6}
+                  placeholder="생년월일(YYMMDD)" 
+                  placeholderTextColor="#777" 
+                  fontSize="14"
+                />
+              </Item>
+            </View>
 
-        <Text>생년월일</Text>
-        <Item regular>
-          <Input
-            onChangeText={(text) => this.setState({birthDay : text})}
-            value={ this.state.birthDay }
-            placeholder='YY/MM/DD'
-            keyboardType='numeric'
-            maxLength={6}
-          />
-        </Item>
+            <View style={stylesReg.termsWrap}>
+              <View style={[styles.fx2, styles.alignItemsStart, styles.justiConBetween]}>
+                <Text style={[styles.greyFont, styles.mb5]}>전자금융거래 이용약관</Text>
+                <Text style={[styles.greyFont, styles.mb5]}>개인정보 수집 및 이용안내</Text>
+                <Text style={[styles.greyFont, styles.mb5]}>전자금융거래 이용약관</Text>
+                <Text style={[styles.greyFont, styles.mb5]}>개인정보 수집 및 이용안내</Text>
+              </View>
 
-        <CustomButton
-          block={ true }
-          info={ true }
-          bordered={ true }
-          onPress={this.scanCard.bind(this)}>
-          <Text>
-            카드 스캔
-          </Text>
-        </CustomButton>
+              <View style={[styles.fx1, styles.fxDirRow]}>
+                <View style={[styles.fx1, styles.alignItemsEnd, styles.justiConBetween]}>
+                  <View style={styles.fx1}>
+                    <CheckBox
+                      title="전체동의"
+                      containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
+                      textStyle={{fontSize: 14}}
+                      checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
+                      uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
+                      checked={this.state.checked}
+                      onPress={() => this.setState({checked: !this.state.checked})}
+                    />
+                  </View>
+                  <View style={styles.fx1}>
+                    <CheckBox
+                      title="동의"
+                      containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
+                      checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
+                      uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
+                      checked={this.state.checked}
+                      onPress={() => this.setState({checked: !this.state.checked})}
+                    />
+                  </View>
+                  <View style={styles.fx1}>
+                    <CheckBox
+                      title="동의"
+                      containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
+                      checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
+                      uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
+                      checked={this.state.checked}
+                      onPress={() => this.setState({checked: !this.state.checked})}
+                    />
+                  </View>
+                  <View style={styles.fx1}>
+                    <CheckBox
+                      title="동의"
+                      containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
+                      checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
+                      uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
+                      checked={this.state.checked}
+                      onPress={() => this.setState({checked: !this.state.checked})}
+                    />
+                  </View>
+                </View>
+              </View>
 
-        <CustomButton
-          block={ true }
-          info={ true }
-          bordered={ true }
-          onPress={this._cardRegister}>
-          <Text>
-            등록
-          </Text>
-        </CustomButton>
-      </CustomBasicWrapper>
+            </View>
+          </View>
+
+          <View style={styles.footerBtnWrap}>
+            <CustomButton 
+              onPress={this._cardRegister}
+              disabled={ this.state.disabledNextBtn }
+              edgeFill={true}
+              fillTxt={true}
+            >
+              등록완료
+            </CustomButton>
+          </View>
+      </Container>
       
     )
   }
 }
+
+const viewHeight = viewportHeight;
