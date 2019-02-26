@@ -5,6 +5,27 @@ export const styles = StyleSheet.create({
     container: {
       backgroundColor: color.whiteColor
     },
+    containerInnerPd: {
+      flex: 1,
+      backgroundColor: color.whiteColor,
+      paddingLeft: 26,
+      paddingRight: 26,
+      paddingBottom: 26
+    },
+    containerScroll: {
+      flex: 1,
+      backgroundColor: color.whiteColor,
+      paddingLeft: 26,
+      paddingRight: 26,
+      paddingBottom: 0
+    },
+    containerSwiper: {
+      flex: 1,
+      backgroundColor: color.whiteColor,
+      paddingLeft: 26,
+      paddingRight: 0,
+      paddingBottom: 26
+    },
     contentWrap: {
       flex: 1
     },
@@ -19,16 +40,6 @@ export const styles = StyleSheet.create({
     whiteFont : {
       color : color.whiteColor,
       fontSize : 15
-    },
-    // ----------------------------
-    // containerInnerPd
-    // ----------------------------
-    containerInnerPd: {
-      flex: 1,
-      backgroundColor: color.whiteColor,
-      paddingLeft: 26,
-      paddingRight: 26,
-      paddingBottom: 26
     },
     // 상세 헤더
     header: {
