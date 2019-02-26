@@ -58,12 +58,26 @@ class CustomHeader extends Component {
                 <Body style={hStyles.headerCenterWrap}>
                     <Title style={hStyles.headerTitleTxt}>{ this.props.title }</Title>
                 </Body>
-                <Right style={[hStyles.headerRightWrap, (this.props.rightBtn) ? localStyles.show : localStyles.hide ]}>
+                {/* <Right style={[hStyles.headerRightWrap, (this.props.rightBtn) ? localStyles.show : localStyles.hide ]}>
                     <Button transparent onPress={ this.props.rightAction }>
                         <Icon name='md-checkbox-outline' />
                     </Button>
-                </Right>
+                </Right> */}
+                <Right style={hStyles.headerRightWrap}></Right>
             </Header>
+
+            // <Header style={[hStyles.header, styles.noPadding]}>
+            //     <Left style={hStyles.headerLeftWrap}>
+            //         <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+            //             <Image source={require("~/Common/Image/btn_back_arrow.png")}  />
+            //         </Button>
+            //     </Left>
+            //     <Body style={hStyles.headerCenterWrap}>
+            //         <Title style={hStyles.headerTitleTxt}>결제카드관리</Title>
+            //     </Body>
+            //     <Right style={hStyles.headerRightWrap}></Right>
+            // </Header>
+
         );
     }
 }

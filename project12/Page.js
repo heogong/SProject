@@ -167,8 +167,8 @@ const PAGE = () => (
       <Scene key="LoginInputAccount" hideNavBar component={LoginInputAccount} title="이메일 로그인"/>
 
       <Scene key="CardIndex" hideNavBar component={CardIndex} title="카드 등록 페이지" type={ActionConst.RESET}/>
-      <Scene key="CardInputInfo" initial hideNavBar component={CardInputInfo} title="카드 등록" />
-      <Scene key="CardListInfo" hideNavBar component={CardListInfo} title="" />
+      <Scene key="CardInputInfo"  hideNavBar component={CardInputInfo} title="카드 등록" />
+      <Scene key="CardListInfo" initial hideNavBar component={CardListInfo} title="" />
 
       {/* 클라이언트 */}
       <Scene key="ClientIndex" hideNavBar component={ClientIndex} type={ActionConst.RESET} />

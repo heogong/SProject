@@ -69,7 +69,7 @@ const PAGE = () => (
             <Scene key="HistoryAfterServiceChk" hideNavBar component={HistoryAfterServiceChk} type={ActionConst.RESET}/>
             <Scene key="HistoryAfterServiceChk2" hideNavBar component={HistoryAfterServiceChk2} type={ActionConst.RESET}/>
             <Scene key="ReportAfterService" hideNavBar component={ReportAfterService} type={ActionConst.RESET}/>
-            <Scene key="SelectUserType" hideNavBar initial component={SelectUserType} type={ActionConst.RESET}/>
+            <Scene key="SelectUserType" hideNavBar component={SelectUserType} type={ActionConst.RESET}/>
             <Scene key="UserLogin" hideNavBar component={UserLogin} type={ActionConst.RESET}/>
             <Scene key="InvaildId" hideNavBar component={InvaildId} type={ActionConst.RESET}/>
             <Scene key="SelectJoinType" hideNavBar component={SelectJoinType} type={ActionConst.RESET}/>
@@ -77,7 +77,7 @@ const PAGE = () => (
             <Scene key="JoinName" hideNavBar component={JoinName} type={ActionConst.RESET}/>
             <Scene key="JoinPhoneAuth" hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
             <Scene key="JoinSuccess" hideNavBar component={JoinSuccess} type={ActionConst.RESET}/>
-            <Scene key="RegCard" hideNavBar component={RegCard}  type={ActionConst.RESET}/>
+            <Scene key="RegCard" hideNavBar initial component={RegCard}  type={ActionConst.RESET}/>
             <Scene key="ManageCard" hideNavBar component={ManageCard} type={ActionConst.RESET}/>
             <Scene key="RegSuccessCard" hideNavBar component={RegSuccessCard} type={ActionConst.RESET}/>
             <Scene key="AgreeTermsService" hideNavBar component={AgreeTermsService} type={ActionConst.RESET}/>
