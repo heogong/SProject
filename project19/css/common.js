@@ -112,6 +112,30 @@ export const styles = StyleSheet.create({
       flex: 1,
       textAlign: "center"
     },
+    btnWhBoder: {
+      backgroundColor: color.defaultColor,
+      borderWidth: 1,
+      borderColor: color.whiteColor,
+      elevation: 0,
+      shadowOpacity: 0
+    },
+    btnWhBoderTxt: {
+      color: color.whiteColor,
+      flex: 1,
+      textAlign: "center"
+    },
+    btnWhBack: {
+      backgroundColor: color.whiteColor,
+      borderWidth: 1,
+      borderColor: color.whiteColor,
+      elevation: 0,
+      shadowOpacity: 0
+    },
+    btnWhBackTxt: {
+      color: color.defaultColor,
+      flex: 1,
+      textAlign: "center"
+    },
 
     fx1: {flex: 1}, 
     fx2: {flex: 2}, 
