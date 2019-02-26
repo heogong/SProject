@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Container, H3, Icon, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -12,23 +12,12 @@ import CustomHeader from '~/Common/Components/CustomHeader';
 import { styles, viewportHeight, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
-const datas = [
-    {text : 'Simon Mignolet', id : 1, defalut : false},
-    {text : 'Nathaniel Clyne', id : 2, defalut : false},
-    {text : 'Dejan Lovren', id : 3, defalut : false},
-    {text : 'Mama Sakho', id : 4, defalut : true},
-    {text : 'Alberto Moreno', id : 5, defalut : false},
-    {text : 'Emre Can', id : 6, defalut : false},
-    {text : 'Joe Allen', id : 7, defalut : false},
-    {text : 'Phil Coutinho', id : 8, defalut : false}
-];
 
-let CARD_ID, SEC_ID, ROW_ID, ROW_MAP;
+let CARD_ID;
 export default class ListCardInfo extends Component {
     constructor(props) {
         super(props);
     
-        //this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
             data : []
         };
@@ -55,14 +44,25 @@ export default class ListCardInfo extends Component {
       });
     }
 
-    // 카드 row 삭제
-    deleteRow(data, secId, rowId, rowMap) {
-        CARD_ID = data.id;
-        SEC_ID = secId;
-        ROW_ID = rowId;
-        ROW_MAP = rowMap;
 
-        this._cardDelete();
+    // 카드 row 삭제
+    deleteRow(id, idx) {
+        CARD_ID = id;
+
+        Alert.alert(
+          '',
+          '삭제하시겠습니까?',
+          [
+            {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {
+              text: '네', onPress: () => (
+                  this.setState({ data: this.state.data.filter((s, sidx) => idx !== sidx)})
+                  //this._cardDelete()
+              )
+            },
+          ],
+          { cancelable: false }
+        )
     }
 
     // 카드삭제 API
@@ -76,6 +76,7 @@ export default class ListCardInfo extends Component {
 
                 ROW_MAP[`${SEC_ID}${ROW_ID}`].props.closeRow();
                 const newData = [...this.state.listViewData];
+
                 newData.splice(ROW_ID, 1);
         
                 this.setState({ listViewData: newData });
@@ -142,7 +143,7 @@ export default class ListCardInfo extends Component {
 
 
                     {/* 여기부터!!! */}
-                    <TouchableOpacity onPress={ () => CARD_ID = card.billingKeyId}>
+                    <TouchableOpacity onPress={ () => this.deleteRow(card.billingKeyId, index)}>
                       <View style={[styles.fx1, styles.alignItemsEnd]}>
                         <Icon name="close"></Icon>
                       </View>

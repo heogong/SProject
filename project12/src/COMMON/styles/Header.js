@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-export const hStyles = StyleSheet.create({
+export const HStyles = StyleSheet.create({
 // 상세 헤더
 header: {
     height: 105,

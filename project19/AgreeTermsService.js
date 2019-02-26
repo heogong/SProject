@@ -60,7 +60,7 @@ class AgreeTermsService extends Component {
             <View style={[styles.mb10, {flexDirection : 'row'}]}>
               <View style={{flex:1}}>
                 <H1>쿨리닉</H1>
-                <H1>이용약관의</H1>
+                <H1>이용약관에</H1>
                 <H1>동의해주세요</H1>
               </View>
               <View style={{flex:1, alignItems : 'flex-end', justifyContent : 'flex-end'}}>
