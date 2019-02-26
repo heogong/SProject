@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import { View } from 'react-native'
+import { Container, Text, Item, Input } from "native-base";
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrNm, setSnsSignYn } from '~/Redux/Actions';
 
-import { Item, Input, Text } from "native-base";
-import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
+import { styles } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
 
 const USER_NM_LEN = 1;
 class InputName extends Component {
@@ -39,33 +41,55 @@ class InputName extends Component {
   
   render() {
     return (
-      <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
-        <CustomBasicWrapper
-          title="고객 이름"
-        >
-          {/* <Text>고객명을 입력해주세요</Text> */}
-
-          <Item regular>
-              <Input
+      <Container style={styles.containerInnerPd}>
+        <CustomHeader />
+        <View style={styles.contentWrap}>
+          <View>
+            <View style={styles.fxDirRow}>
+              <View style={stylesReg.leftGuideTxtWrap}>
+                <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
+                <Text style={stylesReg.leftGuideTxt}>성함을</Text>
+                <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
+              </View>
+              <View style={stylesReg.rightStepNumWrap}>
+                <Text style={stylesReg.rightStepNum}>01</Text>
+              </View>
+            </View>
+            
+            <View style={stylesReg.procBarWrap}>
+              <View style={styles.fx1}>
+                <View style={stylesReg.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+              </View>
+              <View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+              </View>
+            </View>
+          </View>
+          <View style={[styles.fx2, styles.justiConCenter]}>
+            <Item regular style={[styles.mb15, {height : 48}]}>
+              <Input 
                 onChangeText={ this._handleChange }
                 value={ this.state.text }
-                placeholder='홍길동'
                 autoFocus={ true }
-              />
-          </Item>
+                placeholder="홍길동" />
+            </Item>
+          </View>
 
-          <CustomButton
-            block={ true }
-            info={ true }
-            bordered={ true }
-            disabled={ this.state.btnDisabled }
-            onPress={ this._nextButton }>
-            <Text>
-            다음 단계로 이동(2/4)
-            </Text>
-          </CustomButton>
-        </CustomBasicWrapper>
-      </KeyboardAvoidingView>
+          <View style={styles.footerBtnWrap}>
+            <CustomButton 
+              onPress={ this._nextButton }
+              disabled={ this.state.btnDisabled }
+              edgeFill={true}
+              fillTxt={true}
+            >
+              입력완료
+            </CustomButton>
+          </View>
+        </View>
+      </Container>
     )
   }
 }

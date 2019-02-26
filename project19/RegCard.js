@@ -58,6 +58,7 @@ class RegCard extends Component {
         <View style={styles.contentWrap}>
 
           <View>
+            
             <View style={styles.fxDirRow}>
               <View style={stylesReg.leftGuideTxtWrap}>
                 <Text style={stylesReg.leftGuideTxt}>쿨리닉</Text>

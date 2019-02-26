@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-import { Alert, KeyboardAvoidingView, Image, TouchableOpacity, StyleSheet, View } from 'react-native'
+import { Alert, KeyboardAvoidingView, Image, TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native'
 import {
   Container,
-  Header,
-  Title,
-  Button,
   Icon,
-  Left,
-  Right,
-  Body,
   Text,
   Item,
   Input,
@@ -129,17 +123,6 @@ class AccountType extends Component {
     const loginYn = true; // 진입 경로(로그인/회원가입) 확인
 
     return (
-      // <CustomBasicWrapper
-      //   title="로그인 구분"
-      // >
-      //   <NaverLogin
-      //     loginYn={ loginYn }
-      //     name="NAVER 로그인"
-      //   />
-      //   <KakaoLogin
-      //    loginYn={ loginYn }
-      //    name="카카오톡 로그인"
-      //   />
       //   <CustomButton
       //     block={ true }
       //     info={ true }
@@ -151,6 +134,8 @@ class AccountType extends Component {
       //   </CustomButton>
 
       // </CustomBasicWrapper>
+
+      // <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
       <Container style={styles.containerInnerPd}>
         <CustomHeader />
         <View style={styles.fx1}>
@@ -215,7 +200,7 @@ class AccountType extends Component {
 
             <View style={[styles.fxDirRow, styles.justiConBetween, styles.mb20]}>
               <View style={[styles.fx1, {marginRight : 5}]}>
-                <CustomButton edgeFill={true} fillTxt={true}>
+                <CustomButton edgeFill={true} whiteFill={true} fillTxt={true} onPress={Actions.JoinAccountType}>
                   회원가입
                 </CustomButton>
               </View>
@@ -229,23 +214,16 @@ class AccountType extends Component {
             <View>
               <Text style={[styles.mb10, {color:color.whiteColor}]}>SNS LOGIN</Text>
 
-              <View style={styles.fxDirRow}>
-                <View style={[styles.fx1, styles.alignItemsCenter, {paddingRight : 20}]}>
-                  <View style={[localStyles.snsIcon]}>
-                    <Image source={require('~/Common/Image/ico-kakao.png')} 
-                      resizeMode="contain"
-                      style={{height : snsIconSize, width : snsIconSize}}
-                    />
-                  </View>
+              <View style={[styles.fxDirRow, styles.alignItemsCenter]}>
+
+                <View style={[styles.fx1, {marginRight : 10}]}>
+                  <NaverLogin loginYn={ loginYn }/>
+                </View>
+                
+                <View style={[styles.fx1, {marginLeft : 10}]}>
+                  <KakaoLogin loginYn={ loginYn }/>
                 </View>
 
-                <View style={styles.fx1}>
-                  <View style={[localStyles.snsIcon]}>
-                    <Image source={require('~/Common/Image/ico-naver.png')} 
-                      resizeMode="contain"
-                      style={{height : snsIconSize, width : snsIconSize}}/>
-                  </View>
-                </View>
               </View>
             </View>
           </View>

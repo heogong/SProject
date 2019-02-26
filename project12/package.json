@@ -15,6 +15,7 @@
     "react-native-animated-swiper": "0.0.23",
     "react-native-awesome-card-io": "^0.8.1",
     "react-native-camera": "^1.5.1",
+    "react-native-elements": "^1.1.0",
     "react-native-extended-stylesheet": "^0.10.0",
     "react-native-image-overlay": "^0.1.2",
     "react-native-image-picker": "^0.28.0",
@@ -25,6 +26,7 @@
     "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-naver-login": "^1.1.8",
     "react-native-router-flux": "^4.0.5",
+    "react-native-vector-icons": "^6.3.0",
     "react-redux": "^5.1.1",
     "react-timeout": "^1.1.2",
     "redux": "^4.0.1"

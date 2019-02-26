@@ -13,7 +13,7 @@ import GetAfterServiceState from '~/Main/Functions/GetAfterServiceState';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-class IndexPage extends Component {
+class IntroPage extends Component {
     constructor(props) {
         super(props);
         
@@ -137,5 +137,5 @@ let mapDispatchToProps = (dispatch) => {
       onSetIsAfterService: (value) => dispatch(setIsAfterService(value))
   }
 }
-IndexPage = connect(undefined, mapDispatchToProps)(IndexPage);
-export default IndexPage;
+IntroPage = connect(undefined, mapDispatchToProps)(IntroPage);
+export default IntroPage;

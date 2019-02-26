@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { Alert, KeyboardAvoidingView , StyleSheet } from 'react-native';
-
-import { SUCCESS_RETURN_CODE, PARTNER } from '~/Common/Blend';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
+import { Container, Text, Item, Input, Icon } from "native-base";
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrPw } from '~/Redux/Actions';
 
-import { Item, Input, Root, Text, Toast } from "native-base";
-import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
-import CustomButton from '~/Common/Components/CustomButton';
 import SignUp from '../../Functions/SignUp';
+
+import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomButton from '~/Common/Components/CustomButton';
+import { styles } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from '~/Common/Styles/colors';
 
 const USER_EMAIL_LEN = 10;
 const USR_PASSWD_LEN = 1;
@@ -26,6 +28,7 @@ class InputEmail extends Component {
       usrPw: '',
       usrPw2: '',
       btnDisabled: true,
+      errMsg : null
     };
   }
 
@@ -65,35 +68,40 @@ class InputEmail extends Component {
   //이메일 유효성 체크
   _checkUsrEmail = () => {
     if (!emailPattern.test(this.state.usrId)) {
-      Alert.alert(
-        '',
-        "유효하지 않은 이메일 입력입니다.",
-        [
-          {text: '확인', onPress: () => console.log('OK Pressed')},
-        ],
-        { cancelable: false }
-      )
-      return false;
-    } else {
-      return true;
+      this.setState({errMsg : '유효하지 않은 이메일 입력입니다.'});
+    //   Alert.alert(
+    //     '',
+    //     "유효하지 않은 이메일 입력입니다.",
+    //     [
+    //       {text: '확인', onPress: () => console.log('OK Pressed')},
+    //     ],
+    //     { cancelable: false }
+    //   )
+    //   return false;
+    // } else {
+    //   return true;
+    // }
     }
   } 
 
   // 비밀번호 체크 여부
   _checkUsrPasswd = () => {
     if(this.state.usrPw !== this.state.usrPw2) {
-      Alert.alert(
-        '',
-        "비밀번호가 동일하지 않습니다.",
-        [
-          {text: '확인', onPress: () => console.log('OK Pressed')},
-        ],
-        { cancelable: false }
-      )
-      return false;
-    } else {
-      return true;
+      this.setState({errMsg : '비밀번호가 맞지 않습니다.'});
     }
+
+    //   Alert.alert(
+    //     '',
+    //     "비밀번호가 동일하지 않습니다.",
+    //     [
+    //       {text: '확인', onPress: () => console.log('OK Pressed')},
+    //     ],
+    //     { cancelable: false }
+    //   )
+    //   return false;
+    // } else {
+    //   return true;
+    // }
   }
 
   // 회원 가입 프로세스
@@ -140,62 +148,87 @@ class InputEmail extends Component {
     }
   }
   
-  
   render() {
     return (
-      <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
-        <CustomBasicWrapper
-          title="이메일 가입"
-        >
-          <Text>이메일 주소를 입력해 주세요</Text>
-          <Item regular>
-            <Input 
-              onChangeText={this._handleEmailChange}
-              value={this.state.text}
-              placeholder='sample@example.com'
-              autoFocus={ true }
-              // onBlur={ this._checkUsrEmail }
-            />
-          </Item>
-          <Item regular>
-            <Input
-              secureTextEntry={ true }
-              onChangeText={ this._handlePasswdChange }
-              value={ this.state.text }
-              placeholder='비밀번호'
-            />
-          </Item>
-          <Item regular>
-            <Input
-              secureTextEntry={ true }
-              onChangeText={ this._handleChkPasswdChange }
-              value={ this.state.text }
-              placeholder='비밀번호 확인'
-              onBlur={ this._checkUsrPasswd }
-            />
-          </Item>
-          <CustomButton
-            block={ true }
-            info={ true }
-            bordered={ true }
-            disabled={ this.state.btnDisabled }
-            onPress={() => this._SignUsr()}>
-            <Text>
-              다음 단계로 이동(1/4)
-            </Text>
-          </CustomButton>
-        </CustomBasicWrapper>
-      </KeyboardAvoidingView>
+      <Container style={styles.containerInnerPd}>
+        <CustomHeader />
+        <View style={styles.contentWrap}>
+          <View>
+            <View style={styles.fxDirRow}>
+              <View style={stylesReg.leftGuideTxtWrap}>
+                <Text style={stylesReg.leftGuideTxt}>이메일 주소와</Text>
+                <Text style={stylesReg.leftGuideTxt}>비밀번호를</Text>
+                <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
+              </View>
+              <View style={stylesReg.rightStepNumWrap}>
+                <Text style={stylesReg.rightStepNum}>01</Text>
+              </View>
+            </View>
+            
+            <View style={stylesReg.procBarWrap}>
+              <View style={styles.fx1}>
+                <View style={stylesReg.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+              </View>
+              <View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+              </View>
+            </View>
+          </View>
+          <View style={[styles.fx2, styles.justiConCenter]}>
+            <Item regular style={[styles.mb15, {height : 48}]}>
+              <Input 
+                placeholder="이메일" 
+                onChangeText={this._handleEmailChange}
+                value={this.state.text}
+                autoFocus={ true }
+              />
+            </Item>
+
+            <Item regular style={[styles.mb15, {height : 48}]}>
+              <Input 
+                secureTextEntry={ true }
+                onChangeText={ this._handlePasswdChange }
+                value={ this.state.text }
+                placeholder="비밀번호(영문,숫자,특수문자8-15자)" 
+              />
+            </Item>
+
+            <Item regular style={{height : 48}}>
+              <Input 
+                secureTextEntry={ true }
+                onChangeText={ this._handleChkPasswdChange }
+                value={ this.state.text }
+                onBlur={ this._checkUsrPasswd }
+                placeholder="비밀번호 확인" />
+              <Icon name="ios-checkmark-circle" style={{color:color.defautlColor}}/>
+            </Item>
+
+            <Text style={[localStyles.redFont, {paddingLeft : 5}]}>{this.state.errMsg}</Text>
+          </View>
+
+          <View style={styles.footerBtnWrap}>
+            <CustomButton 
+              onPress={() => this._SignUsr()}
+              disabled={ this.state.btnDisabled }
+              edgeFill={true}
+              fillTxt={true}
+            >
+              다음단계로
+            </CustomButton>
+          </View>
+        </View>
+      </Container>
     )
   }
 }
 
-const styles = StyleSheet.create({
-  hide: {
-      display: 'none'
-  },
-  show: {
-      display: 'flex'
+const localStyles = StyleSheet.create({
+  redFont : {
+    color : '#FF0000',
+    fontSize : 15
   }
 });
 
