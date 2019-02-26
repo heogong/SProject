@@ -3,6 +3,7 @@ export const color = {
     defaultBackColor : '#d6f1ff',
     greyColor : '#BDBDBD',
     deepGreyColor : '#777',
-    whiteColor : '#FFF'
+    whiteColor : '#FFF',
+    inputPlaceHodler : '#c9cacb'
 }
 

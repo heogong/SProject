@@ -39,6 +39,11 @@ class UserLogin extends Component {
       checkBox : false
     };
   }
+  toggleSwitch() {
+    this.setState({
+      checkbox: !this.state.checkbox
+    });
+  }
 
   render() {
     return (
@@ -57,115 +62,145 @@ class UserLogin extends Component {
 
         <View style={styles.fx1}>
 
-          <View style={[styles.fx1, styles.alignItemsCenter]}>
-            <Image source={require('./img/logo-partner.png')} resizeMode='center' style={{height : logoHeight}} />
+          <View style={[styles.fx1, styles.mb13, styles.alignItemsCenter, styles.justiConCenter]}>
+            <Image source={require('./img/bank-bg02.png')} resizeMode='center' style={{height: logoHeight}} />
           </View>
+          <View style={[styles.fx5, styles.justiConEnd]}>
+            <Text style={[styles.mb13, {textAlign: "center", fontSize: 13, color: "#8e8e98"}]}>쿨리닉의 회원이 되시면 다양한 혜택을 누리실 수 있습니다</Text>
+            <View style={localStyles.inputBoxWrap}>
+              <Item regular style={[styles.mb12, localStyles.inputStyle]}>
+                <Icon active name="mail" style={localStyles.inputIcon}/>
+                <Input placeholder="이메일" style={localStyles.inputBox} placeholderTextColor={color.inputPlaceHodler}/>
+              </Item>
 
-          <View style={[styles.fx2, styles.alignItemsCenter,{
-            marginRight : 10, 
-            marginLeft:10, 
-            marginBottom:10, 
-            paddingTop : 30,
-            paddingBottom : 30,
-            paddingRight : 30, 
-            paddingLeft: 30,
-            backgroundColor : color.defaultColor
-            }]
-          }>
-
-            <Item regular style={[styles.mb15, {backgroundColor: color.whiteColor, borderColor : color.whiteColor, height : 50}]}>
-              <Icon active name="mail" style={{color:'#dbdbe9'}}/>
-              <Input placeholder="이메일" />
-            </Item>
-
-            <Item regular style={[styles.mb15, {backgroundColor: color.whiteColor, borderColor : color.whiteColor, height : 50}]}>
-              <Icon active name="lock" style={{color:'#dbdbe9'}}/>
-              <Input placeholder="비밀번호(영문,숫자,특수문자8-15자)" />
-            </Item>
+              <Item regular style={[styles.mb20, localStyles.inputStyle]}>
+                <Icon active name="lock" style={localStyles.inputIcon}/>
+                <Input placeholder="비밀번호(영문, 숫자, 특수문자 8~15자)" style={localStyles.inputBox} placeholderTextColor={color.inputPlaceHodler}/>
+              </Item>
 
 
-            <View style={{flexDirection : 'row', marginBottom : 10}}> 
-              <View style={{width : '25%'}}>
-                <View style={{flexDirection : 'row'}}>
-                <CheckBox style={{left : 1}} checked={this.state.checkBox} onPress={ 
-                  () => this.setState({
-                    checkBox : (this.state.checkBox) ? false : true
-                  })
-                }/>
-                <Text style={{paddingLeft : '15%', color:'#fff', fontSize : 13}}>자동로그인</Text>
+              <View style={[styles.justiConBetween, styles.fxDirRow, styles.mb20]}> 
+                <View style={styles.fxDirRow}>
+                  <CheckBox checked={this.state.checkbox}
+                    onPress={() => this.toggleSwitch()}
+                    style={styles.checkboxReset}
+                  />
+                  <Text style={localStyles.inputBottomTxt}>자동로그인</Text>
+                </View>
+                <View>
+                  <TouchableOpacity onPress={ () => alert("아이디와 비밀번호를 잊으셨나요?")}>
+                    <Text style={[localStyles.inputBottomTxt, {textDecorationLine: 'underline'}]}>아이디와 비밀번호를 잊으셨나요?</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
-              <View style={{width : '75%', alignItems : 'flex-end'}}>
-                <TouchableOpacity onPress={ () => alert("아이디와 비밀번호를 잊으셨나요?")}>
-                  <Text style={{color:'#fff', fontSize : 13}}>아이디와 비밀번호를 잊으셨나요?</Text>
-                </TouchableOpacity>
+
+              <View style={[styles.fxDirRow, styles.mb20]}>
+                <View style={styles.fx1}>
+                  <Button style={[styles.btnDefault, localStyles.btnWhBoder]}>
+                    <Text style={[styles.btnDefaultTxt, localStyles.btnWhBoderTxt]}>회원가입</Text>
+                  </Button>
+                </View>
+                <View style={{paddingLeft: 6, paddingRight: 6}}></View>
+                <View style={styles.fx1}>
+                  <Button style={[styles.btnDefault, localStyles.btnWhBack]}>
+                    <Text style={[styles.btnDefaultTxt, localStyles.btnWhBackTxt]}>로그인</Text>
+                  </Button>
+                </View>
               </View>
-            </View>
 
-            <View style={{flexDirection:'row'}}>
-              <View style={{flex:1}}>
-                <Button block info style={{
-                  marginRight : 5,
-                  borderColor : '#fff',
-                  borderTopWidth : 1,
-                  borderBottomWidth : 1,
-                  borderLeftWidth : 1,
-                  borderRightWidth : 1
-                  }} >
-                  <Text>회원가입</Text>
-                </Button>
-              </View>
-              <View style={{flex:1}}>
-                <Button block info bordered style={{
-                  backgroundColor : '#fff',
-                  borderColor : '#fff',
-                  borderTopWidth : 1,
-                  borderBottomWidth : 1,
-                  borderLeftWidth : 1,
-                  borderRightWidth : 1
-                  }}>
-                  <Text>로그인</Text>
-                </Button>
-              </View>
-            </View>
+              <View style={styles.alignItemsCenter}>
+                <Text style={{fontWeight: 'bold', color:'#fff', fontSize: 16, letterSpacing: 0, marginBottom : 14}}>SNS LOGIN</Text>
 
-            <View style={{marginTop : 20}}>
-              <Text style={{color:'#fff', marginBottom : 10}}>SNS LOGIN</Text>
-
-              <View style={{flexDirection : 'row'}}>
-
-                <View style={{flex:1, alignItems : 'flex-end', paddingRight : 20}}>
+                <View style={styles.fxDirRow}>
                   <View style={[localStyles.snsIcon]}>
-                    <Image square small source={require('./img/ico-kakao.png')} 
-                    style={{height : snsIconSize, width : snsIconSize}}/>
+                    <Image source={require('./img/ico-naver.png')} style={{height : 32, width : 32}}/>
+                  </View>
+                  <View style={{paddingLeft: 8, paddingRight: 8}}></View>
+                  <View style={[localStyles.snsIcon]}>
+                    <Image source={require('./img/ico-kakao.png')} style={{height : 32, width : 32}}/>
                   </View>
                 </View>
-
-                <View style={{flex:1}}>
-                  <View style={[localStyles.snsIcon]}>
-                    <Image square small source={require('./img/ico-naver.png')} 
-                    style={{height : snsIconSize, width : snsIconSize}}/>
-                  </View>
-                </View>
-
               </View>
-              
             </View>
           </View>
         </View>
+        
       </Container>
     );
   }
 }
 
-const layoutCount = 4; // 화면 분할 개수 사이즈
-const snsDivideCount = 12;
-
+const layoutCount = 5; // 화면 분할 개수 사이즈
 const logoHeight = (viewportHeight / layoutCount);
-const snsIconSize = (viewportWidth / snsDivideCount);
-
 
 const localStyles = StyleSheet.create({
+  inputStyle: {
+    backgroundColor: color.whiteColor,
+    borderColor : color.whiteColor,
+    height : 40
+  },
+  inputIcon: {
+    color: color.inputPlaceHodler,
+    fontSize: 20,
+    paddingLeft: 17,
+    paddingRight: 7
+  },
+  inputBox: {
+    paddingLeft: 0,
+    fontSize: 14,
+    height : 40
+  },
+  inputBoxWrap: {
+    paddingLeft: 19,
+    paddingRight: 19,
+    paddingTop: 35,
+    paddingBottom: 25,
+    backgroundColor : color.defaultColor
+  },
+  checkBox: {
+    borderColor: color.defaultColor,
+    backgroundColor: color.defaultColor
+  },
+  btnDefault: {
+    height: 42,
+    borderRadius: 0,
+    elevation: 0,
+    width: "100%"
+  },
+  btnDefaultTxt: {
+    fontSize: 16,
+    flex: 1,
+    textAlign: "center",
+    fontWeight: "500"
+  },
+  btnWhBoder: {
+    backgroundColor: color.defaultColor,
+    borderWidth: 1,
+    borderColor: color.whiteColor,
+    elevation: 0,
+    shadowOpacity: 0
+  },
+  btnWhBoderTxt: {
+    color: color.whiteColor,
+    flex: 1,
+    textAlign: "center"
+  },
+  btnWhBack: {
+    backgroundColor: color.whiteColor,
+    borderWidth: 1,
+    borderColor: color.whiteColor,
+    elevation: 0,
+    shadowOpacity: 0
+  },
+  btnWhBackTxt: {
+    color: color.defaultColor,
+    flex: 1,
+    textAlign: "center"
+  },
+  inputBottomTxt: {
+    fontSize: 14,
+    color: color.whiteColor
+  },
   snsIcon : {
     justifyContent : 'center',
     alignItems : 'center',
@@ -174,9 +209,10 @@ const localStyles = StyleSheet.create({
     borderTopWidth : 1,
     borderLeftWidth : 1,
     borderRightWidth : 1,
-    height : snsIconSize + 20, width : snsIconSize + 20,
+    height: 60,
+    width: 60,
     borderRadius : 5
-  }
+  },
 });
 
 export default UserLogin;

@@ -101,25 +101,22 @@ export const styles = StyleSheet.create({
       flex: 1,
       textAlign: "center"
     },
-    // 축약 Style
-    inputStyle: {
-      height : 48,
-      borderColor : color.defaultColor
-    },
-    inputIcon: {
-      color: color.defaultColor,
-      fontSize: 32,
-      marginRight: 5
-    },
 
     fx1: {flex: 1}, 
     fx2: {flex: 2}, 
     fx3: {flex: 3}, 
     fx4: {flex: 4}, 
     fx5: {flex: 5}, 
+    fx6: {flex: 6}, 
     
+    mt13: {marginTop: 13},
+
     mb5: {marginBottom: 5},
     mb10: {marginBottom: 10},
+    mb11: {marginBottom: 11},
+    mb12: {marginBottom: 12},
+    mb13: {marginBottom: 13},
+    mb14: {marginBottom: 14},
     mb15: {marginBottom: 15},
     mb20: {marginBottom: 20},
     
@@ -139,6 +136,8 @@ export const styles = StyleSheet.create({
     alignItemsStart: {alignItems : "flex-start"},
     alignItemsCenter: {alignItems : "center"},
     alignItemsEnd: {alignItems : "flex-end"},
+
+    alignSelfEnd: {alignSelf: "flex-end"},
     
     justiConCenter: {justifyContent : "center"},
     justiConBetween: {justifyContent : "space-between"},
@@ -147,7 +146,10 @@ export const styles = StyleSheet.create({
     
     noPadding: {paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0},
     noMargin: {marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0},
-    noBackNBorderColor: {backgroundColor: color.whiteColor, borderColor: color.whiteColor}
+    noBackNBorderColor: {backgroundColor: color.whiteColor, borderColor: color.whiteColor},
+
+    checkboxReset: {paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, marginLeft: -10, marginRight: 15, marginTop: 0, marginBottom: 0},
+    checkboxTxt: {fontSize: 14, fontWeight: 'normal'},
   });
 
 export const viewportHeight = Dimensions.get('window').height;

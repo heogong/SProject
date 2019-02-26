@@ -84,30 +84,30 @@ class RegCard extends Component {
           </View>
 
           <View style={stylesReg.inputWrap}>
-            <Item regular style={[styles.mb10, styles.inputStyle]}>
-              <Input placeholder="카드번호 16자리" placeholderTextColor="#777" fontSize="14"/>
-              <Icon name="ios-camera" style={styles.inputIcon} />
+            <Item regular style={[styles.mb10, localStyles.inputStyle]}>
+              <Input placeholder="카드번호 16자리" placeholderTextColor={color.inputPlaceHodler} style={{fontSize: 14}}/>
+              <Icon name="ios-camera" style={localStyles.inputIcon} />
             </Item>
             <View style={[styles.mb10, styles.fxDirRow]}>
               <View style={styles.fx1}>
-                <Item regular style={[styles.inputStyle, styles.mr7]}>
-                  <Input placeholder="MM" placeholderTextColor={color.deepGreyColor} fontSize="14" style={{textAlign: "center"}}/>
+                <Item regular style={[localStyles.inputStyle, styles.mr7]}>
+                  <Input placeholder="MM" placeholderTextColor={color.inputPlaceHodler} style={{fontSize: 14, textAlign: "center"}}/>
                 </Item>
               </View>
               <View style={styles.fx1}>
-                <Item regular style={[styles.inputStyle, styles.mr7]}>
-                  <Input placeholder="YY" placeholderTextColor="#777" fontSize="14" style={{textAlign: "center"}}/>
+                <Item regular style={[localStyles.inputStyle, styles.mr7]}>
+                  <Input placeholder="YY" placeholderTextColor={color.inputPlaceHodler} fontSize="14" style={{fontSize: 14, textAlign: "center"}}/>
                 </Item>
               </View>
               <View style={styles.fx2}>
-                <Item regular style={styles.inputStyle}>
-                  <Input placeholder="비밀번호 앞2자리" placeholderTextColor="#777" fontSize="14" style={{textAlign: "center"}}/>
+                <Item regular style={localStyles.inputStyle}>
+                  <Input placeholder="비밀번호 앞2자리" placeholderTextColor={color.inputPlaceHodler} fontSize="14" style={{fontSize: 14, textAlign: "center"}}/>
                 </Item>
               </View>
             </View>
             <View>
-              <Item regular style={styles.inputStyle}>
-                <Input placeholder="생년월일(YYMMDD)" placeholderTextColor="#777" fontSize="14"/>
+              <Item regular style={localStyles.inputStyle}>
+                <Input placeholder="생년월일(YYMMDD)" placeholderTextColor={color.inputPlaceHodler} style={{fontSize: 14}}/>
               </Item>
             </View>
 
@@ -125,7 +125,7 @@ class RegCard extends Component {
                     <CheckBox
                       title="전체동의"
                       containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
-                      textStyle={{fontSize: 14}}
+                      textStyle={[styles.checkboxTxt, {color: color.greyColor}]}
                       checkedIcon={<Image source={require("./images/btn_check_box_on.png")} />}
                       uncheckedIcon={<Image source={require("./images/btn_check_box_off.png")} />}
                       checked={this.state.checked}
@@ -179,4 +179,18 @@ class RegCard extends Component {
     );
   }
 }
+
+const localStyles = StyleSheet.create({
+  // 축약 Style
+  inputStyle: {
+    height : 48,
+    borderColor : color.defaultColor
+  },
+  inputIcon: {
+    color: color.defaultColor,
+    fontSize: 32,
+    marginRight: 5
+  }
+});
+
 export default RegCard;
