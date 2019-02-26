@@ -96,14 +96,14 @@ class UserLogin extends Component {
 
               <View style={[styles.fxDirRow, styles.mb20]}>
                 <View style={styles.fx1}>
-                  <Button style={[styles.btnDefault, localStyles.btnWhBoder]}>
-                    <Text style={[styles.btnDefaultTxt, localStyles.btnWhBoderTxt]}>회원가입</Text>
+                  <Button style={[styles.btnDefault, styles.btnWhBoder]}>
+                    <Text style={[styles.btnDefaultTxt, styles.btnWhBoderTxt]}>회원가입</Text>
                   </Button>
                 </View>
                 <View style={{paddingLeft: 6, paddingRight: 6}}></View>
                 <View style={styles.fx1}>
-                  <Button style={[styles.btnDefault, localStyles.btnWhBack]}>
-                    <Text style={[styles.btnDefaultTxt, localStyles.btnWhBackTxt]}>로그인</Text>
+                  <Button style={[styles.btnDefault, styles.btnWhBack]}>
+                    <Text style={[styles.btnDefaultTxt, styles.btnWhBackTxt]}>로그인</Text>
                   </Button>
                 </View>
               </View>
@@ -160,42 +160,6 @@ const localStyles = StyleSheet.create({
   checkBox: {
     borderColor: color.defaultColor,
     backgroundColor: color.defaultColor
-  },
-  btnDefault: {
-    height: 42,
-    borderRadius: 0,
-    elevation: 0,
-    width: "100%"
-  },
-  btnDefaultTxt: {
-    fontSize: 16,
-    flex: 1,
-    textAlign: "center",
-    fontWeight: "500"
-  },
-  btnWhBoder: {
-    backgroundColor: color.defaultColor,
-    borderWidth: 1,
-    borderColor: color.whiteColor,
-    elevation: 0,
-    shadowOpacity: 0
-  },
-  btnWhBoderTxt: {
-    color: color.whiteColor,
-    flex: 1,
-    textAlign: "center"
-  },
-  btnWhBack: {
-    backgroundColor: color.whiteColor,
-    borderWidth: 1,
-    borderColor: color.whiteColor,
-    elevation: 0,
-    shadowOpacity: 0
-  },
-  btnWhBackTxt: {
-    color: color.defaultColor,
-    flex: 1,
-    textAlign: "center"
   },
   inputBottomTxt: {
     fontSize: 14,
