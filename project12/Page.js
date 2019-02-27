@@ -80,6 +80,7 @@ import JoinListBusinessPlace from './src/FirstScreen/Pages/Join/Client/ListBusin
 // import ViewBusinessPlace from './src/FirstScreen/Pages/Join/Client/ViewBusinessPlace'
 
 // 사업장 등록
+import RegBusinessPlaceIndex from './src/FirstScreen/Pages/Join/Client/RegBusinessPlaceIndex'
 import RegBusinessPlace from './src/FirstScreen/Pages/Join/Client/RegBusinessPlace'
 import SetBusinessPlace from './src/FirstScreen/Pages/Join/Client/SetBusinessPlace'
 
@@ -143,34 +144,34 @@ const PAGE = () => (
       <Scene key="AgreeTermsService"  component={AgreeTermsService} />
       <Scene key="ClientTermsService" component={ClientTermsService} />
       <Scene key="PartnerTermsService" component={PartnerTermsService} />
-      <Scene key="SuccessAgreeTermsService" initial component={SuccessAgreeTermsService} type={ActionConst.RESET}/>
+      <Scene key="SuccessAgreeTermsService"  component={SuccessAgreeTermsService} type={ActionConst.RESET}/>
 
       <Scene key="reactCamera" component={ReactCamera} />
-      <Scene key="ViewImage" component={ViewImage} title="제품 이미지 조회" />
+      <Scene key="ViewImage" component={ViewImage} />
       
-      <Scene key="JoinCustomerType" component={JoinCustomerType} title="고객 구분" />
-      <Scene key="JoinAccountType" component={JoinAccountType} title="가입 구분"/>
-      <Scene key="JoinInputEmail" component={JoinInputEmail} title="이메일 가입" back onBack={() => Actions.JoinInputName()} />
-      <Scene key="JoinInputName"  component={JoinInputName} title="고객 이름"/>
-      <Scene key="JoinInputPhone"  component={JoinInputPhone} title="전화번호"/>
-      <Scene key="JoinInputPhoneAuth"  component={JoinInputPhoneAuth} title="본인 인증"/>
+      <Scene key="JoinCustomerType" component={JoinCustomerType} />
+      <Scene key="JoinAccountType" component={JoinAccountType} />
+      <Scene key="JoinInputEmail" component={JoinInputEmail} back onBack={() => Actions.JoinInputName()} />
+      <Scene key="JoinInputName"  component={JoinInputName} />
+      <Scene key="JoinInputPhone"  component={JoinInputPhone} />
+      <Scene key="JoinInputPhoneAuth"  component={JoinInputPhoneAuth} />
       
       {/* 파트너 회원가입 */}
-      <Scene key="PartnerIndex" component={PartnerIndex} title="사업자정보 등록" type={ActionConst.RESET}/>
-      <Scene key="JoinInputBizLicense" component={JoinInputBizLicense} title="사업장 등록" type={ActionConst.RESET}/>
-      <Scene key="JoinInputPartnerInfo" component={JoinInputPartnerInfo} title="사업장 등록2" />
-      <Scene key="JoinSetPartnerAddress" component={JoinSetPartnerAddress} title="" />
-      <Scene key="JoinSearchPartnerAddress" component={JoinSearchPartnerAddress} title="" />
+      <Scene key="PartnerIndex" component={PartnerIndex} type={ActionConst.RESET}/>
+      <Scene key="JoinInputBizLicense" component={JoinInputBizLicense} type={ActionConst.RESET}/>
+      <Scene key="JoinInputPartnerInfo" component={JoinInputPartnerInfo}/>
+      <Scene key="JoinSetPartnerAddress" component={JoinSetPartnerAddress} />
+      <Scene key="JoinSearchPartnerAddress" component={JoinSearchPartnerAddress} />
       
-      <Scene key="JoinInputProdType"  component={JoinInputProdType} title="파트너 회원가입 제품 선택" />
-      <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} title="근무시간" type={ActionConst.RESET}/>
-      <Scene key="JoinInputSettleAccount" component={JoinInputSettleAccount} title="계좌등록" type={ActionConst.RESET}/>
+      <Scene key="JoinInputProdType"  component={JoinInputProdType} />
+      <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} type={ActionConst.RESET}/>
+      <Scene key="JoinInputSettleAccount" component={JoinInputSettleAccount} type={ActionConst.RESET}/>
       
-      <Scene key="LoginAccountType" component={LoginAccountType} title="로그인 구분" back onBack={() => Actions.InitPage()}/>
-      <Scene key="LoginInputAccount" component={LoginInputAccount} title="이메일 로그인"/>
+      <Scene key="LoginAccountType" component={LoginAccountType} back onBack={() => Actions.InitPage()}/>
+      <Scene key="LoginInputAccount" component={LoginInputAccount} />
 
-      <Scene key="CardIndex"  component={CardIndex} title="카드 등록 페이지" type={ActionConst.RESET}/>
-      <Scene key="CardInputInfo"  component={CardInputInfo} title="카드 등록" />
+      <Scene key="CardIndex"  component={CardIndex} type={ActionConst.RESET}/>
+      <Scene key="CardInputInfo"  component={CardInputInfo} />
       <Scene key="SuccessCardInfo"  component={SuccessCardInfo} type={ActionConst.RESET} />
       <Scene key="CardListInfo"  component={CardListInfo} />
 
@@ -178,10 +179,11 @@ const PAGE = () => (
       <Scene key="ClientIndex" component={ClientIndex} type={ActionConst.RESET} />
       <Scene key="ListBusinessPlace" component={JoinListBusinessPlace} type={ActionConst.RESET} />
       
-      <Scene key="RegBusinessPlace"  component={RegBusinessPlace} title="사업장 등록"/>
-      <Scene key="SetBusinessPlace"  component={SetBusinessPlace} title="사업장 등록 완료"/>
-      <Scene key="SetAddress" component={SetAddress} title="주소" />
-      <Scene key="SearchAddress" component={SearchAddress} title="주소 등록"/>
+      <Scene key="RegBusinessPlaceIndex"  component={RegBusinessPlaceIndex} />
+      <Scene key="RegBusinessPlace"  component={RegBusinessPlace} />
+      <Scene key="SetBusinessPlace"  component={SetBusinessPlace} />
+      <Scene key="SetAddress" component={SetAddress} />
+      <Scene key="SearchAddress" initial component={SearchAddress} />
 
       {/* <Scene key="ViewBusinessPlace" hideNavBar component={ViewBusinessPlace} title="사업장 조회"/> */}
 

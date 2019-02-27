@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Text, Icon, Input, Item, Root, Toast } from 'native-base';
+import { StyleSheet, View } from 'react-native';
+import { Container, Icon, Text, Item, Input } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -13,8 +13,12 @@ import EditBizPlace from '~/Main/Functions/EditBizPlace';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import DrawMap from '~/Main/Components/DrawMap';
-import CustomButton from '~/Common/Components/CustomButton';
+
 import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomButton from '~/Common/Components/CustomButton';
+import { styles } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from '~/Common/Styles/colors';
 
 const ADDRESS_DETAIL_LEN = 1;
 
@@ -23,8 +27,8 @@ class SetAddress extends Component {
         super(props);
 
         this.state = {
-            addressName : '',
-            detailAddressName : '',
+            addressName : null,
+            detailAddressName : null,
             makerYn : false,
             disSaveBtn : true,
             addressObj : [],
@@ -50,15 +54,6 @@ class SetAddress extends Component {
         // 주소 수정 페이지 접근 시
         if (this.props.editAddress) {
             this.setState({
-                region : {
-                  ...this.state.region,
-                  latitude  : Number(this.props.latLng.lat),
-                  longitude : Number(this.props.latLng.lng)
-                },
-                marker: {
-                    latitude: Number(this.props.latLng.lat),
-                    longitude: Number(this.props.latLng.lng)
-                },
                 addressName : this.props.address,
                 detailAddressName : this.props.detailAddress,
                 makerYn : true,
@@ -67,26 +62,6 @@ class SetAddress extends Component {
         } else { // 주소 등록 페이지 접근 시
             this._getLocation();
         }
-    }
-
-    // 현재 위치 조회
-    _getLocation() {
-        navigator.geolocation.getCurrentPosition(
-          (positon) => {
-            this.setState({
-              region : {
-                ...this.state.region,
-                latitude : positon.coords.latitude,
-                longitude : positon.coords.longitude
-              }
-            })
-          }
-        );
-    }
-
-    // 맵 이동 후 좌표 값
-    _onRegionChangeComplete = (region) => {
-        this.setState({region});
     }
 
     // param : this.onResult => 주소 결과 값 리턴
@@ -101,15 +76,6 @@ class SetAddress extends Component {
     onResult = (address) => {
         console.log("this.props.editAddress :", this.props.editAddress);
         this.setState({
-            region : {
-                ...this.state.region,
-                latitude : Number(address.result.y),
-                longitude : Number(address.result.x)
-            },
-            marker : {
-                latitude : Number(address.result.y),
-                longitude : Number(address.result.x)
-            },
             addressName : address.result.address_name,
             makerYn : true,
             addressObj : address.result,
@@ -150,11 +116,7 @@ class SetAddress extends Component {
                         await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
                         Actions.SetBusinessPlace();
                     } else {
-                        Toast.show({
-                            text: result.resultMsg,
-                            type: "danger",
-                            buttonText: '확인'
-                        })
+                        alert(result.resultMsg);
                     }
                 }
             });
@@ -183,57 +145,88 @@ class SetAddress extends Component {
 
     render() {
         return (
-            <Root>
-                <View style={{ flex : 1}}>
-                    <CustomHeader
-                        title="주소 입력"
-                    />
-                    <View style={{ flex : 1, padding: 5 }}>
-                        <DrawMap
-                            region={ this.state.region }
-                            onRegionChangeComplete={ this._onRegionChangeComplete }
-                            makerYn={ this.state.makerYn }
-                            marker={ this.state.marker }
-                        />
-                        <View style={{ height : 50 }}>
-                            <Item 
-                                regular 
-                                onPress={this._goSearchAddress}
-                                style={{backgroundColor:'white'}}
-                            >
-                                <Icon active name='md-home' />
-                                <Input 
-                                    disabled
-                                    placeholder="주소"
-                                > 
-                                    {this.state.addressName} 
-                                </Input>
-                            </Item>
-                            <Item 
-                                regular 
-                                style={{backgroundColor:'white'}}
-                            >
-                                <Input 
-                                    placeholder="상세주소" 
-                                    onChangeText={this._handleChange} >
-                                    {this.state.detailAddressName} 
-                                </Input>
-                            </Item>
-                            <CustomButton
-                                styleWidth={ false }
-                                full={ true }
-                                dark={ true }
-                                disabled={ this.state.disSaveBtn } 
-                                onPress={() => this._saveButton()}>
-                                <Text>다음 단계로 이동</Text>
-                            </CustomButton>
+            <Container style={styles.containerInnerPd}>
+                <CustomHeader />
+        
+                <View style={styles.contentWrap}>
+                    <View>
+                        <View style={styles.fxDirRow}>
+                            <View style={stylesReg.leftGuideTxtWrap}>
+                                <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
+                                <Text style={stylesReg.leftGuideTxt}>업체주소를</Text>
+                                <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
+                            </View>
+                            <View style={stylesReg.rightStepNumWrap}>
+                                <Text style={stylesReg.rightStepNum}>03</Text>
+                            </View>
+                        </View>
+
+                        <View style={stylesReg.procBarWrap}>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOn} />
+                            </View>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOn} />
+                            </View>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOn} />
+                            </View>
                         </View>
                     </View>
+
+                    <View style={[styles.fx3, styles.justiConCenter]}>
+                        <Item 
+                            regular 
+                            style={[styles.mb10, {height : 50}]}
+                            onPress={this._goSearchAddress}
+                        >
+                            <Icon name="ios-search" style={{color : color.defaultColor}}/>
+                            <Input 
+                                placeholder="주소입력"
+                                disabled
+                            >
+                                {this.state.addressName} 
+                            </Input>
+                        </Item>
+
+                        <Item regular style={[
+                            (this.state.addressName !== null) ? localStyles.hide : localStyles.hide, 
+                            {height : 50}]
+                        }>
+                            <Input 
+                                onChangeText={this._handleChange}
+                                placeholder="상세주소입력">
+                                    {this.state.detailAddressName} 
+                                </Input>
+                        </Item>
+                    </View>
+
+                    <View style={styles.footerBtnWrap}>
+                        <CustomButton
+                            onPress={this._nextButton}
+                            disabled={ this.state.disSaveBtn }
+                            edgeFill={true}
+                            fillTxt={true}
+                        >
+                            입력완료
+                        </CustomButton>
+                    </View>
                 </View>
-            </Root>
+            </Container>
         )
     }
 }
+
+const localStyles = StyleSheet.create({
+    hide: {
+        display: 'none'
+    },
+    show: {
+        display: 'flex'
+    }
+});
+
+
 
 let mapStateToProps = (state) => {
     return {

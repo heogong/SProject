@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet} from 'react-native';
 
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { color } from '~/Common/Styles/colors';
 
 class DrawMap extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class DrawMap extends Component {
                             latitude: this.props.marker.latitude,
                             longitude: this.props.marker.longitude
                         }}
-                        pinColor="red"
+                        pinColor={color.defaultColor}
                         />
                     ): (
                         <View></View>
