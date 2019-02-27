@@ -67,6 +67,30 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // 공통 Style
     // ----------------------------
+    // Input Style
+    inputWhBackWhBo: {
+      backgroundColor: color.whiteColor,
+      borderColor : color.whiteColor,
+      height : 36
+    },
+    inputBox: {
+      paddingLeft: 0,
+      fontSize: 14,
+      height : 36
+    },
+    // Tabs Style
+    tabsReset: {
+      elevation: 0,
+      shadowOpacity: 0,
+      shadowRadius: 0,
+      borderBottomWidth: 0,
+      height: 36
+    },
+    tabHeadTxt: {fontWeight: "500"},
+    tabStyle: {backgroundColor: color.defaultBackColor},
+    tabTxtStyle: {color: color.defaultColor, fontSize: 14},
+    tabActStyle: {backgroundColor: color.defaultColor},  
+    tabActTxtStyle: {color: color.whiteColor, fontSize: 14},
     // Button Style
     btnNoneStyle: {
       backgroundColor: color.whiteColor,
@@ -88,6 +112,7 @@ export const styles = StyleSheet.create({
       textAlign: "center",
       fontWeight: "500"
     },
+    // 흰색 배경색 기본 테두리색 버튼
     btnDefaultNoFill: {
       backgroundColor: color.whiteColor,
       borderWidth: 1,
@@ -100,6 +125,7 @@ export const styles = StyleSheet.create({
       flex: 1,
       textAlign: "center"
     },
+    // 기본 배경색 버튼
     btnDefaultFill: {
       backgroundColor: color.defaultColor,
       borderWidth: 1,
@@ -112,6 +138,7 @@ export const styles = StyleSheet.create({
       flex: 1,
       textAlign: "center"
     },
+    // 흰색 테두리색 기본 배경색 버튼
     btnWhBoder: {
       backgroundColor: color.defaultColor,
       borderWidth: 1,
@@ -124,6 +151,7 @@ export const styles = StyleSheet.create({
       flex: 1,
       textAlign: "center"
     },
+    // 흰색 배경색 버튼
     btnWhBack: {
       backgroundColor: color.whiteColor,
       borderWidth: 1,
@@ -166,6 +194,11 @@ export const styles = StyleSheet.create({
     pd15 : {paddingTop : 15, paddingBottom : 15, paddingLeft : 15, paddingRight : 15},
     pd20 : {paddingTop : 20, paddingBottom : 20, paddingLeft : 20, paddingRight : 20},
 
+    pl9: {paddingLeft: 9},
+    pl12: {paddingLeft: 12},
+
+    pr12: {paddingRight: 12},
+
     fxDirRow: {flexDirection : "row"},
     
     alignItemsStart: {alignItems : "flex-start"},
@@ -185,6 +218,9 @@ export const styles = StyleSheet.create({
 
     checkboxReset: {paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, marginLeft: -10, marginRight: 15, marginTop: 0, marginBottom: 0},
     checkboxTxt: {fontSize: 14, fontWeight: 'normal'},
+
+    ftWe500: {fontWeight: "500"},
+    ftWeBold: {fontWeight: "bold"}
   });
 
 export const viewportHeight = Dimensions.get('window').height;
