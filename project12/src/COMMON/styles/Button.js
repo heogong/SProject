@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { color } from './colors';
 
-export const styles = StyleSheet.create({
+export const BStyles = StyleSheet.create({
 // Button Style
   btnNoneStyle: {
     backgroundColor: color.whiteColor,

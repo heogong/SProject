@@ -3,7 +3,7 @@ import { Image, StyleSheet } from "react-native"
 import { Button, Body, Header, Left, Right, Icon, Title, Text } from "native-base";
 
 import { Actions } from "react-native-router-flux";
-import { hStyles } from '~/Common/Styles/Header';
+import { HStyles } from '~/Common/Styles/Header';
 import { styles } from '~/Common/Styles/common';
 
 class CustomHeader extends Component {
@@ -34,8 +34,8 @@ class CustomHeader extends Component {
 
     render() {
         return (
-            <Header style={[hStyles.header, styles.noPadding]}>
-                <Left style={[hStyles.headerLeftWrap, (this.props.resetPage) ? localStyles.hide : localStyles.show ]}>
+            <Header style={[HStyles.header, styles.noPadding]}>
+                <Left style={[HStyles.headerLeftWrap, (this.props.resetPage) ? localStyles.hide : localStyles.show ]}>
                     <Button 
                         transparent 
                         onPress={this._handleBackButton}
@@ -55,15 +55,29 @@ class CustomHeader extends Component {
                         <Icon name='md-close' />
                     </Button>
                 </Left>
-                <Body style={hStyles.headerCenterWrap}>
-                    <Title style={hStyles.headerTitleTxt}>{ this.props.title }</Title>
+                <Body style={HStyles.headerCenterWrap}>
+                    <Title style={HStyles.headerTitleTxt}>{ this.props.title }</Title>
                 </Body>
-                <Right style={[hStyles.headerRightWrap, (this.props.rightBtn) ? localStyles.show : localStyles.hide ]}>
+                {/* <Right style={[hStyles.headerRightWrap, (this.props.rightBtn) ? localStyles.show : localStyles.hide ]}>
                     <Button transparent onPress={ this.props.rightAction }>
                         <Icon name='md-checkbox-outline' />
                     </Button>
-                </Right>
+                </Right> */}
+                <Right style={HStyles.headerRightWrap}></Right>
             </Header>
+
+            // <Header style={[hStyles.header, styles.noPadding]}>
+            //     <Left style={hStyles.headerLeftWrap}>
+            //         <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+            //             <Image source={require("~/Common/Image/btn_back_arrow.png")}  />
+            //         </Button>
+            //     </Left>
+            //     <Body style={hStyles.headerCenterWrap}>
+            //         <Title style={hStyles.headerTitleTxt}>결제카드관리</Title>
+            //     </Body>
+            //     <Right style={hStyles.headerRightWrap}></Right>
+            // </Header>
+
         );
     }
 }

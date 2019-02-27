@@ -30,6 +30,20 @@ export const styles = StyleSheet.create({
       paddingRight: 26,
       paddingBottom: 26
     },
+    containerScroll: {
+      flex: 1,
+      backgroundColor: color.whiteColor,
+      paddingLeft: 26,
+      paddingRight: 26,
+      paddingBottom: 0
+    },
+    containerSwiper: {
+      flex: 1,
+      backgroundColor: color.whiteColor,
+      paddingLeft: 26,
+      paddingRight: 0,
+      paddingBottom: 26
+    },
     // ----------------------------
     // 공통 Style
     // ----------------------------

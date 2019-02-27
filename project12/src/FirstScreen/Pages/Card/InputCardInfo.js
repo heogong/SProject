@@ -263,7 +263,6 @@ export default class InputCardInfo extends Component {
           <View style={styles.footerBtnWrap}>
             <CustomButton 
               onPress={this._cardRegister}
-              disabled={ this.state.disabledNextBtn }
               edgeFill={true}
               fillTxt={true}
             >

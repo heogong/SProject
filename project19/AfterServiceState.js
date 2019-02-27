@@ -183,7 +183,7 @@ function wp (percentage, space) {
 }
 
 function hp (percentage) {
-    const value = (percentage * viewportWidth) / 100;
+    const value = (percentage * viewportHeight) / 100;
     return Math.round(value);
 }
 
