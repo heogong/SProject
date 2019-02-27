@@ -29,7 +29,6 @@ import {
 } from "native-base";
 
 import { styles, viewportHeight, viewportWidth } from './css/common';
-import { stylesReg } from './css/stylesReg';
 import { color } from './css/color';
 
 class SelectJoinType extends Component {
@@ -60,12 +59,12 @@ class SelectJoinType extends Component {
           <View>
             
             <View style={styles.fxDirRow}>
-              <View style={stylesReg.leftGuideTxtWrap}>
-                <Text style={stylesReg.leftGuideTxt}>회원가입할</Text>
-                <Text style={stylesReg.leftGuideTxt}>방법을</Text>
-                <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>회원가입할</Text>
+                <Text style={styles.leftGuideTxt}>방법을</Text>
+                <Text style={styles.leftGuideTxt}>선택해주세요</Text>
               </View>
-              <View style={stylesReg.rightImgWrap}>
+              <View style={styles.rightImgWrap}>
               <Image source={require('./img/join-ico01.png')} style={{height : 84, width : 84}} />
               </View>
             </View>

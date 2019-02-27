@@ -29,7 +29,6 @@ import {
 } from "native-base";
 
 import { styles, viewportHeight, viewportWidth } from './css/common';
-import { stylesReg } from './css/stylesReg';
 import { color } from './css/color';
 
 
@@ -60,25 +59,25 @@ class RegPassBook1 extends Component {
 
           <View style={styles.mb10}>
             <View style={styles.fxDirRow}>
-              <View style={stylesReg.leftGuideTxtWrap}>
-                <Text style={stylesReg.leftGuideTxt}>정산받을</Text>
-                <Text style={stylesReg.leftGuideTxt}>통장사본을</Text>
-                <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>정산받을</Text>
+                <Text style={styles.leftGuideTxt}>통장사본을</Text>
+                <Text style={styles.leftGuideTxt}>등록해주세요</Text>
               </View>
-              <View style={stylesReg.rightStepNumWrap}>
-                <Text style={stylesReg.rightStepNum}>02</Text>
+              <View style={styles.rightStepNumWrap}>
+                <Text style={styles.rightStepNum}>02</Text>
               </View>
             </View>
 
-            <View style={stylesReg.procBarWrap}>
+            <View style={styles.procBarWrap}>
               <View style={styles.fx1}>
-                <View style={stylesReg.procBarOn} />
+                <View style={styles.procBarOn} />
               </View>
               <View style={styles.fx1}>
-                <View style={stylesReg.procBarOn} />
+                <View style={styles.procBarOn} />
               </View>
               <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
+               <View style={styles.procBarOff} />
               </View>
             </View>
           </View>

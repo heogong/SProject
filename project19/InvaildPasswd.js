@@ -8,7 +8,6 @@ import {
 } from "native-base";
 
 import { styles, viewportHeight, viewportWidth } from './css/common';
-import { stylesReg } from './css/stylesReg';
 import { color } from './css/color';
 
 const InvaildPasswd = (props) => {

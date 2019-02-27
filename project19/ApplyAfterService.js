@@ -28,7 +28,6 @@ import {
 } from "native-base";
 
 import { styles, viewportHeight, viewportWidth } from './css/common';
-import { stylesReg } from './css/stylesReg';
 import { color } from './css/color';
 
 class ApplyAfterService extends Component {
@@ -63,12 +62,12 @@ class ApplyAfterService extends Component {
         <View style={styles.contentWrap}>
           <View>
             <View style={styles.fxDirRow}>
-              <View style={stylesReg.leftGuideTxtWrap}>
-                <Text style={stylesReg.leftGuideTxt}>쿨리닉</Text>
-                <Text style={stylesReg.leftGuideTxt}>결제카드를</Text>
-                <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>쿨리닉</Text>
+                <Text style={styles.leftGuideTxt}>결제카드를</Text>
+                <Text style={styles.leftGuideTxt}>등록해주세요</Text>
               </View>
-              <View style={stylesReg.rightImgWrap}>
+              <View style={styles.rightImgWrap}>
                 <Image source={require('./img/license-depart01.png')} style={{width: 76, height: 76}}/>
               </View>
             </View>

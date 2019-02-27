@@ -67,6 +67,42 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // 공통 Style
     // ----------------------------
+    // Detail Guide Style
+    leftGuideTxtWrap: {
+      flex: 1
+    },
+    leftGuideTxt: {
+      fontSize: 26,
+      letterSpacing: 0,
+      lineHeight: 30
+    },
+    rightStepNumWrap: {
+      flex: 1,
+      alignItems : "flex-end",
+      justifyContent : "flex-end"
+    },
+    rightStepNum: {
+      fontSize: 72,
+      color: color.defaultColor,
+      height: 76
+    },
+    rightImgWrap: {
+      flex: 1,
+      alignItems : "flex-end",
+      justifyContent : "flex-end"
+    },
+    procBarWrap: {
+      flexDirection : "row",
+      marginTop: 18
+    },
+    procBarOn: {
+      height : 10,
+      backgroundColor : color.defaultColor
+    },
+    procBarOff: {
+      height : 10,
+      backgroundColor : color.defaultBackColor
+    },
     // Input Style
     inputWhBackWhBo: {
       backgroundColor: color.whiteColor,

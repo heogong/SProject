@@ -29,7 +29,6 @@ import {
 } from "native-base";
 
 import { styles, viewportHeight, viewportWidth } from './css/common';
-import { stylesReg } from './css/stylesReg';
 import { color } from './css/color';
 
 class ListApplyAfterService extends Component {
@@ -135,10 +134,10 @@ class ListApplyAfterService extends Component {
 
           <View style={styles.mb15}>
             <View style={styles.fxDirRow}>
-              <View style={stylesReg.leftGuideTxtWrap}>
-                <Text style={stylesReg.leftGuideTxt}>A/S신청</Text>
-                <Text style={stylesReg.leftGuideTxt}>목록을 보고</Text>
-                <Text style={stylesReg.leftGuideTxt}>수락해주세요</Text>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>A/S신청</Text>
+                <Text style={styles.leftGuideTxt}>목록을 보고</Text>
+                <Text style={styles.leftGuideTxt}>수락해주세요</Text>
               </View>
               </View>
           </View>

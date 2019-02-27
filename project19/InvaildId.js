@@ -31,7 +31,6 @@ import {
 } from "native-base";
 import InvaildPasswd from './InvaildPasswd';
 import { styles, viewportHeight, viewportWidth } from './css/common';
-import { stylesReg } from './css/stylesReg';
 import { color } from './css/color';
 
 class InvaildId extends Component {
@@ -63,13 +62,13 @@ class InvaildId extends Component {
         <View style={styles.contentWrap}>
           <View>
             <View style={styles.fxDirRow}>
-              <View style={stylesReg.leftGuideTxtWrap}>
-                <Text style={stylesReg.leftGuideTxt}>본인인증 하고</Text>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>본인인증 하고</Text>
                 {
                   (this.state.tabIndex == 0 ) ? (
-                    <Text style={stylesReg.leftGuideTxt}>아이디를 찾으세요</Text>
+                    <Text style={styles.leftGuideTxt}>아이디를 찾으세요</Text>
                   ) : (
-                    <Text style={stylesReg.leftGuideTxt}>비밀번호를 찾으세요</Text>
+                    <Text style={styles.leftGuideTxt}>비밀번호를 찾으세요</Text>
                   )
                 }
               </View>

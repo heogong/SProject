@@ -29,7 +29,6 @@ import {
 } from "native-base";
 
 import { styles, viewportHeight, viewportWidth } from './css/common';
-import { stylesReg } from './css/stylesReg';
 import { color } from './css/color';
 
 
@@ -60,25 +59,25 @@ class BusinessRegistration3 extends Component {
 
           <View style={styles.mb10}>
             <View style={styles.fxDirRow}>
-              <View style={stylesReg.leftGuideTxtWrap}>
-                <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
-                <Text style={stylesReg.leftGuideTxt}>사업자정보를</Text>
-                <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>귀하의</Text>
+                <Text style={styles.leftGuideTxt}>사업자정보를</Text>
+                <Text style={styles.leftGuideTxt}>입력해주세요</Text>
               </View>
-              <View style={stylesReg.rightStepNumWrap}>
-                <Text style={stylesReg.rightStepNum}>02</Text>
+              <View style={styles.rightStepNumWrap}>
+                <Text style={styles.rightStepNum}>02</Text>
               </View>
             </View>
 
-            <View style={stylesReg.procBarWrap}>
+            <View style={styles.procBarWrap}>
               <View style={styles.fx1}>
-                <View style={stylesReg.procBarOn} />
+                <View style={styles.procBarOn} />
               </View>
               <View style={styles.fx1}>
-                <View style={stylesReg.procBarOn} />
+                <View style={styles.procBarOn} />
               </View>
               <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
+               <View style={styles.procBarOff} />
               </View>
             </View>
           </View>
@@ -86,7 +85,7 @@ class BusinessRegistration3 extends Component {
           <View
             style={[styles.fx5, styles.justiConCenter]}
           >
-            <View style={stylesReg.inputWrap}>
+            <View style={localStyles.inputWrap}>
               <Item regular style={[styles.mb15, {height : 48}]}>
                 <Input placeholder="업체명" placeholderTextColor="#777" fontSize="14"/>
               </Item>
@@ -113,5 +112,10 @@ class BusinessRegistration3 extends Component {
   }
 }
 
+const localStyles = StyleSheet.create({
+  inputWrap: {
+    marginTop: 32
+  }
+});
 
 export default BusinessRegistration3;

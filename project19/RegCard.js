@@ -24,12 +24,11 @@ import {
   FooterTab,
   Form,
   Item,
-  Input
+  Input,
+  CheckBox
 } from "native-base";
-import { CheckBox } from 'react-native-elements'
 
 import { styles, viewportHeight, viewportWidth } from './css/common';
-import { stylesReg } from './css/stylesReg';
 import { color } from './css/color';
 
 class RegCard extends Component {
@@ -38,6 +37,11 @@ class RegCard extends Component {
     this.state = {
       checkBox : false
     };
+  }
+  toggleSwitch() {
+    this.setState({
+      checkbox: !this.state.checkbox
+    });
   }
 
   render() {
@@ -60,31 +64,31 @@ class RegCard extends Component {
           <View>
             
             <View style={styles.fxDirRow}>
-              <View style={stylesReg.leftGuideTxtWrap}>
-                <Text style={stylesReg.leftGuideTxt}>쿨리닉</Text>
-                <Text style={stylesReg.leftGuideTxt}>결제카드를</Text>
-                <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>쿨리닉</Text>
+                <Text style={styles.leftGuideTxt}>결제카드를</Text>
+                <Text style={styles.leftGuideTxt}>등록해주세요</Text>
               </View>
-              <View style={stylesReg.rightStepNumWrap}>
-                <Text style={stylesReg.rightStepNum}>02</Text>
+              <View style={styles.rightStepNumWrap}>
+                <Text style={styles.rightStepNum}>02</Text>
               </View>
             </View>
 
-            <View style={stylesReg.procBarWrap}>
+            <View style={styles.procBarWrap}>
               <View style={styles.fx1}>
-                <View style={stylesReg.procBarOn} />
+                <View style={styles.procBarOn} />
               </View>
               <View style={styles.fx1}>
-                <View style={stylesReg.procBarOn} />
+                <View style={styles.procBarOn} />
               </View>
               <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
+               <View style={styles.procBarOff} />
               </View>
             </View>
             
           </View>
 
-          <View style={stylesReg.inputWrap}>
+          <View style={localStyles.inputWrap}>
             <Item regular style={[styles.mb10, localStyles.inputStyle]}>
               <Input placeholder="카드번호 16자리" placeholderTextColor={color.inputPlaceHodler} style={{fontSize: 14}}/>
               <Icon name="ios-camera" style={localStyles.inputIcon} />
@@ -112,56 +116,43 @@ class RegCard extends Component {
               </Item>
             </View>
 
-            <View style={stylesReg.termsWrap}>
+            <View style={localStyles.termsWrap}>
               <View style={[styles.fx2, styles.alignItemsStart, styles.justiConBetween]}>
                 <Text style={[styles.greyFont, styles.mb5]}>전자금융거래 이용약관</Text>
                 <Text style={[styles.greyFont, styles.mb5]}>개인정보 수집 및 이용안내</Text>
                 <Text style={[styles.greyFont, styles.mb5]}>전자금융거래 이용약관</Text>
                 <Text style={[styles.greyFont, styles.mb5]}>개인정보 수집 및 이용안내</Text>
               </View>
-
+              
               <View style={[styles.fx1, styles.fxDirRow]}>
                 <View style={[styles.fx1, styles.alignItemsEnd, styles.justiConBetween]}>
-                  <View style={styles.fx1}>
-                    <CheckBox
-                      title="전체동의"
-                      containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
-                      textStyle={[styles.checkboxTxt, {color: color.greyColor}]}
-                      checkedIcon={<Image source={require("./images/btn_check_box_on.png")} />}
-                      uncheckedIcon={<Image source={require("./images/btn_check_box_off.png")} />}
-                      checked={this.state.checked}
-                      onPress={() => this.setState({checked: !this.state.checked})}
+                  <View style={[styles.fxDirRow, styles.fx1]}>
+                    <CheckBox checked={this.state.checkbox}
+                      onPress={() => this.toggleSwitch()}
+                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                     />
+                    <Text style={localStyles.inputBottomTxt}>전체동의</Text>
                   </View>
-                  <View style={styles.fx1}>
-                    <CheckBox
-                      title="동의"
-                      containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
-                      checkedIcon={<Image source={require("./images/btn_check_box_on.png")} />}
-                      uncheckedIcon={<Image source={require("./images/btn_check_box_off.png")} />}
-                      checked={this.state.checked}
-                      onPress={() => this.setState({checked: !this.state.checked})}
+                  <View style={[styles.fxDirRow, styles.fx1]}>
+                    <CheckBox checked={this.state.checkbox}
+                      onPress={() => this.toggleSwitch()}
+                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                     />
+                    <Text style={localStyles.inputBottomTxt}>동의</Text>
                   </View>
-                  <View style={styles.fx1}>
-                    <CheckBox
-                      title="동의"
-                      containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
-                      checkedIcon={<Image source={require("./images/btn_check_box_on.png")} />}
-                      uncheckedIcon={<Image source={require("./images/btn_check_box_off.png")} />}
-                      checked={this.state.checked}
-                      onPress={() => this.setState({checked: !this.state.checked})}
+                  <View style={[styles.fxDirRow, styles.fx1]}>
+                    <CheckBox checked={this.state.checkbox}
+                      onPress={() => this.toggleSwitch()}
+                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                     />
+                    <Text style={localStyles.inputBottomTxt}>동의</Text>
                   </View>
-                  <View style={styles.fx1}>
-                    <CheckBox
-                      title="동의"
-                      containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
-                      checkedIcon={<Image source={require("./images/btn_check_box_on.png")} />}
-                      uncheckedIcon={<Image source={require("./images/btn_check_box_off.png")} />}
-                      checked={this.state.checked}
-                      onPress={() => this.setState({checked: !this.state.checked})}
+                  <View style={[styles.fxDirRow, styles.fx1]}>
+                    <CheckBox checked={this.state.checkbox}
+                      onPress={() => this.toggleSwitch()}
+                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                     />
+                    <Text style={localStyles.inputBottomTxt}>동의</Text>
                   </View>
                 </View>
               </View>
@@ -191,6 +182,13 @@ const localStyles = StyleSheet.create({
     color: color.defaultColor,
     fontSize: 32,
     marginRight: 5
+  },
+  inputWrap: {
+    marginTop: 32
+  },
+  termsWrap: {
+    marginTop: 27,
+    flexDirection : "row"
   }
 });
 
