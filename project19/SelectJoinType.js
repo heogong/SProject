@@ -28,6 +28,10 @@ import {
   CheckBox
 } from "native-base";
 
+import { styles, viewportHeight, viewportWidth } from './css/common';
+import { stylesReg } from './css/stylesReg';
+import { color } from './css/color';
+
 class SelectJoinType extends Component {
   constructor(props) {
     super(props);
@@ -38,50 +42,53 @@ class SelectJoinType extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={{flex:1}}>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
             </Button>
           </Left>
-          <Body style={{flex:1, alignItems: 'center'}}>
-            <Title></Title>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
           </Body>
-          <Right style={{flex:1}}></Right>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <View style={[styles.mg10, {flex:1}]}>
+        <View style={styles.contentWrap}>
 
-          <View style={{flex:1}}>
-            <View style={[styles.mb20, {flexDirection : 'row'}]}>
-              <View style={{flex:1, justifyContent : 'center'}}>
-                <H1>회원가입할</H1>
-                <H1>방법을</H1>
-                <H1>선택해주세요</H1>
+          <View>
+            
+            <View style={styles.fxDirRow}>
+              <View style={stylesReg.leftGuideTxtWrap}>
+                <Text style={stylesReg.leftGuideTxt}>회원가입할</Text>
+                <Text style={stylesReg.leftGuideTxt}>방법을</Text>
+                <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
               </View>
-              <View style={{flex:1, alignItems : 'flex-end'}}>
-                  <Image source={require('./img/join-ico01.png')} style={{height : 100, width : 100}} />
+              <View style={stylesReg.rightImgWrap}>
+              <Image source={require('./img/join-ico01.png')} style={{height : 84, width : 84}} />
               </View>
             </View>
-            <View>
-              <Text style={styles.greyFont}>클리닉의 회원이 되시면</Text>
-              <Text style={styles.greyFont}>다양한 A/S 관련 서비스를 누릴 수 있습니다</Text>
+
+            <View style={localStyles.txtWrap}>
+              <Text style={{color: color.greyColor, fontSize: 14}}>클리닉의 회원이 되시면</Text>
+              <Text style={{color: color.greyColor, fontSize: 14}}>다양한 A/S 관련 서비스를 누릴 수 있습니다</Text>
             </View>
+            
           </View>
 
-          <View style={{flex:2, flexDirection:'row', alignItems : 'center', justifyContent : 'center'}}>
-            <View style={{height : itemSize, width : itemSize, backgroundColor : '#28c8f5', marginRight : 5, paddingTop : 15,alignItems : 'center'}}>
-              <Image source={require('./img/join-email.png')} resizeMode='contain' style={{height : itemSize - 60, width : itemSize - 60}} />
-              <Text style={[styles.whiteFont, {marginTop : 10}]}>이메일</Text>
+          <View style={localStyles.btnBottomWrap}>
+            <View style={localStyles.bttBoxWrap}>
+              <Image source={require('./img/join-email.png')} resizeMode='contain' style={localStyles.btnIcon} />
+              <Text style={localStyles.btnTxt}>이메일</Text>
             </View>
-            <View style={{height : itemSize, width : itemSize, backgroundColor : '#28c8f5', marginRight : 5, paddingTop : 15,alignItems : 'center'}}>
-              <Image source={require('./img/ico-naver.png')} resizeMode='contain' style={{height : itemSize - 60, width : itemSize - 60}} />
-              <Text style={[styles.whiteFont, {marginTop : 10}]}>네이버</Text>
+            <View style={localStyles.bttBoxWrap}>
+              <Image source={require('./img/ico-naver.png')} resizeMode='contain' style={localStyles.btnIcon} />
+              <Text style={[localStyles.btnTxt]}>네이버</Text>
             </View>
-            <View style={{height : itemSize, width : itemSize, backgroundColor : '#28c8f5', marginRight : 5, paddingTop : 15,alignItems : 'center'}}>
-              <Image source={require('./img/ico-kakao.png')} resizeMode='contain' style={{height : itemSize - 60, width : itemSize - 60}} />
-              <Text style={[styles.whiteFont, {marginTop : 10}]}>카카오</Text>
+            <View style={localStyles.bttBoxWrap}>
+              <Image source={require('./img/ico-kakao.png')} resizeMode='contain' style={localStyles.btnIcon} />
+              <Text style={localStyles.btnTxt}>카카오</Text>
             </View>
           </View>
           
@@ -92,53 +99,33 @@ class SelectJoinType extends Component {
   }
 }
 
-function wp (percentage) {
-  const value = (percentage * viewportWidth) / 100;
-  return Math.round(value);
-}
-
-const viewportWidth = Dimensions.get('window').width;
-const itemSize = wp(28);
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff"
+const localStyles = StyleSheet.create({
+  txtWrap: {
+    marginTop: 21
   },
-  content : {
-    marginLeft : 10,
-    marginRight : 10
+  btnBottomWrap: {
+    flex:2,
+    flexDirection: 'row',
+    alignItems : 'center',
+    justifyContent : 'center'
   },
-  mb10: {
-    marginBottom: 10
+  bttBoxWrap: {
+    flex: 1,
+    backgroundColor : color.defaultColor,
+    marginRight : 5,
+    paddingTop : 15,
+    alignItems : 'center'
   },
-  mb20: {
-    marginBottom: 20
+  btnIcon: {
+    height: 28,
+    width: 40,
+    paddingTop: 19
   },
-  mg5 : {
-    marginTop : 5,
-    marginBottom : 5,
-    marginLeft : 5,
-    marginRight : 5
-  },
-  mg10 : {
+  btnTxt: {
+    fontSize: 14,
     marginTop : 10,
-    marginBottom : 10,
-    marginLeft : 10,
-    marginRight : 10
-  },
-  mg20 : {
-    marginTop : 20,
-    marginBottom : 20,
-    marginLeft : 20,
-    marginRight : 20
-  },
-  greyFont : {
-    color : '#BDBDBD',
-    fontSize : 15
-  },
-  whiteFont : {
-    color : '#FFF',
-    fontSize : 15
+    color: color.whiteColor,
+    paddingBottom: 14
   }
 });
 
