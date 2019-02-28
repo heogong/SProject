@@ -12,8 +12,6 @@ import RegBizPlace from '~/Main/Functions/RegBizPlace';
 import EditBizPlace from '~/Main/Functions/EditBizPlace';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import DrawMap from '~/Main/Components/DrawMap';
-
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
 import { styles } from '~/Common/Styles/common';
@@ -28,9 +26,10 @@ class SetAddress extends Component {
 
         this.state = {
             addressName : null,
-            detailAddressName : null,
+            detailAddressName : '',
             makerYn : false,
             disSaveBtn : true,
+            detailAddressInput : false,
             addressObj : [],
             region: {
                 latitude: 37.566535,
@@ -59,41 +58,38 @@ class SetAddress extends Component {
                 makerYn : true,
                 disSaveBtn : false
             })
-        } else { // 주소 등록 페이지 접근 시
-            this._getLocation();
-        }
+        } 
     }
 
     // param : this.onResult => 주소 결과 값 리턴
     _goSearchAddress = () => (
         Actions.SearchAddress({
             onResult : this.onResult, 
-            addressName : this.props.address
+            addressName : this.state.addressName
         }) 
     )
 
     // 주소검색 후 결과 데이터
     onResult = (address) => {
-        console.log("this.props.editAddress :", this.props.editAddress);
+        console.log("주소검색 후 결과 데이터 address :", address);
         this.setState({
             addressName : address.result.address_name,
             makerYn : true,
             addressObj : address.result,
-            disSaveBtn : (this.state.detailAddressName.length > ADDRESS_DETAIL_LEN) ? false : true
+            detailAddressInput : true
         });
     }
 
     // 주소 저장 버튼 활성화 여부
     _handleChange = (text) => {
-        this.setState({detailAddressName : text})
-
-        if(this.state.addressName !== '') {
-            this.setState({disSaveBtn : (this.state.detailAddressName.length > ADDRESS_DETAIL_LEN) ? false : true})
-        }
+        this.setState({
+            detailAddressName : text,
+            disSaveBtn :  (this.state.detailAddressName.length > ADDRESS_DETAIL_LEN) ? false : true
+        })
     }
 
     // 사업장 저장 버튼 클릭
-    _saveButton() {
+    _saveButton = () => {
         // 주소 수정 페이지 접근 시
         if (this.props.editAddress) {
             this._editBusiness();
@@ -175,22 +171,19 @@ class SetAddress extends Component {
                     </View>
 
                     <View style={[styles.fx3, styles.justiConCenter]}>
-                        <Item 
-                            regular 
-                            style={[styles.mb10, {height : 50}]}
-                            onPress={this._goSearchAddress}
+                        <Item regular style={[styles.mb10, {height : 50}]}
+                            // onPress={this._goSearchAddress}
                         >
                             <Icon name="ios-search" style={{color : color.defaultColor}}/>
-                            <Input 
-                                placeholder="주소입력"
-                                disabled
+                            <Input placeholder="주소입력"
+                                onChangeText={ (text) => this.setState({addressName : text})}
                             >
                                 {this.state.addressName} 
                             </Input>
                         </Item>
 
                         <Item regular style={[
-                            (this.state.addressName !== null) ? localStyles.hide : localStyles.hide, 
+                            (this.state.detailAddressInput) ? localStyles.show : localStyles.hide, 
                             {height : 50}]
                         }>
                             <Input 
@@ -202,8 +195,17 @@ class SetAddress extends Component {
                     </View>
 
                     <View style={styles.footerBtnWrap}>
+
                         <CustomButton
-                            onPress={this._nextButton}
+                            onPress={this._goSearchAddress}
+                            edgeFill={true}
+                            fillTxt={true}
+                        >
+                            주소검색
+                        </CustomButton>
+
+                        <CustomButton
+                            onPress={this._saveButton}
                             disabled={ this.state.disSaveBtn }
                             edgeFill={true}
                             fillTxt={true}
