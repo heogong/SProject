@@ -89,30 +89,30 @@ class RegCard extends Component {
           </View>
 
           <View style={localStyles.inputWrap}>
-            <Item regular style={[styles.mb10, localStyles.inputStyle]}>
-              <Input placeholder="카드번호 16자리" placeholderTextColor={color.inputPlaceHodler} style={{fontSize: 14}}/>
-              <Icon name="ios-camera" style={localStyles.inputIcon} />
+            <Item regular style={[styles.mb10, styles.inputWhBackBuBo]}>
+              <Input placeholder="카드번호 16자리" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
+              <Icon name="ios-camera" style={styles.inputIcon} />
             </Item>
             <View style={[styles.mb10, styles.fxDirRow]}>
               <View style={styles.fx1}>
-                <Item regular style={[localStyles.inputStyle, styles.mr7]}>
-                  <Input placeholder="MM" placeholderTextColor={color.inputPlaceHodler} style={{fontSize: 14, textAlign: "center"}}/>
+                <Item regular style={[styles.inputWhBackBuBo, styles.mr7]}>
+                  <Input placeholder="MM" placeholderTextColor={color.inputPlaceHodler} style={[styles.inputDefaultBox, {textAlign: "center"}]}/>
                 </Item>
               </View>
               <View style={styles.fx1}>
-                <Item regular style={[localStyles.inputStyle, styles.mr7]}>
-                  <Input placeholder="YY" placeholderTextColor={color.inputPlaceHodler} fontSize="14" style={{fontSize: 14, textAlign: "center"}}/>
+                <Item regular style={[styles.inputWhBackBuBo, styles.mr7]}>
+                  <Input placeholder="YY" placeholderTextColor={color.inputPlaceHodler} fontSize="14" style={[styles.inputDefaultBox, {textAlign: "center"}]}/>
                 </Item>
               </View>
               <View style={styles.fx2}>
-                <Item regular style={localStyles.inputStyle}>
-                  <Input placeholder="비밀번호 앞2자리" placeholderTextColor={color.inputPlaceHodler} fontSize="14" style={{fontSize: 14, textAlign: "center"}}/>
+                <Item regular style={styles.inputWhBackBuBo}>
+                  <Input placeholder="비밀번호 앞2자리" placeholderTextColor={color.inputPlaceHodler} fontSize="14" style={[styles.inputDefaultBox, {textAlign: "center"}]}/>
                 </Item>
               </View>
             </View>
             <View>
-              <Item regular style={localStyles.inputStyle}>
-                <Input placeholder="생년월일(YYMMDD)" placeholderTextColor={color.inputPlaceHodler} style={{fontSize: 14}}/>
+              <Item regular style={styles.inputWhBackBuBo}>
+                <Input placeholder="생년월일(YYMMDD)" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
               </Item>
             </View>
 
@@ -173,16 +173,6 @@ class RegCard extends Component {
 }
 
 const localStyles = StyleSheet.create({
-  // 축약 Style
-  inputStyle: {
-    height : 48,
-    borderColor : color.defaultColor
-  },
-  inputIcon: {
-    color: color.defaultColor,
-    fontSize: 32,
-    marginRight: 5
-  },
   inputWrap: {
     marginTop: 32
   },

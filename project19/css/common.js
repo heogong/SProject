@@ -67,6 +67,47 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // 공통 Style
     // ----------------------------
+    // Modal
+    modalWrap: {
+      marginLeft: 14,
+      marginRight: 14,
+      height: 110,
+      backgroundColor: color.whiteColor
+    },
+    modalContent: {
+      flex: 1,
+      alignItems : "center",
+      justifyContent : "center"
+    },
+    modalBtnWrap: {
+      flex: 1
+    },
+    modalBtnFill: {
+      height: 36,
+      borderRadius: 0,
+      elevation: 0,
+      width: 124,
+      backgroundColor: color.defaultColor,
+      borderWidth: 1,
+      borderColor: color.defaultColor,
+      shadowOpacity: 0
+    },
+    modalBtnFillTxt: {
+      fontSize: 14,
+      flex: 1,
+      textAlign: "center",
+      fontWeight: "500",
+      color: color.whiteColor,
+      textAlign: "center"
+    },
+    modalTopTxtWrap: {
+      flex: 1,
+      justifyContent: "center"
+    },
+    modalTopTxt: {
+      color: color.modalTxtColor,
+      fontSize: 14
+    },
     // Detail Guide Style
     leftGuideTxtWrap: {
       flex: 1
@@ -113,6 +154,24 @@ export const styles = StyleSheet.create({
       paddingLeft: 0,
       fontSize: 14,
       height : 36
+    },
+    inputDefaultBox: {
+      paddingRight: 8,
+      fontSize: 14,
+      height: 46
+    },
+    inputWhBackBuBo: {
+      height : 46,
+      borderColor : color.defaultColor
+    },
+    inputWhBackGreyBo: {
+      height : 46,
+      borderColor : color.inputBoGrey
+    },
+    inputIcon: {
+      color: color.defaultColor,
+      fontSize: 32,
+      marginRight: 5
     },
     // Tabs Style
     tabsReset: {

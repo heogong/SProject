@@ -25,7 +25,6 @@ import {
   Item,
   Input,
 } from "native-base";
-import { CheckBox } from 'react-native-elements'
 
 import { styles, viewportHeight, viewportWidth } from './css/common';
 import { color } from './css/color';
@@ -138,6 +137,7 @@ class SelectWorkTime extends Component {
 
             <View style={styles.fxDirRow}>
                 <View style={[styles.fx1, styles.alignItemsEnd]}>
+{/* 
                   <CheckBox
                     title="풀타임"
                     containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
@@ -147,8 +147,10 @@ class SelectWorkTime extends Component {
                     checked={this.state.checked}
                     onPress={() => this.setState({checked: !this.state.checked})}
                   />
+                   */}
                 </View>
                 <View style={styles.fx1}>
+{/* 
                   <CheckBox
                     title="공휴일"
                     containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
@@ -158,6 +160,7 @@ class SelectWorkTime extends Component {
                     checked={this.state.checked}
                     onPress={() => this.setState({checked: !this.state.checked})}
                   />
+                   */}
               </View>
 
             </View>

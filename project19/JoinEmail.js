@@ -28,6 +28,9 @@ import {
   CheckBox
 } from "native-base";
 
+import { styles, viewportHeight, viewportWidth } from './css/common';
+import { color } from './css/color';
+
 class JoinEmail extends Component {
   constructor(props) {
     super(props);
@@ -38,113 +41,73 @@ class JoinEmail extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={{flex:1}}>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
             </Button>
           </Left>
-          <Body style={{flex:1, alignItems: 'center'}}>
-            <Title></Title>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
           </Body>
-          <Right style={{flex:1}}></Right>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <View style={[styles.mg10, {flex:1}]}>
+        <View style={styles.contentWrap}>
 
-          <View style={{flex:1}}>
-            <View style={[styles.mb10, {flexDirection : 'row'}]}>
-              <View style={{flex:1}}>
-                <H1>이메일 주소와</H1>
-                <H1>비밀번호를</H1>
-                <H1>입력해주세요</H1>
+          <View>
+            
+            <View style={styles.fxDirRow}>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>이메일주소와</Text>
+                <Text style={styles.leftGuideTxt}>비밀번호를</Text>
+                <Text style={styles.leftGuideTxt}>입력해주세요</Text>
               </View>
-              <View style={{flex:1, alignItems : 'flex-end', justifyContent : 'flex-end'}}>
-                <H1 style={{color:'#28c8f5'}}>01</H1>
+              <View style={styles.rightStepNumWrap}>
+                <Text style={styles.rightStepNum}>01</Text>
               </View>
             </View>
 
-            <View style={{flexDirection : 'row'}}>
-              <View style={{flex:1}}>
-                <View style={{height : 10, backgroundColor : '#28c8f5'}} />
+            <View style={styles.procBarWrap}>
+              <View style={styles.fx1}>
+                <View style={styles.procBarOn} />
               </View>
-              <View style={{flex:1}}>
-                <View style={{height : 10, backgroundColor : '#d6f1ff'}} />
+              <View style={styles.fx1}>
+                <View style={styles.procBarOff} />
               </View>
-              <View style={{flex:1}}>
-               <View style={{height : 10, backgroundColor : '#d6f1ff'}} />
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
               </View>
-              
             </View>
             
           </View>
 
-          <View style={{flex:2, justifyContent:'center'}}>
-            <Item regular style={[styles.mb15, {height : 50}]}>
-              <Input placeholder="이메일" />
+          <View style={[styles.fx3, styles.justiConCenter]}>
+            <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
+              <Input placeholder="이메일주소" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
             </Item>
-
-            <Item regular style={[styles.mb15, {height : 50}]}>
-              <Input placeholder="비밀번호(영문,숫자,특수문자8-15자)" />
+            <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
+              <Input placeholder="비밀번호(영문+숫자+특수문자조합 8~16자리)" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
             </Item>
-
-            <Item regular style={{height : 50}}>
-              <Input placeholder="비밀번호 확인" />
-              <IconNB name="ios-checkmark-circle" style={{color:'#28c8f5'}}/>
+            <Item regular style={[styles.mb10, styles.inputWhBackGreyBo]}>
+              <Input placeholder="비밀번호 확인" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
+              <Icon name="ios-checkmark-circle" style={styles.inputIcon} />
             </Item>
-            <Text style={[styles.redFont, {paddingLeft : 5}]}>비밀번호가 맞지 않습니다.</Text>
+            <Text style={{color: color.warningColor, fontSize: 12}}>비밀번호가 맞지 않습니다.</Text>
           </View>
 
-          <View style={{flex:1, justifyContent:'center'}}>
-            <Button block info style={{elevation:0}}>
-              <Text>다음단계로</Text>
+          <View style={styles.footerBtnWrap}>
+            <Button style={[styles.btnDefault, styles.btnDefaultFill, styles.mb5]}>
+              <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>입력완료</Text>
             </Button>
           </View>
+
         </View>
 
       </Container>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff"
-  },
-  content : {
-    marginLeft : 10,
-    marginRight : 10
-  },
-  mb10: {
-    marginBottom: 10
-  },
-  mb15: {
-    marginBottom: 15
-  },
-  mb20: {
-    marginBottom: 20
-  },
-  mg5 : {
-    marginTop : 5,
-    marginBottom : 5,
-    marginLeft : 5,
-    marginRight : 5
-  },
-  mg10 : {
-    marginTop : 10,
-    marginBottom : 10,
-    marginLeft : 10,
-    marginRight : 10
-  },
-  greyFont : {
-    color : '#BDBDBD',
-    fontSize : 15
-  },
-  redFont : {
-    color : '#FF0000',
-    fontSize : 15
-  }
-});
 
 export default JoinEmail;

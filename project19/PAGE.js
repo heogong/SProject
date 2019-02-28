@@ -72,10 +72,11 @@ const PAGE = () => (
             <Scene key="SelectUserType" hideNavBar component={SelectUserType} type={ActionConst.RESET}/>
             <Scene key="UserLogin" hideNavBar component={UserLogin} type={ActionConst.RESET}/>
             <Scene key="InvaildId" hideNavBar component={InvaildId} type={ActionConst.RESET}/>
-            <Scene key="SelectJoinType" initial hideNavBar component={SelectJoinType} type={ActionConst.RESET}/>
-            <Scene key="JoinEmail" hideNavBar component={JoinEmail} type={ActionConst.RESET}/>
+            <Scene key="SelectJoinType" hideNavBar component={SelectJoinType} type={ActionConst.RESET}/>
+            <Scene key="JoinEmail"  hideNavBar component={JoinEmail} type={ActionConst.RESET}/>
             <Scene key="JoinName" hideNavBar component={JoinName} type={ActionConst.RESET}/>
-            <Scene key="JoinPhoneAuth" hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
+            <Scene key="JoinPhone" hideNavBar component={JoinPhone} type={ActionConst.RESET}/>
+            <Scene key="JoinPhoneAuth" initial hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
             <Scene key="JoinSuccess" hideNavBar component={JoinSuccess} type={ActionConst.RESET}/>
             <Scene key="RegCard" hideNavBar component={RegCard}  type={ActionConst.RESET}/>
             <Scene key="ManageCard" hideNavBar component={ManageCard} type={ActionConst.RESET}/>

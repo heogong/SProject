@@ -4,6 +4,9 @@ export const color = {
     greyColor : '#BDBDBD',
     deepGreyColor : '#777',
     whiteColor : '#FFF',
-    inputPlaceHodler : '#c9cacb'
+    inputPlaceHodler : '#c9cacb',
+    inputBoGrey : '#c9cacb',
+    warningColor : '#ff6b00',
+    modalTxtColor : "#8e8e98"
 }
 
