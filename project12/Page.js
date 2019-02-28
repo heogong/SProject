@@ -194,7 +194,7 @@ const PAGE = () => (
       <Scene key="InputProdImage" component={InputProdImage} type={ActionConst.RESET} />
 
       {/* 제품 쇼케이스  등록 */}
-      <Scene key="InputShowCase" component={InputShowCase} />
+      <Scene key="InputShowCase"  component={InputShowCase} />
 
       {/* 파트너 - A/S 보고서 등록 */}
       <Scene key="RegAsBeforeReport" component={RegReportBeforePic} />

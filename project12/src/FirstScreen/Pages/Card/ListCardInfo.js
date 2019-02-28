@@ -3,8 +3,9 @@ import { Alert, Image, ScrollView, StyleSheet, TouchableOpacity, View } from 're
 import { Container, H3, Icon, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
-import GetCommonData from '~/Common/Functions/GetCommonData';
 
+
+import GetCommonData from '~/Common/Functions/GetCommonData';
 import ListCard from '~/FirstScreen/Functions/Card/ListCard';
 import DelCard from '~/FirstScreen/Functions/Card/DelCard';
 
