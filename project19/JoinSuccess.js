@@ -28,6 +28,9 @@ import {
   CheckBox
 } from "native-base";
 
+import { styles, viewportHeight, viewportWidth } from './css/common';
+import { color } from './css/color';
+
 class JoinSuccess extends Component {
   constructor(props) {
     super(props);
@@ -38,40 +41,40 @@ class JoinSuccess extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={{flex:1}}>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body style={{flex:1, alignItems: 'center'}}>
-            <Title></Title>
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}></Left>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
           </Body>
-          <Right style={{flex:1}}></Right>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <View style={[styles.mg10, {flex:1}]}>
-          <View style={{flex:1, alignItems : 'center', justifyContent : 'center'}}>
+
+        <View style={localStyles.contentWrap}>
+          <View style={localStyles.contentTop}>
             <View>
-              <View style={{alignItems : 'center'}}>
-                <Image source={require('./img/join-end.png')} resizeMode='center'/>
+              <View style={[styles.alignItemsCenter, {marginBottom: 38}]}>
+                <Image source={require('./img/join-end.png')} style={{width: 48, height: 48}}/>
               </View>
-              <View style={{alignItems : 'center'}}>
-                <H1>회원가입이</H1>
-                <H1>완료되었어요!</H1>
+              <View style={localStyles.topTxtWrap}>
+                <Text style={localStyles.topTxt}>회원가입이</Text>
+                <Text style={localStyles.topTxt}>완료되었어요!</Text>
               </View>
             </View>
           </View>
-          <View style={{flex:1}}>
-            <View style={{flex:1, alignItems : 'center'}}>
-              <Text style={styles.greyFont}>결제카드를 등록하고 A/S를 신청해보세요</Text>
+          <View style={styles.fx1}>
+            <View style={[styles.fx1, styles.alignItemsCenter]}>
+              <Text style={localStyles.greyFont}>귀하의 사업자정보를 등록하고</Text>
+              <Text style={localStyles.greyFont}>쿨리닉 매칭 서비스를 이용해보세요</Text>
             </View>
-            <View style={{flex:1, justifyContent : 'center'}}>
-              <Button block info onPress={ () => alert("결제카드등록")}>
-                <Text>결제카드등록</Text>
+
+            <View style={styles.footerBtnWrap}>
+              <Button style={[styles.btnDefault, styles.btnDefaultFill]}>
+                <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>입력완료</Text>
               </Button>
             </View>
+
           </View>
         </View>
 
@@ -80,42 +83,28 @@ class JoinSuccess extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff"
+const localStyles = StyleSheet.create({
+  contentWrap: {
+    flex:1
   },
-  content : {
-    marginLeft : 10,
-    marginRight : 10
+  contentTop: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  mb10: {
-    marginBottom: 10
+  topTxtWrap: {
+    alignItems: 'center'
   },
-  mb15: {
-    marginBottom: 15
-  },
-  mb20: {
-    marginBottom: 20
-  },
-  mg5 : {
-    marginTop : 5,
-    marginBottom : 5,
-    marginLeft : 5,
-    marginRight : 5
-  },
-  mg10 : {
-    marginTop : 10,
-    marginBottom : 10,
-    marginLeft : 10,
-    marginRight : 10
+  topTxt: {
+    fontSize: 26,
+    color: "#1e1e32",
+    letterSpacing: 0,
+    lineHeight: 30,
+    fontWeight: "bold"
   },
   greyFont : {
-    color : '#BDBDBD',
-    fontSize : 15
-  },
-  redFont : {
-    color : '#FF0000',
-    fontSize : 15
+    color : '#8e8e98',
+    fontSize : 14
   }
 });
 
