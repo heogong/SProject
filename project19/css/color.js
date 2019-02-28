@@ -7,6 +7,7 @@ export const color = {
     inputPlaceHodler : '#c9cacb',
     inputBoGrey : '#c9cacb',
     warningColor : '#ff6b00',
-    modalTxtColor : "#8e8e98"
+    modalTxtColor : "#8e8e98",
+    prdTypeBackColor : "#28a0f5"
 }
 

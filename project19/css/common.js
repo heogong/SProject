@@ -266,6 +266,10 @@ export const styles = StyleSheet.create({
     fx4: {flex: 4}, 
     fx5: {flex: 5}, 
     fx6: {flex: 6}, 
+
+    fxDirRow: {flexDirection : "row"},
+
+    fxWraWra: {flexWrap: "wrap"},
     
     mt13: {marginTop: 13},
 
@@ -293,8 +297,6 @@ export const styles = StyleSheet.create({
     pl12: {paddingLeft: 12},
 
     pr12: {paddingRight: 12},
-
-    fxDirRow: {flexDirection : "row"},
     
     alignItemsStart: {alignItems : "flex-start"},
     alignItemsCenter: {alignItems : "center"},

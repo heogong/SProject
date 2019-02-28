@@ -59,12 +59,7 @@ class SelectSpecialty extends Component {
 
   render() {
     return (
-      <Container style={{
-        flex: 1,
-        backgroundColor: color.whiteColor,
-        paddingLeft: 26,
-        paddingRight: 26
-      }}>
+      <Container style={styles.containerInnerPd}>
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>
             <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
@@ -77,17 +72,15 @@ class SelectSpecialty extends Component {
           <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <ScrollView showsVerticalScrollIndicator={false}>
-
-          <View style={styles.mb20}>
+        <View style={{marginBottom: 36}}>
             <View style={styles.fxDirRow}>
               <View style={styles.leftGuideTxtWrap}>
-                <Text style={styles.leftGuideTxt}>냉동기기</Text>
                 <Text style={styles.leftGuideTxt}>전문분야를</Text>
                 <Text style={styles.leftGuideTxt}>선택해주세요</Text>
+                <Text style={styles.leftGuideTxt}>(복수선택가능)</Text>
               </View>
               <View style={styles.rightStepNumWrap}>
-                <Text style={styles.rightStepNum}>02</Text>
+                <Text style={styles.rightStepNum}>03</Text>
               </View>
             </View>
 
@@ -99,12 +92,24 @@ class SelectSpecialty extends Component {
                 <View style={styles.procBarOn} />
               </View>
               <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
+              </View>
+              <View style={styles.fx1}>
                <View style={styles.procBarOff} />
               </View>
             </View>
           </View>
 
-          <View style={[styles.fxDirRow, styles.justiConBetween, {flexWrap : 'wrap'}]}>
+        <ScrollView showsVerticalScrollIndicator={false}
+          style={{marginBottom: 37}}>
+
+          <View style={[styles.fxDirRow, styles.justiConBetween, styles.fxWraWra]}>
 
             {ENTRIES1.map((entry, index) => (
               <TouchableOpacity onPress={ () => alert("ddd")}  key={index}>
@@ -115,7 +120,7 @@ class SelectSpecialty extends Component {
                     styles.alignItemsCenter,
                     styles.justiConCenter,
                     { 
-                      backgroundColor : color.defaultColor, 
+                      backgroundColor : color.prdTypeBackColor, 
                       height : productCardSize, 
                       width : productCardSize
                 }]}>
@@ -124,7 +129,7 @@ class SelectSpecialty extends Component {
                       height : productCardSize - 60, 
                       width : productCardSize - 60
                     }]}/>
-                  <Text style={styles.whiteFont}>{entry.title}</Text>
+                  <Text style={localStyles.whiteFont}>{entry.title}</Text>
                 </View>
               </TouchableOpacity>
             ))}
@@ -133,15 +138,11 @@ class SelectSpecialty extends Component {
           
         </ScrollView>
 
-        <Footer style={{elevation: 0}}>
-          <FooterTab>
-            <Button 
-              style={[styles.btnDefault, {marginTop : 5}]}
-              block info bordered onPress={ () => alert("등록완료")}>
-              <Text>등록완료</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
+        <View style={[styles.footerBtnWrap, {marginTop: 20}]}>
+          <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mb5]}>
+            <Text style={[styles.btnDefaultTxt, styles.btnDefaultNoFillTxt]}>등록완료</Text>
+          </Button>
+        </View>
 
       </Container>
     );
@@ -154,6 +155,14 @@ function wp (percentage, space) {
 }
 
 const productCardSize = wp(47.5, 52);
+
+const localStyles = StyleSheet.create({
+  whiteFont: {
+    color: color.whiteColor,
+    fontSize: 16,
+    fontWeight: "500"
+  }
+});
 
 export default SelectSpecialty;
 

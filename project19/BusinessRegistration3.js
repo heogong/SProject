@@ -79,25 +79,28 @@ class BusinessRegistration3 extends Component {
               <View style={styles.fx1}>
                <View style={styles.procBarOff} />
               </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
+              </View>
             </View>
           </View>
 
-          <View
-            style={[styles.fx5, styles.justiConCenter]}
-          >
-            <View style={localStyles.inputWrap}>
-              <Item regular style={[styles.mb15, {height : 48}]}>
-                <Input placeholder="업체명" placeholderTextColor="#777" fontSize="14"/>
-              </Item>
-
-              <Item regular style={[styles.mb15, {height : 48}]}>
-                <Input placeholder="사업자번호 13자리" placeholderTextColor="#777" fontSize="14"/>
-              </Item>
-
-              <Item regular style={[styles.mb15, {height : 48}]}>
-                <Input placeholder="대표자명" placeholderTextColor="#777" fontSize="14"/>
-              </Item>
-            </View>
+          <View style={[styles.fx3, styles.justiConCenter]}>
+            <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
+              <Input placeholder="업체명" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
+            </Item>
+            <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
+              <Input placeholder="사업자번호 13자리 입력" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
+            </Item>
+            <Item regular style={styles.inputWhBackGreyBo}>
+              <Input placeholder="대표자 명" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
+            </Item>
           </View>
 
           <View style={styles.footerBtnWrap}>
@@ -111,11 +114,5 @@ class BusinessRegistration3 extends Component {
     );
   }
 }
-
-const localStyles = StyleSheet.create({
-  inputWrap: {
-    marginTop: 32
-  }
-});
 
 export default BusinessRegistration3;

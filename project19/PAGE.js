@@ -76,7 +76,7 @@ const PAGE = () => (
             <Scene key="JoinEmail"  hideNavBar component={JoinEmail} type={ActionConst.RESET}/>
             <Scene key="JoinName" hideNavBar component={JoinName} type={ActionConst.RESET}/>
             <Scene key="JoinPhone" hideNavBar component={JoinPhone} type={ActionConst.RESET}/>
-            <Scene key="JoinPhoneAuth" initial hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
+            <Scene key="JoinPhoneAuth" hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
             <Scene key="JoinSuccess" hideNavBar component={JoinSuccess} type={ActionConst.RESET}/>
             <Scene key="RegCard" hideNavBar component={RegCard}  type={ActionConst.RESET}/>
             <Scene key="ManageCard" hideNavBar component={ManageCard} type={ActionConst.RESET}/>
@@ -99,7 +99,7 @@ const PAGE = () => (
             <Scene key="BusinessRegistration1" hideNavBar component={BusinessRegistration1} type={ActionConst.RESET}/>
             <Scene key="BusinessRegistration2" hideNavBar component={BusinessRegistration2}  type={ActionConst.RESET}/>
             <Scene key="BusinessRegistration3" hideNavBar component={BusinessRegistration3} type={ActionConst.RESET}/>
-            <Scene key="SelectSpecialty" hideNavBar component={SelectSpecialty} type={ActionConst.RESET}/>
+            <Scene key="SelectSpecialty" initial hideNavBar component={SelectSpecialty} type={ActionConst.RESET}/>
             <Scene key="SelectWorkTime" hideNavBar component={SelectWorkTime} type={ActionConst.RESET}/>
             <Scene key="RegPassBook1" hideNavBar component={RegPassBook1} type={ActionConst.RESET}/>
             <Scene key="RegPassBook2" hideNavBar component={RegPassBook2} type={ActionConst.RESET}/>

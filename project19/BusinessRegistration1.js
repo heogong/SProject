@@ -46,7 +46,7 @@ class BusinessRegistration1 extends Component {
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>
             <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
-              <Image source={require("./images/btn_back_arrow.png")} />
+              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
             </Button>
           </Left>
           <Body style={styles.headerCenterWrap}>
@@ -57,7 +57,8 @@ class BusinessRegistration1 extends Component {
 
         <View style={styles.contentWrap}>
 
-          <View style={styles.mb10}>
+          <View>
+            
             <View style={styles.fxDirRow}>
               <View style={styles.leftGuideTxtWrap}>
                 <Text style={styles.leftGuideTxt}>귀하의</Text>
@@ -65,7 +66,7 @@ class BusinessRegistration1 extends Component {
                 <Text style={styles.leftGuideTxt}>등록해주세요</Text>
               </View>
               <View style={styles.rightStepNumWrap}>
-                <Text style={styles.rightStepNum}>02</Text>
+                <Text style={styles.rightStepNum}>01</Text>
               </View>
             </View>
 
@@ -74,21 +75,28 @@ class BusinessRegistration1 extends Component {
                 <View style={styles.procBarOn} />
               </View>
               <View style={styles.fx1}>
-                <View style={styles.procBarOn} />
+                <View style={styles.procBarOff} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
               </View>
               <View style={styles.fx1}>
                <View style={styles.procBarOff} />
               </View>
             </View>
+            
           </View>
 
-          <TouchableOpacity 
-            onPress={ () => alert("dddd")}
-            style={[styles.fx5, {borderColor : color.greyColor, borderWidth : 1}]}
-          >
-            <View style={[styles.alignItemsEnd, styles.pd20]}>
-              <Image source={require("./images/btn_back_arrow.png")} />
-              <Image source={require("./images/btn_back_arrow.png")} />
+          <TouchableOpacity style={localStyles.photoBoxWrap}>
+            <View style={localStyles.photoBox}>
+              <Icon name="ios-camera" style={localStyles.phototIcon} />
+              <Text style={localStyles.photoTxt}>등록하기</Text>
             </View>
           </TouchableOpacity>
 
@@ -104,5 +112,27 @@ class BusinessRegistration1 extends Component {
   }
 }
 
+const localStyles = StyleSheet.create({
+  photoBoxWrap: {
+    flex: 5,
+    borderColor : "#c9cacb",
+    borderWidth : 1,
+    marginTop: 18
+  },
+  photoBox: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  phototIcon: {
+    color: color.defaultColor,
+    fontSize: 60
+  },
+  photoTxt: {
+    fontSize: 16,
+    color: color.defaultColor,
+    fontWeight: "bold"
+  }
+});
 
 export default BusinessRegistration1;
