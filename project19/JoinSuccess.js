@@ -65,8 +65,8 @@ class JoinSuccess extends Component {
           </View>
           <View style={styles.fx1}>
             <View style={[styles.fx1, styles.alignItemsCenter]}>
-              <Text style={localStyles.greyFont}>귀하의 사업자정보를 등록하고</Text>
-              <Text style={localStyles.greyFont}>쿨리닉 매칭 서비스를 이용해보세요</Text>
+              <Text style={styles.greyFont}>귀하의 사업자정보를 등록하고</Text>
+              <Text style={styles.greyFont}>쿨리닉 매칭 서비스를 이용해보세요</Text>
             </View>
 
             <View style={styles.footerBtnWrap}>
@@ -101,10 +101,6 @@ const localStyles = StyleSheet.create({
     letterSpacing: 0,
     lineHeight: 30,
     fontWeight: "bold"
-  },
-  greyFont : {
-    color : '#8e8e98',
-    fontSize : 14
   }
 });
 

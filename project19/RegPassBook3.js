@@ -30,7 +30,6 @@ import {
 import { styles, viewportHeight, viewportWidth } from './css/common';
 import { color } from './css/color';
 
-
 class RegPassBook3 extends Component {
   constructor(props) {
     super(props);
@@ -65,7 +64,7 @@ class RegPassBook3 extends Component {
                 <Text style={styles.leftGuideTxt}>등록해주세요</Text>
               </View>
               <View style={styles.rightStepNumWrap}>
-                <Text style={styles.rightStepNum}>02</Text>
+                <Text style={styles.rightStepNum}>06</Text>
               </View>
             </View>
 
@@ -77,36 +76,33 @@ class RegPassBook3 extends Component {
                 <View style={styles.procBarOn} />
               </View>
               <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
                <View style={styles.procBarOff} />
               </View>
             </View>
           </View>
 
-          <View
-            style={[styles.fx5, styles.justiConCenter]}
-          >
-            <View style={localStyles.inputWrap}>
-              <Item regular style={[styles.mb15, {height : 48}]}>
-                <Picker
-                  selectedValue={this.state.language}
-                  style={{width: '100%', color : color.defaultColor}}
-
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({language: itemValue})
-                  }>
-                    <Picker.Item label="은행명" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
-                </Picker>
-              </Item>
-
-              <Item regular style={[styles.mb15, {height : 48}]}>
-                <Input placeholder="예금주" placeholderTextColor="#777" fontSize="14"/>
-              </Item>
-
-              <Item regular style={[styles.mb15, {height : 48}]}>
-                <Input placeholder="계좌번호('-'없이 입력)" placeholderTextColor="#777" fontSize="14"/>
-              </Item>
-            </View>
+          <View style={[styles.fx3, styles.justiConCenter]}>
+            <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
+              <Input placeholder="은행명" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
+            </Item>
+            <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
+              <Input placeholder="예금주" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
+            </Item>
+            <Item regular style={styles.inputWhBackGreyBo}>
+              <Input placeholder="계좌번호( - 없이 입력)" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
+            </Item>
           </View>
 
           <View style={styles.footerBtnWrap}>

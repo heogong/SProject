@@ -24,6 +24,7 @@ import {
   Form,
   Item,
   Input,
+  CheckBox
 } from "native-base";
 
 import { styles, viewportHeight, viewportWidth } from './css/common';
@@ -61,6 +62,11 @@ class SelectWorkTime extends Component {
       checkBox : false
     };
   }
+  toggleSwitch() {
+    this.setState({
+      checkbox: !this.state.checkbox
+    });
+  }
 
   render() {
     return (
@@ -87,7 +93,7 @@ class SelectWorkTime extends Component {
                 <Text style={styles.leftGuideTxt}>선택해주세요</Text>
               </View>
               <View style={styles.rightStepNumWrap}>
-                <Text style={styles.rightStepNum}>02</Text>
+                <Text style={styles.rightStepNum}>04</Text>
               </View>
             </View>
 
@@ -99,70 +105,71 @@ class SelectWorkTime extends Component {
                 <View style={styles.procBarOn} />
               </View>
               <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
+              </View>
+              <View style={styles.fx1}>
                <View style={styles.procBarOff} />
               </View>
             </View>
           </View>
 
-          <View
-            style={[styles.fx5, styles.justiConCenter]}
-          >
-            <View style={[styles.fxDirRow, styles.justiConBetween, styles.mb15]}>
+          <View style={localStyles.contentWrap}>
+            <View style={localStyles.weekWrap}>
               {ENTRIES1.map((entry, index) => (
 
                 <TouchableOpacity onPress={ () => alert(entry.title)}  key={index}>
-                  <View style={[styles.alignItemsCenter, styles.justiConCenter, {
-                    height : weekCardSize, 
-                    width : weekCardSize,
-                    borderColor : color.defaultColor, 
-                    borderWidth : 1
-                  }]}>
-                    <Text style={{color : color.defaultColor}}>{entry.title}</Text>
+                  <View style={localStyles.btnWeekOn}>
+                  {/* <View style={localStyles.btnWeekOff}> */}
+                  <Text style={localStyles.btnWeekOnTxt}>{entry.title}</Text>
+                    {/* <Text style={{color : color.defaultColor}}>{entry.title}</Text> */}
                   </View>
                 </TouchableOpacity>
                 
               ))}
             </View>
-
-            <View style={styles.mb15}>
-              <H1>00</H1>
-              <H1>00</H1>
-              <H1>00</H1>
+            
+            <View style={{flex: 1}}>
+              <View style={[styles.fx1, styles.fxDirRow, styles.alignItemsCenter]}>
+                <TouchableOpacity onPress={ () => alert("Time1")} style={localStyles.timeTxtWrap}>
+                  <Text style={localStyles.timeTxt}>09:30</Text>
+                </TouchableOpacity>
+                <Text style={[localStyles.timeTxt, {textAlign: "center", flex: 1, color: color.greyColor}]}>~</Text>
+                <TouchableOpacity onPress={ () => alert("Time1")} style={localStyles.timeTxtWrap}>
+                  <Text style={localStyles.timeTxt}>09:30</Text>
+                </TouchableOpacity>
+              </View>
             </View>
 
-            <View style={[styles.alignItemsCenter, styles.mb15]}>
+            <View style={localStyles.bottomTxtWrap}>
               <Text style={styles.greyFont}>취약시간에는 출장비가 상승합니다</Text>
               <Text style={styles.greyFont}>취약시간 기준 : 18시 ~ 09시, 일요일 및 공휴일 포함</Text>
             </View>
 
-            <View style={styles.fxDirRow}>
-                <View style={[styles.fx1, styles.alignItemsEnd]}>
-{/* 
-                  <CheckBox
-                    title="풀타임"
-                    containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
-                    textStyle={{fontSize: 14, color: color.greyColor}}
-                    checkedIcon={<Image source={require("./images/btn_check_box_on.png")} />}
-                    uncheckedIcon={<Image source={require("./images/btn_check_box_off.png")} />}
-                    checked={this.state.checked}
-                    onPress={() => this.setState({checked: !this.state.checked})}
-                  />
-                   */}
-                </View>
-                <View style={styles.fx1}>
-{/* 
-                  <CheckBox
-                    title="공휴일"
-                    containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
-                    textStyle={{fontSize: 14, color: color.greyColor}}
-                    checkedIcon={<Image source={require("./images/btn_check_box_on.png")} />}
-                    uncheckedIcon={<Image source={require("./images/btn_check_box_off.png")} />}
-                    checked={this.state.checked}
-                    onPress={() => this.setState({checked: !this.state.checked})}
-                  />
-                   */}
+            <View style={[styles.fxDirRow, styles.fx1, styles.justiConCenter]}>
+              <View style={[styles.fxDirRow, {marginRight: 8}]}>
+                <CheckBox checked={this.state.checkbox}
+                  onPress={() => this.toggleSwitch()}
+                  style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                />
+                <Text style={styles.greyFont}>풀타임</Text>
               </View>
-
+              
+              <View style={[styles.fxDirRow, {marginLeft: 8}]}>
+                <CheckBox checked={this.state.checkbox}
+                  onPress={() => this.toggleSwitch()}
+                  style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                />
+                <Text style={styles.greyFont}>공휴일</Text>
+              </View>
             </View>
           </View>
 
@@ -182,8 +189,61 @@ function wp (percentage, space) {
   const value = (percentage * (viewportWidth - space)) / 100;
   return Math.round(value);
 }
-
 const weekCardSize = wp(12, 52);
 
+const localStyles = StyleSheet.create({
+  contentWrap: {
+    flex: 5,
+    marginTop: 37
+  },
+  weekWrap: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 35
+  },
+  btnWeekOff: {
+    alignItems: "center",
+    justifyContent: "center",
+    height : weekCardSize, 
+    width : weekCardSize,
+    borderColor : color.defaultColor, 
+    borderWidth : 1
+  },
+  btnWeekOffTxt: {
+    fontSize: 15,
+    color: color.defaultColor
+  },
+  btnWeekOn: {
+    alignItems: "center",
+    justifyContent: "center",
+    height : weekCardSize, 
+    width : weekCardSize,
+    borderColor : color.defaultColor, 
+    borderWidth : 1,
+    backgroundColor: color.defaultColor
+  },
+  btnWeekOnTxt: {
+    fontSize: 15,
+    color: color.whiteColor
+  },
+  bottomTxtWrap: {
+    alignItems: "center",
+    marginTop: 35,
+    marginBottom: 17
+  },
+  timeTxtWrap: {
+    flex: 2,
+    borderWidth: 2,
+    borderColor: color.defaultColor,
+    alignItems: "center",
+    paddingTop: 10,
+    paddingBottom: 10
+  },
+  timeTxt: {
+    fontSize: 37,
+    color: color.defaultColor,
+    fontWeight: "bold"
+  }
+});
 
 export default SelectWorkTime;

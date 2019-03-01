@@ -88,6 +88,9 @@ class BusinessRegistration3 extends Component {
               <View style={styles.fx1}>
                <View style={styles.procBarOff} />
               </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
+              </View>
             </View>
           </View>
 
