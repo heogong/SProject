@@ -12,7 +12,6 @@ import InitPage from './src/FirstScreen/Pages/InitPage';
 import ServiceInfo from './src/FirstScreen/Pages/ServiceInfo';
 
 import AgreeTermsService from './src/FirstScreen/Pages/Join/AgreeTermsService';
-import ClientTermsService from './src/FirstScreen/Pages/Join/Client/SuccessTermsService';
 import PartnerTermsService from './src/FirstScreen/Pages/Join/Partner/SuccessTermsService';
 import SuccessAgreeTermsService from './src/FirstScreen/Pages/Join/SuccessAgreeTermsService';
 
@@ -90,12 +89,14 @@ import SearchAddress from './src/FirstScreen/Pages/Join/Client/Address/SearchAdd
 
 /**제품 */
 import InputProdType from './src/FirstScreen/Pages/Join/Client/Product/InputProdType' // 제품 타입등록
-import InputProdInfo from './src/FirstScreen/Pages/Join/Client/Product/InputProdInfo' // 제품 등록
-import InputProdImage from './src/FirstScreen/Pages/Join/Client/Product/InputProdImage' // 제품 이미지 등록
+import InputShowCase from './src/FirstScreen/Pages/Join/Client/Product/InputShowCase' // 쇼케이스 등록
+import TakeProductImage from './src/FirstScreen/Pages/Join/Client/Product/TakeProductImage' // 보유제품 사진 촬영
+import TakeProductGuide1 from './src/FirstScreen/Pages/Join/Client/Product/TakeProductGuide1' // 보유제품 사진 촬영
 
 
- // 쇼케이스 등록
-import InputShowCase from './src/FirstScreen/Pages/Join/Client/Product/InputShowCase'
+import InputProdInfo from './src/FirstScreen/Pages/Join/Client/Product/InputProdInfo' // 제품 등록 (?)
+import InputProdImage from './src/FirstScreen/Pages/Join/Client/Product/InputProdImage' // 제품 이미지 등록 (?)
+
 
  // 메인 AS : 등록된 사업장별 제품 타입
 import AfterServiceProdTypeList from './src/Main/Pages/Client/AfterService/ListBusinessProductType'
@@ -142,7 +143,6 @@ const PAGE = () => (
       
       {/* 약관동의 */}
       <Scene key="AgreeTermsService"  component={AgreeTermsService} />
-      <Scene key="ClientTermsService" component={ClientTermsService} />
       <Scene key="PartnerTermsService" component={PartnerTermsService} />
       <Scene key="SuccessAgreeTermsService"  component={SuccessAgreeTermsService} type={ActionConst.RESET}/>
 
@@ -189,12 +189,19 @@ const PAGE = () => (
       {/* <Scene key="ViewBusinessPlace" hideNavBar component={ViewBusinessPlace} title="사업장 조회"/> */}
 
       {/* 제품 등록 */}
-      <Scene key="InputProdType" initial component={InputProdType} type={ActionConst.RESET} />
-      <Scene key="InputProdInfo" component={InputProdInfo} onRight={()=>{}} rightTitle={'Save'}/>
-      <Scene key="InputProdImage" component={InputProdImage} type={ActionConst.RESET} />
+      <Scene key="InputProdType" component={InputProdType} type={ActionConst.RESET} />
+      <Scene key="InputShowCase" component={InputShowCase} /> 
+      <Scene key="TakeProductImage"  component={TakeProductImage} />
+      <Scene key="TakeProductGuide1"  component={TakeProductGuide1} />
 
-      {/* 제품 쇼케이스  등록 */}
-      <Scene key="InputShowCase"  component={InputShowCase} />
+
+      {/* 클라이언트 - AS 신청 제품 타입 */}
+      <Scene key="AfterServiceProdTypeList" component={AfterServiceProdTypeList}/>
+      <Scene key="AfterServiceProdList" component={AfterServiceProdList} />
+
+      {/* <Scene key="InputProdInfo" component={InputProdInfo} onRight={()=>{}} rightTitle={'Save'}/>
+      <Scene key="InputProdImage" component={InputProdImage} type={ActionConst.RESET} /> */}
+      
 
       {/* 파트너 - A/S 보고서 등록 */}
       <Scene key="RegAsBeforeReport" component={RegReportBeforePic} />
@@ -232,9 +239,9 @@ const PAGE = () => (
             <Stack key="ClientMain" hideNavBar title="클라이언트 Title" icon={TabIcon} 
             tabBarOnPress={() => Actions.ClientHome({type:ActionConst.RESET})}
             transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-              <Scene key="ClientHome" component={ClientHome} title="Scene_Title"/>
-              <Scene key="AfterServiceProdTypeList" hideNavBar component={AfterServiceProdTypeList} title="사업장 별 제품 타입 조회"/>
-              <Scene key="AfterServiceProdList" hideNavBar component={AfterServiceProdList} title="제품 조회"/>
+              <Scene key="ClientHome" component={ClientHome} />
+              {/* <Scene key="AfterServiceProdTypeList" hideNavBar component={AfterServiceProdTypeList} title="사업장 별 제품 타입 조회"/> */}
+              {/* <Scene key="AfterServiceProdList" hideNavBar component={AfterServiceProdList} title="제품 조회"/> */}
               <Scene key="AfterServiceApplyProduct" hideNavBar component={AfterServiceApplyProduct} title="AS 신청"/>
               <Scene key="AfterServiceApplyProductCheck" hideNavBar component={AfterServiceApplyProductCheck} title="AS 신청 확인"/>
               <Scene key="AfterServiceApplyProductComplete" hideNavBar component={AfterServiceApplyProductComplete} title="AS 신청 완료"/>

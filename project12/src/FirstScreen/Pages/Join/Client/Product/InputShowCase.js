@@ -18,7 +18,6 @@ import ProductShowCase from '~/Main/Components/ProductShowCase'
 
 import CustomHeader from '~/Common/Components/CustomHeader';
 import { styles, viewportWidth } from '~/Common/Styles/common';
-import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
 
 let DEL_IDX = null; // 제품 삭제 인덱스
@@ -34,11 +33,13 @@ class InputShowCase extends Component {
       this.state = {
         prdTypeImgData : [], // 첫번째 SHOW CASE 이미지 데이터
         showCase : [], // 제품 데이터
-        slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
-
-        setProductName : false, // 제품명 입력 여부
-        productName : null
+        slider1ActiveSlide: SLIDER_1_FIRST_ITEM
       };
+    }
+
+    static defaultProps = {
+        source : null,
+        prodTypeId : 1 // test!!!!
     }
 
     componentWillMount(){
@@ -66,7 +67,8 @@ class InputShowCase extends Component {
 
     // 제품 마스터 초기 등록 및 추가
     _regProductMst = () => {
-        RegProductMst(this.props.value.bizId, this.props.prodTypeId).then(result => {
+        RegProductMst(104, this.props.prodTypeId).then(result => {
+        // RegProductMst(this.props.value.bizId, this.props.prodTypeId).then(result => {
             GetCommonData(result, this._regProductMst).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -74,13 +76,20 @@ class InputShowCase extends Component {
 
                         const {prdTypeImgData, showCase} = this.state;
 
+                        // 촬영 컴포넌트 에서 필요한 데이터 세팅(clientPrdId, fileUrl)
+                        const imgNData = prdTypeImgData.map((prodImgType, idx) => {
+                            return { ...prodImgType, clientPrdId: resultData.data.clientPrdId, fileUrl : null };
+                        });
+
+                        console.log(imgNData);
+
                         this.setState({
                             showCase : showCase.concat([{
                                 clientPrdId : resultData.data.clientPrdId,
                                 clientPrdNm : resultData.data.clientPrdNm,
                                 prdType : resultData.data.prdType,
                                 prdTypeImg : resultData.data.prdTypeImg,
-                                imgTypeArray : prdTypeImgData
+                                imgTypeArray : imgNData
                             }])
                         })
 
@@ -102,8 +111,13 @@ class InputShowCase extends Component {
             GetCommonData(result, this._copyProductMst).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    console.log(resultData);
+                    console.log(" 제품 복제 - ",resultData);
                     if(ResultBool) {
+
+                        // 촬영 컴포넌트 에서 필요한 데이터 세팅(clientPrdId, fileUrl)
+                        const imgNData = resultData.data.images.map((prodImgType, idx) => {
+                            return { ...prodImgType, clientPrdId: resultData.data.clientPrdId };
+                        });
 
                         this.setState({ 
                             showCase: this.state.showCase.concat([{ 
@@ -111,7 +125,7 @@ class InputShowCase extends Component {
                                 clientPrdNm : resultData.data.clientPrdNm,
                                 prdType : resultData.data.prdType,
                                 prdTypeImg : resultData.data.prdTypeImg,
-                                imgTypeArray : resultData.data.images
+                                imgTypeArray : imgNData
                             }]),
                         });
 
@@ -219,52 +233,22 @@ class InputShowCase extends Component {
         )
     }
 
-
-
-    _renderItem = ({item, index}) => {
-        console.log("renderItem : ", item)
-        return (
-            <ProductShowCase
-                key={index}
-                index={index}
-                item={item}
-                handleAddShowCase={ this._handleAddShowCase }
-                handleCopyShowCase={ this._handleCopyShowCase }
-                handleRemoveShowCase={ this._handleRemoveShowCase }
-            />
-        );
-      }
+    _renderItem = ({item, index}) => (
+        <ProductShowCase
+            key={ index }
+            index={ index }
+            item={ item }
+            clientPrdNm={ item.clientPrdNm } 
+            handleAddShowCase={ this._handleAddShowCase }
+            handleCopyShowCase={ this._handleCopyShowCase }
+            handleRemoveShowCase={ this._handleRemoveShowCase }
+            source={ this.props.source }
+        />
+    )
+  
 
     render() {
         return (
-            // <Container>
-            //     <CustomBlockWrapper
-            //         title="제품 등록"
-            //         customAction={this._handleBackAction}
-            //     >
-            //         {this.state.newShowCase.map((showCase, idx) => (
-            //             <ProductShowCase
-            //                 defaultImg={ this.state.defaultImg }
-            //                 data={ (this.state.btnAddAction) ? this.state.addData : this.state.copyData }
-            //                 clientPrdId={ showCase.clientPrdId }
-            //                 clientPrdNm={ showCase.clientPrdNm } 
-            //                 clientPrdImgId={ showCase.clientPrdImgId } 
-            //                 handleCopyShowCase={ this._handleCopyShowCase }
-            //                 handleRemoveShowCase={ this._handleRemoveShowCase }
-            //                 index={ idx }
-            //             />
-            //         ))}
-            //     </CustomBlockWrapper>
-
-            //     <Footer>
-            //         <Button onPress={ this._handleAddShowCase }>
-            //             <Text>추가</Text>
-            //         </Button>
-            //         <Button onPress={ this._nextButton }>
-            //             <Text>등록완료</Text>
-            //         </Button>
-            //     </Footer>
-            // </Container>
             <Container style={{ 
                 flex: 1,
                 backgroundColor: color.whiteColor,
