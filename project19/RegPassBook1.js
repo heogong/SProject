@@ -65,7 +65,7 @@ class RegPassBook1 extends Component {
                 <Text style={styles.leftGuideTxt}>등록해주세요</Text>
               </View>
               <View style={styles.rightStepNumWrap}>
-                <Text style={styles.rightStepNum}>02</Text>
+                <Text style={styles.rightStepNum}>05</Text>
               </View>
             </View>
 
@@ -77,18 +77,27 @@ class RegPassBook1 extends Component {
                 <View style={styles.procBarOn} />
               </View>
               <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
+              </View>
+              <View style={styles.fx1}>
                <View style={styles.procBarOff} />
               </View>
             </View>
           </View>
 
-          <TouchableOpacity 
-            onPress={ () => alert("dddd")}
-            style={[styles.fx5, {borderColor : color.greyColor, borderWidth : 1}]}
-          >
-            <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConCenter]}>
-              <Image source={require("./img/ico-camera.png")} resizeMode="center"/>
-              <Text style={{color:color.defaultColor, fontSize: 13}}>등록하기</Text>
+          <TouchableOpacity style={localStyles.photoBoxWrap}>
+            <View style={localStyles.photoBox}>
+              <Icon name="ios-camera" style={localStyles.phototIcon} />
+              <Text style={localStyles.photoTxt}>등록하기</Text>
             </View>
           </TouchableOpacity>
 
@@ -104,5 +113,27 @@ class RegPassBook1 extends Component {
   }
 }
 
+const localStyles = StyleSheet.create({
+  photoBoxWrap: {
+    flex: 5,
+    borderColor : "#c9cacb",
+    borderWidth : 1,
+    marginTop: 18
+  },
+  photoBox: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  phototIcon: {
+    color: color.defaultColor,
+    fontSize: 60
+  },
+  photoTxt: {
+    fontSize: 16,
+    color: color.defaultColor,
+    fontWeight: "bold"
+  }
+});
 
 export default RegPassBook1;

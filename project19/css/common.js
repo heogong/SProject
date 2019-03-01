@@ -35,15 +35,27 @@ export const styles = StyleSheet.create({
     },
     greyFont : {
       color : color.greyColor,
-      fontSize : 15
+      fontSize : 14
     },
     whiteFont : {
       color : color.whiteColor,
-      fontSize : 15
+      fontSize : 14
+    },
+    blueFont: {
+      color : color.defaultColor,
+      fontSize : 14
+    },
+    // 메인 헤더
+    headerM: {
+      height: 55,
+      paddingTop : 0,
+      elevation: 0,
+      shadowOpacity: 0,
+      alignItems: "center"
     },
     // 상세 헤더
     header: {
-      height: 105,
+      height: 81,
       paddingTop : 0,
       elevation: 0,
       shadowOpacity: 0,
@@ -67,11 +79,17 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // 공통 Style
     // ----------------------------
+    // FooterTab
+    footTxt: {
+      fontSize: 12,
+      color: "#1e1e32",
+      marginTop: 3
+    },
     // Modal
     modalWrap: {
       marginLeft: 14,
       marginRight: 14,
-      height: 110,
+      height: 106,
       backgroundColor: color.whiteColor
     },
     modalContent: {
@@ -100,13 +118,40 @@ export const styles = StyleSheet.create({
       color: color.whiteColor,
       textAlign: "center"
     },
+    modalBtnNoFill: {
+      height: 36,
+      borderRadius: 0,
+      elevation: 0,
+      width: 124,
+      backgroundColor: color.whiteColor,
+      borderWidth: 1,
+      borderColor: color.defaultColor,
+      shadowOpacity: 0
+    },
+    modalBtnNoFillTxt: {
+      fontSize: 14,
+      flex: 1,
+      textAlign: "center",
+      fontWeight: "500",
+      color: color.defaultColor,
+      textAlign: "center"
+    },
     modalTopTxtWrap: {
       flex: 1,
       justifyContent: "center"
     },
+    modalTop2LTxtWrap: {
+      flex: 3,
+      justifyContent: "center"
+    },
     modalTopTxt: {
       color: color.modalTxtColor,
-      fontSize: 14
+      fontSize: 14,
+      textAlign: "center"
+    },
+    modalBtnTwinWrap: {
+      flex: 2,
+      flexDirection: "row"
     },
     // Detail Guide Style
     leftGuideTxtWrap: {

@@ -39,55 +39,114 @@ class AgreeTermsService extends Component {
     };
   }
 
+  toggleSwitch() {
+    this.setState({
+      checkbox: !this.state.checkbox
+    });
+  }
+
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={{flex:1}}>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
             </Button>
           </Left>
-          <Body style={{flex:1, alignItems: 'center'}}>
-            <Title></Title>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
           </Body>
-          <Right style={{flex:1}}></Right>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <View style={[styles.mg20, {flex:1}]}>
+        <View style={styles.contentWrap}>
 
-          <View style={{flex:1}}>
-            <View style={[styles.mb10, {flexDirection : 'row'}]}>
-              <View style={{flex:1}}>
-                <H1>쿨리닉</H1>
-                <H1>이용약관에</H1>
-                <H1>동의해주세요</H1>
+          <View>
+            
+            <View style={styles.fxDirRow}>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>쿨리닉</Text>
+                <Text style={styles.leftGuideTxt}>이용약관에</Text>
+                <Text style={styles.leftGuideTxt}>동의해주세요</Text>
               </View>
-              <View style={{flex:1, alignItems : 'flex-end', justifyContent : 'flex-end'}}>
-                <H1 style={{color:color.defaultColor}}>03</H1>
+              <View style={styles.rightStepNumWrap}>
+                <Text style={styles.rightStepNum}>07</Text>
               </View>
             </View>
 
-            <View style={{flexDirection : 'row'}}>
-              <View style={{flex:1}}>
-                <View style={{height : 10, backgroundColor : color.defaultBackColor}} />
+            <View style={styles.procBarWrap}>
+              <View style={styles.fx1}>
+                <View style={styles.procBarOn} />
               </View>
-              <View style={{flex:1}}>
-                <View style={{height : 10, backgroundColor : color.defaultBackColor}} />
+              <View style={styles.fx1}>
+                <View style={styles.procBarOn} />
               </View>
-              <View style={{flex:1}}>
-                <View style={{height : 10, backgroundColor : color.defaultColor}} />
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
               </View>
             </View>
-          </View>
-
-          <View style={{flex:2, justifyContent:'center'}}>
             
           </View>
 
-          <View style={{flex:1, justifyContent:'center'}}>
-            <Button block info style={{elevation:0}}>
-              <Text>약관동의완료</Text>
+          <View style={[styles.alignItemsCenter, {paddingTop: 40, paddingBottom: 40, borderBottomWidth: 1, borderBottomColor: "#c9cacb"}]}>
+            <Text style={styles.greyFont}>쿨리닉 내의 원활한 서비스 이용을 위해서는</Text>
+            <Text style={styles.greyFont}>아래의 필수 항목에 대한 동의가 필요합니다</Text>
+          </View>
+
+          <View style={localStyles.termsWrap}>
+            <View style={[styles.fx2, styles.alignItemsStart, styles.justiConBetween]}>
+              <Text style={[styles.blueFont, styles.mb20]}>전자금융거래 이용약관</Text>
+              <Text style={[styles.blueFont, styles.mb20]}>개인정보 수집 및 이용안내</Text>
+              <Text style={[styles.blueFont, styles.mb20]}>전자금융거래 이용약관</Text>
+              <Text style={[styles.blueFont, styles.mb20]}>개인정보 수집 및 이용안내</Text>
+            </View>
+              
+            <View style={[styles.fx1, styles.fxDirRow]}>
+              <View style={[styles.fx1, styles.alignItemsEnd, styles.justiConBetween]}>
+                <View style={[styles.fxDirRow, styles.fx1]}>
+                  <CheckBox checked={this.state.checkbox}
+                    onPress={() => this.toggleSwitch()}
+                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                  />
+                </View>
+                <View style={[styles.fxDirRow, styles.fx1]}>
+                  <CheckBox checked={this.state.checkbox}
+                    onPress={() => this.toggleSwitch()}
+                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                  />
+                </View>
+                <View style={[styles.fxDirRow, styles.fx1]}>
+                  <CheckBox checked={this.state.checkbox}
+                    onPress={() => this.toggleSwitch()}
+                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                  />
+                </View>
+                <View style={[styles.fxDirRow, styles.fx1]}>
+                  <CheckBox checked={this.state.checkbox}
+                    onPress={() => this.toggleSwitch()}
+                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.footerBtnWrap}>
+            <Button style={[styles.btnDefault, styles.btnDefaultFill, styles.mb5]}>
+              <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>약관동의완료</Text>
             </Button>
           </View>
         </View>
@@ -96,5 +155,12 @@ class AgreeTermsService extends Component {
     );
   }
 }
+
+const localStyles = StyleSheet.create({
+  termsWrap: {
+    marginTop: 27,
+    flexDirection : "row"
+  }
+});
 
 export default AgreeTermsService;
