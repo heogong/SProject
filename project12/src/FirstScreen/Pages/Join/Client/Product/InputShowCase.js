@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { Alert, StyleSheet, ImageBackground, View, scrollToEnd } from 'react-native';
-import { Button, Container,  Footer, Text } from "native-base";
+import { Alert, Image, ImageBackground, Icon, ScrollView, TouchableOpacity, View } from 'react-native'
+import { Container, H1, H2, Button, Text, Footer, FooterTab, Item, Input,} from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import GetProdImageType from '~/Main/Functions/GetProdImgType'
@@ -14,27 +16,28 @@ import DelProductMst from '~/Main/Functions/DelProductMst'
 import CopyProductMst from '~/Main/Functions/CopyProductMst'
 import ProductShowCase from '~/Main/Components/ProductShowCase'
 
-import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
-import CustomButton from '~/Common/Components/CustomButton';
+import CustomHeader from '~/Common/Components/CustomHeader';
+import { styles, viewportWidth } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from '~/Common/Styles/colors';
 
 let DEL_IDX = null; // 제품 삭제 인덱스
 let CLIENT_PRODUCT_ID = null; // 제품 복제 아이디
+let CLIENT_PRD_ARRAY = []; //추가/복제 제품아이디 (뒤로가기 버튼 시 제품 한번에 삭제)
+
+const SLIDER_1_FIRST_ITEM = 0;
+
 class InputShowCase extends Component {
     constructor(props) {
       super(props);
 
       this.state = {
-        defaultImg : "https://i.pinimg.com/originals/b8/29/fd/b829fd8f5df3e09589575e4ca939bc9f.png",
-        data : [], // 첫번째 SHOW CASE 이미지 데이터
-        addData : [], // 추가 SHOW CASE 이미지 데이터
-        copyData : [], // 복제 SHOW CASE 이미지 데이터
-        newShowCase: [{
-            clientPrdId : null,
-            clientPrdNm : null,
-            clientPrdImgId : null
-        }], // 추가/복제 SHOW CASE
-        clientPrdArray : [], //추가/복제 제품아이디 (뒤로가기 버튼 시 제품 한번에 삭제)
-        btnAddAction : true // 추가/복제 여부
+        prdTypeImgData : [], // 첫번째 SHOW CASE 이미지 데이터
+        showCase : [], // 제품 데이터
+        slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
+
+        setProductName : false, // 제품명 입력 여부
+        productName : null
       };
     }
 
@@ -51,50 +54,40 @@ class InputShowCase extends Component {
         GetProdImageType(this.props.prodTypeId).then(result => {
             GetCommonData(result, this._drawProductImageType).then(async resultData => {
                 if(resultData !== undefined) {
+                    // console.log(resultData);
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
-                        this.setState({data : resultData.data});
+                        this.setState({prdTypeImgData : resultData.data});
                     }
                 }
             });
         });
     }
 
-    // 제품 마스터 초기 등록 
+    // 제품 마스터 초기 등록 및 추가
     _regProductMst = () => {
         RegProductMst(this.props.value.bizId, this.props.prodTypeId).then(result => {
             GetCommonData(result, this._regProductMst).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
-                        
-                        const newData = this.state.data.map((prodImgType, idx) => {
-                            return { ...prodImgType, clientPrdId: resultData.data.clientPrdId, fileUrl : null };
-                        });
 
-                        // 제품 아이디 array 추가
+                        const {prdTypeImgData, showCase} = this.state;
+
                         this.setState({
-                            clientPrdArray : this.state.clientPrdArray.concat([{
-                                clientPrdId : resultData.data.clientPrdId
+                            showCase : showCase.concat([{
+                                clientPrdId : resultData.data.clientPrdId,
+                                clientPrdNm : resultData.data.clientPrdNm,
+                                prdType : resultData.data.prdType,
+                                prdTypeImg : resultData.data.prdTypeImg,
+                                imgTypeArray : prdTypeImgData
                             }])
                         })
 
-                        // 화면 로드 시 초기 생성된 카드 clientPrdId 세팅
-                        if(this.state.newShowCase.length == 0 ) {
-                            this.setState({ 
-                                data: newData
-                            });
-                        } else {
-                            // showCase 추가 후 마지막 배열에 clientPrdId 세팅
-                            const addClientPrdShowCase = this.state.newShowCase.map((showCase, sidx) => {
-                                return (sidx == this.state.newShowCase.length - 1) ? { ...showCase, clientPrdId: resultData.data.clientPrdId } : showCase;
-                            });
+                        CLIENT_PRD_ARRAY = CLIENT_PRD_ARRAY.concat({
+                            clientPrdId : resultData.data.clientPrdId
+                        });
 
-                            this.setState({
-                                addData: newData,
-                                newShowCase: addClientPrdShowCase
-                            });
-                        }
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -113,16 +106,17 @@ class InputShowCase extends Component {
                     if(ResultBool) {
 
                         this.setState({ 
-                            btnAddAction : false,
-                            newShowCase: this.state.newShowCase.concat([{ 
+                            showCase: this.state.showCase.concat([{ 
                                 clientPrdId : resultData.data.clientPrdId,
-                                clientPrdNm : resultData.data.clientPrdNm
+                                clientPrdNm : resultData.data.clientPrdNm,
+                                prdType : resultData.data.prdType,
+                                prdTypeImg : resultData.data.prdTypeImg,
+                                imgTypeArray : resultData.data.images
                             }]),
-                            //defaultImg : "http://img.asiatoday.co.kr/file/2018y/03m/19d/20180319001047295_1521424194_1.jpg?1521424194"
-                            copyData :  resultData.data.images,
-                            clientPrdArray : this.state.clientPrdArray.concat([{
-                                clientPrdId : resultData.data.clientPrdId
-                            }])
+                        });
+
+                        CLIENT_PRD_ARRAY = CLIENT_PRD_ARRAY.concat({
+                            clientPrdId : resultData.data.clientPrdId
                         });
 
                     } else {
@@ -135,15 +129,15 @@ class InputShowCase extends Component {
 
     // 제품 삭제
     _delProductMst = () => {
-        DelProductMst(this.state.newShowCase[DEL_IDX].clientPrdId).then(result => {
+        DelProductMst(this.state.showCase[DEL_IDX].clientPrdId).then(result => {
             GetCommonData(result, this._delProductMst).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
                         this.setState({ 
-                            newShowCase: this.state.newShowCase.filter((s, sidx) => DEL_IDX !== sidx),
-                            clientPrdArray : this.state.clientPrdArray.filter((s, sidx) => DEL_IDX !== sidx),
+                            showCase: this.state.showCase.filter((s, sidx) => DEL_IDX !== sidx),
                         })
+                        CLIENT_PRD_ARRAY = CLIENT_PRD_ARRAY.filter((s, sidx) => DEL_IDX !== sidx)
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -153,8 +147,8 @@ class InputShowCase extends Component {
     }
 
     // 제품 array 삭제(등록된 제품 뒤로가기 시 한번에 삭제)
-    _delArrayProductMst = async () => {
-        await this.state.clientPrdArray.map((client) => {
+    _delArrayProductMst = () => {
+        CLIENT_PRD_ARRAY.map((client) => {
             DelProductMst(client.clientPrdId).then(result => {
                 GetCommonData(result, this._delArrayProductMst).then(async resultData => {
                     if(resultData !== undefined) {
@@ -166,27 +160,17 @@ class InputShowCase extends Component {
                 });
             });
         });
-        await Actions.InputProdType();
+        Actions.InputProdType();
     }
 
    // showCase 카드 추가
    _handleAddShowCase = () => {
-        this.setState({
-            btnAddAction : true,
-            newShowCase: this.state.newShowCase.concat([{
-                clientPrdId : null, 
-                clientPrdNm : null,
-                clientPrdImgId : null
-            }])
-        });
-
         this._regProductMst();
-       //this.showCase.scrollToEnd();
     }
 
     // showCase 카드 복사
     _handleCopyShowCase = (idx) => () => {
-        CLIENT_PRODUCT_ID = this.state.newShowCase[idx].clientPrdId;
+        CLIENT_PRODUCT_ID = this.state.showCase[idx].clientPrdId;
         this._copyProductMst();
     }
 
@@ -235,41 +219,114 @@ class InputShowCase extends Component {
         )
     }
 
+
+
+    _renderItem = ({item, index}) => {
+        console.log("renderItem : ", item)
+        return (
+            <ProductShowCase
+                key={index}
+                index={index}
+                item={item}
+                handleAddShowCase={ this._handleAddShowCase }
+                handleCopyShowCase={ this._handleCopyShowCase }
+                handleRemoveShowCase={ this._handleRemoveShowCase }
+            />
+        );
+      }
+
     render() {
         return (
-            <Container>
-                <CustomBlockWrapper
-                    title="제품 등록"
-                    customAction={this._handleBackAction}
-                >
-                    {this.state.newShowCase.map((showCase, idx) =>(
-                        <ProductShowCase
-                            defaultImg={ this.state.defaultImg }
-                            data={ (this.state.btnAddAction) ? this.state.addData : this.state.copyData }
-                            clientPrdId={ showCase.clientPrdId }
-                            clientPrdNm={ showCase.clientPrdNm } 
-                            clientPrdImgId={ showCase.clientPrdImgId } 
-                            handleCopyShowCase={ this._handleCopyShowCase }
-                            handleRemoveShowCase={ this._handleRemoveShowCase }
-                            index={ idx }
-                        />
-                    ))}
-                </CustomBlockWrapper>
+            // <Container>
+            //     <CustomBlockWrapper
+            //         title="제품 등록"
+            //         customAction={this._handleBackAction}
+            //     >
+            //         {this.state.newShowCase.map((showCase, idx) => (
+            //             <ProductShowCase
+            //                 defaultImg={ this.state.defaultImg }
+            //                 data={ (this.state.btnAddAction) ? this.state.addData : this.state.copyData }
+            //                 clientPrdId={ showCase.clientPrdId }
+            //                 clientPrdNm={ showCase.clientPrdNm } 
+            //                 clientPrdImgId={ showCase.clientPrdImgId } 
+            //                 handleCopyShowCase={ this._handleCopyShowCase }
+            //                 handleRemoveShowCase={ this._handleRemoveShowCase }
+            //                 index={ idx }
+            //             />
+            //         ))}
+            //     </CustomBlockWrapper>
 
-                <Footer>
-                    <Button onPress={ this._handleAddShowCase }>
-                        <Text>추가</Text>
-                    </Button>
-                    <Button onPress={ this._nextButton }>
-                        <Text>등록완료</Text>
-                    </Button>
-                </Footer>
+            //     <Footer>
+            //         <Button onPress={ this._handleAddShowCase }>
+            //             <Text>추가</Text>
+            //         </Button>
+            //         <Button onPress={ this._nextButton }>
+            //             <Text>등록완료</Text>
+            //         </Button>
+            //     </Footer>
+            // </Container>
+            <Container style={{ 
+                flex: 1,
+                backgroundColor: color.whiteColor,
+                paddingLeft: 26
+            }}>
+              <CustomHeader customAction={this._handleBackAction}/>
+      
+              <ScrollView showsVerticalScrollIndicator={false}>
+      
+                <View style={[styles.mb15, {paddingRight : 26}]}>
+                  <View style={[styles.mb10, styles.fxDirRow]}>
+                    <View style={styles.fx1}>
+                      <H1>제품의</H1>
+                      <H1>상세정보를</H1>
+                      <H1>입력해주세요</H1>
+                    </View>
+                    <View style={[styles.fx1, styles.alignItemsEnd, styles.justiConEnd]}>
+                      <H1 style={{color:color.defaultColor}}>03</H1>
+                    </View>
+                  </View>
+                  <View style={{height : 10, backgroundColor : color.defaultColor }} />
+                </View>
+      
+                <Carousel
+                    renderItem={this._renderItem}
+                    sliderWidth={viewportWidth}
+                    activeSlideAlignment={'start'}
+                    itemWidth={itemWidth}
+                    data={this.state.showCase}
+                    firstItem={this.state.slider1ActiveSlide}
+                    onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
+                >
+                </Carousel>
+                  
+              </ScrollView>
+      
+              <Footer style={{marginRight : 26, elevation: 0}}>
+                <FooterTab>
+                  <Button 
+                    style={[styles.btnDefault, {marginTop : 5}]}
+                    block info bordered onPress={ () => alert("결제카드등록")}>
+                    <Text>제품등록완료</Text>
+                  </Button>
+                </FooterTab>
+              </Footer>
+                
             </Container>
         )
     }
 }
 
+function wp (percentage, space) {
+    const value = (percentage * (viewportWidth - space)) / 100;
+    return Math.round(value);
+}
+  
+// 메인 상품 카드 사이즈
+const slideWidth = wp(85, 26);
+const itemHorizontalMargin = wp(2, 0);
+const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
+  
 let mapStateToProps = (state) => {
     return {
         value: state.BIZ

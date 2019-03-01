@@ -179,20 +179,22 @@ const PAGE = () => (
       <Scene key="ClientIndex" component={ClientIndex} type={ActionConst.RESET} />
       <Scene key="ListBusinessPlace" component={JoinListBusinessPlace} type={ActionConst.RESET} />
       
+      {/* 사업장등록 */}
       <Scene key="RegBusinessPlaceIndex"  component={RegBusinessPlaceIndex} />
       <Scene key="RegBusinessPlace"  component={RegBusinessPlace} />
-      <Scene key="SetBusinessPlace"  component={SetBusinessPlace} />
-      <Scene key="SetAddress" component={SetAddress} />
-      <Scene key="SearchAddress" initial component={SearchAddress} />
+      <Scene key="SetBusinessPlace" component={SetBusinessPlace} />
+      <Scene key="SetAddress"  component={SetAddress} />
+      <Scene key="SearchAddress"  component={SearchAddress} />
 
       {/* <Scene key="ViewBusinessPlace" hideNavBar component={ViewBusinessPlace} title="사업장 조회"/> */}
 
-      <Scene key="InputProdType" component={InputProdType} type={ActionConst.RESET} />
-      <Scene key="InputProdInfo" component={InputProdInfo} title="제품 등록" onRight={()=>{}} rightTitle={'Save'}/>
+      {/* 제품 등록 */}
+      <Scene key="InputProdType" initial component={InputProdType} type={ActionConst.RESET} />
+      <Scene key="InputProdInfo" component={InputProdInfo} onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" component={InputProdImage} type={ActionConst.RESET} />
 
       {/* 제품 쇼케이스  등록 */}
-      <Scene key="InputShowCase" component={InputShowCase} />
+      <Scene key="InputShowCase"  component={InputShowCase} />
 
       {/* 파트너 - A/S 보고서 등록 */}
       <Scene key="RegAsBeforeReport" component={RegReportBeforePic} />
