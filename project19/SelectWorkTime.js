@@ -136,11 +136,17 @@ class SelectWorkTime extends Component {
                 
               ))}
             </View>
-
-            <View>
-              <H1>00</H1>
-              <H1>00</H1>
-              <H1>00</H1>
+            
+            <View style={{flex: 1}}>
+              <View style={[styles.fx1, styles.fxDirRow, styles.alignItemsCenter]}>
+                <TouchableOpacity onPress={ () => alert("Time1")} style={localStyles.timeTxtWrap}>
+                  <Text style={localStyles.timeTxt}>09:30</Text>
+                </TouchableOpacity>
+                <Text style={[localStyles.timeTxt, {textAlign: "center", flex: 1, color: color.greyColor}]}>~</Text>
+                <TouchableOpacity onPress={ () => alert("Time1")} style={localStyles.timeTxtWrap}>
+                  <Text style={localStyles.timeTxt}>09:30</Text>
+                </TouchableOpacity>
+              </View>
             </View>
 
             <View style={localStyles.bottomTxtWrap}>
@@ -224,6 +230,19 @@ const localStyles = StyleSheet.create({
     alignItems: "center",
     marginTop: 35,
     marginBottom: 17
+  },
+  timeTxtWrap: {
+    flex: 2,
+    borderWidth: 2,
+    borderColor: color.defaultColor,
+    alignItems: "center",
+    paddingTop: 10,
+    paddingBottom: 10
+  },
+  timeTxt: {
+    fontSize: 37,
+    color: color.defaultColor,
+    fontWeight: "bold"
   }
 });
 
