@@ -202,7 +202,7 @@ class InvaildId extends Component {
 
 const localStyles = StyleSheet.create({
   idPwFindTabWrap: {
-    flex: 2,
+    flex: 3,
     marginTop: 38
   },
   inputBoxWrap: {

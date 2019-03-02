@@ -38,11 +38,11 @@ class Intro extends Component {
 
   render() {
     return (
-      <Container style={styles.containerInnerPd}>
+      <Container style={styles.container}>
         <View style={styles.fx1}>
 
-          <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConCenter, styles.mb20]}>
-            <Image source={require('./img/intro-logo.png')} resizeMode='contain' style={{width : 132}} />
+          <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConCenter]}>
+            <Image source={require('./img/intro-logo.png')} resizeMode='contain' style={{width : 132, flex: 15}} />
             <Text style={localStyles.versionTxt}>Coolonic Ver. 1.00</Text>
           </View>
           
@@ -54,10 +54,10 @@ class Intro extends Component {
 }
 
 const localStyles = StyleSheet.create({
-  versionTxt: {
+    versionTxt: {
     fontSize: 14,
     color: '#1e1e32',
-    top: 100
+    flex: 1
   }
 });
 

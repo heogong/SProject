@@ -42,36 +42,33 @@ class SelectUserTypejs extends Component {
   render() {
     return (
       <Container style={styles.containerInnerPd}>
-        <ScrollView style={styles.fx1}>
 
-          <View style={[styles.fx1, styles.alignItemsCenter]}>
-            <Image source={require('./img/intro-logo.png')} resizeMode='contain' style={{width : 136}} />
-          </View>
+        <View style={[styles.fx3, styles.alignItemsCenter, styles.alignItemsCenter]}>
+          <Image source={require('./img/intro-logo.png')} resizeMode='contain' style={{width : 136, flex: 1}} />
+        </View>
 
-          <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
+        <View style={[styles.fx2, styles.alignItemsCenter]}>
 
-            <TouchableOpacity  style={[styles.mb15, localStyles.typeBox]} onPress={ () => alert("USER")}>
-              <View style={styles.alignItemsCenter}>
-                <H1 style={localStyles.typetxt}>USER · 유저</H1>
-                <Text style={localStyles.typeDetailTxt}>A/S 서비스를 이용하시겠어요?</Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity  style={[styles.mb20, localStyles.typeBox]} onPress={ () => alert("PARTNER")}>
-              <View style={styles.alignItemsCenter}>
-                <H1 style={localStyles.typetxt}>PARTNER · 파트너</H1>
-                <Text style={localStyles.typeDetailTxt}>제품을 수리 하시겠어요?</Text>
-              </View>
-            </TouchableOpacity>
-
-            <View>
-              <TouchableOpacity onPress={ () => alert("비회원으로 A/S 신청하기")}>
-                <Text style={localStyles.outsidelTxt}>비회원으로 A/S 신청하기</Text>
-              </TouchableOpacity>
+          <TouchableOpacity  style={[styles.mb15, localStyles.typeBox]} onPress={ () => alert("USER")}>
+            <View style={styles.alignItemsCenter}>
+              <Text style={localStyles.typetxt}>USER · 유저</Text>
+              <Text style={localStyles.typeDetailTxt}>A/S 서비스를 이용하시겠어요?</Text>
             </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity  style={[styles.mb20, localStyles.typeBox]} onPress={ () => alert("PARTNER")}>
+            <View style={styles.alignItemsCenter}>
+              <Text style={localStyles.typetxt}>PARTNER · 파트너</Text>
+              <Text style={localStyles.typeDetailTxt}>제품을 수리 하시겠어요?</Text>
+            </View>
+          </TouchableOpacity>
+
+          <View>
+            <TouchableOpacity onPress={ () => alert("비회원으로 A/S 신청하기")}>
+              <Text style={localStyles.outsidelTxt}>비회원으로 A/S 신청하기</Text>
+            </TouchableOpacity>
           </View>
-          
-        </ScrollView>
+        </View>
 
       </Container>
     );

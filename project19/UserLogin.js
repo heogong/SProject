@@ -58,13 +58,13 @@ class UserLogin extends Component {
           </Body>
           <Right style={styles.headerRightWrap}></Right>
         </Header>
-
+        
         <View style={styles.fx1}>
 
-          <View style={[styles.fx1, styles.mb13, styles.alignItemsCenter, styles.justiConCenter]}>
-            <Image source={require('./img/bank-bg02.png')} resizeMode='center' style={{height: logoHeight}} />
+          <View style={[styles.fx2, styles.alignItemsCenter, styles.justiConCenter]}>
+            <Image source={require('./img/bank-bg02.png')} resizeMode='center' style={{height: logoHeight, flex: 1}} />
           </View>
-          <View style={[styles.fx5, styles.justiConCenter]}>
+          <View style={styles.fx5}>
             <Text style={[styles.mb13, {textAlign: "center", fontSize: 13, color: "#8e8e98"}]}>쿨리닉의 회원이 되시면 다양한 혜택을 누리실 수 있습니다</Text>
             <View style={localStyles.inputBoxWrap}>
               <Item regular style={[styles.mb12, styles.inputWhBackWhBo]}>

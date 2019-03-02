@@ -42,6 +42,7 @@ class PartnerMain extends Component {
         tab1: false,
         tab2: false,
         tab3: true,
+        tab4: true,
         slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
         wait : true,
         data : [
@@ -276,33 +277,44 @@ class PartnerMain extends Component {
             </View>
         </ScrollView>
 
-        <Footer style={{height: 36}}>
-            <FooterTab>
-                <Button vertical active={this.state.tab1} onPress={() => this.setState({wait:true})}>
-                    <Image 
-                        source={require("./img/ico-camera.png")}
-                        style={{height : 30, width : 34}} />
-                    <Text style={styles.footTxt}>홈으로</Text>
-                </Button>
-                <Button vertical active={this.state.tab2} onPress={() => this.setState({wait:false})}>
-                    <Image 
-                        source={require("./img/ico-camera.png")}
-                        style={{height : 30, width : 34}} />
-                    <Text style={styles.footTxt}>A/S 매칭</Text>
-                </Button>
-                <Button vertical active={this.state.tab3} onPress={() =>  alert("tab4")}>
-                    <Image 
-                        source={require("./img/ico-camera.png")}
-                        style={{height : 30, width : 34}} />
-                    <Text style={styles.footTxt}>보고서</Text>
-                </Button>
-                <Button vertical active={this.state.tab3} onPress={() =>  alert("tab4")}>
-                    <Image 
-                        source={require("./img/ico-camera.png")}
-                        style={{height : 30, width : 34}} />
-                    <Text style={styles.footTxt}>더보기</Text>
-                </Button>
-                
+        <Footer style={{shadowOpacity: 0.3}}>
+            <FooterTab style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
+                <View style={styles.fx1}>
+                    <Button vertical active={this.state.tab1} onPress={() => this.setState({wait:true})}
+                        style={styles.noPadding}>
+                        <Image 
+                            source={require("./img/ico-camera.png")}
+                            style={{height : 30, width : 34}} />
+                        <Text style={styles.footTxt}>홈으로</Text>
+                    </Button>
+                </View>
+                <View style={styles.fx1}>
+                    <Button vertical active={this.state.tab2} onPress={() => this.setState({wait:false})}
+                        style={styles.noPadding}>
+                        <Image 
+                            source={require("./img/ico-camera.png")}
+                            style={{height : 30, width : 34}} />
+                        <Text style={styles.footTxt}>A/S 매칭</Text>
+                    </Button>
+                </View>
+                <View style={styles.fx1}>
+                    <Button vertical active={this.state.tab3} onPress={() => this.setState({wait:false})}
+                        style={styles.noPadding}>
+                        <Image 
+                            source={require("./img/ico-camera.png")}
+                            style={{height : 30, width : 34}} />
+                        <Text style={styles.footTxt}>보고서</Text>
+                    </Button>
+                </View>
+                <View style={styles.fx1}>
+                    <Button vertical active={this.state.tab4} onPress={() =>  alert("tab4")}
+                        style={styles.noPadding}>
+                        <Image 
+                            source={require("./img/ico-camera.png")}
+                            style={{height : 30, width : 34}} />
+                        <Text style={styles.footTxt}>더보기</Text>
+                    </Button>
+                </View>
             </FooterTab>
         </Footer>
 

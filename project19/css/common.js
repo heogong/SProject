@@ -104,7 +104,7 @@ export const styles = StyleSheet.create({
       height: 36,
       borderRadius: 0,
       elevation: 0,
-      width: 124,
+      width: 130,
       backgroundColor: color.defaultColor,
       borderWidth: 1,
       borderColor: color.defaultColor,
