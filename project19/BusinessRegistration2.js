@@ -66,12 +66,10 @@ class BusinessRegistration2 extends Component {
               source={require("./img/license-bg01.png")} 
               resizeMode="contain"
               style={[styles.alignItemsCenter, styles.justiConCenter, {height : 'auto', width : '100%'}]}> 
-              <View style={{height:'80%', width : '60%', borderColor : "#c9cacb", borderWidth : 2, elevation: 2}}> 
-                <Image source={require("./img/license-bg02.png")} 
-                  style={{height:'100%', width : '100%'}}
-                  resizeMode="contain"
-                />
-              </View>
+              <Image source={require("./img/license-bg02.png")} 
+                style={{height:'80%', width : '60%'}}
+                resizeMode="contain"
+              />
             </ImageBackground>
           </View>
 

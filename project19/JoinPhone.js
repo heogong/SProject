@@ -79,6 +79,9 @@ class JoinPhone extends Component {
               <View style={styles.fx1}>
                <View style={styles.procBarOn} />
               </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOff} />
+              </View>
             </View>
             
           </View>
