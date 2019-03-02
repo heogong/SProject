@@ -196,8 +196,11 @@ const PAGE = () => (
 
 
       {/* 클라이언트 - AS 신청 제품 타입 */}
-      <Scene key="AfterServiceProdTypeList" component={AfterServiceProdTypeList}/>
+      <Scene key="AfterServiceProdTypeList" component={AfterServiceProdTypeList} />
       <Scene key="AfterServiceProdList" component={AfterServiceProdList} />
+      <Scene key="AfterServiceApplyProduct" component={AfterServiceApplyProduct} />
+      <Scene key="AfterServiceApplyProductCheck" component={AfterServiceApplyProductCheck} />
+      <Scene key="AfterServiceApplyProductComplete" component={AfterServiceApplyProductComplete} />
 
       {/* <Scene key="InputProdInfo" component={InputProdInfo} onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" component={InputProdImage} type={ActionConst.RESET} /> */}
@@ -242,9 +245,9 @@ const PAGE = () => (
               <Scene key="ClientHome" component={ClientHome} />
               {/* <Scene key="AfterServiceProdTypeList" hideNavBar component={AfterServiceProdTypeList} title="사업장 별 제품 타입 조회"/> */}
               {/* <Scene key="AfterServiceProdList" hideNavBar component={AfterServiceProdList} title="제품 조회"/> */}
-              <Scene key="AfterServiceApplyProduct" hideNavBar component={AfterServiceApplyProduct} title="AS 신청"/>
-              <Scene key="AfterServiceApplyProductCheck" hideNavBar component={AfterServiceApplyProductCheck} title="AS 신청 확인"/>
-              <Scene key="AfterServiceApplyProductComplete" hideNavBar component={AfterServiceApplyProductComplete} title="AS 신청 완료"/>
+              {/* <Scene key="AfterServiceApplyProduct" hideNavBar component={AfterServiceApplyProduct} title="AS 신청"/> */}
+              {/* <Scene key="AfterServiceApplyProductCheck" hideNavBar component={AfterServiceApplyProductCheck} title="AS 신청 확인"/> */}
+              {/* <Scene key="AfterServiceApplyProductComplete" hideNavBar component={AfterServiceApplyProductComplete} title="AS 신청 완료"/> */}
             </Stack>
 
             {/* 나의제품 */}

@@ -1,19 +1,25 @@
 import React, { Component } from "react";
-import { Alert } from 'react-native';
-import { Icon, Picker, Text, Textarea } from "native-base";
+import { Alert, Image, View } from 'react-native'
+import { ActionSheet, Container, Icon, Picker, Root, Text, Textarea } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+
+import { Actions } from "react-native-router-flux";
 
 import GetProduct from '~/Main/Functions/GetProduct'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import GetAfterServiceCase from '~/Main/Functions/GetAfterServiceCase';
 import RegAfterService from '~/Main/Functions/RegAfterService';
+import ListCard from '~/FirstScreen/Functions/Card/ListCard';
+import PaymentAfterService from '~/Main/Functions/PaymentAfterService';
 
 import CustomButton from '~/Common/Components/CustomButton';
-import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
-import ProductShowCase from '~/Main/Components/ProductShowCase';
-import { Actions } from "react-native-router-flux";
+import CustomHeader from '~/Common/Components/CustomHeader';
+import { styles } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from '~/Common/Styles/colors';
 
+let SELECT_INDEX = null; // 카드 선택 index
 class ApplyBusinessProduct extends Component {
     constructor(props) {
       super(props);
@@ -28,7 +34,10 @@ class ApplyBusinessProduct extends Component {
         asRecvDsc : null,
         etcComment : null,
         asCaseData: [], // 제품 증상 데이터
-        selected: undefined
+        selected: undefined,
+        disabledBtn : true,
+        cardData : ["Option 0", "Option 1", "Option 2", "Delete", "Cancel"],
+        buttonTitle : '결제카드선택'
       };
     }
 
@@ -36,10 +45,22 @@ class ApplyBusinessProduct extends Component {
         this.setState({
             selected: value
         });
+
+        if(value == -1) {
+            this.setState({disabledBtn : true})
+        } else {
+
+            if(SELECT_INDEX !== null) {
+                if(this.state.cardData[SELECT_INDEX].billingKeyId > 0) {
+                    this.setState({disabledBtn : false})
+                }
+            } 
+        }
     }
 
     componentWillMount() {
         this._getAfterServiceCase();
+        this._getListCard();
     }
    
     componentDidMount() {
@@ -58,7 +79,7 @@ class ApplyBusinessProduct extends Component {
                             data: resultData.data,
                         });
                     } else {
-                        alert(resultData.resultMsg);
+                        alert("등록된 사업장 제품 조회 - "+resultData.resultMsg);
                     }
                 }
             });
@@ -68,7 +89,7 @@ class ApplyBusinessProduct extends Component {
     // AS 제품 증상 조회
     _getAfterServiceCase = () => {
         GetAfterServiceCase(207).then(result => {
-        //GetAfterServiceCase(this.props.clientPrdId).then(result => {
+        // GetAfterServiceCase(this.props.clientPrdId).then(result => {
             GetCommonData(result, this._getProduct).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -76,39 +97,29 @@ class ApplyBusinessProduct extends Component {
                     if(ResultBool) {
                         this.setState({asCaseData : resultData.data});
                     } else {
-                        alert(resultData.resultMsg);
+                        alert("AS 제품 증상 조회 - "+resultData.resultMsg);
                     }
                 }
             });
         });
     }
 
-    // AS 신청 API 호출
-    _regAfterService = () => {
-        const {asCaseData, selected, asRecvDsc, etcComment} = this.state
-
-        RegAfterService(
-            this.props.clientPrdId,
-            selected,
-            asRecvDsc, 
-            etcComment).then(result => {
-            GetCommonData(result, this._regAfterService).then(async resultData => {
+    // 내 결제카드 목록 조회
+    _getListCard = () => {
+        ListCard().then(result => {
+            GetCommonData(result, this._getListCard).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        // 증상내역 text
-                        asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm;
-                        // 신청 내역 확인 페이지 이동
-                        Actions.AfterServiceApplyProductCheck({
-                            clientPrdId: this.props.clientPrdId,
-                            asItemNm : asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm,
-                            asItemId : selected,
-                            asRecvDsc : asRecvDsc,
-                            etcComment : etcComment,
-                            asRecvId : resultData.data.asRecvId
+                        const newCard = resultData.data.map((card) => {
+                            return { ...card, text : `${card.cardName} [ ${card.cardNum} ]`};
                         });
-                       
+
+                        this.setState({ cardData: newCard.concat([
+                            { text : '카드 등록', icon: "ios-add-circle-outline", iconColor: "#25de5b", billingKeyId : -1 },
+                            { text : 'CANCLE', icon: "close", iconColor: "#fa213b", billingKeyId : 0 }
+                        ]) });
                     } else {
                         alert(resultData.resultMsg);
                     }
@@ -117,64 +128,207 @@ class ApplyBusinessProduct extends Component {
         });
     }
 
+    _nextButton = () => {
+        const {asCaseData, selected, asRecvDsc, etcComment, cardData} = this.state;
+
+        Actions.AfterServiceApplyProductCheck({
+            clientPrdId: this.props.clientPrdId,
+            asItemNm : asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm,
+            asItemId : selected,
+            asRecvDsc : asRecvDsc,
+            etcComment : etcComment,
+            billingKeyId : cardData[SELECT_INDEX].billingKeyId
+        });
+
+    }
+
+    // AS 신청 API 호출
+    // _regAfterService = () => {
+    //     const {asCaseData, selected, asRecvDsc, etcComment, cardData} = this.state
+
+    //     RegAfterService(
+    //         this.props.clientPrdId,
+    //         selected,
+    //         asRecvDsc, 
+    //         etcComment).then(result => {
+    //         GetCommonData(result, this._regAfterService).then(async resultData => {
+    //             if(resultData !== undefined) {
+    //                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+    //                 console.log(resultData);
+    //                 if(ResultBool) {
+    //                     // 증상내역 text
+    //                     asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm;
+    //                     // 신청 내역 확인 페이지 이동
+    //                     Actions.AfterServiceApplyProductCheck({
+    //                         clientPrdId: this.props.clientPrdId,
+    //                         asItemNm : asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm,
+    //                         asItemId : selected,
+    //                         asRecvDsc : asRecvDsc,
+    //                         etcComment : etcComment,
+    //                         asRecvId : resultData.data.asRecvId,
+    //                         billingKeyId : cardData[SELECT_INDEX].billingKeyId
+    //                     });
+    //                     // this._paymentAfterService(resultData.data.asRecvId);
+    //                 } else {
+    //                     alert("AS 신청 API 호출 - "+resultData.resultMsg);
+    //                 }
+    //             }
+    //         });
+    //     });
+    // }
+
+    
+
+
+    // AS 결제 요청
+    // _paymentAfterService = (asRecvId) => {
+    //     const {cardData} = this.state;
+
+    //     PaymentAfterService(cardData[SELECT_INDEX].billingKeyId, asRecvId).then(result => {
+    //         GetCommonData(result, this._paymentAfterService).then(async resultData => {
+    //             if(resultData !== undefined) {
+    //                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+    //                 console.log(resultData);
+    //                 if(ResultBool) {
+    //                     Actions.AfterServiceApplyProductComplete({
+    //                         asRecvId : asRecvId
+    //                     })
+    //                 } else {
+    //                     alert("AS 결제 요청 - "+resultData.resultMsg);
+    //                 }
+    //             }
+    //         });
+    //     })
+    // }
+
+    // 입력완료 확인
+    // _regAfterServiceConfirm = () => {
+    //     Alert.alert(
+    //         '',
+    //         '입력하신 사항이 정확한가요?\n확정하신경우 출장비 결제',
+    //         [
+    //             {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+    //             {
+    //                 text: '네', onPress: () => (
+    //                     this._regAfterService()
+    //                 ) 
+    //             },
+    //         ],
+    //         { cancelable: false }
+    //     )
+    // }
+
     render() {
         return (
-            <CustomBlockWrapper
-                title="A/S 제품"
-            >
-                <ProductShowCase
-                    defaultImg={ this.state.data.prdTypeImg.fileUrl }
-                    data={ this.state.data.images }
-                    clientPrdId={ this.state.data.clientPrdId }
-                    clientPrdNm={ this.state.data.clientPrdNm } 
-                    index={ 0 }
-                    copyBtn={ false }
-                    viewProduct={ true }
-                />
+            <Root>
+                <Container style={styles.containerInnerPd}>
+                    <CustomHeader title={this.props.clientPrdNm} />
 
-                <Picker
-                    mode="dropdown"
-                    iosIcon={<Icon name="ios-arrow-down-outline" />}
-                    style={{ width: undefined }}
-                    placeholder="Select your SIM"
-                    placeholderStyle={{ color: "#bfc6ea" }}
-                    placeholderIconColor="#007aff"
-                    selectedValue={this.state.selected}
-                    onValueChange={this.onValueChange.bind(this)}
-                >
-                    <Picker.Item label=" == 증상 선택 == " value={ -1 } />
-                    {this.state.asCaseData.map((asCase) => 
-                        <Picker.Item label={asCase.asItemNm} value={asCase.asItemId} />
-                    )}
-                </Picker>
+                    <View style={styles.contentWrap}>
+                        <View>
+                            <View style={styles.fxDirRow}>
+                                <View style={stylesReg.leftGuideTxtWrap}>
+                                    <Text style={stylesReg.leftGuideTxt}>증상 및</Text>
+                                    <Text style={stylesReg.leftGuideTxt}>상세정보를</Text>
+                                    <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
+                                </View>
+                                <View style={stylesReg.rightImgWrap}>
+                                    <Image source={{ uri : this.state.data.prdTypeImg.fileUrl }} style={{width: 76, height: 76}}/>
+                                </View>
+                            </View>
 
-                <Textarea 
-                    value={this.state.bizDsc}
-                    rowSpan={2} 
-                    bordered 
-                    placeholder="참고 사항"
-                    onChangeText={(text) => this.setState({asRecvDsc : text})}
-                />
-                <Textarea 
-                    value={this.state.bizDsc}
-                    rowSpan={5} 
-                    bordered 
-                    placeholder="제품 분석"
-                    onChangeText={(text) => this.setState({etcComment : text})}
-                />
+                            <View>
+                                <Picker
+                                    mode="dropdown"
+                                    iosIcon={<Icon name="arrow-down" />}
+                                    style={{ width: undefined }}
+                                    placeholder="Select your SIM"
+                                    placeholderStyle={{ color: "#bfc6ea" }}
+                                    placeholderIconColor="#007aff"
+                                    selectedValue={this.state.selected}
+                                    onValueChange={this.onValueChange.bind(this)}
+                                >
+                                    <Picker.Item label=" == 증상 선택 == " value={ -1 } />
+                                    {this.state.asCaseData.map((asCase, idx) => 
+                                        <Picker.Item key={idx} label={asCase.asItemNm} value={asCase.asItemId} />
+                                    )}
+                                </Picker>
 
-                <CustomButton
-                    styleWidth={ false }
-                    block={ true }
-                    info={ true }
-                    bordered={ true }
-                    disabled={ (this.state.selected == -1) ? true : false }
-                    onPress={this._regAfterService}>
-                    <Text>
-                        입력완료
-                    </Text>
-                </CustomButton>
-            </CustomBlockWrapper>
+                                <Textarea 
+                                    value={this.state.bizDsc}
+                                    onChangeText={(text) => this.setState({asRecvDsc : text})}
+                                    rowSpan={5} 
+                                    bordered placeholder="출장 시 참고사항(ex:주차공간이 협소합니다)" 
+                                />
+                            </View>
+                        </View>
+
+                        <View style={[styles.fx1, styles.justiConCenter]}>
+                            <Text style={{color:color.defaultColor}}>클리닉 제품 분석</Text>
+                            <View style={styles.fxDirRow}>
+                                <View style={styles.fx1}>
+                                    <Text style={styles.greyFont}>용 량 : </Text>
+                                    <Text style={styles.greyFont}>전 기 : </Text>
+                                    <Text style={styles.greyFont}>압축기 : </Text>
+                                </View>
+                                <View style={styles.fx1}/>
+                                <View style={styles.fx1}>
+                                    <Text style={styles.greyFont}>응축기 : </Text>
+                                    <Text style={styles.greyFont}>증발기 : </Text>
+                                    <Text style={styles.greyFont}>제조사 : </Text>
+                                </View>
+                                <View style={styles.fx1}/>
+                            </View>
+                        </View>
+
+                        <View style={styles.footerBtnWrap}>
+                            <CustomButton 
+                                onPress={() =>
+                                    ActionSheet.show(
+                                        {
+                                            options: this.state.cardData,
+                                            cancelButtonIndex: this.state.cardData.length - 1,
+                                            title: "결제카드"
+                                        },
+                                        buttonIndex => {
+                                            const { cardData, selected } = this.state;
+                                            //this.setState({ selectIndex : buttonIndex });
+                                            SELECT_INDEX = buttonIndex;
+
+                                            if(cardData[buttonIndex].billingKeyId > 0) {
+                                                this.setState({ 
+                                                    buttonTitle: cardData[buttonIndex].text,
+                                                    disabledBtn : (selected !== -1) ? false : true
+                                                });
+                                                // this._paymentAfterService();
+                                            } else if(cardData[buttonIndex].billingKeyId == -1) { // 카드 추가
+                                                Actions.CardInputInfo({regAsCard : true, getListCard: this._getListCard});
+                                            } else if(cardData[buttonIndex].billingKeyId == 0) { // cancle
+                                                this.setState({
+                                                    disabledBtn : true,
+                                                    buttonTitle : '결제카드선택'
+                                                })
+                                            }
+                                        })
+                                }
+                                edgeFill={true}
+                                backgroundColor={color.whiteColor}
+                            >
+                                {this.state.buttonTitle}
+                            </CustomButton>
+                                
+                            <CustomButton 
+                                onPress={this._nextButton}
+                                disabled={this.state.disabledBtn}
+                                edgeFill={true}
+                                fillTxt={true}
+                            >
+                                입력 완료
+                            </CustomButton>
+                        </View>
+                    </View>
+                </Container>
+            </Root>
         )
     }
 }

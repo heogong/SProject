@@ -51,21 +51,14 @@ class ListBusinessProductType extends Component {
         });
     }
     
-   // A/S 제품 타입 선택
-   _nextButton = (prodTypeId) => () => {
-        Actions.AfterServiceProdList({
-            bizId : this.props.bizId,
-            prodTypeId : prodTypeId
-        })
-    }
-
     _renderItem = ({item, index}) => (
         // <TouchableOpacity onPress={ () => this._nextButton(item.prdTypeId) }>
         <TouchableOpacity 
             onPress={ () => Actions.AfterServiceProdList({
                 bizId : this.props.bizId,
-                prodTypeId : item.prodTypeId
-            }) }>
+                prodTypeId : item.prdTypeId
+            }) }
+        >
             <View style={[styles.pd15, {backgroundColor : color.defaultColor, height : '100%'}]}>
                 <View style={styles.fx1}>
                 <H1 style={{color : color.whiteColor}}>{ item.prdType.prdTypeKoNm }</H1>
