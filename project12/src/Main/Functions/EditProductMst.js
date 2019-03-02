@@ -9,6 +9,8 @@ function EditProductMstUrl(prodId, prodNm) {
 }
 
 const EditProductMst = async (prodId, prodNm) => {
+
+  console.log(EditProductMstUrl(prodId, prodNm))
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 

@@ -53,34 +53,39 @@ class InputAccount extends Component {
 
     Login(this.props.value, undefined).then(async result => {
       console.log(result);
-      const ResultBool = await (result.error) ? false : true; // API 결과 여부 확인
 
-      // 로그인 성공
-      if(ResultBool) {
-        // 메인 페이지 이동
+      if(resultData !== undefined) {
+        const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
 
-        this.props.onSetUsrId(this.state.usrId);  // 리덕스 사용자 ID SET 
-        this.props.onSetUsrPw(this.state.usrPw);  // 리덕스 사용자 비밀번호 SET
+        // 로그인 성공
+        if(ResultBool) {
+          // 메인 페이지 이동
 
-        this.props.onSetAccessToken(result.access_token); // 리덕스 액세스 토큰 SET
-        this.props.onSetRefreshToken(result.refresh_token); // 리덕스 갱신 토큰 SET
+          this.props.onSetUsrId(this.state.usrId);  // 리덕스 사용자 ID SET 
+          this.props.onSetUsrPw(this.state.usrPw);  // 리덕스 사용자 비밀번호 SET
 
-        await AsyncStorage.setItem('AccessToken', result.access_token); // AsyncStorage 토큰 저장
-        await AsyncStorage.setItem('RefreshToken', result.refresh_token); // AsyncStorage 갱신 토큰 저장
+          this.props.onSetAccessToken(result.access_token); // 리덕스 액세스 토큰 SET
+          this.props.onSetRefreshToken(result.refresh_token); // 리덕스 갱신 토큰 SET
 
-        this._getUserInfo();
+          await AsyncStorage.setItem('AccessToken', result.access_token); // AsyncStorage 토큰 저장
+          await AsyncStorage.setItem('RefreshToken', result.refresh_token); // AsyncStorage 갱신 토큰 저장
 
-      } else {
-        Alert.alert(
-          '',
-          `${result.resultMsg} - 회원가입 페이지로 이동하시겠습니까?`,
-          [
-            // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-            {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: '네', onPress: () => Actions.JoinCustomerType()},
-          ],
-          { cancelable: false }
-        )
+          this._getUserInfo();
+
+        } else {
+          Alert.alert(
+            '',
+            `${result.resultMsg} - 회원가입 페이지로 이동하시겠습니까?`,
+            [
+              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+              {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              {text: '네', onPress: () => Actions.JoinCustomerType()},
+            ],
+            { cancelable: false }
+          )
+        }
+      } else { 
+        alert(resultData.resultMsg);
       }
     });
   }
