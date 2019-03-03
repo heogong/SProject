@@ -76,7 +76,7 @@ class ListApplyAfterService extends Component {
         <View style={styles.fxDirRow}>
           <View style={[styles.fx1, styles.pd10]}>
             <Button style={styles.modalBtnNoFill} onPress={this._toggleModal1}>
-                <Text style={styles.modalBtnNoFillTxt}>매칭취소</Text>
+                <Text style={styles.modalBtnNoFillTxt}>취소</Text>
             </Button>
           </View>
           <View style={[styles.fx1, styles.pd10]}>
