@@ -42,13 +42,7 @@ class ListApplyAfterService extends Component {
 
   product = () => (
     (this.state.beforeMatch) ? (
-      <View style={[
-        styles.fxDirRow, 
-        styles.justiConCenter, 
-        styles.mb10, 
-        styles.pd15, 
-        {backgroundColor : color.defaultColor}
-      ]}>
+      <View style={localStyles.listFillBoxWrap}>
           <View style={[styles.fx3, styles.alignItemsStart, styles.justiConCenter]}>
             <Image 
               source={require("./img/license-depart01.png")} 
@@ -61,9 +55,9 @@ class ListApplyAfterService extends Component {
             style={[styles.justiConCenter, {flex:6}]
           }>
             <View>
-              <H3 style={[styles.mb10, {color : color.whiteColor}]}>업소용냉장고</H3>
-              <Text style={styles.whiteFont}>경기도 시흥시 산기대로</Text>
-              <Text style={styles.whiteFont}>한국산업기술대학교 305호</Text>
+              <H3 style={[styles.mb12, {fontsize: 18, color : color.whiteColor}]}>업소용냉장고</H3>
+              <Text style={localStyles.listDeTxt}>경기도 시흥시 산기대로</Text>
+              <Text style={localStyles.listDeTxt}>한국산업기술대학교 305호</Text>
             </View>
           </TouchableOpacity>
   
@@ -73,33 +67,21 @@ class ListApplyAfterService extends Component {
       </View>
     ) : (
 
-      <View style={[
-        styles.justiConCenter, 
-        styles.mb10, 
-        styles.pd15, 
-        {
-          backgroundColor : color.whiteColor,
-          borderColor : color.greyColor,
-          borderWidth : 1,
-          elevation : 1
-        }
-      ]}>
+      <View style={localStyles.listNoFillBoxWrap}>
         <View style={styles.alignItemsCenter}>
-          <Text style={{fontSize : 14}}>A/S 매칭을 수락하시겠습니까?</Text>
-          <Text style={{fontSize : 14}}>수락 후 1시간 30분 내에 도착하셔야 합니다</Text>
+          <Text style={styles.modalTopTxt}>A/S 매칭을 수락하시겠습니까?</Text>
+          <Text style={styles.modalTopTxt}>수락 후 1시간 30분 내에 도착하셔야 합니다</Text>
         </View>
 
         <View style={styles.fxDirRow}>
           <View style={[styles.fx1, styles.pd10]}>
-            <Button 
-              onPress={ () => this.setState({beforeMatch : true}) }
-              style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mb5]}>
-                <Text style={[styles.btnDefaultTxt, styles.btnDefaultNoFillTxt]}>매칭취소</Text>
+            <Button style={styles.modalBtnNoFill} onPress={this._toggleModal1}>
+                <Text style={styles.modalBtnNoFillTxt}>매칭취소</Text>
             </Button>
           </View>
           <View style={[styles.fx1, styles.pd10]}>
-            <Button style={[styles.btnDefault, styles.btnDefaultFill, styles.mb5]}>
-                <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>A/S출발</Text>
+            <Button style={styles.modalBtnFill} onPress={this._toggleModal1}>
+                <Text style={styles.modalBtnFillTxt}>A/S 출발</Text>
             </Button>
           </View>
         </View>
@@ -112,41 +94,39 @@ class ListApplyAfterService extends Component {
 
   render() {
     return (
-      <Container style={{
-        flex: 1,
-        backgroundColor: color.whiteColor,
-        paddingLeft : 26,
-        paddingRight : 26,
-      }}>
+      <Container style={styles.containerInnerPd}>
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>
             <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
-              <Image source={require("./images/btn_back_arrow.png")}/>
+              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
             </Button>
           </Left>
           <Body style={styles.headerCenterWrap}>
             <Title style={styles.headerTitleTxt}></Title>
           </Body>
-          <Right style={styles.headerRightWrap}/>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
 
         <ScrollView showsVerticalScrollIndicator={false}>
 
-          <View style={styles.mb15}>
-            <View style={styles.fxDirRow}>
-              <View style={styles.leftGuideTxtWrap}>
-                <Text style={styles.leftGuideTxt}>A/S신청</Text>
-                <Text style={styles.leftGuideTxt}>목록을 보고</Text>
-                <Text style={styles.leftGuideTxt}>수락해주세요</Text>
+          <View style={styles.contentWrap}>
+
+            <View>
+              <View style={{marginBottom: 38}}>
+                <View style={styles.leftGuideTxtWrap}>
+                  <Text style={styles.leftGuideTxt}>A/S신청</Text>
+                  <Text style={styles.leftGuideTxt}>목록을 보고</Text>
+                  <Text style={styles.leftGuideTxt}>수락해주세요</Text>
+                </View>
               </View>
-              </View>
+
+              { this.product() }
+              { this.product() }
+              { this.product() }
+              { this.product() }
+
+            </View>
           </View>
-
-          { this.product() }
-          { this.product() }
-          { this.product() }
-          { this.product() }
-
         </ScrollView>
 
       </Container>
@@ -160,5 +140,29 @@ function wp (percentage, space) {
 }
 
 const productImgSize = wp(24, 52);
+
+const localStyles = StyleSheet.create({
+  listDeTxt: {
+    fontSize: 13,
+    color: color.whiteColor
+  },
+  listFillBoxWrap: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 12,
+    padding: 15, 
+    backgroundColor : color.defaultColor,
+    height: 108
+  },
+  listNoFillBoxWrap: {
+    justifyContent: "center",
+    marginBottom: 12,
+    padding: 15, 
+    backgroundColor : color.whiteColor,
+    borderWidth: 1,
+    borderColor: color.defaultColor,
+    height: 108
+  }
+});
 
 export default ListApplyAfterService;
