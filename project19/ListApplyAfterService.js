@@ -69,7 +69,7 @@ class ListApplyAfterService extends Component {
 
       <View style={localStyles.listNoFillBoxWrap}>
         <View style={styles.alignItemsCenter}>
-          <Text style={styles.modalTopTxt}>A/S 매칭을 수락하시겠습니까?</Text>
+          <Text style={[styles.modalTopTxt, styles.mb5]}>A/S 매칭을 수락하시겠습니까?</Text>
           <Text style={styles.modalTopTxt}>수락 후 1시간 30분 내에 도착하셔야 합니다</Text>
         </View>
 
@@ -161,7 +161,7 @@ const localStyles = StyleSheet.create({
     backgroundColor : color.whiteColor,
     borderWidth: 1,
     borderColor: color.defaultColor,
-    height: 108
+    height: 106
   }
 });
 
