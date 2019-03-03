@@ -189,9 +189,7 @@ class InvaildId extends Component {
                     </Button>
                   </View>
                 )
-
               )
-              
             )
           }
            </View>

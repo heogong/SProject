@@ -47,12 +47,13 @@ class InputAccount extends Component {
   } 
 
   // 이메일 로그인 프로세스
-  async _Login() {
+   _login = async() => {
+    alert("login");
     await this.props.onSetUsrId(this.state.usrId);  // 리덕스 사용자 ID SET (await 절차식으로 진행)
     await this.props.onSetUsrPw(this.state.usrPw);  // 리덕스 사용자 비밀번호 SET (await 절차식으로 진행)
 
     Login(this.props.value, undefined).then(async result => {
-      console.log(result);
+      console.log("로그인 프로세스 - ", result);
 
       if(resultData !== undefined) {
         const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -137,7 +138,7 @@ class InputAccount extends Component {
             info={ true }
             bordered={ true }
             disabled={ this.state.btnDisabled }
-            onPress={() => this._Login()} >
+            onPress={this._login} >
             <Text>
               로그인
             </Text>

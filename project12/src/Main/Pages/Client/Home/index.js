@@ -65,10 +65,10 @@ const AfterServiceState = ({ asPrgsStatCd, status }) => (
         style={{height : stateImgSize, width : stateImgSize}} 
       />
       <Text 
-        style={ (asPrgsStatCd == status.VALUE) ? 
-        {color : color.defaultColor, fontSize : 15} : styles.greyFont}>
-        {/* A/S 완료 */}
-        {status.TEXT}
+        style={[(asPrgsStatCd == status.VALUE) ? {color : color.defaultColor} : styles.greyFont
+          ,{fontSize : 12}
+        ]}>
+          {status.TEXT}
       </Text>
   </View>
 );
@@ -306,7 +306,7 @@ class ClientHome extends Component {
               <View style={{backgroundColor : '#EAEAEA'}}>
                   <View style={localStyles.secondBox}>
                       <Text style={[styles.mb10, {textAlign:'center', color: color.defaultColor}]}>
-                        { (this.state.asPrgsYn == 'Y') ? "매칭된 A/S 업체가 출발했어요." : "고장난 제품의 A/S 신청을 해 보세요" }
+                        { (this.state.asPrgsYn == 'Y') ? this.state.asPrgsStatNm : "고장난 제품의 A/S 신청을 해 보세요" }
                       </Text>
                       <View style={styles.fxDirRow}>
 

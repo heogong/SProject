@@ -30,8 +30,9 @@ import NonMemberNoticeInfoService from './src/FirstScreen/Pages/Join/NonMember/N
 
 // 파트너
 import PartnerIndex from './src/FirstScreen/Pages/Join/Partner'; // 파트너 사업장 등록
-import JoinInputBizLicense from './src/FirstScreen/Pages/Join/Partner/InputBizLicense'; // 파트너 사업자등록증 등록
-import JoinInputPartnerInfo from './src/FirstScreen/Pages/Join/Partner/InputPartnerInfo'; // 파트너 사업자등록증 등록2
+import JoinInputBizLicense from './src/FirstScreen/Pages/Join/Partner/InputBizLicense'; // 파트너 사업자등록증 등록1
+import JoinTakeBizLicense from './src/FirstScreen/Pages/Join/Partner/TakeBizLicense'; // 파트너 사업자등록증 등록2
+import JoinInputPartnerInfo from './src/FirstScreen/Pages/Join/Partner/InputPartnerInfo'; // 파트너 사업자등록증 등록3
 
 import JoinSetPartnerAddress from './src/FirstScreen/Pages/Join/Partner/SetAddress'; // 파트너 주소 등록
 import JoinSearchPartnerAddress from './src/FirstScreen/Pages/Join/Partner/SearchAddress'; // 파트너 주소 검색
@@ -158,7 +159,8 @@ const PAGE = () => (
       
       {/* 파트너 회원가입 */}
       <Scene key="PartnerIndex" component={PartnerIndex} type={ActionConst.RESET}/>
-      <Scene key="JoinInputBizLicense" component={JoinInputBizLicense} type={ActionConst.RESET}/>
+      <Scene key="JoinInputBizLicense" initial component={JoinInputBizLicense} type={ActionConst.RESET}/>
+      <Scene key="JoinTakeBizLicense" component={JoinTakeBizLicense}/>
       <Scene key="JoinInputPartnerInfo" component={JoinInputPartnerInfo}/>
       <Scene key="JoinSetPartnerAddress" component={JoinSetPartnerAddress} />
       <Scene key="JoinSearchPartnerAddress" component={JoinSearchPartnerAddress} />

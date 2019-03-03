@@ -4,9 +4,9 @@ import { Container, Button, Body, List, ListItem, Icon, Input, Item, Text } from
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
-import DrawMap from '~/Main/Components/DrawMap';
 import { Actions } from 'react-native-router-flux';
 
+import DrawMap from '~/Main/Components/DrawMap';
 import GetAddress from '~/Main/Functions/AddressInfo';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 

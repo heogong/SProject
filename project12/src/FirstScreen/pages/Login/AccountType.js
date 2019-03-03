@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, KeyboardAvoidingView, Image, TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native'
+import { AsyncStorage, Alert, KeyboardAvoidingView, Image, TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native'
 import {
   Container,
   Icon,
@@ -9,6 +9,8 @@ import {
   CheckBox
 } from "native-base";
 // import { CheckBox } from 'react-native-elements'
+
+import { SUCCESS_RETURN_CODE, CLIENT_USER } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
