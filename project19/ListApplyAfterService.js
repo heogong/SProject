@@ -28,6 +28,8 @@ import {
   CheckBox
 } from "native-base";
 
+import Modal from "react-native-modal";
+
 import { styles, viewportHeight, viewportWidth } from './css/common';
 import { color } from './css/color';
 
@@ -36,60 +38,34 @@ class ListApplyAfterService extends Component {
     super(props);
 
     this.state = {
+      isModalVisible: false,
       beforeMatch : true
     }
   }
 
+  _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
+
   product = () => (
-    (this.state.beforeMatch) ? (
+    <TouchableOpacity onPress={ () => this._toggleModal()}>
       <View style={localStyles.listFillBoxWrap}>
-          <View style={[styles.fx3, styles.alignItemsStart, styles.justiConCenter]}>
-            <Image 
-              source={require("./img/license-depart01.png")} 
-              resizeMode="contain" 
-              style={{height : productImgSize, width : productImgSize}} 
-            />
-          </View>
-          <TouchableOpacity 
-            onPress={ () => this.setState({beforeMatch : false})} 
-            style={[styles.justiConCenter, {flex:6}]
-          }>
-            <View>
-              <H3 style={[styles.mb12, {fontsize: 18, color : color.whiteColor}]}>업소용냉장고</H3>
-              <Text style={localStyles.listDeTxt}>경기도 시흥시 산기대로</Text>
-              <Text style={localStyles.listDeTxt}>한국산업기술대학교 305호</Text>
-            </View>
-          </TouchableOpacity>
-  
-          <View style={styles.fx1}>
-            <Icon style={{color : '#fff'}} name="arrow-round-forward"/>
-          </View>
-      </View>
-    ) : (
-
-      <View style={localStyles.listNoFillBoxWrap}>
-        <View style={styles.alignItemsCenter}>
-          <Text style={[styles.modalTopTxt, styles.mb5]}>A/S 매칭을 수락하시겠습니까?</Text>
-          <Text style={styles.modalTopTxt}>수락 후 1시간 30분 내에 도착하셔야 합니다</Text>
+        <View style={[styles.fx3, styles.alignItemsStart, styles.justiConCenter]}>
+          <Image 
+            source={require("./img/license-depart01.png")} 
+            resizeMode="contain" 
+            style={{height : productImgSize, width : productImgSize}} 
+          />
+        </View>
+        <View style={[styles.justiConCenter, {flex:6}]}>
+          <H3 style={[styles.mb12, {fontsize: 18, color : color.whiteColor}]}>업소용냉장고</H3>
+          <Text style={localStyles.listDeTxt}>경기도 시흥시 산기대로</Text>
+          <Text style={localStyles.listDeTxt}>한국산업기술대학교 305호</Text>
         </View>
 
-        <View style={styles.fxDirRow}>
-          <View style={[styles.fx1, styles.pd10]}>
-            <Button style={styles.modalBtnNoFill} onPress={this._toggleModal1}>
-                <Text style={styles.modalBtnNoFillTxt}>취소</Text>
-            </Button>
-          </View>
-          <View style={[styles.fx1, styles.pd10]}>
-            <Button style={styles.modalBtnFill} onPress={this._toggleModal1}>
-                <Text style={styles.modalBtnFillTxt}>A/S 출발</Text>
-            </Button>
-          </View>
+        <View style={styles.fx1}>
+          <Icon style={{color : '#fff'}} name="arrow-round-forward"/>
         </View>
-
       </View>
-
-    )
-    
+    </TouchableOpacity>
   );
 
   render() {
@@ -128,6 +104,29 @@ class ListApplyAfterService extends Component {
             </View>
           </View>
         </ScrollView>
+
+        <Modal isVisible={this.state.isModalVisible}>
+          <View style={[styles.modalWrap, {height: 128}]}>
+            <View style={styles.modalContent}>
+              <View style={[styles.modalTop2LTxtWrap]}>
+                  <Text style={styles.modalTopTxt}>A/S 매칭을 수락하시겠습니까?</Text>
+                  <Text style={styles.modalTopTxt}>수락 후 1시간 30분 내에 도착하셔야 합니다</Text>
+              </View>
+              <View style={styles.modalBtnTwinWrap}>
+                <View style={{marginRight: 9}}>
+                    <Button style={styles.modalBtnNoFill} onPress={this._toggleModal}>
+                        <Text style={styles.modalBtnNoFillTxt}>매칭취소</Text>
+                    </Button>
+                </View>
+                <View style={{marginLeft: 9}}>
+                    <Button style={styles.modalBtnFill} onPress={this._toggleModal}>
+                        <Text style={styles.modalBtnFillTxt}>A/S 출발</Text>
+                    </Button>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
 
       </Container>
     );

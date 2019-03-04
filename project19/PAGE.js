@@ -81,8 +81,8 @@ const PAGE = () => (
             <Scene key="RegPassBook3" hideNavBar component={RegPassBook3} type={ActionConst.RESET}/>
             <Scene key="AgreeTermsService" hideNavBar component={AgreeTermsService} type={ActionConst.RESET}/>
             <Scene key="PartnerMain" hideNavBar component={PartnerMain} type={ActionConst.RESET}/>
-            <Scene initial key="ListApplyAfterService" hideNavBar component={ListApplyAfterService} type={ActionConst.RESET}/>
-            
+            <Scene key="ListApplyAfterService" initial hideNavBar component={ListApplyAfterService} type={ActionConst.RESET}/>
+
             <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
             <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
             <Scene key="SelectProduct2" hideNavBar component={SelectProduct2}  type={ActionConst.RESET}/>
