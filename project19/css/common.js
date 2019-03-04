@@ -79,6 +79,19 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // 공통 Style
     // ----------------------------
+    // TextInput
+    textInputBox: {
+      paddingLeft: 9,
+      fontSize: 14,
+      height : 100,
+      width: "100%",
+      paddingRight: 9,
+    },
+    textInputWhBackWhBo: {
+      backgroundColor: color.whiteColor,
+      borderColor : color.whiteColor,
+      height : 100
+    },
     // Box Shdow
     boxShadow: {
       shadowColor: "#000",
@@ -215,6 +228,7 @@ export const styles = StyleSheet.create({
     },
     inputBox: {
       paddingLeft: 0,
+      paddingRight: 9,
       fontSize: 14,
       height : 36
     },

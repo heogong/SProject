@@ -49,7 +49,7 @@ import RegPassBook3 from './RegPassBook3';
 import PartnerMain from './PartnerMain';
 import ListApplyAfterService from './ListApplyAfterService';
 import DetailApplyAfterService from './DetailApplyAfterService';
-
+import RegAddAs from './RegAddAs';
 
 
 
@@ -100,7 +100,10 @@ const PAGE = () => (
             {/* 48번 화면 작업 예정 */}
             <Scene key="ListApplyAfterService" hideNavBar component={ListApplyAfterService} type={ActionConst.RESET}/>
             {/* 50번 화면 작업 예정 */}
-            <Scene initial key="DetailApplyAfterService" hideNavBar component={DetailApplyAfterService}  type={ActionConst.RESET}/>
+            <Scene key="DetailApplyAfterService" hideNavBar component={DetailApplyAfterService}  type={ActionConst.RESET}/>
+            {/* 52번 화면 작업 예정 */}
+            <Scene initial key="RegAddAs" hideNavBar component={RegAddAs}  type={ActionConst.RESET}/>
+            
 
             <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
             <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
