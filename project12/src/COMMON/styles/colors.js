@@ -9,5 +9,10 @@ export const color = {
     green: "#65ed99",
     tan: "#FFEFF8",
     blue: "#5DA9E9",
-    gray1: "#888888"
+    gray1: "#888888",
+    inputPlaceHodler : '#c9cacb',
+    inputBoGrey : '#c9cacb',
+    warningColor : '#ff6b00',
+    modalTxtColor : "#8e8e98",
+    prdTypeBackColor : "#28a0f5"
 }

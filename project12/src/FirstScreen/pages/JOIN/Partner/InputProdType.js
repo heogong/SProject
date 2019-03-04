@@ -1,16 +1,21 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from 'react-native';
-import { Content, Text } from "native-base";
+import { Image, ScrollView, View } from 'react-native'
+import { Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
-import CustomHeader from '~/Common/Components/CustomHeader';
-import CustomButton from '~/Common/Components/CustomButton';
-import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import { Actions } from "react-native-router-flux";
-import SelectButton from "~/Common/Components/SelectButton";
+
+import SelectProduct from "~/Main/Components/SelectProduct";
 import GetProdType from '~/Main/Functions/GetProdType';
 import RegPartnerProdType from '~/FirstScreen/Functions/RegPartnerProdType';
+import GetCommonData from '~/Common/Functions/GetCommonData';
+
+import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomButton from '~/Common/Components/CustomButton';
+import { styles } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from "~/Common/Styles/colors";
 
 class InputProdType extends Component {
     constructor(props) {
@@ -91,48 +96,78 @@ class InputProdType extends Component {
 
     render() {
         return (
-            <View style={{ flex:1 }}>
-                <CustomHeader
-                    title='제품 타입 선택'
-                    backBtn={ true }
-                    rightBtn={ false }
-                    resetPage={ false }
-                    backAction={ false }
-                    actionName=''
-                />
-                <View style={ [styles.centerAlign, { flexWrap: 'wrap', padding: 10, }] }>
-                    
-                    {this.state.data.map((item, idx) => (
-                        <SelectButton 
+            <Container style={styles.containerInnerPd}>
+                <CustomHeader />
+                <View style={{marginBottom: 36}}>
+                    <View style={styles.fxDirRow}>
+                    <View style={stylesReg.leftGuideTxtWrap}>
+                        <Text style={stylesReg.leftGuideTxt}>전문분야를</Text>
+                        <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
+                        <Text style={stylesReg.leftGuideTxt}>(복수선택가능)</Text>
+                    </View>
+                    <View style={stylesReg.rightStepNumWrap}>
+                        <Text style={stylesReg.rightStepNum}>03</Text>
+                    </View>
+                    </View>
+
+                    <View style={stylesReg.procBarWrap}>
+                    <View style={styles.fx1}>
+                        <View style={stylesReg.procBarOn} />
+                    </View>
+                    <View style={styles.fx1}>
+                        <View style={stylesReg.procBarOn} />
+                    </View>
+                    <View style={styles.fx1}>
+                    <View style={stylesReg.procBarOn} />
+                    </View>
+                    <View style={styles.fx1}>
+                    <View style={stylesReg.procBarOff} />
+                    </View>
+                    <View style={styles.fx1}>
+                    <View style={stylesReg.procBarOff} />
+                    </View>
+                    <View style={styles.fx1}>
+                    <View style={stylesReg.procBarOff} />
+                    </View>
+                    <View style={styles.fx1}>
+                    <View style={stylesReg.procBarOff} />
+                    </View>
+                    </View>
+                </View>
+
+                <ScrollView showsVerticalScrollIndicator={false}
+                style={{marginBottom: 37}}>
+
+                <View style={[styles.fxDirRow, styles.justiConBetween, styles.fxWraWra]}>
+
+                    {this.state.data.map((item, index) => (
+                        <SelectProduct
                             value={item.prdTypeId}
                             text={item.prdTypeKoNm}
                             addDataArray={ this._addDataArray }
                             removeDataArray={ this._removeDataArray }
-                            key={ idx }
+                            key={ index }
                         />
                     ))}
+
                 </View>
-                <View style={ [styles.centerAlign] }>
-                    <CustomButton
-                        block={ true }
-                        info={ true }
-                        onPress={ this._nextPress }
-                        disabled={ this.state.btnDisabled }>
-                        <Text>
-                            다음단계로 이동 (3/5)
-                        </Text>
+                
+                </ScrollView>
+
+                <View style={[styles.footerBtnWrap, {marginTop: 20}]}>
+                    <CustomButton 
+                        backgroundColor={color.whiteColor}
+                        onPress={this._nextPress}
+                        disabled={ this.state.btnDisabled }
+                        edgeFill={true}
+                        fillTxt={false}
+                    >
+                        등록완료
                     </CustomButton>
                 </View>
-            </View>
+
+            </Container>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    centerAlign : {
-        flexDirection: 'row',
-        justifyContent: 'center'
-    }
-});
-
 export default InputProdType;

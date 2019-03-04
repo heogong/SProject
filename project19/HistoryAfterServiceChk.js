@@ -28,6 +28,9 @@ import {
   CheckBox
 } from "native-base";
 
+import { styles, viewportHeight } from './css/common';
+import { color } from './css/color';
+
 class HistoryAfterServiceChk extends Component {
   constructor(props) {
     super(props);
@@ -63,13 +66,26 @@ class HistoryAfterServiceChk extends Component {
             </View>
           </View>
 
-          <View style={[styles.mg20, {height : secondHeight, flexDirection : 'row', justifyContent : 'center', backgroundColor : 'pink'}]}>
-            <View style={[ {justifyContent : 'center'}]}>
-              <Text>A/S 서비스를 </Text>
-              <Text>받은 내역이 없습니다.</Text>
+          <View style={[styles.justiConCenter, styles.alignItemsCenter, {height : emptyFlexSize}]}> 
+            <View style={{
+                borderStyle : 'dashed',
+                borderRadius: 100, 
+                borderColor : color.defaultColor, 
+                borderWidth : 1,
+                height : emptyFlexSize - 160,
+                width : emptyFlexSize - 160
+            }}>
+                <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
+                    <Image 
+                        source={require("./img/license-depart01.png")} 
+                        style={{height : '40%', width : '40%'}}  
+                    />
+                    <Text style={{fontSize:12}}>A/S 서비스를</Text>
+                    <Text style={{fontSize:12}}>받은 내역이 없습니다.</Text>
+                </View>
+                
             </View>
           </View>
-          
         </ScrollView>
 
       </Container>
@@ -77,36 +93,11 @@ class HistoryAfterServiceChk extends Component {
   }
 }
 
-const layoutCount = 4;
-const viewportHeight = Dimensions.get('window').height / layoutCount;
-const secondHeight = viewportHeight * 2; // 상태 box 높이
+function hp (percentage) {
+  const value = (percentage * viewportHeight) / 100;
+  return Math.round(value);
+}
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#FFF"
-  },
-  mb10: {
-    marginBottom: 10
-  },
-  mb20: {
-    marginBottom: 20
-  },
-  mg10 : {
-    marginTop : 10,
-    marginBottom : 10,
-    marginLeft : 10,
-    marginRight : 10
-  },
-  mg20 : {
-    marginTop : 20,
-    marginBottom : 20,
-    marginLeft : 20,
-    marginRight : 20
-  },
-  greyFont : {
-    color : '#BDBDBD',
-    fontSize : 15
-  }
-});
+const emptyFlexSize = hp(55);
 
 export default HistoryAfterServiceChk;

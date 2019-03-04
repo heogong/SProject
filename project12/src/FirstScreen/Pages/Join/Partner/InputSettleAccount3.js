@@ -12,7 +12,7 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 import GetBankInfo from '../../../Functions/GetBankInfo';
 import RegSettleAccount from '../../../Functions/RegSettleAccount';
 
-class InputSettleAccount extends Component {
+class InputSettleAccount3 extends Component {
   constructor(props) {
       super(props);
       this.state = {
@@ -154,4 +154,4 @@ class InputSettleAccount extends Component {
   }
 }
 
-export default InputSettleAccount;
+export default InputSettleAccount3;
