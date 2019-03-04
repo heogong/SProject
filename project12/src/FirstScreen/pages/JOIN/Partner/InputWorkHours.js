@@ -1,20 +1,23 @@
 import React, { Component } from "react";
-import { PixelRatio, TouchableOpacity, View } from "react-native"
-import { ActionSheet, Container, Button, Content, Item, Input, Icon, Text } from "native-base";
+import { Image, TouchableOpacity, StyleSheet, View } from 'react-native'
+import { Container, Text, CheckBox} from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from "react-native-router-flux";
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import RegPartnerWork from '~/FirstScreen/Functions/RegPartnerWork';
+import SelectWeekDay from "~/Main/Components/SelectWeekDay";
 
-import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
+import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
-import SelectButton from "~/Common/Components/SelectButton";
+import { styles, viewportWidth } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from "~/Common/Styles/colors";
 
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import Spinner from 'react-native-loading-spinner-overlay';
 
 const ST_TYPE = 'work_st'; // 시작 시간 클릭 여부
 const ED_TYPE = 'work_ed'; // 종료 시간 클릭 여부
@@ -63,7 +66,8 @@ class InputWorkHours extends Component {
           stMin : '00',
           edHour : '18',
           edMin : '00',
-          spinner: false // 로딩
+          spinner: false, // 로딩
+          checkBox : false
         };
     }
 
@@ -234,74 +238,211 @@ class InputWorkHours extends Component {
         this._regPartnerWork();
     }
 
+    toggleSwitch() {
+        this.setState({
+          checkbox: !this.state.checkbox
+        });
+    }
+
     render() {
         return (
-            <Container>
-                <Content padder >
-                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                        { MOCK_DATA.map((data, idx) => (
-                            <SelectButton 
+            // <Container>
+            //     <Content padder >
+            //         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            //             { MOCK_DATA.map((data, idx) => (
+            //                 <SelectButton 
+            //                     value={data.value}
+            //                     text={data.text}
+            //                     addDataArray={ this._setData }
+            //                     removeDataArray={ this._cancleData }
+            //                     key={ idx }
+            //                     ref={ ref => {
+            //                         SELECT_BUTTON[idx] = ref;
+            //                     }}
+            //                 />
+            //             ))}
+            //         </View>
+            //         {/* <View style={{flexDirection: 'row', justifyContent: 'center'}}> */}
+
+            //             <TouchableOpacity onPress={this._showDateTimePicker(ST_TYPE)}>
+            //                 <View style={{borderColor: '#9B9B9B', borderWidth: 1 / PixelRatio.get()}}>
+            //                     <Text>시작시간</Text>
+            //                     <Text>{`${this.state.stHour}:${this.state.stMin}`}</Text>
+            //                 </View>
+            //             </TouchableOpacity>
+
+            //             <TouchableOpacity onPress={this._showDateTimePicker(ED_TYPE)}>
+            //                 <View style={{borderColor: '#9B9B9B', borderWidth: 1 / PixelRatio.get()}}>
+            //                     <Text>종료시간</Text>
+            //                     <Text>{`${this.state.edHour}:${this.state.edMin}`}</Text>
+            //                 </View>
+            //             </TouchableOpacity>
+
+            //             <CustomButton
+            //                 block={ true }
+            //                 light={ this.state.fullBtnLight }
+            //                 warning= { this.state.fullBtnWarning }
+            //                 icon={ true }
+            //                 styleWidth={ false }
+            //                 marginSize={ 0 }
+            //                 onPress={ this._handleFullBtnClick }
+            //             >
+            //                 <Icon name='md-build' />
+            //                 <Text>
+            //                     풀타임
+            //                 </Text>
+            //             </CustomButton>
+            //         {/* </View> */}
+                
+            //         <CustomButton
+            //             block={ true }
+            //             info={ true }
+            //             onPress={ this._nextBtn }
+            //             disabled={ this.state.btnDisabled }>
+            //             <Text>
+            //                 다음단계로 이동 (4/5)
+            //             </Text>
+            //         </CustomButton>
+                    
+            //         {/* 로딩 */}
+            //         <Spinner
+            //             visible={this.state.spinner}
+            //             textContent={'Loading...'}
+            //             style={{color: '#FFF'}}
+            //         />
+            //     </Content>
+                
+            //     <DateTimePicker
+            //         isVisible={this.state.isDateTimePickerVisible}
+            //         onConfirm={this._handleDatePicked}
+            //         onCancel={this._hideDateTimePicker}
+            //         mode='time'
+            //         datePickerModeAndroid='spinner'
+            //         is24Hour={true}
+            //         date={ new Date(this.state.setTime) }
+            //         type={ TIME_TYPE }
+            //         ref={ref => {
+            //             this.DateTimePicker = ref;
+            //         }}
+            //     />
+            // </Container>
+            <Container style={styles.containerInnerPd}>
+                <CustomHeader />
+                <View style={styles.contentWrap}>
+
+                    <View style={styles.mb10}>
+                        <View style={styles.fxDirRow}>
+                        <View style={stylesReg.leftGuideTxtWrap}>
+                            <Text style={stylesReg.leftGuideTxt}>일하실</Text>
+                            <Text style={stylesReg.leftGuideTxt}>시간대를</Text>
+                            <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
+                        </View>
+                        <View style={stylesReg.rightStepNumWrap}>
+                            <Text style={stylesReg.rightStepNum}>04</Text>
+                        </View>
+                        </View>
+
+                        <View style={stylesReg.procBarWrap}>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOn} />
+                            </View>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOn} />
+                            </View>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOn} />
+                            </View>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOn} />
+                            </View>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOff} />
+                            </View>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOff} />
+                            </View>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOff} />
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style={localStyles.contentWrap}>
+                        <View style={localStyles.weekWrap}>
+
+                        {MOCK_DATA.map((data, idx) => (
+                            <SelectWeekDay
                                 value={data.value}
                                 text={data.text}
                                 addDataArray={ this._setData }
                                 removeDataArray={ this._cancleData }
                                 key={ idx }
+                                index={ idx }
                                 ref={ ref => {
                                     SELECT_BUTTON[idx] = ref;
                                 }}
                             />
                         ))}
+
+                        </View>
+                        
+                        <View style={styles.fx1}>
+                            <View style={[styles.fx1, styles.fxDirRow, styles.alignItemsCenter]}>
+                                <TouchableOpacity 
+                                    onPress={this._showDateTimePicker(ST_TYPE)}
+                                    style={localStyles.timeTxtWrap}
+                                >
+                                    <Text style={localStyles.timeTxt}>{`${this.state.stHour}:${this.state.stMin}`}</Text>
+                                </TouchableOpacity>
+                                <Text style={[localStyles.timeTxt, {textAlign: "center", flex: 1, color: color.greyColor}]}>~</Text>
+                                <TouchableOpacity 
+                                    onPress={this._showDateTimePicker(ED_TYPE)}
+                                    style={localStyles.timeTxtWrap}
+                                >
+                                    <Text style={localStyles.timeTxt}>{`${this.state.edHour}:${this.state.edMin}`}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                        <View style={localStyles.bottomTxtWrap}>
+                            <Text style={styles.greyFont}>취약시간에는 출장비가 상승합니다</Text>
+                            <Text style={styles.greyFont}>취약시간 기준 : 18시 ~ 09시, 일요일 및 공휴일 포함</Text>
+                        </View>
+
+                        <View style={[styles.fxDirRow, styles.fx1, styles.justiConCenter]}>
+
+                            <View style={[styles.fxDirRow, {marginRight: 8}]}>
+                                <CheckBox 
+                                    checked={this.state.checkbox}
+                                    onPress={ this._handleFullBtnClick }
+                                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                                />
+                                <Text style={styles.greyFont}>풀타임</Text>
+                            </View>
+
+                            <View style={[styles.fxDirRow, {marginLeft: 8}]}>
+                                <CheckBox 
+                                    checked={this.state.checkbox}
+                                    onPress={ () => this.toggleSwitch() }
+                                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                                />
+                                <Text style={styles.greyFont}>공휴일</Text>
+                            </View>
+                        </View>
                     </View>
-                    {/* <View style={{flexDirection: 'row', justifyContent: 'center'}}> */}
 
-                        <TouchableOpacity onPress={this._showDateTimePicker(ST_TYPE)}>
-                            <View style={{borderColor: '#9B9B9B', borderWidth: 1 / PixelRatio.get()}}>
-                                <Text>시작시간</Text>
-                                <Text>{`${this.state.stHour}:${this.state.stMin}`}</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity onPress={this._showDateTimePicker(ED_TYPE)}>
-                            <View style={{borderColor: '#9B9B9B', borderWidth: 1 / PixelRatio.get()}}>
-                                <Text>종료시간</Text>
-                                <Text>{`${this.state.edHour}:${this.state.edMin}`}</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        <CustomButton
-                            block={ true }
-                            light={ this.state.fullBtnLight }
-                            warning= { this.state.fullBtnWarning }
-                            icon={ true }
-                            styleWidth={ false }
-                            marginSize={ 0 }
-                            onPress={ this._handleFullBtnClick }
+                    <View style={styles.footerBtnWrap}>
+                        <CustomButton 
+                            onPress={this._nextPress}
+                            disabled={ this.state.btnDisabled }
+                            edgeFill={true}
+                            fillTxt={true}
                         >
-                            <Icon name='md-build' />
-                            <Text>
-                                풀타임
-                            </Text>
+                            선택완료
                         </CustomButton>
-                    {/* </View> */}
-                
-                    <CustomButton
-                        block={ true }
-                        info={ true }
-                        onPress={ this._nextBtn }
-                        disabled={ this.state.btnDisabled }>
-                        <Text>
-                            다음단계로 이동 (4/5)
-                        </Text>
-                    </CustomButton>
-                    
-                    {/* 로딩 */}
-                    <Spinner
-                        visible={this.state.spinner}
-                        textContent={'Loading...'}
-                        style={{color: '#FFF'}}
-                    />
-                </Content>
-                
+                    </View>
+                </View>
+
                 <DateTimePicker
                     isVisible={this.state.isDateTimePickerVisible}
                     onConfirm={this._handleDatePicked}
@@ -319,5 +460,36 @@ class InputWorkHours extends Component {
         )
     }
 }
+
+
+const localStyles = StyleSheet.create({
+    contentWrap: {
+      flex: 5,
+      marginTop: 37
+    },
+    weekWrap: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 35
+    },
+    bottomTxtWrap: {
+      alignItems: "center",
+      marginTop: 35,
+      marginBottom: 17
+    },
+    timeTxtWrap: {
+      flex: 2,
+      borderWidth: 2,
+      borderColor: color.defaultColor,
+      alignItems: "center",
+      paddingTop: 10,
+      paddingBottom: 10
+    },
+    timeTxt: {
+      fontSize: 37,
+      color: color.defaultColor,
+      fontWeight: "bold"
+    }
+});
 
 export default InputWorkHours;

@@ -39,7 +39,10 @@ import JoinSearchPartnerAddress from './src/FirstScreen/Pages/Join/Partner/Searc
 
 import JoinInputProdType from './src/FirstScreen/Pages/Join/Partner/InputProdType'; // 파트너 제품타입 선택
 import JoinInputWorkHours from './src/FirstScreen/Pages/Join/Partner/InputWorkHours'; // 파트너 근무시간 선택
-import JoinInputSettleAccount from './src/FirstScreen/Pages/Join/Partner/InputSettleAccount'; // 파트너 정산 계좌
+
+import JoinInputSettleAccount1 from './src/FirstScreen/Pages/Join/Partner/InputSettleAccount1'; // 파트너 정산 계좌
+import JoinInputSettleAccount2 from './src/FirstScreen/Pages/Join/Partner/InputSettleAccount2'; // 파트너 정산 계좌
+import JoinInputSettleAccount3 from './src/FirstScreen/Pages/Join/Partner/InputSettleAccount3'; // 파트너 정산 계좌
 
 import CardIndex from './src/FirstScreen/Pages/Card';
 import CardInputInfo from './src/FirstScreen/Pages/Card/InputCardInfo';
@@ -159,7 +162,7 @@ const PAGE = () => (
       
       {/* 파트너 회원가입 */}
       <Scene key="PartnerIndex" component={PartnerIndex} type={ActionConst.RESET}/>
-      <Scene key="JoinInputBizLicense" initial component={JoinInputBizLicense} type={ActionConst.RESET}/>
+      <Scene key="JoinInputBizLicense" component={JoinInputBizLicense} type={ActionConst.RESET}/>
       <Scene key="JoinTakeBizLicense" component={JoinTakeBizLicense}/>
       <Scene key="JoinInputPartnerInfo" component={JoinInputPartnerInfo}/>
       <Scene key="JoinSetPartnerAddress" component={JoinSetPartnerAddress} />
@@ -167,7 +170,9 @@ const PAGE = () => (
       
       <Scene key="JoinInputProdType"  component={JoinInputProdType} />
       <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} type={ActionConst.RESET}/>
-      <Scene key="JoinInputSettleAccount" component={JoinInputSettleAccount} type={ActionConst.RESET}/>
+      <Scene key="JoinInputSettleAccount" initial component={JoinInputSettleAccount1} type={ActionConst.RESET}/>
+      <Scene key="JoinInputSettleAccount2" component={JoinInputSettleAccount2} />
+      <Scene key="JoinInputSettleAccount3" component={JoinInputSettleAccount3} />
       
       <Scene key="LoginAccountType" component={LoginAccountType} back onBack={() => Actions.InitPage()}/>
       <Scene key="LoginInputAccount" component={LoginInputAccount} />
