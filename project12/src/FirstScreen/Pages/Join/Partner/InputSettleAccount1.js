@@ -60,7 +60,10 @@ class InputSettleAccount1 extends Component {
             </View>
           </View>
 
-          <TouchableOpacity style={localStyles.photoBoxWrap}>
+          <TouchableOpacity 
+            onPress={Actions.JoinInputSettleAccount2}
+            style={localStyles.photoBoxWrap}
+          >
             <View style={localStyles.photoBox}>
               <Icon name="ios-camera" style={localStyles.phototIcon} />
               <Text style={localStyles.photoTxt}>등록하기</Text>

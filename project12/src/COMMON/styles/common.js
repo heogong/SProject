@@ -20,6 +20,10 @@ export const styles = StyleSheet.create({
       color : color.whiteColor,
       fontSize : 15
     },
+    blueFont: {
+      color : color.defaultColor,
+      fontSize : 14
+    },
     // ----------------------------
     // containerInnerPd
     // ----------------------------
@@ -47,16 +51,38 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // 공통 Style
     // ----------------------------
-    // 축약 Style
-    inputStyle: {
-      height : 48,
+
+    // Input Style
+    inputWhBackWhBo: {
+      backgroundColor: color.whiteColor,
+      borderColor : color.whiteColor,
+      height : 36
+    },
+    inputBox: {
+      paddingLeft: 0,
+      fontSize: 14,
+      height : 36
+    },
+    inputDefaultBox: {
+      paddingRight: 8,
+      fontSize: 14,
+      height: 46
+    },
+    inputWhBackBuBo: {
+      height : 46,
       borderColor : color.defaultColor
+    },
+    inputWhBackGreyBo: {
+      height : 46,
+      borderColor : color.inputBoGrey
     },
     inputIcon: {
       color: color.defaultColor,
       fontSize: 32,
       marginRight: 5
     },
+
+    // 축약 Style
 
     fx1: {flex: 1}, 
     fx2: {flex: 2}, 

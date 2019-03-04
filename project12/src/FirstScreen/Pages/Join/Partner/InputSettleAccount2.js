@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
+import { Image, ImageBackground, StyleSheet, View } from 'react-native'
+import { Container, H1, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
-import { connect } from 'react-redux';
-import { ActionSheet, Button, Input, Item, Root, Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
+import ImagePicker from 'react-native-image-picker';
 
-import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
-import CustomButton from '~/Common/Components/CustomButton';
+import RegSettleAccoutImage from '~/FirstScreen/Functions/RegSettleAccoutImage';
 import GetCommonData from '~/Common/Functions/GetCommonData';
-import GetBankInfo from '../../../Functions/GetBankInfo';
-import RegSettleAccount from '../../../Functions/RegSettleAccount';
+
+import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomButton from '~/Common/Components/CustomButton';
+import { styles } from '~/Common/Styles/common';
+import { color } from '~/Common/Styles/colors';
 
 class InputSettleAccount2 extends Component {
   constructor(props) {
@@ -26,70 +29,77 @@ class InputSettleAccount2 extends Component {
           name :'',
         }
     };
+
+    this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
+    this.takePhotoTapped = this.takePhotoTapped.bind(this);
   }
 
-  componentDidMount() {
-    this._getBankInfo();
-  }
+  // 앨범에서 사진 가져오기
+  selectPhotoTapped() {
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true,
+      },
+    };
+
+    ImagePicker.launchImageLibrary(options, (response) => {
+      console.log('Response = ', response);
+  
+        if (response.didCancel) {
+          console.log('User cancelled photo picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          // You can also display the image using data:
+          // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+          SOURCE = { uri: response.uri };
+          this._regSettleAccoutImage();
+      }
+    })
+  };
+
+  // 촬영
+  takePhotoTapped() {
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true,
+      },
+    };
+
+    ImagePicker.launchCamera(options, (response) => {
+      console.log('Response = ', response);
+  
+      if (response.didCancel) {
+        console.log('User cancelled photo picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+          SOURCE = { uri: response.uri };
+          this._regSettleAccoutImage();
+      }
+    })
+  };
 
 
   // 은행정보 가져오기
-  _getBankInfo = () => {
-    GetBankInfo().then(result => {
-      GetCommonData(result, this._getBankInfo).then(async resultData => {
-          if(resultData !== undefined) {
-              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-              //console.log(resultData);
-              if(ResultBool) {
-                const bankSet = resultData.data.map((bank) => {
-                  return { ...bank, text : bank.commCdNm, bankCode : bank.commCd };
-                });
-                this.setState({ bankInfo: bankSet });
-              } else {
-                  alert(resultData.resultMsg);
-              }
-          }
-      });
-    });
-  }
-
-  // 계좌번호 입력
-  _inputSettleAccount = (account) => {
-    this.setState({
-      settleAccount : {
-        ...this.state.settleAccount,
-        number : account
-      }
-    });
-  }
-
-  // 예금 주 입력
-  _inputSettleAccountName = (name) => {
-    this.setState({
-      settleAccount : {
-        ...this.state.settleAccount,
-        name : name
-      }
-    });
-  }
-
-  // NEXT 
-  _nextPress = () => {
-    console.log("은행 명 : ",this.state.bankInfo[this.state.selectIndex].text);
-    console.log("은행 코드 : ",this.state.bankInfo[this.state.selectIndex].bankCode);
-    console.log("계좌번호/예금주 : ",this.state.settleAccount);
-
-    this._regSettleAcccount();
-  }
-
-  _regSettleAcccount = () => {
-    RegSettleAccount(this.state.bankInfo[this.state.selectIndex], this.state.settleAccount).then(result => {
-      GetCommonData(result, this._regSettleAcccount).then(async resultData => {
+  _regSettleAccoutImage = () => {
+    RegSettleAccoutImage(SOURCE.uri).then(result => {
+      GetCommonData(result, this._regSettleAccoutImage).then(async resultData => {
           if(resultData !== undefined) {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
               console.log(resultData);
               if(ResultBool) {
-                Actions.PartnerMain();
+                Actions.JoinInputSettleAccount3();
               } else {
                   alert(resultData.resultMsg);
               }
@@ -100,58 +110,62 @@ class InputSettleAccount2 extends Component {
 
   render() {
     return (
-      <Root>
-        <CustomBasicWrapper
-          resetPage={ true }
-          title="계좌입력"
-        >
-          <Button
-              onPress={() =>
-                  ActionSheet.show(
-                  {
-                      options: this.state.bankInfo,
-                      cancelButtonIndex: this.state.selectIndex,
-                      title: "은행 명"
-                  },
-                  buttonIndex => {
-                    this.setState({ buttonTitle: this.state.bankInfo[buttonIndex].text });
-                    this.setState({ selectIndex : buttonIndex });
-                  }
-              )}
-          >
-            <Text>{this.state.buttonTitle}</Text>
-          </Button>
+      <Container style={styles.containerInnerPd}>
+        <CustomHeader />
 
-          <Item regular>
-              <Input 
-                onChangeText={(text) => this._inputSettleAccount(text) }
-                value={ this.state.settleAccount.number }
-                placeholder='계좌번호'
-                keyboardType='numeric'
+        <View style={styles.fx1}>
+          <View style={[styles.fx1, styles.justiConStart, styles.alignItemsCenter]}>
+            <H1 style={localStyles.topTitleTxt}>정산계좌 통장사진</H1>
+            <Text style={localStyles.topTxt}>계좌번호 및 예금주 등 기본 계좌정보의</Text>
+            <Text style={localStyles.topTxt}>글씨가 잘 보이도록 촬영 또는 스캔해주세요</Text>
+          </View>
+
+          <View style={styles.fx3}>
+            <ImageBackground
+              source={require("~/Common/Image/license-bg01.png")} 
+              resizeMode="contain"
+              style={[styles.alignItemsCenter, styles.justiConCenter, {height : 'auto', width : '100%'}]}> 
+              <Image source={require("~/Common/Image/bank-bg02.png")} 
+                style={{height:'80%', width : '60%'}}
+                resizeMode="contain"
               />
-          </Item>
+            </ImageBackground>
+          </View>
 
-          <Item regular>
-              <Input 
-                onChangeText={(text) => this._inputSettleAccountName(text) }
-                value={ this.state.settleAccount.name }
-                placeholder='예금주'
-              />
-          </Item>
+          <View style={styles.footerBtnWrap}>
+            <CustomButton 
+              onPress={ this.selectPhotoTapped.bind(this) }
+              edgeFill={true}
+              backgroundColor={color.whiteColor}
+            >
+              앨범에서선택하기
+            </CustomButton>
+            
+            <CustomButton 
+              onPress={ this.takePhotoTapped.bind(this) }
+              edgeFill={true}
+              fillTxt={true}
+            >
+              사진촬영하기
+            </CustomButton>
+          </View>
+        </View>
 
-          <CustomButton
-            block={ true }
-            info={ true }
-            onPress={ this._nextPress }
-            disabled={ this.state.btnDisabled }>
-            <Text>
-              등록완료
-            </Text>
-          </CustomButton>
-        </CustomBasicWrapper>
-      </Root>
+      </Container>
     )
   }
 }
 
+const localStyles = StyleSheet.create({
+  topTitleTxt: {
+    marginBottom: 19,
+    fontSize: 26,
+    color: "#0b2024",
+    fontWeight: "bold"
+  },
+  topTxt: {
+    fontSize: 14,
+    color: "#8e8e98"
+  }
+});
 export default InputSettleAccount2;

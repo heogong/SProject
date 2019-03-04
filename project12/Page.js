@@ -11,8 +11,11 @@ import IntroPage from './src';
 import InitPage from './src/FirstScreen/Pages/InitPage';
 import ServiceInfo from './src/FirstScreen/Pages/ServiceInfo';
 
-import AgreeTermsService from './src/FirstScreen/Pages/Join/AgreeTermsService';
-import PartnerTermsService from './src/FirstScreen/Pages/Join/Partner/SuccessTermsService';
+import ClientAgreeTermsService from './src/FirstScreen/Pages/Join/Client/AgreeTermsService';
+import PartnerAgreeTermsService from './src/FirstScreen/Pages/Join/Partner/AgreeTermsService';
+import SuccessJoinPartner from './src/FirstScreen/Pages/Join/Partner/SuccessJoinPartner';
+
+
 import SuccessAgreeTermsService from './src/FirstScreen/Pages/Join/SuccessAgreeTermsService';
 
 import JoinCustomerType from './src/FirstScreen/Pages/Join/CustomerType';
@@ -40,9 +43,10 @@ import JoinSearchPartnerAddress from './src/FirstScreen/Pages/Join/Partner/Searc
 import JoinInputProdType from './src/FirstScreen/Pages/Join/Partner/InputProdType'; // 파트너 제품타입 선택
 import JoinInputWorkHours from './src/FirstScreen/Pages/Join/Partner/InputWorkHours'; // 파트너 근무시간 선택
 
-import JoinInputSettleAccount1 from './src/FirstScreen/Pages/Join/Partner/InputSettleAccount1'; // 파트너 정산 계좌
-import JoinInputSettleAccount2 from './src/FirstScreen/Pages/Join/Partner/InputSettleAccount2'; // 파트너 정산 계좌
-import JoinInputSettleAccount3 from './src/FirstScreen/Pages/Join/Partner/InputSettleAccount3'; // 파트너 정산 계좌
+import JoinInputSettleAccount1 from './src/FirstScreen/Pages/Join/Partner/InputSettleAccount1'; // 파트너 정산 계좌1
+import JoinInputSettleAccount2 from './src/FirstScreen/Pages/Join/Partner/InputSettleAccount2'; // 파트너 정산 계좌2
+import JoinInputSettleAccount3 from './src/FirstScreen/Pages/Join/Partner/InputSettleAccount3'; // 파트너 정산 계좌3
+import JoinInputPartnerInfoSuccess from './src/FirstScreen/Pages/Join/Partner/InputPartnerInfoSuccess'; // 파트너 사업정보 입력완료
 
 import CardIndex from './src/FirstScreen/Pages/Card';
 import CardInputInfo from './src/FirstScreen/Pages/Card/InputCardInfo';
@@ -146,9 +150,12 @@ const PAGE = () => (
       <Scene key="NonMemberNoticeInfoService" component={NonMemberNoticeInfoService} />
       
       {/* 약관동의 */}
-      <Scene key="AgreeTermsService"  component={AgreeTermsService} />
-      <Scene key="PartnerTermsService" component={PartnerTermsService} />
-      <Scene key="SuccessAgreeTermsService"  component={SuccessAgreeTermsService} type={ActionConst.RESET}/>
+      <Scene key="PartnerAgreeTermsService"  initial component={PartnerAgreeTermsService} />
+      <Scene key="SuccessJoinPartner" component={SuccessJoinPartner} />
+      <Scene key="ClientAgreeTermsService"  component={ClientAgreeTermsService} />
+      
+      {/* <Scene key="PartnerTermsService" component={PartnerTermsService} />
+      <Scene key="SuccessAgreeTermsService"  component={SuccessAgreeTermsService} type={ActionConst.RESET}/> */}
 
       <Scene key="reactCamera" component={ReactCamera} />
       <Scene key="ViewImage" component={ViewImage} />
@@ -170,9 +177,10 @@ const PAGE = () => (
       
       <Scene key="JoinInputProdType"  component={JoinInputProdType} />
       <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} type={ActionConst.RESET}/>
-      <Scene key="JoinInputSettleAccount" initial component={JoinInputSettleAccount1} type={ActionConst.RESET}/>
+      <Scene key="JoinInputSettleAccount" component={JoinInputSettleAccount1} type={ActionConst.RESET}/>
       <Scene key="JoinInputSettleAccount2" component={JoinInputSettleAccount2} />
       <Scene key="JoinInputSettleAccount3" component={JoinInputSettleAccount3} />
+      <Scene key="JoinInputPartnerInfoSuccess" component={JoinInputPartnerInfoSuccess} />
       
       <Scene key="LoginAccountType" component={LoginAccountType} back onBack={() => Actions.InitPage()}/>
       <Scene key="LoginInputAccount" component={LoginInputAccount} />

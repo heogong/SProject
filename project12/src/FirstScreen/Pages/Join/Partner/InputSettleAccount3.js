@@ -1,22 +1,27 @@
 import React, { Component } from 'react';
+import { View } from 'react-native'
+import { ActionSheet, Container, Root, Text, Item, Input } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { connect } from 'react-redux';
-import { ActionSheet, Button, Input, Item, Root, Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
 
-import CustomBasicWrapper from '~/Common/Components/CustomBasicWrapper';
-import CustomButton from '~/Common/Components/CustomButton';
 import GetCommonData from '~/Common/Functions/GetCommonData';
-import GetBankInfo from '../../../Functions/GetBankInfo';
-import RegSettleAccount from '../../../Functions/RegSettleAccount';
+import GetBankInfo from '~/FirstScreen/Functions/GetBankInfo';
+import RegSettleAccount from '~/FirstScreen/Functions/RegSettleAccount';
+
+import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomButton from '~/Common/Components/CustomButton';
+import { styles } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from '~/Common/Styles/colors';
 
 class InputSettleAccount3 extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        buttonTitle : '은행 선택',
+        buttonTitle : null,
         selectIndex : 0,
         bankInfo : [
           { text : "데이터가 없습니다.", bankCode : ''}
@@ -28,7 +33,7 @@ class InputSettleAccount3 extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this._getBankInfo();
   }
 
@@ -82,6 +87,7 @@ class InputSettleAccount3 extends Component {
     this._regSettleAcccount();
   }
 
+  // 계좌 정보 등록
   _regSettleAcccount = () => {
     RegSettleAccount(this.state.bankInfo[this.state.selectIndex], this.state.settleAccount).then(result => {
       GetCommonData(result, this._regSettleAcccount).then(async resultData => {
@@ -89,9 +95,9 @@ class InputSettleAccount3 extends Component {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
               console.log(resultData);
               if(ResultBool) {
-                Actions.PartnerMain();
+                Actions.JoinInputPartnerInfoSuccess();
               } else {
-                  alert(resultData.resultMsg);
+                alert(resultData.resultMsg);
               }
           }
       });
@@ -101,12 +107,53 @@ class InputSettleAccount3 extends Component {
   render() {
     return (
       <Root>
-        <CustomBasicWrapper
-          resetPage={ true }
-          title="계좌입력"
-        >
-          <Button
-              onPress={() =>
+        <Container style={styles.containerInnerPd}>
+          <CustomHeader />
+
+          <View style={styles.contentWrap}>
+
+            <View style={styles.mb10}>
+              <View style={styles.fxDirRow}>
+                <View style={stylesReg.leftGuideTxtWrap}>
+                  <Text style={stylesReg.leftGuideTxt}>정산받을</Text>
+                  <Text style={stylesReg.leftGuideTxt}>계좌정보를</Text>
+                  <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
+                </View>
+                <View style={stylesReg.rightStepNumWrap}>
+                  <Text style={stylesReg.rightStepNum}>06</Text>
+                </View>
+              </View>
+
+              <View style={stylesReg.procBarWrap}>
+                <View style={styles.fx1}>
+                  <View style={stylesReg.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
+                  <View style={stylesReg.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
+                <View style={stylesReg.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
+                <View style={stylesReg.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
+                <View style={stylesReg.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
+                <View style={stylesReg.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+                </View>
+              </View>
+            </View>
+
+            <View style={[styles.fx3, styles.justiConCenter]}>
+              <Item 
+                regular 
+                style={[styles.mb20, styles.inputWhBackGreyBo]}
+                onPress={() =>
                   ActionSheet.show(
                   {
                       options: this.state.bankInfo,
@@ -117,38 +164,47 @@ class InputSettleAccount3 extends Component {
                     this.setState({ buttonTitle: this.state.bankInfo[buttonIndex].text });
                     this.setState({ selectIndex : buttonIndex });
                   }
-              )}
-          >
-            <Text>{this.state.buttonTitle}</Text>
-          </Button>
+                )}
+              >
+                <Input 
+                  disabled
+                  value={this.state.buttonTitle}
+                  placeholder="은행명" 
+                  placeholderTextColor={color.inputPlaceHodler} 
+                  style={styles.inputDefaultBox}/>
+              </Item>
+              <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
+                <Input 
+                  onChangeText={(text) => this._inputSettleAccountName(text) }
+                  value={ this.state.settleAccount.name }
+                  placeholder="예금주" 
+                  placeholderTextColor={color.inputPlaceHodler} 
+                  style={styles.inputDefaultBox}/>
+              </Item>
+              <Item regular style={styles.inputWhBackGreyBo}>
+                <Input 
+                  onChangeText={(text) => this._inputSettleAccount(text) }
+                  value={ this.state.settleAccount.number }
+                  keyboardType='numeric'
+                  placeholder="계좌번호( - 없이 입력)" 
+                  placeholderTextColor={color.inputPlaceHodler} 
+                  style={styles.inputDefaultBox}/>
+              </Item>
+            </View>
 
-          <Item regular>
-              <Input 
-                onChangeText={(text) => this._inputSettleAccount(text) }
-                value={ this.state.settleAccount.number }
-                placeholder='계좌번호'
-                keyboardType='numeric'
-              />
-          </Item>
+            <View style={styles.footerBtnWrap}>
+              <CustomButton 
+                  onPress={ this._nextPress }
+                  disabled={ this.state.btnDisabled }
+                  edgeFill={true}
+                  fillTxt={true}
+                >
+                등록완료
+              </CustomButton>
+            </View>
+          </View>
 
-          <Item regular>
-              <Input 
-                onChangeText={(text) => this._inputSettleAccountName(text) }
-                value={ this.state.settleAccount.name }
-                placeholder='예금주'
-              />
-          </Item>
-
-          <CustomButton
-            block={ true }
-            info={ true }
-            onPress={ this._nextPress }
-            disabled={ this.state.btnDisabled }>
-            <Text>
-              등록완료
-            </Text>
-          </CustomButton>
-        </CustomBasicWrapper>
+        </Container>
       </Root>
     )
   }
