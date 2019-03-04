@@ -142,7 +142,7 @@ class SelectWorkTime extends Component {
                 <TouchableOpacity onPress={ () => alert("Time1")} style={localStyles.timeTxtWrap}>
                   <Text style={localStyles.timeTxt}>09:30</Text>
                 </TouchableOpacity>
-                <Text style={[localStyles.timeTxt, {textAlign: "center", flex: 1, color: color.greyColor}]}>~</Text>
+                <Text style={[localStyles.timeTxtWrap, localStyles.timeTxt, {flex: 1}]}>~</Text>
                 <TouchableOpacity onPress={ () => alert("Time1")} style={localStyles.timeTxtWrap}>
                   <Text style={localStyles.timeTxt}>09:30</Text>
                 </TouchableOpacity>
@@ -232,17 +232,17 @@ const localStyles = StyleSheet.create({
     marginBottom: 17
   },
   timeTxtWrap: {
-    flex: 2,
-    borderWidth: 2,
-    borderColor: color.defaultColor,
+    flex: 3,
     alignItems: "center",
     paddingTop: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
+    backgroundColor: color.defaultColor
   },
   timeTxt: {
-    fontSize: 37,
-    color: color.defaultColor,
-    fontWeight: "bold"
+    fontSize: 30,
+    color: color.whiteColor,
+    fontWeight: "bold",
+    textAlign: "center"
   }
 });
 
