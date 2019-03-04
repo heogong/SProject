@@ -5,28 +5,6 @@ export const styles = StyleSheet.create({
     container: {
       backgroundColor: color.whiteColor
     },
-    contentWrap: {
-      flex: 1
-    },
-    footerBtnWrap: {
-      flex: 1,
-      justifyContent: "flex-end",
-    },
-    greyFont : {
-      color : color.greyColor,
-      fontSize : 15
-    },
-    whiteFont : {
-      color : color.whiteColor,
-      fontSize : 15
-    },
-    blueFont: {
-      color : color.defaultColor,
-      fontSize : 14
-    },
-    // ----------------------------
-    // containerInnerPd
-    // ----------------------------
     containerInnerPd: {
       flex: 1,
       backgroundColor: color.whiteColor,
@@ -47,6 +25,144 @@ export const styles = StyleSheet.create({
       paddingLeft: 26,
       paddingRight: 0,
       paddingBottom: 26
+    },
+    contentWrap: {
+      flex: 1
+    },
+    footerBtnWrap: {
+      flex: 1,
+      justifyContent: "flex-end",
+    },
+    greyFont : {
+      color : color.greyColor,
+      fontSize : 14
+    },
+    whiteFont : {
+      color : color.whiteColor,
+      fontSize : 14
+    },
+    blueFont: {
+      color : color.defaultColor,
+      fontSize : 14
+    },
+
+    // ----------------------------
+    // 공통 Style
+    // ----------------------------
+    // List Style
+    listPrdBoxDeTxt: {
+      fontSize: 13,
+      color: color.whiteColor
+    },
+    listPrdBoxFillWrap: {
+      flexDirection: "row",
+      justifyContent: "center",
+      marginBottom: 12,
+      padding: 14, 
+      backgroundColor : color.defaultColor
+    },
+    listPrdBoxStartIcon: {
+      color: color.whiteColor,
+      fontSize: 17,
+      marginRight: 2
+    },
+    listPrdBoxImgWrap: {
+      alignItems: "flex-start",
+      justifyContent : "center",
+      height : 80,
+      width : 80
+    },
+    listPrdBoxImg: {
+      height : 80,
+      width : 80,
+      marginBottom: 5
+    },
+    listPrdBoxImgTxt: {
+      width: 80,
+      textAlign: "center",
+      fontSize: 12,
+      color: color.whiteColor
+    },
+    listPrdBoxRightTxtWrap: {
+      justifyContent : "center",
+      paddingLeft: 20
+    },
+    listPrdBoxRightTitleTxt: {
+      marginBottom: 12,
+      fontWeight: "bold",
+      fontSize: 18,
+      color : color.whiteColor
+    },
+    listPrdBoxNextIconWrap: {
+      flex: 1,
+      alignItems: "flex-end",
+      marginTop: -5
+    },
+    listPrdBoxNextIcon: {
+      color: color.whiteColor
+    },
+    // TextInput
+    textInputBox: {
+      paddingLeft: 9,
+      fontSize: 14,
+      height : 100,
+      width: "100%",
+      paddingRight: 9,
+    },
+    textInputWhBackWhBo: {
+      backgroundColor: color.whiteColor,
+      borderColor : color.whiteColor,
+      height : 100
+    },
+    // Box Shdow
+    boxShadow: {
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      borderWidth: 1,
+      borderRadius: 2,
+      borderColor: '#ddd',
+      borderBottomWidth: 0,
+      marginTop: 2,
+      marginLeft: 5,
+      marginRight: 5
+    },
+    // Modal
+    modalWrap: {
+      marginLeft: 14,
+      marginRight: 14,
+      height: 106,
+      backgroundColor: color.whiteColor
+    },
+    modalContent: {
+      flex: 1,
+      alignItems : "center",
+      justifyContent : "center"
+    },
+    modalBtnWrap: {
+      flex: 1
+    },
+    modalTopTxtWrap: {
+      flex: 1,
+      justifyContent: "center"
+    },
+    modalTop2LTxtWrap: {
+      flex: 3,
+      justifyContent: "center"
+    },
+    modalTopTxt: {
+      color: color.modalTxtColor,
+      fontSize: 14,
+      textAlign: "center"
+    },
+    modalBtnTwinWrap: {
+      flex: 2,
+      flexDirection: "row"
     },
     // ----------------------------
     // 공통 Style

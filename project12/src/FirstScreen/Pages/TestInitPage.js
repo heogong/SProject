@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from "react-native"
+import { AsyncStorage, View } from "react-native"
 
 import { Text } from "native-base";
 import { Actions } from 'react-native-router-flux';
@@ -30,56 +30,44 @@ export default class PageOne extends Component {
 
   render() {
     return (
-      <CustomBasicWrapper
-        title="회원가입/로그인"
-        resetPage={ true }
-      >
+      <View style={{flex:1}}>
+
         <CustomButton 
-          block={ true }
-          info={ true }
-          bordered={ true }
-          onPress={Actions.LoginAccountType}>
-          <Text>
-              LOGIN
-          </Text>
+          onPress={Actions.LoginAccountType}
+          DefaultBtn={true}
+        >
+          LOGIN
         </CustomButton>
+
         <CustomButton 
-          block={ true }
-          info={ true }
-          bordered={ true }
-          onPress={Actions.JoinCustomerType}>
-          <Text>
+          onPress={Actions.JoinCustomerType}
+          DefaultLineBtn={true}
+        >
             회원가입
-          </Text>
         </CustomButton>
-        <CustomButton
-          block={ true }
-          info={ true }
-          bordered={ true }
-          onPress={Actions.ClientMain}>
-          <Text>
+
+        <CustomButton 
+          onPress={Actions.ClientMain}
+          WhiteLineBtn={true}
+          >
             메인_테스트 (클라이언트)
-          </Text>
         </CustomButton>
-        <CustomButton
-          block={ true }
-          info={ true }
-          bordered={ true }
-          onPress={Actions.PartnerMain}>
-          <Text>
+
+        <CustomButton 
+          onPress={Actions.PartnerMain}
+          WhiteBackBtn={true}
+        >
             메인_테스트 (파트너)
-          </Text>
         </CustomButton>
-        <CustomButton
-          block={ true }
-          info={ true }
-          bordered={ true }
-          onPress={Actions.NonMemberNoticeInfoService}>
-          <Text>
+
+        <CustomButton 
+          onPress={Actions.NonMemberNoticeInfoService}
+          disabled={true}
+          bordered={true}
+        >
             비회원으로 A/S 신청하기
-          </Text>
         </CustomButton>
-      </CustomBasicWrapper>
+      </View>
     )
   }
 }

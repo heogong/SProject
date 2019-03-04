@@ -2,12 +2,14 @@ import { StyleSheet } from 'react-native'
 import { color } from './colors';
 
 export const stylesReg = StyleSheet.create({
+    // Detail Guide Style
     leftGuideTxtWrap: {
       flex: 1
     },
     leftGuideTxt: {
       fontSize: 26,
-      letterSpacing: 0
+      letterSpacing: 0,
+      lineHeight: 30
     },
     rightStepNumWrap: {
       flex: 1,
@@ -24,6 +26,20 @@ export const stylesReg = StyleSheet.create({
       alignItems : "flex-end",
       justifyContent : "flex-end"
     },
+    rigthTxtWrap: {
+      flex: 1,
+      alignItems : "flex-end",
+      justifyContent : "flex-end"
+    },
+    rightTxt: {
+      fontSize: 48,
+      color: color.defaultColor,
+      height: 50
+    },
+    rightTxtSmall: {
+      fontSize: 30,
+      color: color.defaultColor,
+    },
     procBarWrap: {
       flexDirection : "row",
       marginTop: 18
@@ -35,12 +51,5 @@ export const stylesReg = StyleSheet.create({
     procBarOff: {
       height : 10,
       backgroundColor : color.defaultBackColor
-    },
-    inputWrap: {
-      marginTop: 32
-    },
-    termsWrap: {
-      marginTop: 27,
-      flexDirection : "row"
     },
   });

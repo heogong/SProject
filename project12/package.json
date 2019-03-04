@@ -23,6 +23,7 @@
     "react-native-loading-spinner-overlay": "^1.0.1",
     "react-native-maps": "^0.22.1",
     "react-native-mauron85-background-geolocation": "^0.5.0-alpha.50",
+    "react-native-modal": "^9.0.0",
     "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-naver-login": "^1.1.8",
     "react-native-router-flux": "^4.0.5",

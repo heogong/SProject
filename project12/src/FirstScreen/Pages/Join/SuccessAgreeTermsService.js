@@ -3,8 +3,8 @@ import { Image, View } from 'react-native'
 import { Container, H1, Text } from "native-base";
 
 import CustomButton from '~/Common/Components/CustomButton';
-import { styles } from '~/Common/Styles/common';
 import CustomHeader from "~/Common/Components/CustomHeader";
+import { styles } from '~/Common/Styles/common';
 import { color } from "~/Common/Styles/colors";
 
 class SuccessAgreeTermsService extends Component {
