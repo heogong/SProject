@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     },
     // 상세 헤더
     header: {
-      height: 81,
+      height: 55,
       paddingTop : 0,
       elevation: 0,
       shadowOpacity: 0,
@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
       flex: 4
     },
     headerTitleTxt: {
-      fontSize: 26,
+      fontSize: 22,
       marginLeft: "auto",
       marginRight: "auto"
     },
