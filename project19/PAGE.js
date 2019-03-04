@@ -50,8 +50,7 @@ import PartnerMain from './PartnerMain';
 import ListApplyAfterService from './ListApplyAfterService';
 import DetailApplyAfterService from './DetailApplyAfterService';
 import RegAddAs from './RegAddAs';
-
-
+import ListNotCompReport from './ListNotCompReport';
 
 
 import pageOne from './Page1'
@@ -102,7 +101,8 @@ const PAGE = () => (
             {/* 50번 화면 작업 예정 */}
             <Scene key="DetailApplyAfterService" hideNavBar component={DetailApplyAfterService}  type={ActionConst.RESET}/>
             {/* 52번 화면 작업 예정 */}
-            <Scene initial key="RegAddAs" hideNavBar component={RegAddAs}  type={ActionConst.RESET}/>
+            <Scene key="RegAddAs" hideNavBar component={RegAddAs}  type={ActionConst.RESET}/>
+            <Scene initial key="ListNotCompReport" hideNavBar component={ListNotCompReport}  type={ActionConst.RESET}/>
             
 
             <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>

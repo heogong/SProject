@@ -208,6 +208,20 @@ export const styles = StyleSheet.create({
       alignItems : "flex-end",
       justifyContent : "flex-end"
     },
+    rigthTxtWrap: {
+      flex: 1,
+      alignItems : "flex-end",
+      justifyContent : "flex-end"
+    },
+    rightTxt: {
+      fontSize: 48,
+      color: color.defaultColor,
+      height: 50
+    },
+    rightTxtSmall: {
+      fontSize: 30,
+      color: color.defaultColor,
+    },
     procBarWrap: {
       flexDirection : "row",
       marginTop: 18

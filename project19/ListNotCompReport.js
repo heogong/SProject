@@ -33,7 +33,7 @@ import Modal from "react-native-modal";
 import { styles, viewportHeight, viewportWidth } from './css/common';
 import { color } from './css/color';
 
-class ListApplyAfterService extends Component {
+class ListNotCompReport extends Component {
   constructor(props) {
     super(props);
 
@@ -48,17 +48,28 @@ class ListApplyAfterService extends Component {
   product = () => (
     <TouchableOpacity onPress={ () => this._toggleModal()}>
       <View style={localStyles.listFillBoxWrap}>
-        <View style={[styles.alignItemsStart, styles.justiConCenter, {height : 80, width : 80}]}>
+        <View style={[styles.alignItemsStart, styles.justiConCenter, {height : 80, width : 80, marginTop: 4}]}>
           <Image 
             source={require("./img/license-depart01.png")} 
             resizeMode="contain" 
             style={{height : 80, width : 80, marginBottom: 5}} 
           />
+          <Text style={{width: 80, textAlign: "center", fontSize: 12, color: color.whiteColor}}>육류 냉장고</Text>
         </View>
         <View style={[styles.justiConCenter, {paddingLeft: 20}]}>
-          <H3 style={[styles.mb12, {fontWeight: "bold", fontsize: 18, color : color.whiteColor}]}>업소용냉장고</H3>
+          <H3 style={[styles.mb12, {fontWeight: "bold", fontsize: 18, color : color.whiteColor}]}>세나정육점</H3>
+          <Text style={[localStyles.listDeTxt, styles.mb12]}>2019년 01월 26일</Text>
           <Text style={localStyles.listDeTxt}>경기도 시흥시 산기대로</Text>
-          <Text style={localStyles.listDeTxt}>한국산업기술대학교 305호</Text>
+          <View style={styles.fxDirRow}>
+            <Text style={[localStyles.listDeTxt, {paddingTop: 3}]}>만족도</Text>
+            <View style={[styles.fxDirRow, {marginLeft: 6}]}>
+              <Icon style={localStyles.startIcon} name="star"/>
+              <Icon style={localStyles.startIcon} name="star"/>
+              <Icon style={localStyles.startIcon} name="star"/>
+              <Icon style={localStyles.startIcon} name="star-outline"/>
+              <Icon style={localStyles.startIcon} name="star-outline"/>
+            </View>
+          </View>
         </View>
 
         <View style={[styles.fx1, {alignItems: "flex-end", marginTop: -5}]}>
@@ -88,11 +99,17 @@ class ListApplyAfterService extends Component {
           <View style={styles.contentWrap}>
 
             <View>
-              <View style={{marginBottom: 38}}>
+              <View style={[styles.fxDirRow, {marginBottom: 38}]}>
                 <View style={styles.leftGuideTxtWrap}>
-                  <Text style={styles.leftGuideTxt}>A/S신청</Text>
-                  <Text style={styles.leftGuideTxt}>목록을 보고</Text>
-                  <Text style={styles.leftGuideTxt}>수락해주세요</Text>
+                  <Text style={styles.leftGuideTxt}>미작성된</Text>
+                  <Text style={styles.leftGuideTxt}>보고서작성을</Text>
+                  <Text style={styles.leftGuideTxt}>완료해주세요</Text>
+                </View>
+
+                <View style={styles.rigthTxtWrap}>
+                  <Text style={styles.rightTxt}>
+                    04<Text style={styles.rightTxtSmall}>건</Text>
+                  </Text>
                 </View>
               </View>
 
@@ -133,13 +150,6 @@ class ListApplyAfterService extends Component {
   }
 }
 
-function wp (percentage, space) {
-  const value = (percentage * (viewportWidth - space)) / 100;
-  return Math.round(value);
-}
-
-const productImgSize = wp(24, 52);
-
 const localStyles = StyleSheet.create({
   listDeTxt: {
     fontSize: 13,
@@ -149,10 +159,15 @@ const localStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginBottom: 12,
-    padding: 16, 
+    padding: 14, 
     backgroundColor : color.defaultColor,
-    height: 108
+    height: 120
+  },
+  startIcon: {
+    color: color.whiteColor,
+    fontSize: 17,
+    marginRight: 2
   }
 });
 
-export default ListApplyAfterService;
+export default ListNotCompReport;
