@@ -63,6 +63,9 @@ const PAGE = () => (
         <Stack key="root">
             <Scene key="Intro" hideNavBar component={Intro} type={ActionConst.RESET}/>
             <Scene key="SelectUserType" hideNavBar component={SelectUserType} type={ActionConst.RESET}/>
+            {/* 3번 화면 작업 예정 */}
+            {/* 4번 화면 작업 예정 */}
+            {/* 5번 화면 작업 예정 */}
             <Scene key="UserLogin" hideNavBar component={UserLogin} type={ActionConst.RESET}/>
             <Scene key="InvaildId" hideNavBar component={InvaildId} type={ActionConst.RESET}/>
             <Scene key="SelectJoinType" hideNavBar component={SelectJoinType} type={ActionConst.RESET}/>
@@ -81,7 +84,23 @@ const PAGE = () => (
             <Scene key="RegPassBook3" hideNavBar component={RegPassBook3} type={ActionConst.RESET}/>
             <Scene key="AgreeTermsService" hideNavBar component={AgreeTermsService} type={ActionConst.RESET}/>
             <Scene key="PartnerMain" hideNavBar component={PartnerMain} type={ActionConst.RESET}/>
-            <Scene key="ListApplyAfterService" initial hideNavBar component={ListApplyAfterService} type={ActionConst.RESET}/>
+            {/* 35번 화면 작업 예정 */}
+            {/* 36번 화면 작업 예정 */}
+            {/* 37번 화면 작업 예정 */}
+            {/* 38번 화면 작업 예정 */}
+            {/* 39번 화면 작업 예정 */}
+            {/* 40번 화면 작업 예정 */}
+            {/* 41번 화면 작업 예정 */}
+            {/* 42번 화면 작업 예정 */}
+            {/* 43번 화면 작업 예정 */}
+            {/* 44번 화면 작업 예정 */}
+            {/* 45번 화면 작업 예정 */}
+            {/* 46번 화면 작업 예정 */}
+            {/* 47번 화면 작업 예정 */}
+            {/* 48번 화면 작업 예정 */}
+            <Scene key="ListApplyAfterService" hideNavBar component={ListApplyAfterService} type={ActionConst.RESET}/>
+            {/* 50번 화면 작업 예정 */}
+            <Scene initial key="DetailApplyAfterService" hideNavBar component={DetailApplyAfterService}  type={ActionConst.RESET}/>
 
             <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
             <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
@@ -109,7 +128,6 @@ const PAGE = () => (
             <Scene key="TakeProductImage" hideNavBar component={TakeProductImage}  type={ActionConst.RESET}/>
             <Scene key="TakeProductGuide1" hideNavBar component={TakeProductGuide1} type={ActionConst.RESET}/>
             <Scene key="TakeProductGuide2" hideNavBar component={TakeProductGuide2} type={ActionConst.RESET}/>
-            <Scene key="DetailApplyAfterService" hideNavBar component={DetailApplyAfterService}  type={ActionConst.RESET}/>
 
 
             <Scene key="pageOne" hideNavBar component={pageOne} title="pageOne" type={ActionConst.RESET}/>
