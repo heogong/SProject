@@ -136,7 +136,7 @@ class RegAddAs extends Component {
 const localStyles = StyleSheet.create({
   addAsInputWrap: {
     flex: 2,
-    marginTop: 38
+    marginTop: 20
   },
   inputBoxWrap: {
     paddingTop : 28,

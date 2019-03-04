@@ -100,9 +100,9 @@ const PAGE = () => (
             {/* 48번 화면 작업 예정 */}
             <Scene key="ListApplyAfterService" hideNavBar component={ListApplyAfterService} type={ActionConst.RESET}/>
             {/* 50번 화면 작업 예정 */}
-            <Scene initial key="DetailApplyAfterService" hideNavBar component={DetailApplyAfterService}  type={ActionConst.RESET}/>
+            <Scene key="DetailApplyAfterService" hideNavBar component={DetailApplyAfterService}  type={ActionConst.RESET}/>
             {/* 52번 화면 작업 예정 */}
-            <Scene key="RegAddAs" hideNavBar component={RegAddAs}  type={ActionConst.RESET}/>
+            <Scene initial key="RegAddAs" hideNavBar component={RegAddAs}  type={ActionConst.RESET}/>
             
 
             <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
