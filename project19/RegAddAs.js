@@ -115,12 +115,12 @@ class RegAddAs extends Component {
                     <View style={styles.modalBtnTwinWrap}>
                         <View style={{marginRight: 9}}>
                             <Button style={styles.modalBtnNoFill} onPress={this._toggleModal}>
-                                <Text style={styles.modalBtnNoFillTxt}>매칭취소</Text>
+                                <Text style={styles.modalBtnNoFillTxt}>취소</Text>
                             </Button>
                         </View>
                         <View style={{marginLeft: 9}}>
                             <Button style={styles.modalBtnFill} onPress={this._toggleModal}>
-                                <Text style={styles.modalBtnFillTxt}>A/S 출발</Text>
+                                <Text style={styles.modalBtnFillTxt}>전송</Text>
                             </Button>
                         </View>
                     </View>
