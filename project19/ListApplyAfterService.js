@@ -47,22 +47,22 @@ class ListApplyAfterService extends Component {
 
   product = () => (
     <TouchableOpacity onPress={ () => this._toggleModal()}>
-      <View style={localStyles.listFillBoxWrap}>
-        <View style={[styles.alignItemsStart, styles.justiConCenter, {height : 80, width : 80}]}>
+      <View style={[styles.listPrdBoxFillWrap, {height: 108}]}>
+        <View style={styles.listPrdBoxImgWrap}>
           <Image 
             source={require("./img/license-depart01.png")} 
             resizeMode="contain" 
-            style={{height : 80, width : 80, marginBottom: 5}} 
+            style={styles.listPrdBoxImg} 
           />
         </View>
-        <View style={[styles.justiConCenter, {paddingLeft: 20}]}>
-          <H3 style={[styles.mb12, {fontWeight: "bold", fontsize: 18, color : color.whiteColor}]}>업소용냉장고</H3>
-          <Text style={localStyles.listDeTxt}>경기도 시흥시 산기대로</Text>
-          <Text style={localStyles.listDeTxt}>한국산업기술대학교 305호</Text>
+        <View style={styles.listPrdBoxRightTxtWrap}>
+          <H3 style={styles.listPrdBoxRightTitleTxt}>업소용냉장고</H3>
+          <Text style={styles.listPrdBoxDeTxt}>경기도 시흥시 산기대로</Text>
+          <Text style={styles.listPrdBoxDeTxt}>한국산업기술대학교 305호</Text>
         </View>
 
-        <View style={[styles.fx1, {alignItems: "flex-end", marginTop: -5}]}>
-          <Icon style={{color : '#fff'}} name="arrow-round-forward"/>
+        <View style={styles.listPrdBoxNextIconWrap}>
+          <Icon style={styles.listPrdBoxNextIcon} name="arrow-round-forward"/>
         </View>
       </View>
     </TouchableOpacity>
@@ -132,27 +132,5 @@ class ListApplyAfterService extends Component {
     );
   }
 }
-
-function wp (percentage, space) {
-  const value = (percentage * (viewportWidth - space)) / 100;
-  return Math.round(value);
-}
-
-const productImgSize = wp(24, 52);
-
-const localStyles = StyleSheet.create({
-  listDeTxt: {
-    fontSize: 13,
-    color: color.whiteColor
-  },
-  listFillBoxWrap: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginBottom: 12,
-    padding: 16, 
-    backgroundColor : color.defaultColor,
-    height: 108
-  }
-});
 
 export default ListApplyAfterService;
