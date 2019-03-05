@@ -55,6 +55,7 @@ import ListNotCompReport from './ListNotCompReport';
 import ListNotCompReportEmpty from './ListNotCompReportEmpty';
 import RegReportStep1 from './RegReportStep1';
 import MoreMenu from './MoreMenu';
+import MyProfileInfo from './MyProfileInfo';
 
 import pageOne from './Page1'
 import pageTwo from './Page2'
@@ -108,7 +109,8 @@ const PAGE = () => (
             <Scene key="ListNotCompReport" hideNavBar component={ListNotCompReport}  type={ActionConst.RESET}/>
             <Scene key="ListNotCompReportEmpty" hideNavBar component={ListNotCompReportEmpty}  type={ActionConst.RESET}/>
             <Scene key="RegReportStep1" hideNavBar component={RegReportStep1}  type={ActionConst.RESET}/>
-            <Scene initial key="MoreMenu" hideNavBar component={MoreMenu}  type={ActionConst.RESET}/>
+            <Scene key="MoreMenu" hideNavBar component={MoreMenu}  type={ActionConst.RESET}/>
+            <Scene initial key="MyProfileInfo" hideNavBar component={MyProfileInfo}  type={ActionConst.RESET}/>
             
 
             <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
