@@ -73,41 +73,41 @@ class SelectSpecialty extends Component {
         </Header>
 
         <View style={{marginBottom: 36}}>
-            <View style={styles.fxDirRow}>
-              <View style={styles.leftGuideTxtWrap}>
-                <Text style={styles.leftGuideTxt}>전문분야를</Text>
-                <Text style={styles.leftGuideTxt}>선택해주세요</Text>
-                <Text style={styles.leftGuideTxt}>(복수선택가능)</Text>
-              </View>
-              <View style={styles.rightStepNumWrap}>
-                <Text style={styles.rightStepNum}>03</Text>
-              </View>
+          <View style={styles.fxDirRow}>
+            <View style={styles.leftGuideTxtWrap}>
+              <Text style={styles.leftGuideTxt}>전문분야를</Text>
+              <Text style={styles.leftGuideTxt}>선택해주세요</Text>
+              <Text style={styles.leftGuideTxt}>(복수선택가능)</Text>
             </View>
-
-            <View style={styles.procBarWrap}>
-              <View style={styles.fx1}>
-                <View style={styles.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-                <View style={styles.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={styles.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={styles.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={styles.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={styles.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={styles.procBarOff} />
-              </View>
+            <View style={styles.rightStepNumWrap}>
+              <Text style={styles.rightStepNum}>03</Text>
             </View>
           </View>
+
+          <View style={styles.procBarWrap}>
+            <View style={styles.fx1}>
+              <View style={styles.procBarOn} />
+            </View>
+            <View style={styles.fx1}>
+              <View style={styles.procBarOn} />
+            </View>
+            <View style={styles.fx1}>
+              <View style={styles.procBarOn} />
+            </View>
+            <View style={styles.fx1}>
+              <View style={styles.procBarOff} />
+            </View>
+            <View style={styles.fx1}>
+              <View style={styles.procBarOff} />
+            </View>
+            <View style={styles.fx1}>
+              <View style={styles.procBarOff} />
+            </View>
+            <View style={styles.fx1}>
+              <View style={styles.procBarOff} />
+            </View>
+          </View>
+        </View>
 
         <ScrollView showsVerticalScrollIndicator={false}
           style={{marginBottom: 37}}>

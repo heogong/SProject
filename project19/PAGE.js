@@ -48,10 +48,12 @@ import RegPassBook2 from './RegPassBook2';
 import RegPassBook3 from './RegPassBook3';
 import PartnerMain from './PartnerMain';
 import ListApplyAfterService from './ListApplyAfterService';
+import ListApplyAfterServiceEmpty from './ListApplyAfterServiceEmpty';
 import DetailApplyAfterService from './DetailApplyAfterService';
 import RegAddAs from './RegAddAs';
 import ListNotCompReport from './ListNotCompReport';
-
+import ListNotCompReportEmpty from './ListNotCompReportEmpty';
+import RegReportStep1 from './RegReportStep1';
 
 import pageOne from './Page1'
 import pageTwo from './Page2'
@@ -98,11 +100,13 @@ const PAGE = () => (
             {/* 47번 화면 작업 예정 */}
             {/* 48번 화면 작업 예정 */}
             <Scene key="ListApplyAfterService" hideNavBar component={ListApplyAfterService} type={ActionConst.RESET}/>
-            {/* 50번 화면 작업 예정 */}
+            <Scene key="ListApplyAfterServiceEmpty" hideNavBar component={ListApplyAfterServiceEmpty} type={ActionConst.RESET}/>
             <Scene key="DetailApplyAfterService" hideNavBar component={DetailApplyAfterService}  type={ActionConst.RESET}/>
             {/* 52번 화면 작업 예정 */}
             <Scene key="RegAddAs" hideNavBar component={RegAddAs}  type={ActionConst.RESET}/>
-            <Scene initial key="ListNotCompReport" hideNavBar component={ListNotCompReport}  type={ActionConst.RESET}/>
+            <Scene key="ListNotCompReport" hideNavBar component={ListNotCompReport}  type={ActionConst.RESET}/>
+            <Scene key="ListNotCompReportEmpty" hideNavBar component={ListNotCompReportEmpty}  type={ActionConst.RESET}/>
+            <Scene initial key="RegReportStep1" hideNavBar component={RegReportStep1}  type={ActionConst.RESET}/>
             
 
             <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>

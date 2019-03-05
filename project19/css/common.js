@@ -79,6 +79,12 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // 공통 Style
     // ----------------------------
+    // Line
+    line: {
+      width: "100%",
+      height: 1,
+      borderTopWidth: 1
+    },
     // List Style
     listPrdBoxDeTxt: {
       fontSize: 13,
@@ -131,6 +137,11 @@ export const styles = StyleSheet.create({
     listPrdBoxNextIcon: {
       color: color.whiteColor
     },
+    listPrdBoxEmptyImgWrap: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center"
+    },
     // TextInput
     textInputBox: {
       paddingLeft: 9,
@@ -144,6 +155,22 @@ export const styles = StyleSheet.create({
       borderColor : color.whiteColor,
       height : 100
     },
+    textInputBox1: {
+      padding: 14,
+      paddingTop: 14,
+      fontSize: 14,
+      height : 170,
+      width: "100%",
+    },
+    textInputWhBack: {
+      backgroundColor: color.whiteColor,
+      borderWidth : 0,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+      borderTopWidth: 0,
+      borderBottomWidth: 0,
+      height : 170
+    },
     // Box Shdow
     boxShadow: {
       shadowColor: "#000",
@@ -154,8 +181,6 @@ export const styles = StyleSheet.create({
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
       elevation: 5,
-      borderWidth: 1,
-      borderRadius: 2,
       borderColor: '#ddd',
       borderBottomWidth: 0,
       marginTop: 2,
@@ -285,6 +310,12 @@ export const styles = StyleSheet.create({
     procBarOff: {
       height : 10,
       backgroundColor : color.defaultBackColor
+    },
+    procBarTxt: {
+      fontSize: 12,
+      color: "#888888",
+      marginTop: 6,
+      textAlign: "center"
     },
     // Input Style
     inputWhBackWhBo: {

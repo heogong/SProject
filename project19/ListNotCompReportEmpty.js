@@ -109,15 +109,12 @@ class ListNotCompReport extends Component {
             </View>
           </View>
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          { this.product() }
-          { this.product() }
-          { this.product() }
-          { this.product() }
-          { this.product() }
-          { this.product() }
-          { this.product() }
-        </ScrollView>
+        <View style={styles.listPrdBoxEmptyImgWrap}>
+          <Image 
+            source={require("./img/license-depart01.png")} 
+            style={{height: 219, width: 219, marginTop: -36}} 
+          />
+        </View>
 
         <Modal isVisible={this.state.isModalVisible}>
           <View style={[styles.modalWrap, {height: 128}]}>

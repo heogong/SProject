@@ -83,26 +83,23 @@ class ListApplyAfterService extends Component {
           <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <ScrollView showsVerticalScrollIndicator={false}>
-
-          <View style={styles.contentWrap}>
-
-            <View>
-              <View style={{marginBottom: 38}}>
-                <View style={styles.leftGuideTxtWrap}>
-                  <Text style={styles.leftGuideTxt}>A/S신청</Text>
-                  <Text style={styles.leftGuideTxt}>목록을 보고</Text>
-                  <Text style={styles.leftGuideTxt}>수락해주세요</Text>
-                </View>
-              </View>
-
-              { this.product() }
-              { this.product() }
-              { this.product() }
-              { this.product() }
-
+        <View style={{marginBottom: 36}}>
+          <View style={styles.fxDirRow}>
+            <View style={styles.leftGuideTxtWrap}>
+              <Text style={styles.leftGuideTxt}>A/S신청</Text>
+              <Text style={styles.leftGuideTxt}>목록을 보고</Text>
+              <Text style={styles.leftGuideTxt}>수락해주세요</Text>
             </View>
           </View>
+        </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          { this.product() }
+          { this.product() }
+          { this.product() }
+          { this.product() }
+          { this.product() }
+          { this.product() }
+          { this.product() }
         </ScrollView>
 
         <Modal isVisible={this.state.isModalVisible}>

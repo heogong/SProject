@@ -33,7 +33,7 @@ import Modal from "react-native-modal";
 import { styles, viewportHeight, viewportWidth } from './css/common';
 import { color } from './css/color';
 
-class ListNotCompReport extends Component {
+class ListApplyAfterServiceEmpty extends Component {
   constructor(props) {
     super(props);
 
@@ -47,29 +47,18 @@ class ListNotCompReport extends Component {
 
   product = () => (
     <TouchableOpacity onPress={ () => this._toggleModal()}>
-      <View style={[styles.listPrdBoxFillWrap, {height: 120}]}>
-        <View style={[styles.listPrdBoxImgWrap ,{marginTop: 4}]}>
+      <View style={[styles.listPrdBoxFillWrap, {height: 108}]}>
+        <View style={styles.listPrdBoxImgWrap}>
           <Image 
             source={require("./img/license-depart01.png")} 
             resizeMode="contain" 
             style={styles.listPrdBoxImg} 
           />
-          <Text style={styles.listPrdBoxImgTxt}>육류 냉장고</Text>
         </View>
         <View style={styles.listPrdBoxRightTxtWrap}>
-          <H3 style={styles.listPrdBoxRightTitleTxt}>세나정육점</H3>
-          <Text style={[styles.listPrdBoxDeTxt, styles.mb12, {fontWeight: "500"}]}>2019년 01월 26일</Text>
+          <H3 style={styles.listPrdBoxRightTitleTxt}>업소용냉장고</H3>
           <Text style={styles.listPrdBoxDeTxt}>경기도 시흥시 산기대로</Text>
-          <View style={styles.fxDirRow}>
-            <Text style={[styles.listPrdBoxDeTxt, {paddingTop: 3}]}>만족도</Text>
-            <View style={[styles.fxDirRow, {marginLeft: 6}]}>
-              <Icon style={styles.listPrdBoxStartIcon} name="star"/>
-              <Icon style={styles.listPrdBoxStartIcon} name="star"/>
-              <Icon style={styles.listPrdBoxStartIcon} name="star"/>
-              <Icon style={styles.listPrdBoxStartIcon} name="star-outline"/>
-              <Icon style={styles.listPrdBoxStartIcon} name="star-outline"/>
-            </View>
-          </View>
+          <Text style={styles.listPrdBoxDeTxt}>한국산업기술대학교 305호</Text>
         </View>
 
         <View style={styles.listPrdBoxNextIconWrap}>
@@ -97,27 +86,18 @@ class ListNotCompReport extends Component {
         <View style={{marginBottom: 36}}>
           <View style={styles.fxDirRow}>
             <View style={styles.leftGuideTxtWrap}>
-              <Text style={styles.leftGuideTxt}>미작성된</Text>
-              <Text style={styles.leftGuideTxt}>보고서작성을</Text>
-              <Text style={styles.leftGuideTxt}>완료해주세요</Text>
-            </View>
-
-            <View style={styles.rigthTxtWrap}>
-              <Text style={[styles.rightTxt, {fontWeight: "bold"}]}>
-                04<Text style={styles.rightTxtSmall}>건</Text>
-              </Text>
+              <Text style={styles.leftGuideTxt}>A/S신청</Text>
+              <Text style={styles.leftGuideTxt}>목록을 보고</Text>
+              <Text style={styles.leftGuideTxt}>수락해주세요</Text>
             </View>
           </View>
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          { this.product() }
-          { this.product() }
-          { this.product() }
-          { this.product() }
-          { this.product() }
-          { this.product() }
-          { this.product() }
-        </ScrollView>
+        <View style={styles.listPrdBoxEmptyImgWrap}>
+          <Image 
+            source={require("./img/license-depart01.png")} 
+            style={{height: 219, width: 219, marginTop: -36}} 
+          />
+        </View>
 
         <Modal isVisible={this.state.isModalVisible}>
           <View style={[styles.modalWrap, {height: 128}]}>
@@ -147,4 +127,4 @@ class ListNotCompReport extends Component {
   }
 }
 
-export default ListNotCompReport;
+export default ListApplyAfterServiceEmpty;
