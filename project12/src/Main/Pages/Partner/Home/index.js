@@ -6,9 +6,9 @@ import { SUCCESS_RETURN_CODE, ARRIVE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
-import Modal from "react-native-modal";
-import Swiper from 'react-native-animated-swiper';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 
+import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
 import GetAfterService from '~/Main/Functions/GetAfterService';
 import RegAfterServiceMatch from '~/Main/Functions/RegAfterServiceMatch';
 import GetAfterServiceState from '~/Main/Functions/GetAfterServiceState';
@@ -18,6 +18,8 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 import AfterServiceStateCard from '~/Main/Components/AfterServiceStateCard';
 
 import CustomButton from '~/Common/Components/CustomButton';
+import CustomEtcButton from '~/Common/Components/CustomEtcButton';
+import CustomModal from '~/Common/Components/CustomModal';
 import CustomHeader from "~/Common/Components/CustomHeader";
 import { styles, viewportWidth, viewportHeight } from '~/Common/Styles/common';
 import { color } from "~/Common/Styles/colors";
@@ -26,7 +28,7 @@ let AS_PRGS_ID = null; //
 let AS_RECV_ID = null; // 
 
 
-
+// 가입신청승인대기
 const PartnerWait = () => (
     <View style={{paddingLeft: 27, paddingRight: 27, paddingTop: 28, paddingBottom: 21}}>
         <View>
@@ -37,6 +39,7 @@ const PartnerWait = () => (
     </View>
 )
 
+// A/S 요청 없음
 const PartnerNoWait = () => (
     <View style={{paddingLeft: 27, paddingRight: 27, paddingTop: 28, paddingBottom: 21}}>
         <View>
@@ -47,7 +50,8 @@ const PartnerNoWait = () => (
     </View>
 )
 
-const Matching = () => (
+// A/S 요청
+const MatchingReq = ({toggleModal}) => (
     <View style={{paddingLeft: 27, paddingRight: 27, paddingTop: 16, paddingBottom: 15}}>
         <View style={{backgroundColor: color.whiteColor, height: 104, widht: "100%"}}>
             <View style={styles.modalContent}>
@@ -55,38 +59,194 @@ const Matching = () => (
                     <Text style={styles.modalTopTxt}>시흥시 정왕동에서 A/S 요청이 있습니다</Text>
                 </View>
                 <View style={styles.modalBtnWrap}>
-                    <CustomButton 
-                        onPress={this._toggleModal}
-                        edgeFill={true}
-                        fillTxt={true}
+                    <CustomEtcButton 
+                        onPress={toggleModal}
                     >
                         매칭수락
-                    </CustomButton>
+                    </CustomEtcButton>
                 </View>
             </View>
         </View>
     </View>
 )
 
+// A/S 보고서
+const RequestReport = ({action, count}) => (
+    <View style={[styles.mb10, styles.pd10, styles.fxDirRow, {backgroundColor : color.defaultColor}]}>
+        <View style={{flex: 1, marginTop: 25}}>
+            <View style={[styles.alignItemsCenter, styles.justiConEnd]}>
+                <Badge info style={{
+                    position : 'absolute', 
+                    right : 12, 
+                    top : -12, 
+                    zIndex : 1, 
+                    color : color.defaultColor, 
+                    elevation : 10
+                }}>
+                    <Text>{count}</Text>
+                </Badge>
+                <Image 
+                    source={require("~/Common/Image/license-bg02.png")} 
+                    resizeMode="contain" 
+                    style={[{height : 79, width : 56}]}
+                />
+            </View>
+        </View>
 
+        <View style={[styles.alignItemsCenter, styles.fx2, {height: 120}]}>
+            <Text style={localStyles.reportTitleTxt}>A/S 출장시 보고서 작성이 필요해요</Text>
+            <Text style={localStyles.reportTxt}>보고서를 작성해야 비용을 정산받을 수 있어요</Text>
+            <View style={styles.alignItemsCenter}>
+                <CustomButton
+                    onPress={action}
+                    WhiteLineBtn={true}
+                    CustomBtnStyle={{height: 36, width: "70%"}}
+                    CustomFontStyle={{fontSize: 14}}
+                >
+                    지금 작성하러가기
+                </CustomButton>
+            </View>
+        </View>
+    </View>
+)
+
+// A/S 보고서 가이드
+const GuideReport = () => (
+    <View style={[styles.mb10, styles.pd10, styles.fxDirRow, {backgroundColor : color.defaultColor}]}>
+        <View style={{flex: 1, marginTop: 25}}>
+            <View style={[styles.alignItemsCenter, styles.justiConEnd]}>
+                <Image 
+                    source={require("~/Common/Image/license-bg02.png")} 
+                    resizeMode="contain" 
+                    style={[{height : 79, width : 56}]}
+                />
+            </View>
+        </View>
+
+        <View style={[styles.alignItemsCenter, styles.fx2, {height: 120}]}>
+            <Text style={localStyles.reportTitleTxt}>A/S 출장시 보고서 작성이 필요해요</Text>
+            <Text style={localStyles.reportTxt}>보고서를 작성해야 비용을 정산받을 수 있어요</Text>
+            <View style={styles.alignItemsCenter}>
+                <CustomButton
+                    WhiteLineBtn={true}
+                    CustomBtnStyle={{height: 36, width: "70%"}}
+                    CustomFontStyle={{fontSize: 14}}
+                >
+                    보고서 작성가이드
+                </CustomButton>
+            </View>
+        </View>
+    </View>
+)
+
+export const ENTRIES1 = [
+    {
+        title: 'STEP.1',
+        guide: true, 
+        guideTxt1 : 'A/S 출발에서',
+        guideTxt2 : 'A/S 완료까지',
+        guideTxt3 : '진행가이드'
+    },
+    {
+        title: 'STEP.2',
+        guide: true,
+        guideTxt1 : 'A/S 출발에서',
+        guideTxt2 : 'A/S 완료까지',
+        guideTxt3 : '진행가이드'
+    },
+    {
+        title: 'STEP.3',
+        guide: true,
+        guideTxt1 : 'A/S 출발에서',
+        guideTxt2 : 'A/S 완료까지',
+        guideTxt3 : '진행가이드'
+    }
+];
+
+const SLIDER_1_FIRST_ITEM = 0;
 export default class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data : [],
-            afterServiceData : null,
+            data : [
+                {
+                    prdTypeKoNm: 'product ',
+                    bplaceAddr : '시흥시 정왕동',
+                    asPrgsId : 10,
+                    asRecvId : 20
+                }
+            ],
+            afterServiceData : [],
             reportCount : 0,
             latitude : null,
             longitude : null,
 
             isModalVisible: false,
             isModalVisible1: false,
-            wait : true
+            slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
+            wait : false, // test 
+            isASreq : true, // test
+            isAlertModal : false // alert 용
         };
     }
 
     _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
     _toggleModal1 = () => this.setState({ isModalVisible1: !this.state.isModalVisible1 });
+
+    // 대기 중일 경우 가이드만 표시
+    _renderItem ({item, index}) {
+        return (
+            <TouchableOpacity onPress={ () => alert("dddd")}>
+                <View style={[styles.pd10, styles.alignItemsCenter, {backgroundColor : color.whiteColor, height : cardHeight}]}>
+                    <View style={{marginTop: 30}}>
+                        <Text style={{fontSize: 24, color: "#038dbd", fontWeight: "bold"}}>{item.title}</Text>
+                    </View>
+                    <View style={[styles.fx1, styles.justiConCenter]}>
+                        <Text style={localStyles.guideBoxTxt}>{item.guideTxt1}</Text>
+                        <Text style={localStyles.guideBoxTxt}>{item.guideTxt2}</Text>
+                        <Text style={localStyles.guideBoxTxt}>{item.guideTxt3}</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        );
+      }
+    
+      // 승인 후 AS 및 가이드 
+      _renderItem2 = ({item, index}) => {
+        return (
+            (item.guide) ? (
+                <TouchableOpacity onPress={ () => alert("dddd")}>
+                    <View style={[styles.pd10, styles.alignItemsCenter, {backgroundColor : color.whiteColor, height : cardHeight}]}>
+                        <View style={{marginTop: 30}}>
+                            <Text style={{fontSize: 24, color: "#038dbd", fontWeight: "bold"}}>{item.title}</Text>
+                        </View>
+                        <View style={[styles.fx1, styles.justiConCenter]}>
+                            <Text style={localStyles.guideBoxTxt}>A/S 출발에서</Text>
+                            <Text style={localStyles.guideBoxTxt}>A/S 완료까지</Text>
+                            <Text style={localStyles.guideBoxTxt}>진행가이드</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            ) : (
+                <TouchableOpacity onPress={ this._selectAfterService(index) }>
+                    <View style={[styles.pd10, styles.alignItemsCenter, {backgroundColor : color.whiteColor, height : cardHeight}]}>
+                        <View style={{marginTop: 20}}>
+                            <Text style={{fontSize: 16, color: "#038dbd", fontWeight: "bold"}}>{item.bplaceAddr}</Text>
+                        </View>
+                        <View style={[styles.fx4, styles.justiConCenter]}>
+                            <Image 
+                                source={require("~/Common/Image/license-depart02.png")} 
+                                resizeMode="contain" 
+                                style={{height : 80, width : 80}} />
+                        </View>
+                        <View style={[styles.fx1, styles.justiConCenter]}>
+                            <Text style={styles.greyFont}>{item.prdTypeKoNm}</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            )
+        );
+      }
 
     componentWillUnmount () {
         console.log("componentWillUnmount");
@@ -96,17 +256,45 @@ export default class Main extends Component {
         // BackgroundGeolocation.events.forEach(event =>
         //     BackgroundGeolocation.removeAllListeners(event)
         // );
+
     }
 
     componentDidMount () {
         BackHandler.addEventListener('hardwareBackPress', () => this.handleBackPress) // Listen for the hardware back button on Android to be pressed
-        this._getAfterService();
-        this._getAfterServiceState();
-        this._getAfterServiceIncomplete();
+
+        this._getUserInfo(); //사용자 정보 조회 - 가입 승인 대기 여부 확인
+        // this._getAfterService();
+        // this._getAfterServiceState();
+        // this._getAfterServiceIncomplete();
+
+        // 가이드값 추가 TEST
+        this.setState({data : this.state.data.concat(ENTRIES1) });
     }
 
     handleBackPress = () => {
         return false;
+    }
+
+    // 로그인(토큰값 가져온) 사용자 정보 가져오기
+    _getUserInfo = () => {
+        GetUserInfo().then(async result => {
+            GetCommonData(result, this._getUserInfo).then(async resultData => {
+                if(resultData !== undefined) {
+                    console.log(resultData);
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+
+                    if(ResultBool) {
+                        // 가입 코드 필요
+                        this.setState({wait : true}); // test 승인
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                    }
+                }
+            });
+        });
     }
     
     // 현재 위치 조회
@@ -143,7 +331,10 @@ export default class Main extends Component {
                             this._getAfterServiceDetail();
                         }
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -160,7 +351,10 @@ export default class Main extends Component {
                     if(ResultBool) {
                         this.setState({ data: resultData.data });
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -169,6 +363,7 @@ export default class Main extends Component {
 
     // 2. 업체 AS 매칭(진행) 수락
     _regAfterServiceMatch = () => {
+        this.setState({ isModalVisible : false });
 
         RegAfterServiceMatch(AS_PRGS_ID).then(result => {
             GetCommonData(result, this._regAfterServiceMatch).then(async resultData => {
@@ -181,7 +376,10 @@ export default class Main extends Component {
                         this._getAfterServiceDetail();
 
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -202,7 +400,10 @@ export default class Main extends Component {
 
                         AS_PRGS_ID = resultData.data.asPrgsId;
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -223,123 +424,54 @@ export default class Main extends Component {
                             // reportCount : 3 // test
                         });
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
         });
     }
 
-    // A/S 선택
-    _selectAfterServiceConfirm = (idx) => () => {
-        // SELECT_INDEX = idx;
+    _selectAfterService = (idx) => () => {
         const { data } = this.state;
 
+        this.setState({ isModalVisible : true });
+        
         AS_PRGS_ID = data[idx].asPrgsId;
         AS_RECV_ID = data[idx].asRecvId;
-
-        Alert.alert(
-            '',
-            'A/S 매칭을 수락하시겠습니까?// 수락 후 1시간 30분 내에 도착하셔야 합니다.',
-            [
-              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-              {text: '취소', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-              {text: '수락', onPress: () => this._regAfterServiceMatch()},
-            ],
-            { cancelable: false }
-        )
     }
 
     render() {
         return (
-            // <View style={{ flex : 1, flexDirection: 'column'}}>
-            //     <CustomHeader
-            //         title='메인'
-            //         backBtn={ false }
-            //         menuBtn={ true }
-            //     />
-            //     <View style={{ flex : 1, backgroundColor : 'powderblue'}}>
-            //         <Swiper
-            //             dots
-            //             dotsColor="rgba(97, 218, 251, 0.25)"
-            //             dotsColorActive="rgba(97, 218, 251, 1)"
-            //             style={styles.slides}>
-                    
-            //             {this.state.data.map((AS, idx) =>
-            //                 <View style={{alignItems: 'center'}} key={ idx }>
-            //                     <Text>{AS.bplaceNm}</Text>
-            //                     <Text>{AS.bplaceAddr}</Text>
-            //                     <Text>{AS.prdTypeKoNm}</Text>
-            //                     <TouchableOpacity
-            //                         onPress={ this._selectAfterServiceConfirm(idx) }
-            //                     >
-            //                         <View style={styles.slide}>
-            //                             <Text style={styles.title}>A/S 접수</Text>
-            //                         </View>
-            //                     </TouchableOpacity>
-            //                 </View>
-            //             )}
-            //         </Swiper>
-            //     </View>
-            //     <View style={{ flex : 1, backgroundColor : 'skyblue'}}>
-            //         <Text>컨텐츠2</Text>
-            //     </View>
-
-            //     {/* A/S 접수 박스 */}
-            //     {(this.state.afterServiceData !== null) ? (
-            //         <AfterServiceStateCard
-            //             data={ this.state.afterServiceData }
-            //             asPrgsId={ AS_PRGS_ID }
-            //             getAfterServiceDetail={this._getAfterServiceDetail}
-            //         />
-            //     ) : (
-            //         <View></View>
-            //     )}
-
-            //     {/* 미완성 보고서 박스 */}
-            //     <View style={ styles.reportBox }>
-            //         <View style={[(this.state.reportCount > 0) ? styles.show : styles.hide, 
-            //             {padding : 10, backgroundColor: 'steelblue'}]}>
-            //             <Text>작성되지 않은 보고서가 있어요!</Text>
-            //             <Text>지금 보고서를 완료하고 정산받으세요!</Text>
-            //             <CustomButton 
-            //                 info={ true }
-            //                 bordered={ true }
-            //                 onPress={ Actions.PartnerReport }
-            //             >
-            //                 <Text>{this.state.reportCount}개 지금작성하러 가기</Text>
-            //             </CustomButton>
-            //         </View>
-            //     </View>
-            // </View>
-
             <Container style={{flex: 1, backgroundColor: color.defaultColor}}>
                 <CustomHeader resetPage={true} title="쿨리닉"/>
 
                 <ScrollView showsVerticalScrollIndicator={false}>
+                    {/* TEST - 가입대기 여부   */}
                     {(this.state.wait) ? (
                         <PartnerWait/>
                     ) : (
-                        <PartnerNoWait/>
+                        // AS 요청 여부
+                        this.state.isASreq ? <MatchingReq toggleModal={this._toggleModal}/> : <PartnerNoWait/>
                     )}
 
-                    {/* <Matching/> */}
-
-                    {/* <View>
+                    <View>
                         <Carousel
                             ref={c => this._slider1Ref = c}
                             renderItem={ (this.state.wait) ? this._renderItem : this._renderItem2 }
                             sliderWidth={viewportWidth}
                             // activeSlideAlignment={'start'}
                             itemWidth={cardWidth}
-                            data={this.state.data}
+                            data={ (this.state.wait) ?  ENTRIES1 : this.state.data }
                             firstItem={this.state.slider1ActiveSlide}
                             onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
                         />
                     </View>
                     <View style={[styles.alignItemsCenter, styles.justiConStart]}>
                         <Pagination
-                            dotsLength={this.state.data.length}
+                            dotsLength={ (this.state.wait) ?  ENTRIES1.length : this.state.data.length }
                             activeDotIndex={this.state.slider1ActiveSlide}
                             containerStyle={localStyles.paginationContainer}
                             dotColor={color.whiteColor}
@@ -350,83 +482,37 @@ export default class Main extends Component {
                             carouselRef={this._slider1Ref}
                             tappableDots={!!this._slider1Ref}
                         />
-                    </View>  */}
+                    </View> 
 
-                    <View style={localStyles.topAsYesWrap}>
-                        <View style={[styles.justiConStart, styles.alignItemsCenter, styles.mb10]}>
-                            <H1 style={localStyles.topTitleTxt}>세나정육점으로 A/S 출발중입니다</H1>
-                            <Text style={localStyles.topTxt}>경기도 시흥시  정왕동 산기대학로 237</Text>
-                            <Text style={localStyles.topTxt}>한국산업기술대학교 TIP 307호</Text>
-                        </View>
-                        <View style={[styles.justiConStart, styles.alignItemsCenter]}>
-                            <View 
-                                style={[
-                                    styles.mb10,
-                                    styles.alignItemsCenter,
-                                    styles.justiConCenter]}>
-                                <Image source={require("~/Common/Image/license-depart01.png")} 
-                                    style={[styles.mb10, {
-                                    height : 100, 
-                                    width : 100
-                                    }]}/>
-                                <Text style={localStyles.topTxt}>업소용 냉장고</Text>
-                                <Text style={localStyles.topTxt2}>증상1. 냉동온도가 올라가지 않음</Text>
-                            </View>
-                        </View>
-                        <View style={styles.fxDirRow}>
-                            <View style={{marginRight: 9}}>
-                                <CustomButton 
-                                    onPress={this._toggleModal1}
-                                    edgeFill={true}
-                                    fillTxt={true}
-                                >
-                                    매칭취소
-                                </CustomButton>
-                            </View>
-                            <View style={{marginLeft: 9}}>
-                                <Button style={styles.modalBtnFill} onPress={this._toggleModal1}>
-                                    <Text style={styles.modalBtnFillTxt}>A/S 출발</Text>
-                                </Button>
-                            </View>
-                        </View>
-                    </View>
+                    {/* A/S 접수 박스 */}
+                    {/* {(this.state.afterServiceData !== null) ? (
+                        <AfterServiceStateCard
+                            data={ this.state.afterServiceData }
+                            asPrgsId={ AS_PRGS_ID }
+                            getAfterServiceDetail={this._getAfterServiceDetail}
+                        />
+                    ) : (
+                        <View></View>
+                    )} */}
+
+                        <AfterServiceStateCard
+                            data={ this.state.afterServiceData }
+                            asPrgsId={ AS_PRGS_ID }
+                            getAfterServiceDetail={this._getAfterServiceDetail}
+                        />
 
                     <View style={{backgroundColor : color.whiteColor}}>
                         <View style={[styles.alignItemsCenter, {backgroundColor : color.whiteColor, paddingVertical : 10}]}>
                             <Text style={[{color: "#038dbd", fontSize : 14}]}>서울시 천호동에서 A/S 매칭이 완료되었습니다</Text>
                         </View>
 
-                        <View style={[styles.mb10, styles.pd10, styles.fxDirRow, {backgroundColor : color.defaultColor}]}>
-                            <View style={{flex: 1, marginTop: 25}}>
-                                <View style={[styles.alignItemsCenter, styles.justiConEnd]}>
-                                    <Badge info style={{
-                                        position : 'absolute', 
-                                        right : 12, 
-                                        top : -12, 
-                                        zIndex : 1, 
-                                        color : color.defaultColor, 
-                                        elevation : 10
-                                    }}>
-                                        <Text>2</Text>
-                                    </Badge>
-                                    <Image 
-                                        source={require("~/Common/Image/license-bg02.png")} 
-                                        resizeMode="contain" 
-                                        style={[{height : 79, width : 56}]}
-                                    />
-                                </View>
-                            </View>
-
-                            <View style={[styles.alignItemsCenter, styles.fx2, {height: 120}]}>
-                                <Text style={localStyles.reportTitleTxt}>A/S 출장시 보고서 작성이 필요해요</Text>
-                                <Text style={localStyles.reportTxt}>보고서를 작성해야 비용을 정산받을 수 있어요</Text>
-                                <View style={styles.alignItemsCenter}>
-                                    <Button style={[styles.btnDefault, styles.btnWhBoder, {height: 36, width: "70%"}]}>
-                                        <Text style={[styles.btnDefaultTxt, styles.btnWhBoderTxt, {fontSize: 14}]}>지금 작성하러가기</Text>
-                                    </Button>
-                                </View>
-                            </View>
-                        </View>
+                        {/* 미작성 보고서 여부 */}
+                        {(this.state.reportCount > 0) ? (
+                            <RequestReport action={ Actions.PartnerReport } count={this.state.reportCount}/>
+                        ) : (
+                            <GuideReport/>
+                        )}
+                        
                         
                         <View style={[styles.pd20, {backgroundColor : color.defaultColor}]}>
                             <H1 style={{color : color.whiteColor}}>쿨리닉</H1>
@@ -444,50 +530,27 @@ export default class Main extends Component {
                     </View>
                 </ScrollView>
 
-                <Modal isVisible={this.state.isModalVisible}>
-                    <View style={[styles.modalWrap, {height: 128}]}>
-                        <View style={styles.modalContent}>
-                            <View style={[styles.modalTop2LTxtWrap]}>
-                                <Text style={styles.modalTopTxt}>A/S 매칭을 수락하시겠습니까?</Text>
-                                <Text style={styles.modalTopTxt}>수락 후 1시간 30분 내에 도착하셔야 합니다</Text>
-                            </View>
-                            <View style={styles.modalBtnTwinWrap}>
-                                <View style={{marginRight: 9}}>
-                                    <Button style={styles.modalBtnNoFill} onPress={this._toggleModal}>
-                                        <Text style={styles.modalBtnNoFillTxt}>매칭취소</Text>
-                                    </Button>
-                                </View>
-                                <View style={{marginLeft: 9}}>
-                                    <Button style={styles.modalBtnFill} onPress={this._toggleModal}>
-                                        <Text style={styles.modalBtnFillTxt}>A/S 출발</Text>
-                                    </Button>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
+                <CustomModal
+                    modalType="CONFIRM"
+                    isVisible={this.state.isModalVisible}
+                    onPress1={this._toggleModal}
+                    onPress2={this._regAfterServiceMatch}
+                    infoText1="A/S 매칭을 수락하시겠습니까?"
+                    infoText2="수락 후 1시간 30분 내에 도착하셔야 합니다"
+                    btnText1="매칭취소"
+                    btnText2="A/S 출발"
+                />
 
-                <Modal isVisible={this.state.isModalVisible1}>
-                    <View style={styles.modalWrap}>
-                        <View style={styles.modalContent}>
-                        <View style={styles.modalTopTxtWrap}>
-                            <Text style={styles.modalTopTxt}>A/S 진행 또는 업체와 전화연결을 선택하세요</Text>
-                        </View>
-                        <View style={[styles.modalBtnTwinWrap, styles.fx1]}>
-                                <View style={{marginRight: 9}}>
-                                    <Button style={styles.modalBtnNoFill} onPress={this._toggleModal1}>
-                                        <Text style={styles.modalBtnNoFillTxt}>A/S 진행</Text>
-                                    </Button>
-                                </View>
-                                <View style={{marginLeft: 9}}>
-                                    <Button style={styles.modalBtnFill} onPress={this._toggleModal1}>
-                                        <Text style={styles.modalBtnFillTxt}>전화연결</Text>
-                                    </Button>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
+                {/* alert 메세지 모달 */}
+                <CustomModal
+                    modalType="ALERT"
+                    isVisible={this.state.isAlertModal}
+                    onPress={ () => this.setState({isAlertModal : false})}
+                    infoText={this.state.resultMsg}
+                    btnText="확인"
+                />
+
+
             </Container>
         )
     }
@@ -549,32 +612,14 @@ const localStyles = StyleSheet.create({
         color : color.whiteColor,
         fontSize : 12
     },
-    topAsYesWrap: {
-        borderBottomColor: color.defaultColor,
-        borderBottomWidth: 10,
-        backgroundColor: color.whiteColor,
-        height: 358,
-        paddingLeft: 27,
-        paddingRight: 27,
-        paddingTop: 23,
-        flex: 1,
-        alignItems: "center"
-    },
-    topTitleTxt: {
-        marginBottom: 19,
-        fontSize: 18,
-        color: color.defaultColor,
-        fontWeight: "bold",
-        marginBottom: 16,
-      },
-      topTxt: {
+    topTxttopTxt: {
         fontSize: 14,
         color: "#8e8e98"
-      },
-      topTxt2: {
+    },
+    topTxt2: {
         fontSize: 14,
         color: "#1e1e32",
         marginTop: 10,
         marginBottom: 13
-      }
+    }
 });

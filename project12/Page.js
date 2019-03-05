@@ -225,6 +225,9 @@ const PAGE = () => (
       <Scene key="RegAsBeforeReport" component={RegReportBeforePic} />
       <Scene key="RegAsAfterReport" component={RegReportAfterPic} />
 
+      {/* 파트너 - A/S 상세 */}
+      <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} />
+
       <Drawer
         hideNavBar
         key="drawer"
@@ -327,7 +330,7 @@ const PAGE = () => (
                 transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
                 <Scene key="PAfterServiceState" component={AfterServiceState} title="A/S 상태 체크"/>
                 <Scene key="AfterServiceMatch" component={ListAfterServiceMatch} title="A/S 매칭"/>
-                <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} title="A/S 매칭 상세"/>
+                {/* <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} title="A/S 매칭 상세"/> */}
                 <Scene key="ViewAfterServiceState" component={ViewAfterServiceState} title="A/S 매칭 후 상태"/>
                 <Scene key="RegAfterServiceAdd" component={RegAfterServiceAdd} title="추가 A/S"/>
               </Stack>
@@ -337,7 +340,7 @@ const PAGE = () => (
                 transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
                 <Scene key="ListInCompleteReport" component={ListInCompleteReport} title="미 완료 보고서 리스트"/>
                 <Scene key="AfterServiceReport" component={AfterServiceReport} title="A/S 보고서"/>
-                <Scene key="RegReportBeforePic" component={RegReportBeforePic} title="A/S 보고서 조치 전"/>
+                {/* <Scene key="RegReportBeforePic" component={RegReportBeforePic} title="A/S 보고서 조치 전"/> */}
                 <Scene key="RegReportAfterPic" component={RegReportAfterPic} title="A/S 보고서 조치 후"/>
               </Stack>
             </Tabs>

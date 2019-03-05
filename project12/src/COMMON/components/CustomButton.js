@@ -7,67 +7,53 @@ import { BStyles } from '~/Common/Styles/Button';
 import { color } from "../Styles/colors";
 
 // 기본 배경에 흰색 글씨
-const DefaultBtn = ({action, text}) => (
+const DefaultBtn = ({action, text, btnStyle, txtStyle}) => (
     <Button 
         onPress={action}
-        style={[BStyles.btnDefault, BStyles.btnDefaultNoFill]}>
-        <Text style={[BStyles.btnDefaultTxt, BStyles.btnDefaultNoFillTxt]}>{text}</Text>
+        style={[BStyles.btnDefault, BStyles.btnDefaultNoFill, btnStyle]}>
+        <Text style={[BStyles.btnDefaultTxt, BStyles.btnDefaultNoFillTxt, txtStyle]}>{text}</Text>
     </Button>
 )
 
 // 기본 라인에 기본색 글씨
-const DefaultLineBtn = ({action, text}) => (
+const DefaultLineBtn = ({action, text, btnStyle, txtStyle}) => (
     <Button 
         onPress={action}
-        style={[BStyles.btnDefault, BStyles.btnDefaultFill]}>
-        <Text style={[BStyles.btnDefaultTxt, BStyles.btnDefaultFillTxt]}>{text}</Text>
+        style={[BStyles.btnDefault, BStyles.btnDefaultFill, btnStyle]}>
+        <Text style={[BStyles.btnDefaultTxt, BStyles.btnDefaultFillTxt, txtStyle]}>{text}</Text>
     </Button>
 )
 
 // 흰색 라인에 기본 배경색 (기본 바탕 있을경우)
-const WhiteLineBtn = ({action, text}) => (
+const WhiteLineBtn = ({action, text, btnStyle, txtStyle}) => (
     <Button 
         onPress={action}
-        style={[BStyles.btnDefault, BStyles.btnWhBoder]}>
-        <Text style={[BStyles.btnDefaultTxt, BStyles.btnWhBoderTxt]}>{text}</Text>
+        style={[BStyles.btnDefault, BStyles.btnWhBoder, btnStyle]}>
+        <Text style={[BStyles.btnDefaultTxt, BStyles.btnWhBoderTxt, txtStyle]}>{text}</Text>
     </Button>
 )
 
 // 흰색 바탕에 기본 글씨 (기본 바탕 있을경우)
-const WhiteBackBtn = ({action, text}) => (
+const WhiteBackBtn = ({action, text, btnStyle, txtStyle}) => (
     <Button 
         onPress={action}
-        style={[BStyles.btnDefault, BStyles.btnWhBack]}>
-        <Text style={[BStyles.btnDefaultTxt, BStyles.btnWhBackTxt]}>{text}</Text>
+        style={[BStyles.btnDefault, BStyles.btnWhBack, btnStyle]}>
+        <Text style={[BStyles.btnDefaultTxt, BStyles.btnWhBackTxt, txtStyle]}>{text}</Text>
     </Button>
 )
-
-// 모달 기본 버튼
-const ModalDefaultBtn = ({action, text}) => (
-    <Button 
-        onPress={action}
-        style={BStyles.modalBtnFill}>
-        <Text style={BStyles.modalBtnFillTxt}>{text}</Text>
-    </Button>
-)
-
             
 
 class CustomButton extends Component {
     static defaultProps = {
         disabled: false,
-        edgeFill : false,
-        whiteFill : false,
-        fillTxt : false,
         bordered : false,
-        backgroundColor : color.backgroundColor,
-        textStyle : null,
-
         defaultBtn : false,
         DefaultLineBtn : false,
         WhiteLineBtn : false,
-        WhiteBackBtn : false
-      }
+        WhiteBackBtn : false,
+        CustomBtnStyle : '',
+        CustomFontStyle : ''
+    }
 
     render() {
         return (
@@ -111,24 +97,32 @@ class CustomButton extends Component {
                     {(this.props.WhiteBackBtn) ? (
                         <WhiteBackBtn
                             action={this.props.onPress}
-                            text={this.props.children} 
+                            text={this.props.children}
+                            btnStyle={this.props.CustomBtnStyle}
+                            txtStyle={this.props.CustomFontStyle} 
                         />
                     ) : (
                         (this.props.DefaultLineBtn) ? (
                             <DefaultLineBtn 
                                 action={this.props.onPress}
-                                text={this.props.children}  
+                                text={this.props.children}
+                                btnStyle={this.props.CustomBtnStyle}
+                                txtStyle={this.props.CustomFontStyle}  
                             />
                         ) : (
                             (this.props.WhiteLineBtn) ? (
-                                <WhiteLineBtn 
-                                 action={this.props.onPress} 
+                                <WhiteLineBtn
+                                    action={this.props.onPress} 
                                     text={this.props.children} 
+                                    btnStyle={this.props.CustomBtnStyle}
+                                    txtStyle={this.props.CustomFontStyle}
                                 />
                         ) : (
                             <DefaultBtn
                                 action={this.props.onPress} 
                                 text={this.props.children}
+                                btnStyle={this.props.CustomBtnStyle}
+                                txtStyle={this.props.CustomFontStyle}
                             />
                         )
                     ))}

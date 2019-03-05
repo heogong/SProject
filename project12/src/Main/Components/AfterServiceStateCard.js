@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, StyleSheet, Image, TouchableOpacity, View } from 'react-native';
-import { Body, Button, Card, CardItem, Icon, Text, Thumbnail } from "native-base";
+import { Badge, Container, H1, Button,  Text}  from "native-base";
 
 import { SUCCESS_RETURN_CODE, COMPLETE_MATCH, DEPARTURE, MOVE, ARRIVE, COMPLETE_AS } from '~/Common/Blend';
 
@@ -12,7 +12,10 @@ import DepartureAfterService from '~/Main/Functions/DepartureAfterService';
 import CompleteAfterService from '~/Main/Functions/CompleteAfterService';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import CustomButton from '~/Common/Components/CustomButton';
+import CustomEtcButton from '~/Common/Components/CustomEtcButton';
+import CustomModal from '~/Common/Components/CustomModal';
+import { styles } from '~/Common/Styles/common';
+import { color } from "~/Common/Styles/colors";
 
 class AfterServiceStateCard extends Component {
     constructor(props) { 
@@ -21,7 +24,11 @@ class AfterServiceStateCard extends Component {
         this.state = {
             afterServiceData : this.props.data,
             latitude : null, 
-            longitud : null
+            longitud : null,
+
+            isArriveModal : false,
+            isAlertModal : false, //alert 용
+            resultMsg : null // alert 결과 메세지
         };
     }
 
@@ -37,11 +44,11 @@ class AfterServiceStateCard extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps){
-        // console.log("componentWillReceiveProps: ", nextProps);
+    // componentWillReceiveProps(nextProps){
+    //     // console.log("componentWillReceiveProps: ", nextProps);
 
-        this.setState({afterServiceData : nextProps.data});
-    }
+    //     this.setState({afterServiceData : nextProps.data});
+    // }
 
     // 현재 위치 조회
     _getLocation() {
@@ -157,7 +164,9 @@ class AfterServiceStateCard extends Component {
     }
 
     // 업체 AS 매칭(진행) 도착
-    _arriveAfterService = () => {
+    _arriveAfterService = async () => {
+        await this._getLocation();
+
         const {latitude, longitude} = this.state;
 
         ArriveAfterService(this.props.asPrgsId, latitude, longitude).then(result => {
@@ -165,13 +174,16 @@ class AfterServiceStateCard extends Component {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
+                    
                     if(ResultBool) {
-                        this.props.getAfterServiceDetail();
+                        this.setState({isArriveModal : true});
+                        this._departureAfterServiceBackgroundStop();
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
-
-                    this._departureAfterServiceBackgroundStop();
                 }
             });
         });
@@ -211,22 +223,6 @@ class AfterServiceStateCard extends Component {
         )
     }
 
-    // A/S 도착 선택
-    _arriveAfterServiceConfirm = () => {
-        this._getLocation();
-
-        Alert.alert(
-            '',
-            '도착??',
-            [
-              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-                {text: '취소', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {text: '수락', onPress: () => this._arriveAfterService()},
-            ],
-            { cancelable: false }
-        )
-    }
-
     // A/S 완료 선택
     _completeAfterServiceConfirm = () => {
         Alert.alert(
@@ -242,7 +238,7 @@ class AfterServiceStateCard extends Component {
     }
 
      // 보고서 작성 선택
-     _regReportAfterServiceConfirm = () => {
+    _regReportAfterServiceConfirm = () => {
         Alert.alert(
             '',
             `A/S 완료??\n 보고서 작성 고고`,
@@ -266,71 +262,153 @@ class AfterServiceStateCard extends Component {
 
     render() {
         return (
-            <View style={ styles.asBox }>
-                <View style={[{padding : 10, backgroundColor: 'pink'}]}>
-                    <Text>{this.state.afterServiceData.bplaceNm} {this.state.afterServiceData.asPrgsStatNm}</Text>
-                    <Text>{this.state.afterServiceData.bplaceAddr}</Text>
-                    <Text>{this.state.afterServiceData.bplaceAddrDtl}</Text>
-                    <Thumbnail square soure={{uri: this.state.afterServiceData.prdTypeImgUrl}} />
-                    <Text>{this.state.afterServiceData.prdTypeKoNm}</Text>
-                    <Text>state test {this.state.afterServiceData.asPrgsStatCd}</Text>
-                        <View>
+            // <View style={ styles.asBox }>
+            //     <View style={[{padding : 10, backgroundColor: 'pink'}]}>
+            //         <Text>{this.state.afterServiceData.bplaceNm} {this.state.afterServiceData.asPrgsStatNm}</Text>
+            //         <Text>{this.state.afterServiceData.bplaceAddr}</Text>
+            //         <Text>{this.state.afterServiceData.bplaceAddrDtl}</Text>
+            //         <Thumbnail square soure={{uri: this.state.afterServiceData.prdTypeImgUrl}} />
+            //         <Text>{this.state.afterServiceData.prdTypeKoNm}</Text>
+            //         <Text>state test {this.state.afterServiceData.asPrgsStatCd}</Text>
+            //             <View>
 
-                            <CustomButton
-                                disabled={ (this.state.afterServiceData.asPrgsStatCd == COMPLETE_MATCH.VALUE) ? false : true }
-                                info={ true }
-                                onPress={ Actions.PartnerReport }
-                            >
-                                <Text>상세정보</Text>
-                            </CustomButton>
+            //                 <CustomButton
+            //                     disabled={ (this.state.afterServiceData.asPrgsStatCd == COMPLETE_MATCH.VALUE) ? false : true }
+            //                     info={ true }
+            //                     onPress={ Actions.PartnerReport }
+            //                 >
+            //                     <Text>상세정보</Text>
+            //                 </CustomButton>
 
-                            <CustomButton 
-                                disabled={ (this.state.afterServiceData.asPrgsStatCd == COMPLETE_MATCH.VALUE) ? false : true }
-                                info={ true }
-                                onPress={ this._departureAfterServiceConfirm }
-                            >
-                                <Text>A/S 출발</Text>
-                            </CustomButton>
+            //                 <CustomButton 
+            //                     disabled={ (this.state.afterServiceData.asPrgsStatCd == COMPLETE_MATCH.VALUE) ? false : true }
+            //                     info={ true }
+            //                     onPress={ this._departureAfterServiceConfirm }
+            //                 >
+            //                     <Text>A/S 출발</Text>
+            //                 </CustomButton>
 
-                            <CustomButton 
-                                disabled={ (this.state.afterServiceData.asPrgsStatCd == DEPARTURE.VALUE) ? false : true }
-                                info={ true }
-                                onPress={ this._arriveAfterServiceConfirm }
-                            >
-                                <Text>도착완료</Text>
-                            </CustomButton>
+            //                 <CustomButton 
+            //                     disabled={ (this.state.afterServiceData.asPrgsStatCd == DEPARTURE.VALUE) ? false : true }
+            //                     info={ true }
+            //                     onPress={ this._arriveAfterServiceConfirm }
+            //                 >
+            //                     <Text>도착완료</Text>
+            //                 </CustomButton>
 
-                            <CustomButton 
-                                disabled={ (this.state.afterServiceData.asPrgsStatCd == ARRIVE.VALUE) ? false : true }
-                                info={ true }
-                                onPress={ this._completeAfterServiceConfirm }
-                            >
-                                <Text>A/S 완료</Text>
-                            </CustomButton>
+            //                 <CustomButton 
+            //                     disabled={ (this.state.afterServiceData.asPrgsStatCd == ARRIVE.VALUE) ? false : true }
+            //                     info={ true }
+            //                     onPress={ this._completeAfterServiceConfirm }
+            //                 >
+            //                     <Text>A/S 완료</Text>
+            //                 </CustomButton>
 
-                            {/* <CustomButton 
-                                disabled={ (this.state.afterServiceData.asPrgsStatCd == COMPLETE_AS.VALUE) ? false : true }
-                                info={ true }
-                                onPress={ () => 
-                                Actions.RegAsBeforeReport({asPrgsId : this.props.asPrgsId}) }>
-                                <Text>A/S 보고서 진행</Text>
-                            </CustomButton> */}
-                        </View>
+            //                 {/* <CustomButton 
+            //                     disabled={ (this.state.afterServiceData.asPrgsStatCd == COMPLETE_AS.VALUE) ? false : true }
+            //                     info={ true }
+            //                     onPress={ () => 
+            //                     Actions.RegAsBeforeReport({asPrgsId : this.props.asPrgsId}) }>
+            //                     <Text>A/S 보고서 진행</Text>
+            //                 </CustomButton> */}
+            //             </View>
 
+            //     </View>
+            // </View>
+            <View style={localStyles.topAsYesWrap}>
+                <View style={[styles.justiConStart, styles.alignItemsCenter, styles.mb10]}>
+                    <H1 style={localStyles.topTitleTxt}>{this.state.afterServiceData.asPrgsStatNm}</H1>
+                    <Text style={localStyles.topTxt}>{this.state.afterServiceData.bplaceAddr}</Text>
+                    <Text style={localStyles.topTxt}>{this.state.afterServiceData.bplaceAddrDtl}</Text>
                 </View>
+                <View style={[styles.justiConStart, styles.alignItemsCenter]}>
+                    <View 
+                        style={[
+                            styles.mb10,
+                            styles.alignItemsCenter,
+                            styles.justiConCenter]}>
+                        <Image soure={ {uri: this.state.afterServiceData.prdTypeImgUrl} } 
+                            style={[styles.mb10, {
+                            height : 100, 
+                            width : 100
+                            }]}/>
+                        <Text style={localStyles.topTxt}>{this.state.afterServiceData.prdTypeKoNm}</Text>
+                        <Text style={localStyles.topTxt2}>증상1. 냉동온도가 올라가지 않음 - 코드화 필요</Text>
+                    </View>
+                </View>
+                <View style={styles.fxDirRow}>
+
+                    <View style={{marginRight: 9}}>
+                        <CustomEtcButton 
+                            onPress={Actions.ViewAfterServiceMatch}
+                            WhiteBackBtn={true}
+                        >
+                            상세정보
+                        </CustomEtcButton>
+                    </View>
+
+                    <View style={{marginLeft: 9}}>
+                        <CustomEtcButton 
+                            onPress={this._arriveAfterService}
+                        >
+                            도착완료
+                        </CustomEtcButton>
+                    </View>
+                </View>
+
+                <CustomModal
+                    modalType="CONFIRM"
+                    isVisible={this.state.isArriveModal}
+                    onPress1={Actions.RegAsBeforeReport}
+                    onPress2={() => alert("ddddd")}
+                    infoText1="A/S 진행 또는 업체와 전화연결을 선택하세요"
+                    btnText1="A/S 진행"
+                    btnText2="전화연결"
+                />
+
+                {/* alert 메세지 모달 */}
+                <CustomModal
+                    modalType="ALERT"
+                    isVisible={this.state.isAlertModal}
+                    onPress={ () => this.setState({isAlertModal : false})}
+                    infoText={this.state.resultMsg}
+                    btnText="확인"
+                />
             </View>
+            
         );
     }
 }
 
-const styles = StyleSheet.create({
-    asBox : {
-        zIndex : 2, 
-        position: 'absolute', 
-        left: 0, 
-        top: 0, 
-        width: '100%',
-        height: 500
+
+const localStyles = StyleSheet.create({
+    topAsYesWrap: {
+        borderBottomColor: color.defaultColor,
+        borderBottomWidth: 10,
+        backgroundColor: color.whiteColor,
+        height: 358,
+        paddingLeft: 27,
+        paddingRight: 27,
+        paddingTop: 23,
+        flex: 1,
+        alignItems: "center"
+    },
+    topTitleTxt: {
+        marginBottom: 19,
+        fontSize: 18,
+        color: color.defaultColor,
+        fontWeight: "bold",
+        marginBottom: 16,
+    },
+    topTxt: {
+        fontSize: 14,
+        color: "#8e8e98"
+    },
+    topTxt2: {
+        fontSize: 14,
+        color: "#1e1e32",
+        marginTop: 10,
+        marginBottom: 13
     }
 });
 
