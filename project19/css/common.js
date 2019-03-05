@@ -381,6 +381,20 @@ export const styles = StyleSheet.create({
       textAlign: "center",
       fontWeight: "500"
     },
+    btnDefaultSmall: {
+      height: 26,
+      borderRadius: 0,
+      elevation: 0,
+      width: "100%",
+      paddingTop: 2,
+      paddingBottom: 2
+    },
+    btnDefaultSmallTxt: {
+      fontSize: 13,
+      flex: 1,
+      textAlign: "center",
+      fontWeight: "500"
+    },
     // 흰색 배경색 기본 테두리색 버튼
     btnDefaultNoFill: {
       backgroundColor: color.whiteColor,
