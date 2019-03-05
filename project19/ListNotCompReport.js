@@ -58,7 +58,7 @@ class ListNotCompReport extends Component {
         </View>
         <View style={styles.listPrdBoxRightTxtWrap}>
           <H3 style={styles.listPrdBoxRightTitleTxt}>세나정육점</H3>
-          <Text style={[styles.listPrdBoxDeTxt, styles.mb12]}>2019년 01월 26일</Text>
+          <Text style={[styles.listPrdBoxDeTxt, styles.mb12, {fontWeight: "500"}]}>2019년 01월 26일</Text>
           <Text style={styles.listPrdBoxDeTxt}>경기도 시흥시 산기대로</Text>
           <View style={styles.fxDirRow}>
             <Text style={[styles.listPrdBoxDeTxt, {paddingTop: 3}]}>만족도</Text>
