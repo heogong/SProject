@@ -7,6 +7,7 @@ import { SUCCESS_RETURN_CODE, ARRIVE } from '~/Common/Blend';
 import { Actions } from 'react-native-router-flux';
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
 import GetAfterService from '~/Main/Functions/GetAfterService';
@@ -22,6 +23,7 @@ import CustomEtcButton from '~/Common/Components/CustomEtcButton';
 import CustomModal from '~/Common/Components/CustomModal';
 import CustomHeader from "~/Common/Components/CustomHeader";
 import { styles, viewportWidth, viewportHeight } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from "~/Common/Styles/colors";
 
 let AS_PRGS_ID = null; // 
@@ -32,31 +34,31 @@ let AS_RECV_ID = null; //
 const PartnerWait = () => (
     <View style={{paddingLeft: 27, paddingRight: 27, paddingTop: 28, paddingBottom: 21}}>
         <View>
-            <Text style={[styles.leftGuideTxt, {color : color.whiteColor}]}>파트너</Text>
-            <Text style={[styles.leftGuideTxt, {color : color.whiteColor}]}>가입신청승인</Text>
-            <Text style={[styles.leftGuideTxt, {color : color.whiteColor}]}>대기중입니다</Text>
+            <Text style={[stylesReg.leftGuideTxt, {color : color.whiteColor}]}>파트너</Text>
+            <Text style={[stylesReg.leftGuideTxt, {color : color.whiteColor}]}>가입신청승인</Text>
+            <Text style={[stylesReg.leftGuideTxt, {color : color.whiteColor}]}>대기중입니다</Text>
         </View>
     </View>
 )
 
 // A/S 요청 없음
-const PartnerNoWait = () => (
+const NoAfterService = () => (
     <View style={{paddingLeft: 27, paddingRight: 27, paddingTop: 28, paddingBottom: 21}}>
         <View>
-            <Text style={[styles.leftGuideTxt, {color : color.whiteColor}]}>현재</Text>
-            <Text style={[styles.leftGuideTxt, {color : color.whiteColor}]}>A/S매칭</Text>
-            <Text style={[styles.leftGuideTxt, {color : color.whiteColor}]}>요청이 없습니다</Text>
+            <Text style={[stylesReg.leftGuideTxt, {color : color.whiteColor}]}>현재</Text>
+            <Text style={[stylesReg.leftGuideTxt, {color : color.whiteColor}]}>A/S매칭</Text>
+            <Text style={[stylesReg.leftGuideTxt, {color : color.whiteColor}]}>요청이 없습니다</Text>
         </View>
     </View>
 )
 
 // A/S 요청
-const MatchingReq = ({toggleModal}) => (
+const MatchingReq = ({toggleModal, data}) => (
     <View style={{paddingLeft: 27, paddingRight: 27, paddingTop: 16, paddingBottom: 15}}>
         <View style={{backgroundColor: color.whiteColor, height: 104, widht: "100%"}}>
             <View style={styles.modalContent}>
                 <View style={styles.modalTopTxtWrap}>
-                    <Text style={styles.modalTopTxt}>시흥시 정왕동에서 A/S 요청이 있습니다</Text>
+                    <Text style={styles.modalTopTxt}>{data.bplaceAddr}에서 A/S 요청이 있습니다</Text>
                 </View>
                 <View style={styles.modalBtnWrap}>
                     <CustomEtcButton 
@@ -168,14 +170,8 @@ export default class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data : [
-                {
-                    prdTypeKoNm: 'product ',
-                    bplaceAddr : '시흥시 정왕동',
-                    asPrgsId : 10,
-                    asRecvId : 20
-                }
-            ],
+            data : [],
+            displayData : [],
             afterServiceData : [],
             reportCount : 0,
             latitude : null,
@@ -184,9 +180,10 @@ export default class Main extends Component {
             isModalVisible: false,
             isModalVisible1: false,
             slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
-            wait : false, // test 
+            wait : true, // test 
             isASreq : true, // test
-            isAlertModal : false // alert 용
+            isAlertModal : false, // alert 용
+            spinner : false
         };
     }
 
@@ -249,8 +246,6 @@ export default class Main extends Component {
       }
 
     componentWillUnmount () {
-        console.log("componentWillUnmount");
-        
         BackHandler.removeEventListener('hardwareBackPress', () => this.handleBackPress) // Remove listener
 
         // BackgroundGeolocation.events.forEach(event =>
@@ -260,45 +255,23 @@ export default class Main extends Component {
     }
 
     componentDidMount () {
+        this.setState({spinner : true});
+        
         BackHandler.addEventListener('hardwareBackPress', () => this.handleBackPress) // Listen for the hardware back button on Android to be pressed
 
         this._getUserInfo(); //사용자 정보 조회 - 가입 승인 대기 여부 확인
+        this._getAfterServiceState();
         // this._getAfterService();
-        // this._getAfterServiceState();
         // this._getAfterServiceIncomplete();
 
-        // 가이드값 추가 TEST
-        this.setState({data : this.state.data.concat(ENTRIES1) });
     }
 
     handleBackPress = () => {
         return false;
     }
 
-    // 로그인(토큰값 가져온) 사용자 정보 가져오기
-    _getUserInfo = () => {
-        GetUserInfo().then(async result => {
-            GetCommonData(result, this._getUserInfo).then(async resultData => {
-                if(resultData !== undefined) {
-                    console.log(resultData);
-                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-
-                    if(ResultBool) {
-                        // 가입 코드 필요
-                        this.setState({wait : true}); // test 승인
-                    } else {
-                        this.setState({
-                            isAlertModal : true,
-                            resultMsg : resultData.resultMsg
-                        })
-                    }
-                }
-            });
-        });
-    }
-    
-    // 현재 위치 조회
-    _getLocation() {
+     // 현재 위치 조회
+     _getLocation() {
         navigator.geolocation.getCurrentPosition(
         (positon) => {
             this.setState({
@@ -311,24 +284,47 @@ export default class Main extends Component {
         );
     }
 
-    // 1. 현재 나의(파트너) AS 진행 상태 체크
+    // 1. 로그인(토큰값 가져온) 사용자 정보 가져오기
+    _getUserInfo = () => {
+        GetUserInfo().then(async result => {
+            GetCommonData(result, this._getUserInfo).then(async resultData => {
+                if(resultData !== undefined) {
+                    console.log(resultData);
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+
+                    if(ResultBool) {
+                        // 가입 코드 필요
+                        this.setState({wait : false}); // test 승인
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                    }
+                }
+            });
+        });
+    }
+    
+    // 2. 현재 나의(파트너) AS 진행 상태 체크
     _getAfterServiceState = () => {
         GetAfterServiceState().then(result => {
             GetCommonData(result, this._getAfterServiceState).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log("현재 나의(파트너) AS 진행 상태 체크 : ", resultData);
-                    if(ResultBool) {
-                        if(resultData.data.asPrgsMst !== null) {
+                    if(ResultBool) { 
+                        // A/S 상태일 경우
+                        if(resultData.data.asPrgsMst !== null) { 
                             AS_RECV_ID = resultData.data.asPrgsMst.asRecvId;
                             AS_PRGS_ID = resultData.data.asPrgsMst.asPrgsId;
 
-                            // A/S 도착 
-                            if(resultData.data.asPrgsMst.asPrgsStatCd == ARRIVE.VALUE) {
-                                this.setState({asStateBtn : false});
-                            }
-
                             this._getAfterServiceDetail();
+
+                        // A/S 상태가 아닐경우 A/S 목록 조회
+                        } else { 
+                            await this._getAfterService();
+                            await this._disPlayAfterService();
                         }
                     } else {
                         this.setState({
@@ -341,7 +337,7 @@ export default class Main extends Component {
         });
     }
 
-    // 1. 나의 AS 매칭 목록 조회
+    // 3. 나의 AS 매칭 목록 조회
     _getAfterService = () => {
         GetAfterService().then(result => {
             GetCommonData(result, this._getAfterService).then(async resultData => {
@@ -356,31 +352,7 @@ export default class Main extends Component {
                             resultMsg : resultData.resultMsg
                         })
                     }
-                }
-            });
-        });
-    }
-
-    // 2. 업체 AS 매칭(진행) 수락
-    _regAfterServiceMatch = () => {
-        this.setState({ isModalVisible : false });
-
-        RegAfterServiceMatch(AS_PRGS_ID).then(result => {
-            GetCommonData(result, this._regAfterServiceMatch).then(async resultData => {
-                if(resultData !== undefined) {
-                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    console.log(resultData);
-                    if(ResultBool) {
-                        //Actions.ViewAfterServiceMatch({asRecvId : data[SELECT_INDEX].asRecvId});
-                        // this._departureAfterServiceConfirm();
-                        this._getAfterServiceDetail();
-
-                    } else {
-                        this.setState({
-                            isAlertModal : true,
-                            resultMsg : resultData.resultMsg
-                        })
-                    }
+                    this.setState({spinner : false});
                 }
             });
         });
@@ -405,9 +377,41 @@ export default class Main extends Component {
                             resultMsg : resultData.resultMsg
                         })
                     }
+                    this.setState({spinner : false});
                 }
             });
         });
+    }
+
+
+    // 업체 AS 매칭(진행) 수락
+    _regAfterServiceMatch = () => {
+        this.setState({ isModalVisible : false });
+
+        RegAfterServiceMatch(AS_PRGS_ID).then(result => {
+            GetCommonData(result, this._regAfterServiceMatch).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+                        //Actions.ViewAfterServiceMatch({asRecvId : data[SELECT_INDEX].asRecvId});
+                        // this._departureAfterServiceConfirm();
+                        this._getAfterServiceDetail();
+
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                    }
+                }
+            });
+        });
+    }
+
+    // 가이드 데이터 추가 : AS 호출 함수 interval로 인해 AS 표시 리스트는 가변적이지 않게 하기 위해 따로 함수로 지정
+    _disPlayAfterService = () => {
+        this.setState({displayData : this.state.data.concat(ENTRIES1)});
     }
 
 
@@ -445,7 +449,14 @@ export default class Main extends Component {
 
     render() {
         return (
-            <Container style={{flex: 1, backgroundColor: color.defaultColor}}>
+            <Container style={[styles.fx1, {backgroundColor: color.defaultColor}]}>
+                <Spinner
+                    visible={this.state.spinner}
+                    textContent={'A/S 데이터를 불러오고 있습니다.'}
+                    textStyle={styles.whiteFont}
+                    style={{color: color.whiteColor}}
+                    overlayColor={"rgba(40, 200, 245, 1)"}
+                />
                 <CustomHeader resetPage={true} title="쿨리닉"/>
 
                 <ScrollView showsVerticalScrollIndicator={false}>
@@ -454,7 +465,11 @@ export default class Main extends Component {
                         <PartnerWait/>
                     ) : (
                         // AS 요청 여부
-                        this.state.isASreq ? <MatchingReq toggleModal={this._toggleModal}/> : <PartnerNoWait/>
+                        this.state.data.length > 0 ? (
+                            <MatchingReq toggleModal={this._toggleModal} data={this.state.data[0]} /> 
+                        ) : (
+                            <NoAfterService/>
+                        )
                     )}
 
                     <View>
@@ -464,14 +479,14 @@ export default class Main extends Component {
                             sliderWidth={viewportWidth}
                             // activeSlideAlignment={'start'}
                             itemWidth={cardWidth}
-                            data={ (this.state.wait) ?  ENTRIES1 : this.state.data }
+                            data={ (this.state.wait) ?  ENTRIES1 : this.state.displayData }
                             firstItem={this.state.slider1ActiveSlide}
                             onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
                         />
                     </View>
                     <View style={[styles.alignItemsCenter, styles.justiConStart]}>
                         <Pagination
-                            dotsLength={ (this.state.wait) ?  ENTRIES1.length : this.state.data.length }
+                            dotsLength={ (this.state.wait) ?  ENTRIES1.length : this.state.displayData.length }
                             activeDotIndex={this.state.slider1ActiveSlide}
                             containerStyle={localStyles.paginationContainer}
                             dotColor={color.whiteColor}
@@ -483,23 +498,26 @@ export default class Main extends Component {
                             tappableDots={!!this._slider1Ref}
                         />
                     </View> 
+                    
 
-                    {/* A/S 접수 박스 */}
-                    {/* {(this.state.afterServiceData !== null) ? (
+                        {/* A/S 접수 박스 */}
+                        {(this.state.afterServiceData.length > 0) ? (
+                            <AfterServiceStateCard
+                                data={ this.state.afterServiceData }
+                                asPrgsId={ AS_PRGS_ID }
+                                getAfterServiceDetail={this._getAfterServiceDetail}
+                            />
+                        ) : (
+                            <View></View>
+                        )}
+
+
+                        {/* 테스트
                         <AfterServiceStateCard
                             data={ this.state.afterServiceData }
                             asPrgsId={ AS_PRGS_ID }
                             getAfterServiceDetail={this._getAfterServiceDetail}
-                        />
-                    ) : (
-                        <View></View>
-                    )} */}
-
-                        <AfterServiceStateCard
-                            data={ this.state.afterServiceData }
-                            asPrgsId={ AS_PRGS_ID }
-                            getAfterServiceDetail={this._getAfterServiceDetail}
-                        />
+                        /> */}
 
                     <View style={{backgroundColor : color.whiteColor}}>
                         <View style={[styles.alignItemsCenter, {backgroundColor : color.whiteColor, paddingVertical : 10}]}>
@@ -550,8 +568,8 @@ export default class Main extends Component {
                     btnText="확인"
                 />
 
-
             </Container>
+           
         )
     }
 }
