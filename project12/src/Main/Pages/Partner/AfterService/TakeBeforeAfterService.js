@@ -17,6 +17,7 @@ import { styles } from '~/Common/Styles/common';
 
 
 let SOURCE = null;
+
 class TakeBeforeAfterService extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +55,7 @@ class TakeBeforeAfterService extends Component {
           // You can also display the image using data:
           // let source = { uri: 'data:image/jpeg;base64,' + response.data };
           SOURCE = { uri: response.uri };
-          this._regBizLicense();
+          this._takeAfterServiceImg();
       }
     })
   };
@@ -79,9 +80,9 @@ class TakeBeforeAfterService extends Component {
           console.log('ImagePicker Error: ', response.error);
         } else if (response.customButton) {
           console.log('User tapped custom button: ', response.customButton);
-        } else {.then
+        } else {
           SOURCE = { uri: response.uri };
-          this._regBizLicense();
+          this._takeAfterServiceImg();
       }
     })
   };

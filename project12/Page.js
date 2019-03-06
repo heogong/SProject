@@ -222,8 +222,8 @@ const PAGE = () => (
       
 
       {/* 파트너 - A/S 보고서 등록 */}
-      <Scene key="TakeBeforeAfterService" initial component={TakeBeforeAfterService} />
-      <Scene key="RegReportAfterService" component={RegReportAfterService} /> 
+      <Scene key="TakeBeforeAfterService" component={TakeBeforeAfterService} />
+      <Scene key="RegReportAfterService" initial component={RegReportAfterService} /> 
 
       {/* 확인 후 필요 없으면 삭제 */}
       <Scene key="RegAsBeforeReport" component={RegReportBeforePic} /> 

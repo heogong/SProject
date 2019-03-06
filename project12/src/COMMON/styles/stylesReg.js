@@ -52,4 +52,10 @@ export const stylesReg = StyleSheet.create({
       height : 10,
       backgroundColor : color.defaultBackColor
     },
+    procBarTxt: {
+      fontSize: 12,
+      color: "#888888",
+      marginTop: 6,
+      textAlign: "center"
+    }
   });

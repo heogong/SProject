@@ -114,6 +114,22 @@ export const styles = StyleSheet.create({
       borderColor : color.whiteColor,
       height : 100
     },
+    textInputBox1: {
+      padding: 14,
+      paddingTop: 14,
+      fontSize: 14,
+      height : 170,
+      width: "100%",
+    },
+    textInputWhBack: {
+      backgroundColor: color.whiteColor,
+      borderWidth : 0,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+      borderTopWidth: 0,
+      borderBottomWidth: 0,
+      height : 170
+    },
     // Box Shdow
     boxShadow: {
       shadowColor: "#000",
