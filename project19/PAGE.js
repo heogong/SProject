@@ -56,6 +56,12 @@ import ListNotCompReportEmpty from './ListNotCompReportEmpty';
 import RegReportStep1 from './RegReportStep1';
 import MoreMenu from './MoreMenu';
 import MyProfileInfo from './MyProfileInfo';
+import MyProfileModPassword1 from './MyProfileModPassword1';
+import MyProfileModPassword2 from './MyProfileModPassword2';
+import MyProfileModPhone from './MyProfileModPhone';
+import MyProfileModName from './MyProfileModName';
+import MyProfileExit1 from './MyProfileExit1';
+import MyProfileExit2 from './MyProfileExit2';
 
 import pageOne from './Page1'
 import pageTwo from './Page2'
@@ -110,8 +116,13 @@ const PAGE = () => (
             <Scene key="ListNotCompReportEmpty" hideNavBar component={ListNotCompReportEmpty}  type={ActionConst.RESET}/>
             <Scene key="RegReportStep1" hideNavBar component={RegReportStep1}  type={ActionConst.RESET}/>
             <Scene key="MoreMenu" hideNavBar component={MoreMenu}  type={ActionConst.RESET}/>
-            <Scene initial key="MyProfileInfo" hideNavBar component={MyProfileInfo}  type={ActionConst.RESET}/>
-            
+            <Scene key="MyProfileInfo" hideNavBar component={MyProfileInfo}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileModPassword1" hideNavBar component={MyProfileModPassword1}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileModPassword2" hideNavBar component={MyProfileModPassword2}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileModPhone" hideNavBar component={MyProfileModPhone}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileModName" hideNavBar component={MyProfileModName}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileExit1" hideNavBar component={MyProfileExit1}  type={ActionConst.RESET}/>
+            <Scene initial key="MyProfileExit2" hideNavBar component={MyProfileExit2}  type={ActionConst.RESET}/>
 
             <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
             <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>

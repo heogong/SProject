@@ -74,7 +74,7 @@ class UserLogin extends Component {
 
               <Item regular style={[styles.mb20, styles.inputWhBackWhBo]}>
                 <Icon active name="lock" style={localStyles.inputIcon}/>
-                <Input placeholder="비밀번호(영문, 숫자, 특수문자 8~15자)" style={styles.inputBox} placeholderTextColor={color.inputPlaceHodler}/>
+                <Input placeholder="비밀번호(영문, 숫자, 특수문자 8~15자)" style={styles.inputBox} placeholderTextColor={color.inputPlaceHodler} secureTextEntry={true}/>
               </Item>
 
 

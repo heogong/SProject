@@ -79,6 +79,16 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // 공통 Style
     // ----------------------------
+    // Tootip
+    tooltipWrap: {
+      width: "100%",
+      backgroundColor: "rgba(230, 230, 230, 1)",
+      padding: 14
+    },
+    tooltipTxt: {
+      fontSize: 11,
+      color: "#626270"
+    },
     // Line
     line: {
       width: "100%",
@@ -261,6 +271,10 @@ export const styles = StyleSheet.create({
       flex: 2,
       flexDirection: "row"
     },
+    modalBtnOneWrap: {
+      flex: 2,
+      flexDirection: "row"
+    },
     // Detail Guide Style
     leftGuideTxtWrap: {
       flex: 1
@@ -438,6 +452,18 @@ export const styles = StyleSheet.create({
     },
     btnDefaultFillTxt: {
       color: color.whiteColor,
+      flex: 1,
+      textAlign: "center"
+    },
+    btnDefaultFillOff: {
+      backgroundColor: "#c9cacb",
+      borderWidth: 1,
+      borderColor: "#c9cacb",
+      elevation: 0,
+      shadowOpacity: 0
+    },
+    btnDefaultFillOffTxt: {
+      color: "#8e8e98",
       flex: 1,
       textAlign: "center"
     },

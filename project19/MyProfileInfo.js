@@ -61,12 +61,12 @@ class MyProfileInfo extends Component {
             <Text style={styles.inputNbTitleTxt}>이메일</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
               <Image source={require('./img/intro-logo.png')} style={localStyles.inputIcon} />
-              <Input placeholder="이메일을 입력해주세요." placeholderTextColor={color.inputPlaceHodler} style={styles.inputNbDefaultBox}/>
+              <Input value="heogong@gamil.com" style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false}/>
             </Item>
 
             <Text style={styles.inputNbTitleTxt}>비밀번호</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
-              <Input placeholder="비밀번호를 입력해주세요." placeholderTextColor={color.inputPlaceHodler} style={styles.inputNbDefaultBox}/>
+              <Input value="1234" style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false} secureTextEntry={true}/>
               <Button 
                 onPress={() => this._toggleModal()}
                 style={[styles.btnDefaultSmall, styles.btnDefaultNoFill, {width: 80, marginTop: 10}]}>
@@ -76,7 +76,7 @@ class MyProfileInfo extends Component {
 
             <Text style={styles.inputNbTitleTxt}>이름</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
-              <Input placeholder="이름을 입력해주세요." placeholderTextColor={color.inputPlaceHodler} style={styles.inputNbDefaultBox}/>
+              <Input value="박변" style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false}/>
               <Button 
                 onPress={() => this._toggleModal()}
                 style={[styles.btnDefaultSmall, styles.btnDefaultNoFill, {width: 80, marginTop: 10}]}>
@@ -86,7 +86,7 @@ class MyProfileInfo extends Component {
 
             <Text style={styles.inputNbTitleTxt}>핸드폰번호 (2019.02.14 인증됨)</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
-              <Input placeholder="핸드폰번호를 입력해주세요." placeholderTextColor={color.inputPlaceHodler} style={styles.inputNbDefaultBox}/>
+              <Input value="01011112222" style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false}/>
               <Button 
                 onPress={() => this._toggleModal()}
                 style={[styles.btnDefaultSmall, styles.btnDefaultNoFill, {width: 80, marginTop: 10}]}>
