@@ -62,6 +62,8 @@ import MyProfileModPhone from './MyProfileModPhone';
 import MyProfileModName from './MyProfileModName';
 import MyProfileExit1 from './MyProfileExit1';
 import MyProfileExit2 from './MyProfileExit2';
+import MyProfileCompany from './MyProfileCompany';
+import MyCalcuList from './MyCalcuList';
 
 import pageOne from './Page1'
 import pageTwo from './Page2'
@@ -122,7 +124,9 @@ const PAGE = () => (
             <Scene key="MyProfileModPhone" hideNavBar component={MyProfileModPhone}  type={ActionConst.RESET}/>
             <Scene key="MyProfileModName" hideNavBar component={MyProfileModName}  type={ActionConst.RESET}/>
             <Scene key="MyProfileExit1" hideNavBar component={MyProfileExit1}  type={ActionConst.RESET}/>
-            <Scene initial key="MyProfileExit2" hideNavBar component={MyProfileExit2}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileExit2" hideNavBar component={MyProfileExit2}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileCompany" hideNavBar component={MyProfileCompany}  type={ActionConst.RESET}/>
+            <Scene initial key="MyCalcuList" hideNavBar component={MyCalcuList}  type={ActionConst.RESET}/>
 
             <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
             <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
