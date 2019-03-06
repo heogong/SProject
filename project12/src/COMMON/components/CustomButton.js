@@ -10,8 +10,8 @@ import { color } from "../Styles/colors";
 const DefaultBtn = ({action, text, btnStyle, txtStyle}) => (
     <Button 
         onPress={action}
-        style={[BStyles.btnDefault, BStyles.btnDefaultNoFill, btnStyle]}>
-        <Text style={[BStyles.btnDefaultTxt, BStyles.btnDefaultNoFillTxt, txtStyle]}>{text}</Text>
+        style={[BStyles.btnDefault, BStyles.btnDefaultFill, btnStyle]}>
+        <Text style={[BStyles.btnDefaultTxt, BStyles.btnDefaultFillTxt, txtStyle]}>{text}</Text>
     </Button>
 )
 
@@ -19,8 +19,8 @@ const DefaultBtn = ({action, text, btnStyle, txtStyle}) => (
 const DefaultLineBtn = ({action, text, btnStyle, txtStyle}) => (
     <Button 
         onPress={action}
-        style={[BStyles.btnDefault, BStyles.btnDefaultFill, btnStyle]}>
-        <Text style={[BStyles.btnDefaultTxt, BStyles.btnDefaultFillTxt, txtStyle]}>{text}</Text>
+        style={[BStyles.btnDefault, BStyles.btnDefaultNoFill, btnStyle]}>
+        <Text style={[BStyles.btnDefaultTxt, BStyles.btnDefaultNoFillTxt, txtStyle]}>{text}</Text>
     </Button>
 )
 

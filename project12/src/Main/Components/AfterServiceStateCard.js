@@ -359,7 +359,7 @@ class AfterServiceStateCard extends Component {
                 <CustomModal
                     modalType="CONFIRM"
                     isVisible={this.state.isArriveModal}
-                    onPress1={Actions.RegAsBeforeReport}
+                    onPress1={() => Actions.TakeBeforeAfterService(this.props.asPrgsId)}
                     onPress2={() => alert("ddddd")}
                     infoText1="A/S 진행 또는 업체와 전화연결을 선택하세요"
                     btnText1="A/S 진행"

@@ -18,7 +18,6 @@ import { styles, viewportWidth, viewportHeight } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from "~/Common/Styles/colors";
 
-// 확인 후 필요 없으면 삭제
 const BEFORE_IMG_CNT = 4; // A/S 조치전 이미지 카운트
 
 export const BeforeServiceImage = () => (

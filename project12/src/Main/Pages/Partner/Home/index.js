@@ -319,8 +319,11 @@ export default class Main extends Component {
                             AS_RECV_ID = resultData.data.asPrgsMst.asRecvId;
                             AS_PRGS_ID = resultData.data.asPrgsMst.asPrgsId;
 
-                            this._getAfterServiceDetail();
-
+                            // A/S 출발 
+                            if(resultData.data.asPrgsMst.asPrgsStatCd == DEPARTURE.VALUE) {
+                                this._getAfterServiceDetail();
+                            }
+                            
                         // A/S 상태가 아닐경우 A/S 목록 조회
                         } else { 
                             await this._getAfterService();
