@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { AsyncStorage, Image, StyleSheet, View } from 'react-native';
 import { Text } from 'native-base';
 
-import { SUCCESS_RETURN_CODE, PARTNER_USER} from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, PARTNER_USER, ARRIVE} from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -73,7 +73,10 @@ class IntroPage extends Component {
                 if(ResultBool) {
                     //this.setState({ data: resultData.data });
                     if(resultData.data.asPrgsYn == 'Y') {
-                      Actions.PartnerAfterService();
+
+                      if(resultData.data.asPrgsMst.asPrgsStatCd == ARRIVE.VALUE) {
+                        // 조치전 페이지 이동
+                      }
                     } else {
                       Actions.PartnerMain();
                     }

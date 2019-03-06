@@ -8,7 +8,7 @@ export const color = {
     pink2: "#d35d90",
     green: "#65ed99",
     tan: "#FFEFF8",
-    blue: "#5DA9E9",
+    blueColor: "#038DBD",
     gray1: "#888888",
     inputPlaceHodler : '#c9cacb',
     inputBoGrey : '#c9cacb',

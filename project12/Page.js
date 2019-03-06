@@ -55,20 +55,20 @@ import CardListInfo from './src/FirstScreen/Pages/Card/ListCardInfo';
 
 import PartnerHome from './src/Main/Pages/Partner/Home';
 import AfterServiceState from './src/Main/Pages/Partner/AfterService';
-// A/S 신청 리스트
-import ListAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ListAfterServiceMatch';
-// A/S 신청 업체 상세
-import ViewAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ViewAfterServiceMatch';
-// A/S 매칭 후 상태정보
-import ViewAfterServiceState from './src/Main/Pages/Partner/AfterService/ViewAfterServiceState';
-// 추가 A/S 내역
-import RegAfterServiceAdd from './src/Main/Pages/Partner/AfterService/RegAfterServiceAdd';
+
+import TakeBeforeAfterService from './src/Main/Pages/Partner/AfterService/TakeBeforeAfterService'; // 조치전 이미지 등록
+import ListAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ListAfterServiceMatch'; // A/S 신청 리스트
+import ViewAfterServiceMatch from './src/Main/Pages/Partner/AfterService/ViewAfterServiceMatch'; // A/S 신청 업체 상세
+import ViewAfterServiceState from './src/Main/Pages/Partner/AfterService/ViewAfterServiceState'; // A/S 매칭 후 상태정보
+import RegAfterServiceAdd from './src/Main/Pages/Partner/AfterService/RegAfterServiceAdd'; // 추가 A/S 내역
+
 
 // A/S 보고서
 import AfterServiceReport from './src/Main/Pages/Partner/Report';
 import ListInCompleteReport from './src/Main/Pages/Partner/Report/ListInCompleteReport';
-import RegReportBeforePic from './src/Main/Pages/Partner/Report/RegReportBeforePic';
-import RegReportAfterPic from './src/Main/Pages/Partner/Report/RegReportAfterPic';
+import RegReportAfterService from './src/Main/Pages/Partner/Report/RegReportAfterService';
+
+import RegReportBeforePic from './src/Main/Pages/Partner/Report/RegReportBeforePic'; // 확인 후 삭제
 
 import DrawerContent from './src/Main/Components/DrawerContent'
 import MenuIcon from './src/Main/Images/menu_burger.png'
@@ -222,8 +222,11 @@ const PAGE = () => (
       
 
       {/* 파트너 - A/S 보고서 등록 */}
-      <Scene key="RegAsBeforeReport" component={RegReportBeforePic} />
-      <Scene key="RegAsAfterReport" component={RegReportAfterPic} />
+      <Scene key="TakeBeforeAfterService" initial component={TakeBeforeAfterService} />
+      <Scene key="RegReportAfterService" component={RegReportAfterService} /> 
+
+      {/* 확인 후 필요 없으면 삭제 */}
+      <Scene key="RegAsBeforeReport" component={RegReportBeforePic} /> 
 
       {/* 파트너 - A/S 상세 */}
       <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} />
@@ -340,8 +343,6 @@ const PAGE = () => (
                 transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
                 <Scene key="ListInCompleteReport" component={ListInCompleteReport} title="미 완료 보고서 리스트"/>
                 <Scene key="AfterServiceReport" component={AfterServiceReport} title="A/S 보고서"/>
-                {/* <Scene key="RegReportBeforePic" component={RegReportBeforePic} title="A/S 보고서 조치 전"/> */}
-                <Scene key="RegReportAfterPic" component={RegReportAfterPic} title="A/S 보고서 조치 후"/>
               </Stack>
             </Tabs>
         </Scene>
