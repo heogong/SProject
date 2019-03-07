@@ -87,6 +87,7 @@ class AfterServiceImage extends Component {
             } else {
                 SOURCE = { uri: response.uri };
 
+                this.props.takeImageAction();
                 this._takeAfterServiceImg();
             }
         })

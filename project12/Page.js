@@ -63,10 +63,11 @@ import ViewAfterServiceState from './src/Main/Pages/Partner/AfterService/ViewAft
 import RegAfterServiceAdd from './src/Main/Pages/Partner/AfterService/RegAfterServiceAdd'; // 추가 A/S 내역
 
 
-// A/S 보고서
+// 파트너 A/S 보고서
 import AfterServiceReport from './src/Main/Pages/Partner/Report';
 import ListInCompleteReport from './src/Main/Pages/Partner/Report/ListInCompleteReport';
 import RegReportAfterService from './src/Main/Pages/Partner/Report/RegReportAfterService';
+import RegAddAfterService from './src/Main/Pages/Partner/Report/RegAddAfterService';
 
 import RegReportBeforePic from './src/Main/Pages/Partner/Report/RegReportBeforePic'; // 확인 후 삭제
 
@@ -223,7 +224,8 @@ const PAGE = () => (
 
       {/* 파트너 - A/S 보고서 등록 */}
       <Scene key="TakeBeforeAfterService" component={TakeBeforeAfterService} />
-      <Scene key="RegReportAfterService" initial component={RegReportAfterService} /> 
+      <Scene key="RegReportAfterService" component={RegReportAfterService} /> 
+      <Scene key="RegAddAfterService" initial component={RegAddAfterService} /> 
 
       {/* 확인 후 필요 없으면 삭제 */}
       <Scene key="RegAsBeforeReport" component={RegReportBeforePic} /> 

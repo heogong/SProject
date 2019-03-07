@@ -183,6 +183,79 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // 공통 Style
     // ----------------------------
+    // Tootip
+    tooltipWrap: {
+      width: "100%",
+      backgroundColor: "rgba(230, 230, 230, 1)",
+      padding: 14
+    },
+    tooltipTxt: {
+      fontSize: 11,
+      color: "#626270"
+    },
+    // Line
+    line: {
+      width: "100%",
+      height: 1,
+      borderTopWidth: 1
+    },
+    // List Style
+    listPrdBoxDeTxt: {
+      fontSize: 13,
+      color: color.whiteColor
+    },
+    listPrdBoxFillWrap: {
+      flexDirection: "row",
+      justifyContent: "center",
+      marginBottom: 12,
+      padding: 14, 
+      backgroundColor : color.defaultColor
+    },
+    listPrdBoxStartIcon: {
+      color: color.whiteColor,
+      fontSize: 17,
+      marginRight: 2
+    },
+    listPrdBoxImgWrap: {
+      alignItems: "flex-start",
+      justifyContent : "center",
+      height : 80,
+      width : 80
+    },
+    listPrdBoxImg: {
+      height : 80,
+      width : 80,
+      marginBottom: 5
+    },
+    listPrdBoxImgTxt: {
+      width: 80,
+      textAlign: "center",
+      fontSize: 12,
+      color: color.whiteColor
+    },
+    listPrdBoxRightTxtWrap: {
+      justifyContent : "center",
+      paddingLeft: 20
+    },
+    listPrdBoxRightTitleTxt: {
+      marginBottom: 12,
+      fontWeight: "bold",
+      fontSize: 18,
+      color : color.whiteColor
+    },
+    listPrdBoxNextIconWrap: {
+      flex: 1,
+      alignItems: "flex-end",
+      marginTop: -5
+    },
+    listPrdBoxNextIcon: {
+      color: color.whiteColor
+    },
+    listPrdBoxEmptyImgWrap: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center"
+    },
 
     // Input Style
     inputWhBackWhBo: {
