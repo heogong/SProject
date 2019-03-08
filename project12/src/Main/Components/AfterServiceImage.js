@@ -59,7 +59,9 @@ class AfterServiceImage extends Component {
 
     static defaultProps = {
         beforeAction : true, // 조치전/후 여부
-        asPrgsId : 5 //test
+        asPrgsId : 5, //test
+        beforImgCnt : 0, // 등록된 조치전 이미지 카운트 (이미지 카운트로 등록 여부 확인)
+        afterImgCnt : 0 // 등록된 조치후 이미지 카운트 (이미지 카운트로 등록 여부 확인)
     }
 
     // 촬영
@@ -85,6 +87,9 @@ class AfterServiceImage extends Component {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                 SOURCE = { uri: response.uri };
+
+                ++this.props.beforImgCnt; //(이미지 카운트로 등록 여부 확인)
+                ++this.props.afterImgCnt; //(이미지 카운트로 등록 여부 확인)
 
                 this.props.takeImageAction();
                 this._takeAfterServiceImg();

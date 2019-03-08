@@ -226,7 +226,7 @@ const PAGE = () => (
       {/* 파트너 - A/S 보고서 등록 */}
       <Scene key="TakeBeforeAfterService" component={TakeBeforeAfterService} />
       <Scene key="RegReportAfterService" component={RegReportAfterService} /> 
-      <Scene key="RegReportAfterService2" component={RegReportAfterService2} /> 
+      <Scene key="RegReportAfterService2" initial component={RegReportAfterService2} /> 
       <Scene key="RegAddAfterService" component={RegAddAfterService} /> 
       {/* 미 완료 보고서 리스트 */}
       <Scene key="ListInCompleteReport" component={ListInCompleteReport} />
