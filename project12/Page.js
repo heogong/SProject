@@ -67,6 +67,7 @@ import RegAfterServiceAdd from './src/Main/Pages/Partner/AfterService/RegAfterSe
 import AfterServiceReport from './src/Main/Pages/Partner/Report';
 import ListInCompleteReport from './src/Main/Pages/Partner/Report/ListInCompleteReport';
 import RegReportAfterService from './src/Main/Pages/Partner/Report/RegReportAfterService';
+import RegReportAfterService2 from './src/Main/Pages/Partner/Report/RegReportAfterService2';
 import RegAddAfterService from './src/Main/Pages/Partner/Report/RegAddAfterService';
 
 import RegReportBeforePic from './src/Main/Pages/Partner/Report/RegReportBeforePic'; // 확인 후 삭제
@@ -225,7 +226,10 @@ const PAGE = () => (
       {/* 파트너 - A/S 보고서 등록 */}
       <Scene key="TakeBeforeAfterService" component={TakeBeforeAfterService} />
       <Scene key="RegReportAfterService" component={RegReportAfterService} /> 
-      <Scene key="RegAddAfterService" initial component={RegAddAfterService} /> 
+      <Scene key="RegReportAfterService2" component={RegReportAfterService2} /> 
+      <Scene key="RegAddAfterService" component={RegAddAfterService} /> 
+      {/* 미 완료 보고서 리스트 */}
+      <Scene key="ListInCompleteReport" component={ListInCompleteReport} />
 
       {/* 확인 후 필요 없으면 삭제 */}
       <Scene key="RegAsBeforeReport" component={RegReportBeforePic} /> 
@@ -343,7 +347,7 @@ const PAGE = () => (
               <Stack key="PartnerReport" hideNavBar title="보고서" icon={TabIcon}
                 tabBarOnPress={() => alert("개발중")}
                 transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-                <Scene key="ListInCompleteReport" component={ListInCompleteReport} title="미 완료 보고서 리스트"/>
+                {/* <Scene key="ListInCompleteReport" component={ListInCompleteReport} title="미 완료 보고서 리스트"/> */}
                 <Scene key="AfterServiceReport" component={AfterServiceReport} title="A/S 보고서"/>
               </Stack>
             </Tabs>

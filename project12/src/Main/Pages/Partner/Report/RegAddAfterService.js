@@ -15,13 +15,27 @@ class RegAddAfterService extends Component {
     this.state = {
       isModalVisible: false,
       checkBox : false,
+      disabledBtn : true,
+      asText : '',
+      asCost : '',
+      asDesc : ''
     };
   }
 
   _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
 
-  _chkNextButton = () => {
 
+
+  // 등록완료 버튼 활성화 체크
+  _chkNextButton = () => {
+    const lenChkNum = 5; // 5글자 이상 
+    const {asText, asCost, asDesc} = this.state;
+
+    if(asText.length >= lenChkNum && asCost.length >= lenChkNum && asDesc.length >= lenChkNum) {
+      this.setState({disabledBtn : false});
+    } else {
+      this.setState({disabledBtn : true});
+    }
   }
 
   render() {
@@ -44,7 +58,7 @@ class RegAddAfterService extends Component {
               <Text style={localStyles.inputTitleTxt}>추가 A/S 내역</Text>
               <Item regular style={[styles.mb14, styles.inputWhBackWhBo]}>
                 <Input 
-                  onChangeText={ (text) => this.setState({asCauseDsc : text}) }
+                  onChangeText={ (text) => { this.setState({asText : text}), this._chkNextButton()} }
                   placeholder="A/S 내역을 작성해주세요" 
                   style={[styles.inputBox, styles.pl9]} 
                   placeholderTextColor={color.inputPlaceHodler}
@@ -53,12 +67,19 @@ class RegAddAfterService extends Component {
               
               <Text style={localStyles.inputTitleTxt}>추가 A/S 비용</Text>
               <Item regular style={[styles.mb14, styles.inputWhBackWhBo]}>
-                <Input placeholder="추가비용을 입력해주세요" style={[styles.inputBox, styles.pl9]} placeholderTextColor={color.inputPlaceHodler}/>
+                <Input 
+                  onChangeText={ (text) => { this.setState({asCost : text}), this._chkNextButton() } }
+                  placeholder="추가비용을 입력해주세요" 
+                  style={[styles.inputBox, styles.pl9]} 
+                  placeholderTextColor={color.inputPlaceHodler}
+                  keyboardType="number-pad"
+                />
               </Item>
               
               <Text style={localStyles.inputTitleTxt}>추가 A/S 사유</Text>
               <Item regular style={[styles.mb14, styles.textInputWhBackWhBo]}>
                 <TextInput
+                  onChangeText={ (text) => { this.setState({asDesc : text}), this._chkNextButton() } }
                   placeholder="추가 A/S가 필요한 이유를 적어주세요"
                   placeholderTextColor={color.inputPlaceHodler}
                   numberOfLines={10}
@@ -72,6 +93,7 @@ class RegAddAfterService extends Component {
           <View style={styles.footerBtnWrap}>
             <CustomButton 
               onPress={() => this._toggleModal()}
+              disabled={ this.state.disabledBtn }
               DefaultLineBtn={true}
             >
               등록완료

@@ -149,31 +149,31 @@ class InputProdType extends Component {
 
                     <View style={styles.fx2}>
                         <View style={[styles.fx1, styles.alignItemsStart, styles.justiConCenter]}>
-                        <Pagination
-                            dotsLength={this.state.data.length}
-                            activeDotIndex={this.state.slider1ActiveSlide}
-                            containerStyle={localStyles.paginationContainer}
-                            dotColor={color.defaultColor}
-                            dotStyle={localStyles.paginationDot}
-                            inactiveDotColor={color.defaultColor}
-                            inactiveDotOpacity={0.4}
-                            inactiveDotScale={0.6}
-                            carouselRef={this._slider1Ref}
-                            tappableDots={!!this._slider1Ref}
-                        />
+                            <Pagination
+                                dotsLength={this.state.data.length}
+                                activeDotIndex={this.state.slider1ActiveSlide}
+                                containerStyle={localStyles.paginationContainer}
+                                dotColor={color.defaultColor}
+                                dotStyle={localStyles.paginationDot}
+                                inactiveDotColor={color.defaultColor}
+                                inactiveDotOpacity={0.4}
+                                inactiveDotScale={0.6}
+                                carouselRef={this._slider1Ref}
+                                tappableDots={!!this._slider1Ref}
+                            />
                         </View>
 
                         <View style={{flex:5}}>
-                        <Carousel
-                            ref={c => this._slider1Ref = c}
-                            renderItem={this._renderItem}
-                            sliderWidth={viewportWidth}
-                            activeSlideAlignment={'start'}
-                            itemWidth={itemWidth}
-                            data={this.state.data}
-                            firstItem={this.state.slider1ActiveSlide}
-                            onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
-                        />
+                            <Carousel
+                                ref={c => this._slider1Ref = c}
+                                renderItem={this._renderItem}
+                                sliderWidth={viewportWidth}
+                                activeSlideAlignment={'start'}
+                                itemWidth={itemWidth}
+                                data={this.state.data}
+                                firstItem={this.state.slider1ActiveSlide}
+                                onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
+                            />
                         </View>
 
                     </View>

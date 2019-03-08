@@ -26,33 +26,8 @@ import {
 import { styles, viewportHeight, viewportWidth } from './css/common';
 import { color } from './css/color';
 
-import Swiper from 'react-native-animated-swiper';
+import Swiper from 'react-native-swiper';
 import { locale } from "core-js";
-
-
-const Slide = ({ title, address, index }) => (
-    <View style={localStyles.topBoxWrap}>
-        <View style={styles.mb10}>
-            <Text style={localStyles.topBoxNameTxt}>{title}</Text>
-            <Text style={localStyles.topBoxtAddrTxt}>{address}</Text>
-            <Text style={localStyles.topBoxtAddrTxt}>{address}</Text>
-        </View>
-
-        <View style={localStyles.bottomBoxWrap}>
-
-            <View style={localStyles.bottomBoxLeftWrap}>
-                <Image source={require("./img/license-depart01.png")} style={localStyles.leftImg}  />
-            </View>
-
-            <View style={localStyles.bottomBoxRightWrap}>
-                <View style={localStyles.rightStateCircle}>
-                    <Text style={localStyles.rightStateTxt}>A/S 신청</Text>
-                </View>
-            </View>
-        </View>
-    </View>
-);
-
 
 
 class ClientMain extends Component {
@@ -69,16 +44,77 @@ class ClientMain extends Component {
   
 
 drawSwiper = () => (
-    <Swiper
-        dots
-        dotsStyle={localStyles.dotsStyle}
-        dotsColor="rgba(97, 218, 251, 0.5)"
-        dotsColorActive="#FFF"
+    <Swiper 
+        style={localStyles.topBoxWrap}
+        paginationStyle={{
+            bottom: 0, left: null, right: 10
+        }} 
+        dot={<View style={{backgroundColor: 'rgba(3,151,189, 0.4)', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
+        activeDot={<View style={{backgroundColor: color.whiteColor, width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
     >
-        <Slide title="세나정육점1" address="서울시 동작구 대방동1" index={0} />
-        <Slide title="세나정육점2" address="서울시 동작구 대방동2" index={1}/>
-        <Slide title="세나정육점3" address="서울시 동작구 대방동3" index={2}/>
-        <Slide title="세나정육점4" address="서울시 동작구 대방동4" index={3}/>
+
+        <View style={localStyles.topBoxWrap}>
+            <View style={styles.mb10}>
+                <Text style={localStyles.topBoxNameTxt}>세나정육점</Text>
+                <Text style={localStyles.topBoxtAddrTxt}>서울시 대방동</Text>
+                <Text style={localStyles.topBoxtAddrTxt}>392-14</Text>
+            </View>
+
+            <View style={localStyles.bottomBoxWrap}>
+
+                <View style={localStyles.bottomBoxLeftWrap}>
+                    <Image source={require("./img/license-depart01.png")} style={localStyles.leftImg}  />
+                </View>
+
+                <View style={localStyles.bottomBoxRightWrap}>
+                    <View style={localStyles.rightStateCircle}>
+                        <Text style={localStyles.rightStateTxt}>A/S 신청</Text>
+                    </View>
+                </View>
+            </View>
+        </View>
+
+        <View style={localStyles.topBoxWrap}>
+            <View style={styles.mb10}>
+                <Text style={localStyles.topBoxNameTxt}>세나정육점</Text>
+                <Text style={localStyles.topBoxtAddrTxt}>서울시 대방동</Text>
+                <Text style={localStyles.topBoxtAddrTxt}>392-14</Text>
+            </View>
+
+            <View style={localStyles.bottomBoxWrap}>
+
+                <View style={localStyles.bottomBoxLeftWrap}>
+                    <Image source={require("./img/license-depart01.png")} style={localStyles.leftImg}  />
+                </View>
+
+                <View style={localStyles.bottomBoxRightWrap}>
+                    <View style={localStyles.rightStateCircle}>
+                        <Text style={localStyles.rightStateTxt}>A/S 신청</Text>
+                    </View>
+                </View>
+            </View>
+        </View>
+
+        <View style={localStyles.topBoxWrap}>
+            <View style={styles.mb10}>
+                <Text style={localStyles.topBoxNameTxt}>세나정육점</Text>
+                <Text style={localStyles.topBoxtAddrTxt}>서울시 대방동</Text>
+                <Text style={localStyles.topBoxtAddrTxt}>392-14</Text>
+            </View>
+
+            <View style={localStyles.bottomBoxWrap}>
+
+                <View style={localStyles.bottomBoxLeftWrap}>
+                    <Image source={require("./img/license-depart01.png")} style={localStyles.leftImg}  />
+                </View>
+
+                <View style={localStyles.bottomBoxRightWrap}>
+                    <View style={localStyles.rightStateCircle}>
+                        <Text style={localStyles.rightStateTxt}>A/S 신청</Text>
+                    </View>
+                </View>
+            </View>
+        </View>
     </Swiper>
 );
 
@@ -148,9 +184,10 @@ maching = () => (
 
         <ScrollView showsVerticalScrollIndicator={false}>
                 
-            {/* {this.drawSwiper()} */}
-            {this.unRegister()}
+            {/* {this.unRegister()} */}
             {/* {this.maching()} */}
+
+            {this.drawSwiper()}
 
             <View style={{backgroundColor : '#d6f1ff'}}>
                 <View style={[styles.boxShadow, localStyles.secondBox]}>
@@ -219,7 +256,7 @@ maching = () => (
 function wp (percentage, space) {
     const value = (percentage * (viewportWidth - space)) / 100;
     return Math.round(value);
-  }
+}
   
 const afterServiceBtnSize = wp(33, 30);
 const stateImgSize = wp(10, 52);

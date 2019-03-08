@@ -50,8 +50,8 @@ class AfterServiceImage extends Component {
         this.takePhotoTapped = this.takePhotoTapped.bind(this);
 
         this.state = {
-            isImage : false,
-            imgUri : null,
+            isImage : (this.props.imgUrl !== null) ? true : false,
+            imgUri : this.props.imgUrl,
             isAlertModal : false, //alert 용
             resultMsg : null // alert 결과 메세지
         };
@@ -59,7 +59,6 @@ class AfterServiceImage extends Component {
 
     static defaultProps = {
         beforeAction : true, // 조치전/후 여부
-        imgUrl : null,
         asPrgsId : 5 //test
     }
 

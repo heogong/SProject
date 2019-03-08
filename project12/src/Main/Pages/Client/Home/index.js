@@ -7,55 +7,53 @@ import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, ADD_AS, COMPLETE_AS} fro
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setIntervalId, setIsAfterService } from '~/Redux/Actions';
-import Swiper from 'react-native-animated-swiper';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import GetBizList from '~/Main/Functions/GetBizList';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import ServiceRequestSwiper from '~/Main/Components/ServiceRequestSwiper';
+
 import CustomHeader from '~/Common/Components/CustomHeader';
 import { styles, viewportHeight, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
 
+export const ENTRIES1 = [
+  {
+    bplaceNm: 'Beautiful and dramatic Antelope Canyon',
+      subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+      illustration: 'https://i.imgur.com/UYiroysl.jpg'
+  },
+  {
+    bplaceNm: 'Earlier this morning, NYC',
+      subtitle: 'Lorem ipsum dolor sit amet',
+      illustration: 'https://i.imgur.com/UPrs1EWl.jpg'
+  },
+  {
+    bplaceNm: 'White Pocket Sunset',
+      subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
+      illustration: 'https://i.imgur.com/MABUbpDl.jpg'
+  },
+  {
+    bplaceNm: 'Acrocorinth, Greece',
+      subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+      illustration: 'https://i.imgur.com/KZsmUi2l.jpg'
+  },
+  {
+    bplaceNm: 'The lone tree, majestic landscape of New Zealand',
+      subtitle: 'Lorem ipsum dolor sit amet',
+      illustration: 'https://i.imgur.com/2nCt3Sbl.jpg'
+  },
+  {
+    bplaceNm: 'Middle Earth, Germany',
+      subtitle: 'Lorem ipsum dolor sit amet',
+      illustration: 'https://i.imgur.com/lceHsT6l.jpg'
+  }
+];
+
+
 let INTEVER_ID = 0;
-
-const Slide = ({ index, biz }) => (
-  <View key={index} style={[styles.pd20, {backgroundColor:color.defaultColor}]}>
-      <View style={styles.mb10}>
-          <H1 style={[styles.mb10, {color : color.whiteColor}]}>{biz.bplaceNm}</H1>
-          <Text style={styles.whiteFont}>{biz.addr.addressName}</Text>
-          <Text style={styles.whiteFont}>{biz.detail.detailAddr1}</Text>
-      </View>
-
-      <View style={styles.fxDirRow}>
-
-          <View style={styles.fx1}>
-              <Image source={require("~/Common/Image/license-depart01.png")} style={{height : afterServiceBtnSize, width : afterServiceBtnSize}}  />
-          </View>
-
-          <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsEnd]}>
-            <TouchableOpacity
-                onPress={() => {
-                    Actions.AfterServiceProdTypeList({bizId : biz.clientBplaceId});
-                    clearInterval(INTEVER_ID);
-                  } 
-                }
-            >
-              <View style={[styles.justiConCenter, styles.alignItemsCenter, {
-                  borderRadius: 100, 
-                  height: afterServiceBtnSize, 
-                  width: afterServiceBtnSize, 
-                  backgroundColor : color.whiteColor,
-              }]}>
-                  <H2 style={{color : color.defaultColor}}>A/S 신청</H2>
-              </View>
-              </TouchableOpacity>
-          </View>
-      </View>
-  </View>
-);
 
 const AfterServiceState = ({ asPrgsStatCd, status }) => (
   <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
@@ -93,8 +91,85 @@ class ClientHome extends Component {
       asPrgsYn : 'N', // AS 여부
       asPrgsStatCd : null,
       asPrgsStatNm : null,
-      asPrgsStatDSC : null
+      asPrgsStatDSC : null,
+      slider1ActiveSlide: 0
     };
+  }
+
+  // _renderItem = ({item, index}) => {
+  //   return (
+  //     <View key={index} style={[styles.pd20, {backgroundColor:color.defaultColor}]}>
+  //       <View style={styles.mb10}>
+  //           <H1 style={[styles.mb10, {color : color.whiteColor}]}>{item.bplaceNm}</H1>
+  //           <Text style={styles.whiteFont}>{item.addr.addressName}</Text>
+  //           <Text style={styles.whiteFont}>{item.detail.detailAddr1}</Text>
+  //       </View>
+  
+  //       <View style={styles.fxDirRow}>
+  
+  //           <View style={styles.fx1}>
+  //               <Image source={require("~/Common/Image/license-depart01.png")} style={{height : afterServiceBtnSize, width : afterServiceBtnSize}}  />
+  //           </View>
+  
+  //           <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsEnd]}>
+  //             <TouchableOpacity
+  //                 onPress={() => {
+  //                     Actions.AfterServiceProdTypeList({bizId : item.clientBplaceId});
+  //                     clearInterval(INTEVER_ID);
+  //                   } 
+  //                 }
+  //             >
+  //               <View style={[styles.justiConCenter, styles.alignItemsCenter, {
+  //                   borderRadius: 100, 
+  //                   height: afterServiceBtnSize, 
+  //                   width: afterServiceBtnSize, 
+  //                   backgroundColor : color.whiteColor,
+  //               }]}>
+  //                   <H2 style={{color : color.defaultColor}}>A/S 신청</H2>
+  //               </View>
+  //               </TouchableOpacity>
+  //           </View>
+  //       </View>
+  //   </View>
+  //   );
+  // }
+
+  _renderItem = ({item, index}) => {
+    return (
+      <View key={index} style={[styles.pd20, {backgroundColor:color.defaultColor}]}>
+        <View style={styles.mb10}>
+            <H1 style={[styles.mb10, {color : color.whiteColor}]}>{item.bplaceNm}</H1>
+            <Text style={styles.whiteFont}>{item.bplaceNm}</Text>
+            <Text style={styles.whiteFont}>{item.bplaceNm}</Text>
+        </View>
+  
+        <View style={styles.fxDirRow}>
+  
+            <View style={styles.fx1}>
+                <Image source={require("~/Common/Image/license-depart01.png")} style={{height : afterServiceBtnSize, width : afterServiceBtnSize}}  />
+            </View>
+  
+            <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsEnd]}>
+              <TouchableOpacity
+                  onPress={() => {
+                      Actions.AfterServiceProdTypeList({bizId : item.bplaceNm});
+                      clearInterval(INTEVER_ID);
+                    } 
+                  }
+              >
+                <View style={[styles.justiConCenter, styles.alignItemsCenter, {
+                    borderRadius: 100, 
+                    height: afterServiceBtnSize, 
+                    width: afterServiceBtnSize, 
+                    backgroundColor : color.whiteColor,
+                }]}>
+                    <H2 style={{color : color.defaultColor}}>A/S 신청</H2>
+                </View>
+                </TouchableOpacity>
+            </View>
+        </View>
+    </View>
+    );
   }
 
   async componentDidMount() {
@@ -283,23 +358,58 @@ class ClientHome extends Component {
           { (this.state.asPrgsYn == 'Y') ? (
             this.maching()
           ) :(
-            <Swiper
-                dots
-                dotsStyle={localStyles.dotsStyle}
-                dotsColor="rgba(97, 218, 251, 0.5)"
-                dotsColorActive="#FFF"
-                customContainer={localStyles.customSwiperContainer}
-                customDotsContainerStyle={localStyles.dotsContainerStyle}
-                customSlideWidth={viewportWidth}
-            >
-              {this.state.data.map((business, index) => (
-                <Slide 
-                  key={index}
-                  index={index}
-                  biz={business}
+            // <Swiper
+            //     dots
+            //     dotsStyle={localStyles.dotsStyle}
+            //     dotsColor="rgba(97, 218, 251, 0.5)"
+            //     dotsColorActive="#FFF"
+            //     customContainer={localStyles.customSwiperContainer}
+            //     customDotsContainerStyle={localStyles.dotsContainerStyle}
+            //     customSlideWidth={viewportWidth}
+            // >
+            //   {this.state.data.map((business, index) => (
+            //     <Slide 
+            //       key={index}
+            //       index={index}
+            //       biz={business}
+            //     />
+            //   ))}
+            // </Swiper>
+            <View>
+              <View style={[styles.fx1, styles.alignItemsStart, styles.justiConCenter]}>
+                <Pagination
+                    // dotsLength={this.state.data.length}
+                    dotsLength={ENTRIES1.length}
+                    activeDotIndex={this.state.slider1ActiveSlide}
+                    containerStyle={localStyles.paginationContainer}
+                    dotColor={color.defaultColor}
+                    dotStyle={localStyles.paginationDot}
+                    inactiveDotColor={color.defaultColor}
+                    inactiveDotOpacity={0.4}
+                    inactiveDotScale={0.6}
+                    carouselRef={this._slider1Ref}
+                    tappableDots={!!this._slider1Ref}
                 />
-              ))}
-            </Swiper>
+              </View>
+
+              <View>
+                <Carousel
+                    ref={c => this._slider1Ref = c}
+                    renderItem={this._renderItem}
+                    sliderWidth={viewportWidth}
+                    activeSlideAlignment={'start'}
+                    itemWidth={viewportWidth}
+                    // data={this.state.data}
+                    data={ENTRIES1}
+                    firstItem={this.state.slider1ActiveSlide}
+                    inactiveSlideOpacity={1}
+                    inactiveSlideScale={1}
+                    onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
+                />
+              </View>
+
+            </View>
+           
           )}
               {/* {this.unRegister()} */}
               
@@ -368,20 +478,6 @@ const localStyles = StyleSheet.create({
     backgroundColor : color.defaultColor, 
     elevation: 5
   },
-  dotsStyle: {
-      borderRadius: 4,
-      height: 8,
-      marginHorizontal: 4,
-      width: 8,
-  },
-  dotsContainerStyle : {
-      paddingLeft : 20,
-      // // backgroundColor : 'pink',
-      // alignSelf: 'auto',
-      // flexDirection: 'row',
-      position: 'absolute',
-      flexDirection: 'row',
-  },
   secondBox : {
       marginBottom : 20,
       marginLeft : 20, 
@@ -392,6 +488,15 @@ const localStyles = StyleSheet.create({
       borderBottomRightRadius : 5, 
       backgroundColor : color.whiteColor,
       elevation: 10
+  },
+  paginationContainer: {
+    paddingVertical: 0
+  },
+  paginationDot: {
+      borderRadius: 4,
+      marginHorizontal: 0,
+      height: 10,
+      width: 10
   }
 });
 
