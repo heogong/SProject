@@ -41,47 +41,60 @@ class RegBusinessName extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={{flex:1}}>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
             </Button>
           </Left>
-          <Body style={{flex:1, alignItems: 'center'}}>
-            <Title></Title>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
           </Body>
-          <Right style={{flex:1}}></Right>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <View style={[styles.mg10, {flex:1}]}>
+        <View style={styles.contentWrap}>
 
-          <View style={{flex:1}}>
-            <View style={[styles.mb10, {flexDirection : 'row'}]}>
-              <View style={{flex:1}}>
-                <H1>귀하의</H1>
-                <H1>상호명을</H1>
-                <H1>입력해주세요</H1>
+          <View>
+            
+            <View style={styles.fxDirRow}>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>귀하의</Text>
+                <Text style={styles.leftGuideTxt}>사업장정보를</Text>
+                <Text style={styles.leftGuideTxt}>입력해주세요</Text>
               </View>
-              <View style={{flex:1, alignItems : 'flex-end', justifyContent : 'flex-end'}}>
-                <H1 style={{color : color.defaultColor}}>03</H1>
+              <View style={styles.rightStepNumWrap}>
+                <Text style={styles.rightStepNum}>03</Text>
               </View>
             </View>
-            <View style={{height : 10, backgroundColor : color.defaultColor}} />
+
+            <View style={styles.procBarWrap}>
+              <View style={styles.fx1}>
+                <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+                <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+            </View>
             
           </View>
 
-          <View style={{flex:2, justifyContent:'center'}}>
-            <Item regular style={[styles.mb15, {height : 50}]}>
-              <Input placeholder="상호명 입력" />
+          <View style={[styles.fx3, styles.justiConCenter]}>
+            <Item regular style={styles.inputWhBackGreyBo}>
+              <Input placeholder="상호명을 입력해주세요" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
             </Item>
           </View>
 
-          <View style={{flex:1, justifyContent:'center'}}>
-            <Button block info style={{elevation:0}}>
-              <Text>입력완료</Text>
+          <View style={styles.footerBtnWrap}>
+            <Button style={[styles.btnDefault, styles.btnDefaultFill, styles.mb5]}>
+              <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>입력완료</Text>
             </Button>
           </View>
+
         </View>
 
       </Container>

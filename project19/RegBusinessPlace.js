@@ -88,34 +88,46 @@ class RegBusinessPlace extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={{flex:1}}>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
             </Button>
           </Left>
-          <Body style={{flex:1, alignItems: 'center'}}>
-            <Title></Title>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
           </Body>
-          <Right style={{flex:1}}></Right>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <View style={[styles.mg20, {flex:1}]}>
+        <View style={styles.contentWrap}>
 
-          <View style={[{flex:1}]}>
-            <View style={[styles.mb10, {flexDirection : 'row'}]}>
-              <View style={{flex:1}}>
-                <H1>귀하의</H1>
-                <H1>사업장정보를</H1>
-                <H1>등록해주세요</H1>
+          <View>
+            
+            <View style={styles.fxDirRow}>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>귀하의</Text>
+                <Text style={styles.leftGuideTxt}>사업장정보를</Text>
+                <Text style={styles.leftGuideTxt}>등록해주세요</Text>
               </View>
-              <View style={{flex:1, alignItems : 'flex-end', justifyContent : 'flex-end'}}>
-                <H1 style={{color:color.defaultColor}}>03</H1>
+              <View style={styles.rightStepNumWrap}>
+                <Text style={styles.rightStepNum}>03</Text>
               </View>
             </View>
 
-            <View style={{height : 10, backgroundColor : color.defaultColor}} />
+            <View style={styles.procBarWrap}>
+              <View style={styles.fx1}>
+                <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+                <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
+            </View>
+            
           </View>
 
           <View style={{flex:2, justifyContent : 'center'}}>
@@ -131,19 +143,17 @@ class RegBusinessPlace extends Component {
               onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
             /> */}
 
-            <View style={{width : '100%', height : itemHeight, backgroundColor : color.defaultColor}}>
-              <View style={{flex:3, alignItems : 'center', justifyContent:'center'}}>
+            <View style={localStyles.placeBoxWrap}>
+              <View style={localStyles.btnPlusWrap}>
                 <TouchableOpacity onPress={ () => alert("사업장 등록")}>
-                  <Image source={require('./img/ico-naver.png')} resizeMode="contain" />
+                  <Image source={require('./img/ico-naver.png')} style={localStyles.btnPlus}/>
                 </TouchableOpacity>
               </View>
-              <View style={{flex:2, alignItems : 'center'}}>
-                <View style={{flex:1}}>
-                  <H2 style={{color:color.whiteColor}}>사업장명칭</H2>
-                </View>
-                <View style={{flex:1, alignItems : 'center'}}>
-                  <Text style={styles.whiteFont}>새로운 사업장을 추가하려면</Text>
-                  <Text style={styles.whiteFont}>위의 아이콘을 클릭하세요</Text>
+              <View style={localStyles.txtWrap}>
+                <Text style={localStyles.placeNameTxt}>사업장명칭</Text>
+                <View style={localStyles.infoTxtWrap}>
+                  <Text style={localStyles.infoTxt}>새로운 사업장을 추가하려면</Text>
+                  <Text style={localStyles.infoTxt}>위의 아이콘을 클릭하세요</Text>
                 </View>
               </View>
 
@@ -184,7 +194,39 @@ const localStyles = StyleSheet.create({
     marginTop: 0,
     marginLeft : 20,
     overflow: 'visible' // for custom animations
-},
+  },
+  placeBoxWrap: {
+    width : '100%',
+    height : itemHeight, 
+    backgroundColor : color.defaultColor
+  },
+  btnPlusWrap: {
+    flex: 3,
+    alignItems : 'center',
+    justifyContent:'center'
+  },
+  btnPlus: {
+    width: 120,
+    height: 120
+  },
+  txtWrap: {
+    flex: 2,
+    alignItems : 'center'
+  },
+  placeNameTxt: {
+    color: color.whiteColor,
+    fontSize: 27,
+    fontWeight: "bold",
+    marginBottom: 22
+  },
+  infoTxtWrap: {
+    flex: 1,
+    alignItems : 'center'
+  },
+  infoTxt: {
+    fontSize: 15,
+    color: color.whiteColor
+  }
 });
 
 export default RegBusinessPlace;

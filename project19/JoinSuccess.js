@@ -51,15 +51,15 @@ class JoinSuccess extends Component {
         </Header>
 
 
-        <View style={localStyles.contentWrap}>
-          <View style={localStyles.contentTop}>
+        <View style={styles.succContentWrap}>
+          <View style={styles.succContentTop}>
             <View>
               <View style={[styles.alignItemsCenter, {marginBottom: 38}]}>
                 <Image source={require('./img/join-end.png')} style={{width: 48, height: 48}}/>
               </View>
-              <View style={localStyles.topTxtWrap}>
-                <Text style={localStyles.topTxt}>회원가입이</Text>
-                <Text style={localStyles.topTxt}>완료되었어요!</Text>
+              <View style={styles.succTopTxtWrap}>
+                <Text style={styles.succTopTxt}>회원가입이</Text>
+                <Text style={styles.succTopTxt}>완료되었어요!</Text>
               </View>
             </View>
           </View>
@@ -82,26 +82,5 @@ class JoinSuccess extends Component {
     );
   }
 }
-
-const localStyles = StyleSheet.create({
-  contentWrap: {
-    flex:1
-  },
-  contentTop: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  topTxtWrap: {
-    alignItems: 'center'
-  },
-  topTxt: {
-    fontSize: 26,
-    color: "#1e1e32",
-    letterSpacing: 0,
-    lineHeight: 30,
-    fontWeight: "bold"
-  }
-});
 
 export default JoinSuccess;

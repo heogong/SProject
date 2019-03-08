@@ -41,52 +41,40 @@ class RegSuccessTerm extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={{flex:1}}>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body style={{flex:1, alignItems: 'center'}}>
-            <Title></Title>
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}></Left>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
           </Body>
-          <Right style={{flex:1}}></Right>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <View style={[styles.mg10, {flex:1}]}>
-          <View style={{flex:1, alignItems : 'center', justifyContent : 'center'}}>
+
+        <View style={styles.succContentWrap}>
+          <View style={styles.succContentTop}>
             <View>
-              <View style={{alignItems : 'center'}}>
-                <Image source={require('./img/join-end.png')} resizeMode='center'/>
+              <View style={[styles.alignItemsCenter, {marginBottom: 38}]}>
+                <Image source={require('./img/join-end.png')} style={{width: 48, height: 48}}/>
               </View>
-              <View style={{alignItems : 'center'}}>
-                <H1>약관동의가</H1>
-                <H1>완료되었어요!</H1>
+              <View style={styles.succTopTxtWrap}>
+                <Text style={styles.succTopTxt}>약관동의가</Text>
+                <Text style={styles.succTopTxt}>완료되었어요!</Text>
               </View>
             </View>
           </View>
-
-          <View style={{flex:1}}>
-            <View style={{flex:1, alignItems : 'center'}}>
+          <View style={styles.fx1}>
+            <View style={[styles.fx1, styles.alignItemsCenter]}>
               <Text style={styles.greyFont}>제품을 등록하면 빠른 서비스를 받을 수 있어요!</Text>
               <Text style={styles.greyFont}>지금 등록하러 가시겠어요?</Text>
             </View>
 
-            <View style={{flex:1, justifyContent : 'center'}}>
-
-              <Button block info bordered onPress={ () => alert("메인화면으로")}
-                style={[styles.mb15, {elevation:0}]}
-              >
-                <Text>메인화면으로</Text>
-              </Button>
-
-              <Button block info onPress={ () => alert("약관동의하러가기")}
-                style={{elevation:0}}
-              >
-                <Text>약관동의 하러가기</Text>
+            <View style={styles.footerBtnWrap}>
+              <Button style={[styles.btnDefault, styles.btnDefaultFill]}>
+                <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>제품등록 하러가기</Text>
               </Button>
             </View>
+
           </View>
         </View>
 

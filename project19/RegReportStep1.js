@@ -119,8 +119,8 @@ class ListNotCompReport extends Component {
             </View>
             
           </View>
-          <ScrollView showsVerticalScrollIndicator={false}>
 
+          <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 60}}>
             <View>
               <View>
                 <View style={[localStyles.boxTitleWrap, {justifyContent: "center", alignItems: "center"}]}>
@@ -176,9 +176,13 @@ class ListNotCompReport extends Component {
 
               </View>
             </View>
-
-
           </ScrollView>
+
+          <View style={styles.footerBtnWrap}>
+            <Button style={[styles.btnDefault, styles.btnDefaultFill, styles.mb5]}>
+              <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>제품등록완료</Text>
+            </Button>
+          </View>
 
         </View>
 
@@ -215,7 +219,7 @@ const localStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     flexWrap : 'wrap',
-    backgroundColor: color.defaultColor,
+    backgroundColor: color.defaultColor
   },
   prdPhoto: {
     margin: 5,

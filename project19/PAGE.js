@@ -132,9 +132,26 @@ const PAGE = () => (
             <Scene key="MyCalcuList" hideNavBar component={MyCalcuList}  type={ActionConst.RESET}/>
             <Scene key="NoticeList" hideNavBar component={NoticeList}  type={ActionConst.RESET}/>
             <Scene key="TermsMenu" hideNavBar component={TermsMenu}  type={ActionConst.RESET}/>
-            <Scene initial key="TermsContent1" hideNavBar component={TermsContent1}  type={ActionConst.RESET}/>
+            <Scene key="TermsContent1" hideNavBar component={TermsContent1}  type={ActionConst.RESET}/>
 
-            <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
+            
+            <Scene key="RegCard" hideNavBar component={RegCard}  type={ActionConst.RESET}/>
+            <Scene key="ManageCard" hideNavBar component={ManageCard} type={ActionConst.RESET}/>
+            <Scene key="RegSuccessCard" hideNavBar component={RegSuccessCard} type={ActionConst.RESET}/>
+            <Scene key="RegSuccessTerm" hideNavBar component={RegSuccessTerm}  type={ActionConst.RESET}/>
+            <Scene key="RegBusinessPlace" hideNavBar component={RegBusinessPlace} type={ActionConst.RESET}/>
+            <Scene key="RegBusinessName" hideNavBar component={RegBusinessName} type={ActionConst.RESET}/>
+            <Scene key="RegBusinessAddress" hideNavBar component={RegBusinessAddress} type={ActionConst.RESET}/>
+            <Scene key="FindBusinessAddress" hideNavBar component={FindBusinessAddress} type={ActionConst.RESET}/>            
+            <Scene key="RegBusinessAddressDetail" hideNavBar component={RegBusinessAddressDetail} type={ActionConst.RESET}/>
+            <Scene key="SuccessBusinessPlace" hideNavBar component={SuccessBusinessPlace} type={ActionConst.RESET}/>
+            <Scene key="RegProductInfo" hideNavBar component={RegProductInfo} type={ActionConst.RESET}/>
+            <Scene key="RegProductDetail" hideNavBar component={RegProductDetail}  type={ActionConst.RESET}/>
+            <Scene key="TakeProductImage" hideNavBar component={TakeProductImage}  type={ActionConst.RESET}/>
+            <Scene key="TakeProductGuide2" hideNavBar component={TakeProductGuide2} type={ActionConst.RESET}/>
+            <Scene key="SuccessRegProduct" hideNavBar component={SuccessRegProduct} type={ActionConst.RESET}/>
+            <Scene initial key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
+
             <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
             <Scene key="SelectProduct2" hideNavBar component={SelectProduct2}  type={ActionConst.RESET}/>
             <Scene key="ApplyAfterService" hideNavBar component={ApplyAfterService} type={ActionConst.RESET}/>
@@ -143,23 +160,8 @@ const PAGE = () => (
             <Scene key="HistoryAfterServiceChk" hideNavBar component={HistoryAfterServiceChk} type={ActionConst.RESET}/>
             <Scene key="HistoryAfterServiceChk2" hideNavBar component={HistoryAfterServiceChk2} type={ActionConst.RESET}/>
             <Scene key="ReportAfterService" hideNavBar component={ReportAfterService} type={ActionConst.RESET}/>
-            <Scene key="RegCard" hideNavBar component={RegCard}  type={ActionConst.RESET}/>
-            <Scene key="ManageCard" hideNavBar component={ManageCard} type={ActionConst.RESET}/>
-            <Scene key="RegSuccessCard" hideNavBar component={RegSuccessCard} type={ActionConst.RESET}/>
-            <Scene key="RegSuccessTerm" hideNavBar component={RegSuccessTerm}  type={ActionConst.RESET}/>
-            <Scene key="RegBusinessPlace" hideNavBar component={RegBusinessPlace} type={ActionConst.RESET}/>
-            <Scene key="RegBusinessName" hideNavBar component={RegBusinessName} type={ActionConst.RESET}/>
-            <Scene key="RegBusinessAddress" hideNavBar component={RegBusinessAddress} type={ActionConst.RESET}/>
-            <Scene key="FindBusinessAddress" hideNavBar component={FindBusinessAddress} type={ActionConst.RESET}/>
-            <Scene key="RegBusinessAddressDetail" hideNavBar component={RegBusinessAddressDetail} type={ActionConst.RESET}/>
-            <Scene key="SuccessBusinessPlace" hideNavBar component={SuccessBusinessPlace} type={ActionConst.RESET}/>
             <Scene key="RegProduct" hideNavBar component={RegProduct} type={ActionConst.RESET}/>
-            <Scene key="RegProductInfo" hideNavBar component={RegProductInfo} type={ActionConst.RESET}/>
-            <Scene key="SuccessRegProduct" hideNavBar component={SuccessRegProduct} type={ActionConst.RESET}/>
-            <Scene key="RegProductDetail" hideNavBar component={RegProductDetail}  type={ActionConst.RESET}/>
-            <Scene key="TakeProductImage" hideNavBar component={TakeProductImage}  type={ActionConst.RESET}/>
             <Scene key="TakeProductGuide1" hideNavBar component={TakeProductGuide1} type={ActionConst.RESET}/>
-            <Scene key="TakeProductGuide2" hideNavBar component={TakeProductGuide2} type={ActionConst.RESET}/>
 
 
             <Scene key="pageOne" hideNavBar component={pageOne} title="pageOne" type={ActionConst.RESET}/>

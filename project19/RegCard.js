@@ -118,10 +118,10 @@ class RegCard extends Component {
 
             <View style={localStyles.termsWrap}>
               <View style={[styles.fx2, styles.alignItemsStart, styles.justiConBetween]}>
-                <Text style={[styles.greyFont, styles.mb5]}>전자금융거래 이용약관</Text>
-                <Text style={[styles.greyFont, styles.mb5]}>개인정보 수집 및 이용안내</Text>
-                <Text style={[styles.greyFont, styles.mb5]}>전자금융거래 이용약관</Text>
-                <Text style={[styles.greyFont, styles.mb5]}>개인정보 수집 및 이용안내</Text>
+                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>전자금융거래 이용약관</Text>
+                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>개인정보 수집 및 이용안내</Text>
+                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>전자금융거래 이용약관</Text>
+                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>개인정보 수집 및 이용안내</Text>
               </View>
               
               <View style={[styles.fx1, styles.fxDirRow]}>
@@ -179,7 +179,11 @@ const localStyles = StyleSheet.create({
   termsWrap: {
     marginTop: 27,
     flexDirection : "row"
-  }
+  },
+  inputBottomTxt: {
+    color: "#1e1e32",
+    fontSize: 13
+  },
 });
 
 export default RegCard;

@@ -5,6 +5,11 @@ export const styles = StyleSheet.create({
     container: {
       backgroundColor: color.whiteColor
     },
+    containerRightSlide: {
+      flex: 1,
+      backgroundColor: color.whiteColor,
+      paddingLeft: 26
+    },
     containerInnerPd: {
       flex: 1,
       backgroundColor: color.whiteColor,
@@ -79,6 +84,25 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // 공통 Style
     // ----------------------------
+    // 성공화면 
+    succContentWrap: {
+      flex:1
+    },
+    succContentTop: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    succTopTxtWrap: {
+      alignItems: 'center'
+    },
+    succTopTxt: {
+      fontSize: 26,
+      color: "#1e1e32",
+      letterSpacing: 0,
+      lineHeight: 30,
+      fontWeight: "bold"
+    },
     // Tootip
     tooltipWrap: {
       width: "100%",
@@ -179,7 +203,8 @@ export const styles = StyleSheet.create({
       borderRightWidth: 0,
       borderTopWidth: 0,
       borderBottomWidth: 0,
-      height : 170
+      height : 170,
+      marginRight: 1
     },
     // Box Shdow
     boxShadow: {
@@ -359,7 +384,8 @@ export const styles = StyleSheet.create({
     inputIcon: {
       color: color.defaultColor,
       fontSize: 32,
-      marginRight: 5
+      marginRight: 5,
+      marginTop: 2
     },
     inputNbTitleTxt: {
       fontSize: 13,
