@@ -27,30 +27,26 @@ import { styles, viewportHeight, viewportWidth } from './css/common';
 import { color } from './css/color';
 
 import Swiper from 'react-native-animated-swiper';
+import { locale } from "core-js";
 
 
 const Slide = ({ title, address, index }) => (
-    <View style={styles.pd20}>
+    <View style={localStyles.topBoxWrap}>
         <View style={styles.mb10}>
-            <H1 style={[styles.mb10, {color : color.whiteColor}]}>{title}</H1>
-            <Text style={styles.whiteFont}>{address}</Text>
-            <Text style={styles.whiteFont}>{address}</Text>
+            <Text style={localStyles.topBoxNameTxt}>{title}</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>{address}</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>{address}</Text>
         </View>
 
-        <View style={styles.fxDirRow}>
+        <View style={localStyles.bottomBoxWrap}>
 
-            <View style={styles.fx1}>
-                <Image source={require("./img/license-depart01.png")} style={{height : afterServiceBtnSize, width : afterServiceBtnSize}}  />
+            <View style={localStyles.bottomBoxLeftWrap}>
+                <Image source={require("./img/license-depart01.png")} style={localStyles.leftImg}  />
             </View>
 
-            <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
-                <View style={[styles.justiConCenter, styles.alignItemsCenter, {
-                    borderRadius: 100, 
-                    height: afterServiceBtnSize, 
-                    width: afterServiceBtnSize, 
-                    backgroundColor : color.whiteColor,
-                }]}>
-                    <H2 style={{color : color.defaultColor}}>A/S 신청</H2>
+            <View style={localStyles.bottomBoxRightWrap}>
+                <View style={localStyles.rightStateCircle}>
+                    <Text style={localStyles.rightStateTxt}>A/S 신청</Text>
                 </View>
             </View>
         </View>
@@ -78,9 +74,6 @@ drawSwiper = () => (
         dotsStyle={localStyles.dotsStyle}
         dotsColor="rgba(97, 218, 251, 0.5)"
         dotsColorActive="#FFF"
-        customContainer={localStyles.customSwiperContainer}
-        customDotsContainerStyle={localStyles.dotsContainerStyle}
-        customSlideWidth={viewportWidth}
     >
         <Slide title="세나정육점1" address="서울시 동작구 대방동1" index={0} />
         <Slide title="세나정육점2" address="서울시 동작구 대방동2" index={1}/>
@@ -90,77 +83,53 @@ drawSwiper = () => (
 );
 
 unRegister = () => (
-    <View style={[styles.pd20, {backgroundColor : color.defaultColor, elevation: 5}]}>
-        <View style={[styles.fx2, styles.mb10]}>
-            <H1 style={[styles.mb10, {color : color.whiteColor}]}>제품정보 미등록</H1>
-            <Text style={styles.whiteFont}>사업장·제품정보를 등록해놓으면</Text>
-            <Text style={styles.whiteFont}>편리하고 정확한 서비스가 제공됩니다</Text>
+    <View style={localStyles.topBoxWrap}>
+        <View style={styles.mb10}>
+            <Text style={localStyles.topBoxNameTxt}>제품정보 미등록</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>사업장·제품정보를 등록해놓으면</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>편리하고 정확한 서비스가 제공됩니다</Text>
         </View>
 
-        <View style={[styles.fx3, styles.fxDirRow]}>
+        <View style={localStyles.bottomBoxWrap}>
             <View style={styles.fx1}>
-                <Button style={[styles.mb5,{
-                    height: 48,
-                    borderRadius: 0,
-                    elevation: 0,
-                    width: "80%",
-                    backgroundColor: color.defaultColor,
-                    borderWidth: 1,
-                    borderColor: color.whiteColor,
-                    elevation: 0,
-                    shadowOpacity: 0,
-                }]}>
-                    <Text style={[styles.btnDefaultFillTxt, {
-                        fontSize: 12,
-                        flex: 1,
-                        textAlign: "center",
-                        fontWeight: "500"
-                    }]}>정보등록하러 이동</Text>
+                <Button style={[styles.btnDefault, styles.btnWhBoder, {height: 36, width: "90%"}]}>
+                    <Text style={[styles.btnDefaultTxt, styles.btnWhBoderTxt, {fontSize: 14}]}>정보등록하러 이동</Text>
                 </Button>
 
-                <Text style={styles.greyFont}>·사업장 미등록</Text>
-                <Text style={styles.greyFont}>·보유제품 미등록</Text>
-                <H1>50%</H1>
-            </View>
-            <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
-                <View style={[styles.justiConCenter, styles.alignItemsCenter, {
-                    borderRadius: 100, 
-                    height: afterServiceBtnSize, 
-                    width: afterServiceBtnSize, 
-                    backgroundColor : color.whiteColor,
-                }]}>
-                    <H2 style={{color : color.defaultColor}}>A/S 신청</H2>
+                <View style={localStyles.noRegWrap}>
+                    <Text style={localStyles.noRegTxt}>· 사업장 미등록</Text>
+                    <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
                 </View>
-                
+                <Text style={localStyles.percentTxt}>50%</Text>
+            </View>
+            <View style={localStyles.bottomBoxRightWrap}>
+                <View style={localStyles.rightStateCircle}>
+                    <Text style={localStyles.rightStateTxt}>A/S 신청</Text>
+                </View>
             </View>
         </View>
     </View>
 );
 
 maching = () => (
-    <View style={[styles.pd20, {backgroundColor : color.defaultColor, elevation: 5}]}>
-        <View style={[styles.fx2, styles.mb10]}>
-            <H1 style={[styles.mb10, {color : color.whiteColor}]}>세나정육점1</H1>
-            <Text style={styles.whiteFont}>서울시 동작구 대방동</Text>
-            <Text style={styles.whiteFont}>대방동 392-45 넥서스힐</Text>
+    <View style={localStyles.topBoxWrap}>
+        <View style={styles.mb5}>
+            <Text style={localStyles.topBoxNameTxt}>박형정육점</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>서울시 동작구 대방동</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>392-45 넥서스힐</Text>
         </View>
 
-        <View style={[styles.fx3, styles.fxDirRow]}>
-            <View style={styles.fx1}>
-                <Text style={[styles.whiteFont, styles.mb10]}>[야채보관냉장고]</Text>
-                <Image source={require("./img/license-depart01.png")} style={{height : afterServiceBtnSize, width : afterServiceBtnSize}}  />
+        <View style={localStyles.bottomBoxWrap}>
+
+            <View style={localStyles.bottomBoxLeftWrap}>
+                <Text style={localStyles.prdNameTxt}>[ 야채보관냉장고123 ]</Text>
+                <Image source={require("./img/license-depart01.png")} style={[localStyles.leftImg, {alignSelf: "center", height: 90, width: 90}]}  />
             </View>
 
-            <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
-                <View style={[styles.justiConCenter, styles.alignItemsCenter, {
-                    borderRadius: 100, 
-                    height: afterServiceBtnSize, 
-                    width: afterServiceBtnSize, 
-                    backgroundColor : '#0397BD',
-                }]}>
-                    <H2 style={{color : color.whiteColor}}>매칭 중</H2>
+            <View style={localStyles.bottomBoxRightWrap}>
+                <View style={[localStyles.rightStateCircle, {backgroundColor: "#0397bd"}]}>
+                    <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>매칭중</Text>
                 </View>
-                
             </View>
         </View>
     </View>
@@ -168,52 +137,52 @@ maching = () => (
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={styles.fx1}/>
-          <Body style={[styles.fx1, styles.alignItemsCenter]}>
-            <Title>쿨리닉</Title>
+    <Container style={{flex: 1, backgroundColor: color.defaultColor}}>
+        <Header style={[styles.headerM, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}/>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}>쿨리닉</Title>
           </Body>
-          <Right style={styles.fx1}></Right>
+          <Right style={styles.headerRightWrap}/>
         </Header>
 
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
                 
             {/* {this.drawSwiper()} */}
-            {/* {this.unRegister()} */}
-            {this.maching()}
+            {this.unRegister()}
+            {/* {this.maching()} */}
 
-            <View style={{backgroundColor : '#EAEAEA'}}>
-                <View style={localStyles.secondBox}>
-                    <Text style={[styles.mb10, {textAlign:'center', color: color.defaultColor}]}>매칭된 A/S 업체가 출발했어요.</Text>
+            <View style={{backgroundColor : '#d6f1ff'}}>
+                <View style={[styles.boxShadow, localStyles.secondBox]}>
+                    <Text style={localStyles.asMatchStateDscTxt}>매칭된 A/S 업체가 출발했어요.</Text>
                     <View style={styles.fxDirRow}>
-                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
+                        <View style={localStyles.asMatchIconWrap}>
                             <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={{fontSize : 12}}>A/S 대기</Text>
+                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
                         </View>
-                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
+                        <View style={localStyles.asMatchIconWrap}>
                             <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={{fontSize : 12}}>A/S 출발</Text>
+                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
                         </View>
-                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
+                        <View style={localStyles.asMatchIconWrap}>
                             <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={{fontSize : 12}}>A/S 도착</Text>
+                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
                         </View>
-                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
+                        <View style={localStyles.asMatchIconWrap}>
                             <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={{fontSize : 12}}>A/S 진행</Text>
+                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
                         </View>
-                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
+                        <View style={localStyles.asMatchIconWrap}>
                             <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={{fontSize : 12}}>A/S 완료</Text>
+                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
                         </View>
                     </View>
                 </View>
             </View>
             
-            <View style={[styles.pd20, {backgroundColor : color.whiteColor}]}>
-                <H1 style={{color : color.defaultColor}}>쿨리닉</H1>
-                <H1 style={{color : color.defaultColor}}>사용자 가이드</H1>
+            <View style={localStyles.guideWrap}>
+                <Text style={localStyles.guideTitleTxt}>쿨리닉</Text>
+                <Text style={localStyles.guideTitleTxt}>사용자 가이드</Text>
                 <Text>aaaaaaaaaaaaaaa</Text>
                 <Text>aaaaaaaaaaaaaaa</Text>
                 <Text>aaaaaaaaaaaaaaa</Text>
@@ -256,37 +225,118 @@ const afterServiceBtnSize = wp(33, 30);
 const stateImgSize = wp(10, 52);
 
 const localStyles = StyleSheet.create({
-    customSwiperContainer : {
-        flex:1,
-        backgroundColor : color.defaultColor, 
-        elevation: 5
+    topBoxWrap: {
+        width: "100%",
+        height: 290,
+        paddingLeft: 27,
+        paddingRight: 27,
+        paddingTop: 40
+    },
+    topBoxNameTxt: {
+        marginBottom: 16,
+        color : color.whiteColor,
+        fontSize: 28,
+        fontWeight: "bold"
+    },
+    topBoxtAddrTxt: {
+        color : color.whiteColor,
+        fontSize: 14        
+    },
+    bottomBoxWrap: {
+        flexDirection: "row",
+        marginTop: 10
+    },
+    bottomBoxLeftWrap: {
+        
+    },
+    bottomBoxRightWrap: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "flex-end"
+    },
+    rightStateCircle: {
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 100, 
+        height: 110, 
+        width: 110, 
+        backgroundColor : color.whiteColor,
+    },
+    rightStateTxt: {
+        color : color.defaultColor,
+        fontSize: 22,
+        fontWeight: "bold"
+    },
+    leftImg: {
+        height : 110,
+        width : 110
+    },
+    percentTxt: {
+        fontSize: 40,
+        fontWeight: "bold"
+    },
+    noRegWrap: {
+        marginTop: 10,
+        marginBottom: 5
+    },
+    noRegTxt: {
+        fontSize: 13
     },
     dotsStyle: {
-        borderRadius: 4,
-        height: 8,
-        marginHorizontal: 4,
-        width: 8,
-    },
-    dotsContainerStyle : {
-        paddingLeft : 20,
-        // // backgroundColor : 'pink',
-        // alignSelf: 'auto',
-        // flexDirection: 'row',
-        position: 'absolute',
+        borderRadius: 12,
+        height: 12,
+        width: 12,
+        marginHorizontal: 5,
         flexDirection: 'row',
+        backgroundColor: "#000",
+
+    },
+    prdNameTxt: {
+        marginBottom: 10,
+        fontSize: 13, 
+        color: color.whiteColor,
+        textAlign: "center",
+        fontWeight: "bold"
     },
     secondBox : {
-        marginBottom : 20,
-        marginLeft : 20, 
-        marginRight : 20, 
-        paddingTop : 15,
-        paddingBottom : 15,
-        paddingLeft : 20,
+        marginBottom : 24,
+        marginLeft : 24, 
+        marginRight : 24, 
+        paddingTop : 18,
+        paddingBottom : 18,
+        paddingLeft : 24,
+        paddingRight: 24,
         borderBottomLeftRadius : 5, 
         borderBottomRightRadius : 5, 
-        backgroundColor : color.whiteColor,
-        elevation: 10
-    }
+        backgroundColor : color.whiteColor
+    },
+    asMatchStateDscTxt: {
+        marginBottom: 15,
+        textAlign:'center',
+        color: "#0397bd",
+        fontWeight: "bold",
+        fontSize: 16
+    },
+    asMatchIconWrap: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    asMatchStateTxt: {
+        fontSize : 12,
+        color: "#0397bd",
+        fontWeight: "500",
+        marginTop: 10
+    },
+    guideWrap: {
+        padding: 22,
+        backgroundColor : color.whiteColor
+    },
+    guideTitleTxt: {
+        fontSize: 22,
+        color: "#0397db",
+        fontWeight: "bold",
+    },
 });
 
 const dotActiveStyle = [localStyles.dotsStyle, { backgroundColor: color.whiteColor }];
