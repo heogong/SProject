@@ -26,7 +26,6 @@ class RegReportBeforePic extends Component {
       super(props);
 
       this.state =  {
-        data : [],
         imgData : [],
         asData : {
             asPrgsMst : {
@@ -64,14 +63,6 @@ class RegReportBeforePic extends Component {
                         });
 
                         ALREADY_IMG_CNT = resultData.data.images.length; // 등록된 조치전 이미지 카운트
-
-                        // if(resultData.data.info !== null) {
-                        //     this.setState({
-                        //         asCauseDsc : resultData.data.info.asCauseDsc,
-                        //         method : 'PUT',
-                        //         btnDisabled : (resultData.data.images.length > 0) ? false : true
-                        //     })
-                        // }
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -115,28 +106,25 @@ class RegReportBeforePic extends Component {
         for (let i = 0; i < BEFORE_IMG_CNT; i++) {
             imageCompArray.push(<AfterServiceImage 
                 key={i + ALREADY_IMG_CNT} 
+                imgUrl={ null }
                 asPrgsId={ this.props.asPrgsId }
-                takeImageAction={ this._addBeforeAfterServiceImg }
+                beforeAction={ true }
+                takeBeforeImageAction={ this._addBeforASImg }
             />); 
         }
         return imageCompArray;
     }
 
-    // _checkAsCauseDsc = async (text) => {
-    //     await this.setState({asCauseDsc : text});
 
-    //     if(this.state.asCauseDsc.length > 3) {
-    //         this.setState({btnDisabled : (this.state.imgData.length > 0) ? false : true});
-    //     } else {
-    //         this.setState({btnDisabled : true});
-    //     }
-    // }
-
-
-    // 조치전 이미지 등록시 next 버튼 활성화
-    _addBeforeAfterServiceImg = () => {
+    // 이미지 등록시 next 버튼 활성화
+    _addBeforASImg = () => {
         this.setState({btnDisabled : false});
-    }
+     }
+
+     // 이미지 등록시 next 버튼 활성화 - 현 페이지에서는 조치 후 사진은 등록 해도 넥스트 버튼 활성화 의미 없음
+    _addAfterASImg = () => {
+        //this.setState({btnDisabled : false});
+     }
 
     render() {
         return (
@@ -165,32 +153,6 @@ class RegReportBeforePic extends Component {
             //             </CustomButton>
             //         </CardItem>
             //     </Card>
-
-            //     {this.state.imgData.map((beforeImg, idx) => 
-            //         <AfterServiceImage
-            //             key={ idx }
-            //             index={ idx }
-            //             imgUrl={ beforeImg.fileUrl }
-            //             imgId={ beforeImg.imgId }
-            //             asPrgsId={ this.props.asPrgsId }
-            //         />
-            //     )}
-
-            //     {this._createBeforeAsImg()}
-
-            //     <Textarea 
-            //         value={this.state.asCauseDsc}
-            //         rowSpan={5} 
-            //         bordered 
-            //         placeholder="조치전 증상(파악한 문제 또는 증상)"
-            //         onChangeText={ this._checkAsCauseDsc }
-            //     />
-            //     <CustomButton 
-            //         // disabled={ this.state.btnDisabled }
-            //         onPress={ this._regAfterServiceReport }>
-            //         <Text>다음</Text>
-            //     </CustomButton>
-            // </ScrollView>
             <Container style={styles.containerScroll}>
                 <CustomHeader />
                 <View style={styles.contentWrap}>
@@ -249,6 +211,7 @@ class RegReportBeforePic extends Component {
                                             imgUrl={ beforeImg.fileUrl }
                                             imgId={ beforeImg.imgId }
                                             asPrgsId={ this.props.asPrgsId }
+                                            takeBeforeImageAction={ this._addBeforASImg }
                                         />
                                     )}
                                     
@@ -278,10 +241,32 @@ class RegReportBeforePic extends Component {
 
                             <View style={styles.boxShadow}>
                                 <View style={localStyles.prdPhotoWrap}>
-                                    <AfterServiceImage asPrgsId={ this.props.asPrgsId }/>
-                                    <AfterServiceImage asPrgsId={ this.props.asPrgsId }/>
-                                    <AfterServiceImage asPrgsId={ this.props.asPrgsId }/>
-                                    <AfterServiceImage asPrgsId={ this.props.asPrgsId }/>
+
+                                    <AfterServiceImage 
+                                        imgUrl={ null }
+                                        asPrgsId={ this.props.asPrgsId }
+                                        beforeAction={ false }
+                                        takeAfterImageAction={ this._addAfterASImg }
+                                    />
+                                    <AfterServiceImage 
+                                        imgUrl={ null }
+                                        asPrgsId={ this.props.asPrgsId }
+                                        beforeAction={ false }
+                                        takeAfterImageAction={ this._addAfterASImg }
+                                    />
+                                    <AfterServiceImage 
+                                        imgUrl={ null }
+                                        asPrgsId={ this.props.asPrgsId }
+                                        beforeAction={ false }
+                                        takeAfterImageAction={ this._addAfterASImg }
+                                    />
+                                    <AfterServiceImage 
+                                        imgUrl={ null }
+                                        asPrgsId={ this.props.asPrgsId }
+                                        beforeAction={ false }
+                                        takeAfterImageAction={ this._addAfterASImg }
+                                    />
+
                                 </View>
                                 <Item regular style={[styles.mb14, styles.textInputWhBack]}>
                                     <TextInput

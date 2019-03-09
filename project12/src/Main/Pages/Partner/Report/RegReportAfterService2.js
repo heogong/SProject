@@ -22,6 +22,8 @@ let BEFORE_IMG_CNT = 4; // 등록할 A/S 조치 전 이미지 카운트
 let AFTER_IMG_CNT = 4; // 등록할 A/S 조치 후 이미지 카운트
 let ALREADY_BEFORE_IMG_CNT = 0; // 이미 등록된 A/S 조치 전 이미지 카운트
 let ALREADY_AFTER_IMG_CNT = 0; // 이미 등록된 A/S 조치 후 이미지 카운트
+let CURRENT_BEFORE_IMG_CNT = 0; // 화면에 등록된 A/S 조치 전 이미지 카운트(유효성 체크용 변수)
+let CURRENT_AFTER_IMG_CNT = 0; // 화면에 등록된 A/S 조치 후 이미지 카운트(유효성 체크용 변수)
 
 class RegReportBeforePic extends Component {
     constructor(props) {
@@ -67,6 +69,7 @@ class RegReportBeforePic extends Component {
                         });
 
                         ALREADY_BEFORE_IMG_CNT = resultData.data.images.length; // 등록된 조치전 이미지 카운트
+                        CURRENT_BEFORE_IMG_CNT = ALREADY_BEFORE_IMG_CNT;
 
                         // if(resultData.data.info !== null) {
                         //     this.setState({
@@ -101,6 +104,7 @@ class RegReportBeforePic extends Component {
                         });
 
                         ALREADY_AFTER_IMG_CNT = resultData.data.images.length; // 등록된 조치전 이미지 카운트
+                        CURRENT_AFTER_IMG_CNT = ALREADY_AFTER_IMG_CNT;
 
                     } else {
                         this.setState({
@@ -148,8 +152,7 @@ class RegReportBeforePic extends Component {
                 imgUrl={ null }
                 asPrgsId={ this.props.asPrgsId }
                 beforeAction={ true }
-                takeImageAction={ this._addAfterServiceImg }
-                beforImgCnt={ ALREADY_BEFORE_IMG_CNT }
+                takeBeforeImageAction={ this._addBeforASImg }
             />); 
         }
         return imageCompArray;
@@ -167,9 +170,7 @@ class RegReportBeforePic extends Component {
                 imgUrl={ null }
                 asPrgsId={ this.props.asPrgsId }
                 beforeAction={ false }
-                takeImageAction={ this._addAfterServiceImg }
-                afterImgCnt={ALREADY_AFTER_IMG_CNT}
-                
+                takeAfterImageAction={ this._addAfterASImg }
             />); 
         }
         return imageCompArray;
@@ -186,29 +187,28 @@ class RegReportBeforePic extends Component {
     // }
 
 
-    // // 이미지 등록시 next 버튼 활성화
-    // _addBeforAfterServiceImg = () => {
-    //     ALREADY_BEFORE_IMG_CNT =+ 1; // 등록된 이미지 카운트
+    // 조치 전 이미지 등록시 카운트
+    _addBeforASImg = () => {
+       ++CURRENT_BEFORE_IMG_CNT;
+        this._chkInvaildButton();
+    }
 
-    //     this._aaaa();
-    // }
+    // 조치 후 이미지 등록시 카운트
+    _addAfterASImg = () => {
+       ++CURRENT_AFTER_IMG_CNT; 
+        this._chkInvaildButton();
+    }
 
-    // // 이미지 등록시 next 버튼 활성화
-    // _addAfterServiceImg = () => {
-    //     ALREADY_AFTER_IMG_CNT =+ 1; 
 
-    //     this._aaaa();
-    // }
+    _chkInvaildButton() {
+        // alert("조치후 : "+ CURRENT_BEFORE_IMG_CNT + " /// 조치전 : " + CURRENT_AFTER_IMG_CNT);
 
-    _addAfterServiceImg = () => {
-        alert(ALREADY_AFTER_IMG_CNT + "///" + ALREADY_BEFORE_IMG_CNT);
-
-        const dscLen = 5;
+        const dscLen = 5; // 내역 최소 글자 수
         const { asCauseDsc, asActionDsc } = this.state;
 
-        if(ALREADY_BEFORE_IMG_CNT > 0 && ALREADY_AFTER_IMG_CNT > 0 && asCauseDsc >= dscLen && asActionDsc >= dscLen ) {
+        if(CURRENT_BEFORE_IMG_CNT > 0 && CURRENT_AFTER_IMG_CNT > 0 && asCauseDsc.length >= dscLen && asActionDsc.length >= dscLen ) {
             this.setState({btnDisabled : false});
-        } else{
+        } else {
             this.setState({btnDisabled : true});
         }
     }
@@ -282,7 +282,7 @@ class RegReportBeforePic extends Component {
                                 <Item regular style={[styles.mb14, styles.textInputWhBack]}>
                                     <TextInput
                                         value={this.state.asCauseDsc}
-                                        onChangeText={ (text) => {this.setState({asCauseDsc : text}), this._addAfterServiceImg } }
+                                        onChangeText={ (text) => {this.setState({asCauseDsc : text}), this._chkInvaildButton() } }
                                         placeholder="A/S 조치 전의 증상에 대해 적어주세요."
                                         placeholderTextColor={color.inputPlaceHodler}
                                         numberOfLines={10}
@@ -321,7 +321,7 @@ class RegReportBeforePic extends Component {
                                 <Item regular style={[styles.mb14, styles.textInputWhBack]}>
                                     <TextInput
                                         value={this.state.asActionDsc}
-                                        onChangeText={ (text) => { this.setState({asActionDsc : text}), this._addAfterServiceImg } }
+                                        onChangeText={ (text) => { this.setState({asActionDsc : text}), this._chkInvaildButton() } }
                                         placeholder="수리한 내역에 대해 적어주세요."
                                         placeholderTextColor={color.inputPlaceHodler}
                                         numberOfLines={10}

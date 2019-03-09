@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Alert, TouchableOpacity, View } from 'react-native';
-import { Body, Button, Card, CardItem, Text, Thumbnail } from "native-base";
+import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Container, Text}  from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -10,22 +10,47 @@ import GetAfterService from '~/Main/Functions/GetAfterService'
 import RegAfterServiceMatch from '~/Main/Functions/RegAfterServiceMatch'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
-import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
+import CustomHeader from "~/Common/Components/CustomHeader";
+import { styles } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
 
 let SELECT_INDEX = null; // 선택된 A/S
+
+const Product = ({index, afterService}) => (
+    <TouchableOpacity onPress={ () => { this._toggleModal(), SELECT_INDEX = index }}>
+      <View style={[styles.listPrdBoxFillWrap, {height: 108}]}>
+        <View style={styles.listPrdBoxImgWrap}>
+          <Image 
+            source={{ uri: afterService.prdTypeFileUrl }} 
+            resizeMode="contain" 
+            style={styles.listPrdBoxImg} 
+          />
+        </View>
+        <View style={styles.listPrdBoxRightTxtWrap}>
+          <H3 style={styles.listPrdBoxRightTitleTxt}>{ afterService.prdTypeKoNm }</H3>
+          <Text style={styles.listPrdBoxDeTxt}>{ afterService.bplaceAddr }</Text>
+          <Text style={styles.listPrdBoxDeTxt}>{ afterService.bplaceAddrDtl }</Text>
+        </View>
+
+        <View style={styles.listPrdBoxNextIconWrap}>
+          <Icon style={styles.listPrdBoxNextIcon} name="arrow-round-forward"/>
+        </View>
+      </View>
+    </TouchableOpacity>
+);
 class ListAfterServiceMatch extends Component {
     constructor(props) {
       super(props);
 
       this.state = {
-        data : []
+        data : [],
+        isModalVisible: false,
+        isAlertModal : false, // alert 용
       };
     }
 
-    static defaultProps = {
-        defaultImg : 'https://i.pinimg.com/originals/b8/29/fd/b829fd8f5df3e09589575e4ca939bc9f.png'
-    }
+    _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
 
     componentDidMount() {
         this._getAfterService();
@@ -63,63 +88,70 @@ class ListAfterServiceMatch extends Component {
                             asPrgsId : data[SELECT_INDEX].asPrgsId
                         });
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
         });
     }
 
-    // A/S 선택
-    _selectAfterService = (idx) => () => {
-        SELECT_INDEX = idx;
-
-        Alert.alert(
-            '',
-            'A/S 매칭을 수락하시겠습니까?// 수락 후 1시간 30분 내에 도착하셔야 합니다.',
-            [
-              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-              {text: '취소', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-              {text: '수락', onPress: () => this._regAfterServiceMatch()},
-            ],
-            { cancelable: false }
-        )
-    }
-
     render() {
         return (
-            <CustomBlockWrapper
-                title="A/S 매칭"
-            >
-                {this.state.data.map((AS, idx) => 
-                    <TouchableOpacity 
-                        onPress={ () => Actions.ViewAfterServiceMatch({
-                            asRecvId : this.state.data[idx].asRecvId
-                        })}
-                        key={idx} 
-                        activeOpacity={0.7}>
-                        <Card>
-                            <CardItem>
-                                <Thumbnail large source={{ uri: this.props.defaultImg }} />
-                                <Text>{ AS.prdTypeKoNm }</Text>
-                                <View>
-                                    <Text>{ AS.bplaceNm }</Text>
-                                    <Text>{ AS.bplaceAddr }</Text>
-                                    <Text>{ AS.bplaceAddrDtl }</Text>
-                                </View>
-                            </CardItem>
-                            <CardItem bordered>
-                                <Body>
-                                    <CustomButton onPress={ this._selectAfterService(idx) }>
-                                        <Text>A/S 매칭 수락하기</Text>
-                                    </CustomButton>
-                                </Body>
-                            </CardItem>
-                        </Card>
-                    </TouchableOpacity>
+            <Container style={styles.containerInnerPd}>
+                <CustomHeader/>
+
+                <View style={{marginBottom: 36}}>
+                    <View style={styles.fxDirRow}>
+                        <View style={stylesReg.leftGuideTxtWrap}>
+                        <Text style={stylesReg.leftGuideTxt}>A/S신청</Text>
+                        <Text style={stylesReg.leftGuideTxt}>목록을 보고</Text>
+                        <Text style={stylesReg.leftGuideTxt}>수락해주세요</Text>
+                        </View>
+                    </View>
+                </View>
+                { (this.state.data.length > 0) ?
+                (
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        {this.state.data.map((AS, idx) => 
+                            <Product
+                                key={idx}
+                                index={idx}
+                                afterService={AS}
+                            />
+                        )}
+                    </ScrollView>
+                ) : (
+                    <View style={styles.listPrdBoxEmptyImgWrap}>
+                        <Image 
+                            source={require("~/Common/Image/license-depart01.png")} 
+                            style={{height: 219, width: 219, marginTop: -36}} 
+                        />
+                    </View>
                 )}
-               
-            </CustomBlockWrapper>
+                
+                <CustomModal
+                    modalType="CONFIRM"
+                    isVisible={this.state.isModalVisible}
+                    onPress1={this._toggleModal}
+                    onPress2={this._regAfterServiceMatch}
+                    infoText1="A/S 매칭을 수락하시겠습니까?"
+                    infoText2="수락 후 1시간 30분 내에 도착하셔야 합니다"
+                    btnText1="매칭취소"
+                    btnText2="A/S 출발"
+                />
+
+                {/* alert 메세지 모달 */}
+                <CustomModal
+                    modalType="ALERT"
+                    isVisible={this.state.isAlertModal}
+                    onPress={ () => this.setState({isAlertModal : false})}
+                    infoText={this.state.resultMsg}
+                    btnText="확인"
+                />
+            </Container>
         )
     }
 }

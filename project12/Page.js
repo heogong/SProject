@@ -70,13 +70,26 @@ import RegReportAfterService from './src/Main/Pages/Partner/Report/RegReportAfte
 import RegReportAfterService2 from './src/Main/Pages/Partner/Report/RegReportAfterService2';
 import RegAddAfterService from './src/Main/Pages/Partner/Report/RegAddAfterService';
 
-import RegReportBeforePic from './src/Main/Pages/Partner/Report/RegReportBeforePic'; // 확인 후 삭제
-
 import DrawerContent from './src/Main/Components/DrawerContent'
 import MenuIcon from './src/Main/Images/menu_burger.png'
 
 import ReactCamera from './src/Main/Components/ReactCamera';
 import ViewImage from './src/Main/Components/ViewImage';
+
+// 파트너 더보기
+import PartnerMoreInfo from './src/Main/Pages/Partner/MoreInfo/';
+import MyProfileInfo from './src/Main/Pages/Partner/MoreInfo/MyProfileInfo';
+import MyProfileModPassword1 from './src/Main/Pages/Partner/MoreInfo/MyProfileModPassword1';
+import MyProfileModPassword2 from './src/Main/Pages/Partner/MoreInfo/MyProfileModPassword2';
+import MyProfileModPhone from './src/Main/Pages/Partner/MoreInfo/MyProfileModPhone';
+import MyProfileModName from './src/Main/Pages/Partner/MoreInfo/MyProfileModName';
+import MyProfileExit1 from './src/Main/Pages/Partner/MoreInfo/MyProfileExit1';
+import MyProfileExit2 from './src/Main/Pages/Partner/MoreInfo/MyProfileExit2';
+import MyCalcuList from './src/Main/Pages/Partner/MoreInfo/MyCalcuList';
+import NoticeList from './src/Main/Pages/Partner/MoreInfo/NoticeList';
+import TermsMenu from './src/Main/Pages/Partner/MoreInfo/TermsMenu';
+import TermsContent1 from './src/Main/Pages/Partner/MoreInfo/TermsContent1';
+
 
 /**클라이언트 */
 
@@ -226,17 +239,29 @@ const PAGE = () => (
       {/* 파트너 - A/S 보고서 등록 */}
       <Scene key="TakeBeforeAfterService" component={TakeBeforeAfterService} />
       <Scene key="RegReportAfterService" component={RegReportAfterService} /> 
-      <Scene key="RegReportAfterService2" initial component={RegReportAfterService2} /> 
+      <Scene key="RegReportAfterService2"  component={RegReportAfterService2} /> 
       <Scene key="RegAddAfterService" component={RegAddAfterService} /> 
       {/* 미 완료 보고서 리스트 */}
-      <Scene key="ListInCompleteReport" component={ListInCompleteReport} />
+      <Scene key="ListInCompleteReport"   component={ListInCompleteReport} />
 
-      {/* 확인 후 필요 없으면 삭제 */}
-      <Scene key="RegAsBeforeReport" component={RegReportBeforePic} /> 
+      {/* 파트너 - A/S 리스트 */}
+      <Scene key="AfterServiceMatch"  component={ListAfterServiceMatch} />
+      <Scene key="ViewAfterServiceMatch"  component={ViewAfterServiceMatch} />
 
-      {/* 파트너 - A/S 상세 */}
-      <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} />
-
+      {/* 파트너 - 더보기 */}
+      <Scene key="PartnerMoreInfo" initial component={PartnerMoreInfo} />
+      <Scene key="MyProfileInfo" component={MyProfileInfo} />
+      <Scene key="MyProfileModPassword1"  component={MyProfileModPassword1} />
+      <Scene key="MyProfileModPassword2" component={MyProfileModPassword2} />
+      <Scene key="MyProfileModPhone" component={MyProfileModPhone} />
+      <Scene key="MyProfileModName" component={MyProfileModName} />
+      <Scene key="MyProfileExit1"  component={MyProfileExit1} />
+      <Scene key="MyProfileExit2" component={MyProfileExit2} />
+      <Scene key="MyCalcuList"  component={MyCalcuList} />
+      <Scene key="NoticeList" component={NoticeList} />
+      <Scene key="TermsMenu" component={TermsMenu} />
+      <Scene key="TermsContent1" component={TermsContent1} />
+      
       <Drawer
         hideNavBar
         key="drawer"
@@ -338,7 +363,7 @@ const PAGE = () => (
                 tabBarOnPress={() => Actions.PAfterServiceState({type:ActionConst.RESET})}
                 transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
                 <Scene key="PAfterServiceState" component={AfterServiceState} title="A/S 상태 체크"/>
-                <Scene key="AfterServiceMatch" component={ListAfterServiceMatch} title="A/S 매칭"/>
+                {/* <Scene key="AfterServiceMatch" component={ListAfterServiceMatch} title="A/S 매칭"/> */}
                 {/* <Scene key="ViewAfterServiceMatch" component={ViewAfterServiceMatch} title="A/S 매칭 상세"/> */}
                 <Scene key="ViewAfterServiceState" component={ViewAfterServiceState} title="A/S 매칭 후 상태"/>
                 <Scene key="RegAfterServiceAdd" component={RegAfterServiceAdd} title="추가 A/S"/>

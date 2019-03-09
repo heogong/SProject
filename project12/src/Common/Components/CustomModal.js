@@ -9,14 +9,33 @@ import { BStyles } from '~/Common/Styles/Button';
 import CustomEtcButton from '~/Common/Components/CustomEtcButton';
 
 // 모달 alert
-const ModalAlert = ({isVisible, action, infoText, btnText}) => (
+const ModalAlert = ({isVisible, action, infoText1, btnText}) => (
     <Modal isVisible={isVisible}>
         <View style={styles.modalWrap}>
             <View style={styles.modalContent}>
                 <View style={styles.modalTopTxtWrap}>
-                    <Text style={styles.modalTopTxt}>{infoText}</Text>
+                    <Text style={styles.modalTopTxt}>{infoText1}</Text>
                 </View>
                 <View style={styles.modalBtnWrap}>
+                    <CustomEtcButton onPress={action}>
+                        {btnText}
+                    </CustomEtcButton>
+                </View>
+            </View>
+        </View>
+    </Modal>
+)
+
+// 모달 alert - 2줄 info
+const ModalAlert2 = ({isVisible, action, infoText1, infoText2, btnText}) => (
+    <Modal isVisible={isVisible}>
+        <View style={[styles.modalWrap, {height: 128}]}>
+            <View style={styles.modalContent}>
+                <View style={styles.modalTop2LTxtWrap}>
+                    <Text style={styles.modalTopTxt}>{infoText1}</Text>
+                    <Text style={styles.modalTopTxt}>{infoText2}</Text>
+                </View>
+                <View style={styles.modalBtnOneWrap}>
                     <CustomEtcButton onPress={action}>
                         {btnText}
                     </CustomEtcButton>
@@ -106,12 +125,22 @@ class CustomModal extends Component {
     render() {
         return (
             this.props.modalType == 'ALERT' ? ( 
+                this.props.infoText2 == null ? (
                 <ModalAlert
                     isVisible={this.state.isVisible}
                     action={this.props.onPress}
-                    infoText={this.props.infoText}
+                    infoText1={this.props.infoText}
                     btnText={this.props.btnText}
                 /> 
+                ) : (
+                    <ModalAlert2
+                        isVisible={this.state.isVisible}
+                        action={this.props.onPress}
+                        infoText1={this.props.infoText}
+                        infoText2={this.props.infoText2}
+                        btnText={this.props.btnText}
+                    />
+                )
             ) : ( 
                 this.props.infoText2 == null ? (
                     <ModalConfirm 

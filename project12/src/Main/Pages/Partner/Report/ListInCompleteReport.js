@@ -13,6 +13,11 @@ import CustomHeader from "~/Common/Components/CustomHeader";
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 
+function pad(n, width) {
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+}
+
 const Product = ({report}) => (
     <TouchableOpacity onPress={ () => Actions.RegAddAfterService({asPrgsId : report.asPrgsId}) }>
       <View style={[styles.listPrdBoxFillWrap, {height: 120}]}>
@@ -123,7 +128,7 @@ class ListInCompleteReport extends Component {
 
                         <View style={stylesReg.rigthTxtWrap}>
                         <Text style={[stylesReg.rightTxt, {fontWeight: "bold"}]}>
-                            04<Text style={stylesReg.rightTxtSmall}>건</Text>
+                            {pad(this.state.data.length, 2)}<Text style={stylesReg.rightTxtSmall}>건</Text>
                         </Text>
                         </View>
                     </View>

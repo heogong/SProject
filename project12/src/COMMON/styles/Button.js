@@ -23,6 +23,20 @@ export const BStyles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "500"
   },
+  btnDefaultSmall: {
+    height: 26,
+    borderRadius: 0,
+    elevation: 0,
+    width: "100%",
+    paddingTop: 2,
+    paddingBottom: 2
+  },
+  btnDefaultSmallTxt: {
+    fontSize: 13,
+    flex: 1,
+    textAlign: "center",
+    fontWeight: "500"
+  },
   // 흰색 배경색 기본 테두리색 버튼
   btnDefaultNoFill: {
     backgroundColor: color.whiteColor,
@@ -46,6 +60,18 @@ export const BStyles = StyleSheet.create({
   },
   btnDefaultFillTxt: {
     color: color.whiteColor,
+    flex: 1,
+    textAlign: "center"
+  },
+  btnDefaultFillOff: {
+    backgroundColor: "#c9cacb",
+    borderWidth: 1,
+    borderColor: "#c9cacb",
+    elevation: 0,
+    shadowOpacity: 0
+  },
+  btnDefaultFillOffTxt: {
+    color: "#8e8e98",
     flex: 1,
     textAlign: "center"
   },
@@ -75,6 +101,20 @@ export const BStyles = StyleSheet.create({
     flex: 1,
     textAlign: "center"
   },
+  btnDefaultSmall: {
+      height: 26,
+      borderRadius: 0,
+      elevation: 0,
+      width: "100%",
+      paddingTop: 2,
+      paddingBottom: 2
+    },
+    btnDefaultSmallTxt: {
+      fontSize: 13,
+      flex: 1,
+      textAlign: "center",
+      fontWeight: "500"
+    },
   // modal
   modalBtnFill: {
     height: 36,

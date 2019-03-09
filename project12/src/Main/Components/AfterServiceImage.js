@@ -60,8 +60,6 @@ class AfterServiceImage extends Component {
     static defaultProps = {
         beforeAction : true, // 조치전/후 여부
         asPrgsId : 5, //test
-        beforImgCnt : 0, // 등록된 조치전 이미지 카운트 (이미지 카운트로 등록 여부 확인)
-        afterImgCnt : 0 // 등록된 조치후 이미지 카운트 (이미지 카운트로 등록 여부 확인)
     }
 
     // 촬영
@@ -88,10 +86,14 @@ class AfterServiceImage extends Component {
             } else {
                 SOURCE = { uri: response.uri };
 
-                ++this.props.beforImgCnt; //(이미지 카운트로 등록 여부 확인)
-                ++this.props.afterImgCnt; //(이미지 카운트로 등록 여부 확인)
 
-                this.props.takeImageAction();
+                // 촬영 후 조치 전 / 후 함수 호출 (true : 조치 전, false : 조치 후)
+                if(this.props.beforeAction) {
+                    this.props.takeBeforeImageAction();
+                } else {
+                    this.props.takeAfterImageAction();
+                }
+                
                 this._takeAfterServiceImg();
             }
         })
@@ -134,7 +136,6 @@ class AfterServiceImage extends Component {
                             isImage : false,
                             imgUri : null
                         });
-
                         this.takePhotoTapped();
                     } else {
                         this.setState({
@@ -150,47 +151,6 @@ class AfterServiceImage extends Component {
     render() {
         return (
             <View key={this.props.index}>
-                {/* { (this.state.isImage) ? (
-                    <Card>
-                        <CardItem cardBody>
-                            <ImageOverlay 
-                                containerStyle={ {height: 200, width: null, flex: 1} }
-                                source={this.state.avatarSource} 
-                                overlayAlpha={0.5}
-                                contentPosition="center"
-                            >
-                                <CustomButton 
-                                    styleWidth={ false }
-                                    block={ true } 
-                                    light={ true }
-                                    bordered={ true }
-                                    onPress={ () => alert("조회") }
-                                    >
-                                    <Icon active name="md-eye" />
-                                    <Text>보기</Text>
-                                </CustomButton>
-                                <CustomButton 
-                                    styleWidth={ false }
-                                    block={ true } 
-                                    light={ true }
-                                    bordered={ true }
-                                    onPress={ this._delAfterServiceImgConfirm }>
-                                    <Icon active name="md-trash" />
-                                    <Text>삭제</Text>
-                                </CustomButton>
-                            </ImageOverlay>
-                        </CardItem>
-                    </Card>
-                ) :(
-                    <TouchableOpacity  onPress={ this.takePhotoTapped.bind(this) }>
-                        <Card>
-                            <CardItem cardBody>
-                                <Image source={this.state.avatarSource} style={{height: 200, width: null, flex: 1}}/>
-                            </CardItem>
-                        </Card>
-                    </TouchableOpacity>
-                )} */}
-
                 { (!this.state.isImage) ? (
                     <EmptyAfterServiceImage
                         key={ this.props.index }

@@ -23,26 +23,45 @@ const ModalWhitetBtn = ({action, text}) => (
     </Button>
 )
 
+const SmallBtn = ({action, text, customStyle}) => (
+    <Button 
+        onPress={action}
+        style={[
+            BStyles.btnDefaultSmall, BStyles.btnDefaultNoFill, customStyle]}>
+        <Text style={[BStyles.btnDefaultSmallTxt, BStyles.btnDefaultNoFillTxt]}>{text}</Text>
+    </Button>
+)
+
+
 class CustomEtcButton extends Component {
     static defaultProps = {
         defaultBtn : false,
-        WhiteBackBtn : false
+        WhiteBackBtn : false,
+        SmallBtn : false,
+        customStyle : {width : 100}
     }
 
     render() {
         return (
             <View style={styles.mb5}>
-
-                {(this.props.WhiteBackBtn) ? (
-                    <ModalWhitetBtn
+                {(this.props.SmallBtn) ? (
+                    <SmallBtn
                         action={this.props.onPress}
-                        text={this.props.children} 
+                        text={this.props.children}
+                        customStyle={this.props.customStyle} 
                     />
                 ) : (
-                    <ModalDefaultBtn
-                        action={this.props.onPress} 
-                        text={this.props.children}
-                    />
+                    (this.props.WhiteBackBtn) ? (
+                        <ModalWhitetBtn
+                            action={this.props.onPress}
+                            text={this.props.children} 
+                        />
+                    ) : (
+                        <ModalDefaultBtn
+                            action={this.props.onPress} 
+                            text={this.props.children}
+                        />
+                    )
                 )}
             </View>
         )

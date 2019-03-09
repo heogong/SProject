@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Alert, Animated, BackHandler, Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Badge, Container, H1, Button,  Text}  from "native-base";
+import { BackHandler, Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Badge, Container, H1, Text}  from "native-base";
 
 import { SUCCESS_RETURN_CODE, ARRIVE } from '~/Common/Blend';
 

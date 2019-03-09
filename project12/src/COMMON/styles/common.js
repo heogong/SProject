@@ -286,6 +286,26 @@ export const styles = StyleSheet.create({
       fontSize: 32,
       marginRight: 5
     },
+    inputNbTitleTxt: {
+      fontSize: 13,
+      color: "#8e8e98",
+      marginBottom: 0,
+      marginTop: 16
+    },
+    inputNbWhBackGreyBottomBo: {
+      height : 46,
+      borderColor : color.inputBoGrey,
+      borderBottomWidth: 1,
+      borderLeftWidth: 0,
+      borderTopWidth: 0,
+      borderRightWidth: 0
+    },
+    inputNbDefaultBox: {
+      paddingLeft: 0,
+      paddingRight: 0,
+      fontSize: 14,
+      height: 46
+    },
 
     // 축약 Style
 
