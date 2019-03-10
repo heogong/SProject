@@ -35,6 +35,7 @@ class SelectWeekDay extends Component {
         this.props.removeDataArray(this.props.value);
     }
 
+    
     render() {
         return (
             <TouchableOpacity 

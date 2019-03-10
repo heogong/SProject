@@ -22,7 +22,8 @@ class MyProfileInfo extends Component {
     super(props);
     this.state = {
       data : [],
-      isAlertModal : false // alert 용
+      isAlertModal : false, // alert 용
+      resultMsg : null// alert 용
     };
   }
 

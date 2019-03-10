@@ -89,6 +89,7 @@ import MyCalcuList from './src/Main/Pages/Partner/MoreInfo/MyCalcuList';
 import NoticeList from './src/Main/Pages/Partner/MoreInfo/NoticeList';
 import TermsMenu from './src/Main/Pages/Partner/MoreInfo/TermsMenu';
 import TermsContent1 from './src/Main/Pages/Partner/MoreInfo/TermsContent1';
+import MyProfileCompany from './src/Main/Pages/Partner/MoreInfo/MyProfileCompany';
 
 
 /**클라이언트 */
@@ -249,7 +250,7 @@ const PAGE = () => (
       <Scene key="ViewAfterServiceMatch"  component={ViewAfterServiceMatch} />
 
       {/* 파트너 - 더보기 */}
-      <Scene key="PartnerMoreInfo" initial component={PartnerMoreInfo} />
+      <Scene key="PartnerMoreInfo" component={PartnerMoreInfo} />
       <Scene key="MyProfileInfo" component={MyProfileInfo} />
       <Scene key="MyProfileModPassword1"  component={MyProfileModPassword1} />
       <Scene key="MyProfileModPassword2" component={MyProfileModPassword2} />
@@ -261,6 +262,7 @@ const PAGE = () => (
       <Scene key="NoticeList" component={NoticeList} />
       <Scene key="TermsMenu" component={TermsMenu} />
       <Scene key="TermsContent1" component={TermsContent1} />
+      <Scene key="MyProfileCompany" initial component={MyProfileCompany} />
       
       <Drawer
         hideNavBar
