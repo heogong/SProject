@@ -25,14 +25,14 @@ const ST_TYPE = 'work_st'; // 시작 시간 클릭 여부
 const ED_TYPE = 'work_ed'; // 종료 시간 클릭 여부
 let TIME_TYPE = ST_TYPE;
 
-const DAY_DATA = [
-  { text : "월", value : "mon" },
-  { text : "화", value : "tue" },
-  { text : "수", value : "wed" },
-  { text : "목", value : "thu" },
-  { text : "금", value : "fri" },
-  { text : "토", value : "sat" },
-  { text : "일", value : "sun" },
+let DAY_DATA = [
+  { text : "월", value : "mon", key : "monWorkYn", workDay : false },
+  { text : "화", value : "tue", key : "tueWorkYn", workDay : false },
+  { text : "수", value : "wed", key : "wedWorkYn", workDay : false },
+  { text : "목", value : "thu", key : "thuWorkYn", workDay : false },
+  { text : "금", value : "fri", key : "friWorkYn", workDay : false },
+  { text : "토", value : "sat", key : "satWorkYn", workDay : false },
+  { text : "일", value : "sun", key : "sunWorkYn", workDay : false },
 ]
 
 let BUSINESS_DAY = {
@@ -156,13 +156,14 @@ class MyProfileCompany extends Component {
 
   // 진행 중
   _drawWorkSchedule = () => {
-    const { selectedDay } = this.state;
 
-    const newData = DAY_DATA.map((day, idx) => {
-      return { ...day, selDay : selectedDay };
+    const newData = DAY_DATA.map((day) => {
+      return { ...day, workDay : this._chkWorkDay(day.key) };
     });
 
-    // console.log(newData);
+    console.log(newData);
+
+    DAY_DATA = newData;
 
     // 시간 값 가져와서 set
     this.setState({
@@ -173,21 +174,37 @@ class MyProfileCompany extends Component {
     });
   }
 
-    // 선택된 데이터 값 변경 - 요일:Y
-    _setData = (value) => {
+  _chkWorkDay = (dayKey) => {
+    const { selectedDay } = this.state;
 
-      switch (value) {
-          case 'mon' : BUSINESS_DAY.monWorkYn = 'Y'; break;
-          case 'tue' : BUSINESS_DAY.tueWorkYn = 'Y'; break;
-          case 'wed' : BUSINESS_DAY.wedWorkYn = 'Y'; break;
-          case 'thu' : BUSINESS_DAY.thuWorkYn = 'Y'; break;
-          case 'fri' : BUSINESS_DAY.friWorkYn = 'Y'; break;
-          case 'sat' : BUSINESS_DAY.satWorkYn = 'Y'; break;
-          case 'sun' : BUSINESS_DAY.sunWorkYn = 'Y'; break;
-          default : BUSINESS_DAY.monWorkYn = 'Y'; break;
-      }
+    switch (dayKey) {
+      case 'monWorkYn' : return (selectedDay.monWorkYn == 'Y') ? true : false;
+      case 'tueWorkYn' : return (selectedDay.tueWorkYn == 'Y') ? true : false;
+      case 'wedWorkYn' : return (selectedDay.wedWorkYn == 'Y') ? true : false;
+      case 'thuWorkYn' : return (selectedDay.thuWorkYn == 'Y') ? true : false;
+      case 'friWorkYn' : return (selectedDay.friWorkYn == 'Y') ? true : false;
+      case 'satWorkYn' : return (selectedDay.satWorkYn == 'Y') ? true : false;
+      case 'sunWorkYn' : return (selectedDay.sunWorkYn == 'Y') ? true : false;
+      default : return (selectedDay.monWorkYn == 'Y') ? true : false;
+    }
+  }
 
-      ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat([{ value: value}]);
+
+  // 선택된 데이터 값 변경 - 요일:Y
+  _setData = (value) => {
+    switch (value) {
+        case 'mon' : BUSINESS_DAY.monWorkYn = 'Y'; break;
+        case 'tue' : BUSINESS_DAY.tueWorkYn = 'Y'; break;
+        case 'wed' : BUSINESS_DAY.wedWorkYn = 'Y'; break;
+        case 'thu' : BUSINESS_DAY.thuWorkYn = 'Y'; break;
+        case 'fri' : BUSINESS_DAY.friWorkYn = 'Y'; break;
+        case 'sat' : BUSINESS_DAY.satWorkYn = 'Y'; break;
+        case 'sun' : BUSINESS_DAY.sunWorkYn = 'Y'; break;
+        default : BUSINESS_DAY.monWorkYn = 'Y'; break;
+    }
+
+    ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: value });
+    console.log(ARRAY_SELECT_DATA)
   }
 
   // 해제된 데이터 값 변경 - 요일:N
@@ -301,6 +318,7 @@ class MyProfileCompany extends Component {
                       index={ idx }
                       value={data.value}
                       text={data.text}
+                      workDay={data.workDay}
                       addDataArray={ this._setData }
                       removeDataArray={ this._cancleData }
                     />

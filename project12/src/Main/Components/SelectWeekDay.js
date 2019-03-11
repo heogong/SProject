@@ -10,9 +10,15 @@ class SelectWeekDay extends Component {
       super(props);
 
       this.state = {
-          btnClick : false
+          btnClick : this.props.workDay
       };
     }
+
+    componentWillReceiveProps(nextProps) {
+        
+    }
+
+
     _handleBtnClick = async () => {
         await this.setState({btnClick : (this.state.btnClick) ? false : true});
 
