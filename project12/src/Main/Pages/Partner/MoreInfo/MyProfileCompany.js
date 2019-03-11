@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { AsyncStorage, Image, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { Button, Container, CheckBox, Text, Item, Input } from "native-base";
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -16,7 +16,6 @@ import CustomHeader from "~/Common/Components/CustomHeader";
 import CustomButton from "~/Common/Components/CustomButton";
 import CustomModal from '~/Common/Components/CustomModal';
 import { styles, viewportWidth } from '~/Common/Styles/common';
-import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from "~/Common/Styles/colors";
 
 let ARRAY_SELECT_SPECIALTY = []; // 선택된 전문분야 배열
@@ -178,13 +177,55 @@ class MyProfileCompany extends Component {
     const { selectedDay } = this.state;
 
     switch (dayKey) {
-      case 'monWorkYn' : return (selectedDay.monWorkYn == 'Y') ? true : false;
-      case 'tueWorkYn' : return (selectedDay.tueWorkYn == 'Y') ? true : false;
-      case 'wedWorkYn' : return (selectedDay.wedWorkYn == 'Y') ? true : false;
-      case 'thuWorkYn' : return (selectedDay.thuWorkYn == 'Y') ? true : false;
-      case 'friWorkYn' : return (selectedDay.friWorkYn == 'Y') ? true : false;
-      case 'satWorkYn' : return (selectedDay.satWorkYn == 'Y') ? true : false;
-      case 'sunWorkYn' : return (selectedDay.sunWorkYn == 'Y') ? true : false;
+      case 'monWorkYn' : 
+        if (selectedDay.monWorkYn == 'Y') {
+          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'mon' }); 
+          return true 
+        } else {
+          return false
+        }
+      case 'tueWorkYn' : 
+        if (selectedDay.tueWorkYn == 'Y') {
+          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'tue' }); 
+          return true 
+        } else {
+          return false
+        }
+      case 'wedWorkYn' : 
+        if (selectedDay.wedWorkYn == 'Y') {
+          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'wed' }); 
+          return true 
+        } else {
+          return false
+        }
+      case 'thuWorkYn' : 
+        if (selectedDay.thuWorkYn == 'Y') {
+          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'thu' }); 
+          return true 
+        } else {
+          return false
+        }
+      case 'friWorkYn' : 
+        if (selectedDay.friWorkYn == 'Y') {
+          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'fri' }); 
+          return true 
+        } else {
+          return false
+        }
+      case 'satWorkYn' : 
+        if (selectedDay.satWorkYn == 'Y') {
+          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'sat' }); 
+          return true 
+        } else {
+          return false
+        }
+      case 'sunWorkYn' : 
+        if (selectedDay.sunWorkYn == 'Y') {
+          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'sun' }); 
+          return true 
+        } else {
+          return false
+        }
       default : return (selectedDay.monWorkYn == 'Y') ? true : false;
     }
   }
@@ -204,7 +245,7 @@ class MyProfileCompany extends Component {
     }
 
     ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: value });
-    console.log(ARRAY_SELECT_DATA)
+    // console.log(ARRAY_SELECT_DATA)
   }
 
   // 해제된 데이터 값 변경 - 요일:N
@@ -220,6 +261,7 @@ class MyProfileCompany extends Component {
           default : BUSINESS_DAY.monWorkYn = 'N'; break;
       }
       ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.filter((item) => item.value !== value);
+      // console.log(ARRAY_SELECT_DATA)
   }
 
   // 타임 picker 표시
@@ -301,17 +343,6 @@ class MyProfileCompany extends Component {
             <Text style={[styles.inputNbTitleTxt, styles.mb12]}>출장 가능시간</Text>
             <View>
               <View style={localStyles.weekWrap}>
-                {/* {ENTRIES1.map((entry, index) => (
-
-                  <TouchableOpacity onPress={ () => alert(entry.title)}  key={index}>
-
-                    <View style={localStyles.btnWeekOn}>
-                    <Text style={localStyles.btnWeekOnTxt}>{entry.title}</Text>
-                    <View style={localStyles.btnWeekOff}>
-                      <Text style={{color : color.defaultColor}}>{entry.title}</Text>
-                    </View>
-                     </TouchableOpacity>
-                  ))} */}
                   {DAY_DATA.map((data, idx) => (
                     <SelectWeekDay
                       key={ idx }
@@ -381,7 +412,6 @@ class MyProfileCompany extends Component {
             infoText={this.state.resultMsg}
             btnText="확인"
         />
-        
 
       </Container>
     );

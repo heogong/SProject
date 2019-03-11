@@ -145,11 +145,10 @@ class KakaoLogin extends Component {
     return (
         <TouchableOpacity onPress={ () => this.kakaoLogin()}>
           {(this.props.loginYn) ? (
-            <View style={[localStyles.snsIcon]}>
-              <Image source={require('~/Common/Image/ico-kakao.png')} 
-                resizeMode="contain"
-                style={{height : snsIconSize, width : snsIconSize}}/>
-            </View>
+                <Image source={require('~/Common/Image/ico-kakao.png')} 
+                  style={{height : 32, width : 32}}
+                  resizeMode="contain"
+                />
           ) : (
             <View>
               <Image source={require('~/Common/Image/ico-kakao.png')} resizeMode='contain' style={{height : itemSize - 60, width : itemSize - 60}} />
@@ -167,19 +166,6 @@ function wp (percentage) {
 }
 
 const itemSize = wp(28);
-const snsDivideCount = 12;
-const snsIconSize = (viewportWidth / snsDivideCount);
-
-const localStyles = StyleSheet.create({
-  snsIcon : {
-    justifyContent : 'center',
-    alignItems : 'center',
-    borderColor : color.whiteColor,
-    borderWidth : 1,
-    height : snsIconSize + 20, width : snsIconSize + 20,
-    borderRadius : 5
-  }
-});
 
 let mapStateToProps = (state) => {
   return {

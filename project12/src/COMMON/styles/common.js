@@ -306,6 +306,19 @@ export const styles = StyleSheet.create({
       fontSize: 14,
       height: 46
     },
+    // Tabs Style
+    tabsReset: {
+      elevation: 0,
+      shadowOpacity: 0,
+      shadowRadius: 0,
+      borderBottomWidth: 0,
+      height: 36
+    },
+    tabHeadTxt: {fontWeight: "500"},
+    tabStyle: {backgroundColor: color.defaultBackColor},
+    tabTxtStyle: {color: color.defaultColor, fontSize: 14},
+    tabActStyle: {backgroundColor: color.defaultColor},  
+    tabActTxtStyle: {color: color.whiteColor, fontSize: 14},
 
     // 축약 Style
 

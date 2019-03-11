@@ -108,13 +108,29 @@ export const BStyles = StyleSheet.create({
       width: "100%",
       paddingTop: 2,
       paddingBottom: 2
-    },
-    btnDefaultSmallTxt: {
-      fontSize: 13,
-      flex: 1,
-      textAlign: "center",
-      fontWeight: "500"
-    },
+  },
+  btnDefaultSmallTxt: {
+    fontSize: 13,
+    flex: 1,
+    textAlign: "center",
+    fontWeight: "500"
+  },
+
+  // 비활성화 
+   // 흰색 테두리색 기본 배경색 버튼
+  disableBtnWhBoder: {
+    backgroundColor: color.defaultColor,
+    borderWidth: 1,
+    borderColor: color.greyColor,
+    elevation: 0,
+    shadowOpacity: 0
+  },
+  disableBtnWhBoderTxt: {
+    color: color.greyColor,
+    flex: 1,
+    textAlign: "center"
+  },
+
   // modal
   modalBtnFill: {
     height: 36,

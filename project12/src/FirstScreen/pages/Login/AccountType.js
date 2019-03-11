@@ -8,7 +8,6 @@ import {
   Input,
   CheckBox
 } from "native-base";
-// import { CheckBox } from 'react-native-elements'
 
 import { SUCCESS_RETURN_CODE, CLIENT_USER } from '~/Common/Blend';
 
@@ -25,10 +24,8 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomHeader from '~/Common/Components/CustomHeader';
-import { styles, viewportHeight, viewportWidth } from '~/Common/Styles/common';
-import { stylesReg } from '~/Common/Styles/stylesReg';
+import { styles, viewportHeight } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
-
 
 const USR_EMAIL_LEN = 10;
 const USR_PASSWD_LEN = 1;
@@ -140,95 +137,89 @@ class AccountType extends Component {
       // <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
       <Container style={styles.containerInnerPd}>
         <CustomHeader />
+
         <View style={styles.fx1}>
 
-          <View style={[styles.fx1, styles.alignItemsCenter]}>
-            <Image source={require('~/Common/Image/logo-partner.png')} resizeMode='contain' style={{height : logoHeight}} />
-            <Text>이미지변경 필요</Text>
+          <View style={[styles.fx2, styles.alignItemsCenter, styles.justiConCenter]}>
+            <Image source={require('~/Common/Image/bank-bg02.png')} resizeMode='center' style={{height: logoHeight, flex: 1}} />
           </View>
-          <View 
-            style={[
-            styles.fx2, 
-            styles.alignItemsCenter, 
-            styles.pd20, {
-              backgroundColor : color.defaultColor
-            }]}>
-              <Item regular style={[styles.mb10, {backgroundColor: color.whiteColor, borderColor : color.whiteColor, height : 48}]}>
-                <Icon name="mail" style={{color : color.greyColor}} />
+
+          <View style={styles.fx5}>
+            <Text style={[styles.mb13, {textAlign: "center", fontSize: 13, color: color.modalTxtColor}]}>쿨리닉의 회원이 되시면 다양한 혜택을 누리실 수 있습니다</Text>
+            <View style={localStyles.inputBoxWrap}>
+              <Item regular style={[styles.mb12, styles.inputWhBackWhBo]}>
+                <Icon active name="mail" style={localStyles.inputIcon}/>
                 <Input 
                   onChangeText={ this._handleEmailChange }
                   value={ this.state.text }
-                  autoFocus={ false }
                   placeholder="이메일" 
-                  placeholderTextColor="#777" 
-                  fontSize="14"
+                  style={styles.inputBox} 
+                  placeholderTextColor={color.inputPlaceHodler}
                 />
               </Item>
 
-              <Item regular style={[styles.mb10, {backgroundColor: color.whiteColor, borderColor : color.whiteColor, height : 48}]}>
-                <Icon active name="lock" style={{color : color.greyColor}} />
+              <Item regular style={[styles.mb20, styles.inputWhBackWhBo]}>
+                <Icon active name="lock" style={localStyles.inputIcon}/>
                 <Input 
-                  secureTextEntry={ true }
                   onChangeText={ this._handlePasswdChange }
                   value={ this.state.text }
-                  placeholder="비밀번호(영문,숫자,특수문자8-15자)" 
-                  placeholderTextColor="#777" 
-                  fontSize="14" 
+                  placeholder="비밀번호(영문, 숫자, 특수문자 8~15자)" 
+                  style={styles.inputBox} 
+                  placeholderTextColor={color.inputPlaceHodler}
+                  secureTextEntry={true}
                 />
               </Item>
 
-
-            <View style={[styles.fxDirRow, styles.mb10]}> 
-              <View style={{width : '25%'}}>
+              <View style={[styles.justiConBetween, styles.fxDirRow, styles.mb20]}> 
                 <View style={styles.fxDirRow}>
-                {/* <CheckBox
-                  title="자동로그인"
-                  containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
-                  textStyle={{fontSize: 14}}
-                  checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
-                  uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
-                  checked={this.state.checked}
-                  onPress={() => this.setState({checked: !this.state.checked})}
-                /> */}
-                <Text style={{paddingLeft : '15%', color: color.defaultColor, fontSize : 13}}>자동로그인</Text>
+                  <CheckBox checked={this.state.checkbox}
+                    onPress={() => this.toggleSwitch()}
+                    style={styles.checkboxReset}
+                  />
+                  <Text style={localStyles.inputBottomTxt}>자동로그인</Text>
+                </View>
+                <View>
+                  <TouchableOpacity onPress={Actions.InvaildId}>
+                    <Text style={[localStyles.inputBottomTxt, {textDecorationLine: 'underline'}]}>아이디와 비밀번호를 잊으셨나요?</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
-              <View style={[styles.alignItemsEnd, {width : '75%'}]}>
-                <TouchableOpacity onPress={ () => alert("아이디와 비밀번호를 잊으셨나요?")}>
-                  <Text style={{color: color.whiteColor, fontSize : 13}}>아이디와 비밀번호를 잊으셨나요?</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
 
-            <View style={[styles.fxDirRow, styles.justiConBetween, styles.mb20]}>
-              <View style={[styles.fx1, {marginRight : 5}]}>
-                <CustomButton edgeFill={true} whiteFill={true} fillTxt={true} onPress={Actions.JoinAccountType}>
-                  회원가입
-                </CustomButton>
-              </View>
-              <View style={[styles.fx1, {marginLeft : 5}]}>
-                <CustomButton onPress={() => this._login()}>
-                  로그인
-                </CustomButton>
-              </View>
-            </View>
-
-            <View>
-              <Text style={[styles.mb10, {color:color.whiteColor}]}>SNS LOGIN</Text>
-
-              <View style={[styles.fxDirRow, styles.alignItemsCenter]}>
-
-                <View style={[styles.fx1, {marginRight : 10}]}>
-                  <NaverLogin loginYn={ loginYn }/>
+              <View style={[styles.fxDirRow, styles.mb20]}>
+                <View style={styles.fx1}>
+                  <CustomButton 
+                    onPress={Actions.JoinAccountType}
+                    WhiteLineBtn={true}
+                  >
+                    회원가입
+                  </CustomButton>
                 </View>
-                
-                <View style={[styles.fx1, {marginLeft : 10}]}>
-                  <KakaoLogin loginYn={ loginYn }/>
+                <View style={{paddingLeft: 6, paddingRight: 6}}></View>
+                <View style={styles.fx1}>
+                  <CustomButton 
+                    onPress={() => this._login()}
+                    WhiteBackBtn={true}
+                  >
+                    로그인
+                  </CustomButton>
                 </View>
-
               </View>
-            </View>
+
+              <View style={styles.alignItemsCenter}>
+                <Text style={{fontWeight: 'bold', color:'#fff', fontSize: 16, letterSpacing: 0, marginBottom : 14}}>SNS LOGIN</Text>
+
+                <View style={styles.fxDirRow}>
+                  <View style={[localStyles.snsIcon]}>
+                    <NaverLogin loginYn={ loginYn }/>
+                  </View>
+                  <View style={{paddingLeft: 8, paddingRight: 8}}/>
+                  <View style={[localStyles.snsIcon]}>
+                    <KakaoLogin loginYn={ loginYn }/>
+                  </View>
+                </View>
+              </View>
           </View>
+        </View>
         </View>
       </Container>
     )
@@ -236,20 +227,42 @@ class AccountType extends Component {
 }
 
 const layoutCount = 5; // 화면 분할 개수 사이즈
-const snsDivideCount = 12;
-
 const logoHeight = (viewportHeight / layoutCount);
-const snsIconSize = (viewportWidth / snsDivideCount);
 
 const localStyles = StyleSheet.create({
+  inputIcon: {
+    color: color.inputPlaceHodler,
+    fontSize: 20,
+    paddingLeft: 17,
+    paddingRight: 7
+  },
+  inputBoxWrap: {
+    paddingLeft: 19,
+    paddingRight: 19,
+    paddingTop: 35,
+    paddingBottom: 25,
+    backgroundColor : color.defaultColor
+  },
+  checkBox: {
+    borderColor: color.defaultColor,
+    backgroundColor: color.defaultColor
+  },
+  inputBottomTxt: {
+    fontSize: 14,
+    color: color.whiteColor
+  },
   snsIcon : {
     justifyContent : 'center',
     alignItems : 'center',
-    borderColor : color.whiteColor,
-    borderWidth : 1,
-    height : snsIconSize + 20, width : snsIconSize + 20,
+    borderColor : '#fff',
+    borderBottomWidth : 1, 
+    borderTopWidth : 1,
+    borderLeftWidth : 1,
+    borderRightWidth : 1,
+    height: 60,
+    width: 60,
     borderRadius : 5
-  }
+  },
 });
 
 

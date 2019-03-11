@@ -25,7 +25,7 @@ class MyProfileModPassword1 extends Component {
       passwd : '',
       disableBtn : true,
       isAlertModal : false, // alert 용
-      resultMsg : ''
+      resultMsg : ''// alert 용
     };
   }
 

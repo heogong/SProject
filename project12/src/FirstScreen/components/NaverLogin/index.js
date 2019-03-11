@@ -146,15 +146,18 @@ class Page extends Component {
     return (
       <TouchableOpacity onPress={ () => this.naverLoginStart()}>
        {(this.props.loginYn) ? (
-        <View style={[localStyles.snsIcon]}>
-          <Image source={require('~/Common/Image/ico-naver.png')} 
+          <Image 
+            source={require('~/Common/Image/ico-naver.png')} 
+            style={{height : 32, width : 32}}
             resizeMode="contain"
-            style={{height : snsIconSize, width : snsIconSize}}
           />
-        </View>
         ) : (
           <View>
-            <Image source={require('~/Common/Image/ico-naver.png')} resizeMode='contain' style={{height : itemSize - 60, width : itemSize - 60}} />
+            <Image 
+              source={require('~/Common/Image/ico-naver.png')} 
+              resizeMode='contain' 
+              style={{height : itemSize - 60, width : itemSize - 60}} 
+            />
             <Text style={[styles.whiteFont, {marginTop : 10}]}>네이버</Text>
           </View>
         )}
@@ -170,19 +173,7 @@ function wp (percentage) {
 }
 
 const itemSize = wp(28);
-const snsDivideCount = 12;
-const snsIconSize = (viewportWidth / snsDivideCount);
 
-const localStyles = StyleSheet.create({
-  snsIcon : {
-    justifyContent : 'center',
-    alignItems : 'center',
-    borderColor : color.whiteColor,
-    borderWidth : 1,
-    height : snsIconSize + 20, width : snsIconSize + 20,
-    borderRadius : 5
-  }
-});
 
 let mapStateToProps = (state) => {
   return {

@@ -6,7 +6,6 @@ import TabIcon from './src/Common/Components/TabIcon';
 import TestInitPage from './src/FirstScreen/Pages/TestInitPage';
 import TestPageOne from './src/FirstScreen/Pages/PageOne';
 
-
 import IntroPage from './src';
 import InitPage from './src/FirstScreen/Pages/InitPage';
 import ServiceInfo from './src/FirstScreen/Pages/ServiceInfo';
@@ -27,6 +26,8 @@ import JoinInputPhoneAuth from './src/FirstScreen/Pages/Join/InputPhoneAuth';
 
 import LoginAccountType from './src/FirstScreen/Pages/Login/AccountType';
 import LoginInputAccount from './src/FirstScreen/Pages/Login/InputAccount';
+
+import InvaildId from './src/FirstScreen/Pages/InvaildId';
 
 // 비회원
 import NonMemberNoticeInfoService from './src/FirstScreen/Pages/Join/NonMember/NoticeInfoService';
@@ -175,7 +176,9 @@ const PAGE = () => (
 
       <Scene key="reactCamera" component={ReactCamera} />
       <Scene key="ViewImage" component={ViewImage} />
-      
+
+      <Scene key="InvaildId" component={InvaildId} />
+
       <Scene key="JoinCustomerType" component={JoinCustomerType} />
       <Scene key="JoinAccountType" component={JoinAccountType} />
       <Scene key="JoinInputEmail" component={JoinInputEmail} back onBack={() => Actions.JoinInputName()} />
@@ -262,7 +265,7 @@ const PAGE = () => (
       <Scene key="NoticeList" component={NoticeList} />
       <Scene key="TermsMenu" component={TermsMenu} />
       <Scene key="TermsContent1" component={TermsContent1} />
-      <Scene key="MyProfileCompany" initial component={MyProfileCompany} />
+      <Scene key="MyProfileCompany" component={MyProfileCompany} />
       
       <Drawer
         hideNavBar

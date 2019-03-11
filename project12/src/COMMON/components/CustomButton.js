@@ -59,23 +59,18 @@ class CustomButton extends Component {
         return (
             // 활성화 여부
             (this.props.disabled) ? (
-                // <Button 
-                //     disabled={ this.props.disabled }
-                //     bordered={ this.props.bordered }
-                //     style={BStyles.btnDefault}>
-                //     <Text
-                //         style={[
-                //             (this.props.textStyle !== null ) ? this.props.textStyle : BStyles.btnDefaultTxt,
-                //             {textAlign: "center"}
-                //         ]}
-                //     >
-                //         {this.props.children}
-                //     </Text>
-                // </Button>
-                <Button style={[BStyles.btnDefault, BStyles.btnDefaultFillOff, styles.mb5]}>
-                    <Text style={[BStyles.btnDefaultTxt, BStyles.btnDefaultFillOffTxt]}>{this.props.children}</Text>
-                </Button>
-
+                <View style={styles.mb5}>
+                 {(this.props.WhiteLineBtn) ? (
+                     <Button 
+                        style={[BStyles.btnDefault, BStyles.disableBtnWhBoder, this.props.CustomBtnStyle]}>
+                        <Text style={[BStyles.btnDefaultTxt, BStyles.disableBtnWhBoderTxt, this.props.CustomFontStyle]}>{this.props.children}</Text>
+                    </Button>
+                 ) : (
+                    <Button style={[BStyles.btnDefault, BStyles.btnDefaultFillOff]}>
+                        <Text style={[BStyles.btnDefaultTxt, BStyles.btnDefaultFillOffTxt]}>{this.props.children}</Text>
+                    </Button>
+                 ) }
+                </View>
             ) : (
                 <View style={styles.mb5}>
                     {(this.props.WhiteBackBtn) ? (
