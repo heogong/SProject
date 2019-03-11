@@ -151,8 +151,8 @@ class KakaoLogin extends Component {
                 />
           ) : (
             <View>
-              <Image source={require('~/Common/Image/ico-kakao.png')} resizeMode='contain' style={{height : itemSize - 60, width : itemSize - 60}} />
-              <Text style={[styles.whiteFont, {marginTop : 10}]}>카카오</Text>
+              <Image source={require('~/Common/Image/ico-kakao.png')} resizeMode='contain' style={localStyles.btnIcon} />
+              <Text style={localStyles.btnTxt}>카카오</Text>
             </View>
           )}
         </TouchableOpacity>
@@ -160,12 +160,26 @@ class KakaoLogin extends Component {
   }
 }
 
-function wp (percentage) {
-  const value = (percentage * viewportWidth) / 100;
-  return Math.round(value);
-}
-
-const itemSize = wp(28);
+const localStyles = StyleSheet.create({
+  bttBoxWrap: {
+    flex: 1,
+    backgroundColor : color.defaultColor,
+    marginRight : 5,
+    paddingTop : 15,
+    alignItems : 'center'
+  },
+  btnIcon: {
+    height: 28,
+    width: 40,
+    paddingTop: 19
+  },
+  btnTxt: {
+    fontSize: 14,
+    marginTop : 10,
+    color: color.whiteColor,
+    paddingBottom: 14
+  }
+});
 
 let mapStateToProps = (state) => {
   return {

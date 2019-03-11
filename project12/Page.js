@@ -180,7 +180,7 @@ const PAGE = () => (
       <Scene key="InvaildId" component={InvaildId} />
 
       <Scene key="JoinCustomerType" component={JoinCustomerType} />
-      <Scene key="JoinAccountType" component={JoinAccountType} />
+      <Scene key="JoinAccountType" initial component={JoinAccountType} />
       <Scene key="JoinInputEmail" component={JoinInputEmail} back onBack={() => Actions.JoinInputName()} />
       <Scene key="JoinInputName"  component={JoinInputName} />
       <Scene key="JoinInputPhone"  component={JoinInputPhone} />

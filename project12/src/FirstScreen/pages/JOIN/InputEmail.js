@@ -69,18 +69,9 @@ class InputEmail extends Component {
   _checkUsrEmail = () => {
     if (!emailPattern.test(this.state.usrId)) {
       this.setState({errMsg : '유효하지 않은 이메일 입력입니다.'});
-    //   Alert.alert(
-    //     '',
-    //     "유효하지 않은 이메일 입력입니다.",
-    //     [
-    //       {text: '확인', onPress: () => console.log('OK Pressed')},
-    //     ],
-    //     { cancelable: false }
-    //   )
-    //   return false;
-    // } else {
-    //   return true;
-    // }
+      return false;
+    } else {
+      return true;
     }
   } 
 
@@ -88,20 +79,10 @@ class InputEmail extends Component {
   _checkUsrPasswd = () => {
     if(this.state.usrPw !== this.state.usrPw2) {
       this.setState({errMsg : '비밀번호가 맞지 않습니다.'});
+      return false;
+    } else {
+      return true;
     }
-
-    //   Alert.alert(
-    //     '',
-    //     "비밀번호가 동일하지 않습니다.",
-    //     [
-    //       {text: '확인', onPress: () => console.log('OK Pressed')},
-    //     ],
-    //     { cancelable: false }
-    //   )
-    //   return false;
-    // } else {
-    //   return true;
-    // }
   }
 
   // 회원 가입 프로세스
@@ -114,6 +95,7 @@ class InputEmail extends Component {
 
       await this.props.onSetUsrId(this.state.usrId);  // 리덕스 사용자 ID SET (await 절차식으로 진행)
       await this.props.onSetUsrPw(this.state.usrPw2);  // 리덕스 사용자 비밀번호 SET (await 절차식으로 진행)
+
 
       // 기획서에 따른 이름 입력
       Actions.JoinInputName();
@@ -213,8 +195,6 @@ class InputEmail extends Component {
             <CustomButton 
               onPress={() => this._SignUsr()}
               disabled={ this.state.btnDisabled }
-              edgeFill={true}
-              fillTxt={true}
             >
               다음단계로
             </CustomButton>

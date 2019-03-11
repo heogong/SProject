@@ -156,9 +156,9 @@ class Page extends Component {
             <Image 
               source={require('~/Common/Image/ico-naver.png')} 
               resizeMode='contain' 
-              style={{height : itemSize - 60, width : itemSize - 60}} 
+              style={localStyles.btnIcon} 
             />
-            <Text style={[styles.whiteFont, {marginTop : 10}]}>네이버</Text>
+            <Text style={[localStyles.btnTxt]}>네이버</Text>
           </View>
         )}
       </TouchableOpacity>
@@ -166,13 +166,26 @@ class Page extends Component {
   }
 }
 
-
-function wp (percentage) {
-  const value = (percentage * viewportWidth) / 100;
-  return Math.round(value);
-}
-
-const itemSize = wp(28);
+const localStyles = StyleSheet.create({
+  bttBoxWrap: {
+    flex: 1,
+    backgroundColor : color.defaultColor,
+    marginRight : 5,
+    paddingTop : 15,
+    alignItems : 'center'
+  },
+  btnIcon: {
+    height: 28,
+    width: 40,
+    paddingTop: 19
+  },
+  btnTxt: {
+    fontSize: 14,
+    marginTop : 10,
+    color: color.whiteColor,
+    paddingBottom: 14
+  }
+});
 
 
 let mapStateToProps = (state) => {

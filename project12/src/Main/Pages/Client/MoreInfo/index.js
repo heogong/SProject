@@ -1,70 +1,193 @@
-import React, { Component } from 'react';
-import{ Alert, View, TouchableOpacity } from 'react-native';
-import { Accordion, Right, Left, List, ListItem, Icon, Text } from "native-base";
+import React, { Component } from "react";
+import { Image, TouchableOpacity, StyleSheet, View } from 'react-native'
+import { Container, Button, Text } from "native-base";
+
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
-import { connect } from 'react-redux';
 
-import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
+import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
+import GetCommonData from '~/Common/Functions/GetCommonData';
 
-const dataArray = [
-    { title: "사업장", content: "Lorem ipsum dolor sit amet" },
-    { title: "Second Element", content: "Lorem ipsum dolor sit amet" },
-    { title: "Third Element", content: "Lorem ipsum dolor sit amet" }
-];
+import CustomHeader from "~/Common/Components/CustomHeader";
+import CustomEtcButton from "~/Common/Components/CustomEtcButton";
+import CustomModal from '~/Common/Components/CustomModal';
+import { styles } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from "~/Common/Styles/colors";
 
-class MyInfo extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
+class MoreMenu extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        data : [],
+        isAlertModal : false, // alert 용
+    }
+  }
+
+  componentDidMount() {
+      this._getUserInfo();
+  }
+
+    //  사용자 정보 가져오기
+  _getUserInfo = () => {
+        GetUserInfo().then(async result => {
+            GetCommonData(result, this._getUserInfo).then(async resultData => {
+                if(resultData !== undefined) {
+                    console.log(resultData);
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+
+                    if(ResultBool) {
+                        this.setState({data : resultData.data})
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                    }
+                }
+            });
+        });
     }
 
-    componentWillMount () {
-        clearInterval(this.props.afterService.intervalId); // 탭 이동 시 Interval 클리어
-    }
+  render() {
+    return (
+      <Container style={styles.container}>
+        <View style={{paddingLeft : 26, paddingRight: 26}}>
+          <CustomHeader title="더보기"/>
+        </View>
 
-    _onPress = () => {
-        Actions.ListBusinessPlace();
-    }
+        <View style={[styles.fx1, {backgroundColor: color.defaultColor}]}>
 
-    render() {
-        return (
-        <CustomBlockWrapper
-            title="내 정보"
-            padder={ false }
-        >
-            <List>
-                <ListItem selected onPress={ this._onPress }>
-                    <Left>
-                        <Text>사업장</Text>
-                    </Left>
-                    <Right>
-                        <Icon name="arrow-forward" />
-                    </Right>
-                </ListItem>
-                <ListItem>
-                    <Left>
-                        <Text>Nathaniel Clyne</Text>
-                    </Left>
-                    <Right>
-                        <Icon name="arrow-forward" />
-                    </Right>
-                </ListItem>
-            </List>
+          <View style={localStyles.profileWrap}>
+            <View style={localStyles.profileTxtWrap}>
+              <Text style={[localStyles.profileTitleTxt, styles.mb10]}>{this.state.data.usrNm}</Text>
+              <Text style={localStyles.profileSubTxt}>{this.state.data.usrId}</Text>
+            </View>
 
-            {/* <Accordion
-                dataArray={dataArray}
-            /> */}
-        </CustomBlockWrapper>
-        )
-    }
+            <View style={[localStyles.btnProfileModWrap]}>
+
+              <CustomEtcButton 
+                onPress={ Actions.MyProfileInfo }
+                SmallBtn={true}
+                >
+                    내정보 수정
+                </CustomEtcButton>
+            </View>
+          </View>
+
+          <View style={localStyles.quickBtnWrap}>
+              <TouchableOpacity 
+                style={[localStyles.quickBtnBox, {borderRightColor: color.defaultColor, borderRightWidth: 1}]}
+                onPress={ () => alert("사진조회")}>
+                <Image source={require("~/Common/Image/license-depart02.png")} style={{width: 60, height: 41}} resizeMode="contain" />
+                <Text style={localStyles.quickBtnTxt}>사업자정보 수정</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={localStyles.quickBtnBox}
+                onPress={ Actions.MyCalcuList }>
+                <Image source={require("~/Common/Image/license-depart02.png")} style={{width: 60, height: 41}} resizeMode="contain" />
+                <Text style={localStyles.quickBtnTxt}>정산 예정금액</Text>
+              </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity onPress={ Actions.NoticeList }>
+            <View style={localStyles.listMenuWrap}>
+              <Text style={localStyles.listMenuTxt}>공지사항</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={ Actions.TermsMenu } 
+            style={{marginBottom: 14}}>
+            <View style={localStyles.listMenuWrap}>
+              <Text style={localStyles.listMenuTxt}>약관 및 정책</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={ () => alert("사진조회")}>
+            <View style={localStyles.listMenuWrap}>
+              <Text style={localStyles.listMenuTxt}>자주 묻는 질문</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={ () => alert("사진조회")} style={{marginBottom: 14}}>
+            <View style={localStyles.listMenuWrap}>
+              <Text style={localStyles.listMenuTxt}>앱 버전 </Text>
+            </View>
+          </TouchableOpacity>
+
+        </View>
+
+        {/* alert 메세지 모달 */}
+        <CustomModal
+            modalType="ALERT"
+            isVisible={this.state.isAlertModal}
+            onPress={ () => this.setState({isAlertModal : false})}
+            infoText={this.state.resultMsg}
+            btnText="확인"
+        />
+      </Container>
+    );
+  }
 }
 
-let mapStateToProps = (state) => {
-    return {
-        afterService: state.AFTERSERVICE
-    };
-}
-  
-MyInfo = connect(mapStateToProps, undefined)(MyInfo);
-export default MyInfo;
+const localStyles = StyleSheet.create({
+  profileWrap: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 1,
+    padding: 26, 
+    backgroundColor : color.whiteColor,
+    height: 96,
+    marginTop: 14,
+    width: "100%"
+  },
+  profileTxtWrap: {
+    justifyContent : "center",
+    flex: 2
+  },
+  profileTitleTxt: {
+    fontSize: 21,
+    color: "#0b2024"
+  },
+  profileSubTxt: {
+    fontSize: 14,
+    color: "#8e8e98"
+  },
+  btnProfileModWrap: {
+    alignItems: "flex-end"
+  },
+  quickBtnWrap: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 1,
+    backgroundColor : color.whiteColor,
+    height: 96,
+    width: "100%",
+    marginBottom: 14
+  },
+  quickBtnBox: {
+    flex: 1,
+    justifyContent : "center",
+    alignItems: "center"
+  },
+  quickBtnTxt: {
+    fontSize: 13,
+    color: "#0b2024",
+    marginTop: 11
+  },
+  listMenuWrap: {
+    justifyContent: "center",
+    marginBottom: 1,
+    backgroundColor : color.whiteColor,
+    height: 48,
+    width: "100%",
+    paddingLeft: 26
+  },
+  listMenuTxt: {
+    fontSize: 16,
+    color: "#8e8e98"
+  },
+});
+
+export default MoreMenu;

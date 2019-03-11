@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Container, H1, Text } from "native-base";
 
 import { CLIENT } from '~/Common/Blend';
@@ -10,10 +10,11 @@ import CustomHeader from '~/Common/Components/CustomHeader';
 import NaverLogin from '../../Components/NaverLogin';
 import KakaoLogin from '../../Components/KakaoLogin';
 
-import { styles, viewportHeight, viewportWidth } from '~/Common/Styles/common';
+import { styles, viewportWidth } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
 
+const LOGIN_YN = false; // 진입 경로(로그인/회원가입) 확인
 class AccountType extends Component {
 
   // 고객 타입 선택에 따른 페이지 이동
@@ -29,66 +30,48 @@ class AccountType extends Component {
   }
 
   render() {
-    const loginYn = false; // 진입 경로(로그인/회원가입) 확인
-
     return (
-      // <CustomBasicWrapper
-      //   title="가입 구분"
-      // >
-      //   <NaverLogin
-      //     loginYn={ loginYn }
-      //     name="NAVER 회원가입"
-      //   />
-
-      //   <KakaoLogin
-      //     loginYn={ loginYn }
-      //     name="카카오톡으로 가입하기"
-      //   />
-      //   <CustomButton
-      //     block={ true }
-      //     info={ true }
-      //     bordered={ true }
-      //     onPress={this._selectCustomerTypeAndGoPage}>
-      //     <Text>
-      //       이메일로 가입하기
-      //     </Text>
-      //   </CustomButton>
-      // </CustomBasicWrapper>
-
       <Container style={styles.containerInnerPd}>
         <CustomHeader />
 
-        <View style={styles.fx1}>
-          <View style={styles.fx1}>
-            <View style={[styles.mb20, {flexDirection : 'row'}]}>
-              <View style={[styles.fx1, styles.justiConCenter]}>
-                <H1>회원가입할</H1>
-                <H1>방법을</H1>
-                <H1>선택해주세요</H1>
-              </View>
-              <View style={{flex:1, alignItems : 'flex-end'}}>
-                  <Image source={require('~/Common/Image/join-ico01.png')} style={{height : 100, width : 100}} />
-              </View>
+        <View style={styles.contentWrap}>
+          <View style={styles.fxDirRow}>
+            <View style={stylesReg.leftGuideTxtWrap}>
+              <Text style={stylesReg.leftGuideTxt}>회원가입할</Text>
+              <Text style={stylesReg.leftGuideTxt}>방법을</Text>
+              <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
             </View>
-            <View>
-              <Text style={styles.greyFont}>클리닉의 회원이 되시면</Text>
-              <Text style={styles.greyFont}>다양한 A/S 관련 서비스를 누릴 수 있습니다</Text>
+            <View style={stylesReg.rightImgWrap}>
+            <Image source={require('~/Common/Image/join-ico01.png')} style={{height : 84, width : 84}} />
             </View>
           </View>
 
-          <View style={[styles.fx2, styles.fxDirRow, styles.alignItemsCenter, styles.justiConCenter]}>
-            <TouchableOpacity onPress={ this._selectCustomerTypeAndGoPage }>
-              <View style={{height : itemSize, width : itemSize, backgroundColor : color.defaultColor, marginRight : 5, paddingTop : 15,alignItems : 'center'}}>
-                <Image source={require('~/Common/Image/join-email.png')} resizeMode='contain' style={{height : itemSize - 60, width : itemSize - 60}} />
-                <Text style={[styles.whiteFont, {marginTop : 10}]}>이메일</Text>
+          <View style={localStyles.txtWrap}>
+            <Text style={{color: color.greyColor, fontSize: 14}}>클리닉의 회원이 되시면</Text>
+            <Text style={{color: color.greyColor, fontSize: 14}}>다양한 A/S 관련 서비스를 누릴 수 있습니다</Text>
+          </View>
+
+           <View style={localStyles.btnBottomWrap}>
+
+            <TouchableOpacity style={localStyles.bttBoxWrap} onPress={this._selectCustomerTypeAndGoPage}>
+              <View >
+                <Image 
+                  source={require('~/Common/Image/join-email.png')} 
+                  resizeMode='contain' 
+                  style={localStyles.btnIcon} 
+                />
+                <Text style={localStyles.btnTxt}>이메일</Text>
               </View>
             </TouchableOpacity>
-            <View style={{height : itemSize, width : itemSize, backgroundColor : color.defaultColor, marginRight : 5, paddingTop : 15,alignItems : 'center'}}>
-              <NaverLogin loginYn={ loginYn } />
+
+            <View style={localStyles.bttBoxWrap}>
+              <NaverLogin loginYn={ LOGIN_YN } />
             </View>
-            <View style={{height : itemSize, width : itemSize, backgroundColor : color.defaultColor, marginRight : 5, paddingTop : 15,alignItems : 'center'}}>
-              <KakaoLogin loginYn={ loginYn } />
+
+            <View style={localStyles.bttBoxWrap}>
+              <KakaoLogin loginYn={ LOGIN_YN } />
             </View>
+
           </View>
         </View>
       </Container>
@@ -101,6 +84,37 @@ function wp (percentage) {
   return Math.round(value);
 }
 const itemSize = wp(28);
+
+
+const localStyles = StyleSheet.create({
+  txtWrap: {
+    marginTop: 21
+  },
+  btnBottomWrap: {
+    flex:2,
+    flexDirection: 'row',
+    alignItems : 'center',
+    justifyContent : 'center'
+  },
+  bttBoxWrap: {
+    flex: 1,
+    backgroundColor : color.defaultColor,
+    marginRight : 5,
+    paddingTop : 15,
+    alignItems : 'center'
+  },
+  btnIcon: {
+    height: 28,
+    width: 40,
+    paddingTop: 19
+  },
+  btnTxt: {
+    fontSize: 14,
+    marginTop : 10,
+    color: color.whiteColor,
+    paddingBottom: 14
+  }
+});
 
 let mapStateToProps = (state) => {
   return {
