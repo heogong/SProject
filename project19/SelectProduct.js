@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, StyleSheet, View } from 'react-native'
+import { Dimensions, Image, ImageBackground, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import {
   Container,
   H1,
@@ -22,7 +22,6 @@ import {
   IconNB,
   CheckBox
 } from "native-base";
-import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { styles, viewportHeight, viewportWidth } from './css/common';
 import { color } from './css/color';
 
@@ -37,48 +36,28 @@ export const ENTRIES1 = [
     title: '업소용냉장고'
   },
   {
+    title: '업소용냉장고'
+  },
+  {
+    title: '업소용냉장고'
+  },
+  {
+    title: '업소용냉장고'
+  },
+  {
+    title: '업소용냉장고'
+  },
+  {
     title: '쇼케이스'
-}];
-
-const SLIDER_1_FIRST_ITEM = 0;
-
-function pad(n, width) {
-  n = n + '';
-  return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
-}
+  }];
 
 class SelectProduct extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      tab1: false,
-      tab2: false,
-      tab3: true,
-      slider1ActiveSlide: SLIDER_1_FIRST_ITEM
+
     };
-  }
-
-  _renderItem ({item, index}) {
-    return (
-      <View style={[styles.pd15, {backgroundColor : color.defaultColor, height : '100%'}]}>
-        <View style={styles.fx1}>
-          <H1 style={{color : color.whiteColor}}>{ item.title }</H1>
-        </View>
-        <View style={[styles.fx2, styles.fxDirRow]}>
-
-          <View style={[styles.fx1, styles.justiConEnd]}>
-            <H1 style={{color : color.whiteColor}}>
-              { pad(++index, 2) }
-            </H1>
-          </View>
-          <View style={[styles.fx2, styles.justiConEnd, styles.alignItemsEnd]}>
-            <Image source={require("./img/license-depart02.png")} style={{height : itemWidth/2, width : itemWidth/2}} />
-          </View>
-
-        </View>
-      </View>
-    );
   }
 
   render() {
@@ -96,68 +75,85 @@ class SelectProduct extends Component {
           <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <View style={styles.fx1}>
-          <View style={[styles.fx1]}>
-            <H1>신청할</H1>
-            <H1>제품종류를</H1>
-            <H1>선택해주세요</H1>
-          </View>
+        <View style={styles.contentWrap}>
 
-          <View style={styles.fx3}>
-            <View style={[styles.fx1, styles.alignItemsStart, styles.justiConStart]}>
-              <Pagination
-                dotsLength={ENTRIES1.length}
-                activeDotIndex={this.state.slider1ActiveSlide}
-                containerStyle={localStyles.paginationContainer}
-                dotColor={color.defaultColor}
-                dotStyle={localStyles.paginationDot}
-                inactiveDotColor={color.defaultColor}
-                inactiveDotOpacity={0.4}
-                inactiveDotScale={0.6}
-                carouselRef={this._slider1Ref}
-                tappableDots={!!this._slider1Ref}
-              />
+          <View style={{marginBottom: 36}}>
+            
+            <View style={styles.fxDirRow}>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>신청할</Text>
+                <Text style={styles.leftGuideTxt}>제품종류를</Text>
+                <Text style={styles.leftGuideTxt}>선택해주세요</Text>
+              </View>
+              <View style={styles.rightStepNumWrap}>
+                <Text style={styles.rightStepNum}>03</Text>
+              </View>
             </View>
 
-            <View style={styles.fx5}>
-               <Carousel
-                ref={c => this._slider1Ref = c}
-                renderItem={this._renderItem}
-                sliderWidth={viewportWidth}
-                activeSlideAlignment={'start'}
-                itemWidth={itemWidth}
-                data={ENTRIES1}
-                firstItem={this.state.slider1ActiveSlide}
-                onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
-              />
+            <View style={styles.procBarWrap}>
+              <View style={styles.fx1}>
+                <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+                <View style={styles.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+               <View style={styles.procBarOn} />
+              </View>
             </View>
+            
           </View>
+
+          <ScrollView showsVerticalScrollIndicator={false}>
+
+            <View style={[styles.fxDirRow, styles.justiConBetween, styles.fxWraWra]}>
+
+              {ENTRIES1.map((entry, index) => (
+                <TouchableOpacity onPress={ () => alert("ddd")}  key={index}>
+                  <View 
+                    style={[
+                      styles.mb15, 
+                      styles.pd10,
+                      styles.alignItemsCenter,
+                      styles.justiConCenter,
+                      { 
+                        backgroundColor : color.prdTypeBackColor, 
+                        height : productCardSize, 
+                        width : productCardSize
+                  }]}>
+                    <Image source={require("./img/license-depart01.png")} 
+                      style={[styles.mb10, {
+                        height : productCardSize - 60, 
+                        width : productCardSize - 60
+                      }]}/>
+                    <Text style={localStyles.whiteFont}>{entry.title}</Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+
+            </View>
+            
+          </ScrollView>
+            
         </View>
-
+          
       </Container>
     );
   }
 }
 
-function wp (percentage) {
-  const value = (percentage * viewportWidth) / 100;
+function wp (percentage, space) {
+  const value = (percentage * (viewportWidth - space)) / 100;
   return Math.round(value);
 }
 
-const slideWidth = wp(65);
-const itemHorizontalMargin = wp(2);
-const itemWidth = slideWidth + itemHorizontalMargin * 2;
-
+const productCardSize = wp(47.5, 52);
 
 const localStyles = StyleSheet.create({
-  paginationContainer: {
-    paddingVertical: 0
-  },
-  paginationDot: {
-    borderRadius: 4,
-    marginHorizontal: 0,
-    height: 10,
-    width: 10
+  whiteFont: {
+    color: color.whiteColor,
+    fontSize: 16,
+    fontWeight: "500"
   }
 });
 

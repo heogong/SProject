@@ -60,28 +60,31 @@ class ApplyAfterService extends Component {
         </Header>
 
         <View style={styles.contentWrap}>
+
           <View>
+            
             <View style={styles.fxDirRow}>
               <View style={styles.leftGuideTxtWrap}>
-                <Text style={styles.leftGuideTxt}>쿨리닉</Text>
-                <Text style={styles.leftGuideTxt}>결제카드를</Text>
-                <Text style={styles.leftGuideTxt}>등록해주세요</Text>
+                <Text style={styles.leftGuideTxt}>증상 및</Text>
+                <Text style={styles.leftGuideTxt}>상세정보를</Text>
+                <Text style={styles.leftGuideTxt}>입력해주세요</Text>
               </View>
               <View style={styles.rightImgWrap}>
-                <Image source={require('./img/license-depart01.png')} style={{width: 76, height: 76}}/>
+                <Image source={require('./img/license-depart01.png')} style={{width: 80, height: 80}}/>
               </View>
             </View>
 
-            <View>
+            <View style={{marginTop: 26}}>
               <Picker
                 mode="dropdown"
-                iosIcon={<Icon name="arrow-down" />}
+                iosIcon={<Icon name="arrow-dropdown" style={styles.selectBoxIcon}/>}
                 style={{ width: undefined }}
-                placeholder="Select your SIM"
-                placeholderStyle={{ color: "#bfc6ea" }}
-                placeholderIconColor="#007aff"
+                placeholder="증상을 선택해 주세요."
+                placeholderStyle={{ color: color.inputPlaceHodler }}
                 selectedValue={this.state.selected2}
                 onValueChange={this.onValueChange2.bind(this)}
+                style={styles.selectBoxWrap}
+                textStyle={styles.selectBoxTxt}
               >
                 <Picker.Item label="Wallet" value="key0" />
                 <Picker.Item label="ATM Card" value="key1" />
@@ -90,19 +93,28 @@ class ApplyAfterService extends Component {
                 <Picker.Item label="Net Banking" value="key4" />
               </Picker>
 
-              <Textarea rowSpan={5} bordered placeholder="Textarea" />
+              <Textarea rowSpan={5} style={[styles.textAreaDefault, {marginTop: 12}]} placeholder="상세 증상을 입력해 주세요." placeholderTextColor={{ color: color.inputPlaceHodler }} />
             </View>
           </View>
 
-          <View style={{flex:1, justifyContent:'center'}}>
-            <Text style={{color:'#28c8f5'}}>클리닉 제품 분석</Text>
-            <Text>aaaaaaaaaaaaaaaa</Text>
-            <Text>aaaaaaaaaaaaaaaa</Text>
-            <Text>aaaaaaaaaaaaaaaa</Text>
+          <View style={styles.mb20}>
+            <Text style={localStyles.boxDetailSubTitleTxt}>쿨리닉 제품분석</Text>
+            <View style={styles.fxDirRow}>
+              <View style={styles.fx1}>
+                <Text style={localStyles.boxDetailSubTxt}>용량 :</Text>
+                <Text style={localStyles.boxDetailSubTxt}>전기 :</Text>
+                <Text style={localStyles.boxDetailSubTxt}>압축기 :</Text>
+              </View>
+              <View style={styles.fx1}>
+                <Text style={localStyles.boxDetailSubTxt}>응축기 :</Text>
+                <Text style={localStyles.boxDetailSubTxt}>증발기 :</Text>
+                <Text style={localStyles.boxDetailSubTxt}>제조사 :</Text>
+              </View>
+            </View>
           </View>
 
           <View style={styles.footerBtnWrap}>
-            <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mb5]}>
+            <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mb12]}>
               <Text style={[styles.btnDefaultTxt, styles.btnDefaultNoFillTxt]}>결제카드선택</Text>
             </Button>
             <Button block info style={[styles.btnDefault, styles.btnDefaultFill]}>
@@ -115,4 +127,20 @@ class ApplyAfterService extends Component {
     );
   }
 }
+
+const localStyles = StyleSheet.create({
+  boxDetailSubTitleTxt: {
+    fontSize: 18,
+    color: color.defaultColor,
+    paddingBottom: 12,
+    fontWeight: "bold",
+    marginTop: 20
+  },
+  boxDetailSubTxt: {
+    fontSize: 14,
+    color: "#8e8e98",
+    lineHeight: 20
+  },
+});
+
 export default ApplyAfterService;

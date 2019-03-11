@@ -38,20 +38,17 @@ class SelectProduct2 extends Component {
   }
 
   drawPrdouct = () => (
-    <View style={[styles.mr7, styles.pd10, styles.alignItemsCenter, {backgroundColor : color.defaultColor, width : productCardSize}]}>
+    <View style={localStyles.myPrdBoxWrap}>
 
-      <View style={[styles.fx1, styles.justiConCenter]}>
-        <H1 style={{color : color.whiteColor}}>01</H1>
+      <Text style={localStyles.myPrdNumTxt}>01</Text>
+
+      <View style={localStyles.myPrdImgWrap}>
+        <Image source={require("./img/license-depart01.png")} style={localStyles.myPrdImg} />
       </View>
 
-      <View style={[styles.fx3, styles.justiConCenter]}>
-        <Image source={require("./img/license-depart01.png")} style={{height : productCardSize - 20, width : productCardSize - 20}} />
-      </View>
-
-      <View style={[styles.fx2, styles.justiConCenter, styles.alignItemsCenter]}>
-        <H3 style={[styles.mb10, {color : color.whiteColor}]}>육류용냉장고</H3>
-        <Text style={styles.whiteFont}>짧은 설명에 대해</Text>
-        <Text style={styles.whiteFont}>20자 내로 작성</Text>
+      <View style={localStyles.myPrdInfoTxtWrap}>
+        <Text style={localStyles.myPrdNameTxt}>육류용냉장고</Text>
+        <Text style={localStyles.myPrdDscTxt}>짧은 설명에 대해 짧은 설명에 대해 짧은 설명에 대해</Text>
       </View>
       
     </View>
@@ -59,12 +56,7 @@ class SelectProduct2 extends Component {
 
   render() {
     return (
-      <Container style={{
-        flex: 1,
-        backgroundColor: color.whiteColor,
-        paddingLeft: 26,
-        paddingBottom: 26
-      }}>
+      <Container style={styles.containerInnerPd}>
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>
             <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
@@ -77,29 +69,31 @@ class SelectProduct2 extends Component {
           <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <View style={styles.fx1}>
+        <View style={styles.contentWrap}>
 
-          <View style={styles.fx1}>
-            <H1>수리가</H1>
-            <H1>필요한것을</H1>
-            <H1>선택해주세요</H1>
-          </View>
-
-          <View style={styles.fx3}>
-
-            <View style={[styles.fx1]}>
-              <View style={{backgroundColor : color.defaultColor, height : 5, marginRight : 26}}/>
-            </View>
-
-            <View style={styles.fx5}>
-              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                { this.drawPrdouct() }
-                { this.drawPrdouct() }
-                { this.drawPrdouct() }
-                { this.drawPrdouct() }
-              </ScrollView>
+          <View style={{marginBottom: 36}}>
+            <View style={styles.fxDirRow}>
+              <View style={styles.leftGuideTxtWrap}>
+                <Text style={styles.leftGuideTxt}>수리가</Text>
+                <Text style={styles.leftGuideTxt}>필요한 제품을</Text>
+                <Text style={styles.leftGuideTxt}>선택해주세요</Text>
+              </View>
             </View>
           </View>
+
+
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={localStyles.myPrdListWrap}>
+              
+                { this.drawPrdouct() }
+                { this.drawPrdouct() }
+                { this.drawPrdouct() }
+                { this.drawPrdouct() }
+                { this.drawPrdouct() }
+                { this.drawPrdouct() }
+              
+            </View>
+          </ScrollView>
         </View>
 
       </Container>
@@ -112,6 +106,55 @@ function wp (percentage, space) {
   return Math.round(value);
 }
 
-const productCardSize = wp(40, 20);
+const productCardSize = wp(48, 52);
+
+const localStyles = StyleSheet.create({
+  myPrdBoxWrap: {
+    alignItems: "center",
+    backgroundColor : color.defaultColor,
+    width : productCardSize,
+    height: 280,
+    marginBottom: 10
+  },
+  myPrdNumTxt: {
+    color : color.whiteColor,
+    fontSize: 30,
+    fontWeight: "bold",
+    marginTop: 20,
+    marginBottom: 14
+  },
+  myPrdImgWrap: {
+    marginBottom: 14
+  },
+  myPrdImg: {
+    height: 100,
+    width: 100
+  },
+  myPrdInfoTxtWrap: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  myPrdNameTxt: {
+    marginBottom: 10,
+    color : color.whiteColor,
+    fontSize: 16,
+    fontWeight: "bold"
+  },
+  myPrdDscTxt: {
+    color: color.whiteColor,
+    fontSize: 13,
+    paddingLeft: 10,
+    paddingRight: 10,
+    textAlign: "center",
+    height: 45
+  },
+  myPrdListWrap: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    flexWrap: "wrap"
+  }
+});
 
 export default SelectProduct2;

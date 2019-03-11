@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, Dimensions, ScrollView, StyleSheet, View } from 'react-native'
+import { Image, TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native'
 import {
   Container,
   H1,
@@ -28,76 +28,95 @@ import {
   CheckBox
 } from "native-base";
 
-import { styles, viewportHeight } from './css/common';
+import { styles, viewportHeight, viewportWidth } from './css/common';
 import { color } from './css/color';
 
 class HistoryAfterServiceChk extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isModalVisible: false,
+      beforeMatch : true
+    }
   }
+
+  _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
+
+  product = () => (
+    <TouchableOpacity onPress={ () => this._toggleModal()}>
+      <View style={[styles.listPrdBoxFillWrap, {height: 120}]}>
+        <View style={[styles.listPrdBoxImgWrap ,{marginTop: 4}]}>
+          <Image 
+            source={require("./img/license-depart01.png")} 
+            resizeMode="contain" 
+            style={styles.listPrdBoxImg} 
+          />
+          <Text style={styles.listPrdBoxImgTxt}>육류 냉장고</Text>
+        </View>
+        <View style={styles.listPrdBoxRightTxtWrap}>
+          <H3 style={styles.listPrdBoxRightTitleTxt}>세나정육점</H3>
+          <Text style={[styles.listPrdBoxDeTxt, styles.mb12, {fontWeight: "500"}]}>2019년 01월 26일</Text>
+          <Text style={styles.listPrdBoxDeTxt}>경기도 시흥시 산기대로</Text>
+          <View style={styles.fxDirRow}>
+            <Text style={[styles.listPrdBoxDeTxt, {paddingTop: 3}]}>만족도</Text>
+            <View style={[styles.fxDirRow, {marginLeft: 6}]}>
+              <Icon style={styles.listPrdBoxStartIcon} name="star"/>
+              <Icon style={styles.listPrdBoxStartIcon} name="star"/>
+              <Icon style={styles.listPrdBoxStartIcon} name="star"/>
+              <Icon style={styles.listPrdBoxStartIcon} name="star-outline"/>
+              <Icon style={styles.listPrdBoxStartIcon} name="star-outline"/>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.listPrdBoxNextIconWrap}>
+          <Icon style={styles.listPrdBoxNextIcon} name="arrow-round-forward"/>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header style={{height:60, paddingTop : 0, elevation:0}}>
-          <Left style={{flex:1}}>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
             </Button>
           </Left>
-          <Body style={{flex:1, alignItems: 'center'}}>
-            <Title></Title>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
           </Body>
-          <Right style={{flex:1}}></Right>
+          <Right style={styles.headerRightWrap}></Right>
         </Header>
 
-        <ScrollView>
-
-          <View style={[styles.mg20, {flex:1, flexDirection : 'row'}]}>
-            <View style={{flex:1}}>
-              <H2>A/S 받으신</H2>
-              <H2>내역에 대해</H2>
-              <H2>확인해보세요</H2>
+        <View style={{marginBottom: 36}}>
+          <View style={styles.fxDirRow}>
+            <View style={styles.leftGuideTxtWrap}>
+              <Text style={styles.leftGuideTxt}>A/S 받으신</Text>
+              <Text style={styles.leftGuideTxt}>내역에 대해</Text>
+              <Text style={styles.leftGuideTxt}>확인해보세요</Text>
             </View>
-            <View style={{flex:1, alignItems : 'flex-end', justifyContent : 'flex-end'}}>
-              <H1 style={{color:'#28c8f5'}}>00</H1>
-              <Text>건</Text>
+
+            <View style={styles.rigthTxtWrap}>
+              <Text style={[styles.rightTxt, {fontWeight: "bold"}]}>
+                00<Text style={styles.rightTxtSmall}>건</Text>
+              </Text>
             </View>
           </View>
-
-          <View style={[styles.justiConCenter, styles.alignItemsCenter, {height : emptyFlexSize}]}> 
-            <View style={{
-                borderStyle : 'dashed',
-                borderRadius: 100, 
-                borderColor : color.defaultColor, 
-                borderWidth : 1,
-                height : emptyFlexSize - 160,
-                width : emptyFlexSize - 160
-            }}>
-                <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
-                    <Image 
-                        source={require("./img/license-depart01.png")} 
-                        style={{height : '40%', width : '40%'}}  
-                    />
-                    <Text style={{fontSize:12}}>A/S 서비스를</Text>
-                    <Text style={{fontSize:12}}>받은 내역이 없습니다.</Text>
-                </View>
-                
-            </View>
-          </View>
-        </ScrollView>
+        </View>
+        <View style={styles.listPrdBoxEmptyImgWrap}>
+          <Image 
+            source={require("./img/license-depart01.png")} 
+            style={{height: 219, width: 219, marginTop: -36}} 
+          />
+        </View>
 
       </Container>
     );
   }
 }
-
-function hp (percentage) {
-  const value = (percentage * viewportHeight) / 100;
-  return Math.round(value);
-}
-
-const emptyFlexSize = hp(55);
 
 export default HistoryAfterServiceChk;

@@ -84,6 +84,39 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // 공통 Style
     // ----------------------------
+    // Select Box
+    selectBoxWrap: {
+      paddingLeft: 14,
+      paddingRight: 14,
+      width: "100%",
+      height: 36,
+      borderWidth: 1,
+      borderColor: "#c9cacb",
+      borderRadius: 0
+    },
+    selectBoxTxt: {
+      fontSize: 13,
+      color: color.defaultColor,
+      paddingLeft: 0,
+      paddingRight: 0
+    },
+    selectBoxIcon: {
+      fontSize: 35,
+      marginLeft: 0,
+      marginRight: 0,
+      color: color.defaultColor
+    },
+    // TextArea
+    textAreaDefault: {
+      paddingLeft: 14,
+      paddingRight: 14,
+      paddingTop: 12,
+      paddingBottom: 12,
+      borderWidth: 1,
+      borderColor: "#c9cacb",
+      borderRadius: 0,
+      fontSize: 13
+    },
     // 성공화면 
     succContentWrap: {
       flex:1
@@ -219,6 +252,21 @@ export const styles = StyleSheet.create({
       borderColor: '#ddd',
       borderBottomWidth: 0,
       marginTop: 2,
+      marginLeft: 5,
+      marginRight: 5
+    },
+    boxShadowTopNo: {
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      borderColor: '#ddd',
+      borderBottomWidth: 0,
+      borderTopWidth: 0,
       marginLeft: 5,
       marginRight: 5
     },

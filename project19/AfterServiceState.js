@@ -41,17 +41,8 @@ class AfterServiceState extends Component {
     super(props);
 
     this.state = {
-        tab1: false,
-        tab2: false,
-        tab3: true,
         map : false
     };
-  }
-
-  drawMap = () => {
-    <View style={[styles.fx3, {backgroundColor : 'skyblue'}]}>
-        <Text>MAP</Text>
-    </View>
   }
 
   render() {
@@ -74,84 +65,73 @@ class AfterServiceState extends Component {
 
         <View style={styles.fx1}>
 
-            {/* {this.drawMap()} */}
+            
             { (this.state.map) ? (
-                <View style={[styles.fx3, {backgroundColor : 'skyblue'}]}>
+                <View style={{height : mapSize, backgroundColor : 'skyblue'}}>
                     <Text>MAP</Text>
                 </View>
-
             ) : (
                 <View style={localStyles.descBox}>
-                    <View style={[styles.fx2, styles.mb15, styles.fxDirRow]}>
+                    <View style={localStyles.topTxtWrap}>
                         <View style={styles.fx2}>
-                            <H2 style={[styles.mb10, {color : color.defaultColor}]}>세나정육점 A/S</H2>
-                            <Text>육류용 냉장고</Text>
-                            <Text style={styles.greyFont}>경기도 시흥시 산기대로</Text>
-                            <Text style={styles.greyFont}>bbbbbbbbbbb</Text>
+                            <Text style={localStyles.topTilteTxt}>세나정육점 A/S</Text>
+                            <Text style={localStyles.topSubTitleTxt}>육류용 냉장고</Text>
+                            <Text style={localStyles.topInfoTxt}>2019년 01월 01일</Text>
+                            <Text style={localStyles.topInfoTxt}>증상1. 냉동 온도가 올라가지 않음</Text>
                         </View>
-                        <View style={[styles.fx1, styles.alignItemsCenter]}>
-                            <Image source={require("./img/license-depart01.png")} resizeMode="contain" style={{height : productImgSize, width : productImgSize}}/>
+                        <View style={localStyles.topboxImgWrap}>
+                            <Image source={require("./img/license-depart01.png")} resizeMode="contain" style={localStyles.topBoxImg}/>
                         </View>
                     </View>
 
-                    <View style={styles.fx3}>
-                        <Text>참고사항</Text>
-                        <Text style={styles.greyFont}>
-                            레이아웃 구성하는데 하루종일 걸리네 나 너무 힘드네 
-                            돈벌기가 이렇게 먹고살기 힘들어서 살겄나
-                            돈벌기가 이렇게 먹고살기 힘들어서 살겄나
-                            돈벌기가 이렇게 먹고살기 힘들어서 살겄나
-                        </Text> 
+                    <View>
+                        <Text style={[localStyles.topSubTitleTxt, {marginTop: 20, marginBottom: 10}]}>참고사항</Text>
+                        <Text style={localStyles.topInfoTxt}>참고사항입니다. 123123123123123123123123333333ㅏㅣㅓㅁㄹㅇ라ㅣㅓㄴㅁㅇ라ㅣㅁㅇ너리만ㅇ럼이ㅏ렁닐</Text>
                     </View>
                     
                 </View>
             )}
 
-            <View style={[styles.fx2, styles.basicBackgroundColor, {paddingLeft : 26, paddingRight : 26}]}>
+            <View>  
                 <View style={localStyles.secondBox}>
-                    <Text style={[styles.mb10, {textAlign:'center', color: color.defaultColor}]}>매칭된 A/S 업체가 출발했어요.</Text>
+                    <Text style={localStyles.asMatchStateDscTxt}>매칭된 A/S 업체가 출발했어요.</Text>
                     <View style={styles.fxDirRow}>
-                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
-                            <Image source={require("./img/input-able.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={{fontSize : 12}}>A/S 대기</Text>
+                        <View style={localStyles.asMatchIconWrap}>
+                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
                         </View>
-                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
-                            <Image source={require("./img/input-able.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={{fontSize : 12}}>A/S 출발</Text>
+                        <View style={localStyles.asMatchIconWrap}>
+                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
                         </View>
-                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
-                            <Image source={require("./img/input-able.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={{fontSize : 12}}>A/S 도착</Text>
+                        <View style={localStyles.asMatchIconWrap}>
+                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
                         </View>
-                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
-                            <Image source={require("./img/input-able.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={{fontSize : 12}}>A/S 진행</Text>
+                        <View style={localStyles.asMatchIconWrap}>
+                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
                         </View>
-                        <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
-                            <Image source={require("./img/input-able.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={{fontSize : 12}}>A/S 완료</Text>
+                        <View style={localStyles.asMatchIconWrap}>
+                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
                         </View>
                     </View>
                 </View>
             </View>
 
-            <View style={[
-                styles.fx2, 
-                styles.fxDirRow, 
-                styles.alignItemsCenter, 
-                {paddingLeft : 26, paddingRight : 26}
-            ]}>
+            <View style={localStyles.serviceBoxWrap}>
                 <View style={[localStyles.serviceBox, {marginRight : 20}]}>
-                    <Image source={require("./img/join-end.png")} resizeMode="contain" style={{height : serviceImgSize, width : serviceImgSize}} />
-                    <Text style={{color : color.defaultColor, fontSize : 14}}>서비스평가</Text>
+                    <Image source={require("./img/join-end.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
+                    <Text style={localStyles.serviceBoxTxt}>서비스평가</Text>
                 </View>
                 <View style={[localStyles.serviceBox, {marginRight : 20}]}>
-                    <Image source={require("./img/join-end.png")} resizeMode="contain" style={{height : serviceImgSize, width : serviceImgSize}} />
-                    <Text style={{color : color.defaultColor, fontSize : 14}}>최근보고서</Text>
+                    <Image source={require("./img/join-end.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
+                    <Text style={localStyles.serviceBoxTxt}>최근보고서</Text>
                 </View>
                 <View style={[localStyles.serviceBox]}>
-                    <Image source={require("./img/join-end.png")} resizeMode="contain" style={{height : serviceImgSize, width : serviceImgSize}} />
-                    <Text style={{color : color.defaultColor, fontSize : 14}}>이전 A/S 내역</Text>
+                    <Image source={require("./img/join-end.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
+                    <Text style={localStyles.serviceBoxTxt}>이전 A/S 내역</Text>
                 </View>
             </View>
         </View>
@@ -189,38 +169,107 @@ function hp (percentage) {
 
 const productImgSize = wp(25,52);
 const stateImgSize = wp(13, 52);
-const serviceImgSize = wp(17, 52);
-const serviceHeightBoxSize = hp(25);
+const mapSize = hp(26);
 
 
 const localStyles = StyleSheet.create({
     descBox : {
-        flex: 3.5,
         backgroundColor : color.whiteColor, 
-        borderColor : color.defaultColor,
+        borderColor : "#ddd",
         borderBottomWidth : 1,
         marginLeft : 26, 
         marginRight : 26,
-        paddingTop : 10,
+        paddingTop : 30,
+        paddingBottom : 30,
         paddingLeft : 10,
-        paddingRight : 10
+        paddingRight : 10,
+        borderTopWidth: 1,
+        borderColor: "#ddd",
+        paddingLeft: 26,
+        paddingRight: 26
     },
     secondBox : {
-        paddingTop : 15,
-        paddingBottom : 15,
+        marginLeft : 26, 
+        marginRight : 26, 
+        paddingTop : 18,
+        paddingBottom : 18,
+        paddingLeft : 24,
+        paddingRight: 24,
         borderBottomLeftRadius : 5, 
         borderBottomRightRadius : 5, 
-        backgroundColor : color.whiteColor,
-        elevation: 10
+        backgroundColor : color.whiteColor
+    },
+    asMatchStateDscTxt: {
+        marginBottom: 15,
+        textAlign:'center',
+        color: "#0397bd",
+        fontWeight: "bold",
+        fontSize: 16
+    },
+    asMatchIconWrap: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    asMatchStateTxt: {
+        fontSize : 12,
+        color: "#0397bd",
+        fontWeight: "500",
+        marginTop: 10
     },
     serviceBox: {
         flex : 1,
         justifyContent : 'center',
         alignItems : "center",
         backgroundColor : color.whiteColor,
-        height : serviceHeightBoxSize, 
+        height : 96,
+        width: 96, 
         borderRadius : 5, 
-        elevation: 10
+        elevation: 10,
+        marginTop: 22
+    },
+    serviceBoxImg: {
+        height : 56,
+        width : 56
+    },
+    serviceBoxTxt: {
+        color : "#0397bd",
+        fontSize : 13,
+        marginTop: 10
+    },
+    serviceBoxWrap: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginLeft : 26, 
+        marginRight : 26, 
+    },
+    topTxtWrap: {
+        flexDirection: "row"
+    },
+    topTilteTxt: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: color.defaultColor,
+        marginBottom: 24
+    },
+    topBoxImg: {
+        height : 80,
+        width : 80
+    },
+    topboxImgWrap: {
+        flex: 1,
+        alignItems: "center"
+    },
+    topSubTitleTxt: {
+        alignItems: "center",
+        fontSize: 15,
+        color: "#1e1e32",
+        fontWeight: "bold",
+        marginBottom: 10
+    },
+    topInfoTxt: {
+        fontSize: 13,
+        color: "#8e8e98"
     }
 });
 
