@@ -190,7 +190,7 @@ maching = () => (
             {this.drawSwiper()}
 
             <View style={{backgroundColor : '#d6f1ff'}}>
-                <View style={[styles.boxShadow, localStyles.secondBox]}>
+                <View style={[styles.boxShadowTopNo, localStyles.secondBox]}>
                     <Text style={localStyles.asMatchStateDscTxt}>매칭된 A/S 업체가 출발했어요.</Text>
                     <View style={styles.fxDirRow}>
                         <View style={localStyles.asMatchIconWrap}>

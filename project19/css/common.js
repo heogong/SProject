@@ -255,6 +255,21 @@ export const styles = StyleSheet.create({
       marginLeft: 5,
       marginRight: 5
     },
+    boxShadowTopNo: {
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      borderColor: '#ddd',
+      borderBottomWidth: 0,
+      borderTopWidth: 0,
+      marginLeft: 5,
+      marginRight: 5
+    },
     // FooterTab
     footTxt: {
       fontSize: 12,
