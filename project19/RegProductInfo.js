@@ -109,8 +109,7 @@ class RegProductInfo extends Component {
             
           </View>
 
-          <ScrollView showsVerticalScrollIndicator={false}
-          style={{marginBottom: 37}}>
+          <ScrollView showsVerticalScrollIndicator={false}>
 
             <View style={[styles.fxDirRow, styles.justiConBetween, styles.fxWraWra]}>
 
@@ -156,15 +155,6 @@ function wp (percentage, space) {
 const productCardSize = wp(47.5, 52);
 
 const localStyles = StyleSheet.create({
-  paginationContainer: {
-    paddingVertical: 0
-  },
-  paginationDot: {
-    borderRadius: 4,
-    marginHorizontal: 0,
-    height: 10,
-    width: 10
-  },
   whiteFont: {
     color: color.whiteColor,
     fontSize: 16,

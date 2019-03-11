@@ -150,11 +150,14 @@ const PAGE = () => (
             <Scene key="TakeProductImage" hideNavBar component={TakeProductImage}  type={ActionConst.RESET}/>
             <Scene key="TakeProductGuide2" hideNavBar component={TakeProductGuide2} type={ActionConst.RESET}/>
             <Scene key="SuccessRegProduct" hideNavBar component={SuccessRegProduct} type={ActionConst.RESET}/>
-            <Scene initial key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
-
+            <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
             <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
-            <Scene key="SelectProduct2" hideNavBar component={SelectProduct2}  type={ActionConst.RESET}/>
-            <Scene key="ApplyAfterService" hideNavBar component={ApplyAfterService} type={ActionConst.RESET}/>
+            <Scene key="SelectProduct2" hideNavBar component={SelectProduct2} type={ActionConst.RESET}/>
+            {/* 44번 화면 작업 예정 */}
+            {/* 47번 화면 작업 예정 */}
+            <Scene initial key="ApplyAfterService" hideNavBar component={ApplyAfterService} type={ActionConst.RESET}/>
+
+
             <Scene key="HistoryAfterService" hideNavBar component={HistoryAfterService} type={ActionConst.RESET}/>
             <Scene key="AfterServiceState" hideNavBar component={AfterServiceState} type={ActionConst.RESET}/>
             <Scene key="HistoryAfterServiceChk" hideNavBar component={HistoryAfterServiceChk} type={ActionConst.RESET}/>
