@@ -45,12 +45,12 @@ class ClientMain extends Component {
 
 drawSwiper = () => (
     <Swiper 
-        style={localStyles.topBoxWrap}
+        style={localStyles.topBoxSwiperWrap}
         paginationStyle={{
-            bottom: 0, left: null, right: 10
+            bottom: 10
         }} 
-        dot={<View style={{backgroundColor: 'rgba(3,151,189, 0.4)', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
-        activeDot={<View style={{backgroundColor: color.whiteColor, width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
+        dot={<View style={[localStyles.swiperDot, {backgroundColor: 'rgba(3,151,189, 0.4)'}]} />}
+        activeDot={<View style={[localStyles.swiperDot, {backgroundColor: color.whiteColor}]} />}
     >
 
         <View style={localStyles.topBoxWrap}>
@@ -262,6 +262,18 @@ const afterServiceBtnSize = wp(33, 30);
 const stateImgSize = wp(10, 52);
 
 const localStyles = StyleSheet.create({
+    topBoxSwiperWrap: {
+        height: 290,
+    },
+    swiperDot: {
+        width: 12,
+        height: 12,
+        borderRadius: 5,
+        marginLeft: 3,
+        marginRight: 3,
+        marginTop: 3,
+        marginBottom: 3
+    },
     topBoxWrap: {
         width: "100%",
         height: 290,
