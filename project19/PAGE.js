@@ -68,6 +68,7 @@ import NoticeList from './NoticeList';
 import TermsMenu from './TermsMenu'
 import TermsContent1 from './TermsContent1';
 import ListBusinessPlace from './ListBusinessPlace';
+import RegProductType from './RegProductType';
 
 import pageOne from './Page1'
 import pageTwo from './Page2'
@@ -151,7 +152,7 @@ const PAGE = () => (
             <Scene key="TakeProductImage" hideNavBar component={TakeProductImage}  type={ActionConst.RESET}/>
             <Scene key="TakeProductGuide2" hideNavBar component={TakeProductGuide2} type={ActionConst.RESET}/>
             <Scene key="SuccessRegProduct" hideNavBar component={SuccessRegProduct} type={ActionConst.RESET}/>
-            <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
+            <Scene initial key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
             <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
             <Scene key="SelectProduct2" hideNavBar component={SelectProduct2} type={ActionConst.RESET}/>
             {/* 44번 화면 작업 예정 */}
@@ -161,10 +162,11 @@ const PAGE = () => (
             <Scene key="HistoryAfterServiceChk2" hideNavBar component={HistoryAfterServiceChk2} type={ActionConst.RESET}/>
             <Scene key="HistoryAfterServiceChk" hideNavBar component={HistoryAfterServiceChk} type={ActionConst.RESET}/>
             <Scene key="ReportAfterService" hideNavBar component={ReportAfterService} type={ActionConst.RESET}/>
-            <Scene initial key="ListBusinessPlace" hideNavBar component={ListBusinessPlace} type={ActionConst.RESET}/>
+            <Scene key="ListBusinessPlace" hideNavBar component={ListBusinessPlace} type={ActionConst.RESET}/>
+            <Scene key="RegProductType" hideNavBar component={RegProductType} type={ActionConst.RESET}/>
+            <Scene key="RegProduct" hideNavBar component={RegProduct} type={ActionConst.RESET}/>
 
             <Scene key="HistoryAfterService" hideNavBar component={HistoryAfterService} type={ActionConst.RESET}/>
-            <Scene key="RegProduct" hideNavBar component={RegProduct} type={ActionConst.RESET}/>
             <Scene key="TakeProductGuide1" hideNavBar component={TakeProductGuide1} type={ActionConst.RESET}/>
 
 
