@@ -55,7 +55,7 @@ class JoinSuccess extends Component {
           <View style={styles.succContentTop}>
             <View>
               <View style={[styles.alignItemsCenter, {marginBottom: 38}]}>
-                <Image source={require('./img/join-end.png')} style={{width: 48, height: 48}}/>
+                <Image source={require('./img/Next_icon.png')} style={{width: 48, height: 48}}/>
               </View>
               <View style={styles.succTopTxtWrap}>
                 <Text style={styles.succTopTxt}>회원가입이</Text>
@@ -65,8 +65,7 @@ class JoinSuccess extends Component {
           </View>
           <View style={styles.fx1}>
             <View style={[styles.fx1, styles.alignItemsCenter]}>
-              <Text style={styles.greyFont}>귀하의 사업자정보를 등록하고</Text>
-              <Text style={styles.greyFont}>쿨리닉 매칭 서비스를 이용해보세요</Text>
+              <Text style={styles.greyFont}>결제카드를 등록하고 A/S를 신청해보세요</Text>
             </View>
 
             <View style={styles.footerBtnWrap}>

@@ -45,7 +45,7 @@ class JoinEmail extends Component {
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>
             <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
-              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
+              <Image source={require("./img/btn_back_arrow.png")} resizeMode="contain" style={styles.btnBackArrowIcon} />
             </Button>
           </Left>
           <Body style={styles.headerCenterWrap}>
@@ -96,8 +96,9 @@ class JoinEmail extends Component {
             <Item regular style={[styles.mb10, styles.inputWhBackGreyBo]}>
               <Input placeholder="비밀번호 확인" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
               <Icon name="ios-checkmark-circle" style={styles.inputIcon} />
+              {/* <Icon name="ios-checkmark-circle" style={[styles.inputIcon, {color: "#ddd"}]} /> */}
             </Item>
-            <Text style={{color: color.warningColor, fontSize: 12}}>비밀번호가 맞지 않습니다.</Text>
+            <Text style={{color: color.warningColor, fontSize: 13}}>비밀번호가 맞지 않습니다.</Text>
           </View>
 
           <View style={styles.footerBtnWrap}>

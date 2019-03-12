@@ -38,7 +38,7 @@ const InvaildPasswd = (props) => {
         </View>
 
         <View>
-          <Text style={{color: color.whiteColor}}>유효한 인증번호입니다.</Text>
+          <Text style={localStyles.infoTxt}>유효한 인증번호입니다.</Text>
         </View>
       </View>
 
@@ -47,9 +47,9 @@ const InvaildPasswd = (props) => {
         <View style={localStyles.inputBoxWrap}>
 
           <View style={localStyles.txtWrap}>
-            <Text style={{textAlign: 'center', color: color.whiteColor}}>김성찬님은 이메일로 가입되어있으며</Text>
-            <Text style={[{textAlign: 'center', color: color.whiteColor}, styles.mb12]}>회원님의 아이디는 rastid@naver.com 입니다</Text>
-            <Text style={{textAlign: 'center', color: color.whiteColor}}>지금 바로 로그인하러 이동하세요</Text>
+            <Text style={localStyles.infoTxt1}>김성찬님은 이메일로 가입되어있으며</Text>
+            <Text style={[localStyles.infoTxt1, styles.mb12]}>회원님의 아이디는 rastid@naver.com 입니다</Text>
+            <Text style={localStyles.infoTxt1}>지금 바로 로그인하러 이동하세요</Text>
           </View>
           <Item regular style={[styles.mb14, styles.inputWhBackWhBo]}>
             <Input placeholder="비밀번호(영문+숫자+특수문자조합 8~16자리)" style={[styles.inputBox, styles.pl9]} placeholderTextColor={color.inputPlaceHodler}/>
@@ -61,9 +61,9 @@ const InvaildPasswd = (props) => {
 
       ) : (
         <View style={localStyles.blankBoxWrap}>
-          <Text style={{color: color.whiteColor}}>김성찬님은 이메일로 가입되어있으며</Text>
-          <Text style={[{color: color.whiteColor}, styles.mb12]}>회원님의 아이디는 rastid@naver.com 입니다</Text>
-          <Text style={{color: color.whiteColor}}>지금 바로 로그인하러 이동하세요</Text>
+          <Text style={localStyles.infoTxt}>김성찬님은 이메일로 가입되어있으며</Text>
+          <Text style={[localStyles.infoTxt, styles.mb12]}>회원님의 아이디는 rastid@naver.com 입니다</Text>
+          <Text style={localStyles.infoTxt}>지금 바로 로그인하러 이동하세요</Text>
         </View>
       )
       
@@ -73,11 +73,11 @@ const InvaildPasswd = (props) => {
 
 const localStyles = StyleSheet.create({
   idPwFindTabWrap: {
-    flex: 2,
+    flex: 3,
     marginTop: 38
   },
   inputBoxWrap: {
-    paddingTop : 52,
+    paddingTop : 30,
     paddingLeft : 20,
     paddingRight : 20,
     flex: 1,
@@ -92,6 +92,12 @@ const localStyles = StyleSheet.create({
   txtWrap: {
     paddingTop: 5,
     paddingBottom: 41
+  },
+  infoTxt: {
+    color: color.whiteColor, fontSize: 13
+  },
+  infoTxt1: {
+    color: color.whiteColor, fontSize: 13, textAlign: "center"
   }
 });
 export default InvaildPasswd;

@@ -50,7 +50,7 @@ class UserLogin extends Component {
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>
             <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
-              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
+              <Image source={require("./img/btn_back_arrow.png")} resizeMode="contain" style={styles.btnBackArrowIcon} />
             </Button>
           </Left>
           <Body style={styles.headerCenterWrap}>
@@ -61,11 +61,12 @@ class UserLogin extends Component {
         
         <View style={styles.fx1}>
 
-          <View style={[styles.fx2, styles.alignItemsCenter, styles.justiConCenter]}>
-            <Image source={require('./img/bank-bg02.png')} resizeMode='center' style={{height: logoHeight, flex: 1}} />
+          <View style={localStyles.logoImgWrap}>
+            {/* <Image source={require('./img/logo-user.png')} resizeMode='contain' style={localStyles.logoImg} /> */}
+            <Image source={require('./img/logo-partner.png')} resizeMode='contain' style={localStyles.logoImg} />
           </View>
-          <View style={styles.fx5}>
-            <Text style={[styles.mb13, {textAlign: "center", fontSize: 13, color: "#8e8e98"}]}>쿨리닉의 회원이 되시면 다양한 혜택을 누리실 수 있습니다</Text>
+          <View style={styles.fx1}>
+            <Text style={[styles.mb10, {textAlign: "center", fontSize: 13, color: "#8e8e98"}]}>쿨리닉의 회원이 되시면 다양한 혜택을 누리실 수 있습니다</Text>
             <View style={localStyles.inputBoxWrap}>
               <Item regular style={[styles.mb12, styles.inputWhBackWhBo]}>
                 <Icon active name="mail" style={localStyles.inputIcon}/>
@@ -82,7 +83,7 @@ class UserLogin extends Component {
                 <View style={styles.fxDirRow}>
                   <CheckBox checked={this.state.checkbox}
                     onPress={() => this.toggleSwitch()}
-                    style={styles.checkboxReset}
+                    style={[styles.checkboxReset]}
                   />
                   <Text style={localStyles.inputBottomTxt}>자동로그인</Text>
                 </View>
@@ -111,13 +112,12 @@ class UserLogin extends Component {
                 <Text style={{fontWeight: 'bold', color:'#fff', fontSize: 16, letterSpacing: 0, marginBottom : 14}}>SNS LOGIN</Text>
 
                 <View style={styles.fxDirRow}>
-                  <View style={[localStyles.snsIcon]}>
-                    <Image source={require('./img/ico-naver.png')} style={{height : 32, width : 32}}/>
-                  </View>
-                  <View style={{paddingLeft: 8, paddingRight: 8}}></View>
-                  <View style={[localStyles.snsIcon]}>
-                    <Image source={require('./img/ico-kakao.png')} style={{height : 32, width : 32}}/>
-                  </View>
+                  <TouchableOpacity style={[localStyles.snsIcon, {marginRight: 16}]}>
+                    <Image source={require('./img/naver-button.png')} style={{height : 60, width : 60}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={[localStyles.snsIcon]}>
+                    <Image source={require('./img/kakao-button.png')} style={{height : 60, width : 60}}/>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
@@ -129,14 +129,11 @@ class UserLogin extends Component {
   }
 }
 
-const layoutCount = 5; // 화면 분할 개수 사이즈
-const logoHeight = (viewportHeight / layoutCount);
-
 const localStyles = StyleSheet.create({
   inputIcon: {
     color: color.inputPlaceHodler,
     fontSize: 20,
-    paddingLeft: 17,
+    paddingLeft: 9,
     paddingRight: 7
   },
   inputBoxWrap: {
@@ -151,21 +148,23 @@ const localStyles = StyleSheet.create({
     backgroundColor: color.defaultColor
   },
   inputBottomTxt: {
-    fontSize: 14,
-    color: color.whiteColor
+    fontSize: 13,
+    color: color.whiteColor,
+    marginTop: 2
   },
   snsIcon : {
     justifyContent : 'center',
     alignItems : 'center',
-    borderColor : '#fff',
-    borderBottomWidth : 1, 
-    borderTopWidth : 1,
-    borderLeftWidth : 1,
-    borderRightWidth : 1,
     height: 60,
-    width: 60,
-    borderRadius : 5
+    width: 60
   },
+  logoImgWrap: {
+    paddingTop: 30, paddingBottom: 30, alignItems: "center"
+  },
+  logoImg: {
+    width: 128,
+    height: 128
+  }
 });
 
 export default UserLogin;

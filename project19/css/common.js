@@ -54,6 +54,10 @@ export const styles = StyleSheet.create({
       color : color.defaultColor,
       fontSize : 14
     },
+    btnBackArrowIcon: {
+      width: 30,
+      height: 30
+    },
     // 메인 헤더
     headerM: {
       height: 55,
@@ -423,7 +427,7 @@ export const styles = StyleSheet.create({
     inputDefaultBox: {
       paddingRight: 8,
       fontSize: 14,
-      height: 46
+      height: 46,
     },
     inputWhBackBuBo: {
       height : 46,
@@ -435,9 +439,9 @@ export const styles = StyleSheet.create({
     },
     inputIcon: {
       color: color.defaultColor,
-      fontSize: 32,
+      fontSize: 30,
       marginRight: 5,
-      marginTop: 2
+      marginTop: 3
     },
     inputNbTitleTxt: {
       fontSize: 13,
@@ -625,7 +629,7 @@ export const styles = StyleSheet.create({
     noMargin: {marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0},
     noBackNBorderColor: {backgroundColor: color.whiteColor, borderColor: color.whiteColor},
 
-    checkboxReset: {paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, marginLeft: -10, marginRight: 15, marginTop: 0, marginBottom: 0},
+    checkboxReset: {paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, marginLeft: -10, marginRight: 15, marginTop: 0, marginBottom: 0, backgroundColor: color.whiteColor},
     checkboxTxt: {fontSize: 14, fontWeight: 'normal'},
 
     ftWe500: {fontWeight: "500"},

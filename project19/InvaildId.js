@@ -50,7 +50,7 @@ class InvaildId extends Component {
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>
             <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
-              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
+              <Image source={require("./img/btn_back_arrow.png")} resizeMode="contain" style={styles.btnBackArrowIcon} />
             </Button>
           </Left>
           <Body style={styles.headerCenterWrap}>
@@ -112,15 +112,15 @@ class InvaildId extends Component {
                   </View>
 
                   <View>
-                    <Text style={{color: color.whiteColor}}>유효한 인증번호입니다.</Text>
+                    <Text style={localStyles.infoTxt}>유효한 인증번호입니다.</Text>
                   </View>
                 </View>
 
               ) : (
                 <View style={localStyles.blankBoxWrap}>
-                  <Text style={{color: color.whiteColor}}>김성찬님은 이메일로 가입되어있으며</Text>
-                  <Text style={[{color: color.whiteColor}, styles.mb12]}>회원님의 아이디는 rastid@naver.com 입니다</Text>
-                  <Text style={{color: color.whiteColor}}>지금 바로 로그인하러 이동하세요</Text>
+                  <Text style={localStyles.infoTxt}>김성찬님은 이메일로 가입되어있으며</Text>
+                  <Text style={[localStyles.infoTxt, styles.mb12]}>회원님의 아이디는 rastid@naver.com 입니다</Text>
+                  <Text style={localStyles.infoTxt}>지금 바로 로그인하러 이동하세요</Text>
                 </View>
               )}
                 
@@ -204,7 +204,7 @@ const localStyles = StyleSheet.create({
     marginTop: 38
   },
   inputBoxWrap: {
-    paddingTop : 52,
+    paddingTop : 30,
     paddingLeft : 20,
     paddingRight : 20,
     flex: 1,
@@ -215,6 +215,9 @@ const localStyles = StyleSheet.create({
     backgroundColor : color.defaultColor,
     justifyContent : 'center',
     alignItems : 'center'
+  },
+  infoTxt: {
+    color: color.whiteColor, fontSize: 13
   }
 });
 

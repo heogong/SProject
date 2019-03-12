@@ -50,7 +50,7 @@ class RegCard extends Component {
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>
             <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
-              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
+              <Image source={require("./img/btn_back_arrow.png")} resizeMode="contain" style={styles.btnBackArrowIcon} />
             </Button>
           </Left>
           <Body style={styles.headerCenterWrap}>
@@ -91,7 +91,7 @@ class RegCard extends Component {
           <View style={localStyles.inputWrap}>
             <Item regular style={[styles.mb10, styles.inputWhBackBuBo]}>
               <Input placeholder="카드번호 16자리" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
-              <Icon name="ios-camera" style={styles.inputIcon} />
+              <Image source={require("./img/camera_icon.png")} resizeMode="contain" style={localStyles.cameraIcon} />
             </Item>
             <View style={[styles.mb10, styles.fxDirRow]}>
               <View style={styles.fx1}>
@@ -118,10 +118,10 @@ class RegCard extends Component {
 
             <View style={localStyles.termsWrap}>
               <View style={[styles.fx2, styles.alignItemsStart, styles.justiConBetween]}>
-                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>전자금융거래 이용약관</Text>
-                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>개인정보 수집 및 이용안내</Text>
-                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>전자금융거래 이용약관</Text>
-                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>개인정보 수집 및 이용안내</Text>
+                <Text style={[localStyles.inputBottomTxt, styles.mb10]}>전자금융거래 이용약관</Text>
+                <Text style={[localStyles.inputBottomTxt, styles.mb10]}>개인정보 수집 및 이용안내</Text>
+                <Text style={[localStyles.inputBottomTxt, styles.mb10]}>전자금융거래 이용약관</Text>
+                <Text style={[localStyles.inputBottomTxt, styles.mb10]}>개인정보 수집 및 이용안내</Text>
               </View>
               
               <View style={[styles.fx1, styles.fxDirRow]}>
@@ -177,13 +177,18 @@ const localStyles = StyleSheet.create({
     marginTop: 32
   },
   termsWrap: {
-    marginTop: 27,
+    marginTop: 20,
     flexDirection : "row"
   },
   inputBottomTxt: {
-    color: "#1e1e32",
+    color: "#8e8e98",
     fontSize: 13
   },
+  cameraIcon: {
+    width: 25,
+    height: 25,
+    marginRight: 15
+  }
 });
 
 export default RegCard;

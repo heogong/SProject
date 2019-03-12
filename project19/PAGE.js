@@ -80,9 +80,7 @@ const PAGE = () => (
         <Stack key="root">
             <Scene key="Intro" hideNavBar component={Intro} type={ActionConst.RESET}/>
             <Scene key="SelectUserType" hideNavBar component={SelectUserType} type={ActionConst.RESET}/>
-            
-            <Scene initial key="ClientIntroGuide" hideNavBar component={ClientIntroGuide} type={ActionConst.RESET}/>
-            
+            <Scene key="ClientIntroGuide" hideNavBar component={ClientIntroGuide} type={ActionConst.RESET}/>
             <Scene key="UserLogin" hideNavBar component={UserLogin} type={ActionConst.RESET}/>
             <Scene key="InvaildId" hideNavBar component={InvaildId} type={ActionConst.RESET}/>
             <Scene key="SelectJoinType" hideNavBar component={SelectJoinType} type={ActionConst.RESET}/>
@@ -91,6 +89,13 @@ const PAGE = () => (
             <Scene key="JoinPhone" hideNavBar component={JoinPhone} type={ActionConst.RESET}/>
             <Scene key="JoinPhoneAuth" hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
             <Scene key="JoinSuccess" hideNavBar component={JoinSuccess} type={ActionConst.RESET}/>
+            
+            <Scene key="RegCard" hideNavBar component={RegCard}  type={ActionConst.RESET}/>
+            <Scene key="ManageCard" hideNavBar component={ManageCard} type={ActionConst.RESET}/>
+            <Scene initial key="RegSuccessCard" hideNavBar component={RegSuccessCard} type={ActionConst.RESET}/>
+
+
+
             <Scene key="BusinessRegistration1" hideNavBar component={BusinessRegistration1} type={ActionConst.RESET}/>
             <Scene key="BusinessRegistration2" hideNavBar component={BusinessRegistration2}  type={ActionConst.RESET}/>
             <Scene key="BusinessRegistration3" hideNavBar component={BusinessRegistration3} type={ActionConst.RESET}/>
@@ -138,9 +143,7 @@ const PAGE = () => (
             <Scene key="TermsContent1" hideNavBar component={TermsContent1}  type={ActionConst.RESET}/>
 
             
-            <Scene key="RegCard" hideNavBar component={RegCard}  type={ActionConst.RESET}/>
-            <Scene key="ManageCard" hideNavBar component={ManageCard} type={ActionConst.RESET}/>
-            <Scene key="RegSuccessCard" hideNavBar component={RegSuccessCard} type={ActionConst.RESET}/>
+            
             <Scene key="RegSuccessTerm" hideNavBar component={RegSuccessTerm}  type={ActionConst.RESET}/>
             <Scene key="RegBusinessPlace" hideNavBar component={RegBusinessPlace} type={ActionConst.RESET}/>
             <Scene key="RegBusinessName" hideNavBar component={RegBusinessName} type={ActionConst.RESET}/>
