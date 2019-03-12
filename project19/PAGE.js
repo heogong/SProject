@@ -80,7 +80,6 @@ const PAGE = () => (
         <Stack key="root">
             <Scene key="Intro" hideNavBar component={Intro} type={ActionConst.RESET}/>
             <Scene key="SelectUserType" hideNavBar component={SelectUserType} type={ActionConst.RESET}/>
-            
             <Scene initial key="ClientIntroGuide" hideNavBar component={ClientIntroGuide} type={ActionConst.RESET}/>
             
             <Scene key="UserLogin" hideNavBar component={UserLogin} type={ActionConst.RESET}/>

@@ -42,11 +42,22 @@ class ClientIntroGuide extends Component {
 
   render() {
     return (
-      <Container style={styles.containerDefault}>
+      <Container style={styles.containerInnerPd}>
+        <Header style={[styles.header, styles.noPadding]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
+              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
+            </Button>
+          </Left>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
+          </Body>
+          <Right style={styles.headerRightWrap}></Right>
+        </Header>
         <Swiper 
           style={{flex: 1, height: "100%"}}
           paginationStyle={{
-              bottom: 25
+              bottom: 0
           }} 
           dot={<View style={[localStyles.swiperDot, {backgroundColor: 'rgba(3,151,189, 0.2)'}]} />}
           activeDot={<View style={[localStyles.swiperDot, {backgroundColor: color.defaultColor}]} />}
@@ -115,7 +126,8 @@ const localStyles = StyleSheet.create({
   guideBoxWrap: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: -40
   },
   guideImg: {
     height : 304,
