@@ -16,6 +16,7 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
@@ -229,6 +230,26 @@ class InputPhoneAuth extends Component {
             </CustomButton>
           </View>
         </View>
+
+        <CustomModal
+            modalType="CONFIRM"
+            isVisible={this.state.isModalVisible}
+            onPress1={this._toggleModal}
+            onPress2={this._regAfterServiceMatch}
+            infoText1="A/S 매칭을 수락하시겠습니까?"
+            infoText2="수락 후 1시간 30분 내에 도착하셔야 합니다"
+            btnText1="매칭취소"
+            btnText2="A/S 출발"
+        />
+
+        {/* alert 메세지 모달 */}
+        <CustomModal
+            modalType="ALERT"
+            isVisible={this.state.isAlertModal}
+            onPress={ () => this.setState({isAlertModal : false})}
+            infoText={this.state.resultMsg}
+            btnText="확인"
+        />
       </Container>
 
 
