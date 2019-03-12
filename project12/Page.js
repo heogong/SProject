@@ -180,7 +180,7 @@ const PAGE = () => (
       <Scene key="InvaildId" component={InvaildId} />
 
       <Scene key="JoinCustomerType" component={JoinCustomerType} />
-      <Scene key="JoinAccountType" initial component={JoinAccountType} />
+      <Scene key="JoinAccountType" component={JoinAccountType} />
       <Scene key="JoinInputEmail" component={JoinInputEmail} back onBack={() => Actions.JoinInputName()} />
       <Scene key="JoinInputName"  component={JoinInputName} />
       <Scene key="JoinInputPhone"  component={JoinInputPhone} />
@@ -206,7 +206,7 @@ const PAGE = () => (
 
       <Scene key="CardIndex"  component={CardIndex} type={ActionConst.RESET}/>
       <Scene key="CardInputInfo"  component={CardInputInfo} />
-      <Scene key="SuccessCardInfo"  component={SuccessCardInfo} type={ActionConst.RESET} />
+      <Scene key="SuccessCardInfo" initial component={SuccessCardInfo} type={ActionConst.RESET} />
       <Scene key="CardListInfo"  component={CardListInfo} />
 
       {/* 클라이언트 */}

@@ -31,9 +31,14 @@ class InputPhoneAuth extends Component {
       InpuCertNum: '',
       resultMsg : null,
       btnDisabled: true,
-      disabledNextBtn : true
+      disabledNextBtn : true,
+      isModalVisible: false, // confirm modal 용
+      isAlertModal : false, // alert 용
+      resultMsg : null
     };
   }
+
+  _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
 
   // 인증번호 next 버튼 활성화 여부
   _handleNumberChange = async (text)  => {
@@ -57,21 +62,9 @@ class InputPhoneAuth extends Component {
 
             // 회원 가입X  : true
             if (UsrResultBool) {
-              this.setState({disabledNextBtn : false}); // 입력완료 활성화
-
+              this.setState({disabledNextBtn : false}); // 입력완료 버튼 활성화
             } else {
-
-              Alert.alert(
-                '',
-                `${result.resultMsg} - 로그인 페이지로 이동하시겠습니까?`,
-                [
-                  // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-                  {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                  {text: '네', onPress: () => this._closeMoveAccountType},
-                ],
-                { cancelable: false }
-              )
-
+              this._toggleModal();
               this.setState({btnDisabled : true});
             }
         });
@@ -95,14 +88,10 @@ class InputPhoneAuth extends Component {
           this._getUserInfo();
 
         } else {
-          Alert.alert(
-            '',
-            result.resultMsg,
-            [
-              {text: '확인', onPress: () => Actions.IntroPage},
-            ],
-            { cancelable: false }
-          )
+          this.setState({
+            isAlertModal : true,
+            resultMsg : resultData.resultMsg
+          })
         }
       });
     } else {
@@ -121,14 +110,10 @@ class InputPhoneAuth extends Component {
           }
 
         } else {
-          Alert.alert(
-            '',
-            result.resultMsg,
-            [
-              {text: '확인', onPress: () => Actions.IntroPage},
-            ],
-            { cancelable: false }
-          )
+          this.setState({
+            isAlertModal : true,
+            resultMsg : resultData.resultMsg
+          })
         }
       });
     }
@@ -156,8 +141,16 @@ class InputPhoneAuth extends Component {
 
   // 이미 가입된 대상자 화면 이동
   _closeMoveAccountType = () => {
-    Actions.LoginAccountType();
+    this._toggleModal();
+    Actions.popTo("IntroPage");
   }
+
+  // errorMsg 대상자 화면 이동
+  _closeMoveAccountType2 = () => {
+    this.setState({isAlertModal : false});
+    Actions.popTo("IntroPage");
+  }
+
 
   render() {
     return (
@@ -203,7 +196,9 @@ class InputPhoneAuth extends Component {
                     placeholder="인증번호입력"
                     />
                 </Item>
+
                 <Text style={styles.greyFont}>{this.state.resultMsg}</Text>
+                
               </View>
               <View style={{width: '40%'}}>
                 <CustomButton 
@@ -235,18 +230,18 @@ class InputPhoneAuth extends Component {
             modalType="CONFIRM"
             isVisible={this.state.isModalVisible}
             onPress1={this._toggleModal}
-            onPress2={this._regAfterServiceMatch}
-            infoText1="A/S 매칭을 수락하시겠습니까?"
-            infoText2="수락 후 1시간 30분 내에 도착하셔야 합니다"
-            btnText1="매칭취소"
-            btnText2="A/S 출발"
+            onPress2={this._closeMoveAccountType}
+            infoText1="현재 시스템에 가입 되어있습니다."
+            infoText2="로그인 페이지로 이동하시겠습니까?"
+            btnText1="아니오"
+            btnText2="예"
         />
 
         {/* alert 메세지 모달 */}
         <CustomModal
             modalType="ALERT"
             isVisible={this.state.isAlertModal}
-            onPress={ () => this.setState({isAlertModal : false})}
+            onPress={this._closeMoveAccountType2}
             infoText={this.state.resultMsg}
             btnText="확인"
         />
