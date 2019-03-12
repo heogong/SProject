@@ -169,10 +169,10 @@ const PAGE = () => (
       {/* 약관동의 */}
       <Scene key="PartnerAgreeTermsService" component={PartnerAgreeTermsService} />
       <Scene key="SuccessJoinPartner" component={SuccessJoinPartner} />
-      <Scene key="ClientAgreeTermsService"  component={ClientAgreeTermsService} />
+      <Scene key="ClientAgreeTermsService" component={ClientAgreeTermsService} />
       
-      {/* <Scene key="PartnerTermsService" component={PartnerTermsService} />
-      <Scene key="SuccessAgreeTermsService"  component={SuccessAgreeTermsService} type={ActionConst.RESET}/> */}
+      {/* <Scene key="PartnerTermsService" component={PartnerTermsService} />*/}
+      <Scene key="SuccessAgreeTermsService"  component={SuccessAgreeTermsService} type={ActionConst.RESET}/> 
 
       <Scene key="reactCamera" component={ReactCamera} />
       <Scene key="ViewImage" component={ViewImage} />
@@ -206,7 +206,7 @@ const PAGE = () => (
 
       <Scene key="CardIndex"  component={CardIndex} type={ActionConst.RESET}/>
       <Scene key="CardInputInfo"  component={CardInputInfo} />
-      <Scene key="SuccessCardInfo" initial component={SuccessCardInfo} type={ActionConst.RESET} />
+      <Scene key="SuccessCardInfo"  component={SuccessCardInfo} type={ActionConst.RESET} />
       <Scene key="CardListInfo"  component={CardListInfo} />
 
       {/* 클라이언트 */}
@@ -216,14 +216,14 @@ const PAGE = () => (
       {/* 사업장등록 */}
       <Scene key="RegBusinessPlaceIndex"  component={RegBusinessPlaceIndex} />
       <Scene key="RegBusinessPlace"  component={RegBusinessPlace} />
-      <Scene key="SetBusinessPlace" component={SetBusinessPlace} />
+      <Scene key="SetBusinessPlace" component={SetBusinessPlace} type={ActionConst.RESET} />
       <Scene key="SetAddress"  component={SetAddress} />
       <Scene key="SearchAddress"  component={SearchAddress} />
 
       {/* <Scene key="ViewBusinessPlace" hideNavBar component={ViewBusinessPlace} title="사업장 조회"/> */}
 
       {/* 제품 등록 */}
-      <Scene key="InputProdType" component={InputProdType} type={ActionConst.RESET} />
+      <Scene key="InputProdType" initial component={InputProdType} />
       <Scene key="InputShowCase" component={InputShowCase} /> 
       <Scene key="TakeProductImage"  component={TakeProductImage} />
       <Scene key="TakeProductGuide1"  component={TakeProductGuide1} />

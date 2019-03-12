@@ -6,6 +6,7 @@ import CustomButton from '~/Common/Components/CustomButton';
 import CustomHeader from "~/Common/Components/CustomHeader";
 import { styles } from '~/Common/Styles/common';
 import { color } from "~/Common/Styles/colors";
+import { Actions } from "react-native-router-flux";
 
 class SuccessAgreeTermsService extends Component {
   constructor(props) {
@@ -19,19 +20,18 @@ class SuccessAgreeTermsService extends Component {
     return (
       <Container style={styles.containerInnerPd}>
         <CustomHeader resetPage={true}/>
-        <View style={styles.fx1}>
-          <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConCenter]}>
+        <View style={styles.succContentWrap}>
+          <View style={styles.succContentTop}>
             <View>
-              <View style={styles.alignItemsCenter}>
-                <Image source={require('~/Common/Image/join-end.png')} resizeMode='center'/>
+              <View style={[styles.alignItemsCenter, {marginBottom: 38}]}>
+                <Image source={require('~/Common/Image/Next_icon.png')} style={{width: 48, height: 48}}/>
               </View>
-              <View style={styles.alignItemsCenter}>
-                <H1>약관동의가</H1>
-                <H1>완료되었어요!</H1>
+              <View style={styles.succTopTxtWrap}>
+                <Text style={styles.succTopTxt}>약관동의가</Text>
+                <Text style={styles.succTopTxt}>완료되었어요!</Text>
               </View>
             </View>
           </View>
-
           <View style={styles.fx1}>
             <View style={[styles.fx1, styles.alignItemsCenter]}>
               <Text style={styles.greyFont}>제품을 등록하면 빠른 서비스를 받을 수 있어요!</Text>
@@ -39,23 +39,13 @@ class SuccessAgreeTermsService extends Component {
             </View>
 
             <View style={styles.footerBtnWrap}>
-            
-            <CustomButton 
-              onPress={this._cardRegister}
-              edgeFill={true}
-              backgroundColor={color.whiteColor}
-            >
-              메인화면으로
-            </CustomButton>
-            
-            <CustomButton 
-              onPress={this._cardRegister}
-              edgeFill={true}
-              fillTxt={true}
-            >
-              제품등록 하러가기
-            </CustomButton>
+              <CustomButton 
+                onPress={Actions.RegBusinessPlaceIndex}
+                style={[styles.btnDefault, styles.btnDefaultFill]}>
+                제품등록 하러가기
+              </CustomButton>
             </View>
+
           </View>
         </View>
 

@@ -16,6 +16,7 @@ import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from '~/Common/Styles/colors';
 
 const BIZ_NAME_LEN = 1;
 class RegBusinessPlace extends Component {
@@ -189,11 +190,14 @@ class RegBusinessPlace extends Component {
                         </View>
                     </View>
         
-                    <View style={[styles.fx2, styles.justiConCenter]}>
-                        <Item regular style={[styles.mb15, {height : 48}]}>
+                    <View style={[styles.fx3, styles.justiConCenter]}>
+                        <Item regular style={styles.inputWhBackGreyBo}>
                             <Input 
                                 onChangeText={ this._handleChkBusinessName }
-                                placeholder="상호명 입력" />
+                                placeholder="상호명을 입력해주세요" 
+                                placeholderTextColor={color.inputPlaceHodler} 
+                                style={styles.inputDefaultBox}
+                            />
                         </Item>
                     </View>
             
@@ -201,8 +205,6 @@ class RegBusinessPlace extends Component {
                         <CustomButton 
                             onPress={this._nextButton}
                             disabled={ this.state.btnDisabled }
-                            edgeFill={true}
-                            fillTxt={true}
                         >
                             입력완료
                         </CustomButton>

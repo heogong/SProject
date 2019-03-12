@@ -174,7 +174,7 @@ class InputShowCase extends Component {
                 });
             });
         });
-        Actions.InputProdType();
+        Actions.popTo("InputProdType");
     }
 
    // showCase 카드 추가

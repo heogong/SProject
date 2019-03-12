@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native'
-import { Container, Text } from "native-base";
+import { Container, CheckBox, Text } from "native-base";
 
 import { PARTNER } from '~/Common/Blend';
 
@@ -11,7 +11,7 @@ import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
-import { color } from 'src/Common/Styles/colors';
+import { color } from '~/Common/Styles/colors';
 
 class AgreeTermsService extends Component {
   constructor(props) {
@@ -30,11 +30,12 @@ class AgreeTermsService extends Component {
 
   // 고객 타입에 따른 페이지 이동
   _nextPage = () => {
-    if(this.props.usrObj.usrCustomerType == PARTNER) {
-        Actions.PartnerTermsService();
-    } else {
-        Actions.ClientTermsService();
-    }
+    // if(this.props.usrObj.usrCustomerType == PARTNER) {
+    //     Actions.PartnerTermsService();
+    // } else {
+    //     Actions.SuccessAgreeTermsService();
+    // }
+    Actions.SuccessAgreeTermsService();
   }
 
   // 확인 버튼 유효성 체크

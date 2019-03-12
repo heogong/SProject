@@ -174,11 +174,14 @@ class SetAddress extends Component {
                         <Item regular style={[styles.mb10, {height : 50}]}
                             // onPress={this._goSearchAddress}
                         >
-                            <Icon name="ios-search" style={{color : color.defaultColor}}/>
-                            <Input placeholder="주소입력"
+                            <Icon active name="ios-search" style={[styles.inputIcon, {marginRight: 0, paddingRight: 0}]} />
+                            <Input
                                 onChangeText={ (text) => this.setState({addressName : text})}
+                                placeholder="주소를 입력해 주세요" 
+                                placeholderTextColor={color.inputPlaceHodler} 
+                                style={styles.inputDefaultBox}
                             >
-                                {this.state.addressName} 
+                                {this.state.addressName}
                             </Input>
                         </Item>
 
@@ -195,11 +198,8 @@ class SetAddress extends Component {
                     </View>
 
                     <View style={styles.footerBtnWrap}>
-
                         <CustomButton
                             onPress={this._goSearchAddress}
-                            edgeFill={true}
-                            fillTxt={true}
                         >
                             주소검색
                         </CustomButton>
@@ -207,8 +207,6 @@ class SetAddress extends Component {
                         <CustomButton
                             onPress={this._saveButton}
                             disabled={ this.state.disSaveBtn }
-                            edgeFill={true}
-                            fillTxt={true}
                         >
                             입력완료
                         </CustomButton>

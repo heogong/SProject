@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BackHandler, Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { BackHandler, Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Container, H1, H3, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -119,11 +119,11 @@ class InputProdType extends Component {
             
                 
             // </CustomBlockWrapper>
-            <Container style={styles.containerInnerPd}>
+            <Container style={styles.containerScroll}>
                 <CustomHeader/>
 
                 <View style={styles.contentWrap}>
-                    <View>
+                    <View style={{marginBottom: 36}}>
                         <View style={styles.fxDirRow}>
                             <View style={stylesReg.leftGuideTxtWrap}>
                                 <Text style={stylesReg.leftGuideTxt}>등록할</Text>
@@ -147,36 +147,35 @@ class InputProdType extends Component {
                         </View>
                     </View>
 
-                    <View style={styles.fx2}>
-                        <View style={[styles.fx1, styles.alignItemsStart, styles.justiConCenter]}>
-                            <Pagination
-                                dotsLength={this.state.data.length}
-                                activeDotIndex={this.state.slider1ActiveSlide}
-                                containerStyle={localStyles.paginationContainer}
-                                dotColor={color.defaultColor}
-                                dotStyle={localStyles.paginationDot}
-                                inactiveDotColor={color.defaultColor}
-                                inactiveDotOpacity={0.4}
-                                inactiveDotScale={0.6}
-                                carouselRef={this._slider1Ref}
-                                tappableDots={!!this._slider1Ref}
-                            />
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <View style={[styles.fxDirRow, styles.justiConBetween, styles.fxWraWra]}>
+                        {this.state.data.map((item, index) => (
+                            <TouchableOpacity 
+                                key={index}
+                                onPress={this._nextButton(item.prdTypeId, item.prdTypeKoNm)}
+                            >
+                                <View 
+                                style={[
+                                    styles.mb15, 
+                                    styles.pd10,
+                                    styles.alignItemsCenter,
+                                    styles.justiConCenter,
+                                    { 
+                                    backgroundColor : color.prdTypeBackColor, 
+                                    height : productCardSize, 
+                                    width : productCardSize
+                                }]}>
+                                <Image source={require("~/Common/Image/license-depart01.png")} 
+                                    style={[styles.mb10, {
+                                    height : productCardSize - 60, 
+                                    width : productCardSize - 60
+                                    }]}/>
+                                <Text style={localStyles.whiteFont}>{item.prdTypeKoNm}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        ))}
                         </View>
-
-                        <View style={{flex:5}}>
-                            <Carousel
-                                ref={c => this._slider1Ref = c}
-                                renderItem={this._renderItem}
-                                sliderWidth={viewportWidth}
-                                activeSlideAlignment={'start'}
-                                itemWidth={itemWidth}
-                                data={this.state.data}
-                                firstItem={this.state.slider1ActiveSlide}
-                                onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
-                            />
-                        </View>
-
-                    </View>
+                    </ScrollView>
                     
                 </View>
                 
@@ -185,26 +184,19 @@ class InputProdType extends Component {
     }
 }
 
-function wp (percentage) {
-    const value = (percentage * viewportWidth) / 100;
+function wp (percentage, space) {
+    const value = (percentage * (viewportWidth - space)) / 100;
     return Math.round(value);
 }
-  
-const slideWidth = wp(65);
-const itemHorizontalMargin = wp(2);
-const itemWidth = slideWidth + itemHorizontalMargin * 2;
-  
-  
+const productCardSize = wp(47.5, (styles.containerInnerPd.paddingLeft * 2));
+
 const localStyles = StyleSheet.create({
-    paginationContainer: {
-        paddingVertical: 0
-    },
-    paginationDot: {
-        borderRadius: 4,
-        marginHorizontal: 0,
-        height: 10,
-        width: 10
-    }
+  whiteFont: {
+    color: color.whiteColor,
+    fontSize: 16,
+    fontWeight: "500"
+  }
 });
+
 
 export default InputProdType;

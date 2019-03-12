@@ -21,7 +21,7 @@ class SearchAddress extends Component {
     super(props);
 
     this.state = { 
-      addressName : this.props.addressName,
+      addressName : (this.props.addressName !== null) ? this.props.addressName : '강남구',
       data: [],
       region: {
         latitude: 37.566535,
@@ -36,10 +36,6 @@ class SearchAddress extends Component {
       showMap : false,
       makerYn : true
     };
-  }
-
-  static defaultProps = {
-    addressName : '대방동 392-14'
   }
 
   componentWillMount () {
@@ -175,8 +171,6 @@ class SearchAddress extends Component {
             ]}>
                 <CustomButton
                   onPress={this._nextButton}
-                  edgeFill={true}
-                  fillTxt={true}
                 >
                     확인
                 </CustomButton>
