@@ -69,6 +69,7 @@ import TermsMenu from './TermsMenu'
 import TermsContent1 from './TermsContent1';
 import ListBusinessPlace from './ListBusinessPlace';
 import RegProductType from './RegProductType';
+import ClientIntroGuide from './ClientIntroGuide';
 
 import pageOne from './Page1'
 import pageTwo from './Page2'
@@ -79,9 +80,9 @@ const PAGE = () => (
         <Stack key="root">
             <Scene key="Intro" hideNavBar component={Intro} type={ActionConst.RESET}/>
             <Scene key="SelectUserType" hideNavBar component={SelectUserType} type={ActionConst.RESET}/>
-            {/* 3번 화면 작업 예정 */}
-            {/* 4번 화면 작업 예정 */}
-            {/* 5번 화면 작업 예정 */}
+            
+            <Scene initial key="ClientIntroGuide" hideNavBar component={ClientIntroGuide} type={ActionConst.RESET}/>
+            
             <Scene key="UserLogin" hideNavBar component={UserLogin} type={ActionConst.RESET}/>
             <Scene key="InvaildId" hideNavBar component={InvaildId} type={ActionConst.RESET}/>
             <Scene key="SelectJoinType" hideNavBar component={SelectJoinType} type={ActionConst.RESET}/>
@@ -152,7 +153,7 @@ const PAGE = () => (
             <Scene key="TakeProductImage" hideNavBar component={TakeProductImage}  type={ActionConst.RESET}/>
             <Scene key="TakeProductGuide2" hideNavBar component={TakeProductGuide2} type={ActionConst.RESET}/>
             <Scene key="SuccessRegProduct" hideNavBar component={SuccessRegProduct} type={ActionConst.RESET}/>
-            <Scene initial key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
+            <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
             <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
             <Scene key="SelectProduct2" hideNavBar component={SelectProduct2} type={ActionConst.RESET}/>
             {/* 44번 화면 작업 예정 */}
