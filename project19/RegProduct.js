@@ -63,7 +63,7 @@ class RegProduct extends Component {
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>
             <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
-              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
+              <Image source={require("./img/btn_back_arrow.png")} resizeMode="contain" style={styles.btnBackArrowIcon} />
             </Button>
           </Left>
           <Body style={styles.headerCenterWrap}>

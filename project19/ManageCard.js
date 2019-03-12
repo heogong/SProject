@@ -49,7 +49,7 @@ class ManageCard extends Component {
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>
             <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
-              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
+              <Image source={require("./img/btn_back_arrow.png")} resizeMode="contain" style={styles.btnBackArrowIcon} />
             </Button>
           </Left>
           <Body style={styles.headerCenterWrap}>
@@ -61,65 +61,85 @@ class ManageCard extends Component {
         <View style={[styles.contentWrap, styles.alignItemsCenter]}>
           <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 60}}>
             <View style={{marginTop: 26}}>
-              <View style={localStyles.newCardStyle}>
-                <Text style={localStyles.cardNameTxt}>카드 등록</Text>
-                <View style={localStyles.cardAddWrap}>
-                  <Image source={require('./img/join-end.png')} style={localStyles.cardAddImg}/>
-                </View>
-                <View style={localStyles.cardBottomWrap}>
-                  <Text style={localStyles.coolinicTxt}>COOLINIC</Text>
-                </View>
+              <View style={localStyles.regCardStyle}>
+                <ImageBackground
+                  source={require("./img/credit_card_layout2.png")} 
+                  resizeMode="contain"
+                  style={localStyles.newCardStyle}> 
+                  <Image source={require('./img/credit_card_regist.png')} style={localStyles.cardAddImg}/>
+                </ImageBackground>
               </View>
 
               <View style={localStyles.regCardStyle}>
-                <View style={localStyles.cardTopWrap}>
-                  <Text style={localStyles.cardNameTxt}>국민 카드</Text>
-                  <TouchableOpacity style={localStyles.btnCloseIconWrap}
-                    onPress={this._toggleModal}>
-                    <Icon name="close" style={localStyles.btnCloseIcon}></Icon>
-                  </TouchableOpacity>
-                </View>
-                <View style={localStyles.carMagWrap}>
-                  <Image source={require('./img/join-end.png')} style={localStyles.cardMagImg}/>
-                </View>
-                <View style={localStyles.cardBottomWrap}>
-                  <Text style={localStyles.cardNumTxt}>****-*****-2046-****</Text>
-                  <Text style={localStyles.coolinicTxt}>COOLINIC</Text>
-                </View>
+                <ImageBackground
+                  source={require("./img/credit_card_layout.png")} 
+                  resizeMode="contain"
+                  style={localStyles.newCardStyle}> 
+                  <View style={localStyles.cardTopWrap}>
+                    <Text style={localStyles.cardNameTxt}>국민 카드</Text>
+                    <TouchableOpacity style={localStyles.btnCloseIconWrap}
+                      onPress={this._toggleModal}>
+                      <Icon name="close" style={localStyles.btnCloseIcon}></Icon>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={localStyles.cardBottomWrap}>
+                    <Text style={localStyles.cardNumTxt}>****-*****-2046-****</Text>
+                  </View>
+                </ImageBackground>
               </View>
 
               <View style={localStyles.regCardStyle}>
-                <View style={localStyles.cardTopWrap}>
-                  <Text style={localStyles.cardNameTxt}>국민 카드</Text>
-                  <TouchableOpacity style={localStyles.btnCloseIconWrap}
-                    onPress={this._toggleModal}>
-                    <Icon name="close" style={localStyles.btnCloseIcon}></Icon>
-                  </TouchableOpacity>
-                </View>
-                <View style={localStyles.carMagWrap}>
-                  <Image source={require('./img/join-end.png')} style={localStyles.cardMagImg}/>
-                </View>
-                <View style={localStyles.cardBottomWrap}>
-                  <Text style={localStyles.cardNumTxt}>****-*****-2046-****</Text>
-                  <Text style={localStyles.coolinicTxt}>COOLINIC</Text>
-                </View>
+                <ImageBackground
+                  source={require("./img/credit_card_layout.png")} 
+                  resizeMode="contain"
+                  style={localStyles.newCardStyle}> 
+                  <View style={localStyles.cardTopWrap}>
+                    <Text style={localStyles.cardNameTxt}>국민 카드</Text>
+                    <TouchableOpacity style={localStyles.btnCloseIconWrap}
+                      onPress={this._toggleModal}>
+                      <Icon name="close" style={localStyles.btnCloseIcon}></Icon>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={localStyles.cardBottomWrap}>
+                    <Text style={localStyles.cardNumTxt}>****-*****-2046-****</Text>
+                  </View>
+                </ImageBackground>
               </View>
 
               <View style={localStyles.regCardStyle}>
-                <View style={localStyles.cardTopWrap}>
-                  <Text style={localStyles.cardNameTxt}>국민 카드</Text>
-                  <TouchableOpacity style={localStyles.btnCloseIconWrap}
-                    onPress={this._toggleModal}>
-                    <Icon name="close" style={localStyles.btnCloseIcon}></Icon>
-                  </TouchableOpacity>
-                </View>
-                <View style={localStyles.carMagWrap}>
-                  <Image source={require('./img/join-end.png')} style={localStyles.cardMagImg}/>
-                </View>
-                <View style={localStyles.cardBottomWrap}>
-                  <Text style={localStyles.cardNumTxt}>****-*****-2046-****</Text>
-                  <Text style={localStyles.coolinicTxt}>COOLINIC</Text>
-                </View>
+                <ImageBackground
+                  source={require("./img/credit_card_layout.png")} 
+                  resizeMode="contain"
+                  style={localStyles.newCardStyle}> 
+                  <View style={localStyles.cardTopWrap}>
+                    <Text style={localStyles.cardNameTxt}>국민 카드</Text>
+                    <TouchableOpacity style={localStyles.btnCloseIconWrap}
+                      onPress={this._toggleModal}>
+                      <Icon name="close" style={localStyles.btnCloseIcon}></Icon>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={localStyles.cardBottomWrap}>
+                    <Text style={localStyles.cardNumTxt}>****-*****-2046-****</Text>
+                  </View>
+                </ImageBackground>
+              </View>
+
+              <View style={localStyles.regCardStyle}>
+                <ImageBackground
+                  source={require("./img/credit_card_layout.png")} 
+                  resizeMode="contain"
+                  style={localStyles.newCardStyle}> 
+                  <View style={localStyles.cardTopWrap}>
+                    <Text style={localStyles.cardNameTxt}>국민 카드</Text>
+                    <TouchableOpacity style={localStyles.btnCloseIconWrap}
+                      onPress={this._toggleModal}>
+                      <Icon name="close" style={localStyles.btnCloseIcon}></Icon>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={localStyles.cardBottomWrap}>
+                    <Text style={localStyles.cardNumTxt}>****-*****-2046-****</Text>
+                  </View>
+                </ImageBackground>
               </View>
 
             </View>
@@ -163,63 +183,47 @@ const localStyles = StyleSheet.create({
   regCardStyle : {
     height : 160, 
     width : 298,
-    backgroundColor : color.defaultBackColor,
-    borderColor : color.defaultColor,
-    borderWidth : 1,
-    borderRadius : 6,
     marginBottom: 20,
-    padding: 15,
     flex: 1
   },
   newCardStyle : {
     height : 160, 
     width : 298,
-    borderColor : "#c9cacb",
-    borderWidth : 1,
-    borderRadius : 6,
-    marginBottom: 20,
-    padding: 15,
+    justifyContent: "center",
+    alignItems: "center",
     flex: 1
   },
   cardTopWrap: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: "center"
+    marginTop: 20
   },
   btnCloseIconWrap: {
     flex: 1,
-    alignItems:'flex-end'
+    alignItems:'flex-end',
+    marginRight: 20
   },
   btnCloseIcon: {
-    color: "#8e8e98"
+    width: 17,
+    height: "auto"
   },
   cardNameTxt: {
-    fontSize: 20,
+    fontSize: 18,
     color: "#626270",
     fontWeight: "bold",
-    paddingLeft: 10
-  },
-  cardMagImg: {
-    height: 42,
-    width: 66
-  },
-  carMagWrap: {
-    flex: 3,
-    justifyContent: 'center'
+    paddingLeft: 30
   },
   cardBottomWrap: {
     flex: 1,
     alignItems: 'flex-end',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    width: "100%"
   },
   cardNumTxt: {
     fontSize: 15,
-    color: "#626270"
-  },
-  coolinicTxt: {
-    fontSize: 12,
     color: "#626270",
-    marginTop: 8
+    marginBottom: 37,
+    marginRight: 20
   },
   cardAddWrap: {
     flex: 3,

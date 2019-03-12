@@ -45,7 +45,7 @@ class SelectJoinType extends Component {
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>
             <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>
-              <Image source={require("./images/btn_back_arrow.png")} width="30" height="30" />
+              <Image source={require("./img/btn_back_arrow.png")} resizeMode="contain" style={styles.btnBackArrowIcon} />
             </Button>
           </Left>
           <Body style={styles.headerCenterWrap}>
@@ -65,7 +65,7 @@ class SelectJoinType extends Component {
                 <Text style={styles.leftGuideTxt}>선택해주세요</Text>
               </View>
               <View style={styles.rightImgWrap}>
-              <Image source={require('./img/join-ico01.png')} style={{height : 84, width : 84}} />
+              <Image source={require('./img/People_icon.png')} style={{height : 84, width : 84}} />
               </View>
             </View>
 
@@ -78,16 +78,13 @@ class SelectJoinType extends Component {
 
           <View style={localStyles.btnBottomWrap}>
             <View style={localStyles.bttBoxWrap}>
-              <Image source={require('./img/join-email.png')} resizeMode='contain' style={localStyles.btnIcon} />
-              <Text style={localStyles.btnTxt}>이메일</Text>
+              <Image source={require('./img/E-mail_button_2.png')} resizeMode='contain' style={localStyles.btnIcon} />
             </View>
             <View style={localStyles.bttBoxWrap}>
-              <Image source={require('./img/ico-naver.png')} resizeMode='contain' style={localStyles.btnIcon} />
-              <Text style={[localStyles.btnTxt]}>네이버</Text>
+              <Image source={require('./img/Naver_button_2.png')} resizeMode='contain' style={localStyles.btnIcon} />
             </View>
-            <View style={localStyles.bttBoxWrap}>
-              <Image source={require('./img/ico-kakao.png')} resizeMode='contain' style={localStyles.btnIcon} />
-              <Text style={localStyles.btnTxt}>카카오</Text>
+            <View style={[localStyles.bttBoxWrap, {marginRight: 0}]}>
+              <Image source={require('./img/Kakao_button_2.png')} resizeMode='contain' style={localStyles.btnIcon} />
             </View>
           </View>
           
@@ -111,14 +108,12 @@ const localStyles = StyleSheet.create({
   bttBoxWrap: {
     flex: 1,
     backgroundColor : color.defaultColor,
-    marginRight : 5,
-    paddingTop : 15,
+    marginRight : 13,
     alignItems : 'center'
   },
   btnIcon: {
-    height: 28,
-    width: 40,
-    paddingTop: 19
+    height: 90,
+    width: 90,
   },
   btnTxt: {
     fontSize: 14,
