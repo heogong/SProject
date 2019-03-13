@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, ImageBackground, Icon, TouchableOpacity, View } from 'react-native'
+import { Image, ImageBackground, Icon, TouchableOpacity, StyleSheet, View } from 'react-native'
 import { H2, Text, Item, Input,} from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -67,44 +67,32 @@ class ProductShowCase extends Component {
 
     render() {
         return (
-            <View style={[styles.pd10, {backgroundColor : color.defaultBackColor}]} key={this.props.index}>
-                <View style={[styles.mb10, styles.fxDirRow]}>
-                    <View style={styles.fx1}>
-                        
-                        <View style={styles.fx1}>
-                            <TouchableOpacity onPress={this.props.handleRemoveShowCase(this.props.index)}>
-                                <Image source={require("~/Common/Image/input-able.png")} style={{height : buttonSize1, width : buttonSize1}} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.fx2} />
-                    </View>
-    
+            <View style={localStyles.prdCardWrap}>
+                <View style={localStyles.prdCardTopWrap}>
+                    <TouchableOpacity onPress={this.props.handleRemoveShowCase(this.props.index)}>
+                        <Image source={require("~/Common/Image/input-able.png")} style={localStyles.prdCardTopIconImg} />
+                    </TouchableOpacity>
+
                     <View style={[styles.fx3, styles.justiConCenter, styles.alignItemsCenter]}>
-                        <H2 style={[styles.mb5, {color:color.whiteColor}]}>01</H2>
+                        <Text style={localStyles.prdCardTopNumTxt}>01</Text>
                         <Image source={require("~/Common/Image/license-depart01.png")} style={{height : imageSize, width : imageSize}} />
                     </View>
-    
-                    <View style={styles.fx1}>
-                        <View style={[styles.fx1, styles.alignItemsEnd]}>
 
-                            <TouchableOpacity onPress={this.props.handleAddShowCase} style={styles.mb10}>
-                                <Image source={require("~/Common/Image/input-able.png")} style={{height : buttonSize1, width : buttonSize1}} />
-                            </TouchableOpacity>
-
-                            
-                            <TouchableOpacity onPress={this.props.handleCopyShowCase(this.props.index)}>
-                                <Image source={require("~/Common/Image/join-end.png")} style={{height : buttonSize1, width : buttonSize1}} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.fx2} />
+                    <View>
+                        <TouchableOpacity onPress={this.props.handleAddShowCase}>
+                            <Image source={require("~/Common/Image/input-able.png")} style={[localStyles.prdCardTopIconImg, styles.mb10]} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.props.handleCopyShowCase(this.props.index)}>
+                            <Image source={require("~/Common/Image/input-able.png")} style={localStyles.prdCardTopIconImg} />
+                        </TouchableOpacity>
                     </View>
                 </View>
     
-                <View style={[styles.mb10, {alignItems : 'center'}]}>
-                    <Text style={[styles.mb5, styles.whiteFont]}>제품 이름을 입력하세요</Text>
+                <View style={localStyles.prdCardInputWrap}>
+                    <Text style={localStyles.prdCardInfoTxt}>제품 이름을 입력하세요</Text>
                     <Item 
                         regular 
-                        style={[styles.mb5, {backgroundColor: color.whiteColor, borderColor : color.whiteColor, height : 30}]}
+                        style={[localStyles.prdCardInputBox, {width: "70%"}]}
                         error 
                         success={ this.state.setProductName }
                     >
@@ -112,26 +100,26 @@ class ProductShowCase extends Component {
                             value={ this.props.clientPrdNm }
                             onChangeText={(text) => this._setProductNm(text) }
                             onBlur={this._submitProductNm}
-                            style={{fontSize : 12}}
+                            style={localStyles.prdCardNameInput}
                             placeholder="제품이름" 
-                            placeholderTextColor={color.deepGreyColor}
+                            placeholderTextColor={"#8e8e98"}
                         />
                     </Item>
-                    <Text style={[styles.mb5, styles.whiteFont]}>제품의 간략한 설명을 입력하세요</Text>
-                    <Item regular style={[styles.mb5, {backgroundColor: color.whiteColor, borderColor : color.whiteColor, height : 30}]}>
+                    <Text style={localStyles.prdCardInfoTxt}>>제품의 간략한 설명을 입력하세요</Text>
+                    <Item regular style={localStyles.prdCardInputBox}>
                         <Input 
-                            style={{fontSize : 12}}
+                            style={localStyles.prdCardDscInput}
                             placeholder="제품설명" 
-                            placeholderTextColor={color.deepGreyColor}
+                            placeholderTextColor={"#8e8e98"}
                         />
                     </Item>
                 </View>
     
-                <View style={{alignItems : 'center'}}>
+                <View style={styles.alignItemsCenter}>
                     <Text style={styles.whiteFont}>촬영가이드에 따라 제품의 사진을 찍어주세요</Text>
     
-                    <View style={[styles.fx1, {justifyContent : 'center'}]}>
-                        <View style={[styles.fxDirRow, styles.justiConBetween, {flexWrap : 'wrap'}]}>
+                    <View style={localStyles.prdCardPhotoWrap}>
+                        <View style={localStyles.prdCardPhoto}>
 
                         {
                             this.props.item.imgTypeArray.map((imgType, idx) => (
@@ -157,7 +145,61 @@ function wp (percentage, space) {
     return Math.round(value);
 }
 
-const imageSize = wp(35, 0);
-const buttonSize1 = wp(8, 0);
+const imageSize = wp(40, 0);
+
+const localStyles = StyleSheet.create({
+  prdCardWrap: {
+    padding: 17,
+    backgroundColor : "#7be6fd"
+  },
+  prdCardTopWrap: {
+    marginBottom: 10,
+    flexDirection: "row"
+  },
+  prdCardTopIconImg: {
+    width: 36,
+    height: 36
+  },
+  prdCardTopNumTxt: {
+    fontSize: 36,
+    color: "#038dbd",
+    fontWeight: "bold",
+    marginBottom: 16
+  },
+  prdCardInfoTxt: {
+    fontSize: 14,
+    color: color.whiteColor,
+    marginBottom: 8
+  },
+  prdCardInputWrap: {
+    alignItems : 'center'
+  },
+  prdCardInputBox: {
+    marginBottom: 20,
+    backgroundColor: color.whiteColor,
+    borderColor : color.whiteColor,
+    height : 32
+  },
+  prdCardNameInput: {
+    fontSize : 14,
+    textAlign: "center",
+    height : 32
+  },
+  prdCardDscInput: {
+    fontSize : 13,
+    textAlign: "center",
+    height : 32
+  },
+  prdCardPhotoWrap: {
+    flex: 1,
+    justifyContent : 'center'
+  },
+  prdCardPhoto: {
+    flexDirection: "row",
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  }
+});
+
 
 export default ProductShowCase;

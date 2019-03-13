@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Alert, Image, ImageBackground, Icon, ScrollView, TouchableOpacity, View } from 'react-native'
-import { Container, H1, H2, Button, Text, Footer, FooterTab, Item, Input,} from "native-base";
+import { Alert, Image, ImageBackground, Icon, StyleSheet, ScrollView, TouchableOpacity, View } from 'react-native'
+import { Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -17,14 +17,24 @@ import CopyProductMst from '~/Main/Functions/CopyProductMst'
 import ProductShowCase from '~/Main/Components/ProductShowCase'
 
 import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles, viewportWidth } from '~/Common/Styles/common';
-import { color } from '~/Common/Styles/colors';
+import { stylesReg } from '~/Common/Styles/stylesReg';
 
 let DEL_IDX = null; // 제품 삭제 인덱스
 let CLIENT_PRODUCT_ID = null; // 제품 복제 아이디
 let CLIENT_PRD_ARRAY = []; //추가/복제 제품아이디 (뒤로가기 버튼 시 제품 한번에 삭제)
 
-const SLIDER_1_FIRST_ITEM = 0;
+let INFO_TXT1 = null; // 모달 메세지1
+let INFO_TXT2 = null; // 모달 메세지2
+let ON_PRESS_ACTION_TYPE = 0; // 터치한 액션 
+
+const ACTION_TYPE = {
+    cancleAction : 0, // 취소 터치 시
+    regAction : 1, // 등록완료 터치 시
+    delAction: 2 // 삭제 터치 시
+}
 
 class InputShowCase extends Component {
     constructor(props) {
@@ -33,7 +43,11 @@ class InputShowCase extends Component {
       this.state = {
         prdTypeImgData : [], // 첫번째 SHOW CASE 이미지 데이터
         showCase : [], // 제품 데이터
-        slider1ActiveSlide: SLIDER_1_FIRST_ITEM
+        slider1ActiveSlide: 0,
+
+        isModalVisible : false, // confirm modal
+        isAlertModal : false, // alert modal
+        resultMsg : null
       };
     }
 
@@ -59,6 +73,11 @@ class InputShowCase extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
                         this.setState({prdTypeImgData : resultData.data});
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -98,7 +117,10 @@ class InputShowCase extends Component {
                         });
 
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -134,7 +156,10 @@ class InputShowCase extends Component {
                         });
 
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -150,10 +175,15 @@ class InputShowCase extends Component {
                     if(ResultBool) {
                         this.setState({ 
                             showCase: this.state.showCase.filter((s, sidx) => DEL_IDX !== sidx),
+                            isModalVisible : false
+
                         })
                         CLIENT_PRD_ARRAY = CLIENT_PRD_ARRAY.filter((s, sidx) => DEL_IDX !== sidx)
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -168,7 +198,10 @@ class InputShowCase extends Component {
                     if(resultData !== undefined) {
                         const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                         if(!ResultBool) {
-                            alert(resultData.resultMsg);
+                            this.setState({
+                                isAlertModal : true,
+                                resultMsg : resultData.resultMsg
+                            })
                         }
                     }
                 });
@@ -190,48 +223,47 @@ class InputShowCase extends Component {
 
      // showCase 카드 제거
     _handleRemoveShowCase = (idx) => () => {
-        Alert.alert(
-            '',
-            '삭제 하시겠습니까?',
-            [
-              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-              {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-              {text: '네', onPress: () => {
-                DEL_IDX = idx;
-                this._delProductMst();
-                }
-              },
-            ],
-            { cancelable: false }
-        )
+
+        this.setState({isModalVisible : true});
+
+        INFO_TXT1 = "삭제 하시겠습니까?";
+        INFO_TXT2 = null;
+        DEL_IDX = idx;
+
+        ON_PRESS_ACTION_TYPE = ACTION_TYPE.delAction;
     }
 
+    // 등록 완료
     _nextButton = () => {
-        Alert.alert(
-            '',
-            '등록되지 않은 이미지는 어딘가에서 등록 가능 \ 제품을 추가 등록 하시겠습니까?',
-            [
-              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-              {text: '아니오', onPress: () => Actions.ClientMain() },
-              {text: '네', onPress: () => Actions.InputProdType() },
-            ],
-            { cancelable: false }
-        )
+        this.setState({isModalVisible : true});
+
+        INFO_TXT1 = "등록되지 않은 정보는 어딘가에서 수정가능합니다.";
+        INFO_TXT2 = "제품을 추가 등록 하시겠습니까?";
+
+        ON_PRESS_ACTION_TYPE = ACTION_TYPE.regAction;
     }
 
     // 뒤로 가기 버튼 클릭 시 등록된 제품 모두 삭제 하기 위함
     _handleBackAction = () => {
-        Alert.alert(
-            '',
-            '제품 등록을 취소 하시겠습니까?',
-            [
-              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-              {text: '아니오', onPress: () => console.log('cancle') },
-              {text: '네', onPress: () => this._delArrayProductMst() },
-            ],
-            { cancelable: false }
-        )
+        this.setState({isModalVisible : true});
+
+        INFO_TXT1 = "제품 등록을 취소 하시겠습니까?";
+        INFO_TXT2 = null;
+        
+        ON_PRESS_ACTION_TYPE = ACTION_TYPE.cancleAction;
     }
+
+    // 모달 '예' Action
+    _onPress2Action = () => {
+        if (ON_PRESS_ACTION_TYPE == ACTION_TYPE.delAction) {
+            this._delProductMst();
+        } else if(ON_PRESS_ACTION_TYPE == ACTION_TYPE.cancleAction) {
+            this._delArrayProductMst();
+        } else {
+            Actions.popTo("InputProdType");
+        }
+    }
+    
 
     _renderItem = ({item, index}) => (
         <ProductShowCase
@@ -245,71 +277,97 @@ class InputShowCase extends Component {
             source={ this.props.source }
         />
     )
-  
 
     render() {
         return (
-            <Container style={{ 
-                flex: 1,
-                backgroundColor: color.whiteColor,
-                paddingLeft: 26
-            }}>
+            <Container style={styles.containerRightSlide}>
               <CustomHeader customAction={this._handleBackAction}/>
-      
-              <ScrollView showsVerticalScrollIndicator={false}>
-      
-                <View style={[styles.mb15, {paddingRight : 26}]}>
-                  <View style={[styles.mb10, styles.fxDirRow]}>
-                    <View style={styles.fx1}>
-                      <H1>제품의</H1>
-                      <H1>상세정보를</H1>
-                      <H1>입력해주세요</H1>
+
+                <View style={styles.contentWrap}>
+                    <View>
+                        <View style={styles.fxDirRow}>
+                            <View style={stylesReg.leftGuideTxtWrap}>
+                                <Text style={stylesReg.leftGuideTxt}>등록할</Text>
+                                <Text style={stylesReg.leftGuideTxt}>제품정보를</Text>
+                                <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
+                            </View>
+                            <View style={[stylesReg.rightStepNumWrap, {paddingRight: 26}]}>
+                                <Text style={stylesReg.rightStepNum}>03</Text>
+                            </View>
+                        </View>
                     </View>
-                    <View style={[styles.fx1, styles.alignItemsEnd, styles.justiConEnd]}>
-                      <H1 style={{color:color.defaultColor}}>03</H1>
+
+                    <View style={[stylesReg.procBarWrap, {paddingRight: 26, marginBottom: 47}]}>
+                        <View style={styles.fx1}>
+                            <View style={stylesReg.procBarOn} />
+                        </View>
+                        <View style={styles.fx1}>
+                            <View style={stylesReg.procBarOn} />
+                        </View>
+                        <View style={styles.fx1}>
+                            <View style={stylesReg.procBarOn} />
+                        </View>
                     </View>
-                  </View>
-                  <View style={{height : 10, backgroundColor : color.defaultColor }} />
+
+                    <ScrollView showsVerticalScrollIndicator={false} style={styles.mb10}>
+                        <Carousel
+                            renderItem={this._renderItem}
+                            sliderWidth={viewportWidth}
+                            activeSlideAlignment={'start'}
+                            itemWidth={itemWidth}
+                            data={this.state.showCase}
+                            firstItem={this.state.slider1ActiveSlide}
+                            onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
+                        />
+                    </ScrollView>
                 </View>
       
-                <Carousel
-                    renderItem={this._renderItem}
-                    sliderWidth={viewportWidth}
-                    activeSlideAlignment={'start'}
-                    itemWidth={itemWidth}
-                    data={this.state.showCase}
-                    firstItem={this.state.slider1ActiveSlide}
-                    onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
-                >
-                </Carousel>
-                  
-              </ScrollView>
-      
-              <Footer style={{marginRight : 26, elevation: 0}}>
-                <FooterTab>
-                  <Button 
-                    style={[styles.btnDefault, {marginTop : 5}]}
-                    block info bordered onPress={ () => alert("결제카드등록")}>
-                    <Text>제품등록완료</Text>
-                  </Button>
-                </FooterTab>
-              </Footer>
+                <View style={[styles.footerBtnWrap, {flex: 0, paddingRight: 26, paddingBottom: 26}]}>
+                    <CustomButton
+                        onPress={ () => this._nextButton() }
+                        DefaultLineBtn={true}
+                    >
+                        제품등록완료
+                    </CustomButton>
+                </View>
+
+                <CustomModal
+                    modalType="CONFIRM"
+                    isVisible={this.state.isModalVisible}
+                    onPress1={() => this.setState({isModalVisible : false})}
+                    onPress2={this._onPress2Action}
+                    infoText1={INFO_TXT1}
+                    infoText2={INFO_TXT2}
+                    btnText1="아니오"
+                    btnText2="네"
+                />
+
+                {/* alert 메세지 모달 */}
+                <CustomModal
+                    modalType="ALERT"
+                    isVisible={this.state.isAlertModal}
+                    onPress={ () => this.setState({isAlertModal : false})}
+                    infoText={this.state.resultMsg}
+                    btnText="확인"
+                />
                 
             </Container>
         )
     }
 }
 
+
+
 function wp (percentage, space) {
     const value = (percentage * (viewportWidth - space)) / 100;
     return Math.round(value);
-}
+  }
   
-// 메인 상품 카드 사이즈
-const slideWidth = wp(85, 26);
-const itemHorizontalMargin = wp(2, 0);
-const itemWidth = slideWidth + itemHorizontalMargin * 2;
-
+  // 메인 상품 카드 사이즈
+  const slideWidth = wp(85, 26);
+  const itemHorizontalMargin = wp(2, 0);
+  const itemWidth = slideWidth + itemHorizontalMargin * 2;
+  
   
 let mapStateToProps = (state) => {
     return {

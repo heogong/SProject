@@ -50,19 +50,52 @@ class ListBusinessProductType extends Component {
     
     render() {
         return (
-            <Container style={styles.containerSwiper}>
+            <Container style={styles.containerInnerPd}>
                 <CustomHeader/>
 
                 <View style={styles.contentWrap}>
-                    <View style={styles.fxDirRow}>
-                        <View style={stylesReg.leftGuideTxtWrap}>
-                            <Text style={stylesReg.leftGuideTxt}>수리가</Text>
-                            <Text style={stylesReg.leftGuideTxt}>필요한것을</Text>
-                            <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
+
+                    <View style={{marginBottom: 36}}>
+                        <View style={styles.fxDirRow}>
+                            <View style={stylesReg.leftGuideTxtWrap}>
+                                <Text style={stylesReg.leftGuideTxt}>수리가</Text>
+                                <Text style={stylesReg.leftGuideTxt}>필요한제품</Text>
+                                <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
+                            </View>
                         </View>
                     </View>
+
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <View style={localStyles.myPrdListWrap}>
+                            {this.state.data.map((product, idx) => 
+                            <TouchableOpacity 
+                                key={idx} 
+                                onPress={ () => Actions.AfterServiceApplyProduct({ 
+                                    clientPrdId : product.clientPrdId,
+                                    clientPrdNm : product.clientPrdNm
+                                }) }
+                            >
+
+                                <View style={localStyles.myPrdBoxWrap}>
+                                    <Text style={localStyles.myPrdNumTxt}>{ pad(++idx, 2) }</Text>
+                        
+                                    <View style={localStyles.myPrdImgWrap}>
+                                        <Image source={{ uri: product.prdTypeImg.fileUrl }} style={localStyles.myPrdImg} />
+                                    </View>
+                        
+                                    <View style={localStyles.myPrdInfoTxtWrap}>
+                                        <Text style={localStyles.myPrdNameTxt}>{product.clientPrdNm}</Text>
+                                        <Text style={localStyles.myPrdDscTxt}>짧은 설명에 대해 짧은 설명에 대해 짧은 설명에 대해</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                             )}
+                        </View>
+                    </ScrollView>
+                </View>
+
                     
-                    <View style={styles.fx3}>
+                    {/* <View style={styles.fx3}>
                         <View style={[styles.fx1, styles.justiConCenter]}>
                             <View style={{backgroundColor : color.defaultColor, height : 5, marginRight : 26}}/>
                         </View>
@@ -99,7 +132,7 @@ class ListBusinessProductType extends Component {
                             </ScrollView>
                         </View>
                   </View>
-                </View>
+                </View> */}
             </Container>
         )
     }
