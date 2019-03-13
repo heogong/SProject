@@ -65,7 +65,7 @@ class JoinPhone extends Component {
                 <Text style={styles.leftGuideTxt}>입력해주세요</Text>
               </View>
               <View style={styles.rightStepNumWrap}>
-                <Text style={styles.rightStepNum}>03</Text>
+                <Text style={styles.rightStepNum}>01</Text>
               </View>
             </View>
 
@@ -74,10 +74,7 @@ class JoinPhone extends Component {
                 <View style={styles.procBarOn} />
               </View>
               <View style={styles.fx1}>
-                <View style={styles.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={styles.procBarOn} />
+                <View style={styles.procBarOff} />
               </View>
               <View style={styles.fx1}>
                <View style={styles.procBarOff} />

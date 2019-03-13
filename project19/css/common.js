@@ -39,7 +39,6 @@ export const styles = StyleSheet.create({
       flex: 1
     },
     footerBtnWrap: {
-      flex: 1,
       justifyContent: "flex-end",
     },
     greyFont : {
@@ -82,12 +81,14 @@ export const styles = StyleSheet.create({
       flex: 4
     },
     headerTitleTxt: {
-      fontSize: 22,
       marginLeft: "auto",
       marginRight: "auto"
     },
     headerRrightWrap: {
       flex: 1
+    },
+    headerLogoImg: {
+      width : 102
     },
     // ----------------------------
     // 공통 Style

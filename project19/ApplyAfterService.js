@@ -70,7 +70,7 @@ class ApplyAfterService extends Component {
                 <Text style={styles.leftGuideTxt}>입력해주세요</Text>
               </View>
               <View style={styles.rightImgWrap}>
-                <Image source={require('./img/license-depart01.png')} style={{width: 80, height: 80}}/>
+                <Image source={require('./img/product/01_icon_white.png')} style={{width: 80, height: 80}}/>
               </View>
             </View>
 
@@ -95,32 +95,33 @@ class ApplyAfterService extends Component {
 
               <Textarea rowSpan={5} style={[styles.textAreaDefault, {marginTop: 12}]} placeholder="상세 증상을 입력해 주세요." placeholderTextColor={{ color: color.inputPlaceHodler }} />
             </View>
-          </View>
 
-          <View style={styles.mb20}>
-            <Text style={localStyles.boxDetailSubTitleTxt}>쿨리닉 제품분석</Text>
-            <View style={styles.fxDirRow}>
-              <View style={styles.fx1}>
-                <Text style={localStyles.boxDetailSubTxt}>용량 :</Text>
-                <Text style={localStyles.boxDetailSubTxt}>전기 :</Text>
-                <Text style={localStyles.boxDetailSubTxt}>압축기 :</Text>
-              </View>
-              <View style={styles.fx1}>
-                <Text style={localStyles.boxDetailSubTxt}>응축기 :</Text>
-                <Text style={localStyles.boxDetailSubTxt}>증발기 :</Text>
-                <Text style={localStyles.boxDetailSubTxt}>제조사 :</Text>
+            <View style={styles.mb20}>
+              <Text style={localStyles.boxDetailSubTitleTxt}>쿨리닉 제품분석</Text>
+              <View style={styles.fxDirRow}>
+                <View style={styles.fx1}>
+                  <Text style={localStyles.boxDetailSubTxt}>용량 :</Text>
+                  <Text style={localStyles.boxDetailSubTxt}>전기 :</Text>
+                  <Text style={localStyles.boxDetailSubTxt}>압축기 :</Text>
+                </View>
+                <View style={styles.fx1}>
+                  <Text style={localStyles.boxDetailSubTxt}>응축기 :</Text>
+                  <Text style={localStyles.boxDetailSubTxt}>증발기 :</Text>
+                  <Text style={localStyles.boxDetailSubTxt}>제조사 :</Text>
+                </View>
               </View>
             </View>
-          </View>
 
-          <View style={styles.footerBtnWrap}>
-            <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mb12]}>
-              <Text style={[styles.btnDefaultTxt, styles.btnDefaultNoFillTxt]}>결제카드선택</Text>
-            </Button>
-            <Button block info style={[styles.btnDefault, styles.btnDefaultFill]}>
-              <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>입력 완료</Text>
-            </Button>
           </View>
+        </View>
+
+        <View style={[styles.footerBtnWrap, {flex: 0}]}>
+          <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mb12]}>
+            <Text style={[styles.btnDefaultTxt, styles.btnDefaultNoFillTxt]}>결제카드선택</Text>
+          </Button>
+          <Button block info style={[styles.btnDefault, styles.btnDefaultFill]}>
+            <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>입력 완료</Text>
+          </Button>
         </View>
 
       </Container>

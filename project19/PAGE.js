@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Actions, Scene, Router, Stack, Overlay, ActionConst, Drawer, Tabs} from 'react-native-router-flux';
+import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator';
+import TabIcon from './TabIcon';
 
 import Intro from './Intro';
 import ClientMain from './ClientMain';
@@ -70,6 +72,7 @@ import TermsContent1 from './TermsContent1';
 import ListBusinessPlace from './ListBusinessPlace';
 import RegProductType from './RegProductType';
 import ClientIntroGuide from './ClientIntroGuide';
+import MatchingWait from './MatchingWait'
 
 import pageOne from './Page1'
 import pageTwo from './Page2'
@@ -92,8 +95,68 @@ const PAGE = () => (
             
             <Scene key="RegCard" hideNavBar component={RegCard}  type={ActionConst.RESET}/>
             <Scene key="ManageCard" hideNavBar component={ManageCard} type={ActionConst.RESET}/>
-            <Scene initial key="RegSuccessCard" hideNavBar component={RegSuccessCard} type={ActionConst.RESET}/>
+            <Scene key="RegSuccessCard" hideNavBar component={RegSuccessCard} type={ActionConst.RESET}/>
+            <Scene key="AgreeTermsService" hideNavBar component={AgreeTermsService} type={ActionConst.RESET}/>
+            <Scene key="RegSuccessTerm" hideNavBar component={RegSuccessTerm}  type={ActionConst.RESET}/>
+            <Scene key="RegBusinessPlace" hideNavBar component={RegBusinessPlace} type={ActionConst.RESET}/>
+            <Scene key="RegBusinessName" hideNavBar component={RegBusinessName} type={ActionConst.RESET}/>
+            <Scene key="RegBusinessAddress" hideNavBar component={RegBusinessAddress} type={ActionConst.RESET}/>
+            <Scene key="FindBusinessAddress" hideNavBar component={FindBusinessAddress} type={ActionConst.RESET}/>            
+            <Scene key="RegBusinessAddressDetail" hideNavBar component={RegBusinessAddressDetail} type={ActionConst.RESET}/>
+            <Scene key="SuccessBusinessPlace" hideNavBar component={SuccessBusinessPlace} type={ActionConst.RESET}/>
+            <Scene key="RegProductInfo" hideNavBar component={RegProductInfo} type={ActionConst.RESET}/>
+            <Scene key="RegProductDetail" hideNavBar component={RegProductDetail}  type={ActionConst.RESET}/>
+            <Scene key="TakeProductImage" hideNavBar component={TakeProductImage}  type={ActionConst.RESET}/>
+            <Scene key="TakeProductGuide2" hideNavBar component={TakeProductGuide2} type={ActionConst.RESET}/>
+            <Scene key="SuccessRegProduct" hideNavBar component={SuccessRegProduct} type={ActionConst.RESET}/>
+            <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
+            <Scene hideNavBar panHandlers={null}>
+            {/* Client Main */}
+                <Tabs
+                    key="clientMain"
+                    routeName="clientMain"
+                    onTabOnPress={() => {
+                        console.log('Back to initial and also print this');
+                    }}
+                    swipeEnabled
+                    showLabel={false}
+                    activeBackgroundColor="#fff"
+                    inactiveBackgroundColor="#fff"
+                    tabBarPosition="bottom"
+                    tabStyle={{height: 56, borderTopWidth: 1, borderColor: "#ddd"}}
+                    >
+                    <Stack key="tab1" hideNavBar iconImg={require("./img/user_footer_icon/tab1.png")} icon={TabIcon}
+                        tabBarOnPress={() => Actions.ClientMain({type:ActionConst.RESET})}
+                        transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                        <Scene key="ClientMain" component={ClientMain}/>
+                    </Stack>
 
+                    <Stack key="tab2" hideNavBar iconImg={require("./img/user_footer_icon/tab2.png")} icon={TabIcon} 
+                        tabBarOnPress={() => Actions.ClientMain({type:ActionConst.RESET})}
+                        transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                        <Scene key="ClientMain" component={ClientMain}/>
+                    </Stack>
+
+                    <Stack key="tab3" hideNavBar iconImg={require("./img/user_footer_icon/tab3.png")} icon={TabIcon} 
+                        tabBarOnPress={() => Actions.ClientMain({type:ActionConst.RESET})}
+                        transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                        <Scene key="ClientMain" component={ClientMain}/>
+                    </Stack>
+
+                    <Stack key="tab4" hideNavBar iconImg={require("./img/user_footer_icon/tab4.png")} icon={TabIcon} 
+                        tabBarOnPress={() => Actions.ClientMain({type:ActionConst.RESET})}
+                        transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                        <Scene key="ClientMain" component={ClientMain}/>
+                    </Stack>
+                </Tabs>
+            </Scene>
+            <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
+            <Scene key="SelectProduct2" hideNavBar component={SelectProduct2} type={ActionConst.RESET}/>
+            <Scene key="ApplyAfterService" hideNavBar component={ApplyAfterService} type={ActionConst.RESET}/>
+            <Scene initial key="MatchingWait" hideNavBar component={MatchingWait} type={ActionConst.RESET}/>
+
+
+            
 
 
             <Scene key="BusinessRegistration1" hideNavBar component={BusinessRegistration1} type={ActionConst.RESET}/>
@@ -104,7 +167,6 @@ const PAGE = () => (
             <Scene key="RegPassBook1" hideNavBar component={RegPassBook1} type={ActionConst.RESET}/>
             <Scene key="RegPassBook2" hideNavBar component={RegPassBook2} type={ActionConst.RESET}/>
             <Scene key="RegPassBook3" hideNavBar component={RegPassBook3} type={ActionConst.RESET}/>
-            <Scene key="AgreeTermsService" hideNavBar component={AgreeTermsService} type={ActionConst.RESET}/>
             <Scene key="PartnerMain" hideNavBar component={PartnerMain} type={ActionConst.RESET}/>
             {/* 35번 화면 작업 예정 */}
             {/* 36번 화면 작업 예정 */}
@@ -144,24 +206,10 @@ const PAGE = () => (
 
             
             
-            <Scene key="RegSuccessTerm" hideNavBar component={RegSuccessTerm}  type={ActionConst.RESET}/>
-            <Scene key="RegBusinessPlace" hideNavBar component={RegBusinessPlace} type={ActionConst.RESET}/>
-            <Scene key="RegBusinessName" hideNavBar component={RegBusinessName} type={ActionConst.RESET}/>
-            <Scene key="RegBusinessAddress" hideNavBar component={RegBusinessAddress} type={ActionConst.RESET}/>
-            <Scene key="FindBusinessAddress" hideNavBar component={FindBusinessAddress} type={ActionConst.RESET}/>            
-            <Scene key="RegBusinessAddressDetail" hideNavBar component={RegBusinessAddressDetail} type={ActionConst.RESET}/>
-            <Scene key="SuccessBusinessPlace" hideNavBar component={SuccessBusinessPlace} type={ActionConst.RESET}/>
-            <Scene key="RegProductInfo" hideNavBar component={RegProductInfo} type={ActionConst.RESET}/>
-            <Scene key="RegProductDetail" hideNavBar component={RegProductDetail}  type={ActionConst.RESET}/>
-            <Scene key="TakeProductImage" hideNavBar component={TakeProductImage}  type={ActionConst.RESET}/>
-            <Scene key="TakeProductGuide2" hideNavBar component={TakeProductGuide2} type={ActionConst.RESET}/>
-            <Scene key="SuccessRegProduct" hideNavBar component={SuccessRegProduct} type={ActionConst.RESET}/>
-            <Scene key="ClientMain" hideNavBar component={ClientMain} type={ActionConst.RESET}/>
-            <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
-            <Scene key="SelectProduct2" hideNavBar component={SelectProduct2} type={ActionConst.RESET}/>
-            {/* 44번 화면 작업 예정 */}
+            
+            
+            
             {/* 47번 화면 작업 예정 */}
-            <Scene key="ApplyAfterService" hideNavBar component={ApplyAfterService} type={ActionConst.RESET}/>
             <Scene key="AfterServiceState" hideNavBar component={AfterServiceState} type={ActionConst.RESET}/>
             <Scene key="HistoryAfterServiceChk2" hideNavBar component={HistoryAfterServiceChk2} type={ActionConst.RESET}/>
             <Scene key="HistoryAfterServiceChk" hideNavBar component={HistoryAfterServiceChk} type={ActionConst.RESET}/>
@@ -177,6 +225,8 @@ const PAGE = () => (
             <Scene key="pageOne" hideNavBar component={pageOne} title="pageOne" type={ActionConst.RESET}/>
             <Scene key="pageTwo" component={pageTwo} title="pageTwo"/>
             <Scene key="pageThree" component={pageThree}/>
+            
+
         </Stack>
     </Router>
 );

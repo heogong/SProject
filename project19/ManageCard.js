@@ -59,7 +59,7 @@ class ManageCard extends Component {
         </Header>
 
         <View style={[styles.contentWrap, styles.alignItemsCenter]}>
-          <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 60}}>
+          <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
             <View style={{marginTop: 26}}>
               <View style={localStyles.regCardStyle}>
                 <ImageBackground

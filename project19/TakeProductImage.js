@@ -55,33 +55,15 @@ class TakeProductImage extends Component {
         </Header>
 
         <View style={styles.fx1}>
-          <View style={[styles.fx1, styles.justiConStart, styles.alignItemsCenter]}>
+          <View style={[styles.justiConStart, styles.alignItemsCenter]}>
             <H1 style={localStyles.topTitleTxt}>보유제품사진</H1>
             <Text style={localStyles.topTxt}>사업자등록번호와 기업명, 대표이름 등</Text>
             <Text style={localStyles.topTxt}>글씨가 잘 보이도록 촬영 또는 스캔해주세요</Text>
           </View>
 
-          <View style={styles.fx3}>
-            <ImageBackground
-              source={require("./img/license-bg01.png")} 
-              resizeMode="contain"
-              style={[styles.alignItemsCenter, styles.justiConCenter, {height : 'auto', width : '100%'}]}>
-
-              <TouchableOpacity 
-                onPress={ () => alert("사진 촬영")}
-                style={[styles.justiConCenter, {
-                  height:'80%', width : '60%',
-                  borderColor : color.defaultColor, 
-                  borderWidth : 2, 
-                  elevation: 2
-                }]}>
-              <View style={[styles.alignItemsCenter]}>
-                <Text style={localStyles.guideGoTxt}>촬영가이드</Text>
-                <Text style={localStyles.guideGoTxt}>보러가기</Text>
-              </View>
-              </TouchableOpacity>
-            </ImageBackground>
-          </View>
+          <TouchableOpacity style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
+            <Image source={require("./img/Photo_guide.png")} resizeMode="contain" style={localStyles.photoGuideImg} />
+          </TouchableOpacity>
           
 
           <View style={styles.footerBtnWrap}>
@@ -114,6 +96,9 @@ const localStyles = StyleSheet.create({
     fontSize: 22,
     color: color.defaultColor,
     fontWeight: "bold"
+  },
+  photoGuideImg: {
+    width: "80%",
   }
 });
 

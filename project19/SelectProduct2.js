@@ -43,7 +43,7 @@ class SelectProduct2 extends Component {
       <Text style={localStyles.myPrdNumTxt}>01</Text>
 
       <View style={localStyles.myPrdImgWrap}>
-        <Image source={require("./img/license-depart01.png")} style={localStyles.myPrdImg} />
+        <Image source={require("./img/product/01_icon_white.png")} style={localStyles.myPrdImg} />
       </View>
 
       <View style={localStyles.myPrdInfoTxtWrap}>

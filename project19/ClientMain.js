@@ -28,6 +28,7 @@ import { color } from './css/color';
 
 import Swiper from 'react-native-swiper';
 import { locale } from "core-js";
+import { Actions } from "react-native-router-flux";
 
 
 class ClientMain extends Component {
@@ -105,7 +106,7 @@ drawSwiper = () => (
             <View style={localStyles.bottomBoxWrap}>
 
                 <View style={localStyles.bottomBoxLeftWrap}>
-                    <Image source={require("./img/license-depart01.png")} style={localStyles.leftImg}  />
+                    <Image source={require("./img/product/01_icon_white.png")} style={localStyles.leftImg}  />
                 </View>
 
                 <View style={localStyles.bottomBoxRightWrap}>
@@ -159,7 +160,7 @@ maching = () => (
 
             <View style={localStyles.bottomBoxLeftWrap}>
                 <Text style={localStyles.prdNameTxt}>[ 야채보관냉장고123 ]</Text>
-                <Image source={require("./img/license-depart01.png")} style={[localStyles.leftImg, {alignSelf: "center", height: 90, width: 90}]}  />
+                <Image source={require("./img/product/01_icon_white.png")} style={[localStyles.leftImg, {alignSelf: "center", height: 90, width: 90}]}  />
             </View>
 
             <View style={localStyles.bottomBoxRightWrap}>
@@ -177,41 +178,46 @@ maching = () => (
         <Header style={[styles.headerM, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}/>
           <Body style={styles.headerCenterWrap}>
-            <Title style={styles.headerTitleTxt}>쿨리닉</Title>
+            <Title style={styles.headerTitleTxt}>
+                <Image source={require("./img/Logo_main.png")} resizeMode="contain" style={styles.headerLogoImg} />
+            </Title>
           </Body>
           <Right style={styles.headerRightWrap}/>
         </Header>
 
         <ScrollView showsVerticalScrollIndicator={false}>
                 
-            {/* {this.unRegister()} */}
+            {this.unRegister()}
             {/* {this.maching()} */}
-
-            {this.drawSwiper()}
+            {/* {this.drawSwiper()} */}
 
             <View style={{backgroundColor : '#d6f1ff'}}>
                 <View style={[styles.boxShadowTopNo, localStyles.secondBox]}>
                     <Text style={localStyles.asMatchStateDscTxt}>매칭된 A/S 업체가 출발했어요.</Text>
                     <View style={styles.fxDirRow}>
                         <View style={localStyles.asMatchIconWrap}>
-                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
+                            {/* 
+                            <Image source={require("./img/user_as_step_icon/Default/as_wait_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
                             <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
+                             */}
+                             <Image source={require("./img/user_as_step_icon/Step_on/as_wait_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={[localStyles.asMatchStateTxt, {color: "#0397bd"}]}>A/S 대기</Text>
                         </View>
                         <View style={localStyles.asMatchIconWrap}>
-                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
+                            <Image source={require("./img/user_as_step_icon/Default/as_start_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 출발</Text>
                         </View>
                         <View style={localStyles.asMatchIconWrap}>
-                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
+                            <Image source={require("./img/user_as_step_icon/Default/as_arrive_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 도착</Text>
                         </View>
                         <View style={localStyles.asMatchIconWrap}>
-                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
+                            <Image source={require("./img/user_as_step_icon/Default/as_progress_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 진행</Text>
                         </View>
                         <View style={localStyles.asMatchIconWrap}>
-                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
+                            <Image source={require("./img/user_as_step_icon/Default/as_complete_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 완료</Text>
                         </View>
                     </View>
                 </View>
@@ -231,23 +237,6 @@ maching = () => (
                 <Text>aaaaaaaaaaaaaaa</Text>
             </View>
         </ScrollView>
-
-        <Footer>
-            <FooterTab>
-                <Button vertical active={this.state.tab1} onPress={() => alert("tab1")}>
-                    <Icon active={this.state.tab1} name="apps" />
-                    <Text>Apps</Text>
-                </Button>
-                    <Button vertical active={this.state.tab2} onPress={() =>  alert("tab2")}>
-                    <Icon active={this.state.tab2} name="camera" />
-                    <Text>Camera</Text>
-                </Button>
-                    <Button vertical active={this.state.tab3} onPress={() =>  alert("tab4")}>
-                    <Icon active={this.state.tab3} name="contact" />
-                    <Text>Contact</Text>
-                </Button>
-            </FooterTab>
-        </Footer>
       </Container>
     );
   }
@@ -259,7 +248,7 @@ function wp (percentage, space) {
 }
   
 const afterServiceBtnSize = wp(33, 30);
-const stateImgSize = wp(10, 52);
+const stateImgSize = wp(15, 52);
 
 const localStyles = StyleSheet.create({
     topBoxSwiperWrap: {
@@ -373,8 +362,8 @@ const localStyles = StyleSheet.create({
     },
     asMatchStateTxt: {
         fontSize : 12,
-        color: "#0397bd",
-        fontWeight: "500",
+        color: "#1e1e32",
+        fontWeight: "bold",
         marginTop: 10
     },
     guideWrap: {

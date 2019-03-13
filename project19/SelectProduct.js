@@ -117,11 +117,11 @@ class SelectProduct extends Component {
                       styles.alignItemsCenter,
                       styles.justiConCenter,
                       { 
-                        backgroundColor : color.prdTypeBackColor, 
+                        backgroundColor : color.defaultColor, 
                         height : productCardSize, 
                         width : productCardSize
                   }]}>
-                    <Image source={require("./img/license-depart01.png")} 
+                    <Image source={require("./img/product/01_icon_white.png")} 
                       style={[styles.mb10, {
                         height : productCardSize - 60, 
                         width : productCardSize - 60

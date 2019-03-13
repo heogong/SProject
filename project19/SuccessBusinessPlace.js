@@ -64,7 +64,7 @@ class SuccessBusinessPlace extends Component {
                 <Text style={styles.leftGuideTxt}>완료되었어요</Text>
               </View>
               <View style={styles.rightImgWrap}>
-                <Image source={require('./img/input-able.png')} />
+                <Image source={require('./img/clear_box.png')} resizeMode="contain" style={{width: 50, height: 50}} />
               </View>
             </View>
 
@@ -74,32 +74,29 @@ class SuccessBusinessPlace extends Component {
             </View>
           </View>
 
-          <View style={{flex:2}}>
-
-            <View style={localStyles.placeBoxWrap}>
-              <View style={localStyles.btnPlusWrap}>
-                <TouchableOpacity onPress={ () => alert("사업장 등록")}>
-                  <Image source={require('./img/license-depart02.png')} style={localStyles.btnPlus} />
-                </TouchableOpacity>
+          <View style={localStyles.placeBoxWrap}>
+            <View style={localStyles.btnPlusWrap}>
+              <TouchableOpacity onPress={ () => alert("사업장 등록")}>
+                <Image source={require('./img/product/01_icon_white.png')} style={localStyles.btnPlus} />
+              </TouchableOpacity>
+            </View>
+            <View style={localStyles.txtWrap}>
+              <Text style={localStyles.placeNameTxt}>세나정육점</Text>
+              <View style={localStyles.infoTxtWrap}>
+                <Text style={localStyles.infoTxt}>경기도 시흥시 산기대학로 237</Text>
+                <Text style={localStyles.infoTxt}>한국산업기술대학교  TIP 308호</Text>
               </View>
-              <View style={localStyles.txtWrap}>
-                <Text style={localStyles.placeNameTxt}>세나정육점</Text>
-                <View style={localStyles.infoTxtWrap}>
-                  <Text style={localStyles.infoTxt}>경기도 시흥시 산기대학로 237</Text>
-                  <Text style={localStyles.infoTxt}>한국산업기술대학교  TIP 308호</Text>
-                </View>
-              </View>
-
             </View>
 
-            <View style={styles.footerBtnWrap}>
-              <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mb5]}>
-                <Text style={[styles.btnDefaultTxt, styles.btnDefaultNoFillTxt]}>제품 등록하러가기</Text>
-              </Button>
-            </View>
           </View>
-          
+
+          <View style={styles.footerBtnWrap}>
+            <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mb5]}>
+              <Text style={[styles.btnDefaultTxt, styles.btnDefaultNoFillTxt]}>제품 등록하러가기</Text>
+            </Button>
+          </View>
         </View>
+          
       </Container>
     );
   }
@@ -120,7 +117,8 @@ const localStyles = StyleSheet.create({
   placeBoxWrap: {
     width : '100%',
     backgroundColor : color.defaultColor,
-    flex: 3
+    flex: 1,
+    marginBottom: 16
   },
   btnPlusWrap: {
     flex: 3,

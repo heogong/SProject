@@ -57,8 +57,8 @@ class FindBusinessAddress extends Component {
         <View style={{flex:1, paddingLeft: 26, paddingRight: 26, borderWidth: 0}}>
           <Item regular style={[styles.inputWhBackGreyBo, {backgroundColor: color.whiteColor, marginLeft: 0}]}>
             <Input placeholder="주소를 입력해 주세요" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
-            <Icon active name="ios-search" style={[styles.inputIcon, {marginRight: 0, paddingRight: 0}]}/>
-            <Icon name="ios-close" style={[styles.inputIcon, {color: "#8e8e98"}]}/>
+            <Icon active name="ios-search" style={[styles.inputIcon, {fontSize: 25, marginRight: 0, paddingRight: 0}]}/>
+            <Icon name="ios-close" style={[styles.inputIcon, {fontSize: 30, color: "#8e8e98"}]}/>
           </Item>
         </View>
 

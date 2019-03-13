@@ -51,7 +51,7 @@ const SLIDER_1_FIRST_ITEM = 0;
 _cameraCard = () => (
   <TouchableOpacity onPress={ () => alert("사진 촬영")}>
     <View style={localStyles.prdCardOffPhotoWrap}>
-      <Icon name="ios-camera" style={localStyles.prdCardCameraIcon} />
+      <Image source={require("./img/camera_icon.png")} resizeMode="contain" style={localStyles.prdCardCameraIcon} />
     </View>
   </TouchableOpacity>
 );
@@ -63,7 +63,7 @@ _imgCard = () => (
       source={{uri: 'https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg'}}>
       <View style={[styles.pd10, styles.fx2]}>
         <TouchableOpacity onPress={ () => alert("사진 삭제")}>
-          <Image source={require("./img/check-on2.png")} />
+          <Image source={require("./img/small_delete_button.png")} resizeMode="contain" style={{width: 20, height: 20}} />
         </TouchableOpacity>
       </View>
 
@@ -92,16 +92,16 @@ class RegProductDetail extends Component {
     return (
         <View style={localStyles.prdCardWrap}>
             <View style={localStyles.prdCardTopWrap}>
-                <Image source={require("./img/input-able.png")} style={localStyles.prdCardTopIconImg} />
+                <Image source={require("./img/card_delete_icon.png")} style={localStyles.prdCardTopIconImg} />
 
                 <View style={{flex:3, justifyContent : 'center', alignItems : 'center'}}>
                     <Text style={localStyles.prdCardTopNumTxt}>01</Text>
-                    <Image source={require("./img/license-depart01.png")} style={{height : imageSize, width : imageSize}} />
+                    <Image source={require("./img/product/01_icon_white.png")} style={{height : imageSize, width : imageSize}} />
                 </View>
 
                 <View>
-                  <Image source={require("./img/input-able.png")} style={[localStyles.prdCardTopIconImg, styles.mb10]} />
-                  <Image source={require("./img/input-able.png")} style={localStyles.prdCardTopIconImg} />
+                  <Image source={require("./img/card_add_icon.png")} style={[localStyles.prdCardTopIconImg, styles.mb10]} />
+                  <Image source={require("./img/card_copy_icon.png")} style={localStyles.prdCardTopIconImg} />
                 </View>
             </View>
 
@@ -159,34 +159,33 @@ class RegProductDetail extends Component {
         </Header>
 
         <View style={styles.contentWrap}>
+          <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
+            <View>
+              
+              <View style={styles.fxDirRow}>
+                <View style={styles.leftGuideTxtWrap}>
+                  <Text style={styles.leftGuideTxt}>제품의</Text>
+                  <Text style={styles.leftGuideTxt}>상세정보를</Text>
+                  <Text style={styles.leftGuideTxt}>입력해주세요</Text>
+                </View>
+                <View style={[styles.rightStepNumWrap, {paddingRight: 26}]}>
+                  <Text style={styles.rightStepNum}>03</Text>
+                </View>
+              </View>
 
-          <View>
-            
-            <View style={styles.fxDirRow}>
-              <View style={styles.leftGuideTxtWrap}>
-                <Text style={styles.leftGuideTxt}>제품의</Text>
-                <Text style={styles.leftGuideTxt}>상세정보를</Text>
-                <Text style={styles.leftGuideTxt}>입력해주세요</Text>
-              </View>
-              <View style={[styles.rightStepNumWrap, {paddingRight: 26}]}>
-                <Text style={styles.rightStepNum}>03</Text>
-              </View>
-            </View>
-
-            <View style={[styles.procBarWrap, {paddingRight: 26, marginBottom: 47}]}>
-              <View style={styles.fx1}>
+              <View style={[styles.procBarWrap, {paddingRight: 26, marginBottom: 47}]}>
+                <View style={styles.fx1}>
+                  <View style={styles.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
+                  <View style={styles.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
                 <View style={styles.procBarOn} />
+                </View>
               </View>
-              <View style={styles.fx1}>
-                <View style={styles.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-              <View style={styles.procBarOn} />
-              </View>
+              
             </View>
-            
-          </View>
-          <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 10}}>
             <Carousel
                 ref={c => this._slider1Ref = c}
                 renderItem={this._renderItem}
@@ -308,7 +307,8 @@ const localStyles = StyleSheet.create({
   },
   prdCardCameraIcon: {
     color: color.defaultColor,
-    fontSize: 50
+    width: 36,
+    height: 36
   }
 });
 

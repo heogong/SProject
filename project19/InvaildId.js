@@ -200,21 +200,21 @@ class InvaildId extends Component {
 
 const localStyles = StyleSheet.create({
   idPwFindTabWrap: {
-    flex: 3,
+    flex: 1,
     marginTop: 38
   },
   inputBoxWrap: {
     paddingTop : 30,
     paddingLeft : 20,
     paddingRight : 20,
-    flex: 1,
-    backgroundColor : color.defaultColor
+    backgroundColor : color.defaultColor,
+    height: 300
   },
   blankBoxWrap: {
-    flex: 1,
     backgroundColor : color.defaultColor,
     justifyContent : 'center',
-    alignItems : 'center'
+    alignItems : 'center',
+    height: 300
   },
   infoTxt: {
     color: color.whiteColor, fontSize: 13
