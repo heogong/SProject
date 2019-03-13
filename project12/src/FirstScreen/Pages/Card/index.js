@@ -7,33 +7,14 @@ import { Actions } from 'react-native-router-flux';
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
 import { styles } from '~/Common/Styles/common';
-import { stylesReg } from '~/Common/Styles/stylesReg';
-import { color } from '~/Common/Styles/colors';
 
 export default class CardIndex extends Component {
 
-  _showAlert = () => {
-    Alert.alert(
-      '',
-      '나중에 등록 하시겠습니까?',
-      [
-        // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-        {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: '네', onPress: () => Actions.ClientIndex() },
-      ],
-      { cancelable: false }
-    )
-  }
-
   render() {
     return (
-      //     <TouchableOpacity  onPress={this._showAlert}>
-      //       <Text style={{ color: 'skyblue', fontSize: 13}}>
-      //           나중에 하기
-      //       </Text>
 
       <Container style={styles.containerInnerPd}>
-        <CustomHeader />
+        <CustomHeader resetPage={true}/>
 
         <View style={styles.fx1}>
 
@@ -55,8 +36,6 @@ export default class CardIndex extends Component {
             <View style={styles.footerBtnWrap}>
               <CustomButton 
                 onPress={Actions.CardInputInfo}
-                edgeFill={true}
-                fillTxt={true}
               >
                 결제카드등록
               </CustomButton>

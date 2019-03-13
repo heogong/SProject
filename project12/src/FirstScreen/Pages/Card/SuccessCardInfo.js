@@ -40,8 +40,6 @@ class SuccessCardInfo extends Component {
             <View style={styles.footerBtnWrap}>
               <CustomButton 
               onPress={this._cardRegister}
-              edgeFill={true}
-              fillTxt={true}
             >
               약관동의하러가기
             </CustomButton>

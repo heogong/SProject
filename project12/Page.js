@@ -169,10 +169,10 @@ const PAGE = () => (
       {/* 약관동의 */}
       <Scene key="PartnerAgreeTermsService" component={PartnerAgreeTermsService} />
       <Scene key="SuccessJoinPartner" component={SuccessJoinPartner} />
-      <Scene key="ClientAgreeTermsService"  component={ClientAgreeTermsService} />
+      <Scene key="ClientAgreeTermsService" component={ClientAgreeTermsService} />
       
-      {/* <Scene key="PartnerTermsService" component={PartnerTermsService} />
-      <Scene key="SuccessAgreeTermsService"  component={SuccessAgreeTermsService} type={ActionConst.RESET}/> */}
+      {/* <Scene key="PartnerTermsService" component={PartnerTermsService} />*/}
+      <Scene key="SuccessAgreeTermsService"  component={SuccessAgreeTermsService} type={ActionConst.RESET}/> 
 
       <Scene key="reactCamera" component={ReactCamera} />
       <Scene key="ViewImage" component={ViewImage} />
@@ -180,7 +180,7 @@ const PAGE = () => (
       <Scene key="InvaildId" component={InvaildId} />
 
       <Scene key="JoinCustomerType" component={JoinCustomerType} />
-      <Scene key="JoinAccountType" initial component={JoinAccountType} />
+      <Scene key="JoinAccountType" component={JoinAccountType} />
       <Scene key="JoinInputEmail" component={JoinInputEmail} back onBack={() => Actions.JoinInputName()} />
       <Scene key="JoinInputName"  component={JoinInputName} />
       <Scene key="JoinInputPhone"  component={JoinInputPhone} />
@@ -216,25 +216,27 @@ const PAGE = () => (
       {/* 사업장등록 */}
       <Scene key="RegBusinessPlaceIndex"  component={RegBusinessPlaceIndex} />
       <Scene key="RegBusinessPlace"  component={RegBusinessPlace} />
-      <Scene key="SetBusinessPlace" component={SetBusinessPlace} />
+      <Scene key="SetBusinessPlace" component={SetBusinessPlace} type={ActionConst.RESET} />
       <Scene key="SetAddress"  component={SetAddress} />
       <Scene key="SearchAddress"  component={SearchAddress} />
 
       {/* <Scene key="ViewBusinessPlace" hideNavBar component={ViewBusinessPlace} title="사업장 조회"/> */}
 
       {/* 제품 등록 */}
-      <Scene key="InputProdType" component={InputProdType} type={ActionConst.RESET} />
+      <Scene key="InputProdType"  component={InputProdType} />
       <Scene key="InputShowCase" component={InputShowCase} /> 
       <Scene key="TakeProductImage"  component={TakeProductImage} />
-      <Scene key="TakeProductGuide1"  component={TakeProductGuide1} />
+      <Scene key="TakeProductGuide1" component={TakeProductGuide1} />
 
 
       {/* 클라이언트 - AS 신청 제품 타입 */}
-      <Scene key="AfterServiceProdTypeList" component={AfterServiceProdTypeList} />
+      <Scene key="AfterServiceProdTypeList" initial component={AfterServiceProdTypeList} />
       <Scene key="AfterServiceProdList" component={AfterServiceProdList} />
       <Scene key="AfterServiceApplyProduct" component={AfterServiceApplyProduct} />
       <Scene key="AfterServiceApplyProductCheck" component={AfterServiceApplyProductCheck} />
       <Scene key="AfterServiceApplyProductComplete" component={AfterServiceApplyProductComplete} />
+
+
 
       {/* <Scene key="InputProdInfo" component={InputProdInfo} onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" component={InputProdImage} type={ActionConst.RESET} /> */}
@@ -312,7 +314,7 @@ const PAGE = () => (
               tabBarOnPress={() => Actions.ListBusinessPlace({type:ActionConst.RESET}) }
               transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" />
-              <Scene key="ListBusinessProductType" component={ListBusinessProductType} title="사업장 제품 타입 목록" />
+              {/* <Scene key="ListBusinessProductType" component={ListBusinessProductType} title="사업장 제품 타입 목록" /> */}
               <Scene key="ListBusinessShowCase" component={ListBusinessShowCase} title="사업장 제품 목록" />
               <Scene key="InputBusinessProdType" component={InputBusinessProdType} title="제품 타입 선택" />
               

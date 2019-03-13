@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, TouchableOpacity, Keyboard, ScrollView, View } from 'react-native';
+import { Image, TouchableOpacity, Keyboard, StyleSheet, View } from 'react-native';
 import { Container, Icon, Text, Item, Input } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -11,6 +11,7 @@ import { CheckBox } from 'react-native-elements'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import RegCard from '~/FirstScreen/Functions/Card/RegCard';
 
+import CustomModal from '~/Common/Components/CustomModal';
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
 import { styles, viewportHeight } from '~/Common/Styles/common';
@@ -28,7 +29,14 @@ export default class InputCardInfo extends Component {
         vaildTermMonth: '',
         vaildTermYear: '',
         passwd: '',
-        birthDay: ''
+        birthDay: '',
+        disableBtn : true,
+        check1 : false,
+        check2 : false,
+        check3 : false,
+        check4 : false,
+        isAlertModal : false, // alert 용
+        resultMsg : null
     };
   }
 
@@ -67,13 +75,17 @@ export default class InputCardInfo extends Component {
               // Actions.pop({ refresh: { data: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' }})
               // Actions.pop({ refresh: { data: 'Data after pop', title: 'title after pop' }, key: 'AfterServiceApplyProductCheck' });
               // Actions.popTo("AfterServiceApplyProductCheck");
-              this.props.getListCard();
-              Actions.pop();
+              //this.props.getListCard();
+              //Actions.pop();
+              Actions.SuccessCardInfo();
             } else{
               Actions.ClientIndex(); // 사업장 제품 등록
             }
           } else {
-            alert(resultData.resultMsg);
+            this.setState({
+              isAlertModal : true,
+              resultMsg : resultData.resultMsg
+            })
           }
         }
       });
@@ -98,13 +110,53 @@ export default class InputCardInfo extends Component {
     }
 
     this.setState({cardNumber : resultValue})
+
+    this._chkNextBtn(); // 유효성 체크
+  }
+
+  _totalCheck = async () => {
+    const { check1 } = this.state;
+
+
+    await this.setState({
+      check1 : !check1,
+      check2 : !check1,
+      check3 : !check1,
+      check4 : !check1,
+    })
+
+    await this._chkNextBtn(); // 유효성 체크
+  }
+
+  // 유효성 체크 : 등록완료 버튼 활성화 여부
+  _chkNextBtn = () => {
+    const cardNumLen = 16;
+    const vaildTermMonthLen = 2;
+    const vaildTermYearLen = 2;
+    const birthDayLen = 6
+    const passwdLen = 2;
+
+    const { cardNumber, vaildTermMonth, vaildTermYear, passwd, birthDay, check2, check3, check4 } = this.state;
+
+    if(cardNumber.length >= cardNumLen 
+      && vaildTermMonth.length >= vaildTermMonthLen 
+      && vaildTermYear.length >= vaildTermYearLen 
+      && passwd.length >= passwdLen
+      && birthDay.length >= birthDayLen
+      && check2
+      && check3
+      && check4 ) {
+        this.setState({disableBtn : false});
+      } else {
+        this.setState({disableBtn : true});
+      }
   }
   
   render() {
     return (
 
       <Container style={styles.containerInnerPd}>
-        <CustomHeader />
+          <CustomHeader />
           <View style={styles.fxDirRow}>
             <View style={stylesReg.leftGuideTxtWrap}>
               <Text style={stylesReg.leftGuideTxt}>쿨리닉</Text>
@@ -128,11 +180,10 @@ export default class InputCardInfo extends Component {
             </View>
           </View>
 
-          <View style={stylesReg.inputWrap}>
+          <View style={localStyles.inputWrap}>
             <Item regular style={[styles.mb10, styles.inputStyle]}>
               <Input 
                 onChangeText={(text) => this._setCardNum(text) }
-                onKeyPress={this._handleKeyPress }
                 value={ this.state.cardNumber }
                 keyboardType='numeric'
                 maxLength={19}
@@ -148,7 +199,7 @@ export default class InputCardInfo extends Component {
               <View style={styles.fx1}>
                 <Item regular style={[styles.inputStyle, styles.mr7]}>
                   <Input 
-                    onChangeText={(text) => this.setState({vaildTermMonth : text})}
+                    onChangeText={ async (text) => { await this.setState({vaildTermMonth : text}), this._chkNextBtn()} }
                     value={ this.state.vaildTerm }
                     keyboardType='numeric'
                     maxLength={2}
@@ -162,7 +213,7 @@ export default class InputCardInfo extends Component {
               <View style={styles.fx1}>
                 <Item regular style={[styles.inputStyle, styles.mr7]}>
                   <Input 
-                    onChangeText={(text) => this.setState({vaildTermYear : text})}
+                    onChangeText={ async (text) => { await this.setState({vaildTermYear : text}), this._chkNextBtn()} }
                     value={ this.state.vaildTerm }
                     keyboardType='numeric'
                     maxLength={2}
@@ -177,7 +228,7 @@ export default class InputCardInfo extends Component {
                 <Item regular style={styles.inputStyle}>
                   <Input 
                     secureTextEntry={ true }
-                    onChangeText={(text) => this.setState({passwd : text})}
+                    onChangeText={ async (text) => { await this.setState({passwd : text}), this._chkNextBtn()} }
                     value={ this.state.passwd }
                     keyboardType='numeric'
                     maxLength={2}
@@ -192,7 +243,7 @@ export default class InputCardInfo extends Component {
             <View>
               <Item regular style={styles.inputStyle}>
                 <Input 
-                  onChangeText={(text) => this.setState({birthDay : text})}
+                  onChangeText={ async (text) => { await this.setState({birthDay : text}), this._chkNextBtn()} }
                   value={ this.state.birthDay }
                   keyboardType='numeric'
                   maxLength={6}
@@ -203,12 +254,12 @@ export default class InputCardInfo extends Component {
               </Item>
             </View>
 
-            <View style={stylesReg.termsWrap}>
+            <View style={localStyles.termsWrap}>
               <View style={[styles.fx2, styles.alignItemsStart, styles.justiConBetween]}>
-                <Text style={[styles.greyFont, styles.mb5]}>전자금융거래 이용약관</Text>
-                <Text style={[styles.greyFont, styles.mb5]}>개인정보 수집 및 이용안내</Text>
-                <Text style={[styles.greyFont, styles.mb5]}>전자금융거래 이용약관</Text>
-                <Text style={[styles.greyFont, styles.mb5]}>개인정보 수집 및 이용안내</Text>
+                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>전자금융거래 이용약관</Text>
+                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>개인정보 수집 및 이용안내</Text>
+                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>전자금융거래 이용약관</Text>
+                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>개인정보 수집 및 이용안내</Text>
               </View>
 
               <View style={[styles.fx1, styles.fxDirRow]}>
@@ -220,8 +271,8 @@ export default class InputCardInfo extends Component {
                       textStyle={{fontSize: 14}}
                       checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
                       uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
-                      checked={this.state.checked}
-                      onPress={() => this.setState({checked: !this.state.checked})}
+                      checked={this.state.check1}
+                      onPress={this._totalCheck}
                     />
                   </View>
                   <View style={styles.fx1}>
@@ -230,8 +281,8 @@ export default class InputCardInfo extends Component {
                       containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
                       checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
                       uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
-                      checked={this.state.checked}
-                      onPress={() => this.setState({checked: !this.state.checked})}
+                      checked={this.state.check2}
+                      onPress={async () => { await this.setState({check2: !this.state.check2}), this._chkNextBtn()} }
                     />
                   </View>
                   <View style={styles.fx1}>
@@ -240,8 +291,8 @@ export default class InputCardInfo extends Component {
                       containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
                       checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
                       uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
-                      checked={this.state.checked}
-                      onPress={() => this.setState({checked: !this.state.checked})}
+                      checked={this.state.check3}
+                      onPress={async () => { await this.setState({check3: !this.state.check3}), this._chkNextBtn()} }
                     />
                   </View>
                   <View style={styles.fx1}>
@@ -250,8 +301,8 @@ export default class InputCardInfo extends Component {
                       containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
                       checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
                       uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
-                      checked={this.state.checked}
-                      onPress={() => this.setState({checked: !this.state.checked})}
+                      checked={this.state.check4}
+                      onPress={async () => { await this.setState({check4: !this.state.check4}), this._chkNextBtn()} }
                     />
                   </View>
                 </View>
@@ -263,16 +314,38 @@ export default class InputCardInfo extends Component {
           <View style={styles.footerBtnWrap}>
             <CustomButton 
               onPress={this._cardRegister}
-              edgeFill={true}
-              fillTxt={true}
+              disabled={this.state.disableBtn}
             >
               등록완료
             </CustomButton>
           </View>
+
+          {/* alert 메세지 모달 */}
+          <CustomModal
+            modalType="ALERT"
+            isVisible={this.state.isAlertModal}
+            onPress={ () => this.setState({isAlertModal : false})}
+            infoText={this.state.resultMsg}
+            btnText="확인"
+          />
       </Container>
       
     )
   }
 }
+
+const localStyles = StyleSheet.create({
+  inputWrap: {
+    marginTop: 32
+  },
+  termsWrap: {
+    marginTop: 27,
+    flexDirection : "row"
+  },
+  inputBottomTxt: {
+    color: "#1e1e32",
+    fontSize: 13
+  },
+});
 
 const viewHeight = viewportHeight;

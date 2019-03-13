@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Container,  H2, Text } from "native-base";
 
 import { Actions } from "react-native-router-flux";
@@ -21,12 +21,12 @@ class RegBusinessPlaceIndex extends Component {
         <CustomHeader />
 
         <View style={styles.contentWrap}>
-          <View>
+          <View style={styles.fx1}>
             <View style={styles.fxDirRow}>
               <View style={stylesReg.leftGuideTxtWrap}>
                 <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
                 <Text style={stylesReg.leftGuideTxt}>사업장정보를</Text>
-                <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
+                <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
               </View>
               <View style={stylesReg.rightStepNumWrap}>
                 <Text style={stylesReg.rightStepNum}>03</Text>
@@ -46,22 +46,20 @@ class RegBusinessPlaceIndex extends Component {
             </View>
           </View>
 
-          <View style={[styles.fx2, styles.justiConCenter]}>
-            <View style={{width : '100%', height : itemHeight, backgroundColor : color.defaultColor}}>
-              <View style={[styles.fx3, styles.alignItemsCenter, styles.justiConCenter]}>
-                <TouchableOpacity onPress={Actions.RegBusinessPlace}>
-                  <Image source={require('~/Common/Image/ico-naver.png')} resizeMode="contain" />
+          <View style={[styles.fx2, styles.justifyContent]}>
+            <View style={localStyles.placeBoxWrap}>
+              <View style={localStyles.btnPlusWrap}>
+                <TouchableOpacity onPress={Actions.RegBusinessPlace} onPress={Actions.RegBusinessPlace}>
+                  <Image source={require('~/Common/Image/ico-naver.png')} style={localStyles.btnPlus}/>
                 </TouchableOpacity>
               </View>
-              <View style={[styles.fx2, styles.alignItemsCenter]}>
-                <View style={styles.fx1}>
-                  <H2 style={{color:color.whiteColor}}>사업장명칭</H2>
+              <View style={localStyles.txtWrap}>
+                  <Text style={localStyles.placeNameTxt}>사업장명칭</Text>
+                  <View style={localStyles.infoTxtWrap}>
+                    <Text style={localStyles.infoTxt}>새로운 사업장을 추가하려면</Text>
+                    <Text style={localStyles.infoTxt}>위의 아이콘을 클릭하세요</Text>
+                  </View>
                 </View>
-                <View style={[styles.fx1, styles.alignItemsCenter]}>
-                  <Text style={styles.whiteFont}>새로운 사업장을 추가하려면</Text>
-                  <Text style={styles.whiteFont}>위의 아이콘을 클릭하세요</Text>
-                </View>
-              </View>
             </View>
           </View>
         </View>
@@ -69,6 +67,42 @@ class RegBusinessPlaceIndex extends Component {
     );
   }
 }
+
 const itemHeight = viewportHeight * 0.47;
+
+const localStyles = StyleSheet.create({
+  placeBoxWrap: {
+    width : '100%',
+    height : itemHeight, 
+    backgroundColor : color.defaultColor
+  },
+  btnPlusWrap: {
+    flex: 3,
+    alignItems : 'center',
+    justifyContent:'center'
+  },
+  btnPlus: {
+    width: 120,
+    height: 120
+  },
+  txtWrap: {
+    flex: 2,
+    alignItems : 'center'
+  },
+  placeNameTxt: {
+    color: color.whiteColor,
+    fontSize: 27,
+    fontWeight: "bold",
+    marginBottom: 22
+  },
+  infoTxtWrap: {
+    flex: 1,
+    alignItems : 'center'
+  },
+  infoTxt: {
+    fontSize: 15,
+    color: color.whiteColor
+  }
+});
 
 export default RegBusinessPlaceIndex;
