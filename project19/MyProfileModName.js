@@ -57,13 +57,16 @@ class MyProfileModName extends Component {
 
         <View style={styles.contentWrap}>
 
-          <View>
+          <View style={styles.fx1}>
             <View style={styles.tooltipWrap}>
               <Text style={styles.tooltipTxt}>본인의 실명을 입력 후 [설정완료] 버튼을 누러주세요.</Text>
             </View>
             <Text style={styles.inputNbTitleTxt}>이름</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
               <Input placeholder="이름을 입력해주세요." placeholderTextColor={color.inputPlaceHodler} style={styles.inputNbDefaultBox}/>
+              <TouchableOpacity>
+                <Image source={require("./img/Delete_button_gray.png")} resizeMode="contain" style={localStyles.clearIconImg} />
+              </TouchableOpacity>
             </Item>
           </View>
 
@@ -78,5 +81,12 @@ class MyProfileModName extends Component {
     );
   }
 }
+
+const localStyles = StyleSheet.create({
+  clearIconImg: {
+    width: 20,
+    height: 20
+  }
+});
 
 export default MyProfileModName; 

@@ -28,6 +28,7 @@ import {
   CheckBox
 } from "native-base";
 import Modal from "react-native-modal";
+import Swiper from 'react-native-swiper';
 
 import { styles, viewportHeight, viewportWidth } from './css/common';
 import { color } from './css/color';
@@ -73,15 +74,15 @@ class ListBusinessPlace extends Component {
 
           <ScrollView
             horizontal={true}
-            pagingEnabled={true} // animates ScrollView to nearest multiple of it's own width
-            showsHorizontalScrollIndicator={false}>
+            pagingEnabled={false} // animates ScrollView to nearest multiple of it's own width
+            showsHorizontalScrollIndicator={true}>
 
             <View style={localStyles.placeBoxWrap}>
               <TouchableOpacity onPress={this._toggleModal} style={localStyles.closeIconWrap}>
-                <Icon name="close-circle" style={localStyles.closeIcon} style={{color: "#d6f1ff"}} />
+                <Image source={require('./img/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
               </TouchableOpacity>
               <View style={localStyles.prdImgWrap}>
-                <Image source={require('./img/ico-naver.png')} style={localStyles.prdImg}/>
+                <Image source={require('./img/product/01_icon_white.png')} style={localStyles.prdImg}/>
               </View>
               <TouchableOpacity onPress={ () => alert("사업장 등록")}>
               <View style={localStyles.txtWrap}>
@@ -95,11 +96,11 @@ class ListBusinessPlace extends Component {
             </View>
             
             <View style={localStyles.placeBoxWrap}>
-              <TouchableOpacity onPress={ () => alert("사업장 등록")} style={localStyles.closeIconWrap}>
-                <Icon name="close-circle" style={localStyles.closeIcon} style={{color: "#d6f1ff"}} />
+              <TouchableOpacity onPress={this._toggleModal} style={localStyles.closeIconWrap}>
+                <Image source={require('./img/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
               </TouchableOpacity>
               <View style={localStyles.prdImgWrap}>
-                <Image source={require('./img/ico-naver.png')} style={localStyles.prdImg}/>
+                <Image source={require('./img/product/01_icon_white.png')} style={localStyles.prdImg}/>
               </View>
               <TouchableOpacity onPress={ () => alert("사업장 등록")}>
               <View style={localStyles.txtWrap}>
@@ -113,11 +114,11 @@ class ListBusinessPlace extends Component {
             </View>
 
             <View style={localStyles.placeBoxWrap}>
-              <TouchableOpacity onPress={ () => alert("사업장 등록")} style={localStyles.closeIconWrap}>
-                <Icon name="close-circle" style={localStyles.closeIcon} style={{color: "#d6f1ff"}} />
+              <TouchableOpacity onPress={this._toggleModal} style={localStyles.closeIconWrap}>
+                <Image source={require('./img/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
               </TouchableOpacity>
               <View style={localStyles.prdImgWrap}>
-                <Image source={require('./img/ico-naver.png')} style={localStyles.prdImg}/>
+                <Image source={require('./img/product/01_icon_white.png')} style={localStyles.prdImg}/>
               </View>
               <TouchableOpacity onPress={ () => alert("사업장 등록")}>
               <View style={localStyles.txtWrap}>
@@ -206,14 +207,15 @@ const localStyles = StyleSheet.create({
     fontSize: 14,
     color: color.whiteColor
   },
-  closeIcon: {
-    marginTop: 14
+  closeIconImg: {
+    width: 24,
+    height: 24
   },
   closeIconWrap: {
     flexDirection: 'row',
     alignSelf: 'flex-start',
     marginLeft: 14,
-    marginTop: 10
+    marginTop: 14
   }
 });
 

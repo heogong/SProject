@@ -74,15 +74,13 @@ class MoreMenu extends Component {
               <TouchableOpacity 
                 style={[localStyles.quickBtnBox, {borderRightColor: color.defaultColor, borderRightWidth: 1}]}
                 onPress={ () => alert("사진조회")}>
-                <Image source={require("./img/license-depart02.png")} style={{width: 60, height: 41}} />
-                <Text style={localStyles.quickBtnTxt}>사업자정보 수정</Text>
+                <Image source={require("./img/company_icon.png")} style={localStyles.quickBtnImg} />
               </TouchableOpacity>
 
               <TouchableOpacity 
                 style={localStyles.quickBtnBox}
                 onPress={ () => alert("사진조회")}>
-                <Image source={require("./img/license-depart02.png")} style={{width: 60, height: 41}} />
-                <Text style={localStyles.quickBtnTxt}>정산 예정금액</Text>
+                <Image source={require("./img/card_manager_icon.png")} style={localStyles.quickBtnImg} />
               </TouchableOpacity>
           </View>
 
@@ -154,10 +152,9 @@ const localStyles = StyleSheet.create({
     justifyContent : "center",
     alignItems: "center"
   },
-  quickBtnTxt: {
-    fontSize: 13,
-    color: "#0b2024",
-    marginTop: 11
+  quickBtnImg: {
+    width: 94,
+    height: 74
   },
   listMenuWrap: {
     justifyContent: "center",

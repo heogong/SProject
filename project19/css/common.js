@@ -427,15 +427,23 @@ export const styles = StyleSheet.create({
     inputDefaultBox: {
       paddingRight: 8,
       fontSize: 14,
-      height: 46,
+      height: 46
     },
     inputWhBackBuBo: {
       height : 46,
-      borderColor : color.defaultColor
+      borderColor : color.defaultColor,
+      borderLeftWidth: 1,
+      borderRightWidth: 1,
+      borderBottomWidth: 1,
+      borderTopWidth: 1
     },
     inputWhBackGreyBo: {
       height : 46,
-      borderColor : color.inputBoGrey
+      borderColor : color.inputBoGrey,
+      borderLeftWidth: 1,
+      borderRightWidth: 1,
+      borderBottomWidth: 1,
+      borderTopWidth: 1
     },
     inputIcon: {
       color: color.defaultColor,

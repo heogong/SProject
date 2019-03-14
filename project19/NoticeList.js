@@ -63,7 +63,7 @@ class NoticeList extends Component {
                     <Text style={localStyles.listNoticeTitleTxt}>[공지] 쿨리닉 서비스가 시작되었습니다</Text>
                     <Text style={localStyles.listNoticeDateTxt}>2019.02.11</Text>
                   </View>
-                  <Image source={require('./img/intro-logo.png')} style={localStyles.newIcon} />
+                  <Image source={require('./img/New_icon.png')} style={localStyles.newIcon} />
                 </View>
               </TouchableOpacity>
 
@@ -73,7 +73,7 @@ class NoticeList extends Component {
                     <Text style={localStyles.listNoticeTitleTxt}>[공지] 쿨리닉 서비스가 시작되었습니다</Text>
                     <Text style={localStyles.listNoticeDateTxt}>2019.02.11</Text>
                   </View>
-                  <Image source={require('./img/intro-logo.png')} style={localStyles.newIcon} />
+                  <Image source={require('./img/New_icon.png')} style={localStyles.newIcon} />
                 </View>
               </TouchableOpacity>
 
@@ -83,11 +83,20 @@ class NoticeList extends Component {
                     <Text style={localStyles.listNoticeTitleTxt}>[공지] 쿨리닉 서비스가 시작되었습니다</Text>
                     <Text style={localStyles.listNoticeDateTxt}>2019.02.11</Text>
                   </View>
-                  <Image source={require('./img/intro-logo.png')} style={localStyles.newIcon} />
+                  <Image source={require('./img/New_icon.png')} style={localStyles.newIcon} />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={ () => alert("사진조회")}>
+                <View style={localStyles.listNoticeWrap}>
+                  <View>
+                    <Text style={localStyles.listNoticeTitleTxt}>[공지] 쿨리닉 서비스가 시작되었습니다</Text>
+                    <Text style={localStyles.listNoticeDateTxt}>2019.02.11</Text>
+                  </View>
+                  <Image source={require('./img/New_icon.png')} style={localStyles.newIcon} />
                 </View>
               </TouchableOpacity>
             </ScrollView>        
-                
           </View>
           
         </View>
@@ -118,9 +127,13 @@ const localStyles = StyleSheet.create({
     marginTop: 5
   },
   newIcon: {
-    width: 24,
-    height: 24
+    width: 20,
+    height: 20
   },
+  btnHome: {
+    width: 72,
+    height: 28
+  }
 });
 
 export default NoticeList;

@@ -153,7 +153,7 @@ const PAGE = () => (
             <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
             <Scene key="SelectProduct2" hideNavBar component={SelectProduct2} type={ActionConst.RESET}/>
             <Scene key="ApplyAfterService" hideNavBar component={ApplyAfterService} type={ActionConst.RESET}/>
-            <Scene initial key="MatchingWait" hideNavBar component={MatchingWait} type={ActionConst.RESET}/>
+            <Scene key="MatchingWait" hideNavBar component={MatchingWait} type={ActionConst.RESET}/>
             {/* <Scene key="AfterServiceState" hideNavBar component={AfterServiceState} type={ActionConst.RESET}/> */}
             <Scene hideNavBar panHandlers={null}>
             {/* Client Main */}
@@ -199,6 +199,23 @@ const PAGE = () => (
             <Scene key="HistoryAfterServiceChk" hideNavBar component={HistoryAfterServiceChk} type={ActionConst.RESET}/>
             <Scene key="ReportAfterService" hideNavBar component={ReportAfterService} type={ActionConst.RESET}/>
             <Scene key="ListBusinessPlace" hideNavBar component={ListBusinessPlace} type={ActionConst.RESET}/>
+            <Scene key="RegProductType" hideNavBar component={RegProductType} type={ActionConst.RESET}/>
+            <Scene key="RegProduct" hideNavBar component={RegProduct} type={ActionConst.RESET}/>
+
+            {/* 공통 */}
+            <Scene key="MoreMenu" hideNavBar component={MoreMenu}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileInfo" hideNavBar component={MyProfileInfo}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileModPassword1" hideNavBar component={MyProfileModPassword1}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileModPassword2" hideNavBar component={MyProfileModPassword2}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileModPhone" hideNavBar component={MyProfileModPhone}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileModName" hideNavBar component={MyProfileModName}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileExit1" hideNavBar component={MyProfileExit1}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileExit2" hideNavBar component={MyProfileExit2}  type={ActionConst.RESET}/>
+            <Scene key="NoticeList" hideNavBar component={NoticeList}  type={ActionConst.RESET}/>
+            <Scene key="TermsMenu" hideNavBar component={TermsMenu}  type={ActionConst.RESET}/>
+            <Scene key="TermsContent1" hideNavBar component={TermsContent1}  type={ActionConst.RESET}/>
+
+
 
 
 
@@ -234,19 +251,20 @@ const PAGE = () => (
             <Scene key="ListNotCompReport" hideNavBar component={ListNotCompReport}  type={ActionConst.RESET}/>
             <Scene key="ListNotCompReportEmpty" hideNavBar component={ListNotCompReportEmpty}  type={ActionConst.RESET}/>
             <Scene key="RegReportStep1" hideNavBar component={RegReportStep1}  type={ActionConst.RESET}/>
-            <Scene key="MoreMenu" hideNavBar component={MoreMenu}  type={ActionConst.RESET}/>
-            <Scene key="MyProfileInfo" hideNavBar component={MyProfileInfo}  type={ActionConst.RESET}/>
-            <Scene key="MyProfileModPassword1" hideNavBar component={MyProfileModPassword1}  type={ActionConst.RESET}/>
-            <Scene key="MyProfileModPassword2" hideNavBar component={MyProfileModPassword2}  type={ActionConst.RESET}/>
-            <Scene key="MyProfileModPhone" hideNavBar component={MyProfileModPhone}  type={ActionConst.RESET}/>
-            <Scene key="MyProfileModName" hideNavBar component={MyProfileModName}  type={ActionConst.RESET}/>
-            <Scene key="MyProfileExit1" hideNavBar component={MyProfileExit1}  type={ActionConst.RESET}/>
-            <Scene key="MyProfileExit2" hideNavBar component={MyProfileExit2}  type={ActionConst.RESET}/>
+            
+
+
             <Scene key="MyProfileCompany" hideNavBar component={MyProfileCompany}  type={ActionConst.RESET}/>
             <Scene key="MyCalcuList" hideNavBar component={MyCalcuList}  type={ActionConst.RESET}/>
-            <Scene key="NoticeList" hideNavBar component={NoticeList}  type={ActionConst.RESET}/>
-            <Scene key="TermsMenu" hideNavBar component={TermsMenu}  type={ActionConst.RESET}/>
-            <Scene key="TermsContent1" hideNavBar component={TermsContent1}  type={ActionConst.RESET}/>
+            
+            
+            
+            
+            
+            
+            
+            
+            
 
             
             
@@ -256,11 +274,11 @@ const PAGE = () => (
             
             
             
-            <Scene key="RegProductType" hideNavBar component={RegProductType} type={ActionConst.RESET}/>
-            <Scene key="RegProduct" hideNavBar component={RegProduct} type={ActionConst.RESET}/>
+            
+            
 
             <Scene key="HistoryAfterService" hideNavBar component={HistoryAfterService} type={ActionConst.RESET}/>
-            <Scene key="TakeProductGuide1" hideNavBar component={TakeProductGuide1} type={ActionConst.RESET}/>
+            <Scene initial key="TakeProductGuide1" hideNavBar component={TakeProductGuide1} type={ActionConst.RESET}/>
 
 
             <Scene key="pageOne" hideNavBar component={pageOne} title="pageOne" type={ActionConst.RESET}/>

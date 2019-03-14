@@ -40,13 +40,13 @@ class RegProduct extends Component {
   drawPrdouct = () => (
     <View style={localStyles.myPrdBoxWrap}>
       <TouchableOpacity onPress={this._toggleModal} style={localStyles.closeIconWrap}>
-        <Icon name="close-circle" style={localStyles.closeIcon} style={{color: "#d6f1ff"}} />
+        <Image source={require('./img/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
       </TouchableOpacity>
 
       <Text style={localStyles.myPrdNumTxt}>01</Text>
 
       <View style={localStyles.myPrdImgWrap}>
-        <Image source={require("./img/license-depart01.png")} style={localStyles.myPrdImg} />
+        <Image source={require("./img/product/04_icon_white.png")} style={localStyles.myPrdImg} />
       </View>
 
       <View style={localStyles.myPrdInfoTxtWrap}>
@@ -85,7 +85,7 @@ class RegProduct extends Component {
           </View>
 
 
-          <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 60}}>
+          <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
             <View style={localStyles.myPrdListWrap}>
               
                 { this.drawPrdouct() }
@@ -99,8 +99,8 @@ class RegProduct extends Component {
           </ScrollView>
 
           <View style={styles.footerBtnWrap}>
-            <Button style={[styles.btnDefault, styles.btnDefaultFill, styles.mb5]}>
-              <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>제품 추가하기</Text>
+            <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mb5]}>
+              <Text style={[styles.btnDefaultTxt, styles.btnDefaultNoFillTxt]}>제품 추가하기</Text>
             </Button>
           </View>
 
@@ -152,7 +152,7 @@ const localStyles = StyleSheet.create({
     color : color.whiteColor,
     fontSize: 30,
     fontWeight: "bold",
-    marginBottom: 14
+    marginBottom: 10
   },
   myPrdImgWrap: {
     marginBottom: 14
@@ -186,14 +186,15 @@ const localStyles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap"
   },
-  closeIcon: {
-    marginTop: 14
+  closeIconImg: {
+    width: 24,
+    height: 24
   },
   closeIconWrap: {
     flexDirection: 'row',
     alignSelf: 'flex-start',
     marginLeft: 10,
-    marginTop: 5
+    marginTop: 10
   }
 });
 

@@ -61,14 +61,16 @@ class MyProfileModPassword1 extends Component {
 
         <View style={styles.contentWrap}>
 
-          <View>
+          <View style={styles.fx1}>
             <View style={styles.tooltipWrap}>
               <Text style={styles.tooltipTxt}>휴대폰 번호를 입력하신 후 [인증번호 받기] 버튼을 눌러주세요.</Text>
             </View>
             <Text style={styles.inputNbTitleTxt}>휴대폰번호 (’-’ 제외)</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
               <Input placeholder="휴대폰 번호를 입력해주세요." placeholderTextColor={color.inputPlaceHodler} style={styles.inputNbDefaultBox}/>
-              <Icon name="close-circle" style={localStyles.phototIcon} style={{color: "#8e8e98"}} />
+              <TouchableOpacity>
+                <Image source={require("./img/Delete_button_gray.png")} resizeMode="contain" style={localStyles.clearIconImg} />
+              </TouchableOpacity>
             </Item>
             <Button style={[styles.btnDefault, styles.btnDefaultFill, styles.mt13]}
               onPress={this._toggleModal}>
@@ -122,6 +124,10 @@ const localStyles = StyleSheet.create({
     width: 24,
     height: 24
   },
+  clearIconImg: {
+    width: 20,
+    height: 20
+  }
 });
 
 export default MyProfileModPassword1; 

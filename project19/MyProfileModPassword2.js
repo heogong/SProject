@@ -57,7 +57,7 @@ class MyProfileModPassword2 extends Component {
 
         <View style={styles.contentWrap}>
 
-          <View>
+          <View style={styles.fx1}>
             <View style={styles.tooltipWrap}>
               <Text style={styles.tooltipTxt}>8자 이상의 비밀번호를 입력한 후 [설정완료] 버튼을누러주세요.</Text>
             </View>
