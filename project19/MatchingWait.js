@@ -42,8 +42,12 @@ class MatchingWait extends Component {
   render() {
     return (
       <Container style={styles.containerDefault}>
+        <ImageBackground 
+        style={[styles.succContentWrap, {backgroundColor: "rgba(40, 200, 245, 0.3)"}]}
+        source={require('./img/maching_effect.png')}>
+          
+          <Image source={require("./img/GPS_match_icon.png")} resizeMode="contain" style={{width: 17, alignSelf: "center", top: "50%", position: "absolute", marginTop: -40}} />
 
-        <View style={[styles.succContentWrap, {backgroundColor: "rgba(40, 200, 245, 0.3)"}]}>
           <View style={localStyles.topTxtWrap}>
             <Text style={localStyles.topTxt}>쿨리닉 A/S업체</Text>
             <Text style={localStyles.topTxt}>매칭을</Text>
@@ -55,8 +59,8 @@ class MatchingWait extends Component {
             <Text style={localStyles.bottomTxt}>매칭연락을 보내는 중입니다.</Text>
             <Text style={localStyles.bottomTxt}>매칭 성공시 문자로 알려드립니다.</Text>
           </View>
-        </View>
-
+          
+        </ImageBackground>
       </Container>
     );
   }

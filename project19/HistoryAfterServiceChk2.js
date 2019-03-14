@@ -48,7 +48,7 @@ class HistoryAfterServiceChk2 extends Component {
       <View style={[styles.listPrdBoxFillWrap, {height: 120}]}>
         <View style={[styles.listPrdBoxImgWrap ,{marginTop: 4}]}>
           <Image 
-            source={require("./img/license-depart01.png")} 
+            source={require("./img/product/01_icon_white.png")} 
             resizeMode="contain" 
             style={styles.listPrdBoxImg} 
           />
@@ -60,18 +60,30 @@ class HistoryAfterServiceChk2 extends Component {
           <Text style={styles.listPrdBoxDeTxt}>경기도 시흥시 산기대로</Text>
           <View style={styles.fxDirRow}>
             <Text style={[styles.listPrdBoxDeTxt, {paddingTop: 3}]}>만족도</Text>
-            <View style={[styles.fxDirRow, {marginLeft: 6}]}>
-              <Icon style={styles.listPrdBoxStartIcon} name="star"/>
-              <Icon style={styles.listPrdBoxStartIcon} name="star"/>
-              <Icon style={styles.listPrdBoxStartIcon} name="star"/>
-              <Icon style={styles.listPrdBoxStartIcon} name="star-outline"/>
-              <Icon style={styles.listPrdBoxStartIcon} name="star-outline"/>
+            <View style={localStyles.starIconWrap}>
+              <TouchableOpacity>
+                  <Image source={require("./img/star_icon_100%.png")} resizeMode="contain" style={localStyles.starIconImg} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                  <Image source={require("./img/star_icon_100%.png")} resizeMode="contain" style={localStyles.starIconImg} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                  <Image source={require("./img/star_icon_100%.png")} resizeMode="contain" style={localStyles.starIconImg} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                  <Image source={require("./img/star_icon_50%.png")} resizeMode="contain" style={localStyles.starIconImg} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                  <Image source={require("./img/star_icon_50%.png")} resizeMode="contain" style={localStyles.starIconImg} />
+              </TouchableOpacity>
             </View>
           </View>
         </View>
 
         <View style={styles.listPrdBoxNextIconWrap}>
-          <Icon style={styles.listPrdBoxNextIcon} name="arrow-round-forward"/>
+          <TouchableOpacity>
+            <Image source={require("./img/Next_icon_white.png")} resizeMode="contain" style={{width: 26, height: 26}} />
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>
@@ -121,5 +133,19 @@ class HistoryAfterServiceChk2 extends Component {
     );
   }
 }
+
+const localStyles = StyleSheet.create({
+  starIconImg: {
+    width: 13,
+    height: 13,
+    marginLeft: 1,
+    marginRight: 1
+  },
+  starIconWrap: {
+    flexDirection: "row",
+    marginLeft: 6,
+    marginTop: 3
+  }
+});
 
 export default HistoryAfterServiceChk2;

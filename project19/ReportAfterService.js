@@ -50,7 +50,7 @@ class ReportAfterService extends Component {
         <TouchableOpacity 
           style={localStyles.prdPhotoBtnEn}
           onPress={ () => alert("사진조회")}>
-          <Icon active={this.state.tab1} name="expand" style={localStyles.prdPhotoBtnEnIcon}/>
+          <Image source={require("./img/Zoomup_button.png")} resizeMode="contain" style={localStyles.prdPhotoBtnEnIcon}/>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -59,7 +59,7 @@ class ReportAfterService extends Component {
   asNoImage = () => (
     <TouchableOpacity style={localStyles.photoNoBoxWrap}>
       <View style={localStyles.photoNoBox}>
-        <Icon name="ios-camera" style={localStyles.phototNoIcon} />
+        <Image source={require("./img/camera_icon.png")} resizeMode="contain" style={localStyles.prdCardCameraIcon} />
       </View>
     </TouchableOpacity>
   )
@@ -83,7 +83,7 @@ class ReportAfterService extends Component {
         
           <View style={localStyles.contentWrap}>
             <View style={localStyles.titleWrap}>
-              <Image source={require('./img/license-depart01.png')} style={localStyles.titleImg}/>
+              <Image source={require('./img/product/01_icon_white.png')} style={localStyles.titleImg}/>
               <Text style={localStyles.titleNameTxt}>세나정육점</Text>
               <Text style={localStyles.subNameTxt}>육류용냉장고</Text>
             </View>
@@ -244,7 +244,8 @@ const localStyles = StyleSheet.create({
   },
   prdPhotoBtnEnIcon: {
     textAlign: "center",
-    color: color.whiteColor
+    width: 32,
+    height: 32
   },
   photoNoBoxWrap: {
     flex: 5,
@@ -260,9 +261,10 @@ const localStyles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: color.whiteColor
   },
-  phototNoIcon: {
+  prdCardCameraIcon: {
     color: color.defaultColor,
-    fontSize: 50
+    width: 36,
+    height: 36
   },
   contentWrap: {
     paddingLeft: 26,

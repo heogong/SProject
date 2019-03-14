@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, View, TouchableOpacity } from 'react-native'
 import {
   Container,
   H1,
@@ -23,27 +23,22 @@ import {
   CheckBox
 } from "native-base";
 
+import Modal from "react-native-modal";
+
 import { styles, viewportHeight, viewportWidth } from './css/common';
 import { color } from './css/color';
-
-const Slide = ({ title, address }) => (
-    <View>
-        <Text>{title}</Text>
-        <Text>{address}</Text>
-        <View style={styles.slide}>
-            <Text style={styles.title}>A/S신청</Text>
-        </View>
-    </View>
-);
 
 class AfterServiceState extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+        isModalVisible: false,
         map : false
     };
   }
+
+  _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
 
   render() {
     return (
@@ -80,7 +75,7 @@ class AfterServiceState extends Component {
                             <Text style={localStyles.topInfoTxt}>증상1. 냉동 온도가 올라가지 않음</Text>
                         </View>
                         <View style={localStyles.topboxImgWrap}>
-                            <Image source={require("./img/license-depart01.png")} resizeMode="contain" style={localStyles.topBoxImg}/>
+                            <Image source={require("./img/product/01_icon_white.png")} resizeMode="contain" style={localStyles.topBoxImg}/>
                         </View>
                     </View>
 
@@ -97,24 +92,28 @@ class AfterServiceState extends Component {
                     <Text style={localStyles.asMatchStateDscTxt}>매칭된 A/S 업체가 출발했어요.</Text>
                     <View style={styles.fxDirRow}>
                         <View style={localStyles.asMatchIconWrap}>
-                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
+                            {/* 
+                            <Image source={require("./img/user_as_step_icon/Default/as_wait_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
                             <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
+                             */}
+                            <Image source={require("./img/user_as_step_icon/Step_on/as_wait_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={[localStyles.asMatchStateTxt, {color: "#0397bd"}]}>A/S 대기</Text>
                         </View>
                         <View style={localStyles.asMatchIconWrap}>
-                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
+                            <Image source={require("./img/user_as_step_icon/Default/as_start_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 출발</Text>
                         </View>
                         <View style={localStyles.asMatchIconWrap}>
-                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
+                            <Image source={require("./img/user_as_step_icon/Default/as_arrive_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 도착</Text>
                         </View>
                         <View style={localStyles.asMatchIconWrap}>
-                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
+                            <Image source={require("./img/user_as_step_icon/Default/as_progress_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 진행</Text>
                         </View>
                         <View style={localStyles.asMatchIconWrap}>
-                            <Image source={require("./img/input-able.png")} style={{height : stateImgSize, width : stateImgSize}} />
-                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
+                            <Image source={require("./img/user_as_step_icon/Default/as_complete_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                            <Text style={localStyles.asMatchStateTxt}>A/S 완료</Text>
                         </View>
                     </View>
                 </View>
@@ -122,36 +121,54 @@ class AfterServiceState extends Component {
 
             <View style={localStyles.serviceBoxWrap}>
                 <View style={[localStyles.serviceBox, {marginRight : 20}]}>
-                    <Image source={require("./img/join-end.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
-                    <Text style={localStyles.serviceBoxTxt}>서비스평가</Text>
+                    <TouchableOpacity onPress={this._toggleModal}>
+                        <Image source={require("./img/service_rating.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
+                    </TouchableOpacity>
                 </View>
                 <View style={[localStyles.serviceBox, {marginRight : 20}]}>
-                    <Image source={require("./img/join-end.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
-                    <Text style={localStyles.serviceBoxTxt}>최근보고서</Text>
+                    <TouchableOpacity>
+                        <Image source={require("./img/recent_report.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
+                    </TouchableOpacity>
                 </View>
                 <View style={[localStyles.serviceBox]}>
-                    <Image source={require("./img/join-end.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
-                    <Text style={localStyles.serviceBoxTxt}>이전 A/S 내역</Text>
+                    <TouchableOpacity>
+                        <Image source={require("./img/previous_as.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
-
-        <Footer>
-            <FooterTab>
-                <Button vertical active={this.state.tab1} onPress={() => this.setState({map : false})}>
-                    <Icon active={this.state.tab1} name="apps" />
-                    <Text>Apps</Text>
-                </Button>
-                    <Button vertical active={this.state.tab2} onPress={() => this.setState({map : true})}>
-                    <Icon active={this.state.tab2} name="camera" />
-                    <Text>Camera</Text>
-                </Button>
-                    <Button vertical active={this.state.tab3} onPress={() =>  alert("tab4")}>
-                    <Icon active={this.state.tab3} name="contact" />
-                    <Text>Contact</Text>
-                </Button>
-            </FooterTab>
-        </Footer>
+    
+        <Modal isVisible={this.state.isModalVisible}>
+            <View style={[styles.modalWrap, {height: 150}]}>
+                <View style={styles.modalContent}>
+                    <View style={[styles.modalTop2LTxtWrap, {flex: 2}]}>
+                        <Text style={styles.modalTopTxt}>A/S업체의 서비스를 평가해주세요!</Text>
+                        <View style={{flexDirection: "row", justifyContent: "center"}}>
+                            <TouchableOpacity>
+                                <Image source={require("./img/Big_bluestar_icon.png")} resizeMode="contain" style={localStyles.starIconImg} />
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <Image source={require("./img/Big_bluestar_icon.png")} resizeMode="contain" style={localStyles.starIconImg} />
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <Image source={require("./img/Big_bluestar_icon.png")} resizeMode="contain" style={localStyles.starIconImg} />
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <Image source={require("./img/Big_graystar_icon.png")} resizeMode="contain" style={localStyles.starIconImg} />
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <Image source={require("./img/Big_graystar_icon.png")} resizeMode="contain" style={localStyles.starIconImg} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={[styles.modalBtnWrap, {marginBottom: 10}]}>
+                        <Button style={styles.modalBtnFill} onPress={this._toggleModal}>
+                            <Text style={styles.modalBtnFillTxt}>평가완료!</Text>
+                        </Button>
+                    </View>
+                </View>
+            </View>
+        </Modal>
       </Container>
     );
   }
@@ -213,29 +230,19 @@ const localStyles = StyleSheet.create({
     },
     asMatchStateTxt: {
         fontSize : 12,
-        color: "#0397bd",
-        fontWeight: "500",
+        color: "#1e1e32",
+        fontWeight: "bold",
         marginTop: 10
     },
     serviceBox: {
         flex : 1,
         justifyContent : 'center',
         alignItems : "center",
-        backgroundColor : color.whiteColor,
-        height : 96,
-        width: 96, 
-        borderRadius : 5, 
-        elevation: 10,
         marginTop: 22
     },
     serviceBoxImg: {
-        height : 56,
-        width : 56
-    },
-    serviceBoxTxt: {
-        color : "#0397bd",
-        fontSize : 13,
-        marginTop: 10
+        height : 96,
+        width : 96
     },
     serviceBoxWrap: {
         flexDirection: "row",
@@ -270,6 +277,17 @@ const localStyles = StyleSheet.create({
     topInfoTxt: {
         fontSize: 13,
         color: "#8e8e98"
+    },
+    starIconImg: {
+        width: 32,
+        height: 32,
+        marginLeft: 2,
+        marginRight: 2
+    },
+    starIconWrap: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 10
     }
 });
 
