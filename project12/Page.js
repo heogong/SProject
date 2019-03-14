@@ -230,13 +230,11 @@ const PAGE = () => (
 
 
       {/* 클라이언트 - AS 신청 제품 타입 */}
-      <Scene key="AfterServiceProdTypeList" initial component={AfterServiceProdTypeList} />
+      <Scene key="AfterServiceProdTypeList"  component={AfterServiceProdTypeList} />
       <Scene key="AfterServiceProdList" component={AfterServiceProdList} />
       <Scene key="AfterServiceApplyProduct" component={AfterServiceApplyProduct} />
-      <Scene key="AfterServiceApplyProductCheck" component={AfterServiceApplyProductCheck} />
+      <Scene key="AfterServiceApplyProductCheck"  component={AfterServiceApplyProductCheck} />
       <Scene key="AfterServiceApplyProductComplete" component={AfterServiceApplyProductComplete} />
-
-
 
       {/* <Scene key="InputProdInfo" component={InputProdInfo} onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" component={InputProdImage} type={ActionConst.RESET} /> */}
@@ -268,6 +266,10 @@ const PAGE = () => (
       <Scene key="TermsMenu" component={TermsMenu} />
       <Scene key="TermsContent1" component={TermsContent1} />
       <Scene key="MyProfileCompany" component={MyProfileCompany} />
+
+
+      {/* 테스트 후 삭제 */}
+      <Scene key="ViewAfterServiceState" initial component={ClientViewAfterServiceState}/>
       
       <Drawer
         hideNavBar
@@ -288,9 +290,8 @@ const PAGE = () => (
           <Tabs
             key="tabbar"
             routeName="tabbar"
-            // backToInitial
             onTabOnPress={() => {
-              console.log('Back to initial and also print this');
+              console.log('Back to  and also print this');
             }}
             swipeEnabled
             showLabel={true}
@@ -333,7 +334,7 @@ const PAGE = () => (
               tabBarOnPress={() => Actions.ClientAfterServiceState({type:ActionConst.RESET})}
               transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ClientAfterServiceState" component={ClientAfterServiceState}/>
-              <Scene key="ViewAfterServiceState" component={ClientViewAfterServiceState}/>
+              {/* <Scene key="ViewAfterServiceState" component={ClientViewAfterServiceState}/> */}
               <Scene key="AfterServiceHistory" component={AfterServiceHistory}/>
               <Scene key="ViewAfterServiceHistory" component={ViewAfterServiceHistory}/>
             </Stack>
@@ -349,9 +350,8 @@ const PAGE = () => (
           <Tabs
               key="tabbar2"
               routeName="tabbar2"
-              // backToInitial
               onTabOnPress={() => {
-                console.log('Back to initial and also print this');
+                console.log('Back to and also print this');
               }}
               swipeEnabled
               showLabel={true}

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { View } from 'react-native';
-import { Button, Text } from "native-base";
+import { Text } from "native-base";
 
 import Modal from "react-native-modal";
 
 import { styles } from '~/Common/Styles/common';
-import { BStyles } from '~/Common/Styles/Button';
 import CustomEtcButton from '~/Common/Components/CustomEtcButton';
 
 // 모달 alert

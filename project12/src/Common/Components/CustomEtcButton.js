@@ -44,7 +44,12 @@ class CustomEtcButton extends Component {
     render() {
         return (
             <View style={styles.mb5}>
-                {(this.props.SmallBtn) ? (
+            {(this.props.disabled) ? (
+                <ModalDefaultBtn
+                    text={this.props.children}
+                />
+            ) : (
+                (this.props.SmallBtn) ? (
                     <SmallBtn
                         action={this.props.onPress}
                         text={this.props.children}
@@ -62,7 +67,8 @@ class CustomEtcButton extends Component {
                             text={this.props.children}
                         />
                     )
-                )}
+                )
+            )}
             </View>
         )
     }

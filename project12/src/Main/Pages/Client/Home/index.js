@@ -1,71 +1,38 @@
 import React, { Component } from 'react';
 import { BackHandler, Image, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { Container, Button, H1, H2, Text } from "native-base";
+import { Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, ADD_AS, COMPLETE_AS} from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setIntervalId, setIsAfterService } from '~/Redux/Actions';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Swiper from 'react-native-swiper';
 
 import GetBizList from '~/Main/Functions/GetBizList';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-
 import CustomHeader from '~/Common/Components/CustomHeader';
-import { styles, viewportHeight, viewportWidth } from '~/Common/Styles/common';
+import CustomModal from '~/Common/Components/CustomModal';
+import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
-
-
-export const ENTRIES1 = [
-  {
-    bplaceNm: 'Beautiful and dramatic Antelope Canyon',
-      subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-      illustration: 'https://i.imgur.com/UYiroysl.jpg'
-  },
-  {
-    bplaceNm: 'Earlier this morning, NYC',
-      subtitle: 'Lorem ipsum dolor sit amet',
-      illustration: 'https://i.imgur.com/UPrs1EWl.jpg'
-  },
-  {
-    bplaceNm: 'White Pocket Sunset',
-      subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
-      illustration: 'https://i.imgur.com/MABUbpDl.jpg'
-  },
-  {
-    bplaceNm: 'Acrocorinth, Greece',
-      subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-      illustration: 'https://i.imgur.com/KZsmUi2l.jpg'
-  },
-  {
-    bplaceNm: 'The lone tree, majestic landscape of New Zealand',
-      subtitle: 'Lorem ipsum dolor sit amet',
-      illustration: 'https://i.imgur.com/2nCt3Sbl.jpg'
-  },
-  {
-    bplaceNm: 'Middle Earth, Germany',
-      subtitle: 'Lorem ipsum dolor sit amet',
-      illustration: 'https://i.imgur.com/lceHsT6l.jpg'
-  }
-];
 
 
 let INTEVER_ID = 0;
 
-const AfterServiceState = ({ asPrgsStatCd, status }) => (
-  <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConBetween]}>
+const AfterServiceState = ({ asPrgsStatCd, status, statusOnImg, statusOffImg }) => (
+
+  <View style={localStyles.asMatchIconWrap}>
     <Image 
-        source={(asPrgsStatCd !== status.VALUE) ? 
-          require("~/Common/Image/input-able.png") : require("~/Common/Image/join-end.png")} 
-        style={{height : stateImgSize, width : stateImgSize}} 
+        source={(asPrgsStatCd !== status.VALUE) ? statusOffImg : statusOnImg } 
+        resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}}
       />
       <Text 
-        style={[(asPrgsStatCd == status.VALUE) ? {color : color.defaultColor} : styles.greyFont
-          ,{fontSize : 12}
-        ]}>
+        style={[localStyles.asMatchStateTxt,
+          (asPrgsStatCd !== status.VALUE) ? {color: "#1e1e32"} : {color: "#0397bd"}
+        ]}
+      >
           {status.TEXT}
       </Text>
   </View>
@@ -92,86 +59,11 @@ class ClientHome extends Component {
       asPrgsStatCd : null,
       asPrgsStatNm : null,
       asPrgsStatDSC : null,
-      slider1ActiveSlide: 0
+      slider1ActiveSlide: 0,
+      isAlertModal : false, // alert 용
+      resultMsg : null // alert 용
     };
   }
-
-  // _renderItem = ({item, index}) => {
-  //   return (
-  //     <View key={index} style={[styles.pd20, {backgroundColor:color.defaultColor}]}>
-  //       <View style={styles.mb10}>
-  //           <H1 style={[styles.mb10, {color : color.whiteColor}]}>{item.bplaceNm}</H1>
-  //           <Text style={styles.whiteFont}>{item.addr.addressName}</Text>
-  //           <Text style={styles.whiteFont}>{item.detail.detailAddr1}</Text>
-  //       </View>
-  
-  //       <View style={styles.fxDirRow}>
-  
-  //           <View style={styles.fx1}>
-  //               <Image source={require("~/Common/Image/license-depart01.png")} style={{height : afterServiceBtnSize, width : afterServiceBtnSize}}  />
-  //           </View>
-  
-  //           <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsEnd]}>
-  //             <TouchableOpacity
-  //                 onPress={() => {
-  //                     Actions.AfterServiceProdTypeList({bizId : item.clientBplaceId});
-  //                     clearInterval(INTEVER_ID);
-  //                   } 
-  //                 }
-  //             >
-  //               <View style={[styles.justiConCenter, styles.alignItemsCenter, {
-  //                   borderRadius: 100, 
-  //                   height: afterServiceBtnSize, 
-  //                   width: afterServiceBtnSize, 
-  //                   backgroundColor : color.whiteColor,
-  //               }]}>
-  //                   <H2 style={{color : color.defaultColor}}>A/S 신청</H2>
-  //               </View>
-  //               </TouchableOpacity>
-  //           </View>
-  //       </View>
-  //   </View>
-  //   );
-  // }
-
-  _renderItem = ({item, index}) => {
-    return (
-      <View key={index} style={[styles.pd20, {backgroundColor:color.defaultColor}]}>
-        <View style={styles.mb10}>
-            <H1 style={[styles.mb10, {color : color.whiteColor}]}>{item.bplaceNm}</H1>
-            <Text style={styles.whiteFont}>{item.bplaceNm}</Text>
-            <Text style={styles.whiteFont}>{item.bplaceNm}</Text>
-        </View>
-  
-        <View style={styles.fxDirRow}>
-  
-            <View style={styles.fx1}>
-                <Image source={require("~/Common/Image/license-depart01.png")} style={{height : afterServiceBtnSize, width : afterServiceBtnSize}}  />
-            </View>
-  
-            <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsEnd]}>
-              <TouchableOpacity
-                  onPress={() => {
-                      Actions.AfterServiceProdTypeList({bizId : item.bplaceNm});
-                      clearInterval(INTEVER_ID);
-                    } 
-                  }
-              >
-                <View style={[styles.justiConCenter, styles.alignItemsCenter, {
-                    borderRadius: 100, 
-                    height: afterServiceBtnSize, 
-                    width: afterServiceBtnSize, 
-                    backgroundColor : color.whiteColor,
-                }]}>
-                    <H2 style={{color : color.defaultColor}}>A/S 신청</H2>
-                </View>
-                </TouchableOpacity>
-            </View>
-        </View>
-    </View>
-    );
-  }
-
   async componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.handleBackPress) // Listen for the hardware back button on Android to be pressed
 
@@ -213,6 +105,11 @@ class ClientHome extends Component {
                 console.log("클라이언트 : 사업장 목록 가져오기", resultData);
                 if(ResultBool) {
                   this.setState({data : resultData.data});
+                } else {
+                  this.setState({
+                    isAlertModal : true,
+                    resultMsg : resultData.resultMsg
+                  })
                 }
             }
         });
@@ -244,7 +141,10 @@ class ClientHome extends Component {
                   clearInterval(this.props.afterService.intervalId);
                 }
               } else {
-                alert(resultData.resultMsg);
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
               }
           }
       });
@@ -252,201 +152,166 @@ class ClientHome extends Component {
   }
 
   unRegister = () => (
-      <View style={[styles.pd20, {backgroundColor : color.defaultColor, elevation: 5}]}>
-          <View style={[styles.fx2, styles.mb10]}>
-              <H1 style={[styles.mb10, {color : color.whiteColor}]}>제품정보 미등록</H1>
-              <Text style={styles.whiteFont}>사업장·제품정보를 등록해놓으면</Text>
-              <Text style={styles.whiteFont}>편리하고 정확한 서비스가 제공됩니다</Text>
-          </View>
+    <View style={localStyles.topBoxWrap}>
+        <View style={styles.mb10}>
+            <Text style={localStyles.topBoxNameTxt}>제품정보 미등록</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>사업장·제품정보를 등록해놓으면</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>편리하고 정확한 서비스가 제공됩니다</Text>
+        </View>
 
-          <View style={[styles.fx3, styles.fxDirRow]}>
-              <View style={styles.fx1}>
-                  <Button style={[styles.mb5,{
-                      height: 48,
-                      borderRadius: 0,
-                      elevation: 0,
-                      width: "80%",
-                      backgroundColor: color.defaultColor,
-                      borderWidth: 1,
-                      borderColor: color.whiteColor,
-                      elevation: 0,
-                      shadowOpacity: 0,
-                  }]}>
-                      <Text style={[styles.btnDefaultFillTxt, {
-                          fontSize: 12,
-                          flex: 1,
-                          textAlign: "center",
-                          fontWeight: "500"
-                      }]}>정보등록하러 이동</Text>
-                  </Button>
+        <View style={localStyles.bottomBoxWrap}>
+            <View style={styles.fx1}>
 
-                  <Text style={styles.greyFont}>·사업장 미등록</Text>
-                  <Text style={styles.greyFont}>·보유제품 미등록</Text>
-                  <H1>50%</H1>
-              </View>
-              <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
-                  <View style={[styles.justiConCenter, styles.alignItemsCenter, {
-                      borderRadius: 100, 
-                      height: afterServiceBtnSize, 
-                      width: afterServiceBtnSize, 
-                      backgroundColor : color.whiteColor,
-                  }]}>
-                      <H2 style={{color : color.defaultColor}}>A/S 신청</H2>
-                  </View>
-                  
-              </View>
-          </View>
-      </View>
-  );
+                <CustomButton
+                  onPress={ () => alert("정보등록하러 이동")}
+                  WhiteLineBtn={true}
+                  CustomBtnStyle={{height: 36, width: "90%"}}
+                  CustomFontStyle={{fontSize: 14}}
+                >
+                  정보등록하러 이동
+                </CustomButton>
+
+                <View style={localStyles.noRegWrap}>
+                    <Text style={localStyles.noRegTxt}>· 사업장 미등록</Text>
+                    <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
+                </View>
+                <Text style={localStyles.percentTxt}>50%</Text>
+            </View>
+            <View style={localStyles.bottomBoxRightWrap}>
+                <View style={localStyles.rightStateCircle}>
+                    <Text style={localStyles.rightStateTxt}>A/S 신청</Text>
+                </View>
+            </View>
+        </View>
+    </View>
+);
 
   maching = () => (
-      <View style={[styles.pd20, {backgroundColor : color.defaultColor, elevation: 5}]}>
-          <View style={[styles.fx2, styles.mb10]}>
-              <H1 style={[styles.mb10, {color : color.whiteColor}]}>세나정육점1</H1>
-              <Text style={styles.whiteFont}>서울시 동작구 대방동</Text>
-              <Text style={styles.whiteFont}>대방동 392-45 넥서스힐</Text>
-          </View>
+    <View style={localStyles.topBoxWrap}>
+        <View style={styles.mb5}>
+            <Text style={localStyles.topBoxNameTxt}>박형정육점</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>서울시 동작구 대방동</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>392-45 넥서스힐</Text>
+        </View>
 
-          <View style={[styles.fx3, styles.fxDirRow]}>
-              <View style={styles.fx1}>
-                  <Text style={[styles.whiteFont, styles.mb10]}>[야채보관냉장고]</Text>
-                  <Image source={require("~/Common/Image/license-depart01.png")} style={{height : afterServiceBtnSize, width : afterServiceBtnSize}}  />
-              </View>
+        <View style={localStyles.bottomBoxWrap}>
 
-              <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
-                  <View style={[styles.justiConCenter, styles.alignItemsCenter, {
-                      borderRadius: 100, 
-                      height: afterServiceBtnSize, 
-                      width: afterServiceBtnSize, 
-                      backgroundColor : '#0397BD',
-                  }]}>
-                      <H2 style={{color : color.whiteColor}}>매칭 중</H2>
-                  </View>
-                  
-              </View>
-          </View>
-      </View>
+            <View style={localStyles.bottomBoxLeftWrap}>
+                <Text style={localStyles.prdNameTxt}>[ 야채보관냉장고123 ]</Text>
+                <Image 
+                  source={require("~/Common/Image/product/01_icon_white.png")} 
+                  style={[localStyles.leftImg, {alignSelf: "center", height: 90, width: 90}]}  
+                />
+            </View>
+
+            <View style={localStyles.bottomBoxRightWrap}>
+                <View style={[localStyles.rightStateCircle, {backgroundColor: "#0397bd"}]}>
+                    <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>매칭중</Text>
+                </View>
+            </View>
+        </View>
+    </View>
   );
 
   render() {
     return (
-
-        //       { (this.state.asPrgsYn == 'Y') ? (
-        //         <View style={{alignItems: 'center'}}>
-        //           <Text>{this.state.clientPrdInfo.bplace.bplaceNm}</Text>
-        //           <Text>{this.state.clientPrdInfo.bplace.addr.addressName}</Text>
-        //           <Text>{this.state.clientPrdInfo.bplace.detail.detailAddr1}</Text>
-        //           <View style={styles.slide}>
-        //               <Text style={styles.title}>{this.state.asPrgsStatNm}</Text>
-        //           </View>
-        //         </View>
-
-        //       ):(
-        //         <ServiceRequestSwiper
-        //           bizList={ this.state.data }
-        //           interverId={ INTEVER_ID }
-        //         />
-        //       ) }
-
-        <Container style={styles.container}>
+        <Container style={[styles.fx1, {backgroundColor: color.defaultColor}]}>
           <CustomHeader 
             resetPage={true}
             title="쿨리닉"
           />
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
 
           { (this.state.asPrgsYn == 'Y') ? (
             this.maching()
           ) :(
-            // <Swiper
-            //     dots
-            //     dotsStyle={localStyles.dotsStyle}
-            //     dotsColor="rgba(97, 218, 251, 0.5)"
-            //     dotsColorActive="#FFF"
-            //     customContainer={localStyles.customSwiperContainer}
-            //     customDotsContainerStyle={localStyles.dotsContainerStyle}
-            //     customSlideWidth={viewportWidth}
-            // >
-            //   {this.state.data.map((business, index) => (
-            //     <Slide 
-            //       key={index}
-            //       index={index}
-            //       biz={business}
-            //     />
-            //   ))}
-            // </Swiper>
-            <View>
-              <View style={[styles.fx1, styles.alignItemsStart, styles.justiConCenter]}>
-                <Pagination
-                    // dotsLength={this.state.data.length}
-                    dotsLength={ENTRIES1.length}
-                    activeDotIndex={this.state.slider1ActiveSlide}
-                    containerStyle={localStyles.paginationContainer}
-                    dotColor={color.defaultColor}
-                    dotStyle={localStyles.paginationDot}
-                    inactiveDotColor={color.defaultColor}
-                    inactiveDotOpacity={0.4}
-                    inactiveDotScale={0.6}
-                    carouselRef={this._slider1Ref}
-                    tappableDots={!!this._slider1Ref}
-                />
-              </View>
+            <Swiper 
+                style={localStyles.topBoxSwiperWrap}
+                paginationStyle={{
+                    bottom: 10
+                }} 
+                dot={<View style={[localStyles.swiperDot, {backgroundColor: 'rgba(3,151,189, 0.4)'}]} />}
+                activeDot={<View style={[localStyles.swiperDot, {backgroundColor: color.whiteColor}]} />}
+            >
+              {this.state.data.map((business, index) => (
+                <View 
+                  key={index}
+                  style={localStyles.topBoxWrap}
+                >
+                  <View style={styles.mb10}>
+                      <Text style={localStyles.topBoxNameTxt}>{business.bplaceNm}</Text>
+                      <Text style={localStyles.topBoxtAddrTxt}>{business.addr.addressName}</Text>
+                      <Text style={localStyles.topBoxtAddrTxt}>{business.detail.detailAddr1}</Text>
+                  </View>
+      
+                  <View style={localStyles.bottomBoxWrap}>
+      
+                      <View style={localStyles.bottomBoxLeftWrap}>
+                          <Image source={require("~/Common/Image/license-depart01.png")} style={localStyles.leftImg}  />
+                      </View>
 
-              <View>
-                <Carousel
-                    ref={c => this._slider1Ref = c}
-                    renderItem={this._renderItem}
-                    sliderWidth={viewportWidth}
-                    activeSlideAlignment={'start'}
-                    itemWidth={viewportWidth}
-                    // data={this.state.data}
-                    data={ENTRIES1}
-                    firstItem={this.state.slider1ActiveSlide}
-                    inactiveSlideOpacity={1}
-                    inactiveSlideScale={1}
-                    onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
-                />
-              </View>
-
-            </View>
-           
+                        <View style={localStyles.bottomBoxRightWrap}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              Actions.AfterServiceProdTypeList({bizId : business.clientBplaceId});
+                              clearInterval(INTEVER_ID);
+                            }}
+                          >
+                            <View style={localStyles.rightStateCircle}>
+                                <Text style={localStyles.rightStateTxt}>A/S 신청</Text>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                  </View>
+                </View>
+              ))}
+            </Swiper>
           )}
               {/* {this.unRegister()} */}
               
-              <View style={{backgroundColor : '#EAEAEA'}}>
-                  <View style={localStyles.secondBox}>
-                      <Text style={[styles.mb10, {textAlign:'center', color: color.defaultColor}]}>
-                        { (this.state.asPrgsYn == 'Y') ? this.state.asPrgsStatNm : "고장난 제품의 A/S 신청을 해 보세요" }
-                      </Text>
-                      <View style={styles.fxDirRow}>
-
-                        <AfterServiceState
-                          asPrgsStatCd={this.state.asPrgsStatCd}
-                          status={MATCH}
-                        />
-                        <AfterServiceState
-                          asPrgsStatCd={this.state.asPrgsStatCd}
-                          status={DEPARTURE}
-                        />
-                        <AfterServiceState
-                          asPrgsStatCd={this.state.asPrgsStatCd}
-                          status={ARRIVE}
-                        />
-                        <AfterServiceState
-                          asPrgsStatCd={this.state.asPrgsStatCd}
-                          status={ADD_AS}
-                        />
-                        <AfterServiceState
-                          asPrgsStatCd={this.state.asPrgsStatCd}
-                          status={COMPLETE_AS}
-                        />
-                      </View>
+              <View style={{backgroundColor : '#d6f1ff'}}>
+                <View style={[styles.boxShadowTopNo, localStyles.secondBox]}>
+                  <Text style={localStyles.asMatchStateDscTxt}>
+                    { (this.state.asPrgsYn == 'Y') ? this.state.asPrgsStatNm : "고장난 제품의 A/S 신청을 해 보세요" }
+                  </Text>
+                  <View style={styles.fxDirRow}>
+                    <AfterServiceState
+                      asPrgsStatCd={this.state.asPrgsStatCd}
+                      status={MATCH}
+                      statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_wait_icon.png')}
+                      statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_wait_icon.png')}
+                    />
+                    <AfterServiceState
+                      asPrgsStatCd={this.state.asPrgsStatCd}
+                      status={DEPARTURE}
+                      statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_start_icon.png')}
+                      statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_start_icon.png')}
+                    />
+                    <AfterServiceState
+                      asPrgsStatCd={this.state.asPrgsStatCd}
+                      status={ARRIVE}
+                      statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_arrive_icon.png')}
+                      statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_arrive_icon.png')}
+                    />
+                    <AfterServiceState
+                      asPrgsStatCd={this.state.asPrgsStatCd}
+                      status={ADD_AS}
+                      statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_progress_icon.png')}
+                      statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_progress_icon.png')}
+                    />
+                    <AfterServiceState
+                      asPrgsStatCd={this.state.asPrgsStatCd}
+                      status={COMPLETE_AS}
+                      statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_complete_icon.png')}
+                      statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_complete_icon.png')}
+                    />
                   </View>
+                </View>
               </View>
               
-              <View style={[styles.pd20, {backgroundColor : color.whiteColor}]}>
-                  <H1 style={{color : color.defaultColor}}>쿨리닉</H1>
-                  <H1 style={{color : color.defaultColor}}>사용자 가이드</H1>
+              <View style={localStyles.guideWrap}>
+                  <Text style={localStyles.guideTitleTxt}>쿨리닉</Text>
+                  <Text style={localStyles.guideTitleTxt}>사용자 가이드</Text>
                   <Text>aaaaaaaaaaaaaaa</Text>
                   <Text>aaaaaaaaaaaaaaa</Text>
                   <Text>aaaaaaaaaaaaaaa</Text>
@@ -458,6 +323,15 @@ class ClientHome extends Component {
                   <Text>aaaaaaaaaaaaaaa</Text>
               </View>
           </ScrollView>
+
+          {/* alert 메세지 모달 */}
+          <CustomModal
+            modalType="ALERT"
+            isVisible={this.state.isAlertModal}
+            onPress={ () => this.setState({isAlertModal : false})}
+            infoText={this.state.resultMsg}
+            btnText="확인"
+          />
       </Container>
     )
   }
@@ -469,35 +343,132 @@ function wp (percentage, space) {
 }
 
 const afterServiceBtnSize = wp(33, 30);
-const stateImgSize = wp(10, 52);
-
+const stateImgSize = wp(15, 52);
 
 const localStyles = StyleSheet.create({
-  customSwiperContainer : {
-    flex:1,
-    backgroundColor : color.defaultColor, 
-    elevation: 5
+  topBoxSwiperWrap: {
+      height: 290,
+  },
+  swiperDot: {
+      width: 12,
+      height: 12,
+      borderRadius: 5,
+      marginLeft: 3,
+      marginRight: 3,
+      marginTop: 3,
+      marginBottom: 3
+  },
+  topBoxWrap: {
+      width: "100%",
+      height: 290,
+      paddingLeft: 27,
+      paddingRight: 27,
+      paddingTop: 40
+  },
+  topBoxNameTxt: {
+      marginBottom: 16,
+      color : color.whiteColor,
+      fontSize: 28,
+      fontWeight: "bold"
+  },
+  topBoxtAddrTxt: {
+      color : color.whiteColor,
+      fontSize: 14        
+  },
+  bottomBoxWrap: {
+      flexDirection: "row",
+      marginTop: 10
+  },
+  bottomBoxLeftWrap: {
+      
+  },
+  bottomBoxRightWrap: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "flex-end"
+  },
+  rightStateCircle: {
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 100, 
+      height: 110, 
+      width: 110, 
+      backgroundColor : color.whiteColor,
+  },
+  rightStateTxt: {
+      color : color.defaultColor,
+      fontSize: 22,
+      fontWeight: "bold"
+  },
+  leftImg: {
+      height : 110,
+      width : 110
+  },
+  percentTxt: {
+      fontSize: 40,
+      fontWeight: "bold"
+  },
+  noRegWrap: {
+      marginTop: 10,
+      marginBottom: 5
+  },
+  noRegTxt: {
+      fontSize: 13
+  },
+  dotsStyle: {
+      borderRadius: 12,
+      height: 12,
+      width: 12,
+      marginHorizontal: 5,
+      flexDirection: 'row',
+      backgroundColor: "#000",
+
+  },
+  prdNameTxt: {
+      marginBottom: 10,
+      fontSize: 13, 
+      color: color.whiteColor,
+      textAlign: "center",
+      fontWeight: "bold"
   },
   secondBox : {
-      marginBottom : 20,
-      marginLeft : 20, 
-      marginRight : 20, 
-      paddingTop : 15,
-      paddingBottom : 15,
+      marginBottom : 24,
+      marginLeft : 24, 
+      marginRight : 24, 
+      paddingTop : 18,
+      paddingBottom : 18,
+      paddingLeft : 24,
+      paddingRight: 24,
       borderBottomLeftRadius : 5, 
       borderBottomRightRadius : 5, 
-      backgroundColor : color.whiteColor,
-      elevation: 10
+      backgroundColor : color.whiteColor
   },
-  paginationContainer: {
-    paddingVertical: 0
+  asMatchStateDscTxt: {
+      marginBottom: 15,
+      textAlign:'center',
+      color: "#0397bd",
+      fontWeight: "bold",
+      fontSize: 16
   },
-  paginationDot: {
-      borderRadius: 4,
-      marginHorizontal: 0,
-      height: 10,
-      width: 10
-  }
+  asMatchIconWrap: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center"
+  },
+  asMatchStateTxt: {
+      fontSize : 12,
+      fontWeight: "bold",
+      marginTop: 10
+  },
+  guideWrap: {
+      padding: 22,
+      backgroundColor : color.whiteColor
+  },
+  guideTitleTxt: {
+      fontSize: 22,
+      color: "#0397db",
+      fontWeight: "bold",
+  },
 });
 
 

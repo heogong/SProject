@@ -1,20 +1,21 @@
 import React, { Component } from "react";
-import { Alert, View } from 'react-native';
-import { ActionSheet, Item, Input, Root, Text, Textarea } from "native-base";
+import { Alert, Image, ImageBackground, StyleSheet, View } from 'react-native'
+import { Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
-import { Actions } from "react-native-router-flux";
 import { connect } from 'react-redux';
 import { setIsAfterService } from '~/Redux/Actions';
 
+import DrawMap from '~/Main/Components/DrawMap';
 import FindAfterServicePartner from '~/Main/Functions/FindAfterServicePartner'
 import CancleAfterServicePartner from '~/Main/Functions/CancleAfterServicePartner'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import CustomButton from '~/Common/Components/CustomButton';
-import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
-import ProductShowCase from '~/Main/Components/ProductShowCase';
+import CustomModal from '~/Common/Components/CustomModal';
+import { styles } from '~/Common/Styles/common';
+import { color } from '~/Common/Styles/colors';
+
 
 
 class ApplyAfterServiceComplete extends Component {
@@ -23,12 +24,40 @@ class ApplyAfterServiceComplete extends Component {
 
       this.state = {
         result : "매칭 중",
-        asPrgsId : null
+        asPrgsId : null,
+        region: {
+            latitude: 37.566535,
+            longitude: 126.97796919999996,
+            latitudeDelta: 0.0043,
+            longitudeDelta: 0.0034
+          },
+          marker: {
+            latitude: 37.566535,
+            longitude: 126.97796919999996
+          },
+          isAlertModal : false, // alert 용
+          resultMsg : null
       };
     }
 
     componentWillMount() {
         this._findAfterServicePartner();
+        this._getLocation();
+    }
+
+    // 현재 위치 조회
+    _getLocation() {
+        navigator.geolocation.getCurrentPosition(
+          (positon) => {
+            this.setState({
+              region : {
+                ...this.state.region,
+                latitude : positon.coords.latitude,
+                longitude : positon.coords.longitude
+              }
+            })
+          }
+        );
     }
    
     // AS 가능 업체 찾기(AS 진행 시작)
@@ -50,8 +79,10 @@ class ApplyAfterServiceComplete extends Component {
                         
                         
                     } else {
-                        alert(resultData.resultMsg);
-                        this.setState({result : "매칭 실패"});
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -94,28 +125,95 @@ class ApplyAfterServiceComplete extends Component {
 
     render() {
         return (
-            <CustomBlockWrapper
-                title="매칭완료"
-            >
-                <View>
-                    <Text>매칭 신청이 완료되었습니다.</Text>
-                    <Text>A/S 업체와 연결을 시작합니다.</Text>
-                    <Text>{this.state.result}</Text>
+            //     <CustomButton
+            //         block={ true }
+            //         info={ true }
+            //         bordered={ true }
+            //         onPress={ this._cancleAfterServicePartnerConfirm }>
+            //         <Text>
+            //             매칭 취소
+            //         </Text>
+            <Container style={styles.containerDefault}>
+                <DrawMap
+                    region={ this.state.region }
+                    makerYn={ false }
+                    marker={ this.state.marker }
+                    showMap={ true }
+                />
+                <ImageBackground 
+                    style={[styles.succContentWrap, {backgroundColor: "rgba(40, 200, 245, 0.3)"}]}
+                    source={require('~/Common/Image/maching_effect.png')}>
+                
+                <Image source={require("~/Common/Image/GPS_match_icon.png")} resizeMode="contain" style={{width: 17, alignSelf: "center", top: "50%", position: "absolute", marginTop: -40}} />
 
+                <View style={localStyles.topTxtWrap}>
+                    <Text style={localStyles.topTxt}>쿨리닉 A/S업체</Text>
+                    <Text style={localStyles.topTxt}>매칭을</Text>
+                    <Text style={localStyles.topTxt}>시작합니다</Text>
                 </View>
-                <CustomButton
-                    block={ true }
-                    info={ true }
-                    bordered={ true }
-                    onPress={ this._cancleAfterServicePartnerConfirm }>
-                    <Text>
-                        매칭 취소
-                    </Text>
-                </CustomButton>
-            </CustomBlockWrapper>
+
+                <View style={localStyles.bottomTxtWrap}>
+                    <Text style={localStyles.bottomTxt}>주변지역 A/S업체에게</Text>
+                    <Text style={localStyles.bottomTxt}>매칭연락을 보내는 중입니다.</Text>
+                    <Text style={localStyles.bottomTxt}>매칭 성공시 문자로 알려드립니다.</Text>
+                </View>
+                
+                </ImageBackground>
+
+                 {/* alert 메세지 모달 */}
+                <CustomModal
+                    modalType="ALERT"
+                    isVisible={this.state.isAlertModal}
+                    onPress={ () => this.setState({isAlertModal : false})}
+                    infoText={this.state.resultMsg}
+                    btnText="확인"
+                />
+            </Container>
         )
     }
 }
+
+const localStyles = StyleSheet.create({
+    topTxtWrap: {
+      marginTop: 117,
+      marginLeft: 26,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      flex: 1
+    },
+    topTxt: {
+      fontSize: 26,
+      fontWeight: "bold",
+      color: color.whiteColor
+    },
+    bottomTxtWrap: {
+      marginBottom: 117,
+      marginLeft: 26,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      justifyContent: "flex-end",
+      flex: 1
+    },
+    bottomTxt: {
+      fontSize: 15,
+      fontWeight: "bold",
+      color: color.whiteColor,
+      lineHeight: 30,
+      letterSpacing: 0.5
+    },
+});
 
 
 let mapDispatchToProps = (dispatch) => {

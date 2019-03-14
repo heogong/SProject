@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Alert, Image, View } from 'react-native'
-import { ActionSheet, Container, Icon, Picker, Root, Text, Textarea } from "native-base";
+import { Image, StyleSheet, View } from 'react-native'
+import { ActionSheet, Container, Icon, Item, Picker, Root, Text, Textarea } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -15,6 +15,7 @@ import PaymentAfterService from '~/Main/Functions/PaymentAfterService';
 
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
@@ -37,7 +38,9 @@ class ApplyBusinessProduct extends Component {
         selected: undefined,
         disabledBtn : true,
         cardData : ["Option 0", "Option 1", "Option 2", "Delete", "Cancel"],
-        buttonTitle : '결제카드선택'
+        buttonTitle : '결제카드선택',
+        isAlertModal : false, // alert 용
+        resultMsg : null // alert 용
       };
     }
 
@@ -79,7 +82,10 @@ class ApplyBusinessProduct extends Component {
                             data: resultData.data,
                         });
                     } else {
-                        alert("등록된 사업장 제품 조회 - "+resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -97,7 +103,10 @@ class ApplyBusinessProduct extends Component {
                     if(ResultBool) {
                         this.setState({asCaseData : resultData.data});
                     } else {
-                        alert("AS 제품 증상 조회 - "+resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -121,7 +130,10 @@ class ApplyBusinessProduct extends Component {
                             { text : 'CANCLE', icon: "close", iconColor: "#fa213b", billingKeyId : 0 }
                         ]) });
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -226,7 +238,7 @@ class ApplyBusinessProduct extends Component {
 
                     <View style={styles.contentWrap}>
                         <View>
-                            <View style={styles.fxDirRow}>
+                            <View style={[styles.fxDirRow, styles.mb20]}>
                                 <View style={stylesReg.leftGuideTxtWrap}>
                                     <Text style={stylesReg.leftGuideTxt}>증상 및</Text>
                                     <Text style={stylesReg.leftGuideTxt}>상세정보를</Text>
@@ -238,21 +250,28 @@ class ApplyBusinessProduct extends Component {
                             </View>
 
                             <View>
-                                <Picker
-                                    mode="dropdown"
-                                    iosIcon={<Icon name="arrow-down" />}
-                                    style={{ width: undefined }}
-                                    placeholder="Select your SIM"
-                                    placeholderStyle={{ color: "#bfc6ea" }}
-                                    placeholderIconColor="#007aff"
-                                    selectedValue={this.state.selected}
-                                    onValueChange={this.onValueChange.bind(this)}
-                                >
-                                    <Picker.Item label=" == 증상 선택 == " value={ -1 } />
-                                    {this.state.asCaseData.map((asCase, idx) => 
-                                        <Picker.Item key={idx} label={asCase.asItemNm} value={asCase.asItemId} />
-                                    )}
-                                </Picker>
+                                <Item style={{
+                                    borderTopWidth : 1, 
+                                    borderLeftWidth  :1, 
+                                    borderRightWidth : 1,  
+                                    borderColor : color.inputBoGrey,
+                                    height : 36
+                                }}>
+                                    <Picker
+                                        mode="dropdown"
+                                        iosIcon={<Icon name="arrow-dropdown" style={styles.selectBoxIcon}/>}
+                                        style={[styles.selectBoxWrap, { color : color.defaultColor }]}
+                                        placeholderStyle={{ color: color.inputPlaceHodler }}
+                                        placeholderIconColor={color.defaultColor}
+                                        selectedValue={this.state.selected}
+                                        onValueChange={this.onValueChange.bind(this)}
+                                    >
+                                        <Picker.Item label=" == 증상 선택 == " value={ -1 } style={{}} />
+                                        {this.state.asCaseData.map((asCase, idx) => 
+                                            <Picker.Item key={idx} label={asCase.asItemNm} value={asCase.asItemId} />
+                                        )}
+                                    </Picker>
+                                </Item>
 
                                 <Textarea 
                                     value={this.state.bizDsc}
@@ -263,21 +282,19 @@ class ApplyBusinessProduct extends Component {
                             </View>
                         </View>
 
-                        <View style={[styles.fx1, styles.justiConCenter]}>
-                            <Text style={{color:color.defaultColor}}>클리닉 제품 분석</Text>
+                        <View style={styles.mb20}>
+                            <Text style={localStyles.boxDetailSubTitleTxt}>쿨리닉 제품분석</Text>
                             <View style={styles.fxDirRow}>
                                 <View style={styles.fx1}>
-                                    <Text style={styles.greyFont}>용 량 : </Text>
-                                    <Text style={styles.greyFont}>전 기 : </Text>
-                                    <Text style={styles.greyFont}>압축기 : </Text>
+                                    <Text style={localStyles.boxDetailSubTxt}>용량 :</Text>
+                                    <Text style={localStyles.boxDetailSubTxt}>전기 :</Text>
+                                    <Text style={localStyles.boxDetailSubTxt}>압축기 :</Text>
                                 </View>
-                                <View style={styles.fx1}/>
                                 <View style={styles.fx1}>
-                                    <Text style={styles.greyFont}>응축기 : </Text>
-                                    <Text style={styles.greyFont}>증발기 : </Text>
-                                    <Text style={styles.greyFont}>제조사 : </Text>
+                                    <Text style={localStyles.boxDetailSubTxt}>응축기 :</Text>
+                                    <Text style={localStyles.boxDetailSubTxt}>증발기 :</Text>
+                                    <Text style={localStyles.boxDetailSubTxt}>제조사 :</Text>
                                 </View>
-                                <View style={styles.fx1}/>
                             </View>
                         </View>
 
@@ -311,8 +328,7 @@ class ApplyBusinessProduct extends Component {
                                             }
                                         })
                                 }
-                                edgeFill={true}
-                                backgroundColor={color.whiteColor}
+                                DefaultLineBtn={true}
                             >
                                 {this.state.buttonTitle}
                             </CustomButton>
@@ -320,17 +336,41 @@ class ApplyBusinessProduct extends Component {
                             <CustomButton 
                                 onPress={this._nextButton}
                                 disabled={this.state.disabledBtn}
-                                edgeFill={true}
-                                fillTxt={true}
                             >
                                 입력 완료
                             </CustomButton>
                         </View>
                     </View>
+
+                    {/* alert 메세지 모달 */}
+                    <CustomModal
+                        modalType="ALERT"
+                        isVisible={this.state.isAlertModal}
+                        onPress={ () => this.setState({isAlertModal : false})}
+                        infoText={this.state.resultMsg}
+                        btnText="확인"
+                    />
+
                 </Container>
             </Root>
         )
     }
 }
+
+
+const localStyles = StyleSheet.create({
+    boxDetailSubTitleTxt: {
+      fontSize: 18,
+      color: color.defaultColor,
+      paddingBottom: 12,
+      fontWeight: "bold",
+      marginTop: 20
+    },
+    boxDetailSubTxt: {
+      fontSize: 14,
+      color: "#8e8e98",
+      lineHeight: 20
+    },
+});
 
 export default ApplyBusinessProduct;
