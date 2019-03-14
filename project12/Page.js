@@ -269,7 +269,8 @@ const PAGE = () => (
 
 
       {/* 테스트 후 삭제 */}
-      <Scene key="ViewAfterServiceState" initial component={ClientViewAfterServiceState}/>
+      <Scene key="ViewAfterServiceState"  component={ClientViewAfterServiceState}/>
+      <Scene key="AfterServiceHistory" initial component={AfterServiceHistory}/>
       
       <Drawer
         hideNavBar

@@ -43,148 +43,112 @@ class ListAfterServiceHistory extends Component {
             });
         });
     }
+
+    // 만족도 별점 그리기
+    _drawStarPoint = (point) => {
+        let starPointArray = [];
+
+        for(let i = 0; i < 5; i++) {
+            starPointArray.push(<TouchableOpacity key={i}>
+                <Image source={
+                    (point-- > 0) ? require("~/Common/Image/star_icon_100.png") : require("~/Common/Image/star_icon_50.png")
+                } 
+                resizeMode="contain" style={localStyles.starIconImg} />
+            </TouchableOpacity>); 
+        }
+
+        return starPointArray;
+    }
     
     render() {
         return (
-            // <CustomBlockWrapper
-            //     title="A/S 내역"
-            // >
-            //     { 
-            //         (this.state.data.length > 0) ? (
-            //             this.state.data.map((afterService, idx) => 
-            //             <Card key={ idx }>
-            //                 <CardItem body>
-            //                     <Thumbnail large source={{ uri: afterService.prdTypeFileUrl }} />
-            //                 </CardItem>
-            //                 <CardItem>
-            //                     <View>
-            //                         <Text>
-            //                             사업장 : {afterService.bplaceNm}
-            //                         </Text>
-            //                         <Text>
-            //                             날짜 : {afterService.regDt}
-            //                         </Text>
-            //                         <Text>
-            //                             증상 : {afterService.evalDsc}
-            //                         </Text>
-            //                         <Text>
-            //                             만족도 : {afterService.evalPoint}
-            //                         </Text>
-            //                     </View>
-            //                 </CardItem>
-            //                 <CardItem>
-            //                     <CustomButton onPress={ () => Actions.ViewAfterServiceHistory({asPrgsId : afterService.asPrgsId}) }>
-            //                         <Text>조회</Text>
-            //                     </CustomButton>
-            //                 </CardItem>
-            //             </Card>
-            //             )
-            //         ) : (
-            //             <View> 
-            //                 <Text>A/S 서비스를 받은 내역이 없습니다.</Text>
-            //             </View>
-            //         )
-            //     }
-            // </CustomBlockWrapper>
             <Container style={styles.containerScroll}>
                 <CustomHeader />
-                <ScrollView showsVerticalScrollIndicator={false}>
+                
+                    <View style={{marginBottom: 36}}>
+                        <View style={styles.fxDirRow}>
+                            <View style={stylesReg.leftGuideTxtWrap}>
+                                <Text style={stylesReg.leftGuideTxt}>A/S 받으신</Text>
+                                <Text style={stylesReg.leftGuideTxt}>내역에 대해</Text>
+                                <Text style={stylesReg.leftGuideTxt}>확인해보세요</Text>
+                            </View>
 
-                    <View style={[styles.fxDirRow, styles.mb20]}>
-                        <View style={stylesReg.leftGuideTxtWrap}>
-                            <Text style={stylesReg.leftGuideTxt}>A/S받으신</Text>
-                            <Text style={stylesReg.leftGuideTxt}>내역에 대해</Text>
-                            <Text style={stylesReg.leftGuideTxt}>확인해보세요</Text>
-                        </View>
-                        <View style={stylesReg.rightStepNumWrap}>
-                            <Text style={{fontSize : 20, color : color.defaultBackColor}}>
-                                {this.state.data.length} 건
-                            </Text>
+                            <View style={stylesReg.rigthTxtWrap}>
+                                <Text style={[stylesReg.rightTxt, {fontWeight: "bold"}]}>
+                                    {this.state.data.length}
+                                    <Text style={stylesReg.rightTxtSmall}>건</Text>
+                                </Text>
+                            </View>
                         </View>
                     </View>
+
                     { 
                     (this.state.data.length > 0) ? (
-                        this.state.data.map((afterService, idx) => 
+                        <ScrollView showsVerticalScrollIndicator={false}>
 
-                        <View 
-                            key={idx}
-                            style={[
-                                styles.fxDirRow, 
-                                styles.justiConCenter, 
-                                styles.mb10, 
-                                styles.pd15, 
-                                {backgroundColor : color.defaultColor}
-                            ]}
-                        >
-                            <View style={[styles.fx3, styles.alignItemsStart, styles.justiConCenter]}>
-                                <Image 
-                                    source={{ uri: afterService.prdTypeFileUrl }} 
-                                    resizeMode="contain" 
-                                    style={{height : productImgSize, width : productImgSize}} 
-                                />
-                                <Text style={styles.whiteFont}>{afterService.prdTypeKoNm}</Text>
-                            </View>
-                            <TouchableOpacity 
-                                onPress={() => Actions.ViewAfterServiceHistory({asPrgsId : afterService.asPrgsId})} 
-                                style={[styles.justiConCenter, {flex:6}]
-                            }>
-                                <View>
-                                <H3 style={{color : color.whiteColor}}>{afterService.bplaceNm}</H3>
-                                <Text style={styles.whiteFont}>{afterService.regDt}</Text>
-                                <Text style={styles.whiteFont}>{afterService.evalDsc}</Text>
-                                <Text style={styles.whiteFont}>만족도 {afterService.evalPoint}</Text>
-                                </View>
-                            </TouchableOpacity>
-                    
-                            <View style={styles.fx1}>
-                                <Icon style={{color : color.whiteColor}} name="arrow-round-forward"/>
-                            </View>
-                        </View>
-                        )
+                            {this.state.data.map((afterService, idx) => 
+                                <TouchableOpacity 
+                                    key={idx}
+                                    onPress={() => Actions.ViewAfterServiceHistory({asPrgsId : afterService.asPrgsId})}
+                                >
+                                    <View style={[styles.listPrdBoxFillWrap, {height: 120}]}>
+                                        <View style={[styles.listPrdBoxImgWrap, {marginTop: 4}]}>
+                                            <Image 
+                                                source={{ uri: afterService.prdTypeFileUrl }} 
+                                                resizeMode="contain" 
+                                                style={styles.listPrdBoxImg} 
+                                            />
+                                            <Text style={styles.listPrdBoxImgTxt}>{afterService.prdTypeKoNm}</Text>
+                                        </View>
+                                        <View style={styles.listPrdBoxRightTxtWrap}>
+                                            <H3 style={styles.listPrdBoxRightTitleTxt}>{afterService.bplaceNm}</H3>
+                                            <Text style={[styles.listPrdBoxDeTxt, styles.mb12, {fontWeight: "500"}]}>{afterService.regDt}</Text>
+                                            <Text style={styles.listPrdBoxDeTxt}>{afterService.evalDsc}</Text>
+                                            <View style={styles.fxDirRow}>
+                                                <Text style={[styles.listPrdBoxDeTxt, {paddingTop: 3}]}>만족도</Text>
+                                                    <View style={localStyles.starIconWrap}>
+                                                        {this._drawStarPoint(parseInt(afterService.evalPoint))}
+                                                    </View>
+                                            </View>
+                                        </View>
+
+                                        <View style={styles.listPrdBoxNextIconWrap}>
+                                        <TouchableOpacity 
+                                            onPress={() => Actions.ViewAfterServiceHistory({asPrgsId : afterService.asPrgsId})} 
+                                        >
+                                            <Image source={require("~/Common/Image/Next_icon_white.png")} resizeMode="contain" style={{width: 26, height: 26}} />
+                                        </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                            )}
+                        </ScrollView>
                       ) : (
-                        <View style={[styles.justiConCenter, styles.alignItemsCenter, {height : emptyFlexSize}]}> 
-                            <View style={{
-                                borderStyle : 'dashed',
-                                borderRadius: 100, 
-                                borderColor : color.defaultColor, 
-                                borderWidth : 1,
-                                height : emptyFlexSize - 160,
-                                width : emptyFlexSize - 160
-                            }}>
-                                <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
-                                    <Image 
-                                        source={require("~/Common/Image/license-depart01.png")} 
-                                        style={{height : '40%', width : '40%'}}  
-                                    />
-                                    <Text style={{fontSize:12}}>A/S 서비스를</Text>
-                                    <Text style={{fontSize:12}}>받은 내역이 없습니다.</Text>
-                                </View>
-                                
-                            </View>
-                            
+                        <View style={styles.listPrdBoxEmptyImgWrap}>
+                            <Image 
+                                source={require("~/Common/Image/No_alram_icon.png")} 
+                                style={{height: 219, width: 219, marginTop: -36}} 
+                            />
                         </View>
                     )
                 }
-                
-                </ScrollView>
-
             </Container>
         )
     }
 }
 
-function wp (percentage, space) {
-    const value = (percentage * (viewportWidth - space)) / 100;
-    return Math.round(value);
-}
-
-function hp (percentage) {
-    const value = (percentage * viewportHeight) / 100;
-    return Math.round(value);
-}
-  
-  
-const productImgSize = wp(24, 52);
-const emptyFlexSize = hp(55);
+const localStyles = StyleSheet.create({
+    starIconImg: {
+      width: 13,
+      height: 13,
+      marginLeft: 1,
+      marginRight: 1
+    },
+    starIconWrap: {
+      flexDirection: "row",
+      marginLeft: 6,
+      marginTop: 3
+    }
+  });
 
 export default ListAfterServiceHistory;
