@@ -146,7 +146,7 @@ const localStyles = StyleSheet.create({
   },
   guideInfoTxt: {
     fontSize: 13,
-    color: "#1e1e32",
+    color: "#8e8e98",
     textAlign: "center"
   }
 });

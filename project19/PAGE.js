@@ -73,6 +73,7 @@ import ListBusinessPlace from './ListBusinessPlace';
 import RegProductType from './RegProductType';
 import ClientIntroGuide from './ClientIntroGuide';
 import MatchingWait from './MatchingWait'
+import PartnerIntroGuide from './PartnerIntroGuide';
 
 import pageOne from './Page1'
 import pageTwo from './Page2'
@@ -202,7 +203,7 @@ const PAGE = () => (
             <Scene key="RegProductType" hideNavBar component={RegProductType} type={ActionConst.RESET}/>
             <Scene key="RegProduct" hideNavBar component={RegProduct} type={ActionConst.RESET}/>
 
-            {/* 공통 */}
+
             <Scene key="MoreMenu" hideNavBar component={MoreMenu}  type={ActionConst.RESET}/>
             <Scene key="MyProfileInfo" hideNavBar component={MyProfileInfo}  type={ActionConst.RESET}/>
             <Scene key="MyProfileModPassword1" hideNavBar component={MyProfileModPassword1}  type={ActionConst.RESET}/>
@@ -218,6 +219,9 @@ const PAGE = () => (
 
 
 
+
+
+            <Scene initial key="PartnerIntroGuide" hideNavBar component={PartnerIntroGuide} type={ActionConst.RESET}/>
 
 
             <Scene key="BusinessRegistration1" hideNavBar component={BusinessRegistration1} type={ActionConst.RESET}/>
@@ -252,33 +256,11 @@ const PAGE = () => (
             <Scene key="ListNotCompReportEmpty" hideNavBar component={ListNotCompReportEmpty}  type={ActionConst.RESET}/>
             <Scene key="RegReportStep1" hideNavBar component={RegReportStep1}  type={ActionConst.RESET}/>
             
-
-
             <Scene key="MyProfileCompany" hideNavBar component={MyProfileCompany}  type={ActionConst.RESET}/>
             <Scene key="MyCalcuList" hideNavBar component={MyCalcuList}  type={ActionConst.RESET}/>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
-            
-            
-            
-
-            
-            
-            
-            
-            
-            
 
             <Scene key="HistoryAfterService" hideNavBar component={HistoryAfterService} type={ActionConst.RESET}/>
-            <Scene initial key="TakeProductGuide1" hideNavBar component={TakeProductGuide1} type={ActionConst.RESET}/>
+            <Scene key="TakeProductGuide1" hideNavBar component={TakeProductGuide1} type={ActionConst.RESET}/>
 
 
             <Scene key="pageOne" hideNavBar component={pageOne} title="pageOne" type={ActionConst.RESET}/>
