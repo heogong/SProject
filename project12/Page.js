@@ -132,14 +132,19 @@ import AfterServiceApplyProductComplete from './src/Main/Pages/Client/AfterServi
 
 // import ViewBusinessProduct from './src/Main/Pages/Client/MyProduct/ViewBusinessProduct'
 
-// 메인 나의제품 : 사업장 목록
+// 메인 나의제품 : 사업장 목록 
 import ListBusinessPlace from './src/Main/Pages/Client/MyProduct/ListBusinessPlace'
 import ListBusinessProductType from './src/Main/Pages/Client/MyProduct/ListBusinessProductType'
 import ListBusinessShowCase from './src/Main/Pages/Client/MyProduct/ListBusinessShowCase'
-import InputBusinessProdType from './src/Main/Pages/Client/MyProduct/InputProdType'
 import RegBusinessShowCase from './src/Main/Pages/Client/MyProduct/RegBusinessShowCase'
 import RegBusinessAddress from './src/Main/Pages/Client/MyProduct/RegBusinessAddress'
 import EditBusinessAddress from './src/Main/Pages/Client/MyProduct/EditBusinessAddress'
+
+import MyListBusinessPlace from './src/Main/Pages/Client/MyProduct/ListBusinessPlace';
+import MyListBusinessProductType from './src/Main/Pages/Client/MyProduct/ListBusinessProductType';
+import MyRegBusinessPlace from './src/Main/Pages/Client/MyProduct/RegBusinessPlace';
+import MyRegBusinessProdType from './src/Main/Pages/Client/MyProduct/RegProdType';
+import MyRegProdShowCase from './src/Main/Pages/Client/MyProduct/RegProdShowCase';
 
 // 메인 A/S 현황
 import ClientAfterServiceState from './src/Main/Pages/Client/AfterServiceState'
@@ -150,8 +155,8 @@ import ViewAfterServiceHistory from './src/Main/Pages/Client/AfterServiceState/V
 
 // 더보기
 import ClientMoreInfo from './src/Main/Pages/Client/MoreInfo'
-import MyListBusinessPlace from './src/Main/Pages/Client/MoreInfo/ListBusinessPlace';
-import MyRegBusinessPlace from './src/Main/Pages/Client/MoreInfo/RegBusinessPlace';
+
+
 
 
 const PAGE = () => ( 
@@ -276,7 +281,12 @@ const PAGE = () => (
 
       {/* 클라이언트 더보기 - 나의 사업자정보  */}
       <Scene key="MyListBusinessPlace" initial component={MyListBusinessPlace}/>
+      {/* 클라이언트 나의제품 */}
+      <Scene key="MyListBusinessProductType" component={MyListBusinessProductType}/>
       <Scene key="MyRegBusinessPlace" component={MyRegBusinessPlace}/>
+      <Scene key="MyRegBusinessProdType" component={MyRegBusinessProdType}/>
+      <Scene key="MyRegProdShowCase" component={MyRegProdShowCase}/>
+      
       
       <Drawer
         hideNavBar
@@ -324,7 +334,7 @@ const PAGE = () => (
               <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" />
               {/* <Scene key="ListBusinessProductType" component={ListBusinessProductType} title="사업장 제품 타입 목록" /> */}
               <Scene key="ListBusinessShowCase" component={ListBusinessShowCase} title="사업장 제품 목록" />
-              <Scene key="InputBusinessProdType" component={InputBusinessProdType} title="제품 타입 선택" />
+              {/* <Scene key="InputBusinessProdType" component={InputBusinessProdType} title="제품 타입 선택" /> */}
               
               {/*join 페이지 공통 사용*/}
               <Scene key="RegBusinessPlace" component={RegBusinessPlace} title="사업장 등록" /> 
