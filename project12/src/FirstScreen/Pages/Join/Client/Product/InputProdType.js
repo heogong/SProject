@@ -161,7 +161,7 @@ class InputProdType extends Component {
                                     styles.alignItemsCenter,
                                     styles.justiConCenter,
                                     { 
-                                    backgroundColor : color.prdTypeBackColor, 
+                                    backgroundColor : color.defaultColor, 
                                     height : productCardSize, 
                                     width : productCardSize
                                 }]}>

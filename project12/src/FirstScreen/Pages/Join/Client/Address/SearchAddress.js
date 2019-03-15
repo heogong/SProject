@@ -21,7 +21,7 @@ class SearchAddress extends Component {
     super(props);
 
     this.state = { 
-      addressName : (this.props.addressName !== null) ? this.props.addressName : '강남구',
+      addressName : (this.props.addressName !== null) ? this.props.addressName : '강남구 논현로',
       data: [],
       region: {
         latitude: 37.566535,

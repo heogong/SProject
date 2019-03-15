@@ -1,43 +1,19 @@
 import React, { Component } from "react";
-import { ImageBackground, ScrollView, TouchableOpacity, View } from 'react-native'
-import { Container, H2, Card, CardItem, Text, Thumbnail, CheckBox} from "native-base";
+import { Image, ImageBackground, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Container, Text} from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 
-import GetAfterServiceReport from '~/Main/Functions/GetAfterServiceReport'
+import GetAfterServiceReport from '~/Main/Functions/GetAfterServiceReport';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
+import AfterServiceImage from '~/Main/Components/AfterServiceImage';
 import CustomHeader from '~/Common/Components/CustomHeader';
 import { styles, viewportWidth } from '~/Common/Styles/common';
-import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
 
-
-const AfterServiceImage = () => (
-    <View 
-      style={[
-        styles.mb15, 
-        styles.alignItemsCenter,
-        styles.justiConCenter,
-        { 
-          backgroundColor : color.defaultColor, 
-          height : asCardSize, 
-          width : asCardSize
-    }]}>
-      <ImageBackground 
-        style={[styles.alignItemsEnd, styles.justiConEnd, {width: '100%', height: '100%'}]}
-        source={{uri: 'https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg'}}
-      >
-        <TouchableOpacity 
-          style={[{height : '25%', width : '25%', backgroundColor : 'rgba(0, 0, 0, 0.6)'}]}
-          onPress={ () => alert("사진조회")}>
-        </TouchableOpacity>
-      </ImageBackground>
-    
-    </View>
-)
 
 class ViewAfterServiceHistory extends Component {
     constructor(props) {
@@ -102,144 +78,126 @@ class ViewAfterServiceHistory extends Component {
             //     </Card>
             // </CustomBlockWrapper>
             <Container style={styles.containerScroll}>
-                <CustomHeader title="출장보고서"/>
+                <CustomHeader title="A/S 보고서"/>
 
-                <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+        
+                    <View style={localStyles.contentWrap}>
+                        <View style={localStyles.titleWrap}>
+                            <Image source={require('~/Common/Image/product/01_icon_white.png')} style={localStyles.titleImg}/>
+                            <Text style={localStyles.titleNameTxt}>세나정육점</Text>
+                            <Text style={localStyles.subNameTxt}>육류용냉장고</Text>
+                        </View>
 
-                    <View style={[styles.mb20, styles.alignItemsCenter] }>
-                        <Thumbnail square large source={require('~/Common/Image/license-depart01.png')} />
-                        <H2>세나정육점</H2>
-                        <Text style={styles.greyFont}>육류용냉장고</Text>
-                    </View>
+                        <View style={[styles.boxShadow, localStyles.histBoxWrap]}>
+                            <Text style={localStyles.histBoxTitleTxt}>A/S신청내역</Text>
 
-                    <View style={styles.mb20}>
-                        <H2 style={{color:color.defaultColor}}>A/S신청내역</H2>
-                        <Card>
-                            <CardItem style={styles.mg10}>
-                                <View style={styles.mg10}>
-                                <View style={styles.mb10} />
+                            <Text style={localStyles.histBoxSubTitleTxt}>육류용 냉장고</Text>
+                            <Text style={localStyles.histBoxInfoTxt}>경기도 시흥시 산기대로</Text>
+                            <Text style={localStyles.histBoxInfoTxt}>bbbbbbbbbbb</Text>
 
-                                <Text>육류용 냉장고</Text>
-                                <Text style={styles.greyFont}>경기도 시흥시 산기대로</Text>
-                                <Text style={styles.greyFont}>bbbbbbbbbbb</Text>
-                                <View style={styles.mb10} />
+                            <Text style={localStyles.histBoxSubTitleTxt}>참고사항</Text>
+                            <Text style={localStyles.histBoxInfoTxt}>12312312312312312312312312321</Text>
 
-                                <Text>참고사항</Text>
-                                <Text style={styles.greyFont}>ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</Text>
-                                <View style={styles.mb10} />
-
-                                <Text>클리닉데이터</Text>
-                                <Text style={styles.greyFont}>ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</Text>
-
-                                </View>
-                            </CardItem>
-                        </Card>
-                    </View>
-
-                    <View>
-                        <H2 style={{color : color.defaultColor}}>A/S 조치 전</H2> 
-                    </View>
-
-                    <View style={ styles.mb20 }>
-                        <Card>
-                        <CardItem style={styles.mg10}>
-                            <View>
-                                <View style={[styles.fxDirRow, styles.justiConBetween, { flexWrap : 'wrap'}]}>
-                                    <AfterServiceImage/>
-                                    <AfterServiceImage/>
-                                    <AfterServiceImage/>
-                                    <AfterServiceImage/>
-                                </View>
-                            <View>
-                                <Text>출장 전 상태</Text>
-                                <Text style={styles.greyFont}>ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</Text>
-                            </View>
-                            </View>
-                        </CardItem>
-                        </Card>
-                    </View>
-
-                    <View>
-                        <H2 style={{color : color.defaultColor}}>A/S 조치 후</H2> 
-                    </View>
-
-                    <View style={styles.mb20} >
-                        <Card>
-                        <CardItem style={styles.mg10}>
-                            <View>
-                                <View style={[styles.fxDirRow, styles.justiConBetween, { flexWrap : 'wrap'}]}>
-                                    <AfterServiceImage/>
-                                    <AfterServiceImage/>
-                                    <AfterServiceImage/>
-                                    <AfterServiceImage/>
-                                </View>
-                            <View>
-                                <Text>A/S 조치내역</Text>
-                                <Text style={styles.greyFont}>ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</Text>
-                            </View>
-                            </View>
-                        </CardItem>
-                        </Card>
-                    </View>
-
-                    <View>
-                        <H2 style={{color : color.defaultColor}}>A/S 청구비용</H2> 
-                    </View>
-                    <View>
-                        <Card>
-                            <CardItem style={styles.mg10}>
-                                <View style={styles.fxDirRow}>
+                            <Text style={localStyles.histBoxSubTitleTxt}>쿨리닉데이터</Text>
+                            <View style={styles.fxDirRow}>
                                 <View style={styles.fx1}>
-                                    <Text style={styles.greyFont}>출장비</Text>
-                                    <Text style={styles.greyFont}>추가 A/S비</Text>
-                                    <Text>총계</Text>
+                                    <Text style={localStyles.histBoxInfoTxt}>용량 :</Text>
+                                    <Text style={localStyles.histBoxInfoTxt}>전기 :</Text>
+                                    <Text style={localStyles.histBoxInfoTxt}>압축기 :</Text>
                                 </View>
-                                <View style={[styles.fx1, styles.alignItemsEnd]}>
-                                    <Text style={styles.greyFont}>30,000 원</Text>
-                                    <Text style={styles.greyFont}>120,000 원</Text>
-                                    <Text>150,000 원</Text>
-                                </View>
-                                </View>
-                            </CardItem>
-
-                            <CardItem style={styles.mg10}>
-                                <View style={[styles.fx1, styles.fxDirRow]}>
                                 <View style={styles.fx1}>
-                                    <H2 style={{color : color.defaultColor}}>추가A/S</H2>
+                                    <Text style={localStyles.histBoxInfoTxt}>응축기 :</Text>
+                                    <Text style={localStyles.histBoxInfoTxt}>증발기 :</Text>
+                                    <Text style={localStyles.histBoxInfoTxt}>제조사 :</Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        <View>
+                            <View>
+                                <View style={[localStyles.boxTitleWrap]}>
+                                    <Text style={localStyles.boxTitleTxt}>A/S 조치 전</Text>
+                                    <View style={[styles.line, {flex: 2, borderColor: color.whiteColor}]}></View>
                                 </View>
 
-                                <CheckBox 
-                                    checked={this.state.checkBox} 
-                                    color={color.defaultColor} 
-                                    onPress={ () => this.setState({
-                                        checkBox : (this.state.checkBox) ? false : true
-                                        })
-                                    }/>
-                                <Text style={{paddingLeft : '5%'}}>공인</Text>
+                                <View style={[styles.boxShadow, {backgroundColor: color.whiteColor}]}>
+                                    <View style={localStyles.prdPhotoWrap}>
+                                        <AfterServiceImage 
+                                            viewImage={true}
+                                            imgUri={"https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg"}
+                                        />
+                                        <AfterServiceImage 
+                                            viewImage={true}
+                                            imgUri={"https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg"}
+                                        />
+                                        <AfterServiceImage 
+                                            viewImage={true}
+                                            imgUri={"https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg"}
+                                        />
+                                        <AfterServiceImage 
+                                            viewImage={true}
+                                            imgUri={"https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg"}
+                                        />
+                                    </View>
+                                    <View style={localStyles.prdPhotoTxtWrap}>
+                                        <Text style={localStyles.histBoxSubTitleTxt}>출장 전 상태</Text>
+                                        <Text style={localStyles.histBoxInfoTxt}>ㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹ</Text>
+                                    </View>
+                                </View>
+                            </View>
 
-                                <CheckBox 
-                                    checked={this.state.checkBox} 
-                                    color={color.defaultColor} 
-                                    onPress={ () => this.setState({
-                                        checkBox : (this.state.checkBox) ? false : true
-                                        })
-                                    }/>
-                                <Text style={{paddingLeft : '5%'}}>부품교체</Text>
+                            <View>
+                                <View style={[localStyles.boxTitleWrap]}>
+                                    <Text style={localStyles.boxTitleTxt}>A/S 조치 후</Text>
+                                    <View style={[styles.line, {flex: 2, borderColor: color.whiteColor}]}></View>
                                 </View>
-                            </CardItem>
-                            <CardItem style={styles.mg10}>
-                                <View>
-                                <Text>추가 A/S 내역</Text>
-                                <Text style={styles.greyFont}>ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</Text>
+
+                                <View style={[styles.boxShadow, {backgroundColor: color.whiteColor}]}>
+                                    <View style={localStyles.prdPhotoWrap}>
+                                        <AfterServiceImage 
+                                            viewImage={true}
+                                            imgUri={"https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg"}
+                                        />
+                                        <AfterServiceImage 
+                                            viewImage={true}
+                                        />
+                                        <AfterServiceImage 
+                                            viewImage={true}
+                                        />
+                                        <AfterServiceImage 
+                                            viewImage={true}
+                                            imgUri={"https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg"}
+                                        />
+                                    </View>
+                                    <View style={localStyles.prdPhotoTxtWrap}>
+                                        <Text style={localStyles.histBoxSubTitleTxt}>A/S 조치내역</Text>
+                                        <Text style={localStyles.histBoxInfoTxt}>ㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹ</Text>
+                                    </View>
                                 </View>
-                            </CardItem>
-                            <CardItem style={styles.mg10}>
-                                <View>
-                                <Text>추가 A/S 사유</Text>
-                                <Text style={styles.greyFont}>ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</Text>
-                                </View>
-                            </CardItem>
-                        </Card>
+                                
+
+                            </View>
+                        </View>
+                        
+                        <View>
+                            <View style={[localStyles.boxTitleWrap]}>
+                                <Text style={localStyles.boxTitleTxt}>추가 A/S</Text>
+                                <View style={[styles.line, {flex: 2, borderColor: color.whiteColor}]}></View>
+                            </View>
+                            <View style={[styles.boxShadow, localStyles.histBoxWrap]}>
+                                <Text style={localStyles.histBoxTitleTxt}>청구비용</Text>
+
+                                <Text style={localStyles.histBoxSubTitleTxt}>추가 A/S 비용</Text>
+                                <Text style={localStyles.histBoxInfoTxt}>120,000원</Text>
+
+                                <Text style={localStyles.histBoxSubTitleTxt}>추가A/S내역</Text>
+                                <Text style={localStyles.histBoxInfoTxt}>1231231231231231231231231232112312312312312312312312312321</Text>
+
+                                <Text style={localStyles.histBoxSubTitleTxt}>추가A/S사유</Text>
+                                <Text style={localStyles.histBoxInfoTxt}>12312312312312312312312312321123123123123123123123123123211231231231231231231231231232112312312312312312312312312321</Text>
+                            </View>
+                        </View>
 
                     </View>
                 </ScrollView>
@@ -252,8 +210,106 @@ class ViewAfterServiceHistory extends Component {
 function wp (percentage, space) {
     const value = (percentage * (viewportWidth - space)) / 100;
     return Math.round(value);
-}
-
-const asCardSize = wp(48, 72);
+  }
+  
+  const asCardSize = wp(45, (styles.containerScroll.paddingLeft * 4) + 10 );
+  
+  const localStyles = StyleSheet.create({
+    titleWrap: {
+      alignItems : 'center'
+    },
+    titleImg: {
+      width: 80,
+      height: 80,
+      marginTop: -40
+    },
+    boxTitleWrap: {
+      marginBottom: 20,
+      flexDirection: "row",
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 25
+    },
+    boxTitleTxt: {
+      flex: 1,
+      fontSize: 18,
+      color : color.whiteColor,
+      fontWeight: "bold"
+    },
+    prdPhotoWrap: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      flexWrap : 'wrap',
+      backgroundColor: color.whiteColor,
+      width: "100%"
+    },
+    photoNoBoxWrap: {
+      flex: 5,
+      borderColor : "#c9cacb",
+      borderWidth : 1,
+      margin: 5,
+      height : asCardSize, 
+      width : asCardSize
+    },
+    photoNoBox: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: color.whiteColor
+    },
+    contentWrap: {
+      paddingLeft: 26,
+      paddingRight: 26,
+      marginTop: 40,
+      paddingBottom: 26,
+      backgroundColor: color.defaultColor
+    },
+    titleNameTxt: {
+      marginTop: 14,
+      fontSize: 18,
+      fontWeight: "bold",
+      color: color.whiteColor
+    },
+    subNameTxt: {
+      marginTop: 7,
+      marginBottom: 30,
+      fontSize: 14,
+      fontWeight: "bold",
+      color: color.whiteColor
+    },
+    histBoxWrap: {
+      backgroundColor: color.whiteColor,
+      paddingTop: 30,
+      paddingBottom: 30,
+      paddingLeft: 24,
+      paddingRight: 24
+    },
+    histBoxTitleTxt: {
+      color:'#28c8f5',
+      fontWeight: "bold",
+      fontSize: 18,
+      marginBottom: 6
+    },
+    histBoxSubTitleTxt: {
+      fontSize: 15,
+      color: "#1e1e32",
+      fontWeight: "bold",
+      marginBottom: 10,
+      marginTop: 20
+    },
+    histBoxInfoTxt: {
+      fontSize: 13,
+      color: "#8e8e98",
+      lineHeight: 20
+    },
+    prdPhotoTxtWrap: {
+      paddingLeft: 16,
+      paddingRight: 16,
+      paddingBottom: 16,
+      borderTopWidth: 1,
+      borderColor: "#c9cacb"
+    },
+  });
 
 export default ViewAfterServiceHistory;

@@ -14,6 +14,7 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
@@ -40,7 +41,9 @@ class SetAddress extends Component {
             marker: {
                 latitude: 37.566535,
                 longitude: 126.97796919999996
-            }
+            },
+            isAlertModal : false, // alert 용
+            resultMsg : null // alert 용
         };
     }
 
@@ -107,12 +110,16 @@ class SetAddress extends Component {
         RegBizPlace(this.props.value).then(async result => {
             GetCommonData(result, this._regBusiness).then(async resultData => {
                 if(resultData !== undefined) {
+                    console.log("사업장 등록 시",resultData);
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
                         await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
                         Actions.SetBusinessPlace();
                     } else {
-                        alert(result.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -132,7 +139,10 @@ class SetAddress extends Component {
                         await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
                         Actions.popTo("ViewBusinessPlace");
                     } else {
-                        alert(result.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -212,6 +222,15 @@ class SetAddress extends Component {
                         </CustomButton>
                     </View>
                 </View>
+
+                 {/* alert 메세지 모달 */}
+                <CustomModal
+                    modalType="ALERT"
+                    isVisible={this.state.isAlertModal}
+                    onPress={ () => this.setState({isAlertModal : false})}
+                    infoText={this.state.resultMsg}
+                    btnText="확인"
+                />
             </Container>
         )
     }

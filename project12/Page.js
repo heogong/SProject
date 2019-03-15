@@ -150,6 +150,8 @@ import ViewAfterServiceHistory from './src/Main/Pages/Client/AfterServiceState/V
 
 // 더보기
 import ClientMoreInfo from './src/Main/Pages/Client/MoreInfo'
+import MyListBusinessPlace from './src/Main/Pages/Client/MoreInfo/ListBusinessPlace';
+import MyRegBusinessPlace from './src/Main/Pages/Client/MoreInfo/RegBusinessPlace';
 
 
 const PAGE = () => ( 
@@ -268,9 +270,13 @@ const PAGE = () => (
       <Scene key="MyProfileCompany" component={MyProfileCompany} />
 
 
-      {/* 테스트 후 삭제 */}
-      <Scene key="ViewAfterServiceState"  component={ClientViewAfterServiceState}/>
-      <Scene key="AfterServiceHistory" initial component={AfterServiceHistory}/>
+      {/* 클라이언트 A/S 내역 */}
+      <Scene key="AfterServiceHistory" component={AfterServiceHistory}/>
+      <Scene key="ViewAfterServiceHistory" component={ViewAfterServiceHistory}/>
+
+      {/* 클라이언트 더보기 - 나의 사업자정보  */}
+      <Scene key="MyListBusinessPlace" initial component={MyListBusinessPlace}/>
+      <Scene key="MyRegBusinessPlace" component={MyRegBusinessPlace}/>
       
       <Drawer
         hideNavBar
@@ -335,9 +341,9 @@ const PAGE = () => (
               tabBarOnPress={() => Actions.ClientAfterServiceState({type:ActionConst.RESET})}
               transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ClientAfterServiceState" component={ClientAfterServiceState}/>
-              {/* <Scene key="ViewAfterServiceState" component={ClientViewAfterServiceState}/> */}
-              <Scene key="AfterServiceHistory" component={AfterServiceHistory}/>
-              <Scene key="ViewAfterServiceHistory" component={ViewAfterServiceHistory}/>
+              <Scene key="ViewAfterServiceState" component={ClientViewAfterServiceState}/>
+              {/* <Scene key="AfterServiceHistory" component={AfterServiceHistory}/> */}
+              {/* <Scene key="ViewAfterServiceHistory" component={ViewAfterServiceHistory}/> */}
             </Stack>
 
             <Stack key="ClientMore" hideNavBar title="더보기" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>

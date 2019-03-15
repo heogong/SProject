@@ -49,12 +49,12 @@ class ListAfterServiceHistory extends Component {
         let starPointArray = [];
 
         for(let i = 0; i < 5; i++) {
-            starPointArray.push(<TouchableOpacity key={i}>
+            starPointArray.push(<View key={i}>
                 <Image source={
                     (point-- > 0) ? require("~/Common/Image/star_icon_100.png") : require("~/Common/Image/star_icon_50.png")
                 } 
                 resizeMode="contain" style={localStyles.starIconImg} />
-            </TouchableOpacity>); 
+            </View>); 
         }
 
         return starPointArray;

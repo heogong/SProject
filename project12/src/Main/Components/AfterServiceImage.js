@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Alert, StyleSheet, ImageBackground, TouchableOpacity, View } from 'react-native';
-import { Body, Button, Card, CardItem, Icon, Text, Thumbnail } from "native-base";
+import { StyleSheet, Image, ImageBackground, TouchableOpacity, View } from 'react-native';
+import { Icon, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -40,6 +40,40 @@ const EmptyAfterServiceImage = ({action}) => (
     </TouchableOpacity>
 )
 
+// 이미지 단순 조회 - 이미지 있을경우
+const ViewAfterServiceImage = ({uri}) => (
+    <View style={localStyles.prdVPhoto}>
+        <ImageBackground 
+            style={[styles.alignItemsEnd, styles.justiConEnd, {width: '100%', height: '100%'}]}
+            source={{uri: uri}}
+        >
+            <TouchableOpacity 
+                style={localStyles.prdVPhotoBtnEn}
+                onPress={ () => alert("사진조회")}
+            >
+                <Image 
+                    source={require("~/Common/Image/Zoomup_button.png")} 
+                    resizeMode="contain" 
+                    style={localStyles.prdVPhotoBtnEnIcon}
+                />
+            </TouchableOpacity>
+        </ImageBackground>
+    </View>
+)
+
+// 이미지 단순 조회 - 이미지 없을경우
+const ViewAfterServiceEmptyImage = () => (
+    <TouchableOpacity style={localStyles.photoVNoBoxWrap}>
+        <View style={localStyles.photoNoBox}>
+            <Image 
+                source={require("~/Common/Image/camera_icon.png")} 
+                style={localStyles.prdCardCameraIcon}
+                resizeMode="contain" 
+            />
+        </View>
+    </TouchableOpacity>
+)
+
 let SOURCE = null;
 let IMG_ID = null;
 
@@ -59,6 +93,7 @@ class AfterServiceImage extends Component {
 
     static defaultProps = {
         beforeAction : true, // 조치전/후 여부
+        viewImage : false,
         asPrgsId : 5, //test
     }
 
@@ -151,17 +186,23 @@ class AfterServiceImage extends Component {
     render() {
         return (
             <View key={this.props.index}>
-                { (!this.state.isImage) ? (
-                    <EmptyAfterServiceImage
-                        key={ this.props.index }
-                        action={ this.takePhotoTapped.bind(this) } 
-                    />
-                ) : (
-                    <DoAfterServiceImage
-                        action={ this._delAfterServiceImg }
-                        uri={ SOURCE.uri }
-                    />
-                ) }
+                { 
+                    (this.props.viewImage) ? (
+                        (this.props.imgUri) ? <ViewAfterServiceImage uri={this.props.imgUri}/> : <ViewAfterServiceEmptyImage/>
+                    ) : (
+                        (!this.state.isImage) ? (
+                            <EmptyAfterServiceImage
+                                key={ this.props.index }
+                                action={ this.takePhotoTapped.bind(this) } 
+                            />
+                        ) : (
+                            <DoAfterServiceImage
+                                action={ this._delAfterServiceImg }
+                                uri={ SOURCE.uri }
+                            />
+                        ) 
+                    )
+                }
 
                 {/* alert 메세지 모달 */}
                 <CustomModal
@@ -171,8 +212,6 @@ class AfterServiceImage extends Component {
                     infoText={this.state.resultMsg}
                     btnText="확인"
                 />
-
-
             </View>
         );
     }
@@ -184,6 +223,7 @@ function wp (percentage, space) {
   }
   
 const asCardSize = wp(48, 72);
+const asCardSize2 = wp(46, (styles.containerScroll.paddingLeft * 4) + 10 );
 
 const localStyles = StyleSheet.create({
     prdPhoto: {
@@ -194,10 +234,31 @@ const localStyles = StyleSheet.create({
         height : asCardSize, 
         width : asCardSize
     },
+    prdVPhoto: {
+        margin: 5,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor : color.defaultColor, 
+        height : asCardSize2, 
+        width : asCardSize2
+    },
     prdPhotoBtnEn: {
         height : 35,
         width : "100%",
         backgroundColor: 'rgba(40, 200, 245, 0.6)'
+    },
+    prdPhotoBtnEnIcon: {
+        width: 32,
+        height: 32
+    },
+    prdVPhotoBtnEn: {
+        height : 32,
+        width : 32,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)'
+    },
+    prdVPhotoBtnEnIcon: {
+        width: 32,
+        height: 32
     },
     prdPhotoBtnTxt: {
         fontSize: 14,
@@ -213,6 +274,14 @@ const localStyles = StyleSheet.create({
         height : asCardSize, 
         width : asCardSize
     },
+    photoVNoBoxWrap: {
+        flex: 5,
+        borderColor : "#c9cacb",
+        borderWidth : 1,
+        margin: 5,
+        height : asCardSize2, 
+        width : asCardSize2
+    },
     photoNoBox: {
         flex: 1,
         alignItems: "center",
@@ -222,6 +291,10 @@ const localStyles = StyleSheet.create({
     phototNoIcon: {
         color: color.defaultColor,
         fontSize: 50
+    },
+    prdCardCameraIcon: {
+        width: 36,
+        height: 36
     }
 });
 
