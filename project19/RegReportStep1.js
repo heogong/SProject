@@ -120,15 +120,62 @@ class ListNotCompReport extends Component {
             
           </View>
 
-          <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 60}}>
+          <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
             <View>
+
+              <View style={{backgroundColor : color.defaultColor, marginBottom: 32}}>
+                  <View style={localStyles.secondBox}>
+                      <Text style={localStyles.asMatchStateDscTxt}>매칭된 A/S 업체가 출발했어요.</Text>
+                      <View style={styles.fxDirRow}>
+                          <View style={localStyles.asMatchIconWrap}>
+                              {/* 
+                              <Image source={require("./img/user_as_step_icon/Default/as_wait_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                              <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
+                              */}
+                              <Image source={require("./img/partner_as_step_icon/Step_on/as_wait_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                              <Text style={[localStyles.asMatchStateTxt, {color: "#0364c8"}]}>A/S 대기</Text>
+                          </View>
+                          <View style={localStyles.asMatchIconWrap}>
+                              <Image source={require("./img/partner_as_step_icon/Default/as_start_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                              <Text style={localStyles.asMatchStateTxt}>A/S 출발</Text>
+                          </View>
+                          <View style={localStyles.asMatchIconWrap}>
+                              <Image source={require("./img/partner_as_step_icon/Default/as_arrive_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                              <Text style={localStyles.asMatchStateTxt}>A/S 도착</Text>
+                          </View>
+                          <View style={localStyles.asMatchIconWrap}>
+                              <Image source={require("./img/partner_as_step_icon/Default/as_progress_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                              <Text style={localStyles.asMatchStateTxt}>A/S 진행</Text>
+                          </View>
+                          <View style={localStyles.asMatchIconWrap}>
+                              <Image source={require("./img/partner_as_step_icon/Default/as_complete_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                              <Text style={localStyles.asMatchStateTxt}>A/S 완료</Text>
+                          </View>
+                      </View> 
+
+                      <View style={[styles.modalBtnTwinWrap, styles.fx1, styles.justiConCenter, {marginTop: 18, marginBottom: 18}]}>
+                        <View style={{marginRight: 9}}>
+                            <Button style={styles.modalBtnNoFill}>
+                                <Text style={styles.modalBtnNoFillTxt}>업체전화연결</Text>
+                            </Button>
+                        </View>
+                        <View style={{marginLeft: 9}}>
+                            <Button style={[styles.modalBtnFill, {backgroundColor: "#0397bd"}]}>
+                                <Text style={styles.modalBtnFillTxt}>추가A/S진행</Text>
+                            </Button>
+                        </View>
+                    </View>
+
+                  </View>
+              </View>
+
               <View>
                 <View style={[localStyles.boxTitleWrap, {justifyContent: "center", alignItems: "center"}]}>
                   <Text style={localStyles.boxTitleTxt}>A/S 조치 전</Text>
                   <View style={[styles.line, {flex: 2, borderColor: "#038dbd"}]}></View>
                 </View>
 
-                <View style={styles.boxShadow}>
+                <View style={[styles.boxShadow, {backgroundColor: color.whiteColor}]}>
                   <View style={localStyles.prdPhotoWrap}>
                     { this.asImage() }
                     { this.asImage() }
@@ -155,7 +202,7 @@ class ListNotCompReport extends Component {
                   <View style={[styles.line, {flex: 2, borderColor: "#038dbd"}]}></View>
                 </View>
 
-                <View style={styles.boxShadow}>
+                <View style={[styles.boxShadow, {backgroundColor: color.whiteColor}]}>
                   <View style={localStyles.prdPhotoWrap}>
                     { this.asImage() }
                     { this.asImage() }
@@ -202,6 +249,7 @@ function hp (percentage) {
 }
 
 const asCardSize = wp(48, 72);
+const stateImgSize = wp(15, 52);
 
 const localStyles = StyleSheet.create({
   boxTitleWrap: {
@@ -257,7 +305,26 @@ const localStyles = StyleSheet.create({
   phototNoIcon: {
     color: color.defaultColor,
     fontSize: 50
-  }
+  },
+  asMatchStateDscTxt: {
+    marginBottom: 15,
+    textAlign:'center',
+    color: "#0364c8",
+    fontWeight: "bold",
+    fontSize: 16,
+    marginTop: 20
+},
+asMatchIconWrap: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+},
+asMatchStateTxt: {
+    fontSize : 12,
+    color: color.whiteColor,
+    fontWeight: "bold",
+    marginTop: 10
+},
 });
 
 export default ListNotCompReport;

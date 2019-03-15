@@ -50,7 +50,7 @@ class ListApplyAfterService extends Component {
       <View style={[styles.listPrdBoxFillWrap, {height: 108}]}>
         <View style={styles.listPrdBoxImgWrap}>
           <Image 
-            source={require("./img/license-depart01.png")} 
+            source={require("./img/product/09_icon_white.png")} 
             resizeMode="contain" 
             style={styles.listPrdBoxImg} 
           />
@@ -62,7 +62,9 @@ class ListApplyAfterService extends Component {
         </View>
 
         <View style={styles.listPrdBoxNextIconWrap}>
-          <Icon style={styles.listPrdBoxNextIcon} name="arrow-round-forward"/>
+          <TouchableOpacity>
+            <Image source={require("./img/card_delete_2.png")} resizeMode="contain" style={{width: 22, height: 22}}/>
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>

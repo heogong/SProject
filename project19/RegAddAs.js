@@ -142,7 +142,7 @@ const localStyles = StyleSheet.create({
     paddingTop : 28,
     paddingLeft : 20,
     paddingRight : 20,
-    flex: 1,
+    height: 350,
     backgroundColor : color.defaultColor
   },
   blankBoxWrap: {

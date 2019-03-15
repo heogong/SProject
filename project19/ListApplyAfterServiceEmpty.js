@@ -94,8 +94,7 @@ class ListApplyAfterServiceEmpty extends Component {
         </View>
         <View style={styles.listPrdBoxEmptyImgWrap}>
           <Image 
-            source={require("./img/license-depart01.png")} 
-            style={{height: 219, width: 219, marginTop: -36}} 
+            source={require("./img/No_alram_icon.png")} style={{height: 219, width: 219, marginTop: -36}} 
           />
         </View>
 

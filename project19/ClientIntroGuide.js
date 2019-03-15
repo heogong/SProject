@@ -55,7 +55,7 @@ class ClientIntroGuide extends Component {
           <Right style={styles.headerRightWrap}></Right>
         </Header>
         <Swiper 
-          style={{flex: 1, height: "100%"}}
+          style={{height: "100%"}}
           paginationStyle={{
               bottom: 0
           }} 

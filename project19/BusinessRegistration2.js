@@ -55,23 +55,15 @@ class BusinessRegistration2 extends Component {
         </Header>
 
         <View style={styles.fx1}>
-          <View style={[styles.fx1, styles.justiConStart, styles.alignItemsCenter]}>
+          <View style={[styles.justiConStart, styles.alignItemsCenter]}>
             <H1 style={localStyles.topTitleTxt}>사업자등록증사진</H1>
             <Text style={localStyles.topTxt}>사업자등록번호와 기업명, 대표이름 등</Text>
             <Text style={localStyles.topTxt}>글씨가 잘 보이도록 촬영 또는 스캔해주세요</Text>
           </View>
 
-          <View style={styles.fx3}>
-            <ImageBackground
-              source={require("./img/license-bg01.png")} 
-              resizeMode="contain"
-              style={[styles.alignItemsCenter, styles.justiConCenter, {height : 'auto', width : '100%'}]}> 
-              <Image source={require("./img/license-bg02.png")} 
-                style={{height:'80%', width : '60%'}}
-                resizeMode="contain"
-              />
-            </ImageBackground>
-          </View>
+          <TouchableOpacity style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
+            <Image source={require("./img/compay_reg_illust.png")} resizeMode="contain" style={localStyles.photoGuideImg} />
+          </TouchableOpacity>
 
           <View style={styles.footerBtnWrap}>
             <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mb12]}>
@@ -98,6 +90,9 @@ const localStyles = StyleSheet.create({
   topTxt: {
     fontSize: 14,
     color: "#8e8e98"
+  },
+  photoGuideImg: {
+    width: "80%",
   }
 });
 

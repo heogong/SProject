@@ -104,14 +104,14 @@ class ListNotCompReport extends Component {
 
             <View style={styles.rigthTxtWrap}>
               <Text style={[styles.rightTxt, {fontWeight: "bold"}]}>
-                04<Text style={styles.rightTxtSmall}>건</Text>
+                00<Text style={styles.rightTxtSmall}>건</Text>
               </Text>
             </View>
           </View>
         </View>
         <View style={styles.listPrdBoxEmptyImgWrap}>
           <Image 
-            source={require("./img/license-depart01.png")} 
+            source={require("./img/no_alram_icon2.png")} 
             style={{height: 219, width: 219, marginTop: -36}} 
           />
         </View>

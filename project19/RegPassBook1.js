@@ -96,12 +96,12 @@ class RegPassBook1 extends Component {
 
           <TouchableOpacity style={localStyles.photoBoxWrap}>
             <View style={localStyles.photoBox}>
-              <Icon name="ios-camera" style={localStyles.phototIcon} />
+              <Image source={require("./img/camera_icon.png")} resizeMode="contain" style={localStyles.phototIconImg}/>
               <Text style={localStyles.photoTxt}>등록하기</Text>
             </View>
           </TouchableOpacity>
 
-          <View style={styles.footerBtnWrap}>
+          <View style={styles.footerBtnWrap} style={{marginTop: 16}}>
             <Button style={[styles.btnDefault, styles.btnDefaultFill, styles.mb5]}>
               <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>등록완료</Text>
             </Button>
@@ -125,9 +125,9 @@ const localStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  phototIcon: {
-    color: color.defaultColor,
-    fontSize: 60
+  phototIconImg: {
+    width: 40,
+    height: 40
   },
   photoTxt: {
     fontSize: 16,

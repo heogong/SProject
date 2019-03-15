@@ -211,7 +211,8 @@ const localStyles = StyleSheet.create({
   },
   btnWeekOffTxt: {
     fontSize: 15,
-    color: color.defaultColor
+    color: color.defaultColor,
+    fontWeight: "bold"
   },
   btnWeekOn: {
     alignItems: "center",
@@ -224,7 +225,8 @@ const localStyles = StyleSheet.create({
   },
   btnWeekOnTxt: {
     fontSize: 15,
-    color: color.whiteColor
+    color: color.whiteColor,
+    fontWeight: "bold"
   },
   bottomTxtWrap: {
     alignItems: "center",

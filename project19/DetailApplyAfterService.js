@@ -46,9 +46,17 @@ class DetailApplyAfterService extends Component {
         <TouchableOpacity 
           style={localStyles.prdPhotoBtnEn}
           onPress={ () => alert("사진조회")}>
-          <Icon active={this.state.tab1} name="expand" style={localStyles.prdPhotoBtnEnIcon}/>
+          <Image source={require("./img/Zoomup_button.png")} resizeMode="contain" style={localStyles.prdPhotoBtnEnIcon}/>
         </TouchableOpacity>
       </ImageBackground>
+    </View>
+  )
+
+  asNoImage = () => (
+    <View style={localStyles.photoNoBoxWrap}>
+      <View style={localStyles.photoNoBox}>
+        <Image source={require("./img/camera_icon.png")} resizeMode="contain" style={localStyles.prdCardCameraIcon} />
+      </View>
     </View>
   )
 
@@ -80,21 +88,23 @@ class DetailApplyAfterService extends Component {
                 styles.justiConCenter, 
                 styles.pd15, 
                 {backgroundColor : color.whiteColor}]}>
-                <View style={[styles.fx3, styles.alignItemsStart, styles.justiConCenter]}>
+                <View style={[, styles.alignItemsStart, styles.justiConCenter]}>
                   <Image 
-                    source={require("./img/license-depart01.png")} 
+                    source={require("./img/product/10_icon_white.png")} 
                     resizeMode="contain" 
                     style={{height : productImgSize, width : productImgSize}} 
                   />
                 </View>
-                <View style={[styles.justiConCenter, {flex:6}]}>
+                <View style={[styles.justiConCenter, {paddingLeft: 10}]}>
                   <H3 style={[styles.mb15, localStyles.topBoxTxt]}>세나정육점</H3>
                   <Text style={localStyles.topBoxDeTxt}>경기도 시흥시 산기대로</Text>
                   <Text style={localStyles.topBoxDeTxt}>한국산업기술대학교 305호</Text>
                 </View>
         
-                <View style={styles.fx1}>
-                  <Icon  name="arrow-round-forward"/>
+                <View style={[styles.fx1, styles.alignItemsEnd]}>
+                  <TouchableOpacity>
+                    <Image source={require("./img/Kakao_navi_Link_icon.png")} resizeMode="contain" style={{height : 27, width : 27}}/>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
@@ -141,8 +151,8 @@ class DetailApplyAfterService extends Component {
                   <View style={localStyles.prdPhotoWrap}>
                     { this.asImage() }
                     { this.asImage() }
-                    { this.asImage() }
-                    { this.asImage() }
+                    { this.asNoImage() }
+                    { this.asNoImage() }
                   </View>
                 </View>
               </View>
@@ -202,7 +212,8 @@ const localStyles = StyleSheet.create({
   boxDetailSubTitleTxt: {
     fontSize: 14,
     color: "#1e1e32",
-    paddingBottom: 10
+    paddingBottom: 10,
+    fontWeight: "bold"
   },
   boxDetailSubTxt: {
     fontSize: 13,
@@ -221,15 +232,31 @@ const localStyles = StyleSheet.create({
     height : asCardSize, 
     width : asCardSize
   },
-  prdPhotoBtnEn: {
-    height : 32,
-    width : 32,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)'
-  },
   prdPhotoBtnEnIcon: {
     textAlign: "center",
-    color: color.whiteColor
-  }
+    width: 32,
+    height: 32
+  },
+  photoNoBoxWrap: {
+    borderColor : "#c9cacb",
+    borderWidth : 1,
+    marginBottom : 10,
+    alignItems: "center",
+    justifyContent: "center",
+    height : asCardSize, 
+    width : asCardSize
+  },
+  photoNoBox: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: color.whiteColor
+  },
+  prdCardCameraIcon: {
+    color: color.defaultColor,
+    width: 36,
+    height: 36
+  },
 });
 
 export default DetailApplyAfterService;

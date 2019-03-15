@@ -74,6 +74,12 @@ import RegProductType from './RegProductType';
 import ClientIntroGuide from './ClientIntroGuide';
 import MatchingWait from './MatchingWait'
 import PartnerIntroGuide from './PartnerIntroGuide';
+import PartnerGuide1 from './PartnerGuide1';
+import PartnerGuide2 from './PartnerGuide2';
+import PartnerGuide1_1 from './PartnerGuide1_1';
+import PartnerGuide1_2 from './PartnerGuide1_2';
+import PartnerGuide2_1 from './PartnerGuide2_1';
+import PartnerGuide2_2 from './PartnerGuide2_2';
 
 import pageOne from './Page1'
 import pageTwo from './Page2'
@@ -217,13 +223,7 @@ const PAGE = () => (
             <Scene key="TermsContent1" hideNavBar component={TermsContent1}  type={ActionConst.RESET}/>
 
 
-
-
-
-
-            <Scene initial key="PartnerIntroGuide" hideNavBar component={PartnerIntroGuide} type={ActionConst.RESET}/>
-
-
+            <Scene key="PartnerIntroGuide" hideNavBar component={PartnerIntroGuide} type={ActionConst.RESET}/>
             <Scene key="BusinessRegistration1" hideNavBar component={BusinessRegistration1} type={ActionConst.RESET}/>
             <Scene key="BusinessRegistration2" hideNavBar component={BusinessRegistration2}  type={ActionConst.RESET}/>
             <Scene key="BusinessRegistration3" hideNavBar component={BusinessRegistration3} type={ActionConst.RESET}/>
@@ -232,29 +232,63 @@ const PAGE = () => (
             <Scene key="RegPassBook1" hideNavBar component={RegPassBook1} type={ActionConst.RESET}/>
             <Scene key="RegPassBook2" hideNavBar component={RegPassBook2} type={ActionConst.RESET}/>
             <Scene key="RegPassBook3" hideNavBar component={RegPassBook3} type={ActionConst.RESET}/>
-            <Scene key="PartnerMain" hideNavBar component={PartnerMain} type={ActionConst.RESET}/>
-            {/* 35번 화면 작업 예정 */}
-            {/* 36번 화면 작업 예정 */}
-            {/* 37번 화면 작업 예정 */}
-            {/* 38번 화면 작업 예정 */}
-            {/* 39번 화면 작업 예정 */}
-            {/* 40번 화면 작업 예정 */}
-            {/* 41번 화면 작업 예정 */}
-            {/* 42번 화면 작업 예정 */}
-            {/* 43번 화면 작업 예정 */}
-            {/* 44번 화면 작업 예정 */}
-            {/* 45번 화면 작업 예정 */}
-            {/* 46번 화면 작업 예정 */}
-            {/* 47번 화면 작업 예정 */}
-            {/* 48번 화면 작업 예정 */}
+            {/* <Scene key="PartnerMain" hideNavBar component={PartnerMain} type={ActionConst.RESET}/> */}
+            <Scene hideNavBar panHandlers={null}>
+            {/* Partner Main */}
+                <Tabs
+                    key="PartnerMain"
+                    routeName="PartnerMain"
+                    onTabOnPress={() => {
+                        console.log('Back to initial and also print this');
+                    }}
+                    swipeEnabled
+                    showLabel={false}
+                    activeBackgroundColor="#fff"
+                    inactiveBackgroundColor="#fff"
+                    tabBarPosition="bottom"
+                    tabStyle={{height: 56, borderTopWidth: 1, borderColor: "#ddd"}}
+                    >
+                    <Stack key="tab1" hideNavBar iconImg={require("./img/partner_footer_icon/tab1.png")} icon={TabIcon}
+                        tabBarOnPress={() => Actions.PartnerMain({type:ActionConst.RESET})}
+                        transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                        <Scene key="PartnerMain" component={PartnerMain}/>
+                    </Stack>
+
+                    <Stack key="tab2" hideNavBar iconImg={require("./img/partner_footer_icon/tab2.png")} icon={TabIcon} 
+                        tabBarOnPress={() => Actions.PartnerMain({type:ActionConst.RESET})}
+                        transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                        <Scene key="PartnerMain" component={PartnerMain}/>
+                    </Stack>
+
+                    <Stack key="tab3" hideNavBar iconImg={require("./img/partner_footer_icon/tab3.png")} icon={TabIcon} 
+                        tabBarOnPress={() => Actions.PartnerMain({type:ActionConst.RESET})}
+                        transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                        <Scene key="PartnerMain" component={PartnerMain}/>
+                    </Stack>
+
+                    <Stack key="tab4" hideNavBar iconImg={require("./img/partner_footer_icon/tab4.png")} icon={TabIcon} 
+                        tabBarOnPress={() => Actions.PartnerMain({type:ActionConst.RESET})}
+                        transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                        <Scene key="PartnerMain" component={PartnerMain}/>
+                    </Stack>
+                </Tabs>
+            </Scene>
+            <Scene key="PartnerGuide1" hideNavBar component={PartnerGuide1} type={ActionConst.RESET}/>
+            <Scene key="PartnerGuide2" hideNavBar component={PartnerGuide2} type={ActionConst.RESET}/>
+            <Scene key="PartnerGuide1_1" hideNavBar component={PartnerGuide1_1} type={ActionConst.RESET}/>
+            <Scene key="PartnerGuide1_2" hideNavBar component={PartnerGuide1_2} type={ActionConst.RESET}/>
+            <Scene key="PartnerGuide2_1" hideNavBar component={PartnerGuide2_1} type={ActionConst.RESET}/>
+            <Scene key="PartnerGuide2_2" hideNavBar component={PartnerGuide2_2} type={ActionConst.RESET}/>
             <Scene key="ListApplyAfterService" hideNavBar component={ListApplyAfterService} type={ActionConst.RESET}/>
             <Scene key="ListApplyAfterServiceEmpty" hideNavBar component={ListApplyAfterServiceEmpty} type={ActionConst.RESET}/>
             <Scene key="DetailApplyAfterService" hideNavBar component={DetailApplyAfterService}  type={ActionConst.RESET}/>
-            {/* 52번 화면 작업 예정 */}
+            <Scene key="RegReportStep1" hideNavBar component={RegReportStep1}  type={ActionConst.RESET}/>
             <Scene key="RegAddAs" hideNavBar component={RegAddAs}  type={ActionConst.RESET}/>
             <Scene key="ListNotCompReport" hideNavBar component={ListNotCompReport}  type={ActionConst.RESET}/>
-            <Scene key="ListNotCompReportEmpty" hideNavBar component={ListNotCompReportEmpty}  type={ActionConst.RESET}/>
-            <Scene key="RegReportStep1" hideNavBar component={RegReportStep1}  type={ActionConst.RESET}/>
+            <Scene initial key="ListNotCompReportEmpty" hideNavBar component={ListNotCompReportEmpty}  type={ActionConst.RESET}/>
+
+
+
             
             <Scene key="MyProfileCompany" hideNavBar component={MyProfileCompany}  type={ActionConst.RESET}/>
             <Scene key="MyCalcuList" hideNavBar component={MyCalcuList}  type={ActionConst.RESET}/>

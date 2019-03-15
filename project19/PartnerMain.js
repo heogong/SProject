@@ -94,7 +94,7 @@ class PartnerMain extends Component {
                 </View>
                 <View style={[styles.fx4, styles.justiConCenter]}>
                     <Image 
-                        source={require("./img/license-depart02.png")} 
+                        source={require("./img/product/04_icon_white.png")} 
                         resizeMode="contain" 
                         style={{height : 80, width : 80}} />
                 </View>
@@ -154,7 +154,6 @@ class PartnerMain extends Component {
                     </View>
                 </View>
              </View>
-              */}
              {/* ./매칭 알림일때 */}
 {/*              
             <View>
@@ -200,7 +199,7 @@ class PartnerMain extends Component {
                             styles.mb10,
                             styles.alignItemsCenter,
                             styles.justiConCenter]}>
-                        <Image source={require("./img/license-depart01.png")} 
+                        <Image source={require("./img/product/04_icon_white.png")}
                             style={[styles.mb10, {
                             height : 100, 
                             width : 100
@@ -234,16 +233,16 @@ class PartnerMain extends Component {
                         <View style={[styles.alignItemsCenter, styles.justiConEnd]}>
                             <Badge info style={{
                                 position : 'absolute', 
-                                right : 12, 
+                                right : 18, 
                                 top : -12, 
                                 zIndex : 1, 
-                                color : color.defaultColor, 
+                                backgroundColor: color.warningColor,
                                 elevation : 10
                             }}>
                                 <Text>2</Text>
                             </Badge>
                             <Image 
-                                source={require("./img/license-bg02.png")} 
+                                source={require("./img/Report_illust.png")} 
                                 resizeMode="contain" 
                                 style={[{height : 79, width : 56}]}
                             />
@@ -276,47 +275,6 @@ class PartnerMain extends Component {
                 </View>
             </View>
         </ScrollView>
-
-        <Footer style={{shadowOpacity: 0.3}}>
-            <FooterTab style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
-                <View style={styles.fx1}>
-                    <Button vertical active={this.state.tab1} onPress={() => this.setState({wait:true})}
-                        style={styles.noPadding}>
-                        <Image 
-                            source={require("./img/ico-camera.png")}
-                            style={{height : 30, width : 34}} />
-                        <Text style={styles.footTxt}>홈으로</Text>
-                    </Button>
-                </View>
-                <View style={styles.fx1}>
-                    <Button vertical active={this.state.tab2} onPress={() => this.setState({wait:false})}
-                        style={styles.noPadding}>
-                        <Image 
-                            source={require("./img/ico-camera.png")}
-                            style={{height : 30, width : 34}} />
-                        <Text style={styles.footTxt}>A/S 매칭</Text>
-                    </Button>
-                </View>
-                <View style={styles.fx1}>
-                    <Button vertical active={this.state.tab3} onPress={() => this.setState({wait:false})}
-                        style={styles.noPadding}>
-                        <Image 
-                            source={require("./img/ico-camera.png")}
-                            style={{height : 30, width : 34}} />
-                        <Text style={styles.footTxt}>보고서</Text>
-                    </Button>
-                </View>
-                <View style={styles.fx1}>
-                    <Button vertical active={this.state.tab4} onPress={() =>  alert("tab4")}
-                        style={styles.noPadding}>
-                        <Image 
-                            source={require("./img/ico-camera.png")}
-                            style={{height : 30, width : 34}} />
-                        <Text style={styles.footTxt}>더보기</Text>
-                    </Button>
-                </View>
-            </FooterTab>
-        </Footer>
 
         <Modal isVisible={this.state.isModalVisible}>
             <View style={[styles.modalWrap, {height: 128}]}>
