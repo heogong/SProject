@@ -117,6 +117,10 @@ class MyProfileCompany extends Component {
                 <Text style={localStyles.prdBtnOffTxt}>업소용냉장고</Text>
               </Button>
             </View>
+            <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mt13]}
+              onPress={this._toggleModal}>
+              <Text style={[styles.btnDefaultTxt, styles.btnDefaultNoFillTxt]}>수정완료</Text>
+            </Button>
 
             <Text style={[styles.inputNbTitleTxt, styles.mb12]}>출장 가능시간</Text>
             <View>
@@ -168,13 +172,11 @@ class MyProfileCompany extends Component {
                   <Text style={styles.greyFont}>공휴일</Text>
                 </View>
               </View>
+              <Button style={[styles.btnDefault, styles.btnDefaultNoFill, styles.mt13]}
+                onPress={this._toggleModal}>
+                <Text style={[styles.btnDefaultTxt, styles.btnDefaultNoFillTxt]}>수정완료</Text>
+              </Button>
             </View>
-          </View>
-
-          <View style={styles.footerBtnWrap}>
-            <Button style={[styles.btnDefault, styles.btnDefaultFill, styles.mb5]}>
-              <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>변경완료</Text>
-            </Button>
           </View>
         </View>
 
@@ -248,7 +250,7 @@ const localStyles = StyleSheet.create({
   },
   bottomTxtWrap: {
     alignItems: "center",
-    marginTop: 35,
+    marginTop: 17,
     marginBottom: 17
   },
   timeTxtWrap: {

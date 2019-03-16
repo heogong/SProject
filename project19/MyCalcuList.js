@@ -67,12 +67,12 @@ class MyCalcuList extends Component {
 
             <View style={[styles.line, {marginTop: 16, marginBottom: 16}]}></View>
 
-            <View style={{borderBottomColor: color.defaultColor, borderBottomWidth: 2, paddingBottom: 30}}>
-              <Text style={{color: "#1e1e32", fontSize: 16, fontWeight: "bold", marginBottom: 5}}>내 계좌번호</Text>
+            <View style={{borderBottomColor: color.defaultColor, borderBottomWidth: 2, paddingBottom: 20}}>
               <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                <Text style={{color: "#1e1e32", fontSize: 16, fontWeight: "bold", marginBottom: 5}}>정산 계좌정보</Text>
                 <Text style={{fontSize: 14, color: color.defaultColor, fontWeight: "bold"}}>카카오뱅크(정진씨)</Text>
-                <Text style={{fontSize: 13}}>000-0000-0000-0000-0000</Text>
               </View>
+              <Text style={{fontSize: 13, textAlign: "right"}}>000-0000-0000-0000-0000</Text>
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>

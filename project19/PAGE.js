@@ -37,8 +37,7 @@ import RegProduct from './RegProduct';
 import RegProductInfo from './RegProductInfo';
 import SuccessRegProduct from './SuccessRegProduct';
 import RegProductDetail from './RegProductDetail';
-import TakeProductImage from './TakeProductImage';
-import TakeProductGuide1 from './SelectSpecialty';
+import TakeProductImage from './TakeProductImage';;
 import TakeProductGuide2 from './TakeProductGuide2';
 import BusinessRegistration1 from './BusinessRegistration1';
 import BusinessRegistration2 from './BusinessRegistration2';
@@ -210,7 +209,47 @@ const PAGE = () => (
             <Scene key="RegProduct" hideNavBar component={RegProduct} type={ActionConst.RESET}/>
 
 
-            <Scene key="MoreMenu" hideNavBar component={MoreMenu}  type={ActionConst.RESET}/>
+            {/* <Scene key="MoreMenu" hideNavBar component={MoreMenu}  type={ActionConst.RESET}/> */}
+            <Scene hideNavBar panHandlers={null}>
+            {/* Client Main */}
+                <Tabs
+                    key="MoreMenu"
+                    routeName="MoreMenu"
+                    onTabOnPress={() => {
+                        console.log('Back to initial and also print this');
+                    }}
+                    swipeEnabled
+                    showLabel={false}
+                    activeBackgroundColor="#fff"
+                    inactiveBackgroundColor="#fff"
+                    tabBarPosition="bottom"
+                    tabStyle={{height: 56, borderTopWidth: 1, borderColor: "#ddd"}}
+                    >
+                    <Stack key="tab1" hideNavBar iconImg={require("./img/user_footer_icon/tab1.png")} icon={TabIcon}
+                        tabBarOnPress={() => Actions.MoreMenu({type:ActionConst.RESET})}
+                        transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                        <Scene key="MoreMenu" component={MoreMenu}/>
+                    </Stack>
+
+                    <Stack key="tab2" hideNavBar iconImg={require("./img/user_footer_icon/tab2.png")} icon={TabIcon} 
+                        tabBarOnPress={() => Actions.MoreMenu({type:ActionConst.RESET})}
+                        transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                        <Scene key="MoreMenu" component={MoreMenu}/>
+                    </Stack>
+
+                    <Stack key="tab3" hideNavBar iconImg={require("./img/user_footer_icon/tab3.png")} icon={TabIcon} 
+                        tabBarOnPress={() => Actions.MoreMenu({type:ActionConst.RESET})}
+                        transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                        <Scene key="MoreMenu" component={MoreMenu}/>
+                    </Stack>
+
+                    <Stack key="tab4" hideNavBar iconImg={require("./img/user_footer_icon/tab4.png")} icon={TabIcon} 
+                        tabBarOnPress={() => Actions.MoreMenu({type:ActionConst.RESET})}
+                        transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                        <Scene key="MoreMenu" component={MoreMenu}/>
+                    </Stack>
+                </Tabs>
+            </Scene>
             <Scene key="MyProfileInfo" hideNavBar component={MyProfileInfo}  type={ActionConst.RESET}/>
             <Scene key="MyProfileModPassword1" hideNavBar component={MyProfileModPassword1}  type={ActionConst.RESET}/>
             <Scene key="MyProfileModPassword2" hideNavBar component={MyProfileModPassword2}  type={ActionConst.RESET}/>
@@ -285,16 +324,15 @@ const PAGE = () => (
             <Scene key="RegReportStep1" hideNavBar component={RegReportStep1}  type={ActionConst.RESET}/>
             <Scene key="RegAddAs" hideNavBar component={RegAddAs}  type={ActionConst.RESET}/>
             <Scene key="ListNotCompReport" hideNavBar component={ListNotCompReport}  type={ActionConst.RESET}/>
-            <Scene initial key="ListNotCompReportEmpty" hideNavBar component={ListNotCompReportEmpty}  type={ActionConst.RESET}/>
+            <Scene key="ListNotCompReportEmpty" hideNavBar component={ListNotCompReportEmpty}  type={ActionConst.RESET}/>
+            <Scene key="MyProfileCompany" hideNavBar component={MyProfileCompany}  type={ActionConst.RESET}/>
+            <Scene key="MyCalcuList" hideNavBar component={MyCalcuList}  type={ActionConst.RESET}/>
+            <Scene key="HistoryAfterService" hideNavBar component={HistoryAfterService} type={ActionConst.RESET}/>
 
 
 
             
-            <Scene key="MyProfileCompany" hideNavBar component={MyProfileCompany}  type={ActionConst.RESET}/>
-            <Scene key="MyCalcuList" hideNavBar component={MyCalcuList}  type={ActionConst.RESET}/>
 
-            <Scene key="HistoryAfterService" hideNavBar component={HistoryAfterService} type={ActionConst.RESET}/>
-            <Scene key="TakeProductGuide1" hideNavBar component={TakeProductGuide1} type={ActionConst.RESET}/>
 
 
             <Scene key="pageOne" hideNavBar component={pageOne} title="pageOne" type={ActionConst.RESET}/>
