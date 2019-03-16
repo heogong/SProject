@@ -1,27 +1,33 @@
 import React, { Component } from 'react';
-import { Alert, Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { Container, H3, Icon, Text } from "native-base";
+import { Image, ImageBackground, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Container, Icon, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
-
 
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import ListCard from '~/FirstScreen/Functions/Card/ListCard';
 import DelCard from '~/FirstScreen/Functions/Card/DelCard';
 
+import CustomButton from '~/Common/Components/CustomButton';
 import CustomHeader from '~/Common/Components/CustomHeader';
-import { styles, viewportHeight, viewportWidth } from '~/Common/Styles/common';
-import { color } from '~/Common/Styles/colors';
+import CustomModal from '~/Common/Components/CustomModal';
+import { styles } from '~/Common/Styles/common';
+import { Actions } from 'react-native-router-flux';
 
-
-let CARD_ID;
+let SELECT_IDX = null;
 export default class ListCardInfo extends Component {
     constructor(props) {
         super(props);
     
         this.state = {
-            data : []
+            data : [],
+            isAlertModal : false, // alert 용
+            resultMsg : null // alert 용
         };
+    }
+
+    static defaultProps = {
+      morePage : false
     }
 
     componentDidMount() {
@@ -38,51 +44,46 @@ export default class ListCardInfo extends Component {
                   if(ResultBool) {
                     this.setState({data : resultData.data});
                   } else {
-                      alert(resultData.resultMsg);
+                    this.setState({
+                      isAlertModal : true,
+                      resultMsg : resultData.resultMsg
+                    })
+                    
                   }
               }
           });
       });
     }
 
-
-    // 카드 row 삭제
-    deleteRow(id, idx) {
-        CARD_ID = id;
-
-        Alert.alert(
-          '',
-          '삭제하시겠습니까?',
-          [
-            {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {
-              text: '네', onPress: () => (
-                  this.setState({ data: this.state.data.filter((s, sidx) => idx !== sidx)})
-                  //this._cardDelete()
-              )
-            },
-          ],
-          { cancelable: false }
-        )
-    }
-
     // 카드삭제 API
     _cardDelete = () => {
-        DelCard(CARD_ID).then(result => {
+      this.setState({isModalVisible : false});
+      
+      const { data } = this.state;
+
+        DelCard(data[SELECT_IDX].billingKeyId).then(result => {
           GetCommonData(result, this._cardDelete).then(async resultData => {
             if(resultData !== undefined) {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
               if(ResultBool) {
-                alert("삭제 완료");
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
+                // alert("삭제 완료");
 
-                ROW_MAP[`${SEC_ID}${ROW_ID}`].props.closeRow();
-                const newData = [...this.state.listViewData];
+                // ROW_MAP[`${SEC_ID}${ROW_ID}`].props.closeRow();
+                // const newData = [...this.state.listViewData];
 
-                newData.splice(ROW_ID, 1);
+                // newData.splice(ROW_ID, 1);
         
-                this.setState({ listViewData: newData });
+                // this.setState({ listViewData: newData });
+                this.setState({ data: this.state.data.filter((s, sidx) => SELECT_IDX !== sidx)})
               } else {
-                alert(resultData.resultMsg);
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
               }
             }
           });
@@ -107,114 +108,131 @@ export default class ListCardInfo extends Component {
 
     render() {
         return (
-          // <CustomBlockWrapper
-          //   title="카드 목록"
-          // >
-          //   <List
-          //       rightOpenValue={-75}
-          //       dataSource={this.ds.cloneWithRows(this.state.listViewData)}
-          //       renderRow={data =>
-          //           <CardList
-          //               title={ data.text }
-          //               setDefaultCard={ this._setDefaultCard }
-          //               defaultCard={ data.default }
-          //           />
-          //       }
-          //       renderRightHiddenRow={(data, secId, rowId, rowMap) =>
-          //       <Button full danger onPress={_ => this.deleteRow(data, secId, rowId, rowMap)}>
-          //           <Icon active name="trash" />
-          //       </Button>}
-          //   />
-          // </CustomBlockWrapper>
-
-          <Container style={styles.containerScroll}>
+          <Container style={styles.containerInnerPd}>
             <CustomHeader title="결제카드관리" />
 
-            <ScrollView>
-
-              { this.state.data.map((card, index) => 
-                <View 
-                  key={index}
-                  style={[styles.fx1, localStyles.regCardStyle, styles.mb20, styles.pd15]
-                }>
-                  <View style={[styles.fx1, styles.fxDirRow]}>
-                    <View style={styles.fx1}>
-                      <H3>{card.cardName}</H3>
+            <View style={[styles.contentWrap, styles.alignItemsCenter]}>
+              <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
+                <View style={{marginTop: 26}}>
+                  <View style={localStyles.regCardStyle}>
+                    <ImageBackground
+                      source={require("~/Common/Image/credit_card_layout2.png")} 
+                      resizeMode="contain"
+                      style={localStyles.newCardStyle}> 
+                      <TouchableOpacity 
+                        onPress={ () => Actions.CardInputInfo({
+                          morePage : true, 
+                          refreshCard : this._getListCard
+                        }
+                      )}> 
+                        <Image source={require('~/Common/Image/credit_card_regist.png')} style={localStyles.cardAddImg}/>
+                      </TouchableOpacity>
+                    </ImageBackground>
+                  </View>
+                  { this.state.data.map((card, index) => 
+                    <View key={index} style={localStyles.regCardStyle}>
+                      <ImageBackground
+                        source={require("~/Common/Image/credit_card_layout.png")} 
+                        resizeMode="contain"
+                        style={localStyles.newCardStyle}> 
+                        <View style={localStyles.cardTopWrap}>
+                          <Text style={localStyles.cardNameTxt}>{card.cardName}</Text>
+                          <TouchableOpacity style={localStyles.btnCloseIconWrap}
+                            onPress={ async () => {SELECT_IDX = await index, this.setState({isModalVisible : true}) }}
+                          >
+                            <Icon name="close" style={localStyles.btnCloseIcon}></Icon>
+                          </TouchableOpacity>
+                        </View>
+                        <View style={localStyles.cardBottomWrap}>
+                          <Text style={localStyles.cardNumTxt}>{card.cardNum}</Text>
+                        </View>
+                      </ImageBackground>
                     </View>
+                  )}
 
-
-                    {/* 여기부터!!! */}
-                    <TouchableOpacity onPress={ () => this.deleteRow(card.billingKeyId, index)}>
-                      <View style={[styles.fx1, styles.alignItemsEnd]}>
-                        <Icon name="close"></Icon>
-                      </View>
-                    </TouchableOpacity>
-
-
-                    
-                  </View>
-                  <View style={[styles.fx3, styles.justiConCenter]}>
-                    <Image source={require('~/Common/Image/join-end.png')} style={{height:iconSize, width : iconSize}}/>
-                  </View>
-                  <View style={[styles.fx1, styles.alignItemsEnd, styles.justiConEnd]}>
-                    <Text>{card.cardNum}</Text>
-                    <Text style={styles.greyFont}>COOLINIC</Text>
-                  </View>
-              </View>
-              )
-            }
-
-              <View style={[styles.fx1, localStyles.newCardStyle, styles.pd15]}>
-                <View style={styles.fx1}>
-                  <H3>카드등록</H3>
                 </View>
-                <View style={[styles.fx3, styles.alignItemsCenter]}>
-                  <Image source={require('~/Common/Image/join-end.png')} resizeMode='center'/>
-                </View>
-                <View style={[styles.fx1, styles.alignItemsEnd, styles.justiConEnd]}>
-                  <Text style={styles.greyFont}>COOLINIC</Text>
-                </View>
-              </View>
-              
-            
-          </ScrollView>
-  
+
+              </ScrollView>
+
+            </View>
+
+            <CustomModal
+                modalType="CONFIRM"
+                isVisible={this.state.isModalVisible}
+                onPress1={() => this.setState({isModalVisible : false})}
+                onPress2={this._cardDelete}
+                infoText1="등록된 결제카드를 삭제하겠어요?"
+                infoText2={null}
+                btnText1="취소"
+                btnText2="삭제"
+            />
+
+             {/* alert 메세지 모달 */}
+              <CustomModal
+                  modalType="ALERT"
+                  isVisible={this.state.isAlertModal}
+                  onPress={ () => this.setState({isAlertModal : false})}
+                  infoText={this.state.resultMsg}
+                  btnText="확인"
+              />
         </Container>
         );
     }
 }
 
-function wp (percentage, space) {
-  const value = (percentage * (viewportWidth - space)) / 100;
-  return Math.round(value);
-}
-
-const layoutCount = 3;
-const cardHeight = (viewportHeight / layoutCount) * 0.8;
-
-const iconSize = wp(14 ,60);
-
 const localStyles = StyleSheet.create({
   regCardStyle : {
-    height : cardHeight, 
-    width : '100%',
-    backgroundColor : color.defaultBackColor,
-    borderColor : color.defaultColor,
-    borderTopWidth : 2,
-    borderBottomWidth : 2,
-    borderLeftWidth : 2,
-    borderRightWidth : 2,
-    borderRadius : 5
+    height : 160, 
+    width : 298,
+    marginBottom: 20,
+    flex: 1
   },
   newCardStyle : {
-    height : cardHeight, 
-    width : '100%',
-    borderColor : color.greyColor,
-    borderTopWidth : 2,
-    borderBottomWidth : 2,
-    borderLeftWidth : 2,
-    borderRightWidth : 2,
-    borderRadius : 5
-  }
+    height : 160, 
+    width : 298,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1
+  },
+  cardTopWrap: {
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: 20
+  },
+  btnCloseIconWrap: {
+    flex: 1,
+    alignItems:'flex-end',
+    marginRight: 20
+  },
+  btnCloseIcon: {
+    width: 17,
+    height: "auto"
+  },
+  cardNameTxt: {
+    fontSize: 18,
+    color: "#626270",
+    fontWeight: "bold",
+    paddingLeft: 30
+  },
+  cardBottomWrap: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    width: "100%"
+  },
+  cardNumTxt: {
+    fontSize: 15,
+    color: "#626270",
+    marginBottom: 37,
+    marginRight: 20
+  },
+  cardAddWrap: {
+    flex: 3,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  cardAddImg: {
+    width: 56,
+    height: 56
+  },
 });
-

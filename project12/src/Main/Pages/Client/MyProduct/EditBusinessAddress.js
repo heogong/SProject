@@ -118,13 +118,16 @@ class SetAddress extends Component {
         await this.props.onSetBizAddress(this.state.addressObj);  // 리덕스 주소 오브젝트 SET
         await this.props.onSetBizAddressDsc(this.state.detailAddressName);  // 리덕스 상세주소 SET
 
+        console.log(this.props.value);
         EditBizPlace(this.props.value).then(async result => {
             GetCommonData(result, this._editBusiness).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
                         await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
-                        Actions.popTo("ViewBusinessPlace");
+
+                        //Actions.popTo("MyListBusinessPlace");
+                        Actions.ClientMain();
                     } else {
                         this.setState({
                             isAlertModal : true,

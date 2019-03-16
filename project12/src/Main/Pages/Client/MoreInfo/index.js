@@ -69,7 +69,7 @@ class MoreMenu extends Component {
             <View style={[localStyles.btnProfileModWrap]}>
 
               <CustomEtcButton 
-                onPress={ Actions.MyProfileInfo }
+                onPress={ Actions.ClientMyProfileInfo }
                 SmallBtn={true}
                 >
                     내정보 수정
@@ -80,25 +80,23 @@ class MoreMenu extends Component {
           <View style={localStyles.quickBtnWrap}>
               <TouchableOpacity 
                 style={[localStyles.quickBtnBox, {borderRightColor: color.defaultColor, borderRightWidth: 1}]}
-                onPress={ () => alert("사진조회")}>
-                <Image source={require("~/Common/Image/license-depart02.png")} style={{width: 60, height: 41}} resizeMode="contain" />
-                <Text style={localStyles.quickBtnTxt}>사업자정보 수정</Text>
+                onPress={ Actions.ClientMoreListBusiness }>
+                <Image source={require("~/Common/Image/company_icon.png")} style={localStyles.quickBtnImg} />
               </TouchableOpacity>
 
               <TouchableOpacity 
                 style={localStyles.quickBtnBox}
-                onPress={ Actions.MyCalcuList }>
-                <Image source={require("~/Common/Image/license-depart02.png")} style={{width: 60, height: 41}} resizeMode="contain" />
-                <Text style={localStyles.quickBtnTxt}>정산 예정금액</Text>
+                onPress={ () => Actions.CardListInfo({morePage : true}) }>
+                <Image source={require("~/Common/Image/card_manager_icon.png")} style={localStyles.quickBtnImg} />
               </TouchableOpacity>
           </View>
 
-          <TouchableOpacity onPress={ Actions.NoticeList }>
+          <TouchableOpacity onPress={ Actions.ClientNoticeList }>
             <View style={localStyles.listMenuWrap}>
               <Text style={localStyles.listMenuTxt}>공지사항</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={ Actions.TermsMenu } 
+          <TouchableOpacity onPress={ Actions.ClientTermsMenu } 
             style={{marginBottom: 14}}>
             <View style={localStyles.listMenuWrap}>
               <Text style={localStyles.listMenuTxt}>약관 및 정책</Text>
@@ -171,10 +169,9 @@ const localStyles = StyleSheet.create({
     justifyContent : "center",
     alignItems: "center"
   },
-  quickBtnTxt: {
-    fontSize: 13,
-    color: "#0b2024",
-    marginTop: 11
+  quickBtnImg: {
+    width: 94,
+    height: 74
   },
   listMenuWrap: {
     justifyContent: "center",

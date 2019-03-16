@@ -41,13 +41,14 @@ export default class InputCardInfo extends Component {
   }
 
   static defaultProps = {
-    regAsCard : false // as신청시 카드 등록 여부 
+    regAsCard : false, // as신청시 카드 등록 여부 
+    morePage : false // 더보기 페이지 접근 시
   }
   
   scanCard() {
     const config = {
       hideCardIOLogo : true,
-      scanInstructions : '와리가리!',
+      scanInstructions : '사각라인에 맞추어 카드를 스캔해주세요!',
       suppressConfirmation  : true
     }
     CardIOModule
@@ -72,13 +73,11 @@ export default class InputCardInfo extends Component {
           const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
           if(ResultBool) {
             if(this.props.regAsCard) {
-              // Actions.pop({ refresh: { data: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' }})
-              // Actions.pop({ refresh: { data: 'Data after pop', title: 'title after pop' }, key: 'AfterServiceApplyProductCheck' });
-              // Actions.popTo("AfterServiceApplyProductCheck");
-              //this.props.getListCard();
-              //Actions.pop();
               Actions.SuccessCardInfo();
-            } else{
+            } else if(this.props.morePage) { // 더보기 페이지에서 접근 시
+              this.props.refreshCard();
+              Actions.pop();
+            } else {
               Actions.ClientIndex(); // 사업장 제품 등록
             }
           } else {

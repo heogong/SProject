@@ -133,8 +133,6 @@ import AfterServiceApplyProductComplete from './src/Main/Pages/Client/AfterServi
 // import ViewBusinessProduct from './src/Main/Pages/Client/MyProduct/ViewBusinessProduct'
 
 // 메인 나의제품 : 사업장 목록 
-import ListBusinessPlace from './src/Main/Pages/Client/MyProduct/ListBusinessPlace'
-import ListBusinessShowCase from './src/Main/Pages/Client/MyProduct/ListBusinessShowCase'
 import RegBusinessAddress from './src/Main/Pages/Client/MyProduct/RegBusinessAddress'
 import EditBusinessAddress from './src/Main/Pages/Client/MyProduct/EditBusinessAddress'
 
@@ -154,10 +152,19 @@ import AfterServiceHistory from './src/Main/Pages/Client/AfterServiceState/ListA
 import ViewAfterServiceHistory from './src/Main/Pages/Client/AfterServiceState/ViewAfterServiceHistory'
 
 
-// 더보기
-import ClientMoreInfo from './src/Main/Pages/Client/MoreInfo'
-
-
+// 클라이언트 - 더보기
+import ClientMoreInfo from './src/Main/Pages/Client/MoreInfo';
+import ClientMoreListBusiness from './src/Main/Pages/Client/MoreInfo/ListBusinessPlace';
+import ClientMyProfileExit1 from './src/Main/Pages/Client/MoreInfo/MyProfileExit1';
+import ClientMyProfileExit2 from './src/Main/Pages/Client/MoreInfo/MyProfileExit2';
+import ClientMyProfileInfo from './src/Main/Pages/Client/MoreInfo/MyProfileInfo';
+import ClientMyProfileModName from './src/Main/Pages/Client/MoreInfo/MyProfileModName';
+import ClientMyProfileModPassword1 from './src/Main/Pages/Client/MoreInfo/MyProfileModPassword1';
+import ClientMyProfileModPassword2 from './src/Main/Pages/Client/MoreInfo/MyProfileModPassword2';
+import ClientMyProfileModPhone from './src/Main/Pages/Client/MoreInfo/MyProfileModPhone';
+import ClientNoticeList from './src/Main/Pages/Client/MoreInfo/NoticeList';
+import ClientTermsContent1 from './src/Main/Pages/Client/MoreInfo/TermsContent1';
+import ClientTermsMenu from './src/Main/Pages/Client/MoreInfo/TermsMenu';
 
 
 const PAGE = () => ( 
@@ -262,7 +269,6 @@ const PAGE = () => (
       <Scene key="ViewAfterServiceMatch"  component={ViewAfterServiceMatch} />
 
       {/* 파트너 - 더보기 */}
-      <Scene key="PartnerMoreInfo" component={PartnerMoreInfo} />
       <Scene key="MyProfileInfo" component={MyProfileInfo} />
       <Scene key="MyProfileModPassword1"  component={MyProfileModPassword1} />
       <Scene key="MyProfileModPassword2" component={MyProfileModPassword2} />
@@ -282,8 +288,20 @@ const PAGE = () => (
       <Scene key="ViewAfterServiceHistory" component={ViewAfterServiceHistory}/>
 
       {/* 클라이언트 더보기 - 나의 사업자정보  */}
-      <Scene key="MyListBusinessPlace" initial component={MyListBusinessPlace}/>
+      <Scene key="ClientMyProfileInfo" component={ClientMyProfileInfo} />
+      <Scene key="ClientMoreListBusiness" component={ClientMoreListBusiness} />
+      <Scene key="ClientMyProfileModPassword1"  component={ClientMyProfileModPassword1} />
+      <Scene key="ClientMyProfileModPassword2" component={ClientMyProfileModPassword2} />
+      <Scene key="ClientMyProfileModPhone" component={ClientMyProfileModPhone} />
+      <Scene key="ClientMyProfileModName" component={ClientMyProfileModName} />
+      <Scene key="ClientMyProfileExit1"  component={ClientMyProfileExit1} />
+      <Scene key="ClientMyProfileExit2" component={ClientMyProfileExit2} />
+      <Scene key="ClientNoticeList" component={ClientNoticeList} />
+      <Scene key="ClientTermsMenu" component={ClientTermsMenu} />
+      <Scene key="ClientTermsContent1" component={ClientTermsContent1} />
+
       {/* 클라이언트 나의제품 */}
+      <Scene key="MyListBusinessPlace" component={MyListBusinessPlace}/>
       <Scene key="MyListBusinessProductType" component={MyListBusinessProductType}/>
       <Scene key="MyListBusinessProduct" component={MyListBusinessProduct}/>
       <Scene key="MyEditProdShowCase" component={MyEditProdShowCase}/>
@@ -314,12 +332,12 @@ const PAGE = () => (
               console.log('Back to  and also print this');
             }}
             swipeEnabled
-            showLabel={true}
-            activeBackgroundColor="white"
-            inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
+            showLabel={false}
+            activeBackgroundColor="#fff"
+            inactiveBackgroundColor="#fff"
             tabBarPosition="bottom"
           >
-            <Stack key="ClientMain" hideNavBar title="클라이언트 Title" icon={TabIcon} 
+            <Stack key="ClientMain" hideNavBar iconImg={require("~/Common/Image/user_footer_icon/tab1.png")} icon={TabIcon} 
             tabBarOnPress={() => Actions.ClientHome({type:ActionConst.RESET})}
             transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ClientHome" component={ClientHome} />
@@ -331,12 +349,11 @@ const PAGE = () => (
             </Stack>
 
             {/* 나의제품 */}
-            <Stack key="clientMyProduct" hideNavBar title="나의제품" icon={TabIcon}
+            <Stack key="clientMyProduct" hideNavBar iconImg={require("~/Common/Image/user_footer_icon/tab2.png")} icon={TabIcon}
               tabBarOnPress={() => Actions.ListBusinessPlace({type:ActionConst.RESET}) }
               transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-              <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" />
+              {/* <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" /> */}
               {/* <Scene key="ListBusinessProductType" component={ListBusinessProductType} title="사업장 제품 타입 목록" /> */}
-              <Scene key="ListBusinessShowCase" component={ListBusinessShowCase} title="사업장 제품 목록" />
               {/* <Scene key="InputBusinessProdType" component={InputBusinessProdType} title="제품 타입 선택" /> */}
               
               {/*join 페이지 공통 사용*/}
@@ -348,7 +365,7 @@ const PAGE = () => (
               {/* <Scene key="EditBusinessAddress" component={EditBusinessAddress} title="사업장 주소 수정" /> */}
             </Stack>
 
-            <Stack key="AfterServiceState" hideNavBar title="A/S 현황" icon={TabIcon} 
+            <Stack key="AfterServiceState" hideNavBar iconImg={require("~/Common/Image/user_footer_icon/tab3.png")} icon={TabIcon} 
               tabBarOnPress={() => Actions.ClientAfterServiceState({type:ActionConst.RESET})}
               transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ClientAfterServiceState" component={ClientAfterServiceState}/>
@@ -357,7 +374,7 @@ const PAGE = () => (
               {/* <Scene key="ViewAfterServiceHistory" component={ViewAfterServiceHistory}/> */}
             </Stack>
 
-            <Stack key="ClientMore" hideNavBar title="더보기" icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+            <Stack key="ClientMore" hideNavBar iconImg={require("~/Common/Image/user_footer_icon/tab4.png")} icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ClientInfo_tab" component={ClientMoreInfo}/>
             </Stack>
           </Tabs>
@@ -372,19 +389,19 @@ const PAGE = () => (
                 console.log('Back to and also print this');
               }}
               swipeEnabled
-              showLabel={true}
+              showLabel={false}
               activeBackgroundColor="white"
               inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
               tabBarPosition="bottom"
             >
-              <Stack key="PartnerMain" hideNavBar title="파트너 Title" initial icon={TabIcon}
+              <Stack key="PartnerMain" hideNavBar iconImg={require("~/Common/Image/partner_footer_icon/tab1.png")} initial icon={TabIcon}
                 tabBarOnPress={() => Actions.PartnerHome({type:ActionConst.RESET})}
                 transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
                 <Scene key="PartnerHome" component={PartnerHome} title=""/>
               </Stack>
 
               {/* A/S 매칭 */}
-              <Stack key="PartnerAfterService" hideNavBar title="A/S 매칭" icon={TabIcon} 
+              <Stack key="PartnerAfterService" hideNavBar iconImg={require("~/Common/Image/partner_footer_icon/tab2.png")} icon={TabIcon} 
                 tabBarOnPress={() => Actions.PAfterServiceState({type:ActionConst.RESET})}
                 transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
                 <Scene key="PAfterServiceState" component={AfterServiceState} title="A/S 상태 체크"/>
@@ -394,11 +411,18 @@ const PAGE = () => (
                 <Scene key="RegAfterServiceAdd" component={RegAfterServiceAdd} title="추가 A/S"/>
               </Stack>
 
-              <Stack key="PartnerReport" hideNavBar title="보고서" icon={TabIcon}
+              <Stack key="PartnerReport" hideNavBar iconImg={require("~/Common/Image/partner_footer_icon/tab3.png")} icon={TabIcon}
                 tabBarOnPress={() => alert("개발중")}
                 transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
                 {/* <Scene key="ListInCompleteReport" component={ListInCompleteReport} title="미 완료 보고서 리스트"/> */}
                 <Scene key="AfterServiceReport" component={AfterServiceReport} title="A/S 보고서"/>
+              </Stack>
+
+              <Stack key="PartnerReport" hideNavBar iconImg={require("~/Common/Image/partner_footer_icon/tab4.png")} icon={TabIcon}
+                tabBarOnPress={() => Actions.PartnerMoreInfo()}
+                transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+                {/* <Scene key="ListInCompleteReport" component={ListInCompleteReport} title="미 완료 보고서 리스트"/> */}
+                  <Scene key="PartnerMoreInfo" component={PartnerMoreInfo} />
               </Stack>
             </Tabs>
         </Scene>

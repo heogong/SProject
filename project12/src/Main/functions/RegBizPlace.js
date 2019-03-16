@@ -106,7 +106,8 @@ const regBizPlace = async (bizObj) => {
     method: 'POST',
     headers: {
       //"Authorization": TEST_ACCESS_TOKEN
-      "Authorization": ACCESS_TOKEN
+      "Authorization": ACCESS_TOKEN,
+      "Content-Type": "multipart/form-data"
     },
     body: makeData(bizObj)
   }).then((response) => response.json()).then(async (responseJson) => {
