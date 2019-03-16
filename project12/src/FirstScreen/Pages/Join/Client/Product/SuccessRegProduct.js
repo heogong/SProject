@@ -1,20 +1,12 @@
 import React, { Component } from "react";
-import { ImageBackground, TouchableOpacity, View } from 'react-native'
-import { Container, H1, Button, Text } from "native-base";
-
-import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+import { Image, View } from 'react-native'
+import { Container, Text } from "native-base";
 
 import { Actions } from "react-native-router-flux";
-import ImagePicker from 'react-native-image-picker';
-
-import RegProdImg from '~/Main/Functions/RegProdImg';
-import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
 import { styles } from '~/Common/Styles/common';
-import { color } from '~/Common/Styles/colors';
-
 
 class SuccessRegProduct extends Component {
   constructor(props) {
@@ -27,7 +19,7 @@ class SuccessRegProduct extends Component {
   render() {
     return (
       <Container style={styles.containerInnerPd}>
-        <CustomHeader />
+        <CustomHeader resetPage={true} />
 
         <View style={styles.succContentWrap}>
           <View style={styles.succContentTop}>
@@ -55,14 +47,15 @@ class SuccessRegProduct extends Component {
                 메인화면으로
               </CustomButton>
 
-              <CustomButton>
+              <CustomButton
+                onPress={ () => alert("등록제품확인??")}
+              >
                 등록제품 확인하기
               </CustomButton>
             </View>
 
           </View>
         </View>
-
       </Container>
     );
   }

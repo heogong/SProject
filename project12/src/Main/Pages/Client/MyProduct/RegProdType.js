@@ -36,10 +36,15 @@ class InputProdType extends Component {
 
     // 제품 타입 선택
     _nextButton = (prodTypeId, prodTypeNm) => () => {
-        Actions.MyRegProdShowCase({
+        // Actions.MyRegProdShowCase({
+        //     prodTypeId : prodTypeId,
+        //     prodTypeNm : prodTypeNm
+        // });
+
+        Actions.InputShowCase({
             prodTypeId : prodTypeId,
             prodTypeNm : prodTypeNm
-        })
+        });
     }
 
     // 제품 타입 조회

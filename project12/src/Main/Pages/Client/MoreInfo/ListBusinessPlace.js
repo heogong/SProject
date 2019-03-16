@@ -96,8 +96,7 @@ class ListBusinessPlace extends Component {
                   <TouchableOpacity onPress={ () => {this._toggleModal(), SELECT_IDX=idx} } style={localStyles.closeIconWrap}>
                     <Image source={require('~/Common/Image/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
                   </TouchableOpacity>
-                ) : (
-                  <View style={[localStyles.closeIconWrap, localStyles.closeIconImg]}/>
+                ) : (<View style={[localStyles.closeIconWrap, localStyles.closeIconImg]}/>
                 )}
 
                 <View style={localStyles.prdImgWrap}>

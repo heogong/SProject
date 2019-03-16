@@ -92,7 +92,7 @@ class ListBusinessProductType extends Component {
                         {this.state.data.map((item, index) => (
                             <TouchableOpacity 
                                 key={index}
-                                onPress={ () => Actions.AfterServiceProdList({
+                                onPress={ () => Actions.MyListBusinessProduct({
                                     bizId : this.props.bizId,
                                     prodTypeId : item.prdTypeId
                                 }) }

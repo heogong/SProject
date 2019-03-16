@@ -105,7 +105,7 @@ class ProductShowCase extends Component {
                             placeholderTextColor={"#8e8e98"}
                         />
                     </Item>
-                    <Text style={localStyles.prdCardInfoTxt}>>제품의 간략한 설명을 입력하세요</Text>
+                    <Text style={localStyles.prdCardInfoTxt}>제품의 간략한 설명을 입력하세요</Text>
                     <Item regular style={localStyles.prdCardInputBox}>
                         <Input 
                             style={localStyles.prdCardDscInput}

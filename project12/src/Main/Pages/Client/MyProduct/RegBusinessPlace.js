@@ -74,9 +74,9 @@ class RegBusinessPlace extends Component {
                     if(ResultBool) {
                         this.setState({
                             bizNm : resultData.data.bplaceNm,
-                            bizDsc: resultData.data.bplaceDsc,
                             bizData : resultData.data
                         })
+                        this._chkBtn();
                     } else {
                         alert(result.resultMsg);
                     }
@@ -97,15 +97,24 @@ class RegBusinessPlace extends Component {
                     console.log(result);
                     if(ResultBool) {
                         await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
-                        //Actions.RegBusinessShowCase();
-
-                        
+                        Actions.EditBusinessAddress();
                     } else {
                         alert(result.resultMsg);
                     }
                 }
             });
         });
+    }
+
+    // 버튼 활성화 여부
+    _chkBtn = () => {
+        const { bizNm } = this.state;
+
+        if(bizNm.length > 0) {
+            this.setState({
+                btnDisabled : (bizNm.length > BIZ_NAME_LEN) ? false : true
+            })
+        }
     }
 
     render() {
@@ -126,6 +135,7 @@ class RegBusinessPlace extends Component {
                     <View style={[styles.fx3, styles.justiConCenter]}>
                         <Item regular style={styles.inputWhBackGreyBo}>
                             <Input 
+                                value={this.state.bizNm}
                                 onChangeText={ this._handleChkBusinessName }
                                 placeholder="상호명을 입력해주세요" 
                                 placeholderTextColor={color.inputPlaceHodler} 

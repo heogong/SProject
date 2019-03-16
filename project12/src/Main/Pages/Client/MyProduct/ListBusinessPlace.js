@@ -76,7 +76,7 @@ class ListBusinessPlace extends Component {
           <View style={styles.fx1}>
             <View style={styles.fxDirRow}>
               <View style={stylesReg.leftGuideTxtWrap}>
-                <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
+                <Text style={stylesReg.leftGuideTxt}>제품조회를위한</Text>
                 <Text style={stylesReg.leftGuideTxt}>사업장정보를</Text>
                 <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
               </View>
@@ -100,10 +100,30 @@ class ListBusinessPlace extends Component {
                 await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
                 Actions.MyListBusinessProductType({ 
                   bizId : business.clientBplaceId
-              }) } }>
-              <View 
-                style={localStyles.placeBoxWrap}>
-                <View style={[localStyles.closeIconWrap, localStyles.closeIconImg]}/>
+              }) } }
+              style={localStyles.placeBoxWrap}
+              >
+              <View>
+                {/* <TouchableOpacity 
+                  onPress={ async () => {
+                    await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
+                    Actions.MyRegBusinessPlace({editBiz : true}) 
+                  }} 
+                  style={localStyles.closeIconWrap}
+                >
+                    <Image source={require('~/Common/Image/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
+                </TouchableOpacity> */}
+                <CustomButton
+                      WhiteLineBtn={true}
+                      CustomBtnStyle={{width:100, height : 30}}
+                      CustomFontStyle={localStyles.infoTxt}
+                      onPress={ async () => {
+                        await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
+                        Actions.MyRegBusinessPlace({editBiz : true}) 
+                      }} 
+                    >
+                      수정하기
+                    </CustomButton>
                 <View style={localStyles.prdImgWrap}>
                   <Image source={require('~/Common/Image/product/01_icon_white.png')} style={localStyles.prdImg}/>
                 </View>

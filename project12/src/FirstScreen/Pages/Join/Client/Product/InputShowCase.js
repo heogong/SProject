@@ -86,8 +86,8 @@ class InputShowCase extends Component {
 
     // 제품 마스터 초기 등록 및 추가
     _regProductMst = () => {
-        RegProductMst(104, this.props.prodTypeId).then(result => {
-        // RegProductMst(this.props.value.bizId, this.props.prodTypeId).then(result => {
+        // RegProductMst(104, this.props.prodTypeId).then(result => {
+        RegProductMst(this.props.value.bizId, this.props.prodTypeId).then(result => {
             GetCommonData(result, this._regProductMst).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -176,7 +176,6 @@ class InputShowCase extends Component {
                         this.setState({ 
                             showCase: this.state.showCase.filter((s, sidx) => DEL_IDX !== sidx),
                             isModalVisible : false
-
                         })
                         CLIENT_PRD_ARRAY = CLIENT_PRD_ARRAY.filter((s, sidx) => DEL_IDX !== sidx)
                     } else {
@@ -207,7 +206,8 @@ class InputShowCase extends Component {
                 });
             });
         });
-        Actions.popTo("InputProdType");
+        //Actions.popTo("InputProdType");
+        Actions.pop();
     }
 
    // showCase 카드 추가
@@ -253,6 +253,14 @@ class InputShowCase extends Component {
         ON_PRESS_ACTION_TYPE = ACTION_TYPE.cancleAction;
     }
 
+     // 모달 '아니오' Action
+    _onPress1Action = () => {
+        if(ON_PRESS_ACTION_TYPE == ACTION_TYPE.regAction) {
+            Actions.SuccessRegProduct();
+        }
+        this.setState({isModalVisible : false})
+    }
+
     // 모달 '예' Action
     _onPress2Action = () => {
         if (ON_PRESS_ACTION_TYPE == ACTION_TYPE.delAction) {
@@ -260,7 +268,8 @@ class InputShowCase extends Component {
         } else if(ON_PRESS_ACTION_TYPE == ACTION_TYPE.cancleAction) {
             this._delArrayProductMst();
         } else {
-            Actions.popTo("InputProdType");
+            //Actions.popTo("InputProdType");
+            Actions.pop();
         }
     }
     
@@ -334,7 +343,7 @@ class InputShowCase extends Component {
                 <CustomModal
                     modalType="CONFIRM"
                     isVisible={this.state.isModalVisible}
-                    onPress1={() => this.setState({isModalVisible : false})}
+                    onPress1={this._onPress1Action}
                     onPress2={this._onPress2Action}
                     infoText1={INFO_TXT1}
                     infoText2={INFO_TXT2}

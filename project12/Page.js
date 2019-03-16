@@ -117,7 +117,7 @@ import InputProdType from './src/FirstScreen/Pages/Join/Client/Product/InputProd
 import InputShowCase from './src/FirstScreen/Pages/Join/Client/Product/InputShowCase' // 쇼케이스 등록
 import TakeProductImage from './src/FirstScreen/Pages/Join/Client/Product/TakeProductImage' // 보유제품 사진 촬영
 import TakeProductGuide1 from './src/FirstScreen/Pages/Join/Client/Product/TakeProductGuide1' // 보유제품 사진 촬영
-
+import SuccessRegProduct from './src/FirstScreen/Pages/Join/Client/Product/SuccessRegProduct' // 제품등록완료
 
 import InputProdInfo from './src/FirstScreen/Pages/Join/Client/Product/InputProdInfo' // 제품 등록 (?)
 import InputProdImage from './src/FirstScreen/Pages/Join/Client/Product/InputProdImage' // 제품 이미지 등록 (?)
@@ -134,17 +134,18 @@ import AfterServiceApplyProductComplete from './src/Main/Pages/Client/AfterServi
 
 // 메인 나의제품 : 사업장 목록 
 import ListBusinessPlace from './src/Main/Pages/Client/MyProduct/ListBusinessPlace'
-import ListBusinessProductType from './src/Main/Pages/Client/MyProduct/ListBusinessProductType'
 import ListBusinessShowCase from './src/Main/Pages/Client/MyProduct/ListBusinessShowCase'
-import RegBusinessShowCase from './src/Main/Pages/Client/MyProduct/RegBusinessShowCase'
 import RegBusinessAddress from './src/Main/Pages/Client/MyProduct/RegBusinessAddress'
 import EditBusinessAddress from './src/Main/Pages/Client/MyProduct/EditBusinessAddress'
 
 import MyListBusinessPlace from './src/Main/Pages/Client/MyProduct/ListBusinessPlace';
 import MyListBusinessProductType from './src/Main/Pages/Client/MyProduct/ListBusinessProductType';
+import MyListBusinessProduct from './src/Main/Pages/Client/MyProduct/ListBusinessProduct';
+import MyEditProdShowCase from './src/Main/Pages/Client/MyProduct/EditProdShowCase';
+
 import MyRegBusinessPlace from './src/Main/Pages/Client/MyProduct/RegBusinessPlace';
 import MyRegBusinessProdType from './src/Main/Pages/Client/MyProduct/RegProdType';
-import MyRegProdShowCase from './src/Main/Pages/Client/MyProduct/RegProdShowCase';
+
 
 // 메인 A/S 현황
 import ClientAfterServiceState from './src/Main/Pages/Client/AfterServiceState'
@@ -234,6 +235,7 @@ const PAGE = () => (
       <Scene key="InputShowCase" component={InputShowCase} /> 
       <Scene key="TakeProductImage"  component={TakeProductImage} />
       <Scene key="TakeProductGuide1" component={TakeProductGuide1} />
+      <Scene key="SuccessRegProduct" component={SuccessRegProduct} type={ActionConst.RESET}/>
 
 
       {/* 클라이언트 - AS 신청 제품 타입 */}
@@ -283,10 +285,11 @@ const PAGE = () => (
       <Scene key="MyListBusinessPlace" initial component={MyListBusinessPlace}/>
       {/* 클라이언트 나의제품 */}
       <Scene key="MyListBusinessProductType" component={MyListBusinessProductType}/>
+      <Scene key="MyListBusinessProduct" component={MyListBusinessProduct}/>
+      <Scene key="MyEditProdShowCase" component={MyEditProdShowCase}/>
       <Scene key="MyRegBusinessPlace" component={MyRegBusinessPlace}/>
       <Scene key="MyRegBusinessProdType" component={MyRegBusinessProdType}/>
-      <Scene key="MyRegProdShowCase" component={MyRegProdShowCase}/>
-      
+      <Scene key="EditBusinessAddress" component={EditBusinessAddress} />
       
       <Drawer
         hideNavBar
@@ -342,9 +345,7 @@ const PAGE = () => (
               <Scene key="SearchAddress" hideNavBar component={SearchAddress} title="주소 검색"/>
 
               <Scene key="SetAddress" component={RegBusinessAddress} title="사업장 주소 등록" />
-              <Scene key="EditBusinessAddress" component={EditBusinessAddress} title="사업장 주소 수정" />
-              
-              <Scene key="RegBusinessShowCase" component={RegBusinessShowCase} title="제품 쇼케이스 등록" />
+              {/* <Scene key="EditBusinessAddress" component={EditBusinessAddress} title="사업장 주소 수정" /> */}
             </Stack>
 
             <Stack key="AfterServiceState" hideNavBar title="A/S 현황" icon={TabIcon} 
