@@ -24,11 +24,17 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles, viewportHeight } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
 const USR_EMAIL_LEN = 10;
 const USR_PASSWD_LEN = 1;
+
+const ERROR_MSG = {
+  invaildIdOrPaswwd : 'invalid_grant',
+  emptyAccount :'unauthorized'
+}
 
 class AccountType extends Component {
   constructor(props) {
@@ -38,7 +44,9 @@ class AccountType extends Component {
       usrPw: '',
       btnDisabled: true,
       checkBox : false,
-      logImg : require('~/Common/Image/logo-partner.png')
+      logImg : require('~/Common/Image/logo-partner.png'),
+      isAlertModal : false, // alert 용
+      resultMsg : null // alert 용
     };
   }
 
@@ -73,12 +81,26 @@ class AccountType extends Component {
 
     Login(this.props.value, undefined).then(async result => {
       console.log(result);
-      const ResultBool = await (result.error) ? false : true; // API 결과 여부 확인
+      // const ResultBool = await (result.error == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+      let ResultBool = false;
 
-      // 로그인 성공
-      if(ResultBool) {
-        // 메인 페이지 이동
+      // switch(result.error) {
+      //   case ERROR_MSG.emptyAccount : return ResultBool = false;
+      //   case ERROR_MSG.invaildIdOrPaswwd : return ResultBool = false;
+      //   default : return ResultBool = true;
+      // }
 
+      if(result.error == ERROR_MSG.emptyAccount) {
+        this.setState({
+          isAlertModal : true,
+          resultMsg : "등록된 아이디가 없습니다."
+        })
+      } else if(result.error == ERROR_MSG.invaildIdOrPaswwd) {
+        this.setState({
+          isAlertModal : true,
+          resultMsg : "아이디 또는 비밀번호 올바르지 않습니다."
+        })
+      } else { // 로그인 성공
         this.props.onSetUsrId(this.state.usrId);  // 리덕스 사용자 ID SET 
         this.props.onSetUsrPw(this.state.usrPw);  // 리덕스 사용자 비밀번호 SET
 
@@ -89,18 +111,6 @@ class AccountType extends Component {
         await AsyncStorage.setItem('RefreshToken', result.refresh_token); // AsyncStorage 갱신 토큰 저장
 
         this._getUserInfo();
-
-      } else {
-        Alert.alert(
-          '',
-          `${result.resultMsg} - 회원가입 페이지로 이동하시겠습니까?`,
-          [
-            // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-            {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: '네', onPress: () => Actions.JoinCustomerType()},
-          ],
-          { cancelable: false }
-        )
       }
     });
   }
@@ -119,6 +129,11 @@ class AccountType extends Component {
                 } else { // 파트너 사용자
                   Actions.PartnerMain();
                 }
+              } else {
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
               }
           }
       });
@@ -227,7 +242,15 @@ class AccountType extends Component {
               </View>
           </View>
         </View>
-        </View>
+      </View>
+      {/* alert 메세지 모달 */}
+      <CustomModal
+        modalType="ALERT"
+        isVisible={this.state.isAlertModal}
+        onPress={ () => this.setState({isAlertModal : false})}
+        infoText={this.state.resultMsg}
+        btnText="확인"
+      />
       </Container>
     )
   }

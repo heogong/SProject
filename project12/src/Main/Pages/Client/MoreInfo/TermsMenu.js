@@ -24,7 +24,12 @@ class TermsMenu extends Component {
   render() {
     return (
       <Container style={styles.container}>
-        <CustomHeader title="약관 및 정책"/>
+        <View style={{
+          paddingLeft : styles.containerInnerPd.paddingLeft, 
+          paddingRight : styles.containerInnerPd.paddingRight}}
+        >
+          <CustomHeader title="약관 및 정책"/>
+        </View>
 
         <View style={[styles.fx1, { backgroundColor: color.defaultColor}]}>
           <View style={{marginTop: 16}}>

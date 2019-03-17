@@ -57,7 +57,7 @@ class MyProfileModName extends Component {
   _chkName = () => {
     // 이름 변경 api 호출
     if(true) {
-      Actions.popTo("PartnerMoreInfo");
+      Actions.popTo("ClientMyProfileInfo");
     } else {
       this.setState({
         isAlertModal : true,

@@ -72,6 +72,8 @@ class InputPhoneAuth extends Component {
               this.setState({btnDisabled : true});
             }
         });
+      } else {
+        this.setState({disabledNextBtn : true});
       }
       this.setState({resultMsg : result.resultMsg});
     });

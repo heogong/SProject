@@ -80,6 +80,7 @@ class SearchAddress extends Component {
           console.log(result.data);
           if(ResultBool) {
             this.setState({data : resultData.data.documents.filter(address => address.address_type !== "REGION")});
+           // this.setState({data : resultData.data.documents.filter(address => address !== null)});
           } else {
             alert(resultData.resultMsg);
           }

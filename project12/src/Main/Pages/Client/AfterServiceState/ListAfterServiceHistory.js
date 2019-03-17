@@ -59,11 +59,18 @@ class ListAfterServiceHistory extends Component {
 
         return starPointArray;
     }
+
+    // 메인페이지 이동 - 그냥 pop 하면 index페이지로 이동 함
+    _goToMain = () => {
+        Actions.ClientMain();
+    }
     
     render() {
         return (
             <Container style={styles.containerScroll}>
-                <CustomHeader />
+                <CustomHeader 
+                    customAction={this._goToMain}
+                />
                 
                     <View style={{marginBottom: 36}}>
                         <View style={styles.fxDirRow}>

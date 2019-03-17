@@ -15,6 +15,7 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomModal from '~/Common/Components/CustomModal';
+import CustomButton from '~/Common/Components/CustomButton';
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
@@ -182,7 +183,7 @@ class ClientHome extends Component {
             </View>
             <View style={localStyles.bottomBoxRightWrap}>
                 <View style={localStyles.rightStateCircle}>
-                    <Text style={localStyles.rightStateTxt}>A/S 신청</Text>
+                    <Text style={localStyles.rightStateTxt}>미등록</Text>
                 </View>
             </View>
         </View>
@@ -228,7 +229,8 @@ class ClientHome extends Component {
           { (this.state.asPrgsYn == 'Y') ? (
             this.maching()
           ) :(
-            <Swiper 
+            (this.state.data.length > 0) ? (
+              <Swiper 
                 style={localStyles.topBoxSwiperWrap}
                 paginationStyle={{
                     bottom: 10
@@ -269,8 +271,12 @@ class ClientHome extends Component {
                 </View>
               ))}
             </Swiper>
+
+            ) : (
+              this.unRegister()
+            )
           )}
-              {/* {this.unRegister()} */}
+             
               
               <View style={{backgroundColor : '#d6f1ff'}}>
                 <View style={[styles.boxShadowTopNo, localStyles.secondBox]}>

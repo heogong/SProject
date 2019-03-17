@@ -284,7 +284,7 @@ const PAGE = () => (
 
 
       {/* 클라이언트 A/S 내역 */}
-      <Scene key="AfterServiceHistory" component={AfterServiceHistory}/>
+      <Scene key="AfterServiceHistory" component={AfterServiceHistory} back onBack={() => Actions.popTo("ClientMain") }/>
       <Scene key="ViewAfterServiceHistory" component={ViewAfterServiceHistory}/>
 
       {/* 클라이언트 더보기 - 나의 사업자정보  */}
@@ -373,7 +373,8 @@ const PAGE = () => (
               {/* <Scene key="ViewAfterServiceHistory" component={ViewAfterServiceHistory}/> */}
             </Stack>
 
-            <Stack key="ClientMore" hideNavBar iconImg={require("~/Common/Image/user_footer_icon/tab4.png")} icon={TabIcon} transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+            <Stack key="ClientMore" hideNavBar iconImg={require("~/Common/Image/user_footer_icon/tab4.png")} icon={TabIcon} 
+              transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ClientInfo_tab" component={ClientMoreInfo}/>
             </Stack>
           </Tabs>
