@@ -21,6 +21,12 @@ export const styles = StyleSheet.create({
       paddingRight: 26,
       paddingBottom: 26
     },
+    containerInnerPdNoBottom: {
+      flex: 1,
+      backgroundColor: color.whiteColor,
+      paddingLeft: 26,
+      paddingRight: 26
+    },
     containerScroll: {
       flex: 1,
       backgroundColor: color.whiteColor,
@@ -374,7 +380,7 @@ export const styles = StyleSheet.create({
     rightStepNum: {
       fontSize: 72,
       color: color.defaultColor,
-      height: 76
+      height: 78
     },
     rightImgWrap: {
       flex: 1,
@@ -389,7 +395,7 @@ export const styles = StyleSheet.create({
     rightTxt: {
       fontSize: 48,
       color: color.defaultColor,
-      height: 50
+      height: 53
     },
     rightTxtSmall: {
       fontSize: 30,
@@ -423,7 +429,7 @@ export const styles = StyleSheet.create({
       paddingLeft: 0,
       paddingRight: 9,
       fontSize: 14,
-      height : 36
+      height : 38
     },
     inputDefaultBox: {
       paddingRight: 8,

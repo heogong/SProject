@@ -10,7 +10,7 @@ const defaultProps = {
   focused: false
 };
 
-const TabIcon = props => <Image source={props.iconImg} resizeMode="contain" style={{height: "90%"}}/>;
+const TabIcon = props => <Image source={props.iconImg} resizeMode="contain" style={{height: 45, marginBottom: 5}}/>;
 
 TabIcon.propTypes = propTypes;
 TabIcon.defaultProps = defaultProps;

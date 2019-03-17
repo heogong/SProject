@@ -85,7 +85,7 @@ class JoinName extends Component {
 
           <View style={[styles.fx3, styles.justiConCenter]}>
             <Item regular style={styles.inputWhBackGreyBo}>
-              <Input placeholder="이름" placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
+              <Input placeholder="이름을 입력해 주세요." placeholderTextColor={color.inputPlaceHodler} style={styles.inputDefaultBox}/>
             </Item>
           </View>
 

@@ -108,7 +108,7 @@ class HistoryAfterService extends Component {
           </View>
         </ScrollView>
 
-        <View style={[styles.footerBtnWrap, {paddingLeft: 26, paddingRight: 26, paddingBottom: 26}]}>
+        <View style={[styles.footerBtnWrap, {paddingLeft: 26, paddingRight: 26, paddingBottom: 26, paddingTop: 10}]}>
             <View style={styles.mb10}>
               <Text style={localStyles.bottomTxt}>입력하신 사항이 정확한가요?</Text>
               <Text style={localStyles.bottomTxt}>매칭이 시작되면 출장비가 결제되니 꼼꼼하게 살펴주세요.</Text>

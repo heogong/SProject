@@ -113,7 +113,9 @@ class PartnerMain extends Component {
             <Header style={[styles.headerM, styles.noPadding]}>
               <Left style={styles.headerLeftWrap}/>
               <Body style={styles.headerCenterWrap}>
-                <Title style={styles.headerTitleTxt}>쿨리닉</Title>
+                <View style={styles.headerTitleTxt}>
+                    <Image source={require("./img/Logo_main.png")} resizeMode="contain" style={styles.headerLogoImg} />
+                </View>
               </Body>
               <Right style={styles.headerRightWrap}/>
             </Header>

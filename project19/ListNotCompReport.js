@@ -93,7 +93,7 @@ class ListNotCompReport extends Component {
 
   render() {
     return (
-      <Container style={styles.containerInnerPd}>
+      <Container style={styles.containerInnerPdNoBottom}>
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>
             <Button style={styles.noPadding}  transparent onPress={() => this.props.navigation.goBack()}>

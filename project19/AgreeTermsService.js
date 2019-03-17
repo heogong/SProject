@@ -95,48 +95,44 @@ class AgreeTermsService extends Component {
           </View>
 
           <View style={localStyles.termsWrap}>
-            <View style={[styles.fx5, styles.alignItemsStart]}>
-              <Text style={[styles.blueFont, styles.mb20]}>서비스 이용약관 동의(필수)</Text>
-              <Text style={[styles.blueFont, styles.mb20]}>위치기반 서비스 이용약관 동의(필수)</Text>
-              <Text style={[styles.blueFont, styles.mb20]}>개인정보 수집 동의(필수)</Text>
-              <Text style={[styles.blueFont, styles.mb20]}>개인정보 제 3자 제공 동의서(필수)</Text>
-              <Text style={[styles.blueFont, styles.mb20]}>마케팅 전체 수신동의(선택)</Text>
-            </View>
-              
-            <View style={[styles.fx1, styles.fxDirRow]}>
-              <View style={[styles.fx1, styles.alignItemsEnd]}>
-                <View style={styles.mb20}>
-                  <CheckBox checked={this.state.checkbox}
-                    onPress={() => this.toggleSwitch()}
-                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                  />
-                </View>
-                <View style={styles.mb20}>
-                  <CheckBox checked={this.state.checkbox}
-                    onPress={() => this.toggleSwitch()}
-                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                  />
-                </View>
-                <View style={styles.mb20}>
-                  <CheckBox checked={this.state.checkbox}
-                    onPress={() => this.toggleSwitch()}
-                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                  />
-                </View>
-                <View style={styles.mb20}>
-                  <CheckBox checked={this.state.checkbox}
-                    onPress={() => this.toggleSwitch()}
-                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                  />
-                </View>
-                <View style={styles.mb20}>
-                  <CheckBox checked={this.state.checkbox}
-                    onPress={() => this.toggleSwitch()}
-                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                  />
-                </View>
+            <View style={styles.fx5}>
+              <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                <Text style={[styles.blueFont, styles.mb20]}>서비스 이용약관 동의(필수)</Text>
+                <CheckBox checked={this.state.checkbox}
+                  onPress={() => this.toggleSwitch()}
+                  style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                />
+              </View>
+              <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                <Text style={[styles.blueFont, styles.mb20]}>위치기반 서비스 이용약관 동의(필수)</Text>
+                <CheckBox checked={this.state.checkbox}
+                  onPress={() => this.toggleSwitch()}
+                  style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                />
+              </View>
+              <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                <Text style={[styles.blueFont, styles.mb20]}>개인정보 수집 동의(필수)</Text>
+                <CheckBox checked={this.state.checkbox}
+                  onPress={() => this.toggleSwitch()}
+                  style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                />
+              </View>
+              <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                <Text style={[styles.blueFont, styles.mb20]}>개인정보 제 3자 제공 동의서(필수)</Text>
+                <CheckBox checked={this.state.checkbox}
+                  onPress={() => this.toggleSwitch()}
+                  style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                />
+              </View>
+              <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                <Text style={[styles.blueFont, styles.mb20]}>마케팅 전체 수신동의(선택)</Text>
+                <CheckBox checked={this.state.checkbox}
+                  onPress={() => this.toggleSwitch()}
+                  style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                />
               </View>
             </View>
+
           </View>
 
           <View style={styles.footerBtnWrap}>

@@ -83,7 +83,7 @@ class ListNotCompReport extends Component {
         </Header>
 
         <View style={styles.contentWrap}>
-
+          <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
           <View style={{marginBottom: 30}}>
             
             <View style={styles.fxDirRow}>
@@ -120,7 +120,6 @@ class ListNotCompReport extends Component {
             
           </View>
 
-          <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
             <View>
 
               <View style={{backgroundColor : color.defaultColor, marginBottom: 32}}>
@@ -196,7 +195,7 @@ class ListNotCompReport extends Component {
 
               </View>
 
-              <View style={{marginTop: 32}}>
+              <View style={{marginTop: 32, marginBottom: 26}}>
                 <View style={[localStyles.boxTitleWrap, {justifyContent: "center", alignItems: "center"}]}>
                   <Text style={localStyles.boxTitleTxt}>A/S 조치 후</Text>
                   <View style={[styles.line, {flex: 2, borderColor: "#038dbd"}]}></View>

@@ -178,18 +178,18 @@ maching = () => (
         <Header style={[styles.headerM, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}/>
           <Body style={styles.headerCenterWrap}>
-            <Title style={styles.headerTitleTxt}>
+            <View style={styles.headerTitleTxt}>
                 <Image source={require("./img/Logo_main.png")} resizeMode="contain" style={styles.headerLogoImg} />
-            </Title>
+            </View>
           </Body>
           <Right style={styles.headerRightWrap}/>
         </Header>
 
         <ScrollView showsVerticalScrollIndicator={false}>
                 
-            {this.unRegister()}
+            {/* {this.unRegister()} */}
             {/* {this.maching()} */}
-            {/* {this.drawSwiper()} */}
+            {this.drawSwiper()}
 
             <View style={{backgroundColor : '#d6f1ff'}}>
                 <View style={[styles.boxShadowTopNo, localStyles.secondBox]}>
@@ -268,7 +268,7 @@ const localStyles = StyleSheet.create({
         height: 290,
         paddingLeft: 27,
         paddingRight: 27,
-        paddingTop: 40
+        paddingTop: 27
     },
     topBoxNameTxt: {
         marginBottom: 16,

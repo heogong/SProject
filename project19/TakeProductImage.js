@@ -99,6 +99,7 @@ const localStyles = StyleSheet.create({
   },
   photoGuideImg: {
     width: "80%",
+    height: "80%"
   }
 });
 

@@ -231,7 +231,8 @@ const cameraSize = (39 * itemWidth) / 100;
 const localStyles = StyleSheet.create({
   prdCardWrap: {
     padding: 17,
-    backgroundColor : "#7be6fd"
+    backgroundColor : "#7be6fd",
+    marginBottom: 26
   },
   prdCardTopWrap: {
     marginBottom: 10,
@@ -264,12 +265,12 @@ const localStyles = StyleSheet.create({
   prdCardNameInput: {
     fontSize : 14,
     textAlign: "center",
-    height : 32
+    height : 38
   },
   prdCardDscInput: {
     fontSize : 13,
     textAlign: "center",
-    height : 32
+    height : 36
   },
   prdCardPhotoWrap: {
     flex: 1,

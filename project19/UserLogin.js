@@ -79,14 +79,18 @@ class UserLogin extends Component {
               </Item>
 
 
-              <View style={[styles.justiConBetween, styles.fxDirRow, styles.mb20]}> 
+              {/*                 
+              <View style={[styles.justiConBetween, styles.fxDirRow, styles.mb20]}>
+                
                 <View style={styles.fxDirRow}>
                   <CheckBox checked={this.state.checkbox}
                     onPress={() => this.toggleSwitch()}
                     style={[styles.checkboxReset]}
                   />
                   <Text style={localStyles.inputBottomTxt}>자동로그인</Text>
-                </View>
+                </View> 
+                */}
+              <View style={[styles.alignItemsEnd, styles.mb20]}>
                 <View>
                   <TouchableOpacity onPress={ () => alert("아이디와 비밀번호를 잊으셨나요?")}>
                     <Text style={[localStyles.inputBottomTxt, {textDecorationLine: 'underline'}]}>아이디와 비밀번호를 잊으셨나요?</Text>

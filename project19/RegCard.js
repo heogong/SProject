@@ -117,15 +117,16 @@ class RegCard extends Component {
             </View>
 
             <View style={localStyles.termsWrap}>
+{/*             
               <View style={[styles.alignItemsStart, styles.fx3]}>
                 <Text style={[localStyles.inputBottomTxt, styles.mb10]}>전자금융거래 이용약관</Text>
                 <Text style={[localStyles.inputBottomTxt, styles.mb10]}>개인정보 수집 및 이용안내</Text>
                 <Text style={[localStyles.inputBottomTxt, styles.mb10]}>전자금융거래 이용약관</Text>
                 <Text style={[localStyles.inputBottomTxt, styles.mb10]}>개인정보 수집 및 이용안내</Text>
               </View>
-              
-              <View style={[styles.fxDirRow, styles.fx1]}>
-                <View style={[styles.alignItemsEnd]}>
+               */}
+              <View style={styles.fx5}>
+                <View style={styles.alignItemsEnd}>
                   <View style={[styles.fxDirRow, styles.mb10]}>
                     <CheckBox checked={this.state.checkbox}
                       onPress={() => this.toggleSwitch()}
@@ -133,20 +134,9 @@ class RegCard extends Component {
                     />
                     <Text style={localStyles.inputBottomTxt}>전체동의</Text>
                   </View>
-                  <View style={[styles.fxDirRow, styles.mb10]}>
-                    <CheckBox checked={this.state.checkbox}
-                      onPress={() => this.toggleSwitch()}
-                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                    />
-                    <Text style={localStyles.inputBottomTxt}>동의</Text>
-                  </View>
-                  <View style={[styles.fxDirRow, styles.mb10]}>
-                    <CheckBox checked={this.state.checkbox}
-                      onPress={() => this.toggleSwitch()}
-                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                    />
-                    <Text style={localStyles.inputBottomTxt}>동의</Text>
-                  </View>
+                </View>
+                <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                  <Text style={[localStyles.inputBottomTxt, styles.mb10]}>전자금융거래 이용약관</Text>
                   <View style={[styles.fxDirRow, styles.mb10]}>
                     <CheckBox checked={this.state.checkbox}
                       onPress={() => this.toggleSwitch()}
@@ -155,8 +145,37 @@ class RegCard extends Component {
                     <Text style={localStyles.inputBottomTxt}>동의</Text>
                   </View>
                 </View>
+                <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                  <Text style={[localStyles.inputBottomTxt, styles.mb10]}>개인정보 수집 및 이용안내</Text>
+                  <View style={[styles.fxDirRow, styles.mb10]}>
+                    <CheckBox checked={this.state.checkbox}
+                      onPress={() => this.toggleSwitch()}
+                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                    />
+                    <Text style={localStyles.inputBottomTxt}>동의</Text>
+                  </View>
+                </View>
+                  <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                  <Text style={[localStyles.inputBottomTxt, styles.mb10]}>전자금융거래 이용약관</Text>
+                  <View style={[styles.fxDirRow, styles.mb10]}>
+                    <CheckBox checked={this.state.checkbox}
+                      onPress={() => this.toggleSwitch()}
+                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                    />
+                    <Text style={localStyles.inputBottomTxt}>동의</Text>
+                  </View>
+                </View>
+                  <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                  <Text style={[localStyles.inputBottomTxt, styles.mb10]}>개인정보 수집 및 이용안내</Text>
+                  <View style={[styles.fxDirRow, styles.mb10]}>
+                    <CheckBox checked={this.state.checkbox}
+                      onPress={() => this.toggleSwitch()}
+                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                    />
+                    <Text style={localStyles.inputBottomTxt}>동의</Text>
+                  </View>
+                  </View>
               </View>
-
             </View>
           </View>
 
