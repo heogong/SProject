@@ -12,9 +12,9 @@ import ListCard from '~/FirstScreen/Functions/Card/ListCard';
 import RegAfterService from '~/Main/Functions/RegAfterService';
 import PaymentAfterService from '~/Main/Functions/PaymentAfterService';
 
-
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
@@ -31,6 +31,9 @@ class ApplyCheckAfterService extends Component {
                 bplaceNm : null,
                 addr : {
                     addressName : null
+                },
+                detail : {
+                    detailAddr1 : null
                 }
             },
             prdTypeImg : {
@@ -39,6 +42,9 @@ class ApplyCheckAfterService extends Component {
             images : [] // 제품 이미지 데이터
         }, // 제품 데이터
         asRecvDsc : null,
+        isAlertModal : false, // alert 용
+        resultMsg : null, // alert 용
+        isModalVisible : false
       };
     }
 
@@ -59,7 +65,10 @@ class ApplyCheckAfterService extends Component {
                             data: resultData.data,
                         });
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -68,6 +77,7 @@ class ApplyCheckAfterService extends Component {
 
     // AS 신청 API 호출
     _regAfterService = () => {
+        this.setState({isModalVisible : false})
 
         RegAfterService(
             this.props.clientPrdId,
@@ -84,7 +94,10 @@ class ApplyCheckAfterService extends Component {
                         // 신청 내역 확인 페이지 이동
                         this._paymentAfterService(resultData.data.asRecvId);
                     } else {
-                        alert("AS 신청 API 호출 - "+resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -103,105 +116,18 @@ class ApplyCheckAfterService extends Component {
                             asRecvId : asRecvId
                         })
                     } else {
-                        alert("AS 결제 요청 - " +resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
         })
     }
 
-    // 입력완료 확인
-    _matchConfirm = () => {
-        Alert.alert(
-            '',
-            '입력하신 사항이 정확한가요?\n확정하신경우 출장비 결제',
-            [
-                {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {
-                    text: '네', onPress: () => (
-                        this._regAfterService()
-                    ) 
-                },
-            ],
-            { cancelable: false }
-        )
-    }
-
     render() {
         return (
-            // <Root>
-            //     <CustomBlockWrapper
-            //         title="A/S 신청내역 확인"
-            //     >
-            //         <View>
-            //             <Text>사업장 : {this.state.data.bplace.bplaceNm}</Text>
-            //             <Text>주소 : {this.state.data.bplace.addr.addressName}</Text>
-            //         </View>
-
-            //         <ProductShowCase
-            //             defaultImg={ this.state.data.prdTypeImg.fileUrl }
-            //             data={ this.state.data.images }
-            //             clientPrdId={ this.state.data.clientPrdId }
-            //             clientPrdNm={ this.state.data.clientPrdNm } 
-            //             index={ 0 }
-            //             copyBtn={ false }
-            //             viewProduct={ true }
-            //         />
-
-            //         <Item regular>
-            //             <Input
-            //                 value={ this.props.asItemNm }
-            //                 disabled
-            //             />
-            //         </Item>
-
-            //         <Textarea 
-            //             value={ this.props.asRecvDsc }
-            //             rowSpan={2} 
-            //             bordered 
-            //             disabled
-            //         />
-
-            //         <CustomButton
-            //             styleWidth={ false }
-            //             block={ true }
-            //             info={ true }
-            //             bordered={ true }
-            //             onPress={() =>
-            //                 ActionSheet.show(
-            //                     {
-            //                         options: this.state.cardData,
-            //                         cancelButtonIndex: this.state.cardData.length - 1,
-            //                         title: "결제카드"
-            //                     },
-            //                     buttonIndex => {
-            //                         this.setState({ buttonTitle: this.state.cardData[buttonIndex].text });
-            //                         //this.setState({ selectIndex : buttonIndex });
-            //                         SELECT_INDEX = buttonIndex;
-                                    
-            //                         if(this.state.cardData[buttonIndex].billingKeyId > 0) {
-            //                             this._paymentAfterService();
-            //                         } else if(this.state.cardData[buttonIndex].billingKeyId == -1) {
-            //                             Actions.CardInputInfo({regAsCard : true, getListCard: this._getListCard});
-            //                         }
-            //                     })
-            //             }>
-            //             <Text>
-            //                 예
-            //             </Text>
-            //         </CustomButton>
-            //         <CustomButton
-            //             styleWidth={ false }
-            //             block={ true }
-            //             info={ true }
-            //             bordered={ true }
-            //             onPress={Actions.pop}>
-            //             <Text>
-            //                 아니오
-            //             </Text>
-            //         </CustomButton>
-            //     </CustomBlockWrapper>
-            // </Root>
             <Container style={styles.containerInnerPd}>
                 <CustomHeader title="A/S신청내역"/>
 
@@ -219,7 +145,7 @@ class ApplyCheckAfterService extends Component {
                                         <H2 style={{color : color.defaultColor}}>{this.state.data.bplace.bplaceNm}</H2>
                                         <Text>{this.state.data.clientPrdNm}</Text>
                                         <Text style={styles.greyFont}>{this.state.data.bplace.addr.addressName}</Text>
-                                        <Text style={styles.greyFont}>bbbbbbbbbbb</Text>
+                                        <Text style={styles.greyFont}>{this.state.data.bplace.detail.detailAddr1}</Text>
                                     </View>
                                 </View>
                             </CardItem>
@@ -252,7 +178,7 @@ class ApplyCheckAfterService extends Component {
                             <Text style={styles.greyFont}>매칭이 시작되면 출장비가 결제되니 꼼꼼하게 살펴주세요</Text>
                         </View>
                         <CustomButton 
-                            onPress={this._matchConfirm}
+                            onPress={ ()=> this.setState({isModalVisible : true}) }
                             disabled={this.state.disabledBtn}
                             edgeFill={true}
                             fillTxt={true}
@@ -261,6 +187,26 @@ class ApplyCheckAfterService extends Component {
                         </CustomButton>
                     </View>
                 </View>
+
+                <CustomModal
+                    modalType="CONFIRM"
+                    isVisible={this.state.isModalVisible}
+                    onPress1={ () => this.setState({isModalVisible : false}) }
+                    onPress2={this._regAfterService}
+                    infoText1="입력하신 사항이 정확한가요?"
+                    infoText2="확정하신경우 출장비가 결제됩니다."
+                    btnText1="취소"
+                    btnText2="확인"
+                />
+                
+                 {/* alert 메세지 모달 */}
+                <CustomModal
+                    modalType="ALERT"
+                    isVisible={this.state.isAlertModal}
+                    onPress={ () => this.setState({isAlertModal : false})}
+                    infoText={this.state.resultMsg}
+                    btnText="확인"
+                />
 
             </Container>
         )

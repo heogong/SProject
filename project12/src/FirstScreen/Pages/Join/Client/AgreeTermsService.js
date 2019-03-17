@@ -22,6 +22,7 @@ class AgreeTermsService extends Component {
       check2 : false,
       check3 : false,
       check4 : false,
+      check5 : false,
       disableBtn : true
     };
     
@@ -40,9 +41,9 @@ class AgreeTermsService extends Component {
 
   // 확인 버튼 유효성 체크
   _chkNextBtn = () => {
-    const { check1, check2, check3 } = this.state;
+    const { check1, check2, check3, check4 } = this.state;
 
-    if(check1 && check2 && check3) {
+    if(check1 && check2 && check3 && check4) {
       this.setState({disableBtn : false })
     } else {
       this.setState({disableBtn : true })
@@ -127,7 +128,13 @@ class AgreeTermsService extends Component {
                 </View>
                 <View style={[styles.fxDirRow, styles.fx1]}>
                   <CheckBox checked={this.state.check4}
-                    onPress={() => this.setState({check4 : !this.state.check4}) }
+                    onPress={async () => {await this.setState({check4 : !this.state.check4}), this._chkNextBtn()} }
+                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                  />
+                </View>
+                <View style={[styles.fxDirRow, styles.fx1]}>
+                  <CheckBox checked={this.state.check5}
+                    onPress={() => this.setState({check5 : !this.state.check5}) }
                     style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                   />
                 </View>

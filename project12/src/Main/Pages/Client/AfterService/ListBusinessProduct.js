@@ -85,7 +85,7 @@ class ListBusinessProductType extends Component {
                             
                                         <View style={localStyles.myPrdInfoTxtWrap}>
                                             <Text style={localStyles.myPrdNameTxt}>{product.clientPrdNm}</Text>
-                                            <Text style={localStyles.myPrdDscTxt}>짧은 설명에 대해 짧은 설명에 대해 짧은 설명에 대해</Text>
+                                            <Text style={localStyles.myPrdDscTxt}>{product.clientPrdDsc}</Text>
                                         </View>
                                     </View>
                                 </TouchableOpacity>

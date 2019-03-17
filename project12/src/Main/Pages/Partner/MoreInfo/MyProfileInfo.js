@@ -14,8 +14,6 @@ import CustomButton from "~/Common/Components/CustomButton";
 import CustomEtcButton from "~/Common/Components/CustomEtcButton";
 import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
-import { stylesReg } from '~/Common/Styles/stylesReg';
-import { color } from "~/Common/Styles/colors";
 
 class MyProfileInfo extends Component {
   constructor(props) {

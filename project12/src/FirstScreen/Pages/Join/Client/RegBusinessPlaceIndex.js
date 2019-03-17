@@ -50,7 +50,7 @@ class RegBusinessPlaceIndex extends Component {
             <View style={localStyles.placeBoxWrap}>
               <View style={localStyles.btnPlusWrap}>
                 <TouchableOpacity onPress={Actions.RegBusinessPlace} onPress={Actions.RegBusinessPlace}>
-                  <Image source={require('~/Common/Image/ico-naver.png')} style={localStyles.btnPlus}/>
+                  <Image source={require('~/Common/Image/campany_add_icon.png')} style={localStyles.btnPlus}/>
                 </TouchableOpacity>
               </View>
               <View style={localStyles.txtWrap}>

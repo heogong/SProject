@@ -53,6 +53,9 @@ class ClientHome extends Component {
           detail : {
             detailAddr1 : null
           }
+        }, 
+        prdTypeImg : {
+          fileUrl : null
         }
       },
       asPrgsYn : 'N', // AS 여부
@@ -134,7 +137,7 @@ class ClientHome extends Component {
                     asPrgsStatCd : resultData.data.asPrgsMst.asPrgsStatCd,
                     asPrgsStatNm : resultData.data.asPrgsMst.asPrgsStatNm,
                     asPrgsStatDSC : resultData.data.asPrgsMst.asPrgsStatDSC,
-                    clientPrdInfo : resultData.data.clientPrdInfo
+                    clientPrdInfo : resultData.data.clinePrdInfo
                   });
                 } else {
                   this.props.onSetIsAfterService(false);
@@ -189,17 +192,17 @@ class ClientHome extends Component {
   maching = () => (
     <View style={localStyles.topBoxWrap}>
         <View style={styles.mb5}>
-            <Text style={localStyles.topBoxNameTxt}>박형정육점</Text>
-            <Text style={localStyles.topBoxtAddrTxt}>서울시 동작구 대방동</Text>
-            <Text style={localStyles.topBoxtAddrTxt}>392-45 넥서스힐</Text>
+            <Text style={localStyles.topBoxNameTxt}>{this.state.clientPrdInfo.bplace.bplaceNm}</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>{this.state.clientPrdInfo.bplace.addr.addressName}</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>{this.state.clientPrdInfo.bplace.detail.detailAddr1}</Text>
         </View>
 
         <View style={localStyles.bottomBoxWrap}>
 
             <View style={localStyles.bottomBoxLeftWrap}>
-                <Text style={localStyles.prdNameTxt}>[ 야채보관냉장고123 ]</Text>
-                <Image 
-                  source={require("~/Common/Image/product/01_icon_white.png")} 
+                <Text style={localStyles.prdNameTxt}>[{this.state.clientPrdInfo.clientPrdNm}]</Text>
+                <Image
+                  source={{uri : this.state.clientPrdInfo.prdTypeImg.fileUrl}} 
                   style={[localStyles.leftImg, {alignSelf: "center", height: 90, width: 90}]}  
                 />
             </View>

@@ -72,13 +72,14 @@ export default class InputCardInfo extends Component {
           console.log(resultData);
           const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
           if(ResultBool) {
-            if(this.props.regAsCard) {
-              Actions.SuccessCardInfo();
+            if(this.props.regAsCard) { // A/S 신청 페이지에서 접근 시
+              this.props.getListCard();
+              Actions.pop();
             } else if(this.props.morePage) { // 더보기 페이지에서 접근 시
               this.props.refreshCard();
               Actions.pop();
             } else {
-              Actions.ClientIndex(); // 사업장 제품 등록
+              Actions.SuccessCardInfo();
             }
           } else {
             this.setState({

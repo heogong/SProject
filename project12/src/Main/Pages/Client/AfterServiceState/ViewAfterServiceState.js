@@ -90,19 +90,19 @@ class ViewAfterServiceState extends Component {
   _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
 
   componentDidMount () {
-    // this._getClientAfterServiceState();
+    this._getClientAfterServiceState();
 
-    // // AS 신청 여부 확인
-    // if(this.props.afterService.isAfterService) {
-    //   console.log("인터벌 확인")
+    // AS 신청 여부 확인
+    if(this.props.afterService.isAfterService) {
+      console.log("인터벌 확인")
 
-    //   // A/S 상태 갱신
-    //   const INTERVAL_ID = setInterval(() => {
-    //     this._getClientAfterServiceState();
-    //   }, 60000);
+      // A/S 상태 갱신
+      const INTERVAL_ID = setInterval(() => {
+        this._getClientAfterServiceState();
+      }, 60000);
 
-    //   this.props.onSetIntervalId(INTERVAL_ID);
-    // }
+      this.props.onSetIntervalId(INTERVAL_ID);
+    }
   }
 
   // 맵 이동 후 좌표 값
@@ -178,15 +178,15 @@ class ViewAfterServiceState extends Component {
 
   // 평가 여부
   _checkGrade = () => {
-    this._toggleModal();
-    // if(this.state.data.asPrgsMst.asPrgsStatCd == COMPLETE_AS.VALUE) {
-    //   this._toggleModal();
-    // } else {
-    //   this.setState({
-    //     isAlertModal : true,
-    //     resultMsg : "A/S완료 후 평가 하실 수 있습니다."
-    //   })
-    // }
+    // this._toggleModal();
+    if(this.state.data.asPrgsMst.asPrgsStatCd == COMPLETE_AS.VALUE) {
+      this._toggleModal();
+    } else {
+      this.setState({
+        isAlertModal : true,
+        resultMsg : "A/S완료 후 평가 하실 수 있습니다."
+      })
+    }
   }
 
   // 별점 클릭 호출
@@ -303,35 +303,35 @@ class ViewAfterServiceState extends Component {
                   <View>
                       <View style={localStyles.secondBox}>
                       <Text style={localStyles.asMatchStateDscTxt}>
-                        { (this.state.asPrgsYn == 'Y') ? this.state.asPrgsStatNm : "매칭된 A/S 업체가 출발했어요." }
+                        { (this.state.asPrgsYn == 'Y') ? this.state.asPrgsStatNm : "A/S 상태가 아닙니다." }
                       </Text>
                       <View style={styles.fxDirRow}>
                           <AfterServiceState
-                            asPrgsStatCd={this.state.asPrgsStatCd}
+                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
                             status={MATCH}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_wait_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_wait_icon.png')}
                           />
                           <AfterServiceState
-                            asPrgsStatCd={this.state.asPrgsStatCd}
+                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
                             status={DEPARTURE}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_start_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_start_icon.png')}
                           />
                           <AfterServiceState
-                            asPrgsStatCd={this.state.asPrgsStatCd}
+                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
                             status={ARRIVE}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_arrive_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_arrive_icon.png')}
                           />
                           <AfterServiceState
-                            asPrgsStatCd={this.state.asPrgsStatCd}
+                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
                             status={ADD_AS}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_progress_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_progress_icon.png')}
                           />
                           <AfterServiceState
-                            asPrgsStatCd={this.state.asPrgsStatCd}
+                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
                             status={COMPLETE_AS}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_complete_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_complete_icon.png')}

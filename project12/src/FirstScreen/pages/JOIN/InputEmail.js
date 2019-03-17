@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
 import { Container, Text, Item, Input, Icon } from "native-base";
 
+import { SUCCESS_RETURN_CODE, OVER_LAP_RETURN_CODE } from '~/Common/Blend';
+
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrPw } from '~/Redux/Actions';
 
-import SignUp from '../../Functions/SignUp';
+import CheckUsrEmail from '~/FirstScreen/Functions/CheckUsrEmail';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
@@ -28,7 +31,9 @@ class InputEmail extends Component {
       usrPw: '',
       usrPw2: '',
       btnDisabled: true,
-      errMsg : null
+      errMsg : null,
+      isAlertModal : false, // alert 용
+      resultMsg : null // alert 용
     };
   }
 
@@ -37,6 +42,32 @@ class InputEmail extends Component {
   //   HISTORY_PAGE = (this.props.value.usrCustomerType == PARTNER) ? "JoinInputPhone" : "JoinInputName";
 
   // }
+
+  _ChkOverLapUsrEmail = () => {
+    CheckUsrEmail(this.state.usrId).then(async result => {
+      const resultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+      if(resultBool) {
+        if(result.resultCode !== OVER_LAP_RETURN_CODE) {
+          await this.props.onSetUsrId(this.state.usrId);  // 리덕스 사용자 ID SET (await 절차식으로 진행)
+          await this.props.onSetUsrPw(this.state.usrPw2);  // 리덕스 사용자 비밀번호 SET (await 절차식으로 진행)
+
+          // 기획서에 따른 이름 입력
+          Actions.JoinInputName();
+        } else {
+          this.setState({
+            isAlertModal : true,
+            resultMsg : result.resultMsg
+          })
+        }
+      } else {
+        this.setState({
+          isAlertModal : true,
+          resultMsg : result.resultMsg
+        })
+      }
+    });
+  }
+
 
   // 이메일 next 버튼 활성화 여부
   _handleEmailChange = async (text)  => {
@@ -93,40 +124,8 @@ class InputEmail extends Component {
 
     if (emailVaild && passwdVaild) {
 
-      await this.props.onSetUsrId(this.state.usrId);  // 리덕스 사용자 ID SET (await 절차식으로 진행)
-      await this.props.onSetUsrPw(this.state.usrPw2);  // 리덕스 사용자 비밀번호 SET (await 절차식으로 진행)
+      this._ChkOverLapUsrEmail();
 
-
-      // 기획서에 따른 이름 입력
-      Actions.JoinInputName();
-
-      //회원가입
-      // SignUp(this.props.value).then(async result => {
-      //   const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-
-      //   if (ResultBool) {
-      //     console.log(result);
-
-      //     // 고객 타입에 따른 페이지 이동
-      //     if(this.props.value.usrCustomerType == PARTNER) {
-      //       Actions.JoinInputBizLicense(); // 사업자 등록 페이지
-            
-      //     } else {
-      //       //Actions.BusinessIndex(); // 사업장 제품 등록
-      //       Actions.CardIndex();
-      //     }
-
-      //   } else {
-      //     Alert.alert(
-      //       '',
-      //       result.resultMsg,
-      //       [
-      //         {text: '확인', onPress: () => console.log('OK Pressed')},
-      //       ],
-      //       { cancelable: false }
-      //     )
-      //   }
-      // });
     }
   }
   
@@ -200,6 +199,15 @@ class InputEmail extends Component {
             </CustomButton>
           </View>
         </View>
+
+        {/* alert 메세지 모달 */}
+        <CustomModal
+          modalType="ALERT"
+          isVisible={this.state.isAlertModal}
+          onPress={ () => this.setState({isAlertModal : false})}
+          infoText={this.state.resultMsg}
+          btnText="확인"
+        />
       </Container>
     )
   }

@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { Image, View } from 'react-native'
 import { Container, H1, Text } from "native-base";
 
+import { Actions } from 'react-native-router-flux';
+
 import CustomButton from '~/Common/Components/CustomButton';
-import { styles } from '~/Common/Styles/common';
 import CustomHeader from "~/Common/Components/CustomHeader";
+import { styles } from '~/Common/Styles/common';
 
 class SuccessCardInfo extends Component {
   constructor(props) {
@@ -39,7 +41,7 @@ class SuccessCardInfo extends Component {
 
             <View style={styles.footerBtnWrap}>
               <CustomButton 
-              onPress={this._cardRegister}
+              onPress={Actions.ClientAgreeTermsService}
             >
               약관동의하러가기
             </CustomButton>

@@ -8,8 +8,8 @@ import {
   Input,
   CheckBox
 } from "native-base";
-
-import { SUCCESS_RETURN_CODE, CLIENT_USER } from '~/Common/Blend';
+ 
+import { SUCCESS_RETURN_CODE, CLIENT_USER, CLIENT } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -37,8 +37,15 @@ class AccountType extends Component {
       usrId: '', 
       usrPw: '',
       btnDisabled: true,
-      checkBox : false
+      checkBox : false,
+      logImg : require('~/Common/Image/logo-partner.png')
     };
+  }
+
+  componentWillMount() {
+    if(this.props.value.usrCustomerType == CLIENT) {
+      this.setState({logImg : require('~/Common/Image/logo-user.png')})
+    }
   }
 
   // 아아디(이메일) next 버튼 활성화 여부
@@ -141,7 +148,7 @@ class AccountType extends Component {
         <View style={styles.fx1}>
 
           <View style={[styles.fx2, styles.alignItemsCenter, styles.justiConCenter]}>
-            <Image source={require('~/Common/Image/bank-bg02.png')} resizeMode='center' style={{height: logoHeight, flex: 1}} />
+            <Image source={this.state.logImg} resizeMode='center' style={{height: logoHeight, flex: 1}} />
           </View>
 
           <View style={styles.fx5}>

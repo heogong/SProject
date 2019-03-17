@@ -38,6 +38,10 @@ class InputPhoneAuth extends Component {
     };
   }
 
+  componentDidMount() {
+    alert("certNum : "+ this.props.certNum)
+  }
+
   _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
 
   // 인증번호 next 버튼 활성화 여부
@@ -141,14 +145,14 @@ class InputPhoneAuth extends Component {
 
   // 이미 가입된 대상자 화면 이동
   _closeMoveAccountType = () => {
-    this._toggleModal();
-    Actions.popTo("IntroPage");
+    //this._toggleModal();
+    Actions.popTo("LoginAccountType");
   }
 
   // errorMsg 대상자 화면 이동
   _closeMoveAccountType2 = () => {
-    this.setState({isAlertModal : false});
-    Actions.popTo("IntroPage");
+    //this.setState({isAlertModal : false});
+    Actions.popTo("LoginAccountType");
   }
 
 

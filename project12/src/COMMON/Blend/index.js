@@ -13,6 +13,7 @@ export const TEST_ACCESS_TOKEN = 'Bearer d84851a8-9396-4a68-bbe7-5a1e5999d05a';
 
 // API 결과 STRING 관련
 export const SUCCESS_RETURN_CODE = '0000';
+export const OVER_LAP_RETURN_CODE = '0010'; // 동일한 이메일의 사용자가 가입되어 있습니다.
 export const FAIL_RETURN_CODE_9020 = '9020'; // API 인증이 실패하였습니다.
 export const FAIL_RETURN_CODE_9021 = '9021'; // 결제 카드 등록이 실패하였습니다.
 export const FAIL_RETURN_CODE_9024 = '9024'; // 유효하지 않은 카드정보입니다.

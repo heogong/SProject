@@ -47,60 +47,8 @@ class RegBusinessPlace extends Component {
 
     render() {
         return (
-            // <CustomBlockWrapper
-            //     title="사업장 등록"
-            // >
-            //     <Item regular>
-            //         <Input
-            //             value={this.state.bizNm}
-            //             placeholder='사업장명'
-            //             onChangeText={(text) => this.setState({bizNm : text})}
-            //         />
-            //     </Item>
-            //     <Textarea 
-            //         value={this.state.bizDsc}
-            //         rowSpan={5} 
-            //         bordered 
-            //         placeholder="사업장 설명"
-            //         onChangeText={(text) => this.setState({bizDsc : text})}
-            //     />
-
-
-            //     {(this.props.editBiz) ? (
-            //         <View>
-            //             <CustomButton 
-            //                 styleWidth= { false }
-            //                 block={ true }
-            //                 info={ true }
-            //                 bordered={ true }
-            //                 onPress={this._nextButton} >
-            //                 <Text>사업장 주소 변경</Text>
-            //             </CustomButton>
-            //             <CustomButton 
-            //                 styleWidth= { false }
-            //                 block={ true }
-            //                 info={ true }
-            //                 bordered={ true }
-            //                 onPress={this._editBusiness} >
-            //                 <Text>사업장명 변경</Text>
-            //             </CustomButton>
-            //         </View>
-            //     ) : (
-            //         <CustomButton 
-            //             styleWidth= { false }
-            //             block={ true }
-            //             info={ true }
-            //             bordered={ true }
-            //             onPress={this._nextButton} >
-            //             <Text>다음 단계로 이동</Text>
-            //         </CustomButton>
-            //     )}
-                
-                
-            // </CustomBlockWrapper>
             <Container style={styles.containerInnerPd}>
                 <CustomHeader />
-        
                 <View style={styles.contentWrap}>
                     <View>
                         <View style={styles.fxDirRow}>

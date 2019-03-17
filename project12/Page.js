@@ -174,7 +174,7 @@ const PAGE = () => (
       <Scene key="TestInitPage" component={TestInitPage} type={ActionConst.RESET} />
       <Scene key="TestPageOne"  component={TestPageOne} title="TestPageOne" type={ActionConst.RESET} />
 
-      <Scene key="IntroPage"  component={IntroPage} title="IntroPage" type={ActionConst.RESET} />
+      <Scene key="IntroPage" initial component={IntroPage} type={ActionConst.RESET} />
       <Scene key="InitPage"  component={InitPage} type={ActionConst.RESET} />
       
       {/* 안내페이지 */}
@@ -229,7 +229,7 @@ const PAGE = () => (
       <Scene key="ListBusinessPlace" component={JoinListBusinessPlace} type={ActionConst.RESET} />
       
       {/* 사업장등록 */}
-      <Scene key="RegBusinessPlaceIndex"  component={RegBusinessPlaceIndex} />
+      <Scene key="RegBusinessPlaceIndex" component={RegBusinessPlaceIndex} />
       <Scene key="RegBusinessPlace"  component={RegBusinessPlace} />
       <Scene key="SetBusinessPlace" component={SetBusinessPlace} type={ActionConst.RESET} />
       <Scene key="SetAddress"  component={SetAddress} />
@@ -350,9 +350,8 @@ const PAGE = () => (
 
             {/* 나의제품 */}
             <Stack key="clientMyProduct" hideNavBar iconImg={require("~/Common/Image/user_footer_icon/tab2.png")} icon={TabIcon}
-              tabBarOnPress={() => Actions.ListBusinessPlace({type:ActionConst.RESET}) }
+              tabBarOnPress={() => Actions.MyListBusinessPlace() }
               transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-              {/* <Scene key="ListBusinessPlace" component={ListBusinessPlace} title="사업장 목록" /> */}
               {/* <Scene key="ListBusinessProductType" component={ListBusinessProductType} title="사업장 제품 타입 목록" /> */}
               {/* <Scene key="InputBusinessProdType" component={InputBusinessProdType} title="제품 타입 선택" /> */}
               
