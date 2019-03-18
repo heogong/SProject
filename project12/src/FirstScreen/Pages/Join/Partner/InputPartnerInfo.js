@@ -11,6 +11,7 @@ import RegPartnerMaster from '~/FirstScreen/Functions/RegPartnerMaster';
 
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
@@ -20,20 +21,18 @@ class InputPartnerInfo extends Component {
       super(props);
 
       this.state = {
-        companyNm : null,
-        companyBusinessNum : null,
-        ceoNm : null,
-        btnDisabled : true
+        companyNm : '',
+        companyBusinessNum : '',
+        ceoNm : '',
+        btnDisabled : true,
+        isAlertModal : false, // alert 용
+        resultMsg : null // alert 용
       };
     }
 
   componentDidMount() {
     this.setState({companyBusinessNum: this.props.data.companyBusinessNum});
-  }
-
-  // NEXT : 파트너 제품 선택
-  _nextPress = () => {
-    this._regPartnerMaster();
+    this._chkNextBtn();
   }
 
   // 사업장 등록 API 호출
@@ -44,58 +43,38 @@ class InputPartnerInfo extends Component {
           const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
           console.log(resultData);
           if(ResultBool) {
-            //this.setState({ bizLicense : resultData.companyBusinessNum, btnDisabled : false });
-            //Actions.JoinInputProdType();
             Actions.JoinSetPartnerAddress();
           } else {
-            alert(resultData.resultMsg);
+            this.setState({
+              isAlertModal : true,
+              resultMsg : resultData.resultMsg
+            })
           }
         }
       });
     });
   }
 
+  // 완료버튼 활성화 여부
+  _chkNextBtn = () => {
+    const companyNmLen = 2;
+    const companyBusinessNumLen = 10;
+    const ceoNmLen = 2;
+
+    const { companyNm, companyBusinessNum, ceoNm } = this.state;
+
+    if(companyNm.length >= companyNmLen 
+      && companyBusinessNum.length >= companyBusinessNumLen 
+      && ceoNm.length >= ceoNmLen ) {
+      this.setState({btnDisabled : false});
+    } else {
+      this.setState({btnDisabled : true});
+    }
+  }
+
+
   render() {
     return (
-      // <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
-      //   <CustomBasicWrapper
-      //     resetPage={ true }
-      //     title="사업자정보 입력"
-      //   >
-      //     <Item regular>
-      //       <Input
-      //         onChangeText={(text) => this.setState({companyNm : text})}
-      //         value={ this.state.companyNm }
-      //         placeholder='업체명'
-      //       />
-      //     </Item>
-      //     <Item regular>
-      //       <Input
-      //         onChangeText={(text) => this.setState({companyBusinessNum : text})}
-      //         value={ this.state.companyBusinessNum }
-      //         placeholder='사업자 번호'
-      //       />
-      //     </Item>
-      //     <Item regular>
-      //       <Input
-      //         onChangeText={(text) => this.setState({ceoNm : text})}
-      //         value={ this.state.ceoNm }
-      //         placeholder='대표명'
-      //       />
-      //     </Item>
-
-      //     <CustomButton
-      //       block={ true }
-      //       info={ true }
-      //       onPress={ this._nextPress }
-      //       // disabled={ this.state.btnDisabled }
-      //     >
-      //       <Text>
-      //         다음단계로 이동 (2/5)
-      //       </Text>
-      //     </CustomButton>
-      //   </CustomBasicWrapper>
-      // </KeyboardAvoidingView>
       <Container style={styles.containerInnerPd}>
         <CustomHeader />
         <View style={styles.contentWrap}>
@@ -140,7 +119,7 @@ class InputPartnerInfo extends Component {
           <View style={[styles.fx3, styles.justiConCenter]}>
             <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
               <Input 
-                onChangeText={(text) => this.setState({companyNm : text})}
+                onChangeText={async (text) => { await this.setState({companyNm : text}), this._chkNextBtn() }}
                 value={ this.state.companyNm }
                 placeholder="업체명" 
                 placeholderTextColor={color.inputPlaceHodler} 
@@ -148,7 +127,7 @@ class InputPartnerInfo extends Component {
             </Item>
             <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
               <Input 
-                onChangeText={(text) => this.setState({companyBusinessNum : text})}
+                onChangeText={async (text) => { await this.setState({companyBusinessNum : text}), this._chkNextBtn() }}
                 value={ this.state.companyBusinessNum }
                 placeholder="사업자번호 13자리 입력" 
                 placeholderTextColor={color.inputPlaceHodler} 
@@ -156,7 +135,7 @@ class InputPartnerInfo extends Component {
             </Item>
             <Item regular style={styles.inputWhBackGreyBo}>
               <Input 
-                onChangeText={(text) => this.setState({ceoNm : text})}
+                onChangeText={async (text) => {await this.setState({ceoNm : text}), this._chkNextBtn() }}
                 value={ this.state.ceoNm }
                 placeholder="대표자 명" 
                 placeholderTextColor={color.inputPlaceHodler} 
@@ -166,15 +145,22 @@ class InputPartnerInfo extends Component {
 
           <View style={styles.footerBtnWrap}>
             <CustomButton 
-              onPress={ this._nextPress }
+              onPress={ this._regPartnerMaster }
               disabled={ this.state.btnDisabled }
-              edgeFill={true}
-              fillTxt={true}
             >
               등록완료
             </CustomButton>
           </View>
         </View>
+
+        {/* alert 메세지 모달 */}
+        <CustomModal
+          modalType="ALERT"
+          isVisible={this.state.isAlertModal}
+          onPress={ () => this.setState({isAlertModal : false})}
+          infoText={this.state.resultMsg}
+          btnText="확인"
+        />
 
       </Container>
     )

@@ -12,8 +12,17 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
-import { color } from '~/Common/Styles/colors';
+
+const OPTIONS = {
+  quality: 1.0,
+  maxWidth: 500,
+  maxHeight: 500,
+  storageOptions: {
+    skipBackup: true,
+  }
+};
 
 class InputSettleAccount2 extends Component {
   constructor(props) {
@@ -27,7 +36,9 @@ class InputSettleAccount2 extends Component {
         settleAccount: {
           number : '',
           name :'',
-        }
+        },
+        isAlertModal : false, // alert 용
+        resultMsg : null // alert 용
     };
 
     this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
@@ -36,16 +47,7 @@ class InputSettleAccount2 extends Component {
 
   // 앨범에서 사진 가져오기
   selectPhotoTapped() {
-    const options = {
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-      storageOptions: {
-        skipBackup: true,
-      },
-    };
-
-    ImagePicker.launchImageLibrary(options, (response) => {
+    ImagePicker.launchImageLibrary(OPTIONS, (response) => {
       console.log('Response = ', response);
   
         if (response.didCancel) {
@@ -65,16 +67,7 @@ class InputSettleAccount2 extends Component {
 
   // 촬영
   takePhotoTapped() {
-    const options = {
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-      storageOptions: {
-        skipBackup: true,
-      },
-    };
-
-    ImagePicker.launchCamera(options, (response) => {
+    ImagePicker.launchCamera(OPTIONS, (response) => {
       console.log('Response = ', response);
   
       if (response.didCancel) {
@@ -101,7 +94,10 @@ class InputSettleAccount2 extends Component {
               if(ResultBool) {
                 Actions.JoinInputSettleAccount3();
               } else {
-                  alert(resultData.resultMsg);
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
               }
           }
       });
@@ -135,21 +131,27 @@ class InputSettleAccount2 extends Component {
           <View style={styles.footerBtnWrap}>
             <CustomButton 
               onPress={ this.selectPhotoTapped.bind(this) }
-              edgeFill={true}
-              backgroundColor={color.whiteColor}
+              DefaultLineBtn={true}
             >
               앨범에서선택하기
             </CustomButton>
             
             <CustomButton 
               onPress={ this.takePhotoTapped.bind(this) }
-              edgeFill={true}
-              fillTxt={true}
             >
               사진촬영하기
             </CustomButton>
           </View>
         </View>
+
+        {/* alert 메세지 모달 */}
+        <CustomModal
+          modalType="ALERT"
+          isVisible={this.state.isAlertModal}
+          onPress={ () => this.setState({isAlertModal : false})}
+          infoText={this.state.resultMsg}
+          btnText="확인"
+        />
 
       </Container>
     )

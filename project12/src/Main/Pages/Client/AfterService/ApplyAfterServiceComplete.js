@@ -4,6 +4,7 @@ import { Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setIsAfterService } from '~/Redux/Actions';
 
@@ -15,8 +16,6 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
-
-
 
 class ApplyAfterServiceComplete extends Component {
     constructor(props) {
@@ -73,9 +72,9 @@ class ApplyAfterServiceComplete extends Component {
                         this.props.onSetIsAfterService(true); // A/S 신청 확인 - interval 최소화 하기위함
 
                         // 타임아웃 clear 필요할듯
-                        // setTimeout(() => {
-                        //     this.setState({result : "매칭 완료"});
-                        // }, 10000);
+                        setTimeout(() => {
+                            Actions.ClientMain();
+                        }, 5000);
                         
                         
                     } else {

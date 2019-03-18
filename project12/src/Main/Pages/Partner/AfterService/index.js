@@ -33,22 +33,22 @@ class AfterService extends Component {
                     console.log(resultData);
                     if(ResultBool) {
 
-                        // if(resultData.data.asPrgsYn == 'Y') {
-                        //     setTimeout(() => {
-                        //         Actions.ViewAfterServiceState({
-                        //             asRecvId : resultData.data.asPrgsMst.asRecvId,
-                        //             asPrgsId : resultData.data.asPrgsMst.asPrgsId,
-                        //             isProcess : false
-                        //         })
-                        //         this.setState({spinner : false});
-                        //     }, 700);
-                        // } else {
-                        //     Actions.AfterServiceMatch();
-                        //     this.setState({spinner : false});
-                        // }
+                        if(resultData.data.asPrgsYn == 'Y') {
+                            setTimeout(() => {
+                                Actions.ViewAfterServiceState({
+                                    asRecvId : resultData.data.asPrgsMst.asRecvId,
+                                    asPrgsId : resultData.data.asPrgsMst.asPrgsId,
+                                    isProcess : false
+                                })
+                                this.setState({spinner : false});
+                            }, 700);
+                        } else {
+                            Actions.AfterServiceMatch();
+                            this.setState({spinner : false});
+                        }
 
-                        Actions.AfterServiceMatch();
-                        this.setState({spinner : false});
+                        // Actions.AfterServiceMatch();
+                        // this.setState({spinner : false});
                     } else {
                         alert(resultData.resultMsg);
                         this.setState({spinner : false});

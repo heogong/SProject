@@ -12,7 +12,8 @@ import RegPartnerBizLicense from '~/FirstScreen/Functions/RegPartnerBizLicense';
 
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomHeader from '~/Common/Components/CustomHeader';
-import { styles, viewportHeight, viewportWidth } from '~/Common/Styles/common';
+import CustomModal from '~/Common/Components/CustomModal';
+import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
 
@@ -23,7 +24,9 @@ class InputBizLicense extends Component {
       this.state = {
           bizLicense : '',
           btnDisabled : true,
-          avatarSource : null
+          avatarSource : null,
+          isAlertModal : false, // alert 용
+          resultMsg : null // alert 용
       };
     }
 
@@ -42,7 +45,10 @@ class InputBizLicense extends Component {
           if(ResultBool) {
             Actions.JoinInputPartnerInfo({data : resultData.data});
           } else {
-            alert(resultData.resultMsg);
+            this.setState({
+              isAlertModal : true,
+              resultMsg : resultData.resultMsg
+            })
           }
         }
       });
@@ -115,6 +121,15 @@ class InputBizLicense extends Component {
             </CustomButton>
           </View>
         </View>
+        
+        {/* alert 메세지 모달 */}
+        <CustomModal
+          modalType="ALERT"
+          isVisible={this.state.isAlertModal}
+          onPress={ () => this.setState({isAlertModal : false})}
+          infoText={this.state.resultMsg}
+          btnText="확인"
+        />
 
       </Container>
     )

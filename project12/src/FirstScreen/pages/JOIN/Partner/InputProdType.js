@@ -154,13 +154,11 @@ class InputProdType extends Component {
                 
                 </ScrollView>
 
-                <View style={[styles.footerBtnWrap, {marginTop: 20}]}>
+                <View style={styles.footerBtnWrap}>
                     <CustomButton 
                         backgroundColor={color.whiteColor}
                         onPress={this._nextPress}
                         disabled={ this.state.btnDisabled }
-                        edgeFill={true}
-                        fillTxt={false}
                     >
                         등록완료
                     </CustomButton>

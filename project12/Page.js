@@ -92,6 +92,14 @@ import TermsMenu from './src/Main/Pages/Partner/MoreInfo/TermsMenu';
 import TermsContent1 from './src/Main/Pages/Partner/MoreInfo/TermsContent1';
 import MyProfileCompany from './src/Main/Pages/Partner/MoreInfo/MyProfileCompany';
 
+// 파트너 가이드
+import PartnerGuide1 from './src/Main/Pages/Partner/Home/PartnerGuide1';
+import PartnerGuide1Sub from './src/Main/Pages/Partner/Home/PartnerGuide1_sub';
+import PartnerGuide2 from './src/Main/Pages/Partner/Home/PartnerGuide2';
+import PartnerGuide2Sub from './src/Main/Pages/Partner/Home/PartnerGuide2_sub';
+import PartnerGuide3 from './src/Main/Pages/Partner/Home/PartnerGuide3';
+import PartnerGuide3Sub from './src/Main/Pages/Partner/Home/PartnerGuide3_sub';
+
 
 /**클라이언트 */
 
@@ -209,9 +217,9 @@ const PAGE = () => (
       <Scene key="JoinSetPartnerAddress" component={JoinSetPartnerAddress} />
       <Scene key="JoinSearchPartnerAddress" component={JoinSearchPartnerAddress} />
       
-      <Scene key="JoinInputProdType"  component={JoinInputProdType} />
-      <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} type={ActionConst.RESET}/>
-      <Scene key="JoinInputSettleAccount" component={JoinInputSettleAccount1} type={ActionConst.RESET}/>
+      <Scene key="JoinInputProdType" component={JoinInputProdType} type={ActionConst.RESET}/>
+      <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} />
+      <Scene key="JoinInputSettleAccount"  component={JoinInputSettleAccount1} />
       <Scene key="JoinInputSettleAccount2" component={JoinInputSettleAccount2} />
       <Scene key="JoinInputSettleAccount3" component={JoinInputSettleAccount3} />
       <Scene key="JoinInputPartnerInfoSuccess" component={JoinInputPartnerInfoSuccess} />
@@ -238,7 +246,7 @@ const PAGE = () => (
       {/* <Scene key="ViewBusinessPlace" hideNavBar component={ViewBusinessPlace} title="사업장 조회"/> */}
 
       {/* 제품 등록 */}
-      <Scene key="InputProdType"  component={InputProdType} />
+      <Scene key="InputProdType" component={InputProdType} />
       <Scene key="InputShowCase" component={InputShowCase} /> 
       <Scene key="TakeProductImage"  component={TakeProductImage} />
       <Scene key="TakeProductGuide1" component={TakeProductGuide1} />
@@ -281,6 +289,14 @@ const PAGE = () => (
       <Scene key="TermsMenu" component={TermsMenu} />
       <Scene key="TermsContent1" component={TermsContent1} />
       <Scene key="MyProfileCompany" component={MyProfileCompany} />
+
+      {/* 파트너 - 가이드 */}
+      <Scene key="PartnerGuide1" component={PartnerGuide1} />
+      <Scene key="PartnerGuide1Sub" component={PartnerGuide1Sub} />
+      <Scene key="PartnerGuide2" component={PartnerGuide2} />
+      <Scene key="PartnerGuide2Sub" component={PartnerGuide2Sub} />
+      <Scene key="PartnerGuide3" component={PartnerGuide3} />
+      <Scene key="PartnerGuide3Sub" component={PartnerGuide3Sub} />
 
 
       {/* 클라이언트 A/S 내역 */}
@@ -390,8 +406,8 @@ const PAGE = () => (
               }}
               swipeEnabled
               showLabel={false}
-              activeBackgroundColor="white"
-              inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
+              activeBackgroundColor="#fff"
+              inactiveBackgroundColor="#fff"
               tabBarPosition="bottom"
             >
               <Stack key="PartnerMain" hideNavBar iconImg={require("~/Common/Image/partner_footer_icon/tab1.png")} initial icon={TabIcon}
@@ -412,16 +428,14 @@ const PAGE = () => (
               </Stack>
 
               <Stack key="PartnerReport" hideNavBar iconImg={require("~/Common/Image/partner_footer_icon/tab3.png")} icon={TabIcon}
-                tabBarOnPress={() => alert("개발중")}
+                tabBarOnPress={() => Actions.ListInCompleteReport()}
                 transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
                 {/* <Scene key="ListInCompleteReport" component={ListInCompleteReport} title="미 완료 보고서 리스트"/> */}
                 <Scene key="AfterServiceReport" component={AfterServiceReport} title="A/S 보고서"/>
               </Stack>
 
-              <Stack key="PartnerReport" hideNavBar iconImg={require("~/Common/Image/partner_footer_icon/tab4.png")} icon={TabIcon}
-                tabBarOnPress={() => Actions.PartnerMoreInfo()}
+              <Stack key="PartnerMore" hideNavBar iconImg={require("~/Common/Image/partner_footer_icon/tab4.png")} icon={TabIcon}
                 transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-                {/* <Scene key="ListInCompleteReport" component={ListInCompleteReport} title="미 완료 보고서 리스트"/> */}
                   <Scene key="PartnerMoreInfo" component={PartnerMoreInfo} />
               </Stack>
             </Tabs>

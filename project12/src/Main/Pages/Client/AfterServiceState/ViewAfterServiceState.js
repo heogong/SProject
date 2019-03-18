@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { Container, Text } from "native-base";
+import { Container,Header,Title, Button,Left,Right,Body,Text} from "native-base";
 
 import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, ADD_AS, COMPLETE_AS} from '~/Common/Blend';
 
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setIntervalId, setIsAfterService } from '~/Redux/Actions';
 import Modal from "react-native-modal";
@@ -250,12 +251,27 @@ class ViewAfterServiceState extends Component {
     }
   }
 
+  // 메인페이지 이동 - 그냥 pop 하면 index페이지로 이동 함
+  _goToMain = () => {
+      Actions.ClientMain();
+  }
+
   render() {
     return (
           <Container style={[styles.fx1, {   
             backgroundColor: color.defaultColor
           }]}>
-              <CustomHeader title="A/S현황"/>
+              <Header style={[styles.header, styles.noPadding, {paddingLeft : 26, paddingRight : 26}]}>
+                <Left style={styles.headerLeftWrap}>
+                  <Button style={styles.noPadding}  transparent onPress={this._goToMain}>
+                    <Image source={require("~/Common/Image/btn_back_arrow.png")} />
+                  </Button>
+                </Left>
+                <Body style={styles.headerCenterWrap}>
+                  <Title style={styles.headerTitleTxt}>A/S 현황</Title>
+                </Body>
+                <Right style={styles.headerRightWrap}></Right>
+              </Header>
       
               <View style={styles.fx1}>
       

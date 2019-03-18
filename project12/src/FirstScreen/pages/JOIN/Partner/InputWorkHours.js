@@ -67,7 +67,8 @@ class InputWorkHours extends Component {
           edHour : '18',
           edMin : '00',
           spinner: false, // 로딩
-          checkBox : false
+          checkBox1 : false,
+          checkBox2 : false
         };
     }
 
@@ -133,11 +134,12 @@ class InputWorkHours extends Component {
     // 풀타임 버튼 클릭
     _handleFullBtnClick() {
         // this.setState({spinner : true });
-        const { fullBtnLight, fullBtnWarning } = this.state;
+        const { fullBtnLight, fullBtnWarning, checkBox1 } = this.state;
 
         this.setState({
-            fullBtnLight : (fullBtnLight) ? false : true,
-            fullBtnWarning : (fullBtnWarning) ? false : true,
+            checkBox1 : !checkBox1,
+            fullBtnLight : !fullBtnLight,
+            fullBtnWarning : !fullBtnWarning,
             stHour : '00',
             stMin : '00',
             edHour : '24',
@@ -246,86 +248,6 @@ class InputWorkHours extends Component {
 
     render() {
         return (
-            // <Container>
-            //     <Content padder >
-            //         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            //             { MOCK_DATA.map((data, idx) => (
-            //                 <SelectButton 
-            //                     value={data.value}
-            //                     text={data.text}
-            //                     addDataArray={ this._setData }
-            //                     removeDataArray={ this._cancleData }
-            //                     key={ idx }
-            //                     ref={ ref => {
-            //                         SELECT_BUTTON[idx] = ref;
-            //                     }}
-            //                 />
-            //             ))}
-            //         </View>
-            //         {/* <View style={{flexDirection: 'row', justifyContent: 'center'}}> */}
-
-            //             <TouchableOpacity onPress={this._showDateTimePicker(ST_TYPE)}>
-            //                 <View style={{borderColor: '#9B9B9B', borderWidth: 1 / PixelRatio.get()}}>
-            //                     <Text>시작시간</Text>
-            //                     <Text>{`${this.state.stHour}:${this.state.stMin}`}</Text>
-            //                 </View>
-            //             </TouchableOpacity>
-
-            //             <TouchableOpacity onPress={this._showDateTimePicker(ED_TYPE)}>
-            //                 <View style={{borderColor: '#9B9B9B', borderWidth: 1 / PixelRatio.get()}}>
-            //                     <Text>종료시간</Text>
-            //                     <Text>{`${this.state.edHour}:${this.state.edMin}`}</Text>
-            //                 </View>
-            //             </TouchableOpacity>
-
-            //             <CustomButton
-            //                 block={ true }
-            //                 light={ this.state.fullBtnLight }
-            //                 warning= { this.state.fullBtnWarning }
-            //                 icon={ true }
-            //                 styleWidth={ false }
-            //                 marginSize={ 0 }
-            //                 onPress={ this._handleFullBtnClick }
-            //             >
-            //                 <Icon name='md-build' />
-            //                 <Text>
-            //                     풀타임
-            //                 </Text>
-            //             </CustomButton>
-            //         {/* </View> */}
-                
-            //         <CustomButton
-            //             block={ true }
-            //             info={ true }
-            //             onPress={ this._nextBtn }
-            //             disabled={ this.state.btnDisabled }>
-            //             <Text>
-            //                 다음단계로 이동 (4/5)
-            //             </Text>
-            //         </CustomButton>
-                    
-            //         {/* 로딩 */}
-            //         <Spinner
-            //             visible={this.state.spinner}
-            //             textContent={'Loading...'}
-            //             style={{color: '#FFF'}}
-            //         />
-            //     </Content>
-                
-            //     <DateTimePicker
-            //         isVisible={this.state.isDateTimePickerVisible}
-            //         onConfirm={this._handleDatePicked}
-            //         onCancel={this._hideDateTimePicker}
-            //         mode='time'
-            //         datePickerModeAndroid='spinner'
-            //         is24Hour={true}
-            //         date={ new Date(this.state.setTime) }
-            //         type={ TIME_TYPE }
-            //         ref={ref => {
-            //             this.DateTimePicker = ref;
-            //         }}
-            //     />
-            // </Container>
             <Container style={styles.containerInnerPd}>
                 <CustomHeader />
                 <View style={styles.contentWrap}>
@@ -413,7 +335,7 @@ class InputWorkHours extends Component {
 
                             <View style={[styles.fxDirRow, {marginRight: 8}]}>
                                 <CheckBox 
-                                    checked={this.state.checkbox}
+                                    checked={this.state.checkBox1}
                                     onPress={ this._handleFullBtnClick }
                                     style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                                 />
@@ -422,8 +344,13 @@ class InputWorkHours extends Component {
 
                             <View style={[styles.fxDirRow, {marginLeft: 8}]}>
                                 <CheckBox 
-                                    checked={this.state.checkbox}
-                                    onPress={ () => this.toggleSwitch() }
+                                    checked={this.state.checkbox2}
+                                    onPress={ 
+                                        async () => {
+                                            await this.setState({checkbox2 : !this.state.checkbox2})
+                                            BUSINESS_DAY.holidayWorkYn = ( this.state.checkbox2 ) ? 'Y' : 'N';
+                                        }
+                                    }
                                     style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                                 />
                                 <Text style={styles.greyFont}>공휴일</Text>
@@ -433,10 +360,8 @@ class InputWorkHours extends Component {
 
                     <View style={styles.footerBtnWrap}>
                         <CustomButton 
-                            onPress={this._nextPress}
+                            onPress={this._regPartnerWork}
                             disabled={ this.state.btnDisabled }
-                            edgeFill={true}
-                            fillTxt={true}
                         >
                             선택완료
                         </CustomButton>

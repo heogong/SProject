@@ -118,7 +118,7 @@ const GuideReport = () => (
         <View style={{flex: 1, marginTop: 25}}>
             <View style={[styles.alignItemsCenter, styles.justiConEnd]}>
                 <Image 
-                    source={require("~/Common/Image/license-bg02.png")} 
+                    source={require("~/Common/Image/Report_illust.png")} 
                     resizeMode="contain" 
                     style={[{height : 79, width : 56}]}
                 />
@@ -147,21 +147,24 @@ export const ENTRIES1 = [
         guide: true, 
         guideTxt1 : 'A/S 출발에서',
         guideTxt2 : 'A/S 완료까지',
-        guideTxt3 : '진행가이드'
+        guideTxt3 : '진행가이드',
+        link : 'PartnerGuide1'
     },
     {
         title: 'STEP.2',
         guide: true,
-        guideTxt1 : 'A/S 출발에서',
-        guideTxt2 : 'A/S 완료까지',
-        guideTxt3 : '진행가이드'
+        guideTxt1 : 'A/S업체',
+        guideTxt2 : '상세정보',
+        guideTxt3 : '보는방법',
+        link : 'PartnerGuide2'
     },
     {
         title: 'STEP.3',
         guide: true,
-        guideTxt1 : 'A/S 출발에서',
-        guideTxt2 : 'A/S 완료까지',
-        guideTxt3 : '진행가이드'
+        guideTxt1 : 'A/S정산',
+        guideTxt2 : '보고서',
+        guideTxt3 : '작성방법',
+        link : 'PartnerGuide3'
     }
 ];
 
@@ -193,7 +196,9 @@ export default class Main extends Component {
     // 대기 중일 경우 가이드만 표시
     _renderItem ({item, index}) {
         return (
-            <TouchableOpacity onPress={ () => alert("dddd")}>
+            <TouchableOpacity 
+                key={index}
+                onPress={() => Actions[item.link].call()}>
                 <View style={[styles.pd10, styles.alignItemsCenter, {backgroundColor : color.whiteColor, height : cardHeight}]}>
                     <View style={{marginTop: 30}}>
                         <Text style={{fontSize: 24, color: "#038dbd", fontWeight: "bold"}}>{item.title}</Text>
@@ -212,20 +217,24 @@ export default class Main extends Component {
       _renderItem2 = ({item, index}) => {
         return (
             (item.guide) ? (
-                <TouchableOpacity onPress={ () => alert("dddd")}>
+                <TouchableOpacity 
+                    key={index}
+                    onPress={() => Actions[item.link].call()}>
                     <View style={[styles.pd10, styles.alignItemsCenter, {backgroundColor : color.whiteColor, height : cardHeight}]}>
                         <View style={{marginTop: 30}}>
                             <Text style={{fontSize: 24, color: "#038dbd", fontWeight: "bold"}}>{item.title}</Text>
                         </View>
                         <View style={[styles.fx1, styles.justiConCenter]}>
-                            <Text style={localStyles.guideBoxTxt}>A/S 출발에서</Text>
-                            <Text style={localStyles.guideBoxTxt}>A/S 완료까지</Text>
-                            <Text style={localStyles.guideBoxTxt}>진행가이드</Text>
+                            <Text style={localStyles.guideBoxTxt}>{item.guideTxt1}</Text>
+                            <Text style={localStyles.guideBoxTxt}>{item.guideTxt2}</Text>
+                            <Text style={localStyles.guideBoxTxt}>{item.guideTxt3}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
             ) : (
-                <TouchableOpacity onPress={ this._selectAfterService(index) }>
+                <TouchableOpacity 
+                    key={index}
+                    onPress={ this._selectAfterService(index) }>
                     <View style={[styles.pd10, styles.alignItemsCenter, {backgroundColor : color.whiteColor, height : cardHeight}]}>
                         <View style={{marginTop: 20}}>
                             <Text style={{fontSize: 16, color: "#038dbd", fontWeight: "bold"}}>{item.bplaceAddr}</Text>
@@ -262,7 +271,7 @@ export default class Main extends Component {
         this._getUserInfo(); //사용자 정보 조회 - 가입 승인 대기 여부 확인
         this._getAfterServiceState();
         // this._getAfterService();
-        // this._getAfterServiceIncomplete();
+        this._getAfterServiceIncomplete();
 
     }
 

@@ -98,10 +98,17 @@ class ListAfterServiceMatch extends Component {
         });
     }
 
+    // 메인페이지 이동 - 그냥 pop 하면 index페이지로 이동 함
+    _goToMain = () => {
+        Actions.PartnerMain();
+    }
+
     render() {
         return (
             <Container style={styles.containerInnerPd}>
-                <CustomHeader/>
+                <CustomHeader
+                    customAction={this._goToMain}
+                />
 
                 <View style={{marginBottom: 36}}>
                     <View style={styles.fxDirRow}>
@@ -126,7 +133,7 @@ class ListAfterServiceMatch extends Component {
                 ) : (
                     <View style={styles.listPrdBoxEmptyImgWrap}>
                         <Image 
-                            source={require("~/Common/Image/license-depart01.png")} 
+                            source={require("~/Common/Image/No_alram_icon.png")} 
                             style={{height: 219, width: 219, marginTop: -36}} 
                         />
                     </View>

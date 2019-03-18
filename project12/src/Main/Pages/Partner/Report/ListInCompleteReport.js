@@ -147,7 +147,7 @@ class ListInCompleteReport extends Component {
                 ) : (
                     <View style={styles.listPrdBoxEmptyImgWrap}>
                         <Image 
-                            source={require("~/Common/Image/license-depart01.png")} 
+                            source={require("~/Common/Image/no_alram_icon2.png")} 
                             style={{height: 219, width: 219, marginTop: -36}} 
                         />
                     </View>

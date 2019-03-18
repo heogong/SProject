@@ -13,23 +13,28 @@ import RegSettleAccount from '~/FirstScreen/Functions/RegSettleAccount';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
+
+let SELECT_IDX = 0;
 
 class InputSettleAccount3 extends Component {
   constructor(props) {
       super(props);
       this.state = {
         buttonTitle : null,
-        selectIndex : 0,
         bankInfo : [
           { text : "데이터가 없습니다.", bankCode : ''}
         ],
         settleAccount: {
           number : '',
           name :'',
-        }
+        },
+        btnDisabled : true,
+        isAlertModal : false, // alert 용
+        resultMsg : null // alert 용
     };
   }
 
@@ -51,7 +56,10 @@ class InputSettleAccount3 extends Component {
                 });
                 this.setState({ bankInfo: bankSet });
               } else {
-                  alert(resultData.resultMsg);
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
               }
           }
       });
@@ -78,10 +86,25 @@ class InputSettleAccount3 extends Component {
     });
   }
 
+  _chkNextBtn = () => {
+    const accountNumLen = 5;
+    const accountNameLen = 2;
+
+    const { bankInfo, settleAccount } = this.state;
+
+    if(bankInfo[SELECT_IDX].bankCode !== null 
+      && settleAccount.number.length >= accountNumLen 
+      && settleAccount.name.length >= accountNameLen) {
+      this.setState({btnDisabled : false})
+    } else {
+      this.setState({btnDisabled : true})
+    }
+  }
+
   // NEXT 
   _nextPress = () => {
-    console.log("은행 명 : ",this.state.bankInfo[this.state.selectIndex].text);
-    console.log("은행 코드 : ",this.state.bankInfo[this.state.selectIndex].bankCode);
+    console.log("은행 명 : ",this.state.bankInfo[SELECT_IDX].text);
+    console.log("은행 코드 : ",this.state.bankInfo[SELECT_IDX].bankCode);
     console.log("계좌번호/예금주 : ",this.state.settleAccount);
 
     this._regSettleAcccount();
@@ -89,7 +112,7 @@ class InputSettleAccount3 extends Component {
 
   // 계좌 정보 등록
   _regSettleAcccount = () => {
-    RegSettleAccount(this.state.bankInfo[this.state.selectIndex], this.state.settleAccount).then(result => {
+    RegSettleAccount(this.state.bankInfo[SELECT_IDX], this.state.settleAccount).then(result => {
       GetCommonData(result, this._regSettleAcccount).then(async resultData => {
           if(resultData !== undefined) {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -153,17 +176,18 @@ class InputSettleAccount3 extends Component {
               <Item 
                 regular 
                 style={[styles.mb20, styles.inputWhBackGreyBo]}
-                onPress={() =>
+                onPress={ () =>
                   ActionSheet.show(
                   {
                       options: this.state.bankInfo,
-                      cancelButtonIndex: this.state.selectIndex,
+                      cancelButtonIndex: SELECT_IDX,
                       title: "은행 명"
                   },
                   buttonIndex => {
                     this.setState({ buttonTitle: this.state.bankInfo[buttonIndex].text });
-                    this.setState({ selectIndex : buttonIndex });
-                  }
+                    SELECT_IDX = buttonIndex;
+                  },
+                  this._chkNextBtn()
                 )}
               >
                 <Input 
@@ -175,7 +199,10 @@ class InputSettleAccount3 extends Component {
               </Item>
               <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
                 <Input 
-                  onChangeText={(text) => this._inputSettleAccountName(text) }
+                  onChangeText={async (text) => {
+                    await this._inputSettleAccountName(text) 
+                    this._chkNextBtn()
+                  }}
                   value={ this.state.settleAccount.name }
                   placeholder="예금주" 
                   placeholderTextColor={color.inputPlaceHodler} 
@@ -183,7 +210,10 @@ class InputSettleAccount3 extends Component {
               </Item>
               <Item regular style={styles.inputWhBackGreyBo}>
                 <Input 
-                  onChangeText={(text) => this._inputSettleAccount(text) }
+                  onChangeText={async (text) => { 
+                    await this._inputSettleAccount(text)
+                    this._chkNextBtn()
+                  }}
                   value={ this.state.settleAccount.number }
                   keyboardType='numeric'
                   placeholder="계좌번호( - 없이 입력)" 
@@ -196,13 +226,19 @@ class InputSettleAccount3 extends Component {
               <CustomButton 
                   onPress={ this._nextPress }
                   disabled={ this.state.btnDisabled }
-                  edgeFill={true}
-                  fillTxt={true}
                 >
                 등록완료
               </CustomButton>
             </View>
           </View>
+          {/* alert 메세지 모달 */}
+          <CustomModal
+            modalType="ALERT"
+            isVisible={this.state.isAlertModal}
+            onPress={ () => this.setState({isAlertModal : false})}
+            infoText={this.state.resultMsg}
+            btnText="확인"
+          />
 
         </Container>
       </Root>

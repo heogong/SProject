@@ -12,16 +12,29 @@ import RegPartnerBizLicense from '~/FirstScreen/Functions/RegPartnerBizLicense';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
 
 let SOURCE = null;
+
+const OPTIONS = {
+  quality: 1.0,
+  maxWidth: 500,
+  maxHeight: 500,
+  storageOptions: {
+    skipBackup: true,
+  },
+};
+
 class TakeBizLicense extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      avatarSource : null
+      avatarSource : null,
+      isAlertModal : false, // alert 용
+      resultMsg : null // alert 용
     };
 
     this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
@@ -31,16 +44,7 @@ class TakeBizLicense extends Component {
 
   // 앨범에서 사진 가져오기
   selectPhotoTapped() {
-    const options = {
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-      storageOptions: {
-        skipBackup: true,
-      },
-    };
-
-    ImagePicker.launchImageLibrary(options, (response) => {
+    ImagePicker.launchImageLibrary(OPTIONS, (response) => {
       console.log('Response = ', response);
   
         if (response.didCancel) {
@@ -60,16 +64,7 @@ class TakeBizLicense extends Component {
 
   // 촬영
   takePhotoTapped() {
-    const options = {
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-      storageOptions: {
-        skipBackup: true,
-      },
-    };
-
-    ImagePicker.launchCamera(options, (response) => {
+    ImagePicker.launchCamera(OPTIONS, (response) => {
       console.log('Response = ', response);
   
         if (response.didCancel) {
@@ -95,7 +90,10 @@ class TakeBizLicense extends Component {
           if(ResultBool) {
             Actions.JoinInputPartnerInfo({data : resultData.data});
           } else {
-            alert(resultData.resultMsg);
+            this.setState({
+              isAlertModal : true,
+              resultMsg : resultData.resultMsg
+            })
           }
         }
       });
@@ -142,6 +140,15 @@ class TakeBizLicense extends Component {
             </CustomButton>
           </View>
         </View>
+        
+        {/* alert 메세지 모달 */}
+        <CustomModal
+          modalType="ALERT"
+          isVisible={this.state.isAlertModal}
+          onPress={ () => this.setState({isAlertModal : false})}
+          infoText={this.state.resultMsg}
+          btnText="확인"
+        />
 
       </Container>
     );
