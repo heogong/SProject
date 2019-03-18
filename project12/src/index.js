@@ -116,14 +116,11 @@ class IntroPage extends Component {
     return (
       <Container style={styles.container}>
         <View style={styles.fx1}>
-
           <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConCenter]}>
             <Image source={require('~/Common/Image/intro-logo.png')} resizeMode='contain' style={{width : 132, flex: 15}} />
             <Text style={localStyles.versionTxt}>Coolonic Ver. 1.00</Text>
           </View>
-          
         </View>
-
       </Container>
     )
   }

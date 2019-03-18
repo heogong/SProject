@@ -130,16 +130,13 @@ class TakeBizLicense extends Component {
           <View style={styles.footerBtnWrap}>
             <CustomButton 
               onPress={ this.selectPhotoTapped.bind(this) }
-              edgeFill={true}
-              backgroundColor={color.whiteColor}
+              DefaultLineBtn={true}
             >
               앨범에서선택하기
             </CustomButton>
             
             <CustomButton 
               onPress={ this.takePhotoTapped.bind(this) }
-              edgeFill={true}
-              fillTxt={true}
             >
               사진촬영하기
             </CustomButton>

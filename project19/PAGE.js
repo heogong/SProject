@@ -93,7 +93,7 @@ const PAGE = () => (
             <Scene key="UserLogin" hideNavBar component={UserLogin} type={ActionConst.RESET}/>
             <Scene key="InvaildId" hideNavBar component={InvaildId} type={ActionConst.RESET}/>
             <Scene key="SelectJoinType" hideNavBar component={SelectJoinType} type={ActionConst.RESET}/>
-            <Scene key="JoinEmail"  hideNavBar component={JoinEmail} type={ActionConst.RESET}/>
+            <Scene key="JoinEmail"  initial hideNavBar component={JoinEmail} type={ActionConst.RESET}/>
             <Scene key="JoinName" hideNavBar component={JoinName} type={ActionConst.RESET}/>
             <Scene key="JoinPhone" hideNavBar component={JoinPhone} type={ActionConst.RESET}/>
             <Scene key="JoinPhoneAuth" hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
@@ -158,7 +158,7 @@ const PAGE = () => (
             </Scene>
             <Scene key="SelectProduct" hideNavBar component={SelectProduct}  type={ActionConst.RESET}/>
             <Scene key="SelectProduct2" hideNavBar component={SelectProduct2} type={ActionConst.RESET}/>
-            <Scene initial key="ApplyAfterService" hideNavBar component={ApplyAfterService} type={ActionConst.RESET}/>
+            <Scene key="ApplyAfterService" hideNavBar component={ApplyAfterService} type={ActionConst.RESET}/>
             <Scene key="MatchingWait" hideNavBar component={MatchingWait} type={ActionConst.RESET}/>
             {/* <Scene key="AfterServiceState" hideNavBar component={AfterServiceState} type={ActionConst.RESET}/> */}
             <Scene hideNavBar panHandlers={null}>

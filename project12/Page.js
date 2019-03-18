@@ -196,7 +196,7 @@ const PAGE = () => (
 
       <Scene key="JoinCustomerType" component={JoinCustomerType} />
       <Scene key="JoinAccountType" component={JoinAccountType} />
-      <Scene key="JoinInputEmail" component={JoinInputEmail} back onBack={() => Actions.JoinInputName()} />
+      <Scene key="JoinInputEmail" component={JoinInputEmail} />
       <Scene key="JoinInputName"  component={JoinInputName} />
       <Scene key="JoinInputPhone"  component={JoinInputPhone} />
       <Scene key="JoinInputPhoneAuth"  component={JoinInputPhoneAuth} />
@@ -431,53 +431,6 @@ const PAGE = () => (
     </Stack>
   </Router>
 );
-
-
-{/* 일단 남겨두기
-  <Scene hideNavBar panHandlers={null}>
-    <Tabs
-      key="tabbar"
-      routeName="tabbar"
-      legacy
-      backToInitial
-      onTabOnPress={() => {
-        console.log('Back to initial and also print this');
-      }}
-      swipeEnabled
-      showLabel={false}
-      tabBarStyle={styles.tabBarStyle}
-      activeBackgroundColor="white"
-      inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
-    >
-      <Stack
-        key="tab_1"
-        title="Tab #1"
-        tabBarLabel="TAB #1"
-        inactiveBackgroundColor="#FFF"
-        activeBackgroundColor="#DDD"
-        icon={TabIcon}
-        navigationBarStyle={{ backgroundColor: 'green' }}
-        titleStyle={{ color: 'white', alignSelf: 'center' }}
-      >
-        <Scene key="tab_1_1" component={TabView} title="Tab #1_1" onRight={() => alert('Right button')} rightTitle="Right" />
-
-        <Scene key="tab_1_2" component={TabView} title="Tab #1_2" back titleStyle={{ color: 'black', alignSelf: 'center' }} />
-      </Stack>
-
-      <Stack key="tab_2" title="Tab #2" icon={TabIcon} initial>
-        <Scene key="tab_2_1" component={TabView} title="Tab #2_1" renderRightButton={() => <Text>Right</Text>} />
-        <Scene key="tab_2_2" component={TabView} title="Tab #2_2" back onBack={() => alert('onBack button!')} hideDrawerButton backTitle="Back!" panHandlers={null} />
-      </Stack>
-
-      <Stack key="tab_3" icon={TabIcon} title="Tab #3">
-        <Scene key="tab_3_1" component={TabView} rightTitle="Reset to 'tabbar'" onRight={() => Actions.reset('tabbar')} />
-      </Stack>
-      <Scene key="tab_4_1" component={TabView} title="Tab #4" hideNavBar icon={TabIcon} />
-      <Stack key="tab_5" icon={TabIcon} title="Tab #5">
-        <Scene key="tab_5_1" component={TabView} />
-      </Stack>
-    </Tabs>
-</Scene> */}
 
 export default PAGE;
 

@@ -28,6 +28,8 @@ import {
   CheckBox
 } from "native-base";
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 import { styles, viewportHeight, viewportWidth } from './css/common';
 import { color } from './css/color';
 
@@ -41,6 +43,7 @@ class JoinEmail extends Component {
 
   render() {
     return (
+      // <KeyboardAwareScrollView></KeyboardAwareScrollView>
       <Container style={styles.containerInnerPd}>
         <Header style={[styles.header, styles.noPadding]}>
           <Left style={styles.headerLeftWrap}>

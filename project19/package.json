@@ -13,6 +13,7 @@
     "react-native-animated-swiper": "0.0.23",
     "react-native-cardview": "^2.0.2",
     "react-native-image-overlay": "^0.1.2",
+    "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-modal": "^9.0.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-snap-carousel": "^3.7.5",
