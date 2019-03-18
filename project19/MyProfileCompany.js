@@ -144,7 +144,7 @@ class MyProfileCompany extends Component {
                     <TouchableOpacity onPress={ () => alert("Time1")} style={localStyles.timeTxtWrap}>
                       <Text style={localStyles.timeTxt}>09:30</Text>
                     </TouchableOpacity>
-                    <Text style={[localStyles.timeTxtWrap, localStyles.timeTxt, {flex: 1}]}>~</Text>
+                    <Text style={localStyles.timeCenterTxt}>~</Text>
                     <TouchableOpacity onPress={ () => alert("Time1")} style={localStyles.timeTxtWrap}>
                       <Text style={localStyles.timeTxt}>09:30</Text>
                     </TouchableOpacity>
@@ -157,7 +157,7 @@ class MyProfileCompany extends Component {
                 </View>
 
                 <View style={[styles.fxDirRow, styles.justiConCenter]}>
-                  <View style={[styles.fxDirRow, {marginRight: 8}]}>
+                  <View style={[styles.checkBoxWrap, {marginRight: 8}]}>
                     <CheckBox checked={this.state.checkbox}
                       onPress={() => this.toggleSwitch()}
                       style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
@@ -165,7 +165,7 @@ class MyProfileCompany extends Component {
                     <Text style={styles.greyFont}>풀타임</Text>
                   </View>
                   
-                  <View style={[styles.fxDirRow, {marginLeft: 8}]}>
+                  <View style={[styles.checkBoxWrap, {marginLeft: 8}]}>
                     <CheckBox checked={this.state.checkbox}
                       onPress={() => this.toggleSwitch()}
                       style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
@@ -263,6 +263,16 @@ const localStyles = StyleSheet.create({
     backgroundColor: color.defaultColor
   },
   timeTxt: {
+    fontSize: 30,
+    color: color.whiteColor,
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  timeCenterTxt: {
+    alignItems: "center",
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: color.defaultColor,
     fontSize: 30,
     color: color.whiteColor,
     fontWeight: "bold",

@@ -106,9 +106,12 @@ export const styles = StyleSheet.create({
       paddingRight: 14,
       width: "100%",
       height: 36,
-      borderWidth: 1,
+      borderLeftWidth: 1,
+      borderRightWidth: 1,
+      borderBottomWidth: 1,
+      borderTopWidth: 1,
       borderColor: "#c9cacb",
-      borderRadius: 0
+      borderRadius: 0,
     },
     selectBoxTxt: {
       fontSize: 13,
@@ -644,6 +647,7 @@ export const styles = StyleSheet.create({
     noMargin: {marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0},
     noBackNBorderColor: {backgroundColor: color.whiteColor, borderColor: color.whiteColor},
 
+    checkBoxWrap: {flexDirection: "row", alignItems: "center"},
     checkboxReset: {paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, marginLeft: -10, marginRight: 15, marginTop: 0, marginBottom: 0, backgroundColor: color.whiteColor},
     checkboxTxt: {fontSize: 14, fontWeight: 'normal'},
 

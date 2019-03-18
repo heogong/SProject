@@ -99,7 +99,7 @@ class MyProfileExit2 extends Component {
                 <Text style={localStyles.infoTxt}>자세한 사항은 개인정보처리방침을 확인하시기 바랍니다.</Text>
               </View>
               
-              <View style={[styles.fxDirRow, {marginLeft: 3}]}>
+              <View style={[styles.checkBoxWrap, {marginLeft: 3}]}>
                 <CheckBox checked={this.state.checkbox}
                   onPress={() => this.toggleSwitch()}
                   style={[styles.checkboxReset, {borderColor: color.defaultColor}]}

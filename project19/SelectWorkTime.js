@@ -142,7 +142,7 @@ class SelectWorkTime extends Component {
                 <TouchableOpacity onPress={ () => alert("Time1")} style={localStyles.timeTxtWrap}>
                   <Text style={localStyles.timeTxt}>09:30</Text>
                 </TouchableOpacity>
-                <Text style={[localStyles.timeTxtWrap, localStyles.timeTxt, {flex: 1}]}>~</Text>
+                <Text style={localStyles.timeCenterTxt}>~</Text>
                 <TouchableOpacity onPress={ () => alert("Time1")} style={localStyles.timeTxtWrap}>
                   <Text style={localStyles.timeTxt}>09:30</Text>
                 </TouchableOpacity>
@@ -154,8 +154,8 @@ class SelectWorkTime extends Component {
               <Text style={styles.greyFont}>취약시간 기준 : 18시 ~ 09시, 일요일 및 공휴일 포함</Text>
             </View>
 
-            <View style={[styles.fxDirRow, styles.fx1, styles.justiConCenter]}>
-              <View style={[styles.fxDirRow, {marginRight: 8}]}>
+            <View style={[styles.fxDirRow, styles.justiConCenter, {marginBottom: 30}]}>
+              <View style={[styles.checkBoxWrap, {marginRight: 8}]}>
                 <CheckBox checked={this.state.checkbox}
                   onPress={() => this.toggleSwitch()}
                   style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
@@ -163,7 +163,7 @@ class SelectWorkTime extends Component {
                 <Text style={styles.greyFont}>풀타임</Text>
               </View>
               
-              <View style={[styles.fxDirRow, {marginLeft: 8}]}>
+              <View style={[styles.checkBoxWrap, {marginLeft: 8}]}>
                 <CheckBox checked={this.state.checkbox}
                   onPress={() => this.toggleSwitch()}
                   style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
@@ -230,7 +230,7 @@ const localStyles = StyleSheet.create({
   },
   bottomTxtWrap: {
     alignItems: "center",
-    marginTop: 35,
+    marginTop: 0,
     marginBottom: 17
   },
   timeTxtWrap: {
@@ -241,6 +241,16 @@ const localStyles = StyleSheet.create({
     backgroundColor: color.defaultColor
   },
   timeTxt: {
+    fontSize: 30,
+    color: color.whiteColor,
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  timeCenterTxt: {
+    alignItems: "center",
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: color.defaultColor,
     fontSize: 30,
     color: color.whiteColor,
     fontWeight: "bold",
