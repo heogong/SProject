@@ -7,7 +7,6 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import { Actions } from 'react-native-router-flux';
 
 import SendSmsCertNum from '~/FirstScreen/Functions/SendSmsCertNum';
-import CheckSmsCertNum from '~/FirstScreen/Functions/CheckSmsCertNum';
 
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomModal from '~/Common/Components/CustomModal';
@@ -34,7 +33,7 @@ class InvaildPasswd extends Component {
   _sendSmsCertNum = () => {
     Keyboard.dismiss();
 
-    const { phoneNum } = this.state;
+    const { email, name, phoneNum } = this.state;
 
     SendSmsCertNum(phoneNum).then(async result => {
       console.log(result);
@@ -44,10 +43,17 @@ class InvaildPasswd extends Component {
         this.setState({
           isAlertModal : true,
           resultMsg : `${phoneNum}로 6자리 인증번호를`,
-          resultMsg2 : `보내드렸습니다. 5분 내 인증번호를 입력해주세요!`,
+          resultMsg2 : `보내드렸습니다. 5분 내 인증번호를 입력해주세요!${result.data.certNum}`,
         })
 
-        this.props.action(result.data.smsSendId);
+        let data = { 
+          smsSendId : result.data.smsSendId,
+          email : email,
+          name : name,
+          phoneNum : phoneNum
+        }
+
+        this.props.action(data);
 
       } else {
         this.setState({
@@ -119,7 +125,7 @@ class InvaildPasswd extends Component {
             <View style={styles.fx2}>
               <CustomButton
                 onPress={this._sendSmsCertNum}
-                disabled={this.state.disableAuthBtn}
+                // disabled={this.state.disableAuthBtn}
                 WhiteLineBtn={true}
                 CustomBtnStyle={{height: 36}}
                 CustomFontStyle={{fontSize: 12}}
@@ -149,9 +155,9 @@ class InvaildPasswd extends Component {
           <View style={localStyles.inputBoxWrap}>
 
             <View style={localStyles.txtWrap}>
-              <Text style={{textAlign: 'center', color: color.whiteColor}}>김성찬님은 이메일로 가입되어있으며</Text>
-              <Text style={[{textAlign: 'center', color: color.whiteColor}, styles.mb12]}>회원님의 아이디는 rastid@naver.com 입니다</Text>
-              <Text style={{textAlign: 'center', color: color.whiteColor}}>지금 바로 로그인하러 이동하세요</Text>
+              <Text style={{textAlign: 'center', color: color.whiteColor}}>{this.state.name}님({this.state.email})의</Text>
+              <Text style={[{textAlign: 'center', color: color.whiteColor}, styles.mb12]}>본인확인이 완료되었습니다</Text>
+              <Text style={{textAlign: 'center', color: color.whiteColor}}>새롭게 사용하실 비밀번호를 입력해주세요</Text>
             </View>
             <Item regular style={[styles.mb14, styles.inputWhBackWhBo]}>
               <Input 
@@ -172,12 +178,11 @@ class InvaildPasswd extends Component {
               />
             </Item>
           </View>
-
         ) : (
           <View style={localStyles.blankBoxWrap}>
-            <Text style={{color: color.whiteColor}}>김성찬님은 이메일로 가입되어있으며</Text>
-            <Text style={[{color: color.whiteColor}, styles.mb12]}>회원님의 아이디는 rastid@naver.com 입니다</Text>
-            <Text style={{color: color.whiteColor}}>지금 바로 로그인하러 이동하세요</Text>
+            <Text style={{color: color.whiteColor}}>{this.state.name}님({this.state.email})의</Text>
+            <Text style={[{color: color.whiteColor}, styles.mb12]}>새로운 비밀번호가 설정되었습니다</Text>
+            <Text style={{color: color.whiteColor}}>지금 바로 로그인하러 이동해주세요</Text>
           </View>
         )
       )

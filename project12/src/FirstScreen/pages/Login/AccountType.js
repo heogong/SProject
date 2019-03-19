@@ -13,7 +13,7 @@ import { SUCCESS_RETURN_CODE, CLIENT_USER, CLIENT } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setUsrId, setUsrPw, setAccessToken, setRefreshToken } from '~/Redux/Actions';
+import { setUsrId, setUsrPw, setUsrNm, setUsrPhoneNum, setAccessToken, setRefreshToken } from '~/Redux/Actions';
 
 import NaverLogin from '../../Components/NaverLogin';
 import KakaoLogin from '../../Components/KakaoLogin';
@@ -119,10 +119,15 @@ class AccountType extends Component {
   _getUserInfo = () => {
     GetUserInfo().then(async result => {
       GetCommonData(result, this._getUserInfo).then(async resultData => {
+        console.log(result);
           if(resultData !== undefined) {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
 
               if(ResultBool) {
+
+                this.props.onSetUsrNm(resultData.data.usrNm);  // 리덕스 사용자 이름 SET
+                this.props.onSetUsrPhoneNum(resultData.data.usrPhoneNum); // 리덕스 사용자 번호 SET
+
                 // 클라이언트 사용자
                 if(resultData.data.usrTypeCd == CLIENT_USER) {
                   Actions.ClientMain();
@@ -306,6 +311,8 @@ let mapDispatchToProps = (dispatch) => {
   return {
       onSetUsrId: (value) => dispatch(setUsrId(value)),
       onSetUsrPw: (value) => dispatch(setUsrPw(value)),
+      onSetUsrNm: (value) => dispatch(setUsrNm(value)),
+      onSetUsrPhoneNum: (value) => dispatch(setUsrPhoneNum(value)),
       onSetAccessToken: (value) => dispatch(setAccessToken(value)),
       onSetRefreshToken: (value) => dispatch(setRefreshToken(value))
   }

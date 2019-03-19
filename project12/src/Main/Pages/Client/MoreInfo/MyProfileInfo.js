@@ -83,7 +83,7 @@ class MyProfileInfo extends Component {
               <Input value="1234" style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false} secureTextEntry={true}/>
 
               <CustomEtcButton
-                onPress={ Actions.ClientMyProfileModPhone }
+                onPress={ Actions.ClientMyProfileModPassword1 }
                 SmallBtn={true}
                 customStyle={{width: 80, marginTop: 10}}
               >

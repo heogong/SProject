@@ -8,6 +8,9 @@ import { Actions } from 'react-native-router-flux';
 
 import SendSmsCertNum from '~/FirstScreen/Functions/SendSmsCertNum';
 import CheckSmsCertNum from '~/FirstScreen/Functions/CheckSmsCertNum';
+import FindUserId from '~/FirstScreen/Functions/FindUserId';
+import FindUserPwd from '~/FirstScreen/Functions/FindUserPwd';
+import ChangeUserPwd from '~/FirstScreen/Functions/ChangeUserPwd';
 import InvaildPasswd from './InvaildPasswd';
 
 import CustomButton from '~/Common/Components/CustomButton';
@@ -19,6 +22,9 @@ import { color } from '~/Common/Styles/colors';
 
 let SMS_SEND_ID = null; // 인증 고유번호
 let PWD_AUTH_NUM = null; // 패스워드 탭 인증번호
+let PWD_EMAIL = null; // 패스워드 찾기 아이디(이메일)
+let PWD_NAME = null; // 패스워드 찾기 이름
+let PWD_PHONE_NUM = null; // 패스워드 찾기 폰번호 
 let PASSWD1 = null; // 패스워드 탭 비밀번호1
 let PASSWD2 = null; // 패스워드 탭 비밀번호1
 
@@ -29,6 +35,7 @@ class InvaildId extends Component {
       disableAuthBtn : true,
       disableNextBtn : true,
       disablePwdBtn1 : true,
+      usrId : '',
       name : '',
       phoneNum : '',
       authNum : '',
@@ -58,7 +65,7 @@ class InvaildId extends Component {
         this.setState({
           isAlertModal : true,
           resultMsg : `${phoneNum}로 6자리 인증번호를`,
-          resultMsg2 : `보내드렸습니다. 5분 내 인증번호를 입력해주세요!`,
+          resultMsg2 : `보내드렸습니다. 5분 내 인증번호를 입력해주세요!${result.data.certNum}`,
           disableNextBtn : false
         })
 
@@ -80,9 +87,7 @@ class InvaildId extends Component {
     CheckSmsCertNum(SMS_SEND_ID, this.state.authNum).then(async result => {
       const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 
       if(ResultBool) {
-        this.setState({
-          findId : true
-        });
+        this._findUserId();
       } else {
         this.setState({
           authErrorMsg : result.resultMsg
@@ -91,14 +96,33 @@ class InvaildId extends Component {
     })
   };
 
+  // 아이디 찾기 요청
+  _findUserId = () => {
+    const { name, phoneNum } = this.state;
+
+    FindUserId(name, phoneNum).then(async result => {
+      const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 
+      if(ResultBool) {
+        this.setState({
+          usrId : result.data.usrId,
+          findId : true
+        });
+      } else {
+        this.setState({
+          isAlertModal : true,
+          resultMsg : result.resultMsg,
+          resultMsg2 : null
+        })
+      }
+    })
+  }
+
   // SMS 인증 확인 - 비밀번호
   _checkPwdSmsCertNum = () => {
     CheckSmsCertNum(SMS_SEND_ID, PWD_AUTH_NUM).then(async result => {
       const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 
       if(ResultBool) {
-        this.setState({
-          passwdStatus : 1
-        });
+        this._findUserPwd();
       } else {
         this.setState({
           authPwdErrorMsg : result.resultMsg
@@ -106,6 +130,42 @@ class InvaildId extends Component {
       }
     })
   };
+
+   // 비밀번호 찾기 요청
+   _findUserPwd = () => {
+    FindUserPwd(PWD_EMAIL, PWD_NAME, PWD_PHONE_NUM).then(async result => {
+      const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 
+      if(ResultBool) {
+        this.setState({
+          passwdStatus : 1
+        });
+      } else {
+        this.setState({
+          isAlertModal : true,
+          resultMsg : result.resultMsg,
+          resultMsg2 : null
+        })
+      }
+    })
+  }
+
+  // 비밀번호 변경 요청
+  _changeUserPwd = () => {
+    ChangeUserPwd(PWD_EMAIL, PWD_NAME, PWD_PHONE_NUM, PASSWD2).then(async result => {
+      const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 
+      if(ResultBool) {
+        this.setState({
+          passwdStatus : 2
+        });
+      } else {
+        this.setState({
+          isAlertModal : true,
+          resultMsg : result.resultMsg,
+          resultMsg2 : null
+        })
+      }
+    })
+  }
 
 
   _chkAuthBtn = () => {
@@ -122,8 +182,12 @@ class InvaildId extends Component {
   }
 
   // 비밀번호 - 인증요청 성공 시
-  _activePwd1Button = (smsSendId) => {
-    SMS_SEND_ID = smsSendId;
+  _activePwd1Button = (returnData) => {
+    SMS_SEND_ID = returnData.smsSendId;
+    PWD_EMAIL = returnData.email;
+    PWD_NAME = returnData.name;
+    PWD_PHONE_NUM = returnData.phoneNum;
+
     this.setState({disablePwdBtn1 : false});
   }
 
@@ -143,7 +207,6 @@ class InvaildId extends Component {
    }
 
    _changePasswd = () => {
-
     //패스워드 유효성 검사 필요(null 여부 / 패턴 여부)
     if(PASSWD1 == '') {
       this.setState({
@@ -163,22 +226,8 @@ class InvaildId extends Component {
       return;
     }
 
-
     if(PASSWD1 == PASSWD2) {
-      // 패스워드 변경 
-      if(true) {
-
-        // 패스워드 변경 api 호출
-
-        this.setState({passwdStatus : 2})
-      } else {
-        this.setState({
-          isAlertModal : true,
-          resultMsg : reulst.resulMsg,
-          resultMsg2 : null
-        })
-      }
-
+      this._changeUserPwd();
     } else {
       this.setState({
         isAlertModal : true,
@@ -186,9 +235,7 @@ class InvaildId extends Component {
         resultMsg2 : null
       })
     }
-
-
-   }
+  }
 
 
   render() {
@@ -278,8 +325,8 @@ class InvaildId extends Component {
                 </View>
               ) : (
                 <View style={localStyles.blankBoxWrap}>
-                  <Text style={{color: color.whiteColor}}>김성찬님은 이메일로 가입되어있으며</Text>
-                  <Text style={[{color: color.whiteColor}, styles.mb12]}>회원님의 아이디는 rastid@naver.com 입니다</Text>
+                  <Text style={{color: color.whiteColor}}>{this.state.name}님은 이메일로 가입되어있으며</Text>
+                  <Text style={[{color: color.whiteColor}, styles.mb12]}>회원님의 아이디는 {this.state.usrId} 입니다</Text>
                   <Text style={{color: color.whiteColor}}>지금 바로 로그인하러 이동하세요</Text>
                 </View>
               )}
@@ -332,7 +379,7 @@ class InvaildId extends Component {
                   <CustomButton
                     onPress={ this._checkPwdSmsCertNum }
                     disabled={ this.state.disablePwdBtn1 }
-                    DefaultLineBtn={true}
+                    WhiteLineBtn={true}
                   >
                     확인
                   </CustomButton>

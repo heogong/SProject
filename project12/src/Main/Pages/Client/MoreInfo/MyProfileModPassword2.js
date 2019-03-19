@@ -7,6 +7,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import { Actions } from 'react-native-router-flux';
 
 import GetCommonData from '~/Common/Functions/GetCommonData';
+import ChangeUserPwd from '~/FirstScreen/Functions/ChangeUserPwd';
 
 import CustomHeader from "~/Common/Components/CustomHeader";
 import CustomButton from "~/Common/Components/CustomButton";
@@ -26,27 +27,33 @@ class MyProfileModPassword2 extends Component {
     };
   }
 
+    // 비밀번호 변경 요청
+    _changeUserPwd = () => {
+      ChangeUserPwd(PWD_EMAIL, PWD_NAME, PWD_PHONE_NUM, PASSWD2).then(async result => {
+        const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 
+        if(ResultBool) {
+          Actions.popTo("PartnerMoreInfo");
+        } else {
+          this.setState({
+            isAlertModal : true,
+            resultMsg : result.resultMsg
+          })
+        }
+      })
+    }
+
   _chkPasswd = () => {
     const { passwd1, passwd2 } = this.state;
 
     if(passwd1 == passwd2) {
-      //비밀번호 변경 API 호출
-      
-      if(true) {
-        Actions.popTo("PartnerMoreInfo");
-      } else {
-        this.setState({
-          isAlertModal : true,
-          resultMsg : resultData.resultMsg
-        })
-      }
-
+      this._changeUserPwd();
     } else {
       this.setState({
         isAlertModal : true,
         resultMsg : '비밀번호가 동일하지 않습니다.'
       })
     }
+    
 
     //체크 함수 호출
     // if(true) {

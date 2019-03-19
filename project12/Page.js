@@ -182,7 +182,7 @@ const PAGE = () => (
       <Scene key="TestInitPage" component={TestInitPage} type={ActionConst.RESET} />
       <Scene key="TestPageOne"  component={TestPageOne} title="TestPageOne" type={ActionConst.RESET} />
 
-      <Scene key="IntroPage" initial component={IntroPage} type={ActionConst.RESET} />
+      <Scene key="IntroPage" component={IntroPage} type={ActionConst.RESET} />
       <Scene key="InitPage"  component={InitPage} type={ActionConst.RESET} />
       
       {/* 안내페이지 */}
