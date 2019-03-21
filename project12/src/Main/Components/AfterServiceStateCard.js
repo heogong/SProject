@@ -22,7 +22,6 @@ class AfterServiceStateCard extends Component {
         super(props); 
 
         this.state = {
-            afterServiceData : this.props.data,
             latitude : null, 
             longitud : null,
 
@@ -33,7 +32,7 @@ class AfterServiceStateCard extends Component {
     }
 
     componentDidMount() {
-        if(this.state.afterServiceData.asPrgsStatCd == DEPARTURE.VALUE) {
+        if(this.props.data.asPrgsStatCd == DEPARTURE.VALUE) {
             
             // BackgroundGeolocation.checkStatus(({ isRunning }) => {
             //     if(isRunning) {
@@ -317,9 +316,9 @@ class AfterServiceStateCard extends Component {
             // </View>
             <View style={localStyles.topAsYesWrap}>
                 <View style={[styles.justiConStart, styles.alignItemsCenter, styles.mb10]}>
-                    <H1 style={localStyles.topTitleTxt}>{this.state.afterServiceData.asPrgsStatNm}</H1>
-                    <Text style={localStyles.topTxt}>{this.state.afterServiceData.bplaceAddr}</Text>
-                    <Text style={localStyles.topTxt}>{this.state.afterServiceData.bplaceAddrDtl}</Text>
+                    <H1 style={localStyles.topTitleTxt}>{this.props.data.asPrgsStatNm}</H1>
+                    <Text style={localStyles.topTxt}>{this.props.data.bplaceAddr}</Text>
+                    <Text style={localStyles.topTxt}>{this.props.data.bplaceAddrDtl}</Text>
                 </View>
                 <View style={[styles.justiConStart, styles.alignItemsCenter]}>
                     <View 
@@ -327,12 +326,14 @@ class AfterServiceStateCard extends Component {
                             styles.mb10,
                             styles.alignItemsCenter,
                             styles.justiConCenter]}>
-                        <Image soure={ {uri: this.state.afterServiceData.prdTypeImgUrl} } 
+                        <Image 
+                            soure={ {uri: this.props.data.prdTypeImgUrl} } 
+                            resizeMode="contain"
                             style={[styles.mb10, {
                             height : 100, 
-                            width : 100
+                            width : 100,
                             }]}/>
-                        <Text style={localStyles.topTxt}>{this.state.afterServiceData.prdTypeKoNm}</Text>
+                        <Text style={localStyles.topTxt}>{this.props.data.prdTypeKoNm}</Text>
                         <Text style={localStyles.topTxt2}>증상1. 냉동온도가 올라가지 않음 - 코드화 필요</Text>
                     </View>
                 </View>

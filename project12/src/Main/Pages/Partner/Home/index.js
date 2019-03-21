@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BackHandler, Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Badge, Container, H1, Text}  from "native-base";
 
-import { SUCCESS_RETURN_CODE, ARRIVE } from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, ARRIVE, DEPARTURE, COMPLETE_MATCH  } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
@@ -225,7 +225,7 @@ export default class Main extends Component {
                             <Text style={{fontSize: 24, color: "#038dbd", fontWeight: "bold"}}>{item.title}</Text>
                         </View>
                         <View style={[styles.fx1, styles.justiConCenter]}>
-                            <Text style={localStyles.guideBoxTxt}>{item.guideTxt1}</Text>
+                            <Text style={localStyles.guideBoxTxt}>{item.guideTxt1} 승인후</Text>
                             <Text style={localStyles.guideBoxTxt}>{item.guideTxt2}</Text>
                             <Text style={localStyles.guideBoxTxt}>{item.guideTxt3}</Text>
                         </View>
@@ -329,14 +329,14 @@ export default class Main extends Component {
                             AS_PRGS_ID = resultData.data.asPrgsMst.asPrgsId;
 
                             // A/S 출발 
-                            if(resultData.data.asPrgsMst.asPrgsStatCd == DEPARTURE.VALUE) {
+                            if(resultData.data.asPrgsMst.asPrgsStatCd == COMPLETE_MATCH.VALUE) {
                                 this._getAfterServiceDetail();
                             }
                             
                         // A/S 상태가 아닐경우 A/S 목록 조회
                         } else { 
-                            await this._getAfterService();
-                            await this._disPlayAfterService();
+                            this._getAfterService();
+                            
                         }
                     } else {
                         this.setState({
@@ -365,6 +365,7 @@ export default class Main extends Component {
                         })
                     }
                     this.setState({spinner : false});
+                    this._disPlayAfterService();
                 }
             });
         });
@@ -424,6 +425,7 @@ export default class Main extends Component {
     // 가이드 데이터 추가 : AS 호출 함수 interval로 인해 AS 표시 리스트는 가변적이지 않게 하기 위해 따로 함수로 지정
     _disPlayAfterService = () => {
         this.setState({displayData : this.state.data.concat(ENTRIES1)});
+        console.log("data : ", this.state.data);
     }
 
 
@@ -467,7 +469,7 @@ export default class Main extends Component {
                     textContent={'A/S 데이터를 불러오고 있습니다.'}
                     textStyle={styles.whiteFont}
                     style={{color: color.whiteColor}}
-                    overlayColor={"rgba(40, 200, 245, 1)"}
+                    overlayCologr={"rgba(40, 200, 245, 1)"}
                 />
                 <CustomHeader resetPage={true} title="쿨리닉"/>
 
@@ -477,10 +479,14 @@ export default class Main extends Component {
                         <PartnerWait/>
                     ) : (
                         // AS 요청 여부
-                        this.state.data.length > 0 ? (
+                        this.state.data.lenth > 0 ? (
                             <MatchingReq toggleModal={this._toggleModal} data={this.state.data[0]} /> 
                         ) : (
-                            <NoAfterService/>
+                            (this.state.afterServiceData.length !== null) ? (
+                                <View/>
+                            ) : (
+                                <NoAfterService/>
+                            )
                         )
                     )}
 
@@ -513,7 +519,7 @@ export default class Main extends Component {
                     
 
                         {/* A/S 접수 박스 */}
-                        {(this.state.afterServiceData.length > 0) ? (
+                        {(this.state.afterServiceData.length !== null) ? (
                             <AfterServiceStateCard
                                 data={ this.state.afterServiceData }
                                 asPrgsId={ AS_PRGS_ID }

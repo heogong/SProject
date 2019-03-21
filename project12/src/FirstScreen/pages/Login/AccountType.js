@@ -14,6 +14,7 @@ import { SUCCESS_RETURN_CODE, CLIENT_USER, CLIENT } from '~/Common/Blend';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrPw, setUsrNm, setUsrPhoneNum, setAccessToken, setRefreshToken } from '~/Redux/Actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import NaverLogin from '../../Components/NaverLogin';
 import KakaoLogin from '../../Components/KakaoLogin';
@@ -39,6 +40,9 @@ const ERROR_MSG = {
 class AccountType extends Component {
   constructor(props) {
     super(props);
+
+    this.secondTextInput = null;
+    
     this.state = {
       usrId: '', 
       usrPw: '',
@@ -162,6 +166,7 @@ class AccountType extends Component {
       // </CustomBasicWrapper>
 
       // <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
+      <KeyboardAwareScrollView enableOnAndroid={true}>
       <Container style={styles.containerInnerPd}>
         <CustomHeader />
 
@@ -182,18 +187,21 @@ class AccountType extends Component {
                   placeholder="이메일" 
                   style={styles.inputBox} 
                   placeholderTextColor={color.inputPlaceHodler}
+                  onSubmitEditing={() => { this.secondTextInput._root.focus(); }}
                 />
               </Item>
 
               <Item regular style={[styles.mb20, styles.inputWhBackWhBo]}>
                 <Icon active name="lock" style={localStyles.inputIcon}/>
                 <Input 
+                  ref={(input) => { this.secondTextInput = input; }}
                   onChangeText={ this._handlePasswdChange }
                   value={ this.state.text }
                   placeholder="비밀번호(영문, 숫자, 특수문자 8~15자)" 
                   style={styles.inputBox} 
                   placeholderTextColor={color.inputPlaceHodler}
                   secureTextEntry={true}
+                  onSubmitEditing={() => this._login()}
                 />
               </Item>
 
@@ -257,6 +265,7 @@ class AccountType extends Component {
         btnText="확인"
       />
       </Container>
+      </KeyboardAwareScrollView>
     )
   }
 }
