@@ -44,7 +44,7 @@ class MatchingWait extends Component {
       <Container style={styles.containerDefault}>
         <ImageBackground 
         style={[styles.succContentWrap, {backgroundColor: "rgba(40, 200, 245, 0.3)"}]}
-        source={require('./img/maching_effect.png')}>
+        source={require('./img/Matching_effect.gif')}>
           
           <Image source={require("./img/GPS_match_icon.png")} resizeMode="contain" style={{width: 17, alignSelf: "center", top: "50%", position: "absolute", marginTop: -40}} />
 

@@ -101,7 +101,8 @@ class RegProductDetail extends Component {
 
                 <View>
                   <Image source={require("./img/card_add_icon.png")} style={[localStyles.prdCardTopIconImg, styles.mb10]} />
-                  <Image source={require("./img/card_copy_icon.png")} style={localStyles.prdCardTopIconImg} />
+                  <Image source={require("./img/card_copy_icon.png")} style={[localStyles.prdCardTopIconImg, styles.mb10]} />
+                  <Image source={require("./img/card_mod_icon.png")} style={localStyles.prdCardTopIconImg} />
                 </View>
             </View>
 

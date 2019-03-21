@@ -79,6 +79,7 @@ import PartnerGuide1_1 from './PartnerGuide1_1';
 import PartnerGuide1_2 from './PartnerGuide1_2';
 import PartnerGuide2_1 from './PartnerGuide2_1';
 import PartnerGuide2_2 from './PartnerGuide2_2';
+import NoticeDetail from './NoticeDetail';
 
 import pageOne from './Page1'
 import pageTwo from './Page2'
@@ -93,7 +94,7 @@ const PAGE = () => (
             <Scene key="UserLogin" hideNavBar component={UserLogin} type={ActionConst.RESET}/>
             <Scene key="InvaildId" hideNavBar component={InvaildId} type={ActionConst.RESET}/>
             <Scene key="SelectJoinType" hideNavBar component={SelectJoinType} type={ActionConst.RESET}/>
-            <Scene key="JoinEmail"  initial hideNavBar component={JoinEmail} type={ActionConst.RESET}/>
+            <Scene key="JoinEmail" hideNavBar component={JoinEmail} type={ActionConst.RESET}/>
             <Scene key="JoinName" hideNavBar component={JoinName} type={ActionConst.RESET}/>
             <Scene key="JoinPhone" hideNavBar component={JoinPhone} type={ActionConst.RESET}/>
             <Scene key="JoinPhoneAuth" hideNavBar component={JoinPhoneAuth} type={ActionConst.RESET}/>
@@ -258,6 +259,7 @@ const PAGE = () => (
             <Scene key="MyProfileExit1" hideNavBar component={MyProfileExit1}  type={ActionConst.RESET}/>
             <Scene key="MyProfileExit2" hideNavBar component={MyProfileExit2}  type={ActionConst.RESET}/>
             <Scene key="NoticeList" hideNavBar component={NoticeList}  type={ActionConst.RESET}/>
+            <Scene initial key="NoticeDetail" hideNavBar component={NoticeDetail}  type={ActionConst.RESET}/>
             <Scene key="TermsMenu" hideNavBar component={TermsMenu}  type={ActionConst.RESET}/>
             <Scene key="TermsContent1" hideNavBar component={TermsContent1}  type={ActionConst.RESET}/>
 

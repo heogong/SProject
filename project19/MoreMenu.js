@@ -61,6 +61,8 @@ class MoreMenu extends Component {
               <Text style={localStyles.profileSubTxt}>rastid@naver.com</Text>
             </View>
 
+            {/* Partner 일때만 표출 */}
+            {/* 
             <View style={localStyles.btnProfileModWrap}>
               <Button 
                 onPress={() => this._toggleModal()}
@@ -68,13 +70,24 @@ class MoreMenu extends Component {
                 <Text style={[styles.btnDefaultSmallTxt, styles.btnDefaultNoFillTxt]}>내정보 수정</Text>
               </Button>
             </View>
+             */}
           </View>
 
           <View style={localStyles.quickBtnWrap}>
+             {/* Partner 일때만 표출 */}
+              {/*              
               <TouchableOpacity 
                 style={[localStyles.quickBtnBox, {borderRightColor: color.defaultColor, borderRightWidth: 1}]}
                 onPress={ () => alert("사진조회")}>
                 <Image source={require("./img/company_icon.png")} style={localStyles.quickBtnImg} />
+              </TouchableOpacity>
+              */}
+
+              {/* Client 일때만 표출 */}
+              <TouchableOpacity 
+                style={[localStyles.quickBtnBox, {borderRightColor: color.defaultColor, borderRightWidth: 1}]}
+                onPress={ () => alert("사진조회")}>
+                <Image source={require("./img/myinfo_icon.png")} style={localStyles.quickBtnImg} />
               </TouchableOpacity>
 
               <TouchableOpacity 

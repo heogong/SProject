@@ -80,6 +80,7 @@ class ListBusinessPlace extends Component {
             <View style={localStyles.placeBoxWrap}>
               <TouchableOpacity onPress={this._toggleModal} style={localStyles.closeIconWrap}>
                 <Image source={require('./img/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
+                <Image source={require('./img/card_mod_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
               </TouchableOpacity>
               <View style={localStyles.prdImgWrap}>
                 <Image source={require('./img/product/01_icon_white.png')} style={localStyles.prdImg}/>
@@ -213,9 +214,11 @@ const localStyles = StyleSheet.create({
   },
   closeIconWrap: {
     flexDirection: 'row',
-    alignSelf: 'flex-start',
-    marginLeft: 14,
-    marginTop: 14
+    justifyContent: 'space-between',
+    paddingLeft: 14,
+    paddingRight: 14,
+    marginTop: 14,
+    width: "100%"
   }
 });
 

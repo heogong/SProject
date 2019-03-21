@@ -192,9 +192,11 @@ const localStyles = StyleSheet.create({
   },
   closeIconWrap: {
     flexDirection: 'row',
-    alignSelf: 'flex-start',
-    marginLeft: 10,
-    marginTop: 10
+    justifyContent: 'space-between',
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginTop: 10,
+    width: "100%"
   }
 });
 
