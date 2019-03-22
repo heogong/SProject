@@ -228,6 +228,10 @@ class ListNotCompReport extends Component {
             <Button style={[styles.btnDefault, styles.btnDefaultFill, styles.mb5]}>
               <Text style={[styles.btnDefaultTxt, styles.btnDefaultFillTxt]}>제품등록완료</Text>
             </Button>
+            <View style={styles.warningWrap}>
+              <Text style={styles.warningTxt}>A/S 전·후 사진이 등록되지 않았습니다.</Text>
+              <Image source={require("./img/warning_icon.png")} resizeMode="contain" style={styles.warningImg} />
+            </View>
           </View>
 
         </View>

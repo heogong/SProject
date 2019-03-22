@@ -100,6 +100,10 @@ export const styles = StyleSheet.create({
     // ----------------------------
     // 공통 Style
     // ----------------------------
+    // Warning
+    warningWrap: {flexDirection: "row", alignItems: "center", width: "100%", justifyContent: "space-between"},
+    warningTxt: {fontSize: 12, color: color.warningColor},
+    warningImg: {height : 18, width : 18},
     // Select Box
     selectBoxWrap: {
       paddingLeft: 14,
