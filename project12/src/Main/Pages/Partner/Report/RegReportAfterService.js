@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { ImageBackground, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import { Container, Icon, Text, Item } from "native-base";
+import { Image, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
+import { Button, Container, Icon, Text, Item } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -8,18 +8,22 @@ import { Actions } from 'react-native-router-flux';
 
 import GetAfterServiceActionInfo from '~/Main/Functions/GetAfterServiceActionInfo';
 import RegAfterServiceReport from '~/Main/Functions/RegAfterServiceReport';
+import CompleteAfterService from '~/Main/Functions/CompleteAfterService';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import AfterServiceImage from '~/Main/Components/AfterServiceImage';
 
 import CustomHeader from "~/Common/Components/CustomHeader";
 import CustomButton from "~/Common/Components/CustomButton";
+import CustomEtcButton from "~/Common/Components/CustomEtcButton";
 import CustomModal from '~/Common/Components/CustomModal';
-import { styles } from '~/Common/Styles/common';
+import { styles, viewportWidth } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from "~/Common/Styles/colors";
 
 let BEFORE_IMG_CNT = 4; // 등록할 A/S 조치전 이미지 카운트
 let ALREADY_IMG_CNT = 0; // 이미 등록된 A/S 조치전 이미지 카운트
+let AS_PRGS_ID = null; // 
+let AS_RECV_ID = null; // 
 
 class RegReportBeforePic extends Component {
     constructor(props) {
@@ -35,6 +39,7 @@ class RegReportBeforePic extends Component {
         asCauseDsc : '',
         asActionDsc : '',
         btnDisabled : true,
+        isArriveModal : false,
         isAlertModal : false, //alert 용
         resultMsg : null // alert 결과 메세지
       };
@@ -44,8 +49,29 @@ class RegReportBeforePic extends Component {
     //     asPrgsId : 157 // test
     // }
 
-    componentWillMount() {
-        //this._getAfterServiceBeforeInfo();
+    componentDidMount() {
+        this._getAfterServiceBeforeInfo();
+    }
+
+     // 현재 나의(파트너) AS 진행 상태 체크
+     _getAfterServiceState = () => {
+        GetAfterServiceState().then(result => {
+            GetCommonData(result, this._getAfterServiceState).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log("현재 나의(파트너) AS 진행 상태 체크 : ", resultData);
+                    if(ResultBool) { 
+                        // AS_RECV_ID = resultData.data.asPrgsMst.asRecvId;
+                        // AS_PRGS_ID = resultData.data.asPrgsMst.asPrgsId;
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                    }
+                }
+            });
+        });
     }
 
     // AS 조치전 정보 조회
@@ -57,12 +83,17 @@ class RegReportBeforePic extends Component {
                     console.log("AS 조치전 정보 조회 : ", resultData);
                     if(ResultBool) {
 
+                        ALREADY_IMG_CNT = await resultData.data.images.length; // 등록된 조치전 이미지 카운트
+
+                        // 조치전 이미지 존재 시 A/S완료 버튼 활성화
+                        if(ALREADY_IMG_CNT > 0) {
+                            this._addBeforASImg();
+                        }
+
                         this.setState({
                             data : resultData.data,
-                            imgData : resultData.data.images,
+                            imgData : resultData.data.images
                         });
-
-                        ALREADY_IMG_CNT = resultData.data.images.length; // 등록된 조치전 이미지 카운트
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -85,7 +116,36 @@ class RegReportBeforePic extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        Actions.RegAsAfterReport({asPrgsId : this.props.asPrgsId});
+                        //Actions.RegAsAfterReport({asPrgsId : this.props.asPrgsId});
+                        this._completeAfterService();
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                    }
+                }
+            });
+        });
+    }
+
+     // 업체 AS 매칭(진행) 완료
+     _completeAfterService = () => {
+
+        CompleteAfterService(this.props.asPrgsId).then(result => {
+            GetCommonData(result, this._completeAfterService).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+
+                        Actions.PartnerMain();
+
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -99,11 +159,13 @@ class RegReportBeforePic extends Component {
 
     // 등록된 조치전 이미지 카운트 만큼 제거 후 draw
     _createBeforeAsImg = () => {
-        BEFORE_IMG_CNT -= ALREADY_IMG_CNT; 
+        let beforeImgCnt = BEFORE_IMG_CNT;
+
+        beforeImgCnt -= ALREADY_IMG_CNT; 
 
         let imageCompArray = [];
 
-        for (let i = 0; i < BEFORE_IMG_CNT; i++) {
+        for (let i = 0; i < beforeImgCnt; i++) {
             imageCompArray.push(<AfterServiceImage 
                 key={i + ALREADY_IMG_CNT} 
                 imgUrl={ null }
@@ -128,34 +190,10 @@ class RegReportBeforePic extends Component {
 
     render() {
         return (
-            // <ScrollView style={{flex:1}}>
-            //     <CustomHeader
-            //         title="A/S 보고서"
-            //         backBtn={ false }
-            //     />
-            //     <Card>
-            //         <CardItem>
-            //             <Text>{this.state.asData.asPrgsMst.asPrgsStatDSC}</Text>
-            //         </CardItem>
-            //         <CardItem cardBody>
-            //             <Text>상태 이미지</Text>
-            //         </CardItem>
-            //         <CardItem cardBody>
-            //             <CustomButton 
-            //                 bordered={ true }
-            //                 onPress={ () => alert("업체 전화연결") } >
-            //                 <Text>업체 전화연결</Text>
-            //             </CustomButton>
-            //             <CustomButton 
-            //                 bordered={ true }
-            //                 onPress={ () => alert("추가 A/S 진행") }>
-            //                 <Text>추가 A/S 진행</Text>
-            //             </CustomButton>
-            //         </CardItem>
-            //     </Card>
-            <Container style={styles.containerScroll}>
+            <Container style={styles.containerInnerPd}>
                 <CustomHeader />
                 <View style={styles.contentWrap}>
+                <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
 
                     <View style={{marginBottom: 30}}>
                         
@@ -176,22 +214,76 @@ class RegReportBeforePic extends Component {
                                 <View style={stylesReg.procBarOn} />
                                 <Text style={stylesReg.procBarTxt}>조치전사진</Text>
                             </View>
-                        <View style={styles.fx1}>
-                            <View style={stylesReg.procBarOff} />
-                            <Text style={stylesReg.procBarTxt}>조치전증상</Text>
-                        </View>
-                        <View style={styles.fx1}>
-                            <View style={stylesReg.procBarOff} />
-                            <Text style={stylesReg.procBarTxt}>조치후사진</Text>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOff} />
+                                <Text style={stylesReg.procBarTxt}>조치전증상</Text>
                             </View>
-                        <View style={styles.fx1}>
-                        <View style={stylesReg.procBarOff} />
-                        <Text style={stylesReg.procBarTxt}>수리한내역</Text>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOff} />
+                                <Text style={stylesReg.procBarTxt}>조치후사진</Text>
+                                </View>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOff} />
+                                <Text style={stylesReg.procBarTxt}>수리한내역</Text>
+                            </View>
                         </View>
-                        </View>
-                        
                     </View>
-                    <ScrollView showsVerticalScrollIndicator={false}>
+
+                    <View>
+                        <View>
+                            <View style={{backgroundColor : color.defaultColor, marginBottom: 32}}>
+                                <View>
+                                    <Text style={localStyles.asMatchStateDscTxt}>A/S 진행중입니다.</Text>
+                                    <View style={styles.fxDirRow}>
+                                        <View style={localStyles.asMatchIconWrap}>
+                                            <Image source={require("~/Common/Image/partner_as_step_icon/Default/as_wait_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                                            <Text style={localStyles.asMatchStateTxt}>A/S 대기</Text>
+                                        </View>
+                                        <View style={localStyles.asMatchIconWrap}>
+                                            <Image source={require("~/Common/Image/partner_as_step_icon/Default/as_start_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                                            <Text style={localStyles.asMatchStateTxt}>A/S 출발</Text>
+                                        </View>
+                                        <View style={localStyles.asMatchIconWrap}>
+                                            <Image source={require("~/Common/Image/partner_as_step_icon/Default/as_arrive_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                                            <Text style={localStyles.asMatchStateTxt}>A/S 도착</Text>
+                                        </View>
+                                        <View style={localStyles.asMatchIconWrap}>
+                                            <Image source={require("~/Common/Image/partner_as_step_icon/Step_on/as_progress_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                                            <Text style={[localStyles.asMatchStateTxt, {color: "#0364c8"}]}>A/S 진행</Text>
+                                        </View>
+                                        <View style={localStyles.asMatchIconWrap}>
+                                            <Image source={require("~/Common/Image/partner_as_step_icon/Default/as_complete_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
+                                            <Text style={localStyles.asMatchStateTxt}>A/S 완료</Text>
+                                        </View>
+                                    </View> 
+
+                                    <View style={[styles.modalBtnTwinWrap, styles.fx1, styles.justiConCenter, {marginTop: 18, marginBottom: 18}]}>
+                                        <View style={{marginRight: 9}}>
+                                            <CustomEtcButton
+                                                WhiteBackBtn={true}
+                                            >
+                                                업체전화연결
+                                            </CustomEtcButton>
+                                        </View>
+
+                                        <View style={{marginLeft: 9}}>
+                                            <CustomEtcButton 
+                                                onPress={() => Actions.RegAddAfterService({
+                                                    asPrgsId : this.props.asPrgsId,
+                                                    refreshActions : 
+                                                })}
+                                                ModalDefaultBtn={true}
+                                                modalCustomStyle={{backgroundColor: "#0397bd"}}>
+                                                추가A/S진행
+                                            </CustomEtcButton>
+                                        </View>
+                                    </View>
+
+                                </View>
+                            </View>
+
+                        </View>
+
                         <View>
                             <View>
                                 <View style={[localStyles.boxTitleWrap, styles.justiConCenter, styles.alignItemsCenter]}>
@@ -281,16 +373,29 @@ class RegReportBeforePic extends Component {
                                 </Item>
                             </View>
                         </View>
+                    </View>
 
-                        {/* TEST */}
-                        <CustomButton 
-                            onPress={ this._regAfterServiceReport }
+                     </ScrollView>
+
+                    <View style={styles.footerBtnWrap}>
+                        <CustomButton  
+                            onPress={ () => this.setState({isArriveModal : true}) }
                             disabled={this.state.btnDisabled}>
-                            넥스트
+                            A/S완료
                         </CustomButton>
-
-                    </ScrollView>
+                    </View>
                 </View>
+
+                <CustomModal
+                    modalType="CONFIRM"
+                    isVisible={this.state.isArriveModal}
+                    onPress1={() => this.setState({isArriveModal : false})}
+                    onPress2={this._regAfterServiceReport}
+                    infoText1="A/S 완료하시겠습니까?"
+                    infoText2="미작성된 보고서는 '보고서' 탭에서 작성하실 수 있습니다."
+                    btnText1="취소"
+                    btnText2="완료"
+                />
                 
                 {/* alert 메세지 모달 */}
                 <CustomModal
@@ -304,25 +409,89 @@ class RegReportBeforePic extends Component {
         )
     }
 }
+
+function wp (percentage, space) {
+    const value = (percentage * (viewportWidth - space)) / 100;
+    return Math.round(value);
+  }
   
-const localStyles = StyleSheet.create({
+  const asCardSize = wp(48, 72);
+  const stateImgSize = wp(15, 52);
+  
+  const localStyles = StyleSheet.create({
     boxTitleWrap: {
-        marginBottom: 20,
-        flexDirection: "row",
-        flex: 1
+      marginBottom: 20,
+      flexDirection: "row",
+      flex: 1
     },
     boxTitleTxt: {
-        flex: 1,
-        fontSize: 18,
-        color : "#038dbd",
-        fontWeight: "bold"
+      flex: 1,
+      fontSize: 18,
+      color : "#038dbd",
+      fontWeight: "bold"
     },
     prdPhotoWrap: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        flexWrap : 'wrap',
-        backgroundColor: color.defaultColor,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      flexWrap : 'wrap',
+      backgroundColor: color.defaultColor
+    },
+    prdPhoto: {
+      margin: 5,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor : color.defaultColor, 
+      height : asCardSize, 
+      width : asCardSize
+    },
+    prdPhotoBtnEn: {
+      height : 35,
+      width : "100%",
+      backgroundColor: 'rgba(40, 200, 245, 0.6)'
+    },
+    prdPhotoBtnTxt: {
+      fontSize: 14,
+      color: color.whiteColor,
+      textAlign: "center",
+      marginTop: 10
+    },
+    photoNoBoxWrap: {
+      flex: 5,
+      borderColor : "#c9cacb",
+      borderWidth : 1,
+      margin: 5,
+      height : asCardSize, 
+      width : asCardSize
+    },
+    photoNoBox: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: color.whiteColor
+    },
+    phototNoIcon: {
+      color: color.defaultColor,
+      fontSize: 50
+    },
+    asMatchStateDscTxt: {
+      marginBottom: 15,
+      textAlign:'center',
+      color: "#0364c8",
+      fontWeight: "bold",
+      fontSize: 16,
+      marginTop: 20
+  },
+    asMatchIconWrap: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    asMatchStateTxt: {
+        fontSize : 12,
+        color: color.whiteColor,
+        fontWeight: "bold",
+        marginTop: 10
     }
-});
+  });
 
 export default RegReportBeforePic;

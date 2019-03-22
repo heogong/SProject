@@ -166,8 +166,8 @@ class AccountType extends Component {
       // </CustomBasicWrapper>
 
       // <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
-      <KeyboardAwareScrollView enableOnAndroid={true}>
-      <Container style={styles.containerInnerPd}>
+      <KeyboardAwareScrollView enableOnAndroid={true} style={styles.containerInnerPd}>
+      {/* <Container style={styles.containerInnerPd}> */}
         <CustomHeader />
 
         <View style={styles.fx1}>
@@ -264,7 +264,7 @@ class AccountType extends Component {
         infoText={this.state.resultMsg}
         btnText="확인"
       />
-      </Container>
+      {/* </Container> */}
       </KeyboardAwareScrollView>
     )
   }

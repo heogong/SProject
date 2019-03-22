@@ -9,7 +9,7 @@ import BackgroundGeolocation from 'react-native-mauron85-background-geolocation'
 
 import ArriveAfterService from '~/Main/Functions/ArriveAfterService';
 import DepartureAfterService from '~/Main/Functions/DepartureAfterService';
-import CompleteAfterService from '~/Main/Functions/CompleteAfterService';
+import ProgressAfterService from '~/Main/Functions/ProgressAfterService';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomEtcButton from '~/Common/Components/CustomEtcButton';
@@ -32,6 +32,7 @@ class AfterServiceStateCard extends Component {
     }
 
     componentDidMount() {
+        this._getLocation();
         if(this.props.data.asPrgsStatCd == DEPARTURE.VALUE) {
             
             // BackgroundGeolocation.checkStatus(({ isRunning }) => {
@@ -58,8 +59,9 @@ class AfterServiceStateCard extends Component {
                 longitude : positon.coords.longitude
             })
         },
-        // (error) => {console.log(error.message)},
-        // {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
+        (error) => 
+        {console.log(error.message)},
+        {enableHighAccuracy: true, timeout: 10000}
         );
     }
 
@@ -155,7 +157,10 @@ class AfterServiceStateCard extends Component {
                         this._moveAfterServiceBackground();
                         this.props.getAfterServiceDetail();
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -167,6 +172,8 @@ class AfterServiceStateCard extends Component {
         await this._getLocation();
 
         const {latitude, longitude} = this.state;
+        console.log(latitude, longitude);
+
 
         ArriveAfterService(this.props.asPrgsId, latitude, longitude).then(result => {
             GetCommonData(result, this._arriveAfterService).then(async resultData => {
@@ -188,65 +195,25 @@ class AfterServiceStateCard extends Component {
         });
     }
 
-    // 업체 AS 매칭(진행) 완료
-    _completeAfterService = () => {
-        const {latitude, longitude} = this.state;
-
-        CompleteAfterService(this.props.asPrgsId, latitude, longitude).then(result => {
-            GetCommonData(result, this._completeAfterService).then(async resultData => {
+    // 업체 AS 매칭(진행) 진행
+    _progressAfterService = async () => {
+        ProgressAfterService(this.props.asPrgsId).then(result => {
+            GetCommonData(result, this._progressAfterService).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
+                    
                     if(ResultBool) {
-                        this._regReportAfterServiceConfirm();
+                        Actions.TakeBeforeAfterService({asPrgsId : this.props.asPrgsId});
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
         });
-    }
-
-    // A/S 출발 선택
-    _departureAfterServiceConfirm = () => {
-        this._getLocation();
-
-        Alert.alert(
-            '',
-            `A/S 출발하시겠습니까?`,
-            [
-                {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {text: '예', onPress: () => this._departureAfterService()},
-            ],
-            { cancelable: false }
-        )
-    }
-
-    // A/S 완료 선택
-    _completeAfterServiceConfirm = () => {
-        Alert.alert(
-            '',
-            '완료??',
-            [
-              // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-              {text: '취소', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-              {text: '수락', onPress: () => this._completeAfterService()},
-            ],
-            { cancelable: false }
-        )
-    }
-
-     // 보고서 작성 선택
-    _regReportAfterServiceConfirm = () => {
-        Alert.alert(
-            '',
-            `A/S 완료??\n 보고서 작성 고고`,
-            [
-                { text: '나중에 작성', onPress: () =>  Actions.reset('tabbar2') },
-                { text: '지금 작성', onPress: () => Actions.RegAsBeforeReport({asPrgsId : this.props.asPrgsId}) },
-            ],
-            { cancelable: false }
-        )
     }
 
     _departureAfterServiceBackgroundStop = () => {
@@ -334,7 +301,7 @@ class AfterServiceStateCard extends Component {
                             width : 100,
                             }]}/>
                         <Text style={localStyles.topTxt}>{this.props.data.prdTypeKoNm}</Text>
-                        <Text style={localStyles.topTxt2}>증상1. 냉동온도가 올라가지 않음 - 코드화 필요</Text>
+                        <Text style={localStyles.topTxt2}>{this.props.data.asItemNm}</Text>
                     </View>
                 </View>
                 <View style={styles.fxDirRow}>
@@ -349,19 +316,45 @@ class AfterServiceStateCard extends Component {
                     </View>
 
                     <View style={{marginLeft: 9}}>
-                        <CustomEtcButton 
-                            onPress={this._arriveAfterService}
-                        >
-                            도착완료
-                        </CustomEtcButton>
+                        {(this.props.data.asPrgsStatCd == COMPLETE_MATCH.VALUE) ? (
+                            <CustomEtcButton 
+                                onPress={this._departureAfterService}
+                            >
+                                A/S 출발
+                            </CustomEtcButton>
+
+                        ) : (
+                            (this.props.data.asPrgsStatCd == DEPARTURE.VALUE) ? (
+                                <CustomEtcButton 
+                                    onPress={this._arriveAfterService}
+                                >
+                                    도착완료
+                                </CustomEtcButton>
+                            ) : (
+                                (this.props.data.asPrgsStatCd == ARRIVE.VALUE) ? (
+                                <CustomEtcButton 
+                                    onPress={this._progressAfterService}
+                                >
+                                    A/S 진행
+                                </CustomEtcButton>
+                                ) : (
+                                    <CustomEtcButton 
+                                        onPress={() => Actions.RegReportAfterService({asPrgsId : this.props.asPrgsId})}
+                                    >
+                                        보고서등록
+                                    </CustomEtcButton>
+                                )
+                            )
+                        )}
+                        
                     </View>
                 </View>
 
                 <CustomModal
                     modalType="CONFIRM"
                     isVisible={this.state.isArriveModal}
-                    onPress1={() => Actions.TakeBeforeAfterService(this.props.asPrgsId)}
-                    onPress2={() => alert("ddddd")}
+                    onPress1={this._progressAfterService}
+                    onPress2={() => alert("전화연결 - 개발중")}
                     infoText1="A/S 진행 또는 업체와 전화연결을 선택하세요"
                     btnText1="A/S 진행"
                     btnText2="전화연결"
