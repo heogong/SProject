@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { StyleSheet, View, TextInput } from 'react-native'
 import { Container, Text, Item, Input } from "native-base";
 
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+
+import { Actions } from 'react-native-router-flux';
+
 import AddPayAfterService from '~/Main/Functions/AddPayAfterService';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
@@ -31,7 +35,7 @@ class RegAddAfterService extends Component {
 
   // 업체 AS 추가 진행(결제) 요청
   _addPayAfterService = () => {
-
+    this.setState({isModalVisible : false});
     const {asText, asCost, asComment} = this.state;
 
     AddPayAfterService(this.props.asPrgsId, asText, asCost, asComment).then(result => {
@@ -40,9 +44,8 @@ class RegAddAfterService extends Component {
                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                 console.log(resultData);
                 if(ResultBool) {
-
+                    this.props.refreshActions();
                     Actions.pop();
-                    
                 } else {
                     this.setState({
                         isAlertModal : true,
@@ -56,7 +59,7 @@ class RegAddAfterService extends Component {
 
   // 등록완료 버튼 활성화 체크
   _chkNextButton = () => {
-    const lenChkNum = 5; // 5글자 이상 
+    const lenChkNum = 3; // 5글자 이상 
     const {asText, asCost, asComment} = this.state;
 
     if(asText.length >= lenChkNum && asCost.length >= lenChkNum && asComment.length >= lenChkNum) {
@@ -135,7 +138,7 @@ class RegAddAfterService extends Component {
             modalType="CONFIRM"
             isVisible={this.state.isModalVisible}
             onPress1={this._toggleModal}
-            onPress2={this._toggleModal}
+            onPress2={this._addPayAfterService}
             infoText1="추가 A/S에 대한 내역을 청구합니다."
             infoText2={`추가비용 : ${this.state.asCost}원`}
             btnText1="취소"

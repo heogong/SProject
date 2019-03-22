@@ -5,13 +5,16 @@ import { Container, Icon, H3, Text } from "native-base";
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import GetAfterServiceIncomplete from '~/Main/Functions/GetAfterServiceIncomplete';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from "~/Common/Components/CustomHeader";
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from "~/Common/Styles/colors";
 
 function pad(n, width) {
     n = n + '';
@@ -19,7 +22,7 @@ function pad(n, width) {
 }
 
 const Product = ({report}) => (
-    <TouchableOpacity onPress={ () => Actions.RegAddAfterService({asPrgsId : report.asPrgsId}) }>
+    <TouchableOpacity onPress={ () => Actions.RegReportAfterService2({asPrgsId : report.asPrgsId}) }>
       <View style={[styles.listPrdBoxFillWrap, {height: 120}]}>
         <View style={[styles.listPrdBoxImgWrap ,{marginTop: 4}]}>
           <Image 
@@ -58,11 +61,15 @@ class ListInCompleteReport extends Component {
       super(props);
 
       this.state =  {
-        data : []
+        data : [],
+        isAlertModal : false, // alert 용
+        resultMsg : null, // alert 용
+        spinner : false
       };
     }
 
     componentDidMount() {
+        this.setState({spinner : true});
         this._getAfterServiceIncomplete();
     }
 
@@ -76,8 +83,12 @@ class ListInCompleteReport extends Component {
                     if(ResultBool) {
                         this.setState({ data : resultData.data });
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
+                    this.setState({spinner : false});
                 }
             });
         });
@@ -116,6 +127,15 @@ class ListInCompleteReport extends Component {
             //     )}
             // </CustomBlockWrapper>
             <Container style={(this.state.data.length > 0) ? styles.containerScroll : styles.containerInnerPd}>
+
+                <Spinner
+                    overlayCologr={"rgba(40, 200, 245, 1)"}
+                    visible={this.state.spinner}
+                    textContent={'미작성 보고서를 불러오고 있습니다.'}
+                    textStyle={styles.whiteFont}
+                    style={{color: color.whiteColor}}
+                />
+
                 <CustomHeader />
 
                 <View style={{marginBottom: 36}}>
@@ -153,6 +173,15 @@ class ListInCompleteReport extends Component {
                     </View>
 
                 )}
+
+                {/* alert 메세지 모달 */}
+                <CustomModal
+                    modalType="ALERT"
+                    isVisible={this.state.isAlertModal}
+                    onPress={ () => this.setState({isAlertModal : false})}
+                    infoText={this.state.resultMsg}
+                    btnText="확인"
+                />
             </Container>
         )
     }

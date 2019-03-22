@@ -62,7 +62,11 @@ const MatchingReq = ({toggleModal, data}) => (
                 </View>
                 <View style={styles.modalBtnWrap}>
                     <CustomEtcButton 
-                        onPress={toggleModal}
+                        onPress={() => { 
+                            AS_PRGS_ID = data.asPrgsId, 
+                            AS_RECV_ID = data.asRecvId
+                            toggleModal()
+                        }}
                     >
                         매칭수락
                     </CustomEtcButton>
@@ -328,13 +332,6 @@ export default class Main extends Component {
                             AS_RECV_ID = resultData.data.asPrgsMst.asRecvId;
                             AS_PRGS_ID = resultData.data.asPrgsMst.asPrgsId;
 
-                            // A/S 매칭완료
-                            // if(resultData.data.asPrgsMst.asPrgsStatCd == COMPLETE_MATCH.VALUE) {
-                            //     this._getAfterServiceDetail();
-                            // } else if(resultData.data.asPrgsMst.asPrgsStatCd == DEPARTURE.VALUE) { // A/S 출발
-                            //     this._getAfterServiceDetail();
-                            // } 
-
                             this._getAfterServiceDetail();
                             
                         // A/S 상태가 아닐경우 A/S 목록 조회
@@ -403,7 +400,13 @@ export default class Main extends Component {
 
     // 업체 AS 매칭(진행) 수락
     _regAfterServiceMatch = () => {
-        this.setState({ isModalVisible : false });
+        
+        this.setState({ 
+            spinner : true,
+            isModalVisible : false,
+            data : [],
+            displayData : []
+        });
 
         RegAfterServiceMatch(AS_PRGS_ID).then(result => {
             GetCommonData(result, this._regAfterServiceMatch).then(async resultData => {
@@ -422,7 +425,6 @@ export default class Main extends Component {
                         })
 
                         this._getAfterService(); // 
-
                     }
                 }
             });
@@ -486,13 +488,14 @@ export default class Main extends Component {
                         <PartnerWait/>
                     ) : (
                         // AS 요청 여부
-                        this.state.data.lenth > 0 ? (
+                        this.state.data.length > 0 ? (
                             <MatchingReq toggleModal={this._toggleModal} data={this.state.data[0]} /> 
                         ) : (
-                            (this.state.afterServiceData.length !== null) ? (
+                            (this.state.afterServiceData.length !== 0) ? (
                                 <View/>
                             ) : (
-                                <NoAfterService/>
+                                // A/S 요청 없음
+                                <NoAfterService/> 
                             )
                         )
                     )}
@@ -525,18 +528,16 @@ export default class Main extends Component {
                     </View> 
                     
 
-                        {/* A/S 접수 박스 */}
-                        {(this.state.afterServiceData.length !== null) ? (
-                            <AfterServiceStateCard
-                                data={ this.state.afterServiceData }
-                                asPrgsId={ AS_PRGS_ID }
-                                getAfterServiceDetail={this._getAfterServiceDetail}
-                            />
-                        ) : (
-                            <View></View>
-                        )}
-
-
+                    {/* A/S 접수 박스 */}
+                    {(this.state.afterServiceData.length !== 0) ? (
+                        <AfterServiceStateCard
+                            data={ this.state.afterServiceData }
+                            asPrgsId={ AS_PRGS_ID }
+                            getAfterServiceDetail={this._getAfterServiceDetail}
+                        />
+                    ) : (
+                        <View/>
+                    )}
                         {/* 테스트
                         <AfterServiceStateCard
                             data={ this.state.afterServiceData }
@@ -551,7 +552,7 @@ export default class Main extends Component {
 
                         {/* 미작성 보고서 여부 */}
                         {(this.state.reportCount > 0) ? (
-                            <RequestReport action={ Actions.PartnerReport } count={this.state.reportCount}/>
+                            <RequestReport action={ Actions.ListInCompleteReport } count={this.state.reportCount}/>
                         ) : (
                             <GuideReport/>
                         )}

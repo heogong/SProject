@@ -168,7 +168,9 @@ class AfterServiceImage extends Component {
 
     // AS 조치전/후 사진 수정
     _editAfterServiceImg = () => {
-        EditAfterServiceImg(this.props.beforeAction, SOURCE.uri, this.props.imgId ).then(result => {
+        let imgId = (this.props.imgId !== null) ? this.props.imgId : IMG_ID;
+        
+        EditAfterServiceImg(this.props.beforeAction, SOURCE.uri, imgId ).then(result => {
             GetCommonData(result, this._delAfterServiceImg).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인

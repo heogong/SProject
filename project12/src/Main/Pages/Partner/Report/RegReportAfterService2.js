@@ -50,8 +50,8 @@ class RegReportBeforePic extends Component {
     // }
 
     componentWillMount() {
-        // this._getAfterServiceBeforeInfo();
-        // this._getAfterServiceAfterInfo();
+        this._getAfterServiceBeforeInfo();
+        this._getAfterServiceAfterInfo();
     }
 
     // AS 조치전 정보 조회
@@ -62,14 +62,14 @@ class RegReportBeforePic extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log("AS 조치전 정보 조회 : ", resultData);
                     if(ResultBool) {
+                        ALREADY_BEFORE_IMG_CNT = resultData.data.images.length; // 등록된 조치전 이미지 카운트
+                        CURRENT_BEFORE_IMG_CNT = ALREADY_BEFORE_IMG_CNT;
 
                         this.setState({
                             beforeData : resultData.data,
                             beforeImgData : resultData.data.images,
+                            asCauseDsc : resultData.data.info.asCauseDsc
                         });
-
-                        ALREADY_BEFORE_IMG_CNT = resultData.data.images.length; // 등록된 조치전 이미지 카운트
-                        CURRENT_BEFORE_IMG_CNT = ALREADY_BEFORE_IMG_CNT;
 
                         // if(resultData.data.info !== null) {
                         //     this.setState({
@@ -97,14 +97,14 @@ class RegReportBeforePic extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log("AS 조치후 정보 조회 : ", resultData);
                     if(ResultBool) {
+                        ALREADY_AFTER_IMG_CNT = resultData.data.images.length; // 등록된 조치전 이미지 카운트
+                        CURRENT_AFTER_IMG_CNT = ALREADY_AFTER_IMG_CNT;
 
                         this.setState({
                             afterData : resultData.data,
                             afterImgData : resultData.data.images,
+                            asActionDsc : resultData.data.info.asActionDsc
                         });
-
-                        ALREADY_AFTER_IMG_CNT = resultData.data.images.length; // 등록된 조치전 이미지 카운트
-                        CURRENT_AFTER_IMG_CNT = ALREADY_AFTER_IMG_CNT;
 
                     } else {
                         this.setState({
@@ -119,7 +119,7 @@ class RegReportBeforePic extends Component {
 
     // AS 보고서 기본 정보 등록
     _regAfterServiceReport = () => {
-        const method ='POST'; // AS 조치전 정보 조회 정보 여부에 따른 메소드 값
+        const method ='PUT'; // AS 조치전 정보 조회 정보 여부에 따른 메소드 값
         const { asCauseDsc, asActionDsc } = this.state;
 
         RegAfterServiceReport(this.props.asPrgsId, asCauseDsc, asActionDsc, method).then(result => {
@@ -128,7 +128,11 @@ class RegReportBeforePic extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        Actions.RegAsAfterReport({asPrgsId : this.props.asPrgsId});
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                        //Actions.RegAsAfterReport({asPrgsId : this.props.asPrgsId});
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -142,14 +146,17 @@ class RegReportBeforePic extends Component {
 
     // 등록된 조치전 이미지 카운트 만큼 제거 후 draw
     _createBeforeAsImg = () => {
-        BEFORE_IMG_CNT -= ALREADY_BEFORE_IMG_CNT; 
+        let beforeImgCnt = BEFORE_IMG_CNT;
+
+        beforeImgCnt -= ALREADY_BEFORE_IMG_CNT; 
 
         let imageCompArray = [];
 
-        for (let i = 0; i < BEFORE_IMG_CNT; i++) {
+        for (let i = 0; i < beforeImgCnt; i++) {
             imageCompArray.push(<AfterServiceImage 
                 key={i + ALREADY_BEFORE_IMG_CNT} 
                 imgUrl={ null }
+                imgId={ null }
                 asPrgsId={ this.props.asPrgsId }
                 beforeAction={ true }
                 takeBeforeImageAction={ this._addBeforASImg }
@@ -160,14 +167,16 @@ class RegReportBeforePic extends Component {
 
     // 등록된 조치후 이미지 카운트 만큼 제거 후 draw
     _createAfterAsImg = () => {
-        AFTER_IMG_CNT -= ALREADY_AFTER_IMG_CNT; 
+        let afterImgCnt = AFTER_IMG_CNT;
 
+        afterImgCnt -= ALREADY_AFTER_IMG_CNT; 
         let imageCompArray = [];
 
-        for (let i = 0; i < AFTER_IMG_CNT; i++) {
+        for (let i = 0; i < afterImgCnt; i++) {
             imageCompArray.push(<AfterServiceImage 
                 key={i + ALREADY_AFTER_IMG_CNT} 
                 imgUrl={ null }
+                imgId={ null }
                 asPrgsId={ this.props.asPrgsId }
                 beforeAction={ false }
                 takeAfterImageAction={ this._addAfterASImg }
@@ -218,6 +227,7 @@ class RegReportBeforePic extends Component {
             <Container style={styles.containerScroll}>
                 <CustomHeader />
                 <View style={styles.contentWrap}>
+                <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
 
                     <View style={{marginBottom: 30}}>
                         
@@ -253,7 +263,7 @@ class RegReportBeforePic extends Component {
                         </View>
                         
                     </View>
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                    <View>
                         <View>
                             <View>
                                 <View style={[localStyles.boxTitleWrap, styles.justiConCenter, styles.alignItemsCenter]}>
@@ -273,6 +283,7 @@ class RegReportBeforePic extends Component {
                                             imgUrl={ beforeImg.fileUrl }
                                             imgId={ beforeImg.imgId }
                                             asPrgsId={ this.props.asPrgsId }
+                                            takeBeforeImageAction={ this._addBeforASImg }
                                         />
                                     )}
                                     
@@ -312,6 +323,7 @@ class RegReportBeforePic extends Component {
                                             imgId={ afterImg.imgId }
                                             beforeAction={ false }
                                             asPrgsId={ this.props.asPrgsId }
+                                            takeAfterImageAction={ this._addAfterASImg }
                                         />
                                     )}
                                     
@@ -329,17 +341,19 @@ class RegReportBeforePic extends Component {
                                         style={styles.textInputBox1}
                                     />
                                 </Item>
+                                </View>
                             </View>
                         </View>
 
-                        {/* TEST */}
-                        <CustomButton 
-                            onPress={ this._regAfterServiceReport }
-                            disabled={this.state.btnDisabled}>
-                            넥스트
-                        </CustomButton>
-
                     </ScrollView>
+
+                        <View style={styles.footerBtnWrap}>
+                            <CustomButton  
+                                onPress={ this._regAfterServiceReport }
+                                disabled={this.state.btnDisabled}>
+                                등록완료
+                            </CustomButton>
+                        </View>
                 </View>
                 
                 {/* alert 메세지 모달 */}

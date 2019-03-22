@@ -4,9 +4,10 @@ import { Button, Container, Icon, Text, Item } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst} from 'react-native-router-flux';
 
 import GetAfterServiceActionInfo from '~/Main/Functions/GetAfterServiceActionInfo';
+import GetAfterServiceState from '~/Main/Functions/GetAfterServiceState';
 import RegAfterServiceReport from '~/Main/Functions/RegAfterServiceReport';
 import CompleteAfterService from '~/Main/Functions/CompleteAfterService';
 import GetCommonData from '~/Common/Functions/GetCommonData';
@@ -22,8 +23,6 @@ import { color } from "~/Common/Styles/colors";
 
 let BEFORE_IMG_CNT = 4; // 등록할 A/S 조치전 이미지 카운트
 let ALREADY_IMG_CNT = 0; // 이미 등록된 A/S 조치전 이미지 카운트
-let AS_PRGS_ID = null; // 
-let AS_RECV_ID = null; // 
 
 class RegReportBeforePic extends Component {
     constructor(props) {
@@ -50,6 +49,7 @@ class RegReportBeforePic extends Component {
     // }
 
     componentDidMount() {
+        this._getAfterServiceState();
         this._getAfterServiceBeforeInfo();
     }
 
@@ -61,8 +61,7 @@ class RegReportBeforePic extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log("현재 나의(파트너) AS 진행 상태 체크 : ", resultData);
                     if(ResultBool) { 
-                        // AS_RECV_ID = resultData.data.asPrgsMst.asRecvId;
-                        // AS_PRGS_ID = resultData.data.asPrgsMst.asPrgsId;
+                        this.setState({asData : resultData.data});
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -107,6 +106,8 @@ class RegReportBeforePic extends Component {
 
     // AS 보고서 기본 정보 등록
     _regAfterServiceReport = () => {
+        this.setState({isArriveModal : false});
+
         const method ='POST'; // AS 조치전 정보 조회 정보 여부에 따른 메소드 값
         const { asCauseDsc, asActionDsc } = this.state;
 
@@ -139,13 +140,15 @@ class RegReportBeforePic extends Component {
                     console.log(resultData);
                     if(ResultBool) {
 
-                        this.setState({
-                            isAlertModal : true,
-                            resultMsg : resultData.resultMsg
-                        })
+                        // this.setState({
+                        //     isAlertModal : true,
+                        //     resultMsg : resultData.resultMsg
+                        // })
 
-                        Actions.PartnerMain();
-
+                        //Actions.PartnerMain({type:'replace'})
+                        // Actions.replace('PartnerMain')
+                        // Actions.PartnerMain({type:ActionConst.REPLACE})
+                        Actions.PartnerMain({type:ActionConst.REPLACE})
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -169,6 +172,7 @@ class RegReportBeforePic extends Component {
             imageCompArray.push(<AfterServiceImage 
                 key={i + ALREADY_IMG_CNT} 
                 imgUrl={ null }
+                imgId={ null }
                 asPrgsId={ this.props.asPrgsId }
                 beforeAction={ true }
                 takeBeforeImageAction={ this._addBeforASImg }
@@ -190,8 +194,8 @@ class RegReportBeforePic extends Component {
 
     render() {
         return (
-            <Container style={styles.containerInnerPd}>
-                <CustomHeader />
+            <Container style={styles.containerScroll}>
+                <CustomHeader resetPage={true} />
                 <View style={styles.contentWrap}>
                 <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
 
@@ -233,7 +237,7 @@ class RegReportBeforePic extends Component {
                         <View>
                             <View style={{backgroundColor : color.defaultColor, marginBottom: 32}}>
                                 <View>
-                                    <Text style={localStyles.asMatchStateDscTxt}>A/S 진행중입니다.</Text>
+                                    <Text style={localStyles.asMatchStateDscTxt}>{this.state.asData.asPrgsMst.asPrgsStatDsc}</Text>
                                     <View style={styles.fxDirRow}>
                                         <View style={localStyles.asMatchIconWrap}>
                                             <Image source={require("~/Common/Image/partner_as_step_icon/Default/as_wait_icon.png")} resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}} />
@@ -270,7 +274,7 @@ class RegReportBeforePic extends Component {
                                             <CustomEtcButton 
                                                 onPress={() => Actions.RegAddAfterService({
                                                     asPrgsId : this.props.asPrgsId,
-                                                    refreshActions : 
+                                                    refreshActions : this._getAfterServiceState 
                                                 })}
                                                 ModalDefaultBtn={true}
                                                 modalCustomStyle={{backgroundColor: "#0397bd"}}>
@@ -336,24 +340,28 @@ class RegReportBeforePic extends Component {
 
                                     <AfterServiceImage 
                                         imgUrl={ null }
+                                        imgId={ null }
                                         asPrgsId={ this.props.asPrgsId }
                                         beforeAction={ false }
                                         takeAfterImageAction={ this._addAfterASImg }
                                     />
                                     <AfterServiceImage 
                                         imgUrl={ null }
+                                        imgId={ null }
                                         asPrgsId={ this.props.asPrgsId }
                                         beforeAction={ false }
                                         takeAfterImageAction={ this._addAfterASImg }
                                     />
                                     <AfterServiceImage 
                                         imgUrl={ null }
+                                        imgId={ null }
                                         asPrgsId={ this.props.asPrgsId }
                                         beforeAction={ false }
                                         takeAfterImageAction={ this._addAfterASImg }
                                     />
                                     <AfterServiceImage 
                                         imgUrl={ null }
+                                        imgId={ null }
                                         asPrgsId={ this.props.asPrgsId }
                                         beforeAction={ false }
                                         takeAfterImageAction={ this._addAfterASImg }

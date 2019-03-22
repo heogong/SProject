@@ -23,7 +23,7 @@ class AfterServiceStateCard extends Component {
 
         this.state = {
             latitude : null, 
-            longitud : null,
+            longitude : null,
 
             isArriveModal : false,
             isAlertModal : false, //alert 용
@@ -33,6 +33,7 @@ class AfterServiceStateCard extends Component {
 
     componentDidMount() {
         this._getLocation();
+
         if(this.props.data.asPrgsStatCd == DEPARTURE.VALUE) {
             
             // BackgroundGeolocation.checkStatus(({ isRunning }) => {
@@ -53,15 +54,15 @@ class AfterServiceStateCard extends Component {
     // 현재 위치 조회
     _getLocation() {
         navigator.geolocation.getCurrentPosition(
-        (positon) => {
-            this.setState({
-                latitude : positon.coords.latitude,
-                longitude : positon.coords.longitude
-            })
-        },
-        (error) => 
-        {console.log(error.message)},
-        {enableHighAccuracy: true, timeout: 10000}
+            (positon) => {
+                this.setState({
+                    latitude : positon.coords.latitude,
+                    longitude : positon.coords.longitude
+                })
+            },
+            (error) => 
+            {console.log(error.message)},
+            {enableHighAccuracy: false, timeout: 10000}
         );
     }
 
@@ -171,9 +172,7 @@ class AfterServiceStateCard extends Component {
     _arriveAfterService = async () => {
         await this._getLocation();
 
-        const {latitude, longitude} = this.state;
-        console.log(latitude, longitude);
-
+        const {latitude, longitude} = await this.state;
 
         ArriveAfterService(this.props.asPrgsId, latitude, longitude).then(result => {
             GetCommonData(result, this._arriveAfterService).then(async resultData => {
@@ -197,6 +196,7 @@ class AfterServiceStateCard extends Component {
 
     // 업체 AS 매칭(진행) 진행
     _progressAfterService = async () => {
+        this.setState({isArriveModal : false});
         ProgressAfterService(this.props.asPrgsId).then(result => {
             GetCommonData(result, this._progressAfterService).then(async resultData => {
                 if(resultData !== undefined) {
@@ -204,7 +204,8 @@ class AfterServiceStateCard extends Component {
                     console.log(resultData);
                     
                     if(ResultBool) {
-                        Actions.TakeBeforeAfterService({asPrgsId : this.props.asPrgsId});
+                        //Actions.TakeBeforeAfterService({asPrgsId : this.props.asPrgsId});
+                        Actions.RegReportAfterService({asPrgsId : this.props.asPrgsId});
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -308,7 +309,7 @@ class AfterServiceStateCard extends Component {
 
                     <View style={{marginRight: 9}}>
                         <CustomEtcButton 
-                            onPress={Actions.ViewAfterServiceMatch}
+                            onPress={() => Actions.ViewAfterServiceMatch({asRecvId : this.props.data.asRecvId})}
                             WhiteBackBtn={true}
                         >
                             상세정보
