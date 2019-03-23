@@ -220,10 +220,16 @@ class ClientHome extends Component {
   render() {
     return (
         <Container style={[styles.fx1, {backgroundColor: color.defaultColor}]}>
-          <CustomHeader 
-            resetPage={true}
-            title="쿨리닉"
-          />
+          <Header style={[styles.headerM, styles.noPadding]}>
+            <Left style={styles.headerLeftWrap}/>
+            <Body style={styles.headerCenterWrap}>
+              <View style={styles.headerTitleTxt}>
+                  <Image source={require("~/Common/Image/Logo_main.png")} resizeMode="contain" style={styles.headerLogoImg} />
+              </View>
+            </Body>
+            <Right style={styles.headerRightWrap}/>
+          </Header>
+
           <ScrollView showsVerticalScrollIndicator={false}>
 
           { (this.state.asPrgsYn == 'Y') ? (

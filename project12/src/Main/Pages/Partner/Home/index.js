@@ -480,7 +480,15 @@ export default class Main extends Component {
                     style={{color: color.whiteColor}}
                     overlayCologr={"rgba(40, 200, 245, 1)"}
                 />
-                <CustomHeader resetPage={true} title="쿨리닉"/>
+                <Header style={[styles.headerM, styles.noPadding]}>
+                    <Left style={styles.headerLeftWrap}/>
+                    <Body style={styles.headerCenterWrap}>
+                    <View style={styles.headerTitleTxt}>
+                        <Image source={require("~/Common/Image/Logo_main.png")} resizeMode="contain" style={styles.headerLogoImg} />
+                    </View>
+                    </Body>
+                    <Right style={styles.headerRightWrap}/>
+                </Header>
 
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {/* TEST - 가입대기 여부   */}
