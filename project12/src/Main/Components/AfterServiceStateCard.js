@@ -382,10 +382,10 @@ const localStyles = StyleSheet.create({
         borderBottomColor: color.defaultColor,
         borderBottomWidth: 10,
         backgroundColor: color.whiteColor,
-        height: 358,
         paddingLeft: 27,
         paddingRight: 27,
         paddingTop: 23,
+        paddingBottom: 23,
         flex: 1,
         alignItems: "center"
     },
