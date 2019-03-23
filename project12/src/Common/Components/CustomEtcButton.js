@@ -38,7 +38,7 @@ class CustomEtcButton extends Component {
         defaultBtn : false,
         WhiteBackBtn : false,
         SmallBtn : false,
-        customStyle : {width : 100},
+        customStyle : {width : 110},
         modalCustomStyle : ''
     }
 

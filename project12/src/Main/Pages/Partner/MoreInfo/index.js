@@ -71,7 +71,6 @@ class MoreMenu extends Component {
               <CustomEtcButton 
                 onPress={ Actions.MyProfileInfo }
                 SmallBtn={true}
-                customStyle={{width: 100}}
                 >
                     내정보 수정
                 </CustomEtcButton>
