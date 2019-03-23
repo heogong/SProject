@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BackHandler, Image, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { Container, Text } from "native-base";
+import { Container, Header, Left, Body, Right, Text } from "native-base";
 
-import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, PROGRESS, ADD_AS, COMPLETE_AS} from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, PROGRESS, COMPLETE_MATCH, COMPLETE_AS} from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -13,7 +13,6 @@ import GetBizList from '~/Main/Functions/GetBizList';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomModal from '~/Common/Components/CustomModal';
 import CustomButton from '~/Common/Components/CustomButton';
 import { styles, viewportWidth } from '~/Common/Styles/common';
@@ -23,18 +22,17 @@ import { color } from '~/Common/Styles/colors';
 let INTEVER_ID = 0;
 
 const AfterServiceState = ({ asPrgsStatCd, status, statusOnImg, statusOffImg }) => (
-
   <View style={localStyles.asMatchIconWrap}>
     <Image 
-        source={(asPrgsStatCd !== status.VALUE) ? statusOffImg : statusOnImg } 
+        source={(asPrgsStatCd !== status.code1.VALUE || asPrgsStatCd !== status.code2.VALUE) ? statusOffImg : statusOnImg } 
         resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}}
       />
       <Text 
         style={[localStyles.asMatchStateTxt,
-          (asPrgsStatCd !== status.VALUE) ? {color: "#1e1e32"} : {color: "#0397bd"}
+          (asPrgsStatCd !== status.code1.VALUE || asPrgsStatCd !== status.code2.VALUE) ? {color: "#1e1e32"} : {color: "#0397bd"}
         ]}
       >
-          {status.TEXT}
+          {status.code1.TEXT}
       </Text>
   </View>
 );
@@ -137,7 +135,7 @@ class ClientHome extends Component {
                   this.setState({
                     asPrgsStatCd : resultData.data.asPrgsMst.asPrgsStatCd,
                     asPrgsStatNm : resultData.data.asPrgsMst.asPrgsStatNm,
-                    asPrgsStatDSC : resultData.data.asPrgsMst.asPrgsStatDSC,
+                    asPrgsStatDSC : resultData.data.asPrgsMst.asPrgsStatDsc,
                     clientPrdInfo : resultData.data.clinePrdInfo
                   });
                 } else {
@@ -292,31 +290,31 @@ class ClientHome extends Component {
                   <View style={styles.fxDirRow}>
                     <AfterServiceState
                       asPrgsStatCd={this.state.asPrgsStatCd}
-                      status={MATCH}
+                      status={{'code1' : MATCH, 'code2' : COMPLETE_MATCH}}
                       statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_wait_icon.png')}
                       statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_wait_icon.png')}
                     />
                     <AfterServiceState
                       asPrgsStatCd={this.state.asPrgsStatCd}
-                      status={DEPARTURE}
+                      status={{'code1' : DEPARTURE, 'code2' : null}}
                       statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_start_icon.png')}
                       statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_start_icon.png')}
                     />
                     <AfterServiceState
                       asPrgsStatCd={this.state.asPrgsStatCd}
-                      status={ARRIVE}
+                      status={{'code1' : ARRIVE, 'code2' : null}}
                       statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_arrive_icon.png')}
                       statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_arrive_icon.png')}
                     />
                     <AfterServiceState
                       asPrgsStatCd={this.state.asPrgsStatCd}
-                      status={PROGRESS}
+                      status={{'code1' : PROGRESS, 'code2' : null}}
                       statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_progress_icon.png')}
                       statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_progress_icon.png')}
                     />
                     <AfterServiceState
                       asPrgsStatCd={this.state.asPrgsStatCd}
-                      status={COMPLETE_AS}
+                      status={{'code1' : COMPLETE_AS, 'code2' : null}}
                       statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_complete_icon.png')}
                       statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_complete_icon.png')}
                     />

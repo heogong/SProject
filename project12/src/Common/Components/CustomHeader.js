@@ -40,7 +40,7 @@ class CustomHeader extends Component {
                         transparent 
                         onPress={this._handleBackButton}
                         style={[styles.noPadding, (this.props.backBtn) ? localStyles.show : localStyles.hide ]}>
-                            <Image source={require("~/Common/Image/btn_back_arrow.png")} />
+                            <Image source={require("~/Common/Image/btn_back_arrow.png")} style={HStyles.btnBackArrowIcon}/>
                     </Button>
                     <Button 
                         transparent
@@ -60,6 +60,7 @@ class CustomHeader extends Component {
                 </Body>
                 <Right style={[HStyles.headerRightWrap, (this.props.resetPage) ? localStyles.hide : localStyles.show ]}></Right>
             </Header>
+
         );
     }
 }

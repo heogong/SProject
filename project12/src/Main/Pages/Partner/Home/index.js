@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BackHandler, Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Badge, Container, H1, Text}  from "native-base";
+import { Badge, Container, H1, Text, Header, Left, Body, Right}  from "native-base";
 
 import { SUCCESS_RETURN_CODE, ARRIVE, DEPARTURE, COMPLETE_MATCH  } from '~/Common/Blend';
 

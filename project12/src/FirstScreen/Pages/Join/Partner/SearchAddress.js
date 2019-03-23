@@ -42,19 +42,17 @@ class SearchAddress extends Component {
   }
 
   _getLocation() {
-      navigator.geolocation.getCurrentPosition(
-        (positon) => {
-          this.setState({
-            region : {
-              ...this.state.region,
-              latitude : positon.coords.latitude,
-              longitude : positon.coords.longitude
-            }
-          })
-        },
-        // (error) => {console.log(error.message)},
-        // {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
-    );
+    navigator.geolocation.getCurrentPosition(
+          (positon) => {
+              this.setState({
+                  latitude : positon.coords.latitude,
+                  longitude : positon.coords.longitude
+              })
+          },
+          (error) => 
+          {console.log(error.message)},
+          {enableHighAccuracy: false, timeout: 10000}
+      );
   }
 
   _onPress = (item) => {
