@@ -326,8 +326,9 @@ export const styles = StyleSheet.create({
     },
     inputBox: {
       paddingLeft: 0,
+      paddingRight: 9,
       fontSize: 14,
-      height : 36
+      height : 38
     },
     inputDefaultBox: {
       paddingRight: 8,
@@ -336,16 +337,25 @@ export const styles = StyleSheet.create({
     },
     inputWhBackBuBo: {
       height : 46,
-      borderColor : color.defaultColor
+      borderColor : color.defaultColor,
+      borderLeftWidth: 1,
+      borderRightWidth: 1,
+      borderBottomWidth: 1,
+      borderTopWidth: 1
     },
     inputWhBackGreyBo: {
       height : 46,
-      borderColor : color.inputBoGrey
+      borderColor : color.inputBoGrey,
+      borderLeftWidth: 1,
+      borderRightWidth: 1,
+      borderBottomWidth: 1,
+      borderTopWidth: 1
     },
     inputIcon: {
       color: color.defaultColor,
-      fontSize: 32,
-      marginRight: 5
+      fontSize: 30,
+      marginRight: 5,
+      marginTop: 3
     },
     inputNbTitleTxt: {
       fontSize: 13,
