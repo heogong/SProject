@@ -372,7 +372,7 @@ const localStyles = StyleSheet.create({
       height: 290,
       paddingLeft: 27,
       paddingRight: 27,
-      paddingTop: 40
+      paddingTop: 27
   },
   topBoxNameTxt: {
       marginBottom: 16,
@@ -466,6 +466,7 @@ const localStyles = StyleSheet.create({
   },
   asMatchStateTxt: {
       fontSize : 12,
+      color: "#1e1e32",
       fontWeight: "bold",
       marginTop: 10
   },
