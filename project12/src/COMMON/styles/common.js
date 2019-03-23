@@ -167,6 +167,7 @@ export const styles = StyleSheet.create({
       fontSize: 14,
       height : 170,
       width: "100%",
+      textAlignVertical: 'top'
     },
     textInputWhBack: {
       backgroundColor: color.whiteColor,
