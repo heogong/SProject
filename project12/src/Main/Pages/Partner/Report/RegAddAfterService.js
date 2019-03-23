@@ -89,21 +89,21 @@ class RegAddAfterService extends Component {
           <View style={localStyles.addAsInputWrap}>
             <View style={localStyles.inputBoxWrap}>
               <Text style={localStyles.inputTitleTxt}>추가 A/S 내역</Text>
-              <Item regular style={[styles.mb14, styles.inputNoBorder]}>
+              <Item regular style={[styles.mb14, styles.inputWhBackWhBo]}>
                 <Input 
                   onChangeText={ (text) => { this.setState({asText : text}), this._chkNextButton()} }
                   placeholder="A/S 내역을 작성해주세요" 
-                  style={[styles.inputWhBackWhBo, styles.pl9]} 
+                  style={[styles.inputBox, styles.pl9]} 
                   placeholderTextColor={color.inputPlaceHodler}
                 />
               </Item>
               
               <Text style={localStyles.inputTitleTxt}>추가 A/S 비용</Text>
-              <Item regular style={[styles.mb14, styles.inputNoBorder]}>
+              <Item regular style={[styles.mb14, styles.inputWhBackWhBo]}>
                 <Input 
                   onChangeText={ (text) => { this.setState({asCost : text}), this._chkNextButton() } }
                   placeholder="추가비용을 입력해주세요" 
-                  style={[styles.inputWhBackWhBo, styles.pl9]} 
+                  style={[styles.inputBox, styles.pl9]} 
                   placeholderTextColor={color.inputPlaceHodler}
                   keyboardType="number-pad"
                 />

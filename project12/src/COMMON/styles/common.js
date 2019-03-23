@@ -154,7 +154,7 @@ export const styles = StyleSheet.create({
       height : 100,
       width: "100%",
       paddingRight: 9,
-      paddingTop: 10,
+      textAlignVertical: 'top'
     },
     textInputWhBackWhBo: {
       backgroundColor: color.whiteColor,
@@ -320,23 +320,21 @@ export const styles = StyleSheet.create({
     },
 
     // Input Style
-    inputNoBorder: {borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, borderBottomWidth: 0,},
     inputWhBackWhBo: {
-      paddingLeft: 0,
-      paddingRight: 9,
-      fontSize: 14,
       backgroundColor: color.whiteColor,
       borderColor : color.whiteColor,
-      height : 36
+      height : 36,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+      borderTopWidth: 0,
+      borderBottomWidth: 0
     },
-
     inputBox: {
       paddingLeft: 0,
       paddingRight: 9,
       fontSize: 14,
-      height : 38
+      height : 40,
     },
-    
     inputDefaultBox: {
       paddingRight: 8,
       fontSize: 14,
