@@ -5,6 +5,7 @@ import { Container, Header, Text, Title, Button, Left, Right, Body} from "native
 import { Actions } from 'react-native-router-flux';
 
 import { styles } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from "~/Common/Styles/colors";
 
 class PartnerGuide3 extends Component {

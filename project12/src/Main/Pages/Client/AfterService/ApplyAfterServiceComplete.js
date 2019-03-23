@@ -73,7 +73,8 @@ class ApplyAfterServiceComplete extends Component {
 
                         // 타임아웃 clear 필요할듯
                         setTimeout(() => {
-                            Actions.ClientMain();
+                            //Actions.ClientMain();
+                            Actions.reset("ClientMain");
                         }, 5000);
                         
                         
@@ -141,7 +142,7 @@ class ApplyAfterServiceComplete extends Component {
                 />
                 <ImageBackground 
                     style={[styles.succContentWrap, {backgroundColor: "rgba(40, 200, 245, 0.3)"}]}
-                    source={require('~/Common/Image/maching_effect.png')}>
+                    source={require('~/Common/Image/Matching_effect.gif')}>
                 
                 <Image source={require("~/Common/Image/GPS_match_icon.png")} resizeMode="contain" style={{width: 17, alignSelf: "center", top: "50%", position: "absolute", marginTop: -40}} />
 

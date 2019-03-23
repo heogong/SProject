@@ -298,7 +298,7 @@ class ApplyBusinessProduct extends Component {
                             </View>
                         </View>
 
-                        <View style={styles.footerBtnWrap}>
+                        <View style={[styles.footerBtnWrap, {flex: 0}]}>
                             <CustomButton 
                                 onPress={() =>
                                     ActionSheet.show(

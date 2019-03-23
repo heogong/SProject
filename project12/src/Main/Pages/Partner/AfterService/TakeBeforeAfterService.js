@@ -18,6 +18,15 @@ import { styles } from '~/Common/Styles/common';
 
 let SOURCE = null;
 
+const OPTIONS = {
+  quality: 1.0,
+  maxWidth: 500,
+  maxHeight: 500,
+  storageOptions: {
+    skipBackup: true,
+  },
+};
+
 class TakeBeforeAfterService extends Component {
   constructor(props) {
     super(props);
@@ -33,16 +42,7 @@ class TakeBeforeAfterService extends Component {
 
   // 앨범에서 사진 가져오기
   selectPhotoTapped() {
-    const options = {
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-      storageOptions: {
-        skipBackup: true,
-      },
-    };
-
-    ImagePicker.launchImageLibrary(options, (response) => {
+    ImagePicker.launchImageLibrary(OPTIONS, (response) => {
       console.log('Response = ', response);
   
         if (response.didCancel) {
@@ -62,16 +62,7 @@ class TakeBeforeAfterService extends Component {
 
   // 촬영
   takePhotoTapped() {
-    const options = {
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-      storageOptions: {
-        skipBackup: true,
-      },
-    };
-
-    ImagePicker.launchCamera(options, (response) => {
+    ImagePicker.launchCamera(OPTIONS, (response) => {
       console.log('Response = ', response);
   
         if (response.didCancel) {
@@ -96,6 +87,7 @@ class TakeBeforeAfterService extends Component {
                 console.log(resultData);
                 if(ResultBool) {
                     //this.setState({imgId : resultData.data.imgId});
+                    Actions.RegReportAfterService({asPrgsId : this.props.asPrgsId});
                 } else {
                   this.setState({
                       isAlertModal : true,

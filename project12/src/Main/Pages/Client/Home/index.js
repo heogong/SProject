@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BackHandler, Image, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Container, Text } from "native-base";
 
-import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, ADD_AS, COMPLETE_AS} from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, PROGRESS, ADD_AS, COMPLETE_AS} from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -210,7 +210,7 @@ class ClientHome extends Component {
 
             <View style={localStyles.bottomBoxRightWrap}>
                 <View style={[localStyles.rightStateCircle, {backgroundColor: "#0397bd"}]}>
-                    <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>매칭중</Text>
+                    <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>{this.state.asPrgsStatNm}</Text>
                 </View>
             </View>
         </View>
@@ -304,7 +304,7 @@ class ClientHome extends Component {
                     />
                     <AfterServiceState
                       asPrgsStatCd={this.state.asPrgsStatCd}
-                      status={ADD_AS}
+                      status={PROGRESS}
                       statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_progress_icon.png')}
                       statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_progress_icon.png')}
                     />
@@ -406,7 +406,7 @@ const localStyles = StyleSheet.create({
   },
   rightStateTxt: {
       color : color.defaultColor,
-      fontSize: 22,
+      fontSize: 15,
       fontWeight: "bold"
   },
   leftImg: {

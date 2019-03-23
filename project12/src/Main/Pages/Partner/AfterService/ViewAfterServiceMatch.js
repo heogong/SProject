@@ -64,8 +64,8 @@ class ViewAfterServiceMatch extends Component {
 
     // AS 접수 상세 내용 조회
     _getAfterServiceDetail = () => {
-        GetAfterServiceDetail(96).then(result => {
-        // GetAfterServiceDetail(this.props.asRecvId).then(result => {
+        // GetAfterServiceDetail(96).then(result => {
+        GetAfterServiceDetail(this.props.asRecvId).then(result => {
             GetCommonData(result, this._getAfterServiceDetail).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인

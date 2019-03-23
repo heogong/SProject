@@ -7,6 +7,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import ImagePicker from 'react-native-image-picker';
 
 import TakeAfterServiceImg from '~/Main/Functions/TakeAfterServiceImg';
+import EditAfterServiceImg from '~/Main/Functions/EditAfterServiceImg';
 import DelAfterServiceImg from '~/Main/Functions/DelAfterServiceImg';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
@@ -99,7 +100,6 @@ class AfterServiceImage extends Component {
 
     // 촬영
     takePhotoTapped() {
-
         const options = {
             quality: 1.0,
             maxWidth: 500,
@@ -121,15 +121,21 @@ class AfterServiceImage extends Component {
             } else {
                 SOURCE = { uri: response.uri };
 
-
                 // 촬영 후 조치 전 / 후 함수 호출 (true : 조치 전, false : 조치 후)
                 if(this.props.beforeAction) {
                     this.props.takeBeforeImageAction();
                 } else {
+
                     this.props.takeAfterImageAction();
                 }
+
+                // 재등록 여부 확인
+                if(this.state.isImage) {
+                    this._editAfterServiceImg();
+                } else {
+                    this._takeAfterServiceImg();
+                }
                 
-                this._takeAfterServiceImg();
             }
         })
     };
@@ -143,11 +149,37 @@ class AfterServiceImage extends Component {
                     console.log(resultData);
                     if(ResultBool) {
                         this.setState({
+                            imgUri : SOURCE.uri,
                             isImage : true
                         });
 
                         IMG_ID = resultData.data.imgId; // 이미지 삭제 없으면 필요 없을 듯
 
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                    }
+                }
+            });
+        });
+    }
+
+    // AS 조치전/후 사진 수정
+    _editAfterServiceImg = () => {
+        let imgId = (this.props.imgId !== null) ? this.props.imgId : IMG_ID;
+        
+        EditAfterServiceImg(this.props.beforeAction, SOURCE.uri, imgId ).then(result => {
+            GetCommonData(result, this._delAfterServiceImg).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(resultData);
+                    if(ResultBool) {
+                        this.setState({
+                            imgUri : SOURCE.uri,
+                            isImage : true
+                        });
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -197,8 +229,8 @@ class AfterServiceImage extends Component {
                             />
                         ) : (
                             <DoAfterServiceImage
-                                action={ this._delAfterServiceImg }
-                                uri={ SOURCE.uri }
+                                action={ this.takePhotoTapped.bind(this) }
+                                uri={ this.state.imgUri }
                             />
                         ) 
                     )
