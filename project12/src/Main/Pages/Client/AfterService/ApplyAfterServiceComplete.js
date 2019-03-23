@@ -47,15 +47,15 @@ class ApplyAfterServiceComplete extends Component {
     // 현재 위치 조회
     _getLocation() {
         navigator.geolocation.getCurrentPosition(
-          (positon) => {
-            this.setState({
-              region : {
-                ...this.state.region,
-                latitude : positon.coords.latitude,
-                longitude : positon.coords.longitude
-              }
-            })
-          }
+            (positon) => {
+                this.setState({
+                    latitude : positon.coords.latitude,
+                    longitude : positon.coords.longitude
+                })
+            },
+            (error) => 
+            {console.log(error.message)},
+            {enableHighAccuracy: false, timeout: 10000}
         );
     }
    

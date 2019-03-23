@@ -15,7 +15,8 @@ export const HStyles = StyleSheet.create({
     paddingTop : 0,
     elevation: 0,
     shadowOpacity: 0,
-    alignItems: "center"
+    alignItems: "center",
+    borderBottomWidth: 0
   },
   headerLeftWrap: {
     flex: 1,
@@ -25,11 +26,17 @@ export const HStyles = StyleSheet.create({
     flex: 4
   },
   headerTitleTxt: {
-    fontSize: 22,
     marginLeft: "auto",
     marginRight: "auto"
   },
   headerRrightWrap: {
     flex: 1
+  },
+  headerLogoImg: {
+    width : 102
+  },
+  btnBackArrowIcon: {
+    width: 30,
+    height: 30
   }
 });
