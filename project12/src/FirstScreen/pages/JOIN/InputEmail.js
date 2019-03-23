@@ -164,10 +164,12 @@ class InputEmail extends Component {
                 </View>
               </View>
             </View>
-            <View style={[styles.fx2, styles.justiConCenter]}>
-              <Item regular style={[styles.mb15, {height : 48}]}>
+            <View style={[styles.fx3, styles.justiConCenter]}>
+            <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
                 <Input 
-                  placeholder="이메일" 
+                  placeholder="이메일주소" 
+                  placeholderTextColor={color.inputPlaceHodler} 
+                  style={styles.inputDefaultBox}
                   onChangeText={this._handleEmailChange}
                   value={this.state.text}
                   autoFocus={ true }
@@ -175,29 +177,36 @@ class InputEmail extends Component {
                 />
               </Item>
 
-              <Item regular style={[styles.mb15, {height : 48}]}>
-                <Input 
+              <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
+                <Input
+                  placeholder="비밀번호(영문+숫자+특수문자조합 8~16자리)"
+                  placeholderTextColor={color.inputPlaceHodler}
+                  style={styles.inputDefaultBox}
                   ref={(input) => { this.secondTextInput = input; }}
                   secureTextEntry={ true }
                   onChangeText={ this._handlePasswdChange }
                   value={ this.state.text }
                   placeholder="비밀번호(영문,숫자,특수문자8-15자)" 
                   onSubmitEditing={() => { this.thirdTextInput._root.focus(); }}
+                  />
+              </Item>
+
+              <Item regular style={[styles.mb10, styles.inputWhBackGreyBo]}>
+                <Input
+                    placeholder="비밀번호 확인"
+                    placeholderTextColor={color.inputPlaceHodler}
+                    style={styles.inputDefaultBox}
+                    ref={(input) => { this.thirdTextInput = input; }}
+                    secureTextEntry={ true }
+                    onChangeText={ this._handleChkPasswdChange }
+                    value={ this.state.text }
+                    onBlur={ this._checkUsrPasswd }
                 />
+                <Icon name="ios-checkmark-circle" style={styles.inputIcon} />
+                {/* <Icon name="ios-checkmark-circle" style={[styles.inputIcon, {color: "#ddd"}]} /> */}
               </Item>
 
-              <Item regular style={{height : 48}}>
-                <Input 
-                  ref={(input) => { this.thirdTextInput = input; }}
-                  secureTextEntry={ true }
-                  onChangeText={ this._handleChkPasswdChange }
-                  value={ this.state.text }
-                  onBlur={ this._checkUsrPasswd }
-                  placeholder="비밀번호 확인" />
-                <Icon name="ios-checkmark-circle" style={{color:color.defautlColor}}/>
-              </Item>
-
-              <Text style={[localStyles.redFont, {paddingLeft : 5}]}>{this.state.errMsg}</Text>
+              <Text style={{color: color.warningColor, fontSize: 13}}>{this.state.errMsg}</Text>
             </View>
 
             <View style={styles.footerBtnWrap}>
