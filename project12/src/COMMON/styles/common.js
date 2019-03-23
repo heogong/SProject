@@ -332,8 +332,7 @@ export const styles = StyleSheet.create({
     inputBox: {
       paddingLeft: 0,
       paddingRight: 9,
-      fontSize: 14,
-      height : 40,
+      fontSize: 14
     },
     inputDefaultBox: {
       paddingRight: 8,
