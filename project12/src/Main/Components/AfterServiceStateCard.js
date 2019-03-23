@@ -284,7 +284,7 @@ class AfterServiceStateCard extends Component {
             // </View>
             <View style={localStyles.topAsYesWrap}>
                 <View style={[styles.justiConStart, styles.alignItemsCenter, styles.mb10]}>
-                    <H1 style={localStyles.topTitleTxt}>{this.props.data.asPrgsStatNm}</H1>
+                    <H1 style={localStyles.topTitleTxt}>{this.props.data.asPrgsStatDsc}</H1>
                     <Text style={localStyles.topTxt}>{this.props.data.bplaceAddr}</Text>
                     <Text style={localStyles.topTxt}>{this.props.data.bplaceAddrDtl}</Text>
                 </View>
@@ -295,7 +295,8 @@ class AfterServiceStateCard extends Component {
                             styles.alignItemsCenter,
                             styles.justiConCenter]}>
                         <Image 
-                            soure={ {uri: this.props.data.prdTypeImgUrl} } 
+                            // soure={ {uri: this.props.data.prdTypeImgUrl} } 
+                            source={require("~/Common/Image/license-depart01.png")} 
                             resizeMode="contain"
                             style={[styles.mb10, {
                             height : 100, 
