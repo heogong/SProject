@@ -18,8 +18,7 @@ export const stylesReg = StyleSheet.create({
     },
     rightStepNum: {
       fontSize: 72,
-      color: color.defaultColor,
-      height: 78
+      color: color.defaultColor
     },
     rightImgWrap: {
       flex: 1,

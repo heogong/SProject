@@ -202,8 +202,8 @@ class InputEmail extends Component {
                     value={ this.state.text }
                     onBlur={ this._checkUsrPasswd }
                 />
-                <Icon name="ios-checkmark-circle" style={styles.inputIcon} />
-                {/* <Icon name="ios-checkmark-circle" style={[styles.inputIcon, {color: "#ddd"}]} /> */}
+                {/* <Icon name="ios-checkmark-circle" style={styles.inputIcon} /> */}
+                <Icon name="ios-checkmark-circle" style={[styles.inputIcon, {color: "#ddd"}]} />
               </Item>
 
               <Text style={{color: color.warningColor, fontSize: 13}}>{this.state.errMsg}</Text>
