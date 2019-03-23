@@ -34,7 +34,7 @@ export const stylesReg = StyleSheet.create({
     rightTxt: {
       fontSize: 48,
       color: color.defaultColor,
-      height: 53
+      height: 55
     },
     rightTxtSmall: {
       fontSize: 30,
