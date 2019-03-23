@@ -336,8 +336,7 @@ export const styles = StyleSheet.create({
     },
     inputDefaultBox: {
       paddingRight: 8,
-      fontSize: 14,
-      height: 46
+      fontSize: 14
     },
     inputWhBackBuBo: {
       height : 46,
