@@ -413,7 +413,7 @@ const PAGE = () => (
               <Stack key="PartnerMain" hideNavBar iconImg={require("~/Common/Image/partner_footer_icon/tab1.png")} initial icon={TabIcon}
                 tabBarOnPress={() => Actions.PartnerHome({type:ActionConst.RESET})}
                 transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
-                <Scene key="PartnerHome" component={PartnerHome} title=""/>
+                <Scene key="PartnerHome" component={PartnerHome} />
               </Stack>
 
               {/* A/S 매칭 */}

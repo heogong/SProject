@@ -296,25 +296,25 @@ class ClientHome extends Component {
                     />
                     <AfterServiceState
                       asPrgsStatCd={this.state.asPrgsStatCd}
-                      status={{'code1' : DEPARTURE, 'code2' : null}}
+                      status={{'code1' : DEPARTURE, 'code2' : DEPARTURE}}
                       statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_start_icon.png')}
                       statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_start_icon.png')}
                     />
                     <AfterServiceState
                       asPrgsStatCd={this.state.asPrgsStatCd}
-                      status={{'code1' : ARRIVE, 'code2' : null}}
+                      status={{'code1' : ARRIVE, 'code2' : ARRIVE}}
                       statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_arrive_icon.png')}
                       statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_arrive_icon.png')}
                     />
                     <AfterServiceState
                       asPrgsStatCd={this.state.asPrgsStatCd}
-                      status={{'code1' : PROGRESS, 'code2' : null}}
+                      status={{'code1' : PROGRESS, 'code2' : PROGRESS}}
                       statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_progress_icon.png')}
                       statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_progress_icon.png')}
                     />
                     <AfterServiceState
                       asPrgsStatCd={this.state.asPrgsStatCd}
-                      status={{'code1' : COMPLETE_AS, 'code2' : null}}
+                      status={{'code1' : COMPLETE_AS, 'code2' : COMPLETE_AS}}
                       statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_complete_icon.png')}
                       statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_complete_icon.png')}
                     />

@@ -35,10 +35,9 @@ class AfterService extends Component {
 
                         if(resultData.data.asPrgsYn == 'Y') {
                             setTimeout(() => {
-                                Actions.ViewAfterServiceState({
+                                Actions.ViewAfterServiceMatch({
                                     asRecvId : resultData.data.asPrgsMst.asRecvId,
-                                    asPrgsId : resultData.data.asPrgsMst.asPrgsId,
-                                    isProcess : false
+                                    asPrgsId : resultData.data.asPrgsMst.asPrgsId
                                 })
                                 this.setState({spinner : false});
                             }, 700);

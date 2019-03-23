@@ -4,7 +4,7 @@ import { Container, H3, Icon, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 
 import GetAfterServiceDetail from '~/Main/Functions/GetAfterServiceDetail'
 import GetCommonData from '~/Common/Functions/GetCommonData';
@@ -94,6 +94,13 @@ class ViewAfterServiceMatch extends Component {
         });
     }
 
+    // 메인페이지 이동 - 그냥 pop 하면 index페이지로 이동 함
+    _goToMain = () => {
+        // Actions.PartnerMain();
+        // Actions.refresh({ key: 'PartnerHome' });
+        Actions.PartnerMain({ refresh: true });
+    }
+
     render() {
         return (
             // <CustomBlockWrapper
@@ -133,7 +140,9 @@ class ViewAfterServiceMatch extends Component {
             //     </View>
             // </CustomBlockWrapper>
             <Container style={styles.containerScroll}>
-                <CustomHeader title="매칭상세정보"/>
+                <CustomHeader 
+                customAction={this._goToMain}
+                title="매칭상세정보"/>
 
                 <ScrollView showsVerticalScrollIndicator={false}>
 
