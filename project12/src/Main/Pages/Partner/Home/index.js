@@ -79,27 +79,27 @@ const MatchingReq = ({toggleModal, data}) => (
 // A/S 보고서
 const RequestReport = ({action, count}) => (
     <View style={[styles.mb10, styles.pd10, styles.fxDirRow, {backgroundColor : color.defaultColor}]}>
-        <View style={{flex: 1, marginTop: 25}}>
+        <View style={{flex: 1, marginTop: 15}}>
             <View style={[styles.alignItemsCenter, styles.justiConEnd]}>
                 <Badge info style={{
                     position : 'absolute', 
-                    right : 12, 
+                    right : 18, 
                     top : -12, 
                     zIndex : 1, 
-                    color : color.defaultColor, 
+                    backgroundColor: color.warningColor,
                     elevation : 10
                 }}>
                     <Text>{count}</Text>
                 </Badge>
                 <Image 
-                    source={require("~/Common/Image/license-bg02.png")} 
+                    source={require("~/Common/Image/Report_illust.png")} 
                     resizeMode="contain" 
                     style={[{height : 79, width : 56}]}
                 />
             </View>
         </View>
 
-        <View style={[styles.alignItemsCenter, styles.fx2, {height: 120}]}>
+        <View style={[styles.alignItemsCenter, styles.fx2]}>
             <Text style={localStyles.reportTitleTxt}>A/S 출장시 보고서 작성이 필요해요</Text>
             <Text style={localStyles.reportTxt}>보고서를 작성해야 비용을 정산받을 수 있어요</Text>
             <View style={styles.alignItemsCenter}>
@@ -653,7 +653,7 @@ const localStyles = StyleSheet.create({
         textAlign: "center"
     },
     reportTitleTxt: {
-        marginTop: 17,
+        marginTop: 7,
         marginBottom: 7,
         fontSize: 16,
         color: "#038dbd",

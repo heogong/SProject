@@ -295,8 +295,7 @@ class AfterServiceStateCard extends Component {
                             styles.alignItemsCenter,
                             styles.justiConCenter]}>
                         <Image 
-                            // soure={ {uri: this.props.data.prdTypeImgUrl} } 
-                            source={require("~/Common/Image/license-depart01.png")} 
+                            source={ {uri: this.props.data.prdTypeImgUrl} } 
                             resizeMode="contain"
                             style={[styles.mb10, {
                             height : 100, 
