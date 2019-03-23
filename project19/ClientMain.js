@@ -187,9 +187,9 @@ maching = () => (
 
         <ScrollView showsVerticalScrollIndicator={false}>
                 
-            {/* {this.unRegister()} */}
+            {this.unRegister()}
             {/* {this.maching()} */}
-            {this.drawSwiper()}
+            {/* {this.drawSwiper()} */}
 
             <View style={{backgroundColor : '#d6f1ff'}}>
                 <View style={[styles.boxShadowTopNo, localStyles.secondBox]}>
@@ -265,10 +265,10 @@ const localStyles = StyleSheet.create({
     },
     topBoxWrap: {
         width: "100%",
-        height: 290,
         paddingLeft: 27,
         paddingRight: 27,
-        paddingTop: 27
+        paddingTop: 27,
+        paddingBottom: 27
     },
     topBoxNameTxt: {
         marginBottom: 16,

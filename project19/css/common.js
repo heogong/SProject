@@ -238,6 +238,7 @@ export const styles = StyleSheet.create({
       height : 100,
       width: "100%",
       paddingRight: 9,
+      textAlignVertical: 'top'
     },
     textInputWhBackWhBo: {
       backgroundColor: color.whiteColor,
@@ -250,6 +251,7 @@ export const styles = StyleSheet.create({
       fontSize: 14,
       height : 170,
       width: "100%",
+      textAlignVertical: 'top'
     },
     textInputWhBack: {
       backgroundColor: color.whiteColor,
@@ -386,8 +388,7 @@ export const styles = StyleSheet.create({
     },
     rightStepNum: {
       fontSize: 72,
-      color: color.defaultColor,
-      height: 78
+      color: color.defaultColor
     },
     rightImgWrap: {
       flex: 1,
@@ -401,8 +402,7 @@ export const styles = StyleSheet.create({
     },
     rightTxt: {
       fontSize: 48,
-      color: color.defaultColor,
-      height: 53
+      color: color.defaultColor
     },
     rightTxtSmall: {
       fontSize: 30,
@@ -430,18 +430,20 @@ export const styles = StyleSheet.create({
     inputWhBackWhBo: {
       backgroundColor: color.whiteColor,
       borderColor : color.whiteColor,
-      height : 36
+      height : 36,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+      borderTopWidth: 0,
+      borderBottomWidth: 0
     },
     inputBox: {
       paddingLeft: 0,
       paddingRight: 9,
-      fontSize: 14,
-      height : 38
+      fontSize: 14
     },
     inputDefaultBox: {
       paddingRight: 8,
-      fontSize: 14,
-      height: 46
+      fontSize: 14
     },
     inputWhBackBuBo: {
       height : 46,

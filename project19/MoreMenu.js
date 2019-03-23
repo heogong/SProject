@@ -70,7 +70,6 @@ class MoreMenu extends Component {
                 <Text style={[styles.btnDefaultSmallTxt, styles.btnDefaultNoFillTxt]}>내정보 수정</Text>
               </Button>
             </View>
-             */}
           </View>
 
           <View style={localStyles.quickBtnWrap}>

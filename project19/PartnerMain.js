@@ -201,7 +201,8 @@ class PartnerMain extends Component {
                             styles.mb10,
                             styles.alignItemsCenter,
                             styles.justiConCenter]}>
-                        <Image source={require("./img/product/04_icon_white.png")}
+                        <Image 
+                            source={require("./img/product/04_icon_white.png")}
                             style={[styles.mb10, {
                             height : 100, 
                             width : 100
@@ -231,7 +232,7 @@ class PartnerMain extends Component {
                 </View>
 
                 <View style={[styles.mb10, styles.pd10, styles.fxDirRow, {backgroundColor : color.defaultColor}]}>
-                    <View style={{flex: 1, marginTop: 25}}>
+                    <View style={{flex: 1, marginTop: 15}}>
                         <View style={[styles.alignItemsCenter, styles.justiConEnd]}>
                             <Badge info style={{
                                 position : 'absolute', 
@@ -251,7 +252,7 @@ class PartnerMain extends Component {
                         </View>
                     </View>
 
-                    <View style={[styles.alignItemsCenter, styles.fx2, {height: 120}]}>
+                    <View style={[styles.alignItemsCenter, styles.fx2]}>
                         <Text style={localStyles.reportTitleTxt}>A/S 출장시 보고서 작성이 필요해요</Text>
                         <Text style={localStyles.reportTxt}>보고서를 작성해야 비용을 정산받을 수 있어요</Text>
                         <View style={styles.alignItemsCenter}>
@@ -372,7 +373,7 @@ const localStyles = StyleSheet.create({
         textAlign: "center"
     },
     reportTitleTxt: {
-        marginTop: 17,
+        marginTop: 7,
         marginBottom: 7,
         fontSize: 16,
         color: "#038dbd",
@@ -387,10 +388,10 @@ const localStyles = StyleSheet.create({
         borderBottomColor: color.defaultColor,
         borderBottomWidth: 10,
         backgroundColor: color.whiteColor,
-        height: 358,
         paddingLeft: 27,
         paddingRight: 27,
         paddingTop: 23,
+        paddingBottom: 23,
         flex: 1,
         alignItems: "center"
     },

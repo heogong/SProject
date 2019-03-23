@@ -205,7 +205,7 @@ const PAGE = () => (
             <Scene key="HistoryAfterServiceChk2" hideNavBar component={HistoryAfterServiceChk2} type={ActionConst.RESET}/>
             <Scene key="HistoryAfterServiceChk" hideNavBar component={HistoryAfterServiceChk} type={ActionConst.RESET}/>
             <Scene key="ReportAfterService" hideNavBar component={ReportAfterService} type={ActionConst.RESET}/>
-            <Scene key="ListBusinessPlace" hideNavBar component={ListBusinessPlace} type={ActionConst.RESET}/>
+            <Scene initial key="ListBusinessPlace" hideNavBar component={ListBusinessPlace} type={ActionConst.RESET}/>
             <Scene key="RegProductType" hideNavBar component={RegProductType} type={ActionConst.RESET}/>
             <Scene key="RegProduct" hideNavBar component={RegProduct} type={ActionConst.RESET}/>
 
@@ -323,7 +323,7 @@ const PAGE = () => (
             <Scene key="ListApplyAfterService" hideNavBar component={ListApplyAfterService} type={ActionConst.RESET}/>
             <Scene key="ListApplyAfterServiceEmpty" hideNavBar component={ListApplyAfterServiceEmpty} type={ActionConst.RESET}/>
             <Scene key="DetailApplyAfterService" hideNavBar component={DetailApplyAfterService}  type={ActionConst.RESET}/>
-            <Scene initial key="RegReportStep1" hideNavBar component={RegReportStep1}  type={ActionConst.RESET}/>
+            <Scene key="RegReportStep1" hideNavBar component={RegReportStep1}  type={ActionConst.RESET}/>
             <Scene key="RegAddAs" hideNavBar component={RegAddAs}  type={ActionConst.RESET}/>
             <Scene key="ListNotCompReport" hideNavBar component={ListNotCompReport}  type={ActionConst.RESET}/>
             <Scene key="ListNotCompReportEmpty" hideNavBar component={ListNotCompReportEmpty}  type={ActionConst.RESET}/>

@@ -75,7 +75,7 @@ class ListBusinessPlace extends Component {
           <ScrollView
             horizontal={true}
             pagingEnabled={false} // animates ScrollView to nearest multiple of it's own width
-            showsHorizontalScrollIndicator={true}>
+            showsHorizontalScrollIndicator={false}>
 
             <View style={localStyles.placeBoxWrap}>
               <TouchableOpacity onPress={this._toggleModal} style={localStyles.closeIconWrap}>
