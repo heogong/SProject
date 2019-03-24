@@ -8,6 +8,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setIntervalId, setIsAfterService } from '~/Redux/Actions';
 import Swiper from 'react-native-swiper';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import GetBizList from '~/Main/Functions/GetBizList';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
@@ -62,29 +63,10 @@ class ClientHome extends Component {
       asPrgsStatNm : null,
       asPrgsStatDSC : null,
       slider1ActiveSlide: 0,
+      spinner : false,
       isAlertModal : false, // alert 용
       resultMsg : null // alert 용
     };
-  }
-  async componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => this.handleBackPress) // Listen for the hardware back button on Android to be pressed
-
-    this._getBizList();
-    this._getClientAfterServiceState();
-
-    // AS 신청 여부 확인
-    console.log("AS 신청 여부 확인!!!! : ", this.props.afterService.isAfterService);
-    
-    if(this.props.afterService.isAfterService) {
-      console.log("인터벌 확인")
-
-      // A/S 상태 갱신
-      const INTERVAL_ID = setInterval(() => {
-        this._getClientAfterServiceState();
-      }, 10000);
-      
-      this.props.onSetIntervalId(INTERVAL_ID);
-    }
   }
 
   componentWillUnmount () {
@@ -94,8 +76,31 @@ class ClientHome extends Component {
     console.log("componentWillUnmount :", this.props.afterService.intervalId);
   }
 
+  componentDidMount() {
+    this.setState({spinner : true});
+    BackHandler.addEventListener('hardwareBackPress', () => this.handleBackPress) // Listen for the hardware back button on Android to be pressed
+
+    this._getBizList();
+    this._getClientAfterServiceState();
+    this._chkIsAfterService(); 
+  }
+
   handleBackPress = () => {
     return false;
+  }
+
+  // AS 신청 여부 확인
+  _chkIsAfterService = () => {
+    console.log("AS 신청 여부 확인!!!! : ", this.props.afterService.isAfterService);
+    if(this.props.afterService.isAfterService) {
+      console.log("인터벌 확인")
+      // A/S 상태 갱신
+      const INTERVAL_ID = setInterval(() => {
+        this._getClientAfterServiceState();
+      }, 10000);
+
+      this.props.onSetIntervalId(INTERVAL_ID);
+    }
   }
 
    // 사업장 목록 가져오기
@@ -110,7 +115,7 @@ class ClientHome extends Component {
                 } else {
                   this.setState({
                     isAlertModal : true,
-                    resultMsg : resultData.resultMsg
+                    resultMsg : '사업장 목록 - ' + resultData.resultMsg
                   })
                 }
             }
@@ -145,9 +150,10 @@ class ClientHome extends Component {
               } else {
                 this.setState({
                   isAlertModal : true,
-                  resultMsg : resultData.resultMsg
+                  resultMsg : '진행 상태 체크 - ' + resultData.resultMsg
                 })
               }
+              this.setState({spinner : false});
           }
       });
     });
@@ -218,6 +224,13 @@ class ClientHome extends Component {
   render() {
     return (
         <Container style={[styles.fx1, {backgroundColor: color.defaultColor}]}>
+          <Spinner
+            visible={this.state.spinner}
+            textContent={'데이터를 불러오고 있습니다.'}
+            textStyle={styles.whiteFont}
+            style={{color: color.whiteColor}}
+            overlayCologr={"rgba(40, 200, 245, 1)"}
+          />
           <Header style={[styles.headerM, styles.noPadding]}>
             <Left style={styles.headerLeftWrap}/>
             <Body style={styles.headerCenterWrap}>

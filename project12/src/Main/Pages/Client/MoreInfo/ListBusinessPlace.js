@@ -87,6 +87,25 @@ class ListBusinessPlace extends Component {
             pagingEnabled={false} // animates ScrollView to nearest multiple of it's own width
             showsHorizontalScrollIndicator={true}>
 
+            <View style={localStyles.placeBoxWrap}>
+              <TouchableOpacity onPress={this._toggleModal} style={localStyles.closeIconWrap}>
+                <Image source={require('~/Common/Image/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
+                <Image source={require('~/Common/Image/card_mod_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
+              </TouchableOpacity>
+              <View style={localStyles.prdImgWrap}>
+                <Image source={require('~/Common/Image/product/01_icon_white.png')} style={localStyles.prdImg}/>
+              </View>
+              <TouchableOpacity onPress={ () => alert("사업장 등록")}>
+              <View style={localStyles.txtWrap}>
+                <Text style={localStyles.placeNameTxt}>사업장명칭</Text>
+                <View style={localStyles.infoTxtWrap}>
+                  <Text style={localStyles.infoTxt}>새로운 사업장을 추가하려면</Text>
+                  <Text style={localStyles.infoTxt}>위의 아이콘을 클릭하세요</Text>
+                </View>
+              </View>
+              </TouchableOpacity>
+            </View>
+
             {this.state.data.map((business, idx) =>
               <View 
                 key={idx}

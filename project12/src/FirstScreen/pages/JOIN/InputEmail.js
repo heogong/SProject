@@ -36,6 +36,7 @@ class InputEmail extends Component {
       usrPw: '',
       usrPw2: '',
       btnDisabled: true,
+      equalsPw : false,
       errMsg : null,
       isAlertModal : false, // alert 용
       resultMsg : null // alert 용
@@ -100,6 +101,16 @@ class InputEmail extends Component {
         this.setState({btnDisabled : (this.state.usrPw2.length > USR_PASSWD_LEN) ? false : true})
     }
   } 
+
+  // 비밀번호 체크 여부 아이콘 - 작동이 안됨 테스트 필요
+  // _checkUsrPasswdIcon = () => {
+  //   const { usrPw, usrPw2 } = this.state;
+
+  //   console.log("usrPwd : ",usrPw);
+  //   console.log("usrPwd222 : ",usrPw2);
+
+  //   this.setState({equalsPw : (usrPw == usrPw2) ? true : false });
+  // }
 
   //이메일 유효성 체크
   _checkUsrEmail = () => {
@@ -202,8 +213,7 @@ class InputEmail extends Component {
                     value={ this.state.text }
                     onBlur={ this._checkUsrPasswd }
                 />
-                {/* <Icon name="ios-checkmark-circle" style={styles.inputIcon} /> */}
-                <Icon name="ios-checkmark-circle" style={[styles.inputIcon, {color: "#ddd"}]} />
+                <Icon name={this.state.equalsPw ? "ios-checkmark-circle" : "ios-close-circle"} style={[styles.inputIcon, {color: color.defaultColor}]} />
               </Item>
 
               <Text style={{color: color.warningColor, fontSize: 13}}>{this.state.errMsg}</Text>

@@ -3,7 +3,7 @@ import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '~/Commo
 import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
 // 고객 AS 내역 목록 조회
-const API_URL = `${DOMAIN}coolinic/as/prgs/hist/me`;
+const API_URL = `${DOMAIN}coolinic/as/prgs/hist/clients/me`;
 
 function GetAfterServiceHistoryUrl() {
   return `${API_URL}`;

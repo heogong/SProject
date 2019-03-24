@@ -71,7 +71,7 @@ class ListBusinessPlace extends Component {
   render() {
     return (
       <Container style={styles.containerRightSlide}>
-        <CustomHeader />
+        <CustomHeader/>
         <View style={styles.contentWrap}>
           <View style={styles.fx1}>
             <View style={styles.fxDirRow}>
@@ -94,56 +94,58 @@ class ListBusinessPlace extends Component {
             showsHorizontalScrollIndicator={true}>
 
             {this.state.data.map((business, idx) =>
-            <TouchableOpacity 
-              key={idx} 
-              onPress={ async () => {
-                await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
-                Actions.MyListBusinessProductType({ 
-                  bizId : business.clientBplaceId
-              }) } }
-              style={localStyles.placeBoxWrap}
-              >
-              <View>
-                {/* <TouchableOpacity 
-                  onPress={ async () => {
-                    await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
-                    Actions.MyRegBusinessPlace({editBiz : true}) 
-                  }} 
-                  style={localStyles.closeIconWrap}
+              <TouchableOpacity 
+                key={idx} 
+                onPress={ async () => {
+                  await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
+                  Actions.MyListBusinessProductType({ 
+                    bizId : business.clientBplaceId
+                }) } }
+                style={localStyles.placeBoxWrap}
                 >
-                    <Image source={require('~/Common/Image/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
-                </TouchableOpacity> */}
-                <CustomButton
-                      WhiteLineBtn={true}
-                      CustomBtnStyle={{width:100, height : 30}}
-                      CustomFontStyle={localStyles.infoTxt}
-                      onPress={ async () => {
-                        await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
-                        Actions.MyRegBusinessPlace({editBiz : true}) 
-                      }} 
-                    >
-                      수정하기
-                    </CustomButton>
-                <View style={localStyles.prdImgWrap}>
-                  <Image source={require('~/Common/Image/product/01_icon_white.png')} style={localStyles.prdImg}/>
-                </View>
-                
-                  <View style={localStyles.txtWrap}>
-                    <Text style={localStyles.placeNameTxt}>{business.bplaceNm}</Text>
-                    <View style={localStyles.infoTxtWrap}>
-                      {/* <Text style={localStyles.infoTxt}>{business.addr.addressName}</Text>
-                      <Text style={localStyles.infoTxt}>{business.detail.detailAddr1}</Text> */}
-                      <Text style={localStyles.infoTxt}>test</Text>
-                      <Text style={localStyles.infoTxt}>test</Text>
+                <View>
+                    <View style={localStyles.closeIconWrap}>
+
+                      {(this.state.data.length > LEAST_COUNT) ? (
+                        <TouchableOpacity onPress={this._toggleModal} >
+                          <Image source={require('~/Common/Image/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
+                        </TouchableOpacity>
+                      ) : (
+                        <View style={localStyles.closeIconImg}/>
+                      )}
+                        <TouchableOpacity 
+                          onPress={ async () => {
+                            await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
+                            Actions.MyRegBusinessPlace({editBiz : true}) 
+                          }} 
+                        >
+                          <Image source={require('~/Common/Image/card_mod_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
+                        </TouchableOpacity>
                     </View>
-                  </View>
-              </View>
-            </TouchableOpacity>
+
+                    <View style={localStyles.prdImgWrap}>
+                      <Image source={require('~/Common/Image/product/01_icon_white.png')} style={localStyles.prdImg}/>
+                    </View>
+                  
+                    <View style={localStyles.txtWrap}>
+                      <Text style={localStyles.placeNameTxt}>{business.bplaceNm}</Text>
+                      <View style={localStyles.infoTxtWrap}>
+                        {/* <Text style={localStyles.infoTxt}>{business.addr.addressName}</Text>
+                        <Text style={localStyles.infoTxt}>{business.detail.detailAddr1}</Text> */}
+                        <Text style={localStyles.infoTxt}>test</Text>
+                        <Text style={localStyles.infoTxt}>test</Text>
+                      </View>
+                    </View>
+                </View>
+              </TouchableOpacity>
             )}
           </ScrollView>
 
           <View style={[styles.footerBtnWra, {paddingRight : 26}]}>
-            <CustomButton onPress={Actions.MyRegBusinessPlace}>
+            <CustomButton 
+              onPress={Actions.MyRegBusinessPlace}
+              CustomBtnStyle={styles.mb5}
+            >
               사업장 추가하기
             </CustomButton>
           </View>
@@ -173,6 +175,11 @@ class ListBusinessPlace extends Component {
       </Container>
     );
   }
+}
+
+function wp (percentage) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
 }
 
 const localStyles = StyleSheet.create({
@@ -213,9 +220,11 @@ const localStyles = StyleSheet.create({
   },
   closeIconWrap: {
     flexDirection: 'row',
-    alignSelf: 'flex-start',
-    marginLeft: 14,
-    marginTop: 14
+    justifyContent: 'space-between',
+    paddingLeft: 14,
+    paddingRight: 14,
+    marginTop: 14,
+    width: "100%"
   }
 });
 

@@ -69,7 +69,7 @@ class MyProfileInfo extends Component {
 
         <View style={styles.contentWrap}>
 
-          <View>
+         <View style={styles.fx1}>
             <Text style={styles.inputNbTitleTxt}>이메일</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
               <Image source={require('~/Common/Image/intro-logo.png')} style={localStyles.inputIcon} />

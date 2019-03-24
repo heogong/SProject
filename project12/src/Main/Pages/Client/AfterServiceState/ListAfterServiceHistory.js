@@ -5,7 +5,9 @@ import { Container, Icon, Text, H3 } from "native-base";
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
+import Spinner from 'react-native-loading-spinner-overlay';
 
+import CustomModal from '~/Common/Components/CustomModal';
 import GetAfterServiceHistory from '~/Main/Functions/GetAfterServiceHistory'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
@@ -19,11 +21,14 @@ class ListAfterServiceHistory extends Component {
       super(props);
 
       this.state = {
-        data : []
+        data : [],
+        isAlertModal : false, // alert 용
+        resultMsg : null // alert 용
       };
     }
 
     componentDidMount() {
+        this.setState({spinner : true});
         this._getAfterServiceHistory();
     }
 
@@ -37,8 +42,12 @@ class ListAfterServiceHistory extends Component {
                     if(ResultBool) {
                         this.setState({ data : resultData.data });
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
+                    this.setState({spinner : false});
                 }
             });
         });
@@ -68,6 +77,12 @@ class ListAfterServiceHistory extends Component {
     render() {
         return (
             <Container style={styles.containerScroll}>
+                {/* 로딩 */}
+                <Spinner
+                    visible={this.state.spinner}
+                    textContent={'A/S 내역을 불러오고 있습니다.'}
+                    style={{color: '#FFF'}}
+                />
                 <CustomHeader 
                     customAction={this._goToMain}
                 />
@@ -139,6 +154,14 @@ class ListAfterServiceHistory extends Component {
                         </View>
                     )
                 }
+                {/* alert 메세지 모달 */}
+                <CustomModal
+                    modalType="ALERT"
+                    isVisible={this.state.isAlertModal}
+                    onPress={ () => this.setState({isAlertModal : false})}
+                    infoText={this.state.resultMsg}
+                    btnText="확인"
+                />
             </Container>
         )
     }

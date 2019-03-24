@@ -68,20 +68,20 @@ class MoreMenu extends Component {
 
             <View style={[localStyles.btnProfileModWrap]}>
 
-              <CustomEtcButton 
+              {/* <CustomEtcButton 
                 onPress={ Actions.ClientMyProfileInfo }
                 SmallBtn={true}
                 >
                     내정보 수정
-                </CustomEtcButton>
+                </CustomEtcButton> */}
             </View>
           </View>
 
           <View style={localStyles.quickBtnWrap}>
               <TouchableOpacity 
                 style={[localStyles.quickBtnBox, {borderRightColor: color.defaultColor, borderRightWidth: 1}]}
-                onPress={ Actions.ClientMoreListBusiness }>
-                <Image source={require("~/Common/Image/company_icon.png")} style={localStyles.quickBtnImg} />
+                onPress={ Actions.ClientMyProfileInfo }>
+                <Image source={require("~/Common/Image/myinfo_icon.png")} style={localStyles.quickBtnImg} />
               </TouchableOpacity>
 
               <TouchableOpacity 

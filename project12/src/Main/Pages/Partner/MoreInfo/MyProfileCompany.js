@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import { Container, Text } from "native-base";
+import { StyleSheet, ScrollView, TouchableOpacity, View } from 'react-native'
+import { CheckBox, Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
-import { Actions } from 'react-native-router-flux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import GetProdType from '~/Main/Functions/GetProdType';
@@ -316,11 +315,12 @@ class MyProfileCompany extends Component {
 
   render() {
     return (
-      <Container style={styles.containerInnerPd}>
+      <Container style={styles.containerInnerPdNoBottom}>
         <CustomHeader title="사업자정보 수정"/>
 
         <View style={styles.contentWrap}>
-          <View>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.fx1}>
             <View style={styles.tooltipWrap}>
               <Text style={styles.tooltipTxt}>개인정보를 안전하게 보호하기 위해 비밀번호를 입력해주세요.</Text>
             </View>
@@ -339,6 +339,14 @@ class MyProfileCompany extends Component {
                 />
               ))}
             </View>
+
+            <CustomButton 
+                onPress={ this._logOut }
+                DefaultLineBtn={true}
+                CustomBtnStyle={styles.mt13}
+            >
+                수정완료
+            </CustomButton>
 
             <Text style={[styles.inputNbTitleTxt, styles.mb12]}>출장 가능시간</Text>
             <View>
@@ -364,7 +372,7 @@ class MyProfileCompany extends Component {
                   >
                     <Text style={localStyles.timeTxt}>{`${this.state.stHour}:${this.state.stMin}`}</Text>
                   </TouchableOpacity>
-                  <Text style={[localStyles.timeTxtWrap, localStyles.timeTxt, {flex: 1}]}>~</Text>
+                  <Text style={localStyles.timeCenterTxt}>~</Text>
                   <TouchableOpacity 
                     onPress={this._showDateTimePicker(ED_TYPE)} 
                     style={localStyles.timeTxtWrap}
@@ -378,16 +386,34 @@ class MyProfileCompany extends Component {
                 <Text style={styles.greyFont}>취약시간에는 출장비가 상승합니다</Text>
                 <Text style={styles.greyFont}>취약시간 기준 : 18시 ~ 09시, 일요일 및 공휴일 포함</Text>
               </View>
+
+              <View style={[styles.fxDirRow, styles.justiConCenter]}>
+                <View style={[styles.checkBoxWrap, {marginRight: 8}]}>
+                  <CheckBox checked={this.state.checkbox}
+                    onPress={() => this.toggleSwitch()}
+                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                  />
+                  <Text style={styles.greyFont}>풀타임</Text>
+                </View>
+                
+                <View style={[styles.checkBoxWrap, {marginLeft: 8}]}>
+                  <CheckBox checked={this.state.checkbox}
+                    onPress={() => this.toggleSwitch()}
+                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                  />
+                  <Text style={styles.greyFont}>공휴일</Text>
+                </View>
+              </View>
+              <CustomButton 
+                onPress={ this._logOut }
+                DefaultLineBtn={true}
+                CustomBtnStyle={{marginTop: 13, marginBottom: 26}}
+              >
+                수정완료
+              </CustomButton>
             </View>
           </View>
-
-          <View style={styles.footerBtnWrap}>
-            <CustomButton 
-              onPress={ this._logOut }
-            >
-              변경완료
-            </CustomButton>
-          </View>
+          </ScrollView>
         </View>
 
         <DateTimePicker
@@ -425,6 +451,32 @@ function wp (percentage, space) {
 const weekCardSize = wp(12, 52);
 
 const localStyles = StyleSheet.create({
+  prdBtnOn: {
+    backgroundColor: color.defaultColor,
+    borderRadius: 0,
+    elevation: 0,
+    width: "50%",
+    shadowOpacity: 0,
+    height: 34,
+    justifyContent: "center"
+  },
+  prdBtnOnTxt: {
+    fontSize: 14,
+    color: color.whiteColor
+  },
+  prdBtnOff: {
+    backgroundColor: "#d6f1ff",
+    borderRadius: 0,
+    elevation: 0,
+    width: "50%",
+    shadowOpacity: 0,
+    height: 34,
+    justifyContent: "center"
+  },
+  prdBtnOffTxt: {
+    fontSize: 14,
+    color: color.defaultColor
+  },
   weekWrap: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -457,7 +509,7 @@ const localStyles = StyleSheet.create({
   },
   bottomTxtWrap: {
     alignItems: "center",
-    marginTop: 35,
+    marginTop: 17,
     marginBottom: 17
   },
   timeTxtWrap: {
@@ -472,7 +524,16 @@ const localStyles = StyleSheet.create({
     color: color.whiteColor,
     fontWeight: "bold",
     textAlign: "center"
+  },
+  timeCenterTxt: {
+    alignItems: "center",
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: color.defaultColor,
+    fontSize: 30,
+    color: color.whiteColor,
+    fontWeight: "bold",
+    textAlign: "center"
   }
 });
-
 export default MyProfileCompany; 

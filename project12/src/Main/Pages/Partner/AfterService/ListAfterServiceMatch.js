@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
-import { Container, Text}  from "native-base";
+import { Container, H3, Icon, Text}  from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -17,8 +17,8 @@ import { stylesReg } from '~/Common/Styles/stylesReg';
 
 let SELECT_INDEX = null; // 선택된 A/S
 
-const Product = ({index, afterService}) => (
-    <TouchableOpacity onPress={ () => { this._toggleModal(), SELECT_INDEX = index }}>
+const Product = ({index, afterService, toggelAction}) => (
+    <TouchableOpacity onPress={ () => { toggelAction(), SELECT_INDEX = index }}>
       <View style={[styles.listPrdBoxFillWrap, {height: 108}]}>
         <View style={styles.listPrdBoxImgWrap}>
           <Image 
@@ -34,7 +34,9 @@ const Product = ({index, afterService}) => (
         </View>
 
         <View style={styles.listPrdBoxNextIconWrap}>
-          <Icon style={styles.listPrdBoxNextIcon} name="arrow-round-forward"/>
+          <TouchableOpacity>
+            <Image source={require("~/Common/Image/card_delete_2.png")} resizeMode="contain" style={{width: 22, height: 22}}/>
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>
@@ -127,6 +129,7 @@ class ListAfterServiceMatch extends Component {
                                 key={idx}
                                 index={idx}
                                 afterService={AS}
+                                toggelAction={this._toggleModal}
                             />
                         )}
                     </ScrollView>
@@ -146,8 +149,8 @@ class ListAfterServiceMatch extends Component {
                     onPress2={this._regAfterServiceMatch}
                     infoText1="A/S 매칭을 수락하시겠습니까?"
                     infoText2="수락 후 1시간 30분 내에 도착하셔야 합니다"
-                    btnText1="매칭취소"
-                    btnText2="A/S 출발"
+                    btnText1="취소"
+                    btnText2="수락완료"
                 />
 
                 {/* alert 메세지 모달 */}

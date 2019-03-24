@@ -8,8 +8,9 @@ import { Actions } from 'react-native-router-flux';
 
 import GetAfterServiceReport from '~/Main/Functions/GetAfterServiceReport';
 import GetCommonData from '~/Common/Functions/GetCommonData';
-
 import AfterServiceImage from '~/Main/Components/AfterServiceImage';
+
+import CustomModal from '~/Common/Components/CustomModal';
 import CustomHeader from '~/Common/Components/CustomHeader';
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
@@ -20,7 +21,9 @@ class ViewAfterServiceHistory extends Component {
       super(props);
 
       this.state = {
-        data : []
+        data : [],
+        isAlertModal : false, // alert 용
+        resultMsg : null // alert 용
       };
     }
 
@@ -38,7 +41,10 @@ class ViewAfterServiceHistory extends Component {
                     if(ResultBool) {
                         this.setState({ data : resultData.data });
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -47,36 +53,6 @@ class ViewAfterServiceHistory extends Component {
 
     render() {
         return (
-            // <CustomBlockWrapper
-            //     title="출장 보고서"
-            // >
-            //     <Card>
-            //         <CardItem body>
-            //             <Thumbnail large source={{ uri: afterService.prdTypeFileUrl }} />
-            //         </CardItem>
-            //         <CardItem>
-            //             <View>
-            //                 <Text>
-            //                     사업장 : {afterService.bplaceNm}
-            //                 </Text>
-            //                 <Text>
-            //                     날짜 : {afterService.regDt}
-            //                 </Text>
-            //                 <Text>
-            //                     증상 : {afterService.evalDsc}
-            //                 </Text>
-            //                 <Text>
-            //                     만족도 : {afterService.evalPoint}
-            //                 </Text>
-            //             </View>
-            //         </CardItem>
-            //         <CardItem>
-            //             <CustomButton onPress={ () => alert("작성") }>
-            //                 <Text>작성</Text>
-            //             </CustomButton>
-            //         </CardItem>
-            //     </Card>
-            // </CustomBlockWrapper>
             <Container style={styles.containerScroll}>
                 <CustomHeader title="A/S 보고서"/>
 
@@ -201,6 +177,15 @@ class ViewAfterServiceHistory extends Component {
 
                     </View>
                 </ScrollView>
+
+                 {/* alert 메세지 모달 */}
+                 <CustomModal
+                    modalType="ALERT"
+                    isVisible={this.state.isAlertModal}
+                    onPress={ () => this.setState({isAlertModal : false})}
+                    infoText={this.state.resultMsg}
+                    btnText="확인"
+                />
 
             </Container>
         )

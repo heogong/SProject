@@ -353,7 +353,7 @@ const PAGE = () => (
             inactiveBackgroundColor="#fff"
             tabBarPosition="bottom"
           >
-            <Stack key="ClientMain" hideNavBar iconImg={require("~/Common/Image/user_footer_icon/tab1.png")} icon={TabIcon} 
+            <Stack initial key="ClientMain" hideNavBar iconImg={require("~/Common/Image/user_footer_icon/tab1.png")} icon={TabIcon} 
             tabBarOnPress={() => Actions.ClientHome({type:ActionConst.RESET})}
             transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ClientHome" component={ClientHome} />

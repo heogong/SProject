@@ -15,6 +15,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrPw, setUsrNm, setUsrPhoneNum, setAccessToken, setRefreshToken } from '~/Redux/Actions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import NaverLogin from '../../Components/NaverLogin';
 import KakaoLogin from '../../Components/KakaoLogin';
@@ -49,6 +50,7 @@ class AccountType extends Component {
       btnDisabled: true,
       checkBox : false,
       logImg : require('~/Common/Image/logo-partner.png'),
+      spinner : false,
       isAlertModal : false, // alert 용
       resultMsg : null // alert 용
     };
@@ -80,29 +82,25 @@ class AccountType extends Component {
 
   // 이메일 로그인 프로세스
   async _login() {
+    this.setState({spinner : true}); // 로딩 모달 시작
+
     await this.props.onSetUsrId(this.state.usrId);  // 리덕스 사용자 ID SET (await 절차식으로 진행)
     await this.props.onSetUsrPw(this.state.usrPw);  // 리덕스 사용자 비밀번호 SET (await 절차식으로 진행)
 
     Login(this.props.value, undefined).then(async result => {
       console.log(result);
-      // const ResultBool = await (result.error == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-      let ResultBool = false;
-
-      // switch(result.error) {
-      //   case ERROR_MSG.emptyAccount : return ResultBool = false;
-      //   case ERROR_MSG.invaildIdOrPaswwd : return ResultBool = false;
-      //   default : return ResultBool = true;
-      // }
 
       if(result.error == ERROR_MSG.emptyAccount) {
         this.setState({
           isAlertModal : true,
-          resultMsg : "등록된 아이디가 없습니다."
+          resultMsg : "등록된 아이디가 없습니다.",
+          spinner : false
         })
       } else if(result.error == ERROR_MSG.invaildIdOrPaswwd) {
         this.setState({
           isAlertModal : true,
-          resultMsg : "아이디 또는 비밀번호 올바르지 않습니다."
+          resultMsg : "아이디 또는 비밀번호 올바르지 않습니다.",
+          spinner : false
         })
       } else { // 로그인 성공
         this.props.onSetUsrId(this.state.usrId);  // 리덕스 사용자 ID SET 
@@ -144,6 +142,7 @@ class AccountType extends Component {
                   resultMsg : resultData.resultMsg
                 })
               }
+              this.setState({spinner : false}); // 로딩 모달 종료
           }
       });
     });
@@ -153,21 +152,15 @@ class AccountType extends Component {
     const loginYn = true; // 진입 경로(로그인/회원가입) 확인
 
     return (
-      //   <CustomButton
-      //     block={ true }
-      //     info={ true }
-      //     bordered={ true }
-      //     onPress={Actions.LoginInputAccount}>
-      //     <Text>
-      //     이메일 로그인
-      //     </Text>
-      //   </CustomButton>
-
-      // </CustomBasicWrapper>
-
       // <KeyboardAvoidingView style={{ flex:1 }} behavior="padding" enabled>
       <KeyboardAwareScrollView enableOnAndroid={true} style={styles.containerInnerPd}>
-      {/* <Container style={styles.containerInnerPd}> */}
+        <Spinner
+            visible={this.state.spinner}
+            textContent={'로그인중입니다.'}
+            textStyle={styles.whiteFont}
+            style={{color: color.whiteColor}}
+            overlayCologr={"rgba(40, 200, 245, 1)"}
+        />
         <CustomHeader />
 
         <View style={styles.fx1}>
@@ -205,14 +198,15 @@ class AccountType extends Component {
                 />
               </Item>
 
-              <View style={[styles.justiConBetween, styles.fxDirRow, styles.mb20]}> 
+              {/* <View style={[styles.justiConBetween, styles.fxDirRow, styles.mb20]}> 
                 <View style={styles.fxDirRow}>
                   <CheckBox checked={this.state.checkbox}
                     onPress={() => this.toggleSwitch()}
                     style={styles.checkboxReset}
                   />
                   <Text style={localStyles.inputBottomTxt}>자동로그인</Text>
-                </View>
+                </View> */}
+              <View style={[styles.alignItemsEnd, styles.mb20]}>
                 <View>
                   <TouchableOpacity onPress={Actions.InvaildId}>
                     <Text style={[localStyles.inputBottomTxt, {textDecorationLine: 'underline'}]}>아이디와 비밀번호를 잊으셨나요?</Text>
@@ -264,7 +258,6 @@ class AccountType extends Component {
         infoText={this.state.resultMsg}
         btnText="확인"
       />
-      {/* </Container> */}
       </KeyboardAwareScrollView>
     )
   }

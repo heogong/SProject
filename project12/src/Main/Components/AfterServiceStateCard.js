@@ -229,59 +229,6 @@ class AfterServiceStateCard extends Component {
 
     render() {
         return (
-            // <View style={ styles.asBox }>
-            //     <View style={[{padding : 10, backgroundColor: 'pink'}]}>
-            //         <Text>{this.state.afterServiceData.bplaceNm} {this.state.afterServiceData.asPrgsStatNm}</Text>
-            //         <Text>{this.state.afterServiceData.bplaceAddr}</Text>
-            //         <Text>{this.state.afterServiceData.bplaceAddrDtl}</Text>
-            //         <Thumbnail square soure={{uri: this.state.afterServiceData.prdTypeImgUrl}} />
-            //         <Text>{this.state.afterServiceData.prdTypeKoNm}</Text>
-            //         <Text>state test {this.state.afterServiceData.asPrgsStatCd}</Text>
-            //             <View>
-
-            //                 <CustomButton
-            //                     disabled={ (this.state.afterServiceData.asPrgsStatCd == COMPLETE_MATCH.VALUE) ? false : true }
-            //                     info={ true }
-            //                     onPress={ Actions.PartnerReport }
-            //                 >
-            //                     <Text>상세정보</Text>
-            //                 </CustomButton>
-
-            //                 <CustomButton 
-            //                     disabled={ (this.state.afterServiceData.asPrgsStatCd == COMPLETE_MATCH.VALUE) ? false : true }
-            //                     info={ true }
-            //                     onPress={ this._departureAfterServiceConfirm }
-            //                 >
-            //                     <Text>A/S 출발</Text>
-            //                 </CustomButton>
-
-            //                 <CustomButton 
-            //                     disabled={ (this.state.afterServiceData.asPrgsStatCd == DEPARTURE.VALUE) ? false : true }
-            //                     info={ true }
-            //                     onPress={ this._arriveAfterServiceConfirm }
-            //                 >
-            //                     <Text>도착완료</Text>
-            //                 </CustomButton>
-
-            //                 <CustomButton 
-            //                     disabled={ (this.state.afterServiceData.asPrgsStatCd == ARRIVE.VALUE) ? false : true }
-            //                     info={ true }
-            //                     onPress={ this._completeAfterServiceConfirm }
-            //                 >
-            //                     <Text>A/S 완료</Text>
-            //                 </CustomButton>
-
-            //                 {/* <CustomButton 
-            //                     disabled={ (this.state.afterServiceData.asPrgsStatCd == COMPLETE_AS.VALUE) ? false : true }
-            //                     info={ true }
-            //                     onPress={ () => 
-            //                     Actions.RegAsBeforeReport({asPrgsId : this.props.asPrgsId}) }>
-            //                     <Text>A/S 보고서 진행</Text>
-            //                 </CustomButton> */}
-            //             </View>
-
-            //     </View>
-            // </View>
             <View style={localStyles.topAsYesWrap}>
                 <View style={[styles.justiConStart, styles.alignItemsCenter, styles.mb10]}>
                     <H1 style={localStyles.topTitleTxt}>{this.props.data.asPrgsStatDsc}</H1>

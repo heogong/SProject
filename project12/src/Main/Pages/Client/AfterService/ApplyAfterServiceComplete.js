@@ -17,13 +17,14 @@ import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
+let AS_PRGS_ID = null;
+
 class ApplyAfterServiceComplete extends Component {
     constructor(props) {
       super(props);
 
       this.state = {
         result : "매칭 중",
-        asPrgsId : null,
         region: {
             latitude: 37.566535,
             longitude: 126.97796919999996,
@@ -65,18 +66,18 @@ class ApplyAfterServiceComplete extends Component {
             GetCommonData(result, this._findAfterServicePartner).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log('AS 가능 업체 찾기(AS 진행 시작)')
                     console.log(resultData);
 
                     if(ResultBool) {
-                        this.setState({asPrgsId : result.data.asPrgsId});
+                        AS_PRGS_ID = result.data.asPrgsId;
                         this.props.onSetIsAfterService(true); // A/S 신청 확인 - interval 최소화 하기위함
 
                         // 타임아웃 clear 필요할듯
                         setTimeout(() => {
-                            //Actions.ClientMain();
-                            Actions.reset("ClientMain");
+                            Actions.ClientMain();
+                            // Actions.ClientHome({type : 'reset'}); 어디서 A/S 2번 넣는지 확인 이 필요
                         }, 5000);
-                        
                         
                     } else {
                         this.setState({
@@ -91,7 +92,7 @@ class ApplyAfterServiceComplete extends Component {
 
     // 고객 AS 매칭(진행)중 취소
     _cancleAfterServicePartner = () => {
-        CancleAfterServicePartner(this.state.asPrgsId).then(result => {
+        CancleAfterServicePartner(AS_PRGS_ID).then(result => {
             GetCommonData(result, this._cancleAfterServicePartner).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인

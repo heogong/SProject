@@ -172,7 +172,6 @@ export const ENTRIES1 = [
     }
 ];
 
-const SLIDER_1_FIRST_ITEM = 0;
 export default class Main extends Component {
     constructor(props) {
         super(props);
@@ -181,12 +180,9 @@ export default class Main extends Component {
             displayData : [],
             afterServiceData : [],
             reportCount : 0,
-            latitude : null,
-            longitude : null,
-
             isModalVisible: false,
             isModalVisible1: false,
-            slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
+            slider1ActiveSlide: 0,
             wait : true, // test 
             isASreq : true, // test
             isAlertModal : false, // alert 용
@@ -261,10 +257,9 @@ export default class Main extends Component {
     componentWillUnmount () {
         BackHandler.removeEventListener('hardwareBackPress', () => this.handleBackPress) // Remove listener
 
-        // BackgroundGeolocation.events.forEach(event =>
-        //     BackgroundGeolocation.removeAllListeners(event)
-        // );
-
+        BackgroundGeolocation.events.forEach(event =>
+            BackgroundGeolocation.removeAllListeners(event)
+        );
     }
 
     componentDidMount () {
@@ -274,26 +269,11 @@ export default class Main extends Component {
 
         this._getUserInfo(); //사용자 정보 조회 - 가입 승인 대기 여부 확인
         this._getAfterServiceState();
-        // this._getAfterService();
         this._getAfterServiceIncompleteCnt();
     }
 
     handleBackPress = () => {
         return false;
-    }
-
-     // 현재 위치 조회
-     _getLocation() {
-        navigator.geolocation.getCurrentPosition(
-        (positon) => {
-            this.setState({
-                latitude : positon.coords.latitude,
-                longitude : positon.coords.longitude
-            })
-        },
-        (error) => {console.log(error.message)},
-        {enableHighAccuracy: false, timeout: 10000}
-        );
     }
 
     // 1. 로그인(토큰값 가져온) 사용자 정보 가져오기
@@ -336,7 +316,6 @@ export default class Main extends Component {
                         // A/S 상태가 아닐경우 A/S 목록 조회
                         } else { 
                             this._getAfterService();
-                            
                         }
                     } else {
                         this.setState({

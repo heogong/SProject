@@ -24,7 +24,12 @@ class NoticeList extends Component {
   render() {
     return (
       <Container style={styles.container}>
-        <CustomHeader title="공지사항"/>
+        <View style={{
+          paddingLeft : styles.containerInnerPd.paddingLeft, 
+          paddingRight : styles.containerInnerPd.paddingRigth 
+        }}>
+          <CustomHeader title="공지사항"/>
+        </View>
 
         <View style={[styles.fx1, {backgroundColor: color.defaultColor}]}>
           <View style={{marginTop: 16}}>

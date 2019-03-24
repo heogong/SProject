@@ -6,8 +6,9 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions, ActionConst } from 'react-native-router-flux';
 
-import GetAfterServiceDetail from '~/Main/Functions/GetAfterServiceDetail'
+import GetAfterServiceDetail from '~/Main/Functions/GetAfterServiceDetail';
 import GetCommonData from '~/Common/Functions/GetCommonData';
+import AfterServiceImage from '~/Main/Components/AfterServiceImage';
 import DrawMap from '~/Main/Components/DrawMap';
 
 import CustomModal from '~/Common/Components/CustomModal';
@@ -16,25 +17,25 @@ import { styles, viewportWidth, viewportHeight } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from "~/Common/Styles/colors";
 
-const AfterServiceImage = ({AfterService}) => (
-    <View style={localStyles.prdPhoto}>
-      <ImageBackground 
-        style={[styles.alignItemsEnd, styles.justiConEnd, {width: '100%', height: '100%', backgroundColor:color.whiteColor}]}
-        source={{ uri: AfterService.fileUrl }}>
+// const AfterServiceImage = ({AfterService}) => (
+//     <View style={localStyles.prdPhoto}>
+//       <ImageBackground 
+//         style={[styles.alignItemsEnd, styles.justiConEnd, {width: '100%', height: '100%', backgroundColor:color.whiteColor}]}
+//         source={{ uri: AfterService.fileUrl }}>
 
-        {(AfterService.fileUrl !== null) ? (
-            <TouchableOpacity 
-                style={localStyles.prdPhotoBtnEn}
-                onPress={ () => alert("사진조회")}>
-                <Icon name="expand" style={localStyles.prdPhotoBtnEnIcon}/>
-            </TouchableOpacity>
-        ) : (
-            <View/>
-        )}
+//         {(AfterService.fileUrl !== null) ? (
+//             <TouchableOpacity 
+//                 style={localStyles.prdPhotoBtnEn}
+//                 onPress={ () => alert("사진조회")}>
+//                 <Icon name="expand" style={localStyles.prdPhotoBtnEnIcon}/>
+//             </TouchableOpacity>
+//         ) : (
+//             <View/>
+//         )}
 
-      </ImageBackground>
-    </View>
-)
+//       </ImageBackground>
+//     </View>
+// )
 
 class ViewAfterServiceMatch extends Component {
     constructor(props) {
@@ -96,59 +97,20 @@ class ViewAfterServiceMatch extends Component {
 
     // 메인페이지 이동 - 그냥 pop 하면 index페이지로 이동 함
     _goToMain = () => {
-        // Actions.PartnerMain();
-        // Actions.refresh({ key: 'PartnerHome' });
-        Actions.PartnerMain({ refresh: true });
+        Actions.PartnerMain();
     }
 
     render() {
         return (
-            // <CustomBlockWrapper
-            //     title="A/S 매칭 상세정보"
-            // >
-            //     <View>
-            //         <Thumbnail large source={{ uri: this.state.data.prdTypeImgUrl }} />
-            //         <Text>사업장 : {this.state.data.bplaceNm}</Text>
-            //         <Text>주소 : {this.state.data.bplaceAddr} {this.state.data.bplaceAddrDtl}</Text>
-            //     </View>
-
-            //     <View style={{width:"100%", height:200}}>
-            //         <DrawMap
-            //             region={ this.state.region }
-            //             // onRegionChangeComplete={ this._onRegionChangeComplete }
-            //             makerYn={ true }
-            //             marker={ this.state.marker }
-            //         />
-            //     </View>
-
-            //     <View style={{ flex:1, justifyContent: 'center'}}>
-            //         <View style={ styles.boxLayout }>
-            //             {this.state.data.clientPrdImgs.map((info, idx) => (
-            //                 <ProductImage 
-            //                     key={idx}
-            //                     prdTypeImgCateNm={ info.prdTypeImgCateNm }
-            //                     clientPrdId={ this.state.data.clientPrdId }
-            //                     clientPrdImgId={ info.clientPrdImgId }
-            //                     prdImgCateId={ info.prdTypeImgCateId }
-            //                     uri={ (info.fileUrl !== null) ? info.fileUrl : this.props.defaultImg }
-            //                     defaultImg={ this.props.defaultImg }
-            //                     imageTouch={ (info.fileUrl !== null) ? false : true }
-            //                     viewProduct={ true }
-            //                 />
-            //             ))}
-            //         </View>
-            //     </View>
-            // </CustomBlockWrapper>
             <Container style={styles.containerScroll}>
                 <CustomHeader 
-                customAction={this._goToMain}
-                title="매칭상세정보"/>
-
+                    customAction={this._goToMain}
+                    title="매칭상세정보"
+                />
                 <ScrollView showsVerticalScrollIndicator={false}>
-
                     <View style={styles.mb15}>
                         <View style={styles.boxShadow}>
-                            <View style={{height : mapSize, backgroundColor : 'skyblue'}}>
+                            <View style={{height : mapSize}}>
                             <DrawMap
                                 region={ this.state.region }
                                 // onRegionChangeComplete={ this._onRegionChangeComplete }
@@ -162,21 +124,23 @@ class ViewAfterServiceMatch extends Component {
                                 styles.justiConCenter, 
                                 styles.pd15, 
                                 {backgroundColor : color.whiteColor}]}>
-                                <View style={[styles.fx3, styles.alignItemsStart, styles.justiConCenter]}>
+                                <View style={[styles.alignItemsStart, styles.justiConCenter]}>
                                     <Image 
                                         source={{ uri: this.state.data.prdTypeImgUrl }} 
                                         resizeMode="contain" 
                                         style={{height : productImgSize, width : productImgSize}} 
                                     />
                                 </View>
-                                <View style={[styles.justiConCenter, styles.fx6]}>
+                                <View style={[styles.justiConCenter, {paddingLeft: 10}]}>
                                     <H3 style={[styles.mb15, localStyles.topBoxTxt]}>{this.state.data.bplaceNm}</H3>
                                     <Text style={localStyles.topBoxDeTxt}>{this.state.data.bplaceAddr}</Text>
                                     <Text style={localStyles.topBoxDeTxt}>{this.state.data.bplaceAddrDtl}</Text>
                                 </View>
                         
-                                <View style={styles.fx1}>
-                                    <Icon  name="arrow-round-forward"/>
+                                <View style={[styles.fx1, styles.alignItemsEnd]}>
+                                    <TouchableOpacity>
+                                        <Image source={require("~/Common/Image/Kakao_navi_Link_icon.png")} resizeMode="contain" style={{height : 27, width : 27}}/>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </View>
@@ -188,16 +152,14 @@ class ViewAfterServiceMatch extends Component {
                                 </View>
 
                                 <View style={styles.mb20}>
-                                    <Text style={localStyles.boxDetailSubTitleTxt}>업소용냉장고</Text>
-                                    <Text style={localStyles.boxDetailSubTxt}>증상1. 냉동 온도가 올라가지 않음</Text>
+                                    <Text style={localStyles.boxDetailSubTitleTxt}>{this.state.data.prdTypeKoNm}</Text>
+                                    <Text style={localStyles.boxDetailSubTxt}>{this.state.data.asItemNm}</Text>
                                 </View>
 
                                 <View style={styles.mb20}>
                                     <Text style={localStyles.boxDetailSubTitleTxt}>참고사항</Text>
                                     <Text style={localStyles.boxDetailSubTxt}>
-                                        주차공간이 협소하니 어쩌구저저구
-                                        주차공간이 협소하니 어쩌구저저구
-                                        주차공간이 협소하니 어쩌구저저구
+                                        {this.state.data.asItemDsc}
                                     </Text>
                                 </View>
 
@@ -224,7 +186,8 @@ class ViewAfterServiceMatch extends Component {
                                         {this.state.data.clientPrdImgs.map((info, idx) => (
                                             <AfterServiceImage
                                                 key={idx}
-                                                AfterService={info}
+                                                viewImage={true}
+                                                imgUri={info.fileUrl}
                                             />
                                         ))}
 

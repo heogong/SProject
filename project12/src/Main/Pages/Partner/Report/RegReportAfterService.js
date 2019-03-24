@@ -132,23 +132,13 @@ class RegReportBeforePic extends Component {
 
      // 업체 AS 매칭(진행) 완료
      _completeAfterService = () => {
-
         CompleteAfterService(this.props.asPrgsId).then(result => {
             GetCommonData(result, this._completeAfterService).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    console.log(resultData);
                     if(ResultBool) {
-
-                        // this.setState({
-                        //     isAlertModal : true,
-                        //     resultMsg : resultData.resultMsg
-                        // })
-
-                        //Actions.PartnerMain({type:'replace'})
-                        // Actions.replace('PartnerMain')
-                        // Actions.PartnerMain({type:ActionConst.REPLACE})
-                        Actions.PartnerMain({type:ActionConst.REPLACE})
+                        Actions.PartnerMain();
+                        Actions.reset('tabbar2');
                     } else {
                         this.setState({
                             isAlertModal : true,

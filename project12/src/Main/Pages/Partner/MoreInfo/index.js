@@ -54,7 +54,10 @@ class MoreMenu extends Component {
   render() {
     return (
       <Container style={styles.container}>
-        <View style={{paddingLeft : 26, paddingRight: 26}}>
+        <View style={{
+          paddingLeft : styles.containerInnerPd.paddingLeft, 
+          paddingRight : styles.containerInnerPd.paddingRigth 
+        }}>
           <CustomHeader title="더보기"/>
         </View>
 

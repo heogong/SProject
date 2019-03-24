@@ -21,6 +21,12 @@ export const styles = StyleSheet.create({
       paddingRight: 26,
       paddingBottom: 26
     },
+    containerInnerPdNoBottom: {
+      flex: 1,
+      backgroundColor: color.whiteColor,
+      paddingLeft: 26,
+      paddingRight: 26
+    },
     containerScroll: {
       flex: 1,
       backgroundColor: color.whiteColor,
@@ -450,6 +456,7 @@ export const styles = StyleSheet.create({
     noMargin: {marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0},
     noBackNBorderColor: {backgroundColor: color.whiteColor, borderColor: color.whiteColor},
 
+    checkBoxWrap: {flexDirection: "row", alignItems: "center"},
     checkboxReset: {paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, marginLeft: -10, marginRight: 15, marginTop: 0, marginBottom: 0},
     checkboxTxt: {fontSize: 14, fontWeight: 'normal'},
 
