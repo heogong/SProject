@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Alert, View } from 'react-native'
-import { Card, CardItem, Container, H2, H3,Text,Thumbnail } from "native-base";
+import { Image, ScrollView, StyleSheet, View } from 'react-native'
+import { Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -131,64 +131,57 @@ class ApplyCheckAfterService extends Component {
 
     render() {
         return (
-            <Container style={styles.containerInnerPd}>
-                <CustomHeader title="A/S신청내역"/>
-
-                <View style={styles.fx1}>
-                    <View style={[styles.fx3, styles.justiConCenter]}>
-                        <Card>
-                            <CardItem bordered style={styles.mg10}>
-                                <View style={[styles.fxDirRow, styles.mg10]}>
-
-                                    <View style={styles.fx1}>
-                                        <Thumbnail square large source={{uri : this.state.data.prdTypeImg.fileUrl}} />
-                                    </View>
-
-                                    <View style={styles.fx2}>
-                                        <H2 style={{color : color.defaultColor}}>{this.state.data.bplace.bplaceNm}</H2>
-                                        <Text>{this.state.data.clientPrdNm}</Text>
-                                        <Text style={styles.greyFont}>{this.state.data.bplace.addr.addressName}</Text>
-                                        <Text style={styles.greyFont}>{this.state.data.bplace.detail.detailAddr1}</Text>
-                                    </View>
-                                </View>
-                            </CardItem>
-                            <CardItem style={styles.mg10}>
-
-                                <View style={styles.mg10}>
-                                    <H2 style={[styles.mb20, {color:color.defaultColor}]}>A/S 신청내역</H2>
-                                    <H3>{this.state.data.clientPrdNm}</H3>
-                                    <Text style={styles.greyFont}>{ this.props.asItemNm }</Text>
-                                    <View style={styles.mb20}></View>
-
-                                    <H3>참고사항</H3>
-                                    <Text style={styles.greyFont}>
-                                        { this.props.asRecvDsc }
-                                    </Text>
-                                    <View style={styles.mb20}></View>
-
-                                    <H3>출장비 결제</H3>
-                                    <Text style={styles.greyFont}>aaaaaaaaaaaaaaaaaaaaa</Text>
-                                    <View style={styles.mb20}></View>
-                                </View>
-                            </CardItem>
-                        </Card>
-                    </View>
-                   
-
-                    <View style={styles.footerBtnWrap}>
-                        <View style={[styles.mb20, {alignItems : 'center'}]}>
-                            <Text style={styles.greyFont}>입력하신 사항이 정확한가요?</Text>
-                            <Text style={styles.greyFont}>매칭이 시작되면 출장비가 결제되니 꼼꼼하게 살펴주세요</Text>
+            <Container style={styles.container}>
+                <View style={{
+                    paddingLeft : styles.containerInnerPd.paddingLeft,
+                    paddingRight : styles.containerInnerPd.paddingRight
+                }}>
+                    <CustomHeader title="A/S신청내역"/>
+                </View>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={localStyles.contentWrap}>
+                        <View style={localStyles.titleWrap}>
+                        <Image source={{uri : this.state.data.prdTypeImg.fileUrl}} style={localStyles.titleImg}/>
+                        <Text style={localStyles.titleNameTxt}>{this.state.data.bplace.bplaceNm}</Text>
+                        <Text style={localStyles.subNameTxt}>{this.state.data.clientPrdNm}</Text>
                         </View>
-                        <CustomButton 
-                            onPress={ ()=> this.setState({isModalVisible : true}) }
-                            disabled={this.state.disabledBtn}
-                            edgeFill={true}
-                            fillTxt={true}
-                        >
-                            매칭시작
-                        </CustomButton>
+
+                        <View style={[styles.boxShadow, localStyles.histBoxWrap]}>
+                        <Text style={localStyles.histBoxTitleTxt}>A/S신청내역</Text>
+
+                        <Text style={localStyles.histBoxSubTitleTxt}>{this.state.data.clientPrdNm}</Text>
+                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.bplace.addr.addressName}</Text>
+                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.bplace.detail.detailAddr1}</Text>
+
+                        <Text style={localStyles.histBoxSubTitleTxt}>A/S 증상</Text>
+                        <Text style={localStyles.histBoxInfoTxt}>{ this.props.asItemNm }</Text>
+
+                        <Text style={localStyles.histBoxSubTitleTxt}>참고사항</Text>
+                        <Text style={localStyles.histBoxInfoTxt}>{ this.props.asRecvDsc }</Text>
+
+                        <Text style={localStyles.histBoxSubTitleTxt}>A/S 출장 비용</Text>
+                        <Text style={localStyles.histBoxInfoTxt}>120,000원</Text>
+                        </View>
+
                     </View>
+                
+                </ScrollView>
+
+                <View style={[styles.footerBtnWrap, {paddingLeft: 26, paddingRight: 26, paddingBottom: 26, paddingTop: 10}]}>
+                    <View style={styles.mb10}>
+                        <Text style={localStyles.bottomTxt}>입력하신 사항이 정확한가요?</Text>
+                        <Text style={localStyles.bottomTxt}>매칭이 시작되면 출장비가 결제되니 꼼꼼하게 살펴주세요.</Text>
+                    </View>
+
+                    <CustomButton 
+                        onPress={ ()=> this.setState({isModalVisible : true}) }
+                        disabled={this.state.disabledBtn}
+                        edgeFill={true}
+                        fillTxt={true}
+                    >
+                        매칭시작
+                    </CustomButton>
+
                 </View>
 
                 <CustomModal
@@ -215,5 +208,79 @@ class ApplyCheckAfterService extends Component {
         )
     }
 }
+  
+
+const localStyles = StyleSheet.create({
+    titleWrap: {
+      alignItems : 'center'
+    },
+    titleImg: {
+      width: 80,
+      height: 80,
+      marginTop: -40
+    },
+    boxTitleWrap: {
+      marginBottom: 20,
+      flexDirection: "row",
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 25
+    },
+    boxTitleTxt: {
+      flex: 1,
+      fontSize: 18,
+      color : color.whiteColor,
+      fontWeight: "bold"
+    },
+    contentWrap: {
+      paddingLeft: 26,
+      paddingRight: 26,
+      marginTop: 40,
+      paddingBottom: 26,
+      backgroundColor: color.defaultColor,
+    },
+    titleNameTxt: {
+      marginTop: 14,
+      fontSize: 18,
+      fontWeight: "bold",
+      color: color.whiteColor
+    },
+    subNameTxt: {
+      marginTop: 7,
+      marginBottom: 30,
+      fontSize: 14,
+      fontWeight: "bold",
+      color: color.whiteColor
+    },
+    histBoxWrap: {
+      backgroundColor: color.whiteColor,
+      paddingTop: 30,
+      paddingBottom: 30,
+      paddingLeft: 24,
+      paddingRight: 24
+    },
+    histBoxTitleTxt: {
+      color:'#28c8f5',
+      fontWeight: "bold",
+      fontSize: 18,
+      marginBottom: 6
+    },
+    histBoxSubTitleTxt: {
+      fontSize: 15,
+      color: "#1e1e32",
+      fontWeight: "bold",
+      marginBottom: 10,
+      marginTop: 20
+    },
+    histBoxInfoTxt: {
+      fontSize: 13,
+      color: "#8e8e98",
+      lineHeight: 20
+    },
+    bottomTxt: {
+      fontSize: 14, color: "#8e8e98", textAlign: "center"
+    }
+  });
 
 export default ApplyCheckAfterService;

@@ -252,7 +252,7 @@ class ApplyBusinessProduct extends Component {
                                 </View>
                             </View>
 
-                            <View>
+                            <View style={{marginTop: 26}}>
                                 <Item style={{
                                     borderTopWidth : 1, 
                                     borderLeftWidth  :1, 
@@ -283,66 +283,66 @@ class ApplyBusinessProduct extends Component {
                                     bordered placeholder="출장 시 참고사항(ex:주차공간이 협소합니다)" 
                                 />
                             </View>
-                        </View>
 
-                        <View style={styles.mb20}>
-                            <Text style={localStyles.boxDetailSubTitleTxt}>쿨리닉 제품분석</Text>
-                            <View style={styles.fxDirRow}>
-                                <View style={styles.fx1}>
-                                    <Text style={localStyles.boxDetailSubTxt}>용량 :</Text>
-                                    <Text style={localStyles.boxDetailSubTxt}>전기 :</Text>
-                                    <Text style={localStyles.boxDetailSubTxt}>압축기 :</Text>
-                                </View>
-                                <View style={styles.fx1}>
-                                    <Text style={localStyles.boxDetailSubTxt}>응축기 :</Text>
-                                    <Text style={localStyles.boxDetailSubTxt}>증발기 :</Text>
-                                    <Text style={localStyles.boxDetailSubTxt}>제조사 :</Text>
+                            <View style={styles.mb20}>
+                                <Text style={localStyles.boxDetailSubTitleTxt}>쿨리닉 제품분석</Text>
+                                <View style={styles.fxDirRow}>
+                                    <View style={styles.fx1}>
+                                        <Text style={localStyles.boxDetailSubTxt}>용량 :</Text>
+                                        <Text style={localStyles.boxDetailSubTxt}>전기 :</Text>
+                                        <Text style={localStyles.boxDetailSubTxt}>압축기 :</Text>
+                                    </View>
+                                    <View style={styles.fx1}>
+                                        <Text style={localStyles.boxDetailSubTxt}>응축기 :</Text>
+                                        <Text style={localStyles.boxDetailSubTxt}>증발기 :</Text>
+                                        <Text style={localStyles.boxDetailSubTxt}>제조사 :</Text>
+                                    </View>
                                 </View>
                             </View>
                         </View>
+                    </View>
 
-                        <View style={[styles.footerBtnWrap, {flex: 0}]}>
-                            <CustomButton 
-                                onPress={() =>
-                                    ActionSheet.show(
-                                        {
-                                            options: this.state.cardData,
-                                            cancelButtonIndex: this.state.cardData.length - 1,
-                                            title: "결제카드"
-                                        },
-                                        buttonIndex => {
-                                            const { cardData, selected } = this.state;
-                                            //this.setState({ selectIndex : buttonIndex });
-                                            SELECT_INDEX = buttonIndex;
+                    <View style={[styles.footerBtnWrap, {flex: 0}]}>
+                        <CustomButton 
+                            onPress={() =>
+                                ActionSheet.show(
+                                    {
+                                        options: this.state.cardData,
+                                        cancelButtonIndex: this.state.cardData.length - 1,
+                                        title: "결제카드"
+                                    },
+                                    buttonIndex => {
+                                        const { cardData, selected } = this.state;
+                                        //this.setState({ selectIndex : buttonIndex });
+                                        SELECT_INDEX = buttonIndex;
 
-                                            if(cardData[buttonIndex].billingKeyId > 0) {
-                                                this.setState({ 
-                                                    buttonTitle: cardData[buttonIndex].text,
-                                                    disabledBtn : (selected !== -1) ? false : true
-                                                });
-                                                // this._paymentAfterService();
-                                            } else if(cardData[buttonIndex].billingKeyId == -1) { // 카드 추가
-                                                Actions.CardInputInfo({regAsCard : true, getListCard: this._getListCard});
-                                            } else if(cardData[buttonIndex].billingKeyId == 0) { // cancle
-                                                this.setState({
-                                                    disabledBtn : true,
-                                                    buttonTitle : '결제카드선택'
-                                                })
-                                            }
-                                        })
-                                }
-                                DefaultLineBtn={true}
-                            >
-                                {this.state.buttonTitle}
-                            </CustomButton>
-                                
-                            <CustomButton 
-                                onPress={this._nextButton}
-                                disabled={this.state.disabledBtn}
-                            >
-                                입력 완료
-                            </CustomButton>
-                        </View>
+                                        if(cardData[buttonIndex].billingKeyId > 0) {
+                                            this.setState({ 
+                                                buttonTitle: cardData[buttonIndex].text,
+                                                disabledBtn : (selected !== -1) ? false : true
+                                            });
+                                            // this._paymentAfterService();
+                                        } else if(cardData[buttonIndex].billingKeyId == -1) { // 카드 추가
+                                            Actions.CardInputInfo({regAsCard : true, getListCard: this._getListCard});
+                                        } else if(cardData[buttonIndex].billingKeyId == 0) { // cancle
+                                            this.setState({
+                                                disabledBtn : true,
+                                                buttonTitle : '결제카드선택'
+                                            })
+                                        }
+                                    })
+                            }
+                            DefaultLineBtn={true}
+                        >
+                            {this.state.buttonTitle}
+                        </CustomButton>
+                            
+                        <CustomButton 
+                            onPress={this._nextButton}
+                            disabled={this.state.disabledBtn}
+                        >
+                            입력 완료
+                        </CustomButton>
                     </View>
 
                     {/* alert 메세지 모달 */}

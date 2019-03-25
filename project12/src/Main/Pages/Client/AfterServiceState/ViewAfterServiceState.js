@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Container,Header,Title, Button,Left,Right,Body,Text} from "native-base";
 
-import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, ADD_AS, COMPLETE_AS} from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, PROGRESS, COMPLETE_MATCH, ADD_AS, COMPLETE_AS} from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -23,18 +23,22 @@ import { color } from '~/Common/Styles/colors';
 const AfterServiceState = ({ asPrgsStatCd, status, statusOnImg, statusOffImg }) => (
   <View style={localStyles.asMatchIconWrap}>
     <Image 
-        source={(asPrgsStatCd !== status.VALUE) ? statusOffImg : statusOnImg } 
-        resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}}
+        source={(asPrgsStatCd == null) ? 
+          (statusOffImg) : 
+          (asPrgsStatCd == status.code1.VALUE || asPrgsStatCd == status.code2.VALUE) ? statusOnImg : statusOffImg 
+        } 
       />
       <Text 
         style={[localStyles.asMatchStateTxt,
-          (asPrgsStatCd !== status.VALUE) ? {color: "#1e1e32"} : {color: "#0397bd"}
+          (asPrgsStatCd !== status.code1.VALUE || asPrgsStatCd !== status.code2.VALUE) ? {color: "#1e1e32"} : {color: "#0397bd"}
         ]}
       >
-          {status.TEXT}
+          {status.code1.TEXT}
       </Text>
   </View>
 );
+
+let AS_PRGS_STAT_CD = null;
 
 class ViewAfterServiceState extends Component {
   constructor(props) {
@@ -42,7 +46,6 @@ class ViewAfterServiceState extends Component {
     this.state = { 
       data: {
         asPrgsMst : {
-          asPrgsStatCd : null,
           asPrgsStatNm : null,
           asPrgsStatDSC : null
         },
@@ -91,6 +94,8 @@ class ViewAfterServiceState extends Component {
   _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
 
   componentDidMount () {
+    clearInterval(this.props.afterService.intervalId);
+
     this._getClientAfterServiceState();
 
     // AS 신청 여부 확인
@@ -100,7 +105,7 @@ class ViewAfterServiceState extends Component {
       // A/S 상태 갱신
       const INTERVAL_ID = setInterval(() => {
         this._getClientAfterServiceState();
-      }, 60000);
+      }, 20000);
 
       this.props.onSetIntervalId(INTERVAL_ID);
     }
@@ -128,7 +133,11 @@ class ViewAfterServiceState extends Component {
                   this.setState({
                     data : resultData.data
                   });
+
+                  AS_PRGS_STAT_CD = resultData.data.asPrgsMst.asPrgsStatCd;
+
                 } else {
+                  AS_PRGS_STAT_CD = null;
                   this.props.onSetIsAfterService(false);
                   clearInterval(this.props.afterService.intervalId);
                 }
@@ -180,7 +189,7 @@ class ViewAfterServiceState extends Component {
   // 평가 여부
   _checkGrade = () => {
     // this._toggleModal();
-    if(this.state.data.asPrgsMst.asPrgsStatCd == COMPLETE_AS.VALUE) {
+    if(AS_PRGS_STAT_CD == COMPLETE_AS.VALUE) {
       this._toggleModal();
     } else {
       this.setState({
@@ -253,7 +262,8 @@ class ViewAfterServiceState extends Component {
 
   // 메인페이지 이동 - 그냥 pop 하면 index페이지로 이동 함
   _goToMain = () => {
-      Actions.ClientMain();
+    clearInterval(this.props.afterService.intervalId);
+    Actions.ResetMain({client : true});
   }
 
   render() {
@@ -263,8 +273,8 @@ class ViewAfterServiceState extends Component {
           }]}>
               <Header style={[styles.header, styles.noPadding, {paddingLeft : 26, paddingRight : 26}]}>
                 <Left style={styles.headerLeftWrap}>
-                  <Button style={styles.noPadding}  transparent onPress={this._goToMain}>
-                    <Image source={require("~/Common/Image/btn_back_arrow.png")} />
+                  <Button style={styles.noPadding} transparent onPress={this._goToMain}>
+                    <Image source={require("~/Common/Image/btn_back_arrow.png")} style={styles.btnBackArrowIcon}/>
                   </Button>
                 </Left>
                 <Body style={styles.headerCenterWrap}>
@@ -296,10 +306,10 @@ class ViewAfterServiceState extends Component {
                                     {this.state.data.clinePrdInfo.clientPrdNm}
                                   </Text>
                                   <Text style={localStyles.topInfoTxt}>
-                                    {this.state.data.clinePrdInfo.bplace.addr.addressName}
+                                    {this.state.data.asPrgsMst.regDt}
                                   </Text>
                                   <Text style={localStyles.topInfoTxt}>
-                                    {this.state.data.clinePrdInfo.bplace.detail.detailAddr1}
+                                    {this.state.data.asPrgsMst.asItemNm}
                                   </Text>
                               </View>
                               <View style={localStyles.topboxImgWrap}>
@@ -319,36 +329,36 @@ class ViewAfterServiceState extends Component {
                   <View>
                       <View style={localStyles.secondBox}>
                       <Text style={localStyles.asMatchStateDscTxt}>
-                        { (this.state.asPrgsYn == 'Y') ? this.state.asPrgsStatNm : "A/S 상태가 아닙니다." }
+                        { (this.state.asPrgsYn == 'Y') ? this.state.data.asPrgsMst.asPrgsStatNm : "A/S 상태가 아닙니다." }
                       </Text>
                       <View style={styles.fxDirRow}>
                           <AfterServiceState
-                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
-                            status={MATCH}
+                            asPrgsStatCd={AS_PRGS_STAT_CD}
+                            status={{'code1' : MATCH, 'code2' : COMPLETE_MATCH}}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_wait_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_wait_icon.png')}
                           />
                           <AfterServiceState
-                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
-                            status={DEPARTURE}
+                            asPrgsStatCd={AS_PRGS_STAT_CD}
+                            status={{'code1' : DEPARTURE, 'code2' : DEPARTURE}}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_start_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_start_icon.png')}
                           />
                           <AfterServiceState
-                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
-                            status={ARRIVE}
+                            asPrgsStatCd={AS_PRGS_STAT_CD}
+                            status={{'code1' : ARRIVE, 'code2' : ARRIVE}}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_arrive_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_arrive_icon.png')}
                           />
                           <AfterServiceState
-                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
-                            status={ADD_AS}
+                            asPrgsStatCd={AS_PRGS_STAT_CD}
+                            status={{'code1' : PROGRESS, 'code2' : ADD_AS}}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_progress_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_progress_icon.png')}
                           />
                           <AfterServiceState
-                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
-                            status={COMPLETE_AS}
+                            asPrgsStatCd={AS_PRGS_STAT_CD}
+                            status={{'code1' : COMPLETE_AS, 'code2' : COMPLETE_AS}}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_complete_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_complete_icon.png')}
                           />
@@ -368,7 +378,10 @@ class ViewAfterServiceState extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={[localStyles.serviceBox]}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {
+                            clearInterval(this.props.afterService.intervalId), 
+                            Actions.AfterServiceHistory() 
+                          }}>
                             <Image source={require("~/Common/Image/previous_as.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
                         </TouchableOpacity>
                     </View>

@@ -32,30 +32,39 @@ class MoreMenu extends Component {
 
     //  사용자 정보 가져오기
   _getUserInfo = () => {
-        GetUserInfo().then(async result => {
-            GetCommonData(result, this._getUserInfo).then(async resultData => {
-                if(resultData !== undefined) {
-                    console.log(resultData);
-                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+    GetUserInfo().then(async result => {
+        GetCommonData(result, this._getUserInfo).then(async resultData => {
+            if(resultData !== undefined) {
+                console.log(resultData);
+                const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
 
-                    if(ResultBool) {
-                        this.setState({data : resultData.data})
-                    } else {
-                        this.setState({
-                            isAlertModal : true,
-                            resultMsg : resultData.resultMsg
-                        })
-                    }
+                if(ResultBool) {
+                    this.setState({data : resultData.data})
+                } else {
+                    this.setState({
+                        isAlertModal : true,
+                        resultMsg : resultData.resultMsg
+                    })
                 }
-            });
+            }
         });
-    }
+    });
+  }
+
+  // 메인페이지 이동 
+  _goToMain = () => {
+    Actions.ResetMain({client : true});
+  } 
+
 
   render() {
     return (
       <Container style={styles.container}>
         <View style={{paddingLeft : 26, paddingRight: 26}}>
-          <CustomHeader title="더보기"/>
+          <CustomHeader 
+            title="더보기"
+            customAction={this._goToMain}
+          />
         </View>
 
         <View style={[styles.fx1, {backgroundColor: color.defaultColor}]}>

@@ -59,6 +59,11 @@ class ListBusinessPlace extends Component {
     });
   }
 
+  // 메인페이지 이동 
+  _goToMain = () => {
+    Actions.ResetMain({client : true});
+  } 
+
   // 사업장 삭제
   _delBusiness = () => {
     
@@ -71,7 +76,9 @@ class ListBusinessPlace extends Component {
   render() {
     return (
       <Container style={styles.containerRightSlide}>
-        <CustomHeader/>
+        <CustomHeader 
+          customAction={this._goToMain}
+        />
         <View style={styles.contentWrap}>
           <View style={styles.fx1}>
             <View style={styles.fxDirRow}>

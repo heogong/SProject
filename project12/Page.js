@@ -8,12 +8,13 @@ import TestPageOne from './src/FirstScreen/Pages/PageOne';
 
 import IntroPage from './src';
 import InitPage from './src/FirstScreen/Pages/InitPage';
+import ResetMain from './src/Main/Pages/ResetMain';
+
 import ServiceInfo from './src/FirstScreen/Pages/ServiceInfo';
 
 import ClientAgreeTermsService from './src/FirstScreen/Pages/Join/Client/AgreeTermsService';
 import PartnerAgreeTermsService from './src/FirstScreen/Pages/Join/Partner/AgreeTermsService';
 import SuccessJoinPartner from './src/FirstScreen/Pages/Join/Partner/SuccessJoinPartner';
-
 
 import SuccessAgreeTermsService from './src/FirstScreen/Pages/Join/SuccessAgreeTermsService';
 
@@ -182,8 +183,9 @@ const PAGE = () => (
       <Scene key="TestInitPage" component={TestInitPage} type={ActionConst.RESET} />
       <Scene key="TestPageOne"  component={TestPageOne} title="TestPageOne" type={ActionConst.RESET} />
 
-      <Scene key="IntroPage" component={IntroPage} type={ActionConst.RESET} />
+      <Scene key="IntroPage" initial component={IntroPage} type={ActionConst.RESET} />
       <Scene key="InitPage"  component={InitPage} type={ActionConst.RESET} />
+      <Scene key="ResetMain"  component={ResetMain} type={ActionConst.RESET} />
       
       {/* 안내페이지 */}
       <Scene key="ServiceInfo" component={ServiceInfo} />
@@ -354,14 +356,9 @@ const PAGE = () => (
             tabBarPosition="bottom"
           >
             <Stack initial key="ClientMain" hideNavBar iconImg={require("~/Common/Image/user_footer_icon/tab1.png")} icon={TabIcon} 
-            tabBarOnPress={() => Actions.ClientHome({type:ActionConst.RESET})}
-            transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
+              tabBarOnPress={() => Actions.ClientHome({type:ActionConst.RESET})}
+              transitionConfig={() => ({screenInterpolator: StackViewStyleInterpolator.forHorizontal})}>
               <Scene key="ClientHome" component={ClientHome} />
-              {/* <Scene key="AfterServiceProdTypeList" hideNavBar component={AfterServiceProdTypeList} title="사업장 별 제품 타입 조회"/> */}
-              {/* <Scene key="AfterServiceProdList" hideNavBar component={AfterServiceProdList} title="제품 조회"/> */}
-              {/* <Scene key="AfterServiceApplyProduct" hideNavBar component={AfterServiceApplyProduct} title="AS 신청"/> */}
-              {/* <Scene key="AfterServiceApplyProductCheck" hideNavBar component={AfterServiceApplyProductCheck} title="AS 신청 확인"/> */}
-              {/* <Scene key="AfterServiceApplyProductComplete" hideNavBar component={AfterServiceApplyProductComplete} title="AS 신청 완료"/> */}
             </Stack>
 
             {/* 나의제품 */}

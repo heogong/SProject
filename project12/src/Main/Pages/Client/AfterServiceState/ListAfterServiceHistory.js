@@ -71,10 +71,7 @@ class ListAfterServiceHistory extends Component {
 
     // 메인페이지 이동 - 그냥 pop 하면 index페이지로 이동 함
     _goToMain = () => {
-        // Actions.ClientHome();
-        // Actions.ClientMain({type : ActionConst.REFRESH});
-        // Actions.ClientHome({type : ActionConst.RESET});
-        Actions.ClientHome({type : ActionConst.REPLACE, resetPage : true});
+        Actions.ResetMain({client : true});
     }
     
     render() {

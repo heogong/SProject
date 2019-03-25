@@ -8,7 +8,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setCustomerType } from '~/Redux/Actions';
 
-import { styles, viewportHeight, viewportWidth } from '~/Common/Styles/common';
+import { styles } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
 class InitPage extends Component {
@@ -24,29 +24,29 @@ class InitPage extends Component {
       <Container style={styles.containerInnerPd}>
         <View style={styles.fx1}>
 
-          <View style={[styles.fx1, styles.alignItemsCenter]}>
-            <Image source={require('~/Common/Image/intro-logo.png')} resizeMode='contain' style={{width : logoImageSize}} />
+          <View style={[styles.fx3, styles.alignItemsCenter, styles.alignItemsCenter]}>
+            <Image source={require('~/Common/Image/intro-logo.png')} resizeMode='contain' style={{width : 136, flex: 1}} />
           </View>
 
-          <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
+          <View style={[styles.fx2, styles.alignItemsCenter]}>
 
-            <TouchableOpacity  style={[styles.mb10, localStyles.typeBox]} onPress={this._selectCustomerTypeAndGoPage(CLIENT)}>
+            <TouchableOpacity  style={[styles.mb15, localStyles.typeBox]} onPress={this._selectCustomerTypeAndGoPage(CLIENT)}>
               <View style={styles.alignItemsCenter}>
-                <H1 style={{color:color.whiteColor, fontWeight:'900'}}>USER</H1>
-                <Text style={{color:color.whiteColor, fontSize : 15}}>A/S 서비스를 이용하시겠어요?</Text>
+                <Text style={localStyles.typetxt}>USER · 유저</Text>
+                <Text style={localStyles.typeDetailTxt}>A/S 서비스를 이용하시겠어요?</Text>
               </View>
             </TouchableOpacity>
 
             <TouchableOpacity  style={[styles.mb20, localStyles.typeBox]} onPress={this._selectCustomerTypeAndGoPage(PARTNER)}>
               <View style={styles.alignItemsCenter}>
-                <H1 style={{color: color.whiteColor, fontWeight:'900'}}>PARTNER</H1>
-                <Text style={{color:color.whiteColor, fontSize : 15}}>제품을 수리 하시겠어요?</Text>
+                <Text style={localStyles.typetxt}>PARTNER · 파트너</Text>
+                <Text style={localStyles.typeDetailTxt}>제품을 수리 하시겠어요?</Text>
               </View>
             </TouchableOpacity>
 
             <View>
-              <TouchableOpacity onPress={ () => alert("비 회원으로 A/S 신청하기")}>
-                <Text style={{color : color.defaultColor, fontSize : 15}}>비 회원으로 A/S 신청하기</Text>
+              <TouchableOpacity onPress={ () => alert("비회원으로 A/S 신청하기")}>
+                <Text style={localStyles.outsidelTxt}>비회원으로 A/S 신청하기</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -58,29 +58,26 @@ class InitPage extends Component {
   }
 }
 
-function wp (percentage, space) {
-  const value = (percentage * (viewportWidth - space)) / 100;
-  return Math.round(value);
-}
-
-function hp (percentage) {
-  const value = (percentage * viewportHeight) / 100;
-  return Math.round(value);
-}
-
-const itemHeight = hp(13);
-const logoImageSize = wp(30, (styles.containerInnerPd.paddingLeft * 2));
-
 const localStyles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff"
+  typetxt: {
+    color: color.whiteColor,
+    fontWeight: 'bold',
+    fontSize: 24,
+    marginBottom: 5
   },
-  
-  typeBox : {
+  typeBox: {
     justifyContent : 'center', 
-    height : itemHeight, 
+    height : 72, 
     width : '100%', 
     backgroundColor : color.defaultColor
+  },
+  typeDetailTxt: {
+    color: color.whiteColor,
+    fontSize : 14
+  },
+  outsidelTxt: {
+    color: color.defaultColor,
+    fontSize : 14
   }
 });
 

@@ -73,16 +73,10 @@ class ApplyAfterServiceComplete extends Component {
                         this.props.onSetIsAfterService(true); // A/S 신청 확인 - interval 최소화 하기위함
 
                         // 타임아웃 clear 필요할듯
-                        // setTimeout(() => {
-                        //     Actions.ClientMain();
-                        //     Actions.ClientHome({type : 'reset'}); //어디서 A/S 2번 넣는지 확인 이 필요
-                        // }, 5000);
+                        setTimeout(() => {
+                            Actions.ResetMain({client : true});
+                        }, 5000);
 
-                        console.log("짱나게하네");
-                        // Actions.reset(); //어디서 A/S 2번 넣는지 확인 이 필요
-                        // Actions.ClientMain();
-                        Actions.ClientHome({type : ActionConst.REPLACE, resetPage : true});
-                        
                     } else {
                         this.setState({
                             isAlertModal : true,

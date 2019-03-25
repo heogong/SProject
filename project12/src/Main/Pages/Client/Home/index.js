@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BackHandler, Image, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Container, Header, Left, Body, Right, Text } from "native-base";
 
-import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, PROGRESS, COMPLETE_MATCH, COMPLETE_AS} from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, PROGRESS, ADD_AS, COMPLETE_MATCH, COMPLETE_AS} from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -24,8 +24,11 @@ let INTEVER_ID = 0;
 
 const AfterServiceState = ({ asPrgsStatCd, status, statusOnImg, statusOffImg }) => (
   <View style={localStyles.asMatchIconWrap}>
-    <Image 
-        source={(asPrgsStatCd !== status.code1.VALUE || asPrgsStatCd !== status.code2.VALUE) ? statusOffImg : statusOnImg } 
+    <Image
+        source={(asPrgsStatCd == null) ? 
+          (statusOffImg) : 
+          (asPrgsStatCd == status.code1.VALUE || asPrgsStatCd == status.code2.VALUE) ? statusOnImg : statusOffImg 
+        } 
         resizeMode="contain" style={{height : stateImgSize, width : stateImgSize}}
       />
       <Text 
@@ -71,14 +74,15 @@ class ClientHome extends Component {
 
   componentWillUnmount () {
     BackHandler.removeEventListener('hardwareBackPress', () => this.handleBackPress) // Remove listener
-
-    clearInterval(this.props.afterService.intervalId);
+    
     console.log("componentWillUnmount :", this.props.afterService.intervalId);
+    clearInterval(this.props.afterService.intervalId);
   }
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.handleBackPress) // Listen for the hardware back button on Android to be pressed
 
+    clearInterval(this.props.afterService.intervalId);
     this.setState({spinner : true});
     this._startFn();
   }
@@ -149,6 +153,9 @@ class ClientHome extends Component {
                     clientPrdInfo : resultData.data.clinePrdInfo
                   });
                 } else {
+                  this.setState({
+                    asPrgsStatCd : null
+                  })
                   this.props.onSetIsAfterService(false);
                   clearInterval(this.props.afterService.intervalId);
                 }
@@ -326,7 +333,7 @@ class ClientHome extends Component {
                     />
                     <AfterServiceState
                       asPrgsStatCd={this.state.asPrgsStatCd}
-                      status={{'code1' : PROGRESS, 'code2' : PROGRESS}}
+                      status={{'code1' : PROGRESS, 'code2' : ADD_AS}}
                       statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_progress_icon.png')}
                       statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_progress_icon.png')}
                     />
