@@ -76,7 +76,7 @@ class MyProfileInfo extends Component {
 
             <Text style={styles.inputNbTitleTxt}>이름</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
-              <Input value="박변" style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false}/>
+              <Input value="유정현" style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false}/>
               <Button 
                 onPress={() => this._toggleModal()}
                 style={[styles.btnDefaultSmall, styles.btnDefaultNoFill, {width: 80, marginTop: 10}]}>

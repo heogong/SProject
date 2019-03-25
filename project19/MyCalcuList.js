@@ -70,7 +70,7 @@ class MyCalcuList extends Component {
             <View style={{borderBottomColor: color.defaultColor, borderBottomWidth: 2, paddingBottom: 20}}>
               <View style={[styles.fxDirRow, styles.justiConBetween]}>
                 <Text style={{color: "#1e1e32", fontSize: 16, fontWeight: "bold", marginBottom: 5}}>정산 계좌정보</Text>
-                <Text style={{fontSize: 14, color: color.defaultColor, fontWeight: "bold"}}>카카오뱅크(정진씨)</Text>
+                <Text style={{fontSize: 14, color: color.defaultColor, fontWeight: "bold"}}>카카오뱅크(유정현)</Text>
               </View>
               <Text style={{fontSize: 13, textAlign: "right"}}>000-0000-0000-0000-0000</Text>
             </View>
