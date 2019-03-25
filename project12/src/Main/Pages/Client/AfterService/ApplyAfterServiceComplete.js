@@ -4,7 +4,7 @@ import { Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setIsAfterService } from '~/Redux/Actions';
 
@@ -40,9 +40,9 @@ class ApplyAfterServiceComplete extends Component {
       };
     }
 
-    componentWillMount() {
-        this._findAfterServicePartner();
+    componentDidMount() {
         this._getLocation();
+        this._findAfterServicePartner();
     }
 
     // 현재 위치 조회
@@ -66,7 +66,6 @@ class ApplyAfterServiceComplete extends Component {
             GetCommonData(result, this._findAfterServicePartner).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    console.log('AS 가능 업체 찾기(AS 진행 시작)')
                     console.log(resultData);
 
                     if(ResultBool) {
@@ -74,10 +73,15 @@ class ApplyAfterServiceComplete extends Component {
                         this.props.onSetIsAfterService(true); // A/S 신청 확인 - interval 최소화 하기위함
 
                         // 타임아웃 clear 필요할듯
-                        setTimeout(() => {
-                            Actions.ClientMain();
-                            // Actions.ClientHome({type : 'reset'}); 어디서 A/S 2번 넣는지 확인 이 필요
-                        }, 5000);
+                        // setTimeout(() => {
+                        //     Actions.ClientMain();
+                        //     Actions.ClientHome({type : 'reset'}); //어디서 A/S 2번 넣는지 확인 이 필요
+                        // }, 5000);
+
+                        console.log("짱나게하네");
+                        // Actions.reset(); //어디서 A/S 2번 넣는지 확인 이 필요
+                        // Actions.ClientMain();
+                        Actions.ClientHome({type : ActionConst.REPLACE, resetPage : true});
                         
                     } else {
                         this.setState({

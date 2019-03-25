@@ -4,7 +4,7 @@ import { Container, Icon, Text, H3 } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import CustomModal from '~/Common/Components/CustomModal';
@@ -71,7 +71,10 @@ class ListAfterServiceHistory extends Component {
 
     // 메인페이지 이동 - 그냥 pop 하면 index페이지로 이동 함
     _goToMain = () => {
-        Actions.ClientMain();
+        // Actions.ClientHome();
+        // Actions.ClientMain({type : ActionConst.REFRESH});
+        // Actions.ClientHome({type : ActionConst.RESET});
+        Actions.ClientHome({type : ActionConst.REPLACE, resetPage : true});
     }
     
     render() {

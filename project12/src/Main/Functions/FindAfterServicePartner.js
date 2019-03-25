@@ -13,7 +13,7 @@ const FindAfterServicePartner = async (asRecvId) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  console.log(FindAfterServicePartnerUrl(asRecvId));
+  console.log("AS 가능 업체 찾기(AS 진행 시작) - ",FindAfterServicePartnerUrl(asRecvId));
 
   return fetch(FindAfterServicePartnerUrl(asRecvId), {
     method: 'GET',

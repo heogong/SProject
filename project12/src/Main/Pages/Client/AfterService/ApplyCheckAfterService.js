@@ -75,45 +75,48 @@ class ApplyCheckAfterService extends Component {
         });
     }
 
-    // AS 신청 API 호출
-    _regAfterService = () => {
-        this.setState({isModalVisible : false})
+    // 회원 AS 접수
+    // _regAfterService = () => {
+    //     this.setState({isModalVisible : false})
 
-        RegAfterService(
-            this.props.clientPrdId,
-            this.props.asItemId,
-            this.props.asRecvDsc, 
-            this.props.etcComment).then(result => {
-            GetCommonData(result, this._regAfterService).then(async resultData => {
-                if(resultData !== undefined) {
-                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    console.log(resultData);
-                    if(ResultBool) {
-                        // // 증상내역 text
-                        // asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm;
-                        // 신청 내역 확인 페이지 이동
-                        this._paymentAfterService(resultData.data.asRecvId);
-                    } else {
-                        this.setState({
-                            isAlertModal : true,
-                            resultMsg : resultData.resultMsg
-                        })
-                    }
-                }
-            });
-        });
-    }
+    //     RegAfterService(
+    //         this.props.clientPrdId,
+    //         this.props.asItemId,
+    //         this.props.asRecvDsc, 
+    //         this.props.etcComment).then(result => {
+    //         GetCommonData(result, this._regAfterService).then(async resultData => {
+    //             if(resultData !== undefined) {
+    //                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+    //                 console.log(resultData);
+    //                 if(ResultBool) {
+    //                     // // 증상내역 text
+    //                     // asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm;
+    //                     // 신청 내역 확인 페이지 이동
+    //                     this._paymentAfterService(resultData.data.asRecvId);
+    //                 } else {
+    //                     this.setState({
+    //                         isAlertModal : true,
+    //                         resultMsg : resultData.resultMsg
+    //                     })
+    //                 }
+    //             }
+    //         });
+    //     });
+    // }
 
     // AS 결제 요청
-    _paymentAfterService = (asRecvId) => {
-        PaymentAfterService(this.props.billingKeyId, asRecvId).then(result => {
+    _paymentAfterService = () => {
+
+        this.setState({isModalVisible : false})
+
+        PaymentAfterService(this.props.billingKeyId, this.props.asRecvId).then(result => {
             GetCommonData(result, this._paymentAfterService).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
                         Actions.AfterServiceApplyProductComplete({
-                            asRecvId : asRecvId
+                            asRecvId : this.props.asRecvId
                         })
                     } else {
                         this.setState({
@@ -192,7 +195,7 @@ class ApplyCheckAfterService extends Component {
                     modalType="CONFIRM"
                     isVisible={this.state.isModalVisible}
                     onPress1={ () => this.setState({isModalVisible : false}) }
-                    onPress2={this._regAfterService}
+                    onPress2={this._paymentAfterService}
                     infoText1="입력하신 사항이 정확한가요?"
                     infoText2="확정하신경우 출장비가 결제됩니다."
                     btnText1="취소"

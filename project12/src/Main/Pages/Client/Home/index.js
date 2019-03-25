@@ -77,27 +77,32 @@ class ClientHome extends Component {
   }
 
   componentDidMount() {
-    this.setState({spinner : true});
     BackHandler.addEventListener('hardwareBackPress', () => this.handleBackPress) // Listen for the hardware back button on Android to be pressed
 
-    this._getBizList();
-    this._getClientAfterServiceState();
-    this._chkIsAfterService(); 
+    this.setState({spinner : true});
+    this._startFn();
   }
 
   handleBackPress = () => {
     return false;
   }
 
+  // 초기 시작 API
+  _startFn = () => {
+    this._getBizList();
+    this._getClientAfterServiceState();
+    this._chkIsAfterService(); 
+  }
+
   // AS 신청 여부 확인
   _chkIsAfterService = () => {
-    console.log("AS 신청 여부 확인!!!! : ", this.props.afterService.isAfterService);
+    console.log("AS 신청 여부 확인  : ", this.props.afterService.isAfterService);
     if(this.props.afterService.isAfterService) {
       console.log("인터벌 확인")
       // A/S 상태 갱신
       const INTERVAL_ID = setInterval(() => {
         this._getClientAfterServiceState();
-      }, 10000);
+      }, 20000);
 
       this.props.onSetIntervalId(INTERVAL_ID);
     }
