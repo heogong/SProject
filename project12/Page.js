@@ -383,7 +383,6 @@ const PAGE = () => (
               <Scene key="ClientAfterServiceState" component={ClientAfterServiceState}/>
               <Scene key="ViewAfterServiceState" component={ClientViewAfterServiceState}/>
               {/* <Scene key="AfterServiceHistory" component={AfterServiceHistory}/> */}
-              {/* <Scene key="ViewAfterServiceHistory" component={ViewAfterServiceHistory}/> */}
             </Stack>
 
             <Stack key="ClientMore" hideNavBar iconImg={require("~/Common/Image/user_footer_icon/tab4.png")} icon={TabIcon} 

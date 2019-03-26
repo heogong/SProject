@@ -2,9 +2,9 @@ import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}coolinic/as/prgs/report/recvinfo/me?asPrgsId=`;
+const API_URL = `${DOMAIN}coolinic/as/prgs/report/total/info?asPrgsId=`;
 
-// AS 보고서 접수(신청) 정보 조회
+// AS 보고서 신청내역, 결제정보 조회
 function GetAfterServiceReportUrl(asPrgsId) {
   return `${API_URL}${asPrgsId}`;
 }

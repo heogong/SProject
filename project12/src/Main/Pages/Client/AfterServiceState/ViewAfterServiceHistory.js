@@ -7,6 +7,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import { Actions } from 'react-native-router-flux';
 
 import GetAfterServiceReport from '~/Main/Functions/GetAfterServiceReport';
+import GetAfterServiceActionInfo from '~/Main/Functions/GetAfterServiceActionInfo';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import AfterServiceImage from '~/Main/Components/AfterServiceImage';
 
@@ -15,13 +16,46 @@ import CustomHeader from '~/Common/Components/CustomHeader';
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
+let BEFORE_DATA = [];
+let AFTER_DATA = [];
+const AFTER_SERVICE_IMG_CNT = 4;
 
 class ViewAfterServiceHistory extends Component {
     constructor(props) {
       super(props);
 
       this.state = {
-        data : [],
+        data: {
+            asPrgsMst : {
+              asPrgsStatNm : null,
+              asPrgsStatDSC : null,
+              asRecvDsc : null
+            },
+            clinePrdInfo : {
+              bplace : {
+                bplaceNm : null,
+                addr : {
+                  addressName : null
+                },
+                detail : {
+                  detailAddr1 : null
+                }
+              },
+              prdType : {
+                prdTypeKoNm: null
+              },
+              clientPrdNm : null,
+              prdTypeImg : {
+                fileUrl : null
+              }
+            }
+        },
+        beforeData : {
+            images : []
+        },
+        afterData : {
+            images : []
+        },
         isAlertModal : false, // alert 용
         resultMsg : null // alert 용
       };
@@ -29,15 +63,17 @@ class ViewAfterServiceHistory extends Component {
 
     componentDidMount() {
         this._getAfterServiceReport();
+        this._getBeforeActionInfo();
+        this._getAfterActionInfo();
     }
 
-    // AS 보고서 접수(신청) 정보 조회
+    // AS 보고서 신청내역, 결제정보 조회
     _getAfterServiceReport = () => {
         GetAfterServiceReport(this.props.asPrgsId).then(result => {
             GetCommonData(result, this._getAfterServiceReport).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    console.log(resultData);
+                    console.log("신청내역, 결제정보 조회 -", resultData);
                     if(ResultBool) {
                         this.setState({ data : resultData.data });
                     } else {
@@ -51,6 +87,92 @@ class ViewAfterServiceHistory extends Component {
         });
     }
 
+    // AS 보고서 조치전 정보 조회
+    _getBeforeActionInfo = () => {
+        GetAfterServiceActionInfo(true, this.props.asPrgsId).then(result => {
+            GetCommonData(result, this._getBeforeActionInfo).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log("조치전 정보 조회 - ",resultData);
+                    if(ResultBool) {
+                        this.setState({ beforeData : resultData.data });
+                        // BEFORE_DATA = resultData.data;
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                    }
+                }
+            });
+        });
+    }
+
+    // AS 보고서 조치후 정보 조회
+    _getAfterActionInfo = () => {
+        GetAfterServiceActionInfo(false, this.props.asPrgsId).then(result => {
+            GetCommonData(result, this._getAfterActionInfo).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log("조치후 정보 조회 - ", resultData);
+                    if(ResultBool) {
+                        this.setState({ afterData : resultData.data });
+                        // AFTER_DATA = resultData.data;
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                    }
+                }
+            });
+        });
+    }
+
+    _drawBeforeImg = () => {
+        let beforeImgArray = [];
+        const { beforeData } = this.state;
+        let beforeImgCnt = beforeData.images.length;
+
+        for( let i = 0 ; i < AFTER_SERVICE_IMG_CNT; i++ ) {
+            if(beforeImgCnt > 0) {
+                beforeImgArray.push( 
+                    <AfterServiceImage key={i} viewImage={true} imgUri={beforeData.images[i].fileUrl} />
+                )
+                beforeImgCnt--;
+            } else {
+                beforeImgArray.push( 
+                    <AfterServiceImage key={i} viewImage={true} imgUri={null} />
+                )
+            }
+        }
+
+        return beforeImgArray;
+    }
+
+    _drawAfterImg = () => {
+        let afterImgArray = [];
+        const { afterData } = this.state;
+        let afterImgCnt = afterData.images.length;
+
+        for( let i = 0 ; i < AFTER_SERVICE_IMG_CNT; i++ ) {
+            if(afterImgCnt > 0) {
+                afterImgArray.push( 
+                    <AfterServiceImage key={i} viewImage={true} imgUri={beforeData.images[i].fileUrl} />
+                )
+                afterImgCnt--;
+            } else {
+                afterImgArray.push( 
+                    <AfterServiceImage key={i} viewImage={true} imgUri={null} />
+                )
+            }
+        }
+
+        return afterImgArray;
+    }
+
+    
+
     render() {
         return (
             <Container style={styles.containerScroll}>
@@ -61,19 +183,23 @@ class ViewAfterServiceHistory extends Component {
                     <View style={localStyles.contentWrap}>
                         <View style={localStyles.titleWrap}>
                             <Image source={require('~/Common/Image/product/01_icon_white.png')} style={localStyles.titleImg}/>
-                            <Text style={localStyles.titleNameTxt}>세나정육점</Text>
-                            <Text style={localStyles.subNameTxt}>육류용냉장고</Text>
+                            <Text style={localStyles.titleNameTxt}>{this.state.data.clinePrdInfo.bplace.bplaceNm}</Text>
+                            <Text style={localStyles.subNameTxt}>{this.state.data.clinePrdInfo.prdType.prdTypeKoNm}</Text>
                         </View>
 
                         <View style={[styles.boxShadow, localStyles.histBoxWrap]}>
                             <Text style={localStyles.histBoxTitleTxt}>A/S신청내역</Text>
 
-                            <Text style={localStyles.histBoxSubTitleTxt}>육류용 냉장고</Text>
-                            <Text style={localStyles.histBoxInfoTxt}>경기도 시흥시 산기대로</Text>
-                            <Text style={localStyles.histBoxInfoTxt}>bbbbbbbbbbb</Text>
+                            <Text style={localStyles.histBoxSubTitleTxt}>{this.state.data.clinePrdInfo.clientPrdNm}</Text>
+                            <Text style={localStyles.histBoxInfoTxt}>{this.state.data.clinePrdInfo.bplace.addr.addressName}</Text>
+                            <Text style={localStyles.histBoxInfoTxt}>{this.state.data.clinePrdInfo.bplace.detail.detailAddr1}</Text>
 
                             <Text style={localStyles.histBoxSubTitleTxt}>참고사항</Text>
-                            <Text style={localStyles.histBoxInfoTxt}>12312312312312312312312312321</Text>
+                            <Text style={localStyles.histBoxInfoTxt}>
+                                {
+                                    (this.state.data.asPrgsMst.asRecvDsc == "null") ? '' : this.state.data.asPrgsMst.asRecvDsc
+                                }
+                            </Text>
 
                             <Text style={localStyles.histBoxSubTitleTxt}>쿨리닉데이터</Text>
                             <View style={styles.fxDirRow}>
@@ -99,22 +225,9 @@ class ViewAfterServiceHistory extends Component {
 
                                 <View style={[styles.boxShadow, {backgroundColor: color.whiteColor}]}>
                                     <View style={localStyles.prdPhotoWrap}>
-                                        <AfterServiceImage 
-                                            viewImage={true}
-                                            imgUri={"https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg"}
-                                        />
-                                        <AfterServiceImage 
-                                            viewImage={true}
-                                            imgUri={"https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg"}
-                                        />
-                                        <AfterServiceImage 
-                                            viewImage={true}
-                                            imgUri={"https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg"}
-                                        />
-                                        <AfterServiceImage 
-                                            viewImage={true}
-                                            imgUri={"https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg"}
-                                        />
+
+                                        {this._drawBeforeImg()}
+
                                     </View>
                                     <View style={localStyles.prdPhotoTxtWrap}>
                                         <Text style={localStyles.histBoxSubTitleTxt}>출장 전 상태</Text>
@@ -131,20 +244,9 @@ class ViewAfterServiceHistory extends Component {
 
                                 <View style={[styles.boxShadow, {backgroundColor: color.whiteColor}]}>
                                     <View style={localStyles.prdPhotoWrap}>
-                                        <AfterServiceImage 
-                                            viewImage={true}
-                                            imgUri={"https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg"}
-                                        />
-                                        <AfterServiceImage 
-                                            viewImage={true}
-                                        />
-                                        <AfterServiceImage 
-                                            viewImage={true}
-                                        />
-                                        <AfterServiceImage 
-                                            viewImage={true}
-                                            imgUri={"https://dispatch.cdnser.be/wp-content/uploads/2017/12/20171226203808_page_00299.jpg"}
-                                        />
+
+                                       {this._drawAfterImg()}
+
                                     </View>
                                     <View style={localStyles.prdPhotoTxtWrap}>
                                         <Text style={localStyles.histBoxSubTitleTxt}>A/S 조치내역</Text>
@@ -152,7 +254,6 @@ class ViewAfterServiceHistory extends Component {
                                     </View>
                                 </View>
                                 
-
                             </View>
                         </View>
                         
