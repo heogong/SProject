@@ -16,6 +16,7 @@ import { styles, viewportWidth, viewportHeight } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
 
+const STAR_POINT_CNT = 5;
 class ListAfterServiceHistory extends Component {
     constructor(props) {
       super(props);
@@ -57,7 +58,7 @@ class ListAfterServiceHistory extends Component {
     _drawStarPoint = (point) => {
         let starPointArray = [];
 
-        for(let i = 0; i < 5; i++) {
+        for(let i = 0; i < STAR_POINT_CNT; i++) {
             starPointArray.push(<View key={i}>
                 <Image source={
                     (point-- > 0) ? require("~/Common/Image/star_icon_100.png") : require("~/Common/Image/star_icon_50.png")
