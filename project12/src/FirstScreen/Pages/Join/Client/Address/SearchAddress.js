@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, FlatList, TouchableOpacity, StyleSheet, View } from 'react-native';
-import { Container, Button, Body, List, ListItem, Icon, Input, Item, Text } from 'native-base';
+import { Container, Button, Body, List, ListItem, Icon, Input, Item, Text, Header, Left, Right, Title } from 'native-base';
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -44,24 +44,26 @@ class SearchAddress extends Component {
 
   _renderItem = ({item}) => (
     <ListItem 
-      style={{marginLeft : 5, marginRight : 5}} 
+      style={localStyles.flatListWrapList}
       onPress={() => this._onPress(item)}
     >
-      <Body>
-        <Text>{item.address_name}</Text>
-        {(item.road_address !== null) ? (
-          <Text style={styles.greyFont}>{item.road_address.address_name}</Text>
-        ) : (
-          <Text style={styles.greyFont}>도로명 주소가 없습니다.</Text>
-        )}
+      <Body style={localStyles.flatListWrap}>
+        <TouchableOpacity>
+          <Text style={localStyles.flatListTxt}>{item.address_name}</Text>
+          {(item.road_address !== null) ? (
+            <Text style={localStyles.flatListTxt}>{item.road_address.address_name}</Text>
+          ) : (
+            <Text style={localStyles.flatListTxt}>도로명 주소가 없습니다.</Text>
+          )}
+        </TouchableOpacity>
       </Body>
     </ListItem>
   );
 
   _emptyRenderItem = () => (
-    <ListItem style={{marginLeft : 5, marginRight : 5}}>
-      <Body>
-        <Text>검색정보가 없습니다.</Text>
+    <ListItem style={localStyles.flatListWrapList}>
+      <Body style={[localStyles.flatListWrap, {paddingTop: 20, paddingBottom: 20}]}>
+        <Text style={localStyles.flatListTxt}>검색정보가 없습니다.</Text>
       </Body>
     </ListItem>
   );
@@ -117,15 +119,82 @@ class SearchAddress extends Component {
   
   render() {
     return (
-      <Container>
-          <DrawMap
-            region={ this.state.region }
-            onRegionChangeComplete={ this._onRegionChangeComplete }
-            makerYn={ this.state.makerYn }
-            marker={ this.state.marker }
-            showMap={ this.state.showMap }
-          />
+      <Container style={styles.Container}>
+        <DrawMap
+          region={ this.state.region }
+          onRegionChangeComplete={ this._onRegionChangeComplete }
+          makerYn={ this.state.makerYn }
+          marker={ this.state.marker }
+          showMap={ this.state.showMap }
+        />
         
+        <Header style={[styles.header, styles.noPadding, {backgroundColor: "transparent", paddingLeft: 26, paddingRight: 26, borderBottomWidth: 0}]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={Actions.pop}>
+              <Image source={require("~/Common/Image/btn_back_arrow.png")} style={styles.btnBackArrowIcon}/>
+            </Button>
+          </Left>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
+          </Body>
+          <Right style={styles.headerRightWrap}></Right>
+        </Header>
+
+        <View style={{flex:1, paddingLeft: 26, paddingRight: 26, borderWidth: 0}}>
+          <Item
+            regular
+            style={[styles.inputWhBackGreyBo, {backgroundColor: color.whiteColor, marginLeft: 0}]}
+            onPress={ () => this.setState({showMap : !this.state.showMap})}
+          >
+            <Input
+              placeholder="주소를 입력해 주세요"
+              placeholderTextColor={color.inputPlaceHodler}
+              style={styles.inputDefaultBox}
+              disabled={ this.state.showMap } 
+              value={this.state.addressName}
+              onChangeText={(text) => this.setState({addressName : text})}
+              onSubmitEditing={this._setAddressInfo}
+              />
+            <Icon 
+              active
+              name="ios-search"
+              style={[styles.inputIcon, {fontSize: 25, marginRight: 0, paddingRight: 0}]}
+              onPress={this._setAddressInfo}
+            />
+            <Icon
+              name="ios-close"
+              style={[styles.inputIcon, {fontSize: 32, color: "#8e8e98"}]}
+            />
+          </Item>
+
+          <View style={[(this.state.showMap) ? localStyles.hide : localStyles.show, 
+            {
+              borderColor : color.inputBoGrey,
+              borderLeftWidth: 1,
+              borderRightWidth: 1,
+              borderBottomWidth: 0,
+              backgroundColor: color.whiteColor}]}>
+            <FlatList 
+              data={this.state.data} 
+              renderItem={this._renderItem} 
+              ListEmptyComponent={this._emptyRenderItem}
+              keyExtractor={(item) => item.toString()}
+            />
+          </View>
+        </View>
+
+        <View style={[
+              (this.state.showMap) ? localStyles.show : localStyles.hide,
+              styles.footerBtnWrap,
+              {paddingLeft: 26, paddingRight: 26, paddingBottom: 26}
+            ]}>
+            <CustomButton
+              onPress={this._nextButton}
+            >
+                확인
+            </CustomButton>
+        </View>
+{/* 
           <View style={[styles.fx1, styles.mg10]}>
             <View style={styles.fx1}>
 
@@ -178,6 +247,7 @@ class SearchAddress extends Component {
                 </CustomButton>
             </View>
           </View>
+           */}
       </Container>
     )
   }
@@ -189,6 +259,20 @@ const localStyles = StyleSheet.create({
   },
   show: {
       display: 'flex'
+  },
+  flatListTxt: {
+    fontSize: 14, color: "#1e1e32"
+  },
+  flatListWrap: {
+    flex: 1, 
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderColor : color.inputBoGrey,
+    width: "100%"
+  },
+  flatListWrapList: {
+    marginLeft: 0, marginRight: 0, paddingTop: 0, paddingBottom: 0, paddingRight: 0, alignItems: "flex-start", flexDirection: "column"
   }
 });
 
