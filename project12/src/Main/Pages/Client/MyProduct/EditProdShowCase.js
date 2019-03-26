@@ -144,7 +144,7 @@ class EditProdShowCase extends Component {
      // 모달 '아니오' Action
     _onPress1Action = () => {
         if(ON_PRESS_ACTION_TYPE == ACTION_TYPE.editAction) {
-            Actions.clientMyProduct();
+            Actions.ResetMain({client : true});
         }
         this.setState({isModalVisible : false})
     }
@@ -210,9 +210,10 @@ class EditProdShowCase extends Component {
                                             await this.setState({clientPrdNm : text}),
                                             this._chkBtn()
                                         }}
-                                        style={localStyles.prdCardNameInput}
+                                        // style={localStyles.prdCardNameInput}
                                         placeholder="제품이름" 
-                                        placeholderTextColor={"#8e8e98"}
+                                        style={[styles.inputBox, styles.pl9]} 
+                                        placeholderTextColor={color.inputPlaceHodler}
                                     />
                                 </Item>
                                 
@@ -221,9 +222,10 @@ class EditProdShowCase extends Component {
                                     <Input
                                         value={ this.state.clientPrdDsc }
                                         onChangeText={(text) => this.setState({clientPrdDsc  :text}) }
-                                        style={localStyles.prdCardDscInput}
+                                        // style={localStyles.prdCardDscInput}
                                         placeholder="제품설명" 
-                                        placeholderTextColor={"#8e8e98"}
+                                        style={[styles.inputBox, styles.pl9]}
+                                        placeholderTextColor={color.inputPlaceHodler}
                                     />
                                 </Item>
                             </View>

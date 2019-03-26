@@ -35,15 +35,11 @@ class InputProdType extends Component {
 
 
     // 제품 타입 선택
-    _nextButton = (prodTypeId, prodTypeNm) => () => {
-        // Actions.MyRegProdShowCase({
-        //     prodTypeId : prodTypeId,
-        //     prodTypeNm : prodTypeNm
-        // });
-
+    _nextButton = (prodTypeId, prodTypeNm, prodFileUrl) => () => {
         Actions.InputShowCase({
             prodTypeId : prodTypeId,
-            prodTypeNm : prodTypeNm
+            prodTypeNm : prodTypeNm,
+            prodFileUrl : prodFileUrl
         });
     }
 
@@ -90,7 +86,7 @@ class InputProdType extends Component {
                         {this.state.data.map((item, index) => (
                             <TouchableOpacity 
                                 key={index}
-                                onPress={this._nextButton(item.prdTypeId, item.prdTypeKoNm)}
+                                onPress={this._nextButton(item.prdTypeId, item.prdTypeKoNm, item.image.fileUrl)}
                             >
                                 <View 
                                 style={[
@@ -103,7 +99,7 @@ class InputProdType extends Component {
                                     height : productCardSize, 
                                     width : productCardSize
                                 }]}>
-                                <Image source={require("~/Common/Image/license-depart01.png")} 
+                                <Image source={{uri : item.image.fileUrl}} 
                                     style={[styles.mb10, {
                                     height : productCardSize - 60, 
                                     width : productCardSize - 60

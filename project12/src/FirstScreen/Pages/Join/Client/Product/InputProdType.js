@@ -68,10 +68,11 @@ class InputProdType extends Component {
     }
 
     // 제품 타입 선택
-    _nextButton = (prodTypeId, prodTypeNm) => () => {
+    _nextButton = (prodTypeId, prodTypeNm, prodFileUrl) => () => {
         Actions.InputShowCase({
             prodTypeId : prodTypeId,
-            prodTypeNm : prodTypeNm
+            prodTypeNm : prodTypeNm,
+            prodFileUrl : prodFileUrl
         })
     }
 
@@ -94,31 +95,6 @@ class InputProdType extends Component {
 
     render() {
         return (
-            // <CustomBlockWrapper
-            //     title="제품 타입 등록"
-            //     resetPage= { true }
-            // >
-            //     <View style={ {flex: 1, justifyContent:'center'} }>
-            //         <View style={{
-            //             flexDirection: 'row',
-            //             flexWrap: 'wrap',
-            //             justifyContent: 'center',
-            //             padding: 5
-            //         }}>
-            //         {this.state.data.map((productType, idx) => 
-            //             <TouchableOpacity key={idx} 
-            //                 onPress={this._nextButton(productType.prdTypeId, productType.prdTypeKoNm)}
-            //             >
-            //                 <View style={styles.slide}>
-            //                     <Text style={styles.title}>{productType.prdTypeKoNm}</Text>
-            //                 </View>
-            //             </TouchableOpacity>
-            //         )}
-            //         </View>
-            //     </View>
-            
-                
-            // </CustomBlockWrapper>
             <Container style={styles.containerScroll}>
                 <CustomHeader/>
 
@@ -152,7 +128,7 @@ class InputProdType extends Component {
                         {this.state.data.map((item, index) => (
                             <TouchableOpacity 
                                 key={index}
-                                onPress={this._nextButton(item.prdTypeId, item.prdTypeKoNm)}
+                                onPress={this._nextButton(item.prdTypeId, item.prdTypeKoNm, item.image.fileUrl)}
                             >
                                 <View 
                                 style={[
@@ -165,7 +141,7 @@ class InputProdType extends Component {
                                     height : productCardSize, 
                                     width : productCardSize
                                 }]}>
-                                <Image source={require("~/Common/Image/license-depart01.png")} 
+                                <Image source={{uri : item.image.fileUrl}} 
                                     style={[styles.mb10, {
                                     height : productCardSize - 60, 
                                     width : productCardSize - 60

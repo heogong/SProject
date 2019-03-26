@@ -66,7 +66,6 @@ class ListBusinessPlace extends Component {
 
   // 사업장 삭제
   _delBusiness = () => {
-    
     this.setState({ 
       data: this.state.data.filter((s, sidx) => SELECT_IDX !== sidx),
       isModalVisible : false
@@ -114,7 +113,10 @@ class ListBusinessPlace extends Component {
                     <View style={localStyles.closeIconWrap}>
 
                       {(this.state.data.length > LEAST_COUNT) ? (
-                        <TouchableOpacity onPress={this._toggleModal} >
+                        <TouchableOpacity onPress={() => {
+                          SELECT_IDX = idx,
+                          this._toggleModal()
+                        }} >
                           <Image source={require('~/Common/Image/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
                         </TouchableOpacity>
                       ) : (

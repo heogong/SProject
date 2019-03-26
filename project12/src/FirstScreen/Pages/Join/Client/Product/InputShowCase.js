@@ -53,7 +53,7 @@ class InputShowCase extends Component {
 
     static defaultProps = {
         source : null,
-        prodTypeId : 1 // test!!!!
+        // prodTypeId : 1 // test!!!!
     }
 
     componentWillMount(){
@@ -107,7 +107,7 @@ class InputShowCase extends Component {
                                 clientPrdId : resultData.data.clientPrdId,
                                 clientPrdNm : resultData.data.clientPrdNm,
                                 prdType : resultData.data.prdType,
-                                prdTypeImg : resultData.data.prdTypeImg,
+                                prdTypeImg : this.props.prodFileUrl,
                                 imgTypeArray : imgNData
                             }])
                         })
@@ -237,7 +237,7 @@ class InputShowCase extends Component {
     _nextButton = () => {
         this.setState({isModalVisible : true});
 
-        INFO_TXT1 = "등록되지 않은 정보는 어딘가에서 수정가능합니다.";
+        INFO_TXT1 = "등록되지 않은 정보는 '나의제품'메뉴에서 수정가능합니다.";
         INFO_TXT2 = "제품을 추가 등록 하시겠습니까?";
 
         ON_PRESS_ACTION_TYPE = ACTION_TYPE.regAction;

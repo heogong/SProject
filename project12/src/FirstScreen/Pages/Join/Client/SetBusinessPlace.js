@@ -21,7 +21,14 @@ class SetBusinessPlace extends Component {
     super(props); 
 
     this.state = {
-      data : []
+      data : {
+        addr : {
+          addressName : null
+        },
+        detail : {
+          detailAddr1 : null
+        }
+      }
     };
   }
 
@@ -71,32 +78,29 @@ class SetBusinessPlace extends Component {
             </View>
           </View>
 
-          <View style={styles.fx2}>
-
-            <View style={localStyles.placeBoxWrap}>
-              <View style={localStyles.btnPlusWrap}>
-                <Image source={require('~/Common/Image/license-depart02.png')} style={localStyles.btnPlus} />
-              </View>
-              <View style={localStyles.txtWrap}>
-                <Text style={localStyles.placeNameTxt}>{this.state.data.bplaceNm}</Text>
-                <View style={localStyles.infoTxtWrap}>
-                  <Text style={localStyles.infoTxt}>{this.state.data.addressName}</Text>
-                  <Text style={localStyles.infoTxt}>{this.state.data.detailAddr1}</Text>
-                </View>
-              </View>
+          <View style={localStyles.placeBoxWrap}>
+            <View style={localStyles.btnPlusWrap}>
+              <Image source={require('~/Common/Image/product/01_icon_white.png')} style={localStyles.btnPlus} />
             </View>
-
-            <View style={styles.footerBtnWrap}>
-              <CustomButton
-                  onPress={Actions.InputProdType}
-                  DefaultLineBtn={true}
-              >
-                  제품등록하러가기
-              </CustomButton>
+            <View style={localStyles.txtWrap}>
+              <Text style={localStyles.placeNameTxt}>{this.state.data.bplaceNm}</Text>
+              <View style={localStyles.infoTxtWrap}>
+                <Text style={localStyles.infoTxt}>{this.state.data.addr.addressName}</Text>
+                <Text style={localStyles.infoTxt}>{this.state.data.detail.detailAddr1}</Text>
+              </View>
             </View>
           </View>
-          
+
+          <View style={styles.footerBtnWrap}>
+            <CustomButton
+                onPress={Actions.InputProdType}
+                DefaultLineBtn={true}
+            >
+                제품등록하러가기
+            </CustomButton>
+          </View>
         </View>
+          
       </Container>
     )
   }
@@ -107,7 +111,7 @@ function wp (percentage) {
   return Math.round(value);
 }
 
-const imageSize = wp(37);
+const imageSize = wp(50);
 
 const localStyles = StyleSheet.create({
   topTxt: {
@@ -117,7 +121,8 @@ const localStyles = StyleSheet.create({
   placeBoxWrap: {
     width : '100%',
     backgroundColor : color.defaultColor,
-    flex: 3
+    flex: 1,
+    marginBottom: 16
   },
   btnPlusWrap: {
     flex: 3,

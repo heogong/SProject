@@ -48,13 +48,20 @@ class ViewAfterServiceHistory extends Component {
               prdTypeImg : {
                 fileUrl : null
               }
-            }
+            },
+            clientPrdParts : []
         },
         beforeData : {
-            images : []
+            images : [],
+            info : {
+                asCauseDsc : null
+            }
         },
         afterData : {
-            images : []
+            images : [],
+            info : {
+                asActionDsc : null
+            }
         },
         isAlertModal : false, // alert 용
         resultMsg : null // alert 용
@@ -197,22 +204,30 @@ class ViewAfterServiceHistory extends Component {
                             <Text style={localStyles.histBoxSubTitleTxt}>참고사항</Text>
                             <Text style={localStyles.histBoxInfoTxt}>
                                 {
-                                    (this.state.data.asPrgsMst.asRecvDsc == "null") ? '' : this.state.data.asPrgsMst.asRecvDsc
+                                    (this.state.data.asPrgsMst.asRecvDsc == "null") ? '입력된 내용이 없습니다.' : this.state.data.asPrgsMst.asRecvDsc
                                 }
                             </Text>
 
                             <Text style={localStyles.histBoxSubTitleTxt}>쿨리닉데이터</Text>
                             <View style={styles.fxDirRow}>
-                                <View style={styles.fx1}>
-                                    <Text style={localStyles.histBoxInfoTxt}>용량 :</Text>
-                                    <Text style={localStyles.histBoxInfoTxt}>전기 :</Text>
+                                
+                                {/* <View style={styles.fx1}>
+                                    <Text style={localStyles.histBoxInfoTxt}>용량 : </Text>
+                                    <Text style={localStyles.histBoxInfoTxt}>전기 : </Text>
                                     <Text style={localStyles.histBoxInfoTxt}>압축기 :</Text>
                                 </View>
                                 <View style={styles.fx1}>
                                     <Text style={localStyles.histBoxInfoTxt}>응축기 :</Text>
                                     <Text style={localStyles.histBoxInfoTxt}>증발기 :</Text>
                                     <Text style={localStyles.histBoxInfoTxt}>제조사 :</Text>
+                                </View> */}
+
+                                <View style={styles.fx1}>
+                                    {this.state.data.clientPrdParts.map((info, idx) =>
+                                        <Text key={idx} style={localStyles.histBoxInfoTxt}>{info.rootPrdPartKoNm} : {info.prdPartKoNm}</Text>
+                                    )}
                                 </View>
+
                             </View>
                         </View>
 
@@ -231,7 +246,11 @@ class ViewAfterServiceHistory extends Component {
                                     </View>
                                     <View style={localStyles.prdPhotoTxtWrap}>
                                         <Text style={localStyles.histBoxSubTitleTxt}>출장 전 상태</Text>
-                                        <Text style={localStyles.histBoxInfoTxt}>ㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹ</Text>
+                                        <Text style={localStyles.histBoxInfoTxt}>
+                                            {
+                                                this.state.beforeData.info.asCauseDsc !== null ? this.state.beforeData.info.asCauseDsc : '입력된 내용이 없습니다.'
+                                            }
+                                        </Text>
                                     </View>
                                 </View>
                             </View>
@@ -250,31 +269,39 @@ class ViewAfterServiceHistory extends Component {
                                     </View>
                                     <View style={localStyles.prdPhotoTxtWrap}>
                                         <Text style={localStyles.histBoxSubTitleTxt}>A/S 조치내역</Text>
-                                        <Text style={localStyles.histBoxInfoTxt}>ㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹㅁㅇㄴㄹㅁㅇㄹ</Text>
+                                        <Text style={localStyles.histBoxInfoTxt}>
+                                            {
+                                                this.state.afterData.info.asActionDsc !== null ? this.state.afterData.info.asActionDsc : '입력된 내용이 없습니다.'
+                                            }
+                                        </Text>
                                     </View>
                                 </View>
                                 
                             </View>
                         </View>
-                        
-                        <View>
-                            <View style={[localStyles.boxTitleWrap]}>
-                                <Text style={localStyles.boxTitleTxt}>추가 A/S</Text>
-                                <View style={[styles.line, {flex: 2, borderColor: color.whiteColor}]}></View>
+
+                        {(this.state.data.asPrgsMst.asAddYn == "Y") ? (
+                             <View>
+                                <View style={[localStyles.boxTitleWrap]}>
+                                    <Text style={localStyles.boxTitleTxt}>추가 A/S</Text>
+                                    <View style={[styles.line, {flex: 2, borderColor: color.whiteColor}]}></View>
+                                </View>
+                                <View style={[styles.boxShadow, localStyles.histBoxWrap]}>
+                                    <Text style={localStyles.histBoxTitleTxt}>청구비용</Text>
+    
+                                    <Text style={localStyles.histBoxSubTitleTxt}>추가 A/S 비용</Text>
+                                    <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asPrgsMst.asAddCost} 원</Text>
+    
+                                    <Text style={localStyles.histBoxSubTitleTxt}>추가A/S내역</Text>
+                                    <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asPrgsMst.asAddTitle}</Text>
+    
+                                    <Text style={localStyles.histBoxSubTitleTxt}>추가A/S사유</Text>
+                                    <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asPrgsMst.asAddComment}</Text>
+                                </View>
                             </View>
-                            <View style={[styles.boxShadow, localStyles.histBoxWrap]}>
-                                <Text style={localStyles.histBoxTitleTxt}>청구비용</Text>
-
-                                <Text style={localStyles.histBoxSubTitleTxt}>추가 A/S 비용</Text>
-                                <Text style={localStyles.histBoxInfoTxt}>120,000원</Text>
-
-                                <Text style={localStyles.histBoxSubTitleTxt}>추가A/S내역</Text>
-                                <Text style={localStyles.histBoxInfoTxt}>1231231231231231231231231232112312312312312312312312312321</Text>
-
-                                <Text style={localStyles.histBoxSubTitleTxt}>추가A/S사유</Text>
-                                <Text style={localStyles.histBoxInfoTxt}>12312312312312312312312312321123123123123123123123123123211231231231231231231231231232112312312312312312312312312321</Text>
-                            </View>
-                        </View>
+                        ) : (
+                            <View/>
+                        )}
 
                     </View>
                 </ScrollView>

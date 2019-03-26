@@ -126,7 +126,7 @@ class ListAfterServiceHistory extends Component {
                                         <View style={styles.listPrdBoxRightTxtWrap}>
                                             <H3 style={styles.listPrdBoxRightTitleTxt}>{afterService.bplaceNm}</H3>
                                             <Text style={[styles.listPrdBoxDeTxt, styles.mb12, {fontWeight: "500"}]}>{afterService.regDt}</Text>
-                                            <Text style={styles.listPrdBoxDeTxt}>{afterService.evalDsc}</Text>
+                                            <Text style={styles.listPrdBoxDeTxt}>{afterService.asItemNm}</Text>
                                             <View style={styles.fxDirRow}>
                                                 <Text style={[styles.listPrdBoxDeTxt, {paddingTop: 3}]}>만족도</Text>
                                                     <View style={localStyles.starIconWrap}>

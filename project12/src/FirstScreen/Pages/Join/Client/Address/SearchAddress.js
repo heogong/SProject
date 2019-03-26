@@ -43,19 +43,17 @@ class SearchAddress extends Component {
   }
 
   _renderItem = ({item}) => (
-    <ListItem 
+    <ListItem
       style={localStyles.flatListWrapList}
       onPress={() => this._onPress(item)}
     >
       <Body style={localStyles.flatListWrap}>
-        <TouchableOpacity>
           <Text style={localStyles.flatListTxt}>{item.address_name}</Text>
           {(item.road_address !== null) ? (
             <Text style={localStyles.flatListTxt}>{item.road_address.address_name}</Text>
           ) : (
             <Text style={localStyles.flatListTxt}>도로명 주소가 없습니다.</Text>
           )}
-        </TouchableOpacity>
       </Body>
     </ListItem>
   );
@@ -178,7 +176,7 @@ class SearchAddress extends Component {
               data={this.state.data} 
               renderItem={this._renderItem} 
               ListEmptyComponent={this._emptyRenderItem}
-              keyExtractor={(item) => item.toString()}
+              keyExtractor={(item, index) => index.toString()}
             />
           </View>
         </View>

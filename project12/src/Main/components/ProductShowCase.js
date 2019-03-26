@@ -15,6 +15,11 @@ import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
 
+function pad(n, width) {
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+}
+
 class ProductShowCase extends Component {
     constructor(props) { 
         super(); 
@@ -69,21 +74,23 @@ class ProductShowCase extends Component {
         return (
             <View style={localStyles.prdCardWrap}>
                 <View style={localStyles.prdCardTopWrap}>
-                    <TouchableOpacity onPress={this.props.handleRemoveShowCase(this.props.index)}>
-                        <Image source={require("~/Common/Image/input-able.png")} style={localStyles.prdCardTopIconImg} />
-                    </TouchableOpacity>
+                    <View>
+                        <TouchableOpacity onPress={this.props.handleRemoveShowCase(this.props.index)}>
+                            <Image source={require("~/Common/Image/Delete_button_gray.png")} style={localStyles.prdCardTopIconImg} />
+                        </TouchableOpacity>
+                    </View>
 
                     <View style={[styles.fx3, styles.justiConCenter, styles.alignItemsCenter]}>
-                        <Text style={localStyles.prdCardTopNumTxt}>01</Text>
-                        <Image source={require("~/Common/Image/license-depart01.png")} style={{height : imageSize, width : imageSize}} />
+                        <Text style={localStyles.prdCardTopNumTxt}>{pad(++this.props.index, 2)}</Text>
+                        <Image source={{uri : this.props.item.prdTypeImg}} style={{height : imageSize, width : imageSize}} />
                     </View>
 
                     <View>
                         <TouchableOpacity onPress={this.props.handleAddShowCase}>
-                            <Image source={require("~/Common/Image/input-able.png")} style={[localStyles.prdCardTopIconImg, styles.mb10]} />
+                            <Image source={require("~/Common/Image/card_add_icon.png")} style={[localStyles.prdCardTopIconImg, styles.mb10]} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this.props.handleCopyShowCase(this.props.index)}>
-                            <Image source={require("~/Common/Image/input-able.png")} style={localStyles.prdCardTopIconImg} />
+                            <Image source={require("~/Common/Image/card_copy_icon.png")} style={localStyles.prdCardTopIconImg} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -100,17 +107,19 @@ class ProductShowCase extends Component {
                             value={ this.props.clientPrdNm }
                             onChangeText={(text) => this._setProductNm(text) }
                             onBlur={this._submitProductNm}
-                            style={localStyles.prdCardNameInput}
+                            // style={localStyles.prdCardNameInput}
                             placeholder="제품이름" 
-                            placeholderTextColor={"#8e8e98"}
+                            style={[styles.inputBox, styles.pl9]} 
+                            placeholderTextColor={color.inputPlaceHodler}
                         />
                     </Item>
                     <Text style={localStyles.prdCardInfoTxt}>제품의 간략한 설명을 입력하세요</Text>
                     <Item regular style={localStyles.prdCardInputBox}>
                         <Input 
-                            style={localStyles.prdCardDscInput}
+                            // style={localStyles.prdCardDscInput}
                             placeholder="제품설명" 
-                            placeholderTextColor={"#8e8e98"}
+                            style={[styles.inputBox, styles.pl9]} 
+                            placeholderTextColor={color.inputPlaceHodler}
                         />
                     </Item>
                 </View>
