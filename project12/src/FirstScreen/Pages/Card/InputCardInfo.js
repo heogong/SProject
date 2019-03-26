@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Image, TouchableOpacity, Keyboard, StyleSheet, View } from 'react-native';
-import { Container, Icon, Text, Item, Input } from "native-base";
+import { Container, Text, Item, Input, CheckBox } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
-import { CheckBox } from 'react-native-elements'
 
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import RegCard from '~/FirstScreen/Functions/Card/RegCard';
@@ -35,6 +34,7 @@ export default class InputCardInfo extends Component {
         check2 : false,
         check3 : false,
         check4 : false,
+        check5 : false,
         isAlertModal : false, // alert 용
         resultMsg : null
     };
@@ -123,6 +123,7 @@ export default class InputCardInfo extends Component {
       check2 : !check1,
       check3 : !check1,
       check4 : !check1,
+      check5 : !check1,
     })
 
     await this._chkNextBtn(); // 유효성 체크
@@ -181,133 +182,135 @@ export default class InputCardInfo extends Component {
           </View>
 
           <View style={localStyles.inputWrap}>
-            <Item regular style={[styles.mb10, styles.inputStyle]}>
-              <Input 
+            <Item regular style={[styles.mb10, styles.inputWhBackBuBo]}>
+              <Input
+                placeholder="카드번호 16자리"
+                placeholderTextColor={color.inputPlaceHodler}
+                style={styles.inputDefaultBox}
                 onChangeText={(text) => this._setCardNum(text) }
                 value={ this.state.cardNumber }
                 keyboardType='numeric'
                 maxLength={19}
-                placeholder="카드번호 16자리" 
-                placeholderTextColor="#777" 
-                fontSize="14"
               />
               <TouchableOpacity onPress={this.scanCard.bind(this)}>
-                <Icon name="ios-camera" style={styles.inputIcon} />
+                <Image source={require("~/Common/Image/camera_icon.png")} resizeMode="contain" style={localStyles.cameraIcon} />
               </TouchableOpacity>
             </Item>
             <View style={[styles.mb10, styles.fxDirRow]}>
               <View style={styles.fx1}>
-                <Item regular style={[styles.inputStyle, styles.mr7]}>
-                  <Input 
+                <Item regular style={[styles.inputWhBackBuBo, styles.mr7]}>
+                  <Input
+                    placeholder="MM" 
+                    placeholderTextColor={color.inputPlaceHodler} 
+                    style={[styles.inputDefaultBox, {textAlign: "center"}]}
                     onChangeText={ async (text) => { await this.setState({vaildTermMonth : text}), this._chkNextBtn()} }
                     value={ this.state.vaildTerm }
                     keyboardType='numeric'
                     maxLength={2}
-                    placeholder="MM" 
-                    placeholderTextColor={color.deepGreyColor} 
-                    fontSize="14" 
-                    style={{textAlign: "center"}}
                   />
                 </Item>
               </View>
               <View style={styles.fx1}>
-                <Item regular style={[styles.inputStyle, styles.mr7]}>
+                <Item regular style={[styles.inputWhBackBuBo, styles.mr7]}>
                   <Input 
+                    placeholder="YY"
+                    placeholderTextColor={color.inputPlaceHodler}
+                    fontSize="14"
+                    style={[styles.inputDefaultBox, {textAlign: "center"}]}
                     onChangeText={ async (text) => { await this.setState({vaildTermYear : text}), this._chkNextBtn()} }
                     value={ this.state.vaildTerm }
                     keyboardType='numeric'
                     maxLength={2}
-                    placeholder="YY" 
-                    placeholderTextColor="#777" 
-                    fontSize="14" 
-                    style={{textAlign: "center"}}
                   />
                 </Item>
               </View>
               <View style={styles.fx2}>
-                <Item regular style={styles.inputStyle}>
+                <Item regular style={styles.inputWhBackBuBo}>
                   <Input 
+                    placeholder="비밀번호 앞2자리"
+                    placeholderTextColor={color.inputPlaceHodler} 
+                    fontSize="14" 
+                    style={[styles.inputDefaultBox, {textAlign: "center"}]}
                     secureTextEntry={ true }
                     onChangeText={ async (text) => { await this.setState({passwd : text}), this._chkNextBtn()} }
                     value={ this.state.passwd }
                     keyboardType='numeric'
                     maxLength={2}
-                    placeholder="비밀번호 앞2자리" 
-                    placeholderTextColor="#777" 
-                    fontSize="14" 
-                    style={{textAlign: "center"}}
                   />
                 </Item>
               </View>
             </View>
             <View>
-              <Item regular style={styles.inputStyle}>
-                <Input 
+              <Item regular style={styles.inputWhBackBuBo}>
+                <Input
+                  placeholder="생년월일(YYMMDD)"
+                  placeholderTextColor={color.inputPlaceHodler}
+                  style={styles.inputDefaultBox}
                   onChangeText={ async (text) => { await this.setState({birthDay : text}), this._chkNextBtn()} }
                   value={ this.state.birthDay }
                   keyboardType='numeric'
                   maxLength={6}
-                  placeholder="생년월일(YYMMDD)" 
-                  placeholderTextColor="#777" 
-                  fontSize="14"
-                />
+                  />
               </Item>
             </View>
 
             <View style={localStyles.termsWrap}>
-              <View style={[styles.fx2, styles.alignItemsStart, styles.justiConBetween]}>
-                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>전자금융거래 이용약관</Text>
-                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>개인정보 수집 및 이용안내</Text>
-                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>전자금융거래 이용약관</Text>
-                <Text style={[localStyles.inputBottomTxt, styles.mb5]}>개인정보 수집 및 이용안내</Text>
-              </View>
-
-              <View style={[styles.fx1, styles.fxDirRow]}>
-                <View style={[styles.fx1, styles.alignItemsEnd, styles.justiConBetween]}>
-                  <View style={styles.fx1}>
-                    <CheckBox
-                      title="전체동의"
-                      containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
-                      textStyle={{fontSize: 14}}
-                      checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
-                      uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
+              <View style={styles.fx5}>
+                <View style={styles.alignItemsEnd}>
+                  <View style={[styles.fxDirRow, styles.mb10]}>
+                    <CheckBox 
                       checked={this.state.check1}
                       onPress={this._totalCheck}
+                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                     />
-                  </View>
-                  <View style={styles.fx1}>
-                    <CheckBox
-                      title="동의"
-                      containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
-                      checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
-                      uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
-                      checked={this.state.check2}
-                      onPress={async () => { await this.setState({check2: !this.state.check2}), this._chkNextBtn()} }
-                    />
-                  </View>
-                  <View style={styles.fx1}>
-                    <CheckBox
-                      title="동의"
-                      containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
-                      checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
-                      uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
-                      checked={this.state.check3}
-                      onPress={async () => { await this.setState({check3: !this.state.check3}), this._chkNextBtn()} }
-                    />
-                  </View>
-                  <View style={styles.fx1}>
-                    <CheckBox
-                      title="동의"
-                      containerStyle={[styles.noBackNBorderColor, styles.noPadding, styles.noMargin]}
-                      checkedIcon={<Image source={require("~/Common/Image/btn_check_box_on.png")} />}
-                      uncheckedIcon={<Image source={require("~/Common/Image/btn_check_box_off.png")} />}
-                      checked={this.state.check4}
-                      onPress={async () => { await this.setState({check4: !this.state.check4}), this._chkNextBtn()} }
-                    />
+                    <Text style={localStyles.inputBottomTxt}>전체동의</Text>
                   </View>
                 </View>
+                <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                  <Text style={[localStyles.inputBottomTxt, styles.mb10]}>전자금융거래 이용약관</Text>
+                  <View style={[styles.fxDirRow, styles.mb10]}>
+                    <CheckBox
+                      checked={this.state.check2}
+                      onPress={async () => { await this.setState({check2: !this.state.check2}), this._chkNextBtn()} }
+                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                    />
+                    <Text style={localStyles.inputBottomTxt}>동의</Text>
+                  </View>
+                </View>
+                <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                  <Text style={[localStyles.inputBottomTxt, styles.mb10]}>개인정보 수집 및 이용안내</Text>
+                  <View style={[styles.fxDirRow, styles.mb10]}>
+                    <CheckBox
+                      checked={this.state.check3}
+                      onPress={async () => { await this.setState({check3: !this.state.check3}), this._chkNextBtn()} }
+                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                    />
+                    <Text style={localStyles.inputBottomTxt}>동의</Text>
+                  </View>
+                </View>
+                  <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                  <Text style={[localStyles.inputBottomTxt, styles.mb10]}>전자금융거래 이용약관</Text>
+                  <View style={[styles.fxDirRow, styles.mb10]}>
+                    <CheckBox 
+                      checked={this.state.check4}
+                      onPress={async () => { await this.setState({check4: !this.state.check4}), this._chkNextBtn()} }
+                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                    />
+                    <Text style={localStyles.inputBottomTxt}>동의</Text>
+                  </View>
+                </View>
+                  <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                  <Text style={[localStyles.inputBottomTxt, styles.mb10]}>개인정보 수집 및 이용안내</Text>
+                  <View style={[styles.fxDirRow, styles.mb10]}>
+                    <CheckBox
+                      checked={this.state.check5}
+                      onPress={async () => { await this.setState({check5: !this.state.check5}), this._chkNextBtn()} }
+                      style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
+                    />
+                    <Text style={localStyles.inputBottomTxt}>동의</Text>
+                  </View>
+                  </View>
               </View>
-
             </View>
           </View>
 
@@ -336,16 +339,24 @@ export default class InputCardInfo extends Component {
 
 const localStyles = StyleSheet.create({
   inputWrap: {
-    marginTop: 32
+    marginTop: 32,
+    flex: 1
   },
   termsWrap: {
-    marginTop: 27,
-    flexDirection : "row"
+    marginTop: 20,
+    flexDirection : "row",
+    flex: 1,
+    width: "100%"
   },
   inputBottomTxt: {
-    color: "#1e1e32",
+    color: "#8e8e98",
     fontSize: 13
   },
+  cameraIcon: {
+    width: 25,
+    height: 25,
+    marginRight: 15
+  }
 });
 
 const viewHeight = viewportHeight;
