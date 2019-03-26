@@ -29,7 +29,7 @@ class RegBusinessPlaceIndex extends Component {
                 <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
               </View>
               <View style={stylesReg.rightStepNumWrap}>
-                <Text style={stylesReg.rightStepNum}>03</Text>
+                <Text style={stylesReg.rightStepNum}>04</Text>
               </View>
             </View>
 
@@ -42,6 +42,9 @@ class RegBusinessPlaceIndex extends Component {
               </View>
               <View style={styles.fx1}>
                 <View style={stylesReg.procBarOn} />
+              </View>
+              <View style={styles.fx1}>
+                  <View style={stylesReg.procBarOn} />
               </View>
             </View>
           </View>

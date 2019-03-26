@@ -154,7 +154,7 @@ class InputEmail extends Component {
             <View>
               <View style={styles.fxDirRow}>
                 <View style={stylesReg.leftGuideTxtWrap}>
-                  <Text style={stylesReg.leftGuideTxt}>이메일 주소와</Text>
+                  <Text style={stylesReg.leftGuideTxt}>이메일주소와</Text>
                   <Text style={stylesReg.leftGuideTxt}>비밀번호를</Text>
                   <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
                 </View>
@@ -166,6 +166,9 @@ class InputEmail extends Component {
               <View style={stylesReg.procBarWrap}>
                 <View style={styles.fx1}>
                   <View style={stylesReg.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
+                  <View style={stylesReg.procBarOff} />
                 </View>
                 <View style={styles.fx1}>
                   <View style={stylesReg.procBarOff} />

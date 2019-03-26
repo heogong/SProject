@@ -185,6 +185,9 @@ class InputPhoneAuth extends Component {
               <View style={styles.fx1}>
                 <View style={stylesReg.procBarOff} />
               </View>
+              <View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+              </View>
             </View>
           </View>
 
