@@ -59,7 +59,7 @@ class ListBusinessProductType extends Component {
                 <CustomHeader/>
                 <View style={styles.contentWrap}>
 
-                    <View style={{marginBottom: 36}}>
+                    <View style={{marginBottom: 21}}>
 
                         <View style={styles.fxDirRow}>
                             <View style={stylesReg.leftGuideTxtWrap}>

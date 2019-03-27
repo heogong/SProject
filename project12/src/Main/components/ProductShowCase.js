@@ -76,11 +76,11 @@ class ProductShowCase extends Component {
                 <View style={localStyles.prdCardTopWrap}>
                     <View>
                         <TouchableOpacity onPress={this.props.handleRemoveShowCase(this.props.index)}>
-                            <Image source={require("~/Common/Image/Delete_button_gray.png")} style={localStyles.prdCardTopIconImg} />
+                            <Image source={require("~/Common/Image/card_delete_icon.png")} style={localStyles.prdCardTopIconImg} />
                         </TouchableOpacity>
                     </View>
 
-                    <View style={[styles.fx3, styles.justiConCenter, styles.alignItemsCenter]}>
+                    <View style={{flex:3, justifyContent : 'center', alignItems : 'center'}}>
                         <Text style={localStyles.prdCardTopNumTxt}>{pad(++this.props.index, 2)}</Text>
                         <Image source={{uri : this.props.item.prdTypeImg}} style={{height : imageSize, width : imageSize}} />
                     </View>
@@ -107,19 +107,17 @@ class ProductShowCase extends Component {
                             value={ this.props.clientPrdNm }
                             onChangeText={(text) => this._setProductNm(text) }
                             onBlur={this._submitProductNm}
-                            // style={localStyles.prdCardNameInput}
                             placeholder="제품이름" 
-                            style={[styles.inputBox, styles.pl9]} 
-                            placeholderTextColor={color.inputPlaceHodler}
+                            style={localStyles.prdCardNameInput}
+                            placeholderTextColor="#8e8e98"
                         />
                     </Item>
                     <Text style={localStyles.prdCardInfoTxt}>제품의 간략한 설명을 입력하세요</Text>
                     <Item regular style={localStyles.prdCardInputBox}>
                         <Input 
-                            // style={localStyles.prdCardDscInput}
+                            style={localStyles.prdCardDscInput}
                             placeholder="제품설명" 
-                            style={[styles.inputBox, styles.pl9]} 
-                            placeholderTextColor={color.inputPlaceHodler}
+                            placeholderTextColor="#8e8e98"
                         />
                     </Item>
                 </View>
@@ -157,57 +155,56 @@ function wp (percentage, space) {
 const imageSize = wp(40, 0);
 
 const localStyles = StyleSheet.create({
-  prdCardWrap: {
-    padding: 17,
-    backgroundColor : "#7be6fd"
-  },
-  prdCardTopWrap: {
-    marginBottom: 10,
-    flexDirection: "row"
-  },
-  prdCardTopIconImg: {
-    width: 36,
-    height: 36
-  },
-  prdCardTopNumTxt: {
-    fontSize: 36,
-    color: "#038dbd",
-    fontWeight: "bold",
-    marginBottom: 16
-  },
-  prdCardInfoTxt: {
-    fontSize: 14,
-    color: color.whiteColor,
-    marginBottom: 8
-  },
-  prdCardInputWrap: {
-    alignItems : 'center'
-  },
-  prdCardInputBox: {
-    marginBottom: 20,
-    backgroundColor: color.whiteColor,
-    borderColor : color.whiteColor,
-    height : 32
-  },
-  prdCardNameInput: {
-    fontSize : 14,
-    textAlign: "center",
-    height : 32
-  },
-  prdCardDscInput: {
-    fontSize : 13,
-    textAlign: "center",
-    height : 32
-  },
-  prdCardPhotoWrap: {
-    flex: 1,
-    justifyContent : 'center'
-  },
-  prdCardPhoto: {
-    flexDirection: "row",
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  }
+      prdCardWrap: {
+        padding: 17,
+        backgroundColor : "#7be6fd",
+        marginBottom: 26
+      },
+      prdCardTopWrap: {
+        marginBottom: 10,
+        flexDirection: "row"
+      },
+      prdCardTopIconImg: {
+        width: 36,
+        height: 36
+      },
+      prdCardTopNumTxt: {
+        fontSize: 36,
+        color: "#038dbd",
+        fontWeight: "bold",
+        marginBottom: 16
+      },
+      prdCardInfoTxt: {
+        fontSize: 14,
+        color: color.whiteColor,
+        marginBottom: 8
+      },
+      prdCardInputWrap: {
+        alignItems : 'center'
+      },
+      prdCardInputBox: {
+        marginBottom: 20,
+        backgroundColor: color.whiteColor,
+        borderColor : color.whiteColor,
+        height : 32
+      },
+      prdCardNameInput: {
+        fontSize : 14,
+        textAlign: "center",
+      },
+      prdCardDscInput: {
+        fontSize : 13,
+        textAlign: "center",
+      },
+      prdCardPhotoWrap: {
+        flex: 1,
+        justifyContent : 'center'
+      },
+      prdCardPhoto: {
+        flexDirection: "row",
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+      }
 });
 
 

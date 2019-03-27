@@ -293,32 +293,31 @@ class InputShowCase extends Component {
               <CustomHeader customAction={this._handleBackAction}/>
 
                 <View style={styles.contentWrap}>
-                    <View>
-                        <View style={styles.fxDirRow}>
-                            <View style={stylesReg.leftGuideTxtWrap}>
-                                <Text style={stylesReg.leftGuideTxt}>등록할</Text>
-                                <Text style={stylesReg.leftGuideTxt}>제품정보를</Text>
-                                <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
+                    <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
+                        <View>
+                            <View style={styles.fxDirRow}>
+                                <View style={stylesReg.leftGuideTxtWrap}>
+                                    <Text style={stylesReg.leftGuideTxt}>제품의</Text>
+                                    <Text style={stylesReg.leftGuideTxt}>상세정보를</Text>
+                                    <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
+                                </View>
+                                <View style={[stylesReg.rightStepNumWrap, {paddingRight: 26}]}>
+                                    <Text style={stylesReg.rightStepNum}>03</Text>
+                                </View>
                             </View>
-                            <View style={[stylesReg.rightStepNumWrap, {paddingRight: 26}]}>
-                                <Text style={stylesReg.rightStepNum}>03</Text>
+                        </View>
+
+                        <View style={[stylesReg.procBarWrap, {paddingRight: 26, marginBottom: 47}]}>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOn} />
+                            </View>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOn} />
+                            </View>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOn} />
                             </View>
                         </View>
-                    </View>
-
-                    <View style={[stylesReg.procBarWrap, {paddingRight: 26, marginBottom: 47}]}>
-                        <View style={styles.fx1}>
-                            <View style={stylesReg.procBarOn} />
-                        </View>
-                        <View style={styles.fx1}>
-                            <View style={stylesReg.procBarOn} />
-                        </View>
-                        <View style={styles.fx1}>
-                            <View style={stylesReg.procBarOn} />
-                        </View>
-                    </View>
-
-                    <ScrollView showsVerticalScrollIndicator={false} style={styles.mb10}>
                         <Carousel
                             renderItem={this._renderItem}
                             sliderWidth={viewportWidth}

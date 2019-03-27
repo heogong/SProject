@@ -79,7 +79,7 @@ class ListBusinessPlace extends Component {
           customAction={this._goToMain}
         />
         <View style={styles.contentWrap}>
-          <View style={styles.fx1}>
+          <View style={{marginBottom: 21}}>
             <View style={styles.fxDirRow}>
               <View style={stylesReg.leftGuideTxtWrap}>
                 <Text style={stylesReg.leftGuideTxt}>제품조회를위한</Text>
@@ -97,7 +97,7 @@ class ListBusinessPlace extends Component {
           <ScrollView
             horizontal={true}
             pagingEnabled={false} // animates ScrollView to nearest multiple of it's own width
-            showsHorizontalScrollIndicator={true}>
+            showsHorizontalScrollIndicator={false}>
 
             {this.state.data.map((business, idx) =>
               <TouchableOpacity 
@@ -135,14 +135,16 @@ class ListBusinessPlace extends Component {
                     <View style={localStyles.prdImgWrap}>
                       <Image source={require('~/Common/Image/product/01_icon_white.png')} style={localStyles.prdImg}/>
                     </View>
-                  
+                          
                     <View style={localStyles.txtWrap}>
                       <Text style={localStyles.placeNameTxt}>{business.bplaceNm}</Text>
                       <View style={localStyles.infoTxtWrap}>
-                        {/* <Text style={localStyles.infoTxt}>{business.addr.addressName}</Text>
-                        <Text style={localStyles.infoTxt}>{business.detail.detailAddr1}</Text> */}
-                        <Text style={localStyles.infoTxt}>test</Text>
-                        <Text style={localStyles.infoTxt}>test</Text>
+                        <Text style={localStyles.infoTxt}>
+                          {(business.addr != null || business.road != null ?
+                            (business.addr != null ? business.addr.addressName : business.road.addressName)
+                            : "사업자 주소를 등록해주세요.")}
+                        </Text>
+                        <Text style={localStyles.infoTxt}>{(business.detail != null ? business.detail.detailAddr1 : "사업장 상세주소를 입력해주세요.")}</Text>
                       </View>
                     </View>
                 </View>
@@ -150,7 +152,7 @@ class ListBusinessPlace extends Component {
             )}
           </ScrollView>
 
-          <View style={[styles.footerBtnWra, {paddingRight : 26}]}>
+          <View style={[styles.footerBtnWrap, {paddingRight : 26}]}>
             <CustomButton 
               onPress={Actions.MyRegBusinessPlace}
               CustomBtnStyle={styles.mb5}
@@ -195,7 +197,7 @@ const localStyles = StyleSheet.create({
   placeBoxWrap: {
     backgroundColor : color.defaultColor,
     width: 280,
-    height: 284,
+    height: 300,
     marginRight: 12
   },
   prdImgWrap: {

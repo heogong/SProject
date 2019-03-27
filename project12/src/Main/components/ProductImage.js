@@ -86,7 +86,7 @@ class ProductImage extends Component {
                         >
                             <View style={[styles.pd10, styles.fx2]}>
                                 <TouchableOpacity onPress={ this._handleImageDelete }>
-                                    <Image source={require("~/Common/Image/check-on2.png")} />
+                                    <Image source={require("~/Common/Image/small_delete_button.png")} resizeMode="contain" style={{width: 20, height: 20}} />
                                 </TouchableOpacity>
                             </View>
 
@@ -126,10 +126,7 @@ class ProductImage extends Component {
                         prdTypeImgCateId :this.props.prdTypeImgCateId
                     }) }>
                     <View style={localStyles.prdCardOffPhotoWrap}>
-                        <Image 
-                            source={require("~/Common/Image/ico-camera.png")} 
-                            resizeMode="center"
-                        />
+                        <Image source={require("~/Common/Image/camera_icon.png")}  resizeMode="contain" style={localStyles.prdCardCameraIcon} />
                     </View>
                 </TouchableOpacity>
             )
@@ -143,7 +140,7 @@ function wp (percentage, space) {
 }
 
 // 메인 상품 카드 사이즈
-const slideWidth = wp(85, 26);
+const slideWidth = wp(90, 88);
 const itemHorizontalMargin = wp(2, 0);
 const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
@@ -159,27 +156,28 @@ const localStyles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         margin: 5
-    },
-    prdCardOnPhotoWrap: {
+      },
+      prdCardOnPhotoWrap: {
         width : cameraSize,
         height : cameraSize,
         margin: 5
-    },
-    prdCardPhotoBtnEn: {
+      },
+      prdCardPhotoBtnEn: {
         height : 35,
         width : "100%",
         backgroundColor: 'rgba(40, 200, 245, 0.6)'
-    },
-    prdCardPhotoBtnTxt: {
+      },
+      prdCardPhotoBtnTxt: {
         fontSize: 14,
         color: color.whiteColor,
         textAlign: "center",
         marginTop: 10
-    },
-    prdCardCameraIcon: {
+      },
+      prdCardCameraIcon: {
         color: color.defaultColor,
-        fontSize: 50
-    }
+        width: 36,
+        height: 36
+      }
 });
 
 export default ProductImage;

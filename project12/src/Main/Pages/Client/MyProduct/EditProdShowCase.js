@@ -175,23 +175,22 @@ class EditProdShowCase extends Component {
               <CustomHeader />
 
                 <View style={styles.contentWrap}>
-                    <View>
-                        <View style={styles.fxDirRow}>
-                            <View style={stylesReg.leftGuideTxtWrap}>
-                                <Text style={stylesReg.leftGuideTxt}>등록할</Text>
-                                <Text style={stylesReg.leftGuideTxt}>제품정보를</Text>
-                                <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
-                            </View>
-                            <View style={[stylesReg.rightStepNumWrap, {paddingRight: 26}]}>
-                                <Text style={stylesReg.rightStepNum}></Text>
+                    <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
+                        <View>
+                            <View style={styles.fxDirRow}>
+                                <View style={stylesReg.leftGuideTxtWrap}>
+                                    <Text style={stylesReg.leftGuideTxt}>제품의</Text>
+                                    <Text style={stylesReg.leftGuideTxt}>상세정보를</Text>
+                                    <Text style={stylesReg.leftGuideTxt}>수정해주세요</Text>
+                                </View>
+                                <View style={[stylesReg.rightStepNumWrap, {paddingRight: 26}]}>
+                                    <Text style={stylesReg.rightStepNum}></Text>
+                                </View>
                             </View>
                         </View>
-                    </View>
-
-                    <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={localStyles.prdCardWrap}>
                             <View style={localStyles.prdCardTopWrap}>
-                                <View style={[styles.fx3, styles.justiConCenter, styles.alignItemsCenter]}>
+                                <View style={{flex:3, justifyContent : 'center', alignItems : 'center'}}>
                                     <Text style={localStyles.prdCardTopNumTxt}>{ pad(this.props.number, 2) }</Text>
                                     <Image source={{uri : this.state.data.prdTypeImg.fileUrl}} style={{height : imageSize, width : imageSize}} />
                                 </View>
@@ -199,7 +198,7 @@ class EditProdShowCase extends Component {
                             </View>
                 
                             <View style={localStyles.prdCardInputWrap}>
-                                <Text style={localStyles.prdCardInfoTxt}>제품 이름</Text>
+                                <Text style={localStyles.prdCardInfoTxt}>제품 이름을 수정하세요</Text>
                                 <Item 
                                     regular 
                                     style={[localStyles.prdCardInputBox, {width: "70%"}]}
@@ -210,28 +209,26 @@ class EditProdShowCase extends Component {
                                             await this.setState({clientPrdNm : text}),
                                             this._chkBtn()
                                         }}
-                                        // style={localStyles.prdCardNameInput}
                                         placeholder="제품이름" 
-                                        style={[styles.inputBox, styles.pl9]} 
-                                        placeholderTextColor={color.inputPlaceHodler}
+                                        style={localStyles.prdCardNameInput}
+                                        placeholderTextColor="#8e8e98"
                                     />
                                 </Item>
                                 
-                                <Text style={localStyles.prdCardInfoTxt}>제품 설명</Text>
+                                <Text style={localStyles.prdCardInfoTxt}>제품의 간략한 설명을 수정하세요</Text>
                                 <Item regular style={localStyles.prdCardInputBox}>
                                     <Input
                                         value={ this.state.clientPrdDsc }
                                         onChangeText={(text) => this.setState({clientPrdDsc  :text}) }
-                                        // style={localStyles.prdCardDscInput}
+                                        style={localStyles.prdCardDscInput}
                                         placeholder="제품설명" 
-                                        style={[styles.inputBox, styles.pl9]}
-                                        placeholderTextColor={color.inputPlaceHodler}
+                                        placeholderTextColor="#8e8e98"
                                     />
                                 </Item>
                             </View>
                 
                             <View style={styles.alignItemsCenter}>
-                                <Text style={styles.whiteFont}>제품 사진</Text>
+                                <Text style={styles.whiteFont}>촬영가이드에 따라 제품의 사진을 수정해주세요</Text>
                 
                                 <View style={localStyles.prdCardPhotoWrap}>
                                     <View style={localStyles.prdCardPhoto}>
@@ -306,57 +303,56 @@ function wp (percentage, space) {
 const imageSize = wp(40, 0);
 
 const localStyles = StyleSheet.create({
-  prdCardWrap: {
-    padding: 17,
-    backgroundColor : "#7be6fd"
-  },
-  prdCardTopWrap: {
-    marginBottom: 10,
-    flexDirection: "row"
-  },
-  prdCardTopIconImg: {
-    width: 36,
-    height: 36
-  },
-  prdCardTopNumTxt: {
-    fontSize: 36,
-    color: "#038dbd",
-    fontWeight: "bold",
-    marginBottom: 16
-  },
-  prdCardInfoTxt: {
-    fontSize: 14,
-    color: color.whiteColor,
-    marginBottom: 8
-  },
-  prdCardInputWrap: {
-    alignItems : 'center'
-  },
-  prdCardInputBox: {
-    marginBottom: 20,
-    backgroundColor: color.whiteColor,
-    borderColor : color.whiteColor,
-    height : 32
-  },
-  prdCardNameInput: {
-    fontSize : 14,
-    textAlign: "center",
-    height : 32
-  },
-  prdCardDscInput: {
-    fontSize : 13,
-    textAlign: "center",
-    height : 32
-  },
-  prdCardPhotoWrap: {
-    flex: 1,
-    justifyContent : 'center'
-  },
-  prdCardPhoto: {
-    flexDirection: "row",
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  }
+    prdCardWrap: {
+        padding: 17,
+        backgroundColor : "#7be6fd",
+        marginBottom: 26
+      },
+      prdCardTopWrap: {
+        marginBottom: 10,
+        flexDirection: "row"
+      },
+      prdCardTopIconImg: {
+        width: 36,
+        height: 36
+      },
+      prdCardTopNumTxt: {
+        fontSize: 36,
+        color: "#038dbd",
+        fontWeight: "bold",
+        marginBottom: 16
+      },
+      prdCardInfoTxt: {
+        fontSize: 14,
+        color: color.whiteColor,
+        marginBottom: 8
+      },
+      prdCardInputWrap: {
+        alignItems : 'center'
+      },
+      prdCardInputBox: {
+        marginBottom: 20,
+        backgroundColor: color.whiteColor,
+        borderColor : color.whiteColor,
+        height : 32
+      },
+      prdCardNameInput: {
+        fontSize : 14,
+        textAlign: "center",
+      },
+      prdCardDscInput: {
+        fontSize : 13,
+        textAlign: "center",
+      },
+      prdCardPhotoWrap: {
+        flex: 1,
+        justifyContent : 'center'
+      },
+      prdCardPhoto: {
+        flexDirection: "row",
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+      }
 });
   
 export default EditProdShowCase;

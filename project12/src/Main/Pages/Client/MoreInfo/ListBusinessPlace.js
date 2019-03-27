@@ -85,7 +85,7 @@ class ListBusinessPlace extends Component {
           <ScrollView
             horizontal={true}
             pagingEnabled={false} // animates ScrollView to nearest multiple of it's own width
-            showsHorizontalScrollIndicator={true}>
+            showsHorizontalScrollIndicator={false}>
 
             <View style={localStyles.placeBoxWrap}>
               <TouchableOpacity onPress={this._toggleModal} style={localStyles.closeIconWrap}>
@@ -125,10 +125,12 @@ class ListBusinessPlace extends Component {
                   <View style={localStyles.txtWrap}>
                     <Text style={localStyles.placeNameTxt}>{business.bplaceNm}</Text>
                     <View style={localStyles.infoTxtWrap}>
-                      {/* <Text style={localStyles.infoTxt}>{business.addr.addressName}</Text>
-                      <Text style={localStyles.infoTxt}>{business.detail.detailAddr1}</Text> */}
-                      <Text style={localStyles.infoTxt}>test</Text>
-                      <Text style={localStyles.infoTxt}>test</Text>
+                      <Text style={localStyles.infoTxt}>
+                            {(business.addr != null || business.road != null ?
+                              (business.addr != null ? business.addr.addressName : business.road.addressName)
+                              : "사업자 주소를 등록해주세요.")}
+                      </Text>
+                      <Text style={localStyles.infoTxt}>{(business.detail != null ? business.detail.detailAddr1 : "사업장 상세주소를 입력해주세요.")}</Text>
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -173,7 +175,7 @@ const localStyles = StyleSheet.create({
   placeBoxWrap: {
     backgroundColor : color.defaultColor,
     width: 280,
-    height: 284,
+    height: 300,
     marginRight: 12
   },
   prdImgWrap: {

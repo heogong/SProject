@@ -11,7 +11,7 @@ export const HStyles = StyleSheet.create({
   },
   // 상세 헤더
   header: {
-    height: 55,
+    height: 100,
     paddingTop : 0,
     elevation: 0,
     shadowOpacity: 0,
