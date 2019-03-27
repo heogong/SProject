@@ -22,7 +22,8 @@ import { color } from '~/Common/Styles/colors';
 
 const AfterServiceState = ({ asPrgsStatCd, status, statusOnImg, statusOffImg }) => (
   <View style={localStyles.asMatchIconWrap}>
-    <Image 
+    <Image
+        style={{height : stateImgSize, width : stateImgSize}} 
         source={(asPrgsStatCd == null) ? 
           (statusOffImg) : 
           (asPrgsStatCd == status.code1.VALUE || asPrgsStatCd == status.code2.VALUE) ? statusOnImg : statusOffImg 
@@ -329,7 +330,7 @@ class ViewAfterServiceState extends Component {
                   <View>
                       <View style={localStyles.secondBox}>
                       <Text style={localStyles.asMatchStateDscTxt}>
-                        { (this.state.asPrgsYn == 'Y') ? this.state.data.asPrgsMst.asPrgsStatNm : "A/S 상태가 아닙니다." }
+                        { (this.state.asPrgsYn == 'Y') ? this.state.data.asPrgsMst.asPrgsStatDsc : "A/S 상태가 아닙니다." }
                       </Text>
                       <View style={styles.fxDirRow}>
                           <AfterServiceState

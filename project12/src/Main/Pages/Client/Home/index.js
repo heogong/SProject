@@ -310,7 +310,7 @@ class ClientHome extends Component {
               <View style={{backgroundColor : '#d6f1ff'}}>
                 <View style={[styles.boxShadowTopNo, localStyles.secondBox]}>
                   <Text style={localStyles.asMatchStateDscTxt}>
-                    { (this.state.asPrgsYn == 'Y') ? this.state.asPrgsStatNm : "고장난 제품의 A/S 신청을 해 보세요" }
+                    { (this.state.asPrgsYn == 'Y') ? this.state.asPrgsStatDSC : "고장난 제품의 A/S 신청을 해 보세요" }
                   </Text>
                   <View style={styles.fxDirRow}>
                     <AfterServiceState

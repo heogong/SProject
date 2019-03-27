@@ -174,7 +174,6 @@ const localStyles = StyleSheet.create({
         marginTop: 10
       },
       prdCardCameraIcon: {
-        color: color.defaultColor,
         width: 36,
         height: 36
       }
