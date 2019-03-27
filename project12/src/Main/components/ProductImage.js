@@ -63,7 +63,8 @@ class ProductImage extends Component {
 
     // 촬영 결과 데이터
     _takeOnResult = (result) => {
-        console.log("촬영 결과 데이터 source :", result);
+        // alert("촬영 결과 데이터 이미지아이디!!!! - ", result.resultData.clientPrdImgId);
+        console.log("촬영 결과 데이터 source :", result.resultData.clientPrdImgId);
 
         this.setState({
             isImage : true,
@@ -92,11 +93,15 @@ class ProductImage extends Component {
 
                             <TouchableOpacity 
                                 style={localStyles.prdCardPhotoBtnEn}
-                                onPress={ () => Actions.TakeProductImage({ 
-                                    onResult : this._takeOnResult,
-                                    clientPrdId : this.props.clientPrdId,
-                                    prdTypeImgCateId :this.props.prdTypeImgCateId
-                                }) }>
+                                // onPress={ () => Actions.TakeProductImage({ 
+                                //     onResult : this._takeOnResult,
+                                //     clientPrdId : this.props.clientPrdId,
+                                //     clientPrdImgId : this.props.clientPrdImgId,
+                                //     prdTypeImgCateId :this.props.prdTypeImgCateId,
+                                //     reTeakPicture  : true
+                                // }) }
+                                onPress={() => alert("재등록 버그 fix진행 중")}
+                                >
                                 <View>
                                     <Text style={localStyles.prdCardPhotoBtnTxt}>재등록하기</Text>
                                 </View>
@@ -105,20 +110,6 @@ class ProductImage extends Component {
                     </View>
                 </View>
             ) : (
-                // <View style={[styles.pd10, styles.mb10, {width : cameraSize, height : cameraSize, backgroundColor : color.whiteColor}]}>
-                //     <View style={styles.fx1} />
-                //         <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
-                //             <TouchableOpacity 
-                //                 onPress={ () => Actions.TakeProductImage({ 
-                //                     onResult : this._takeOnResult,
-                //                     clientPrdId : this.props.clientPrdId,
-                //                     prdTypeImgCateId :this.props.prdTypeImgCateId
-                //                 }) }>
-                //                 <Image source={require("~/Common/Image/ico-camera.png")} resizeMode="center"/>
-                //             </TouchableOpacity>
-                //         </View>
-                //     <View style={styles.fx1} />
-                // </View>
                 <TouchableOpacity  
                     onPress={ () => Actions.TakeProductImage({ 
                         onResult : this._takeOnResult,

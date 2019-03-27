@@ -102,11 +102,11 @@ class SearchAddress extends Component {
       marker: {
         latitude : Number(item.y),
         longitude : Number(item.x)
-      }
+      },
+      addressName : item.address_name
     });
 
     SELECT_ITEM = item;
-    
   }
 
 

@@ -6,7 +6,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 
-import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
+import ChkUsrPasswd from '~/Main/Functions/ChkUsrPasswd';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from "~/Common/Components/CustomHeader";
@@ -29,19 +29,28 @@ class MyProfileModPassword1 extends Component {
     };
   }
 
+  //  비밀번호 확인
+  _chkUsrPasswd = () => {
+    const { passwd } = this.state;
 
-  _chkPasswd = () => {
-    
-    //체크 함수 호출
-    if(true) {
-      Actions.MyProfileModPassword2();
-    } else {
-      this.setState({
-        isAlertModal : true,
-        resultMsg : resultData.resultMsg
-      })
-    }
-  }
+    ChkUsrPasswd(passwd).then(async result => {
+        GetCommonData(result, this._chkUsrPasswd).then(async resultData => {
+            if(resultData !== undefined) {
+                console.log(resultData);
+                const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+
+                if(ResultBool) {
+                    Actions.ClientMyProfileModPassword2();
+                } else {
+                    this.setState({
+                        isAlertModal : true,
+                        resultMsg : resultData.resultMsg
+                    })
+                }
+            }
+        });
+    });
+  } 
 
   _chkButton = () => {
     const chkLen = 3;
@@ -53,8 +62,6 @@ class MyProfileModPassword1 extends Component {
       this.setState({disableBtn : true});
     }
   }
-
-
 
   render() {
     return (
@@ -70,7 +77,7 @@ class MyProfileModPassword1 extends Component {
             <Text style={styles.inputNbTitleTxt}>현재 비밀번호</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
               <Input 
-                onChangeText={(text) => { this.setState({passwd : text}), this._chkButton() } }
+                onChangeText={async (text) => { await this.setState({passwd : text}), this._chkButton() } }
                 placeholder="현재 비밀번호를 입력해주세요." 
                 placeholderTextColor={color.inputPlaceHodler} 
                 style={styles.inputNbDefaultBox} 
@@ -80,7 +87,7 @@ class MyProfileModPassword1 extends Component {
 
           <View style={styles.footerBtnWrap}>
             <CustomButton 
-              onPress={ this._chkPasswd }
+              onPress={ this._chkUsrPasswd }
               disabled={ this.state.disableBtn }
             >
               다음

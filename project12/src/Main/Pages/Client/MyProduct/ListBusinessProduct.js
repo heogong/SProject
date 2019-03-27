@@ -70,7 +70,7 @@ class ListBusinessProductType extends Component {
                   console.log(resultData);
                   if(ResultBool) {
                       this.setState({ 
-                        data: this.state.data.filter((s, sidx) => SELECT_IDX !== sidx),
+                        data: data.filter((s, sidx) => SELECT_IDX !== sidx),
                         isModalVisible : false
                       })
                   } else {

@@ -255,7 +255,7 @@ function wp (percentage, space) {
   }
   
 const asCardSize = wp(48, 72);
-const asCardSize2 = wp(46, (styles.containerScroll.paddingLeft * 4) + 10 );
+const asCardSize2 = wp(46, (styles.containerScroll.paddingLeft * 2) + 10 );
 
 const localStyles = StyleSheet.create({
     prdPhoto: {

@@ -86,7 +86,7 @@ class MyProfileInfo extends Component {
               <Input value={this.state.data.usrNm} style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false}/>
 
               <CustomEtcButton
-                onPress={ Actions.ClientMyProfileModName }
+                onPress={ () => Actions.ClientMyProfileModName({refreshAction : this._getUserInfo}) }
                 SmallBtn={true}
                 customStyle={{width: 80, marginTop: 10}}
               >
@@ -94,12 +94,12 @@ class MyProfileInfo extends Component {
               </CustomEtcButton>
             </Item>
 
-            <Text style={styles.inputNbTitleTxt}>핸드폰번호 (2019.02.14 인증됨)</Text>
+            <Text style={styles.inputNbTitleTxt}>핸드폰번호</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
               <Input value={this.state.data.usrPhoneNum} style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false}/>
 
               <CustomEtcButton
-                onPress={ Actions.ClientMyProfileModPhone }
+                onPress={ () => Actions.ClientMyProfileModPhone({refreshAction : this._getUserInfo}) }
                 SmallBtn={true}
                 customStyle={{width: 80, marginTop: 10}}
               >

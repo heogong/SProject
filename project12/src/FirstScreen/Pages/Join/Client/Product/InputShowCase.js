@@ -145,8 +145,9 @@ class InputShowCase extends Component {
                             showCase: this.state.showCase.concat([{ 
                                 clientPrdId : resultData.data.clientPrdId,
                                 clientPrdNm : resultData.data.clientPrdNm,
+                                clientPrdDsc : resultData.data.clientPrdDsc,
                                 prdType : resultData.data.prdType,
-                                prdTypeImg : resultData.data.prdTypeImg,
+                                prdTypeImg : resultData.data.prdTypeImg.fileUrl,
                                 imgTypeArray : imgNData
                             }]),
                         });
@@ -280,6 +281,7 @@ class InputShowCase extends Component {
             index={ index }
             item={ item }
             clientPrdNm={ item.clientPrdNm } 
+            clientPrdDsc={ item.clientPrdDsc }
             handleAddShowCase={ this._handleAddShowCase }
             handleCopyShowCase={ this._handleCopyShowCase }
             handleRemoveShowCase={ this._handleRemoveShowCase }

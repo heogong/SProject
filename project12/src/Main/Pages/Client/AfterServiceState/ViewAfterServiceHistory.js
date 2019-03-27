@@ -182,8 +182,13 @@ class ViewAfterServiceHistory extends Component {
 
     render() {
         return (
-            <Container style={styles.containerScroll}>
-                <CustomHeader title="A/S 보고서"/>
+            <Container style={styles.container}>
+                <View style={{
+                    paddingLeft : styles.containerScroll.paddingLeft,
+                    paddingRight : styles.containerScroll.paddingRight
+                }}>
+                    <CustomHeader title="A/S 보고서"/>
+                </View>
 
                 <ScrollView showsVerticalScrollIndicator={false}>
         
@@ -325,7 +330,7 @@ function wp (percentage, space) {
     return Math.round(value);
   }
   
-  const asCardSize = wp(45, (styles.containerScroll.paddingLeft * 4) + 10 );
+  const asCardSize = wp(50, (styles.containerScroll.paddingLeft * 2));
   
   const localStyles = StyleSheet.create({
     titleWrap: {
@@ -356,14 +361,6 @@ function wp (percentage, space) {
       flexWrap : 'wrap',
       backgroundColor: color.whiteColor,
       width: "100%"
-    },
-    photoNoBoxWrap: {
-      flex: 5,
-      borderColor : "#c9cacb",
-      borderWidth : 1,
-      margin: 5,
-      height : asCardSize, 
-      width : asCardSize
     },
     photoNoBox: {
       flex: 1,

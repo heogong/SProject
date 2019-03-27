@@ -8,6 +8,7 @@ import { Actions } from 'react-native-router-flux';
 
 import SendSmsCertNum from '~/FirstScreen/Functions/SendSmsCertNum';
 import CheckSmsCertNum from '~/FirstScreen/Functions/CheckSmsCertNum';
+import ChangeMyUsrPhone from '~/Main/Functions/ChangeMyUsrPhone';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from "~/Common/Components/CustomHeader";
@@ -19,7 +20,7 @@ import { color } from "~/Common/Styles/colors";
 const PHONE_AUTH_LEN = 6; // 인증번호 길이
 let SMS_SEND_ID = null; // 인증 고유번호
 
-class MyProfileModPassword1 extends Component {
+class MyProfileModPhone extends Component {
   constructor(props) {
     super(props);
 
@@ -50,7 +51,7 @@ class MyProfileModPassword1 extends Component {
         this.setState({
           isAlertModal : true,
           resultMsg : `${phoneNum}로 6자리 인증번호를`,
-          resultMsg2 : `보내드렸습니다. 5분 내 인증번호를 입력해주세요!`
+          resultMsg2 : `보내드렸습니다. 5분 내 인증번호를 입력해주세요!${result.data.certNum}`
         })
 
         SMS_SEND_ID = result.data.smsSendId;
@@ -72,17 +73,7 @@ class MyProfileModPassword1 extends Component {
       const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 
 
       if(ResultBool) {
-        // 휴대폰 번호 변경 api 호출
-        if(true) {
-          Actions.popTo("PartnerMoreInfo");
-
-        } else {
-          this.setState({
-            isAlertModal : true,
-            resultMsg : result.resultMsg,
-            resultMsg2 : null
-          })
-        }
+        this._changeMyUsrPhone();
       } else {
         this.setState({
           isAlertModal : true,
@@ -92,6 +83,29 @@ class MyProfileModPassword1 extends Component {
       }
     })
   };
+
+  // 휴대폰번호 변경 요청(로그인 상태)
+  _changeMyUsrPhone = () => {
+    const { phoneNum } = this.state;
+    ChangeMyUsrPhone(phoneNum).then(async result => {
+      GetCommonData(result, this._changeMyUsrPhone).then(async resultData => {
+          if(resultData !== undefined) {
+              console.log(resultData);
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+
+            if(ResultBool) {
+              this.props.refreshAction();
+              Actions.pop();
+            } else {
+                this.setState({
+                    isAlertModal : true,
+                    resultMsg : resultData.resultMsg
+                })
+            }
+          }
+      });
+    });
+  }
 
   // 인증번호 받기 버튼 활성화 여부
   _chkButton1 = () => {
@@ -198,4 +212,4 @@ const localStyles = StyleSheet.create({
   },
 });
 
-export default MyProfileModPassword1; 
+export default MyProfileModPhone; 

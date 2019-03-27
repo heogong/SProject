@@ -26,9 +26,7 @@ class ResetMain extends Component {
     render() {
         return (
         <Container style={styles.container}>
-            <View style={styles.fx1}>
-                <Text>완료!!!</Text>
-            </View>
+            <View style={styles.fx1}/>
         </Container>
         )
     }

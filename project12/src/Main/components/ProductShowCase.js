@@ -26,14 +26,14 @@ class ProductShowCase extends Component {
 
         this.state = {
             setProductName : false, // 제품명 입력 여부
-            productName : null
+            productName : '',
+            productDsc : ''
         };
     }
 
     static defaultProps = {
         copyBtn : true, // 복사버튼 사용 여부
-        viewProduct : false, // 단순 조회 여부
-        clientPrdNm : null
+        viewProduct : false // 단순 조회 여부
     }
 
     componentDidMount() {
@@ -57,7 +57,9 @@ class ProductShowCase extends Component {
 
     // 제품명 업데이트
     _submitProductNm = () => {
-        EditProductMst(this.props.item.clientPrdId, this.state.productName).then(result => {
+        const { productName, productDsc } = this.state;
+
+        EditProductMst(this.props.item.clientPrdId, productName, productDsc).then(result => {
             GetCommonData(result, this._submitProductNm).then(async resultData => {
                 if(resultData !== undefined) {
                     console.log("GetProdImageType : ",resultData);
@@ -75,9 +77,13 @@ class ProductShowCase extends Component {
             <View style={localStyles.prdCardWrap}>
                 <View style={localStyles.prdCardTopWrap}>
                     <View>
-                        <TouchableOpacity onPress={this.props.handleRemoveShowCase(this.props.index)}>
-                            <Image source={require("~/Common/Image/card_delete_icon.png")} style={localStyles.prdCardTopIconImg} />
-                        </TouchableOpacity>
+                        {(this.props.index > 0) ? (
+                            <TouchableOpacity onPress={this.props.handleRemoveShowCase(this.props.index)}>
+                                <Image source={require("~/Common/Image/card_delete_icon.png")} style={localStyles.prdCardTopIconImg} />
+                            </TouchableOpacity>
+                        ) : (
+                            <View style={localStyles.prdCardTopIconImg}/>
+                        )}
                     </View>
 
                     <View style={{flex:3, justifyContent : 'center', alignItems : 'center'}}>
@@ -104,21 +110,26 @@ class ProductShowCase extends Component {
                         success={ this.state.setProductName }
                     >
                         <Input 
-                            value={ this.props.clientPrdNm }
                             onChangeText={(text) => this._setProductNm(text) }
                             onBlur={this._submitProductNm}
                             placeholder="제품이름" 
                             style={localStyles.prdCardNameInput}
                             placeholderTextColor="#8e8e98"
-                        />
+                        >
+                            {this.props.clientPrdNm}
+                        </Input>
                     </Item>
                     <Text style={localStyles.prdCardInfoTxt}>제품의 간략한 설명을 입력하세요</Text>
                     <Item regular style={localStyles.prdCardInputBox}>
                         <Input 
+                            onChangeText={(text) => this.setState({productDsc : text})}
+                            onBlur={this._submitProductNm}
                             style={localStyles.prdCardDscInput}
                             placeholder="제품설명" 
                             placeholderTextColor="#8e8e98"
-                        />
+                        >
+                            {this.props.clientPrdDsc}
+                        </Input>
                     </Item>
                 </View>
     

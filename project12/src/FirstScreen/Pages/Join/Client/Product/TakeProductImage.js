@@ -8,6 +8,7 @@ import { Actions } from "react-native-router-flux";
 import ImagePicker from 'react-native-image-picker';
 
 import RegProdImg from '~/Main/Functions/RegProdImg';
+import EditProdImg from '~/Main/Functions/EditProdImg';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
@@ -41,6 +42,12 @@ class TakeProductImage extends Component {
     this.takePhotoTapped = this.takePhotoTapped.bind(this);
   }
 
+  static defaultProps = {
+    reTeakPicture: false,
+  }
+
+  
+
 
   // 앨범에서 사진 가져오기
   selectPhotoTapped() {
@@ -57,7 +64,13 @@ class TakeProductImage extends Component {
           // You can also display the image using data:
           // let source = { uri: 'data:image/jpeg;base64,' + response.data };
           SOURCE = { uri: response.uri };
-          this._registerProdImage();
+
+          if(this.props.reTeakPicture) {
+            this._editProdImg();
+          } else {
+            this._registerProdImage();
+          }
+          
       }
     })
   };
@@ -76,7 +89,12 @@ class TakeProductImage extends Component {
         } else {
 
         SOURCE = { uri: response.uri };
-        this._registerProdImage();
+
+        if(this.props.reTeakPicture) {
+          this._editProdImg();
+        } else {
+          this._registerProdImage();
+        }
       }
     })
   };
@@ -95,7 +113,6 @@ class TakeProductImage extends Component {
                       resultData : resultData.data
                     });
 
-                    //Actions.popTo("InputShowCase");
                     Actions.pop();
 
                 } else {
@@ -107,7 +124,32 @@ class TakeProductImage extends Component {
             }
         });
     });
-}
+  }
+
+    // 고객 제품 이미지 단건 수정
+    _editProdImg = () => {
+      alert("재등록 이미지 아읻 : ", this.props.clientPrdImgId);
+      EditProdImg(SOURCE.uri, this.props.clientPrdImgId).then(result => {
+        GetCommonData(result, this._editProdImg).then(async resultData => {
+            if(resultData !== undefined) {
+                const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                if(ResultBool) {
+
+                    this.props.onResult({ 
+                      source: SOURCE,
+                      resultData : resultData.data
+                    });
+                    Actions.pop();
+                } else {
+                  this.setState({
+                    isAlertModal : true,
+                    resultMsg : resultData.resultMsg
+                  })
+                }
+            }
+        });
+    });
+  }
 
   render() {
     return (
