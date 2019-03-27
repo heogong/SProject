@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, TouchableOpacity, StyleSheet, View } from 'react-native'
+import { AsyncStorage, Image, TouchableOpacity, StyleSheet, View } from 'react-native'
 import { Container, Button, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -50,6 +50,18 @@ class MoreMenu extends Component {
             });
         });
     }
+  
+    // 로그아웃 
+  _logOut = async () => {
+    try {
+      await AsyncStorage.removeItem("AccessToken");
+      await AsyncStorage.removeItem("RefreshToken");
+      await Actions.IntroPage();
+    } 
+    catch(exception) {
+      return false;
+    }
+  }
 
   render() {
     return (
@@ -106,14 +118,15 @@ class MoreMenu extends Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={ () => alert("사진조회")}>
+          <TouchableOpacity onPress={ this._logOut }>
             <View style={localStyles.listMenuWrap}>
-              <Text style={localStyles.listMenuTxt}>자주 묻는 질문</Text>
+              <Text style={localStyles.listMenuTxt}>로그아웃</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={ () => alert("사진조회")} style={{marginBottom: 14}}>
-            <View style={localStyles.listMenuWrap}>
-              <Text style={localStyles.listMenuTxt}>앱 버전 </Text>
+            <View style={localStyles.listMenuWrap1}>
+              <Text style={localStyles.listMenuTxt}>앱 버전</Text>
+              <Text style={localStyles.listMenuTxt}>V.1.00</Text>
             </View>
           </TouchableOpacity>
 
@@ -188,6 +201,17 @@ const localStyles = StyleSheet.create({
     fontSize: 16,
     color: "#8e8e98"
   },
+  listMenuWrap1: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 1,
+    backgroundColor : color.whiteColor,
+    height: 48,
+    width: "100%",
+    paddingLeft: 26,
+    paddingRight: 26
+  }
 });
 
 export default MoreMenu;

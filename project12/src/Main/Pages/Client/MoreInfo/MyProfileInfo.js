@@ -52,18 +52,6 @@ class MyProfileInfo extends Component {
       });
   } 
 
-  // 로그아웃 
-  _logOut = async () => {
-    try {
-      await AsyncStorage.removeItem("AccessToken");
-      await AsyncStorage.removeItem("RefreshToken");
-      await Actions.IntroPage();
-    } 
-    catch(exception) {
-      return false;
-    }
-  }
-
   render() {
     return (
       <Container style={styles.containerInnerPd}>
@@ -128,14 +116,6 @@ class MyProfileInfo extends Component {
                 </TouchableOpacity>
               <Text style={[styles.inputNbTitleTxt, {color: "#626270"}]}>를 눌려주세요.</Text>
             </View>
-          </View>
-
-          <View style={styles.footerBtnWrap}>
-            <CustomButton 
-              onPress={ this._logOut }
-            >
-              로그아웃
-            </CustomButton>
           </View>
         </View>
 
