@@ -248,7 +248,7 @@ class ViewAfterServiceHistory extends Component {
                                         <Text style={localStyles.histBoxSubTitleTxt}>출장 전 상태</Text>
                                         <Text style={localStyles.histBoxInfoTxt}>
                                             {
-                                                this.state.beforeData.info.asCauseDsc !== null ? this.state.beforeData.info.asCauseDsc : '입력된 내용이 없습니다.'
+                                                this.state.beforeData.info !== null ? this.state.beforeData.info.asCauseDsc : '입력된 내용이 없습니다.'
                                             }
                                         </Text>
                                     </View>
@@ -271,7 +271,7 @@ class ViewAfterServiceHistory extends Component {
                                         <Text style={localStyles.histBoxSubTitleTxt}>A/S 조치내역</Text>
                                         <Text style={localStyles.histBoxInfoTxt}>
                                             {
-                                                this.state.afterData.info.asActionDsc !== null ? this.state.afterData.info.asActionDsc : '입력된 내용이 없습니다.'
+                                                this.state.afterData.info !== null ? this.state.afterData.info.asActionDsc : '입력된 내용이 없습니다.'
                                             }
                                         </Text>
                                     </View>
