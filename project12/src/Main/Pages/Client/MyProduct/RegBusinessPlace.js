@@ -14,6 +14,7 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
@@ -24,10 +25,13 @@ class RegBusinessPlace extends Component {
       super(props);
 
       this.state = {
-          bizNm : '',
+          bizNm : null,
           bizDsc : '',
           btnDisabled : true,
-          bizData : []
+          bizData : [],
+          isModalVisible : false,
+          isAlertModal : false, // alert 용
+          resultMsg : null // alert 용
       };
     }
 
@@ -40,6 +44,58 @@ class RegBusinessPlace extends Component {
         if(this.props.editBiz) {
             this._getBizPlace();
         }
+    }
+
+    // 사업장 정보 가져오기
+    _getBizPlace = async () => {
+        GetBizPlace(this.props.value.bizId).then(async result => {
+            GetCommonData(result, this._getBizPlace).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(result);
+                    if(ResultBool) {
+                        this.setState({
+                            bizNm : resultData.data.bplaceNm,
+                            bizData : resultData.data
+                        })
+                        this._chkBtn();
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                    }
+                }
+            });
+        });
+    }
+
+    // 사업장 수정
+    _editBusiness = async () => {
+        this.setState({isModalVisible : false});
+
+        await this.props.onSetBizNm(this.state.bizNm);  // 리덕스 사업장 명 SET
+        await this.props.onSetBizDsc(this.state.bizDsc);  // 리덕스 사업장 설명 SET
+
+        EditBizNm(this.props.value).then(async result => {
+            GetCommonData(result, this._editBusiness).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log(result);
+                    if(ResultBool) {
+                        await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
+                        //Actions.EditBusinessAddress();
+                        this.props.refreshAction();
+                        Actions.pop();
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                    }
+                }
+            });
+        });
     }
 
     // 입력완료버튼 활성화 여부
@@ -62,48 +118,6 @@ class RegBusinessPlace extends Component {
             Actions.SetAddress(); // 등록 시
         }
         
-    }
-
-    // 사업장 정보 가져오기
-    _getBizPlace = async () => {
-        GetBizPlace(this.props.value.bizId).then(async result => {
-            GetCommonData(result, this._getBizPlace).then(async resultData => {
-                if(resultData !== undefined) {
-                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    console.log(result);
-                    if(ResultBool) {
-                        this.setState({
-                            bizNm : resultData.data.bplaceNm,
-                            bizData : resultData.data
-                        })
-                        this._chkBtn();
-                    } else {
-                        alert(result.resultMsg);
-                    }
-                }
-            });
-        });
-    }
-
-    // 사업장 수정
-    _editBusiness = async () => {
-        await this.props.onSetBizNm(this.state.bizNm);  // 리덕스 사업장 명 SET
-        await this.props.onSetBizDsc(this.state.bizDsc);  // 리덕스 사업장 설명 SET
-
-        EditBizNm(this.props.value).then(async result => {
-            GetCommonData(result, this._editBusiness).then(async resultData => {
-                if(resultData !== undefined) {
-                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                    console.log(result);
-                    if(ResultBool) {
-                        await this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 리덕스 SET
-                        Actions.EditBusinessAddress();
-                    } else {
-                        alert(result.resultMsg);
-                    }
-                }
-            });
-        });
     }
 
     // 버튼 활성화 여부
@@ -135,24 +149,44 @@ class RegBusinessPlace extends Component {
                     <View style={[styles.fx3, styles.justiConCenter]}>
                         <Item regular style={styles.inputWhBackGreyBo}>
                             <Input 
-                                value={this.state.bizNm}
                                 onChangeText={ this._handleChkBusinessName }
                                 placeholder="상호명을 입력해주세요" 
                                 placeholderTextColor={color.inputPlaceHodler} 
                                 style={styles.inputDefaultBox}
-                            />
+                            >{this.state.bizNm}</Input>
                         </Item>
                     </View>
             
                     <View style={styles.footerBtnWrap}>
                         <CustomButton 
-                            onPress={this._nextButton}
+                            onPress={() => (this.props.editBiz) ? this.setState({isModalVisible : true}) : this._nextButton()}
                             disabled={ this.state.btnDisabled }
                         >
                             입력완료
                         </CustomButton>
                     </View>
                 </View>
+
+                 {/* alert 메세지 모달 */}
+                <CustomModal
+                    modalType="ALERT"
+                    isVisible={this.state.isAlertModal}
+                    onPress={ () => this.setState({isAlertModal : false})}
+                    infoText={this.state.resultMsg}
+                    btnText="확인"
+                />
+
+
+                <CustomModal
+                    modalType="CONFIRM"
+                    isVisible={this.state.isModalVisible}
+                    onPress1={this._editBusiness}
+                    onPress2={() => { this.setState({isModalVisible : false}), this._nextButton() } }
+                    infoText1="사업장주소 변경 하시겠습니까???"
+                    infoText2={null}
+                    btnText1="아니오"
+                    btnText2="예"
+                />
         
             </Container>
         )

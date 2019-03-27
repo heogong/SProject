@@ -30,7 +30,7 @@ const ACTION_TYPE = {
 }
 
 function pad(n, width) {
-    n = n + '';
+    n = ++n + '';
     return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
 }
 
@@ -75,7 +75,7 @@ class EditProdShowCase extends Component {
                         this.setState({ 
                             data : resultData.data,
                             clientPrdNm : resultData.data.clientPrdNm,
-                            clientPrDsc : resultData.data.clientPrDsc
+                            clientPrdDsc : resultData.data.clientPrdDsc
                         });
                         this._chkBtn();
                     } else {
@@ -144,9 +144,12 @@ class EditProdShowCase extends Component {
      // 모달 '아니오' Action
     _onPress1Action = () => {
         if(ON_PRESS_ACTION_TYPE == ACTION_TYPE.editAction) {
-            Actions.ResetMain({client : true});
+
+            // Actions.ResetMain({client : true});
+            this.props.refreshAction();
+            Actions.pop();
         }
-        this.setState({isModalVisible : false})
+        //this.setState({isModalVisible : false})
     }
 
     // 모달 '예' Action
@@ -163,7 +166,8 @@ class EditProdShowCase extends Component {
     // 등록완료 활성화 여부
     _chkBtn = () => {
         const { clientPrdNm } = this.state;
-        if(clientPrdNm !== 0) {
+
+        if(clientPrdNm !== '') {
             this.setState({disableBtn : (clientPrdNm.length > 1) ? false : true })
         }
     }
@@ -219,7 +223,7 @@ class EditProdShowCase extends Component {
                                 <Item regular style={localStyles.prdCardInputBox}>
                                     <Input
                                         value={ this.state.clientPrdDsc }
-                                        onChangeText={(text) => this.setState({clientPrdDsc  :text}) }
+                                        onChangeText={(text) => this.setState({clientPrdDsc : text}) }
                                         style={localStyles.prdCardDscInput}
                                         placeholder="제품설명" 
                                         placeholderTextColor="#8e8e98"

@@ -11,6 +11,8 @@ import RegProdImg from '~/Main/Functions/RegProdImg';
 import DelProdImage from '~/Main/Functions/DelProdImage';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
+import CustomModal from '~/Common/Components/CustomModal';
+
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
@@ -25,7 +27,9 @@ class ProductImage extends Component {
 
           clientPrdImgId: this.props.clientPrdImgId,
           isImage : (this.props.uri !== null) ? true : false,
-          sourceUri : this.props.uri
+          sourceUri : this.props.uri,
+          isAlertModal : false, // alert 용
+          resultMsg : null // alert 용
       };
     }
 
@@ -54,7 +58,10 @@ class ProductImage extends Component {
                             isImage : false
                         });
                     } else {
-                        alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -63,16 +70,13 @@ class ProductImage extends Component {
 
     // 촬영 결과 데이터
     _takeOnResult = (result) => {
-        // alert("촬영 결과 데이터 이미지아이디!!!! - ", result.resultData.clientPrdImgId);
-        console.log("촬영 결과 데이터 source :", result.resultData.clientPrdImgId);
+        //console.log("촬영 결과 데이터 source :", result);
 
         this.setState({
             isImage : true,
             sourceUri : result.source.uri,
             clientPrdImgId : result.resultData.clientPrdImgId
         })
-
-        console.log(result.source.uri);
     }
 
 
@@ -93,14 +97,13 @@ class ProductImage extends Component {
 
                             <TouchableOpacity 
                                 style={localStyles.prdCardPhotoBtnEn}
-                                // onPress={ () => Actions.TakeProductImage({ 
-                                //     onResult : this._takeOnResult,
-                                //     clientPrdId : this.props.clientPrdId,
-                                //     clientPrdImgId : this.props.clientPrdImgId,
-                                //     prdTypeImgCateId :this.props.prdTypeImgCateId,
-                                //     reTeakPicture  : true
-                                // }) }
-                                onPress={() => alert("재등록 버그 fix진행 중")}
+                                onPress={ () => Actions.TakeProductImage({ 
+                                    onResult : this._takeOnResult,
+                                    clientPrdId : this.props.clientPrdId,
+                                    clientPrdImgId : this.state.clientPrdImgId,
+                                    prdTypeImgCateId :this.props.prdTypeImgCateId,
+                                    reTeakPicture  : true
+                                }) }
                                 >
                                 <View>
                                     <Text style={localStyles.prdCardPhotoBtnTxt}>재등록하기</Text>
@@ -108,6 +111,15 @@ class ProductImage extends Component {
                             </TouchableOpacity>
                         </ImageBackground>
                     </View>
+
+                    {/* alert 메세지 모달 */}
+                    <CustomModal
+                        modalType="ALERT"
+                        isVisible={this.state.isAlertModal}
+                        onPress={ () => this.setState({isAlertModal : false})}
+                        infoText={this.state.resultMsg}
+                        btnText="확인"
+                    />
                 </View>
             ) : (
                 <TouchableOpacity  

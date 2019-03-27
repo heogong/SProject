@@ -8,8 +8,8 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setBizId } from '~/Redux/Actions';
 
-import GetAfterServiceHistory from '~/Main/Functions/GetAfterServiceHistory'
 import GetBizList from '~/Main/Functions/GetBizList';
+import DelBusinessPlace from '~/Main/Functions/DelBusinessPlace';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
@@ -59,18 +59,36 @@ class ListBusinessPlace extends Component {
     });
   }
 
+
+   // 사업장 삭제
+   _delBusinessPlace = () => {
+    const {data} = this.state;
+
+    DelBusinessPlace(data[SELECT_IDX].clientBplaceId).then(async result => {
+        GetCommonData(result, this._delBusinessPlace).then(async resultData => {
+            if(resultData !== undefined) {
+                const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                if(ResultBool) {
+                  this.setState({ 
+                    data: this.state.data.filter((s, sidx) => SELECT_IDX !== sidx),
+                    isModalVisible : false
+                  })
+                } else {
+                  this.setState({
+                    isAlertModal : true,
+                    resultMsg : resultData.resultMsg
+                  })
+                }
+            }
+        });
+    });
+  }
+
+
   // 메인페이지 이동 
   _goToMain = () => {
     Actions.ResetMain({client : true});
   } 
-
-  // 사업장 삭제
-  _delBusiness = () => {
-    this.setState({ 
-      data: this.state.data.filter((s, sidx) => SELECT_IDX !== sidx),
-      isModalVisible : false
-    })
-  }
 
   render() {
     return (
@@ -125,7 +143,10 @@ class ListBusinessPlace extends Component {
                         <TouchableOpacity 
                           onPress={ async () => {
                             await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
-                            Actions.MyRegBusinessPlace({editBiz : true}) 
+                            Actions.MyRegBusinessPlace({
+                              editBiz : true,
+                              refreshAction : this._getBizList
+                            }) 
                           }} 
                         >
                           <Image source={require('~/Common/Image/card_mod_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
@@ -167,7 +188,7 @@ class ListBusinessPlace extends Component {
             modalType="CONFIRM"
             isVisible={this.state.isModalVisible}
             onPress1={this._toggleModal}
-            onPress2={this._delBusiness}
+            onPress2={this._delBusinessPlace}
             infoText1="등록하신 사업장 정보를 삭제할까요?"
             infoText2={null}
             btnText1="취소"

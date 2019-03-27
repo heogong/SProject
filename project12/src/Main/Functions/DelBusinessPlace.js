@@ -2,20 +2,18 @@ import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '~/Common/Blend';
 import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}coolinic/clients/products/master?`;
+const API_URL = `${DOMAIN}coolinic/clients/products/bplace?clientBplaceId=`;
 
-function EditProductMstUrl(prodId, prodNm, prodDsc) {
-  return `${API_URL}clientPrdId=${prodId}&clientPrdNm=${prodNm}&clientPrdDsc=${prodDsc}`;
+function DelBusinessPlaceUrl(clientBplaceId) {
+  return `${API_URL}${clientBplaceId}`;
 }
 
-const EditProductMst = async (prodId, prodNm, prodDsc) => {
-
-  //console.log(EditProductMstUrl(prodId, prodNm, prodDsc))
+const DelBusinessPlace = async (clientBplaceId) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  return fetch(EditProductMstUrl(prodId, prodNm, prodDsc), {
-    method: 'PUT',
+  return fetch(DelBusinessPlaceUrl(clientBplaceId), {
+    method: 'DELETE',
     headers: {
       "Authorization": ACCESS_TOKEN
       //"Authorization": TEST_ACCESS_TOKEN
@@ -34,4 +32,4 @@ const EditProductMst = async (prodId, prodNm, prodDsc) => {
   });
 };
 
-export default EditProductMst;
+export default DelBusinessPlace;

@@ -6,9 +6,7 @@ const API_URL = `${DOMAIN}coolinic/partners/account/info?`;
 
 // 계좌 정보 등록
 function RegSettleAccountUrl(bank, account) {
-  return `${API_URL}bankCd=${bank.bankCode}&accountHolder=${account.name}&accountNum=${account.number}
-  &managerNm=''
-  &managerPhoneNum=''`;
+  return `${API_URL}bankCd=${bank.bankCode}&accountHolder=${account.name}&accountNum=${account.number}&managerNm=''&managerPhoneNum=''`;
 }
 
 const RegSettleAccount = async (bank, account) => {

@@ -6,9 +6,7 @@ const API_URL = `${DOMAIN}/coolinic/clients/products/bplace?`;
 
 // 사업장 수정 - 상세주소만 변경
 function EditBizPlaceNmUrl(bizObj) {
-  return `${API_URL}clientBplaceId=${bizObj.bizId}
-  &detail.detailAddr1=${bizObj.addressDsc}
-  `;
+  return `${API_URL}clientBplaceId=${bizObj.bizId}&detail.detailAddr1=${bizObj.addressDsc}`;
 }
 
 const EditBizPlaceNm = async (bizObj) => {

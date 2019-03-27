@@ -127,14 +127,14 @@ class MyProfileInfo extends Component {
               <Text style={[styles.inputNbTitleTxt, {color: "#626270"}]}>를 눌려주세요.</Text>
             </View>
           </View>
-
+{/* 
           <View style={styles.footerBtnWrap}>
             <CustomButton 
               onPress={ this._logOut }
             >
               로그아웃
             </CustomButton>
-          </View>
+          </View> */}
         </View>
 
         {/* alert 메세지 모달 */}

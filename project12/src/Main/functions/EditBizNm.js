@@ -6,18 +6,14 @@ import GetAccessToken from '~/Common/Functions/GetAccessToken';
 const API_URL = `${DOMAIN}/coolinic/clients/products/bplace?`;
 
 function EditBizNmUrl(bizObj) {
-  console.log(bizObj);
-  return `${API_URL}clientBplaceId=${bizObj.bizId}
-  &bplaceNm=${bizObj.bizNm}
-  &bplaceDsc=${bizObj.bizDsc}
-  `;
+  return `${API_URL}clientBplaceId=${bizObj.bizId}&bplaceNm=${bizObj.bizNm}&bplaceDsc=${bizObj.bizDsc}`;
 }
 
 const EditBizNm = async (bizObj) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
   //console.log("bizObj : ",bizObj);
-  //console.log("RegBizPlaceUrl : ",RegBizPlaceUrl(bizObj))
+  console.log("RegBizPlaceUrl : ",EditBizNmUrl(bizObj))
   return fetch(EditBizNmUrl(bizObj), {
     method: 'PUT',
     headers: {

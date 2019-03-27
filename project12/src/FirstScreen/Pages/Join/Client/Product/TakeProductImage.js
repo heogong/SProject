@@ -107,13 +107,13 @@ class TakeProductImage extends Component {
             if(resultData !== undefined) {
                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                 if(ResultBool) {
+                  
+                  await this.props.onResult({ 
+                    source: SOURCE,
+                    resultData : resultData.data
+                  });
 
-                    this.props.onResult({ 
-                      source: SOURCE,
-                      resultData : resultData.data
-                    });
-
-                    Actions.pop();
+                  await Actions.pop();
 
                 } else {
                   this.setState({
@@ -128,7 +128,6 @@ class TakeProductImage extends Component {
 
     // 고객 제품 이미지 단건 수정
     _editProdImg = () => {
-      alert("재등록 이미지 아읻 : ", this.props.clientPrdImgId);
       EditProdImg(SOURCE.uri, this.props.clientPrdImgId).then(result => {
         GetCommonData(result, this._editProdImg).then(async resultData => {
             if(resultData !== undefined) {

@@ -5,7 +5,7 @@ import GetAccessToken from '../../Common/Functions/GetAccessToken';
 const API_URL = `${DOMAIN}coolinic/as/prgs/eval/info?asPrgsId=`;
 
 function RegEvalPointUrl(asPrgsId, evalPoint) {
-  return `${API_URL}${asPrgsId}&evalPoint=${evalPoint}&evalDsc=평가 설멍입니다.`;
+  return `${API_URL}${asPrgsId}&evalPoint=${evalPoint}&evalDsc=평가 설명입니다.`;
 }
 const RegEvalPoint = async (asPrgsId, evalPoint) => {
 

@@ -17,7 +17,7 @@ import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
 function pad(n, width) {
-    n = n + '';
+    n = ++n + '';
     return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
 }
 
@@ -108,7 +108,8 @@ class ListBusinessProductType extends Component {
                             {this.state.data.map((product, idx) => 
                                 <TouchableOpacity 
                                     key={idx} 
-                                    onPress={ () => Actions.MyEditProdShowCase({ 
+                                    onPress={ () => Actions.MyEditProdShowCase({
+                                        refreshAction : this._getBizProduct, 
                                         bizId : product.clientBplaceId,
                                         clientPrdId : product.clientPrdId,
                                         number : idx
@@ -129,15 +130,19 @@ class ListBusinessProductType extends Component {
                                     <View style={[localStyles.closeIconWrap, localStyles.closeIconImg]}/>
                                 )}
 
-                                    <Text style={localStyles.myPrdNumTxt}>{ pad(++idx, 2) }</Text>
+                                    <Text style={localStyles.myPrdNumTxt}>{ pad(idx, 2) }</Text>
 
                                     <View style={localStyles.myPrdImgWrap}>
                                         <Image source={{ uri: product.prdTypeImg.fileUrl }} style={localStyles.myPrdImg} />
                                     </View>
 
                                     <View style={localStyles.myPrdInfoTxtWrap}>
-                                        <Text style={localStyles.myPrdNameTxt}>{product.clientPrdNm}</Text>
-                                        <Text style={localStyles.myPrdDscTxt}>짧은 설명에 대해 짧은 설명에 대해 짧은 설명에 대해</Text>
+                                        <Text style={localStyles.myPrdNameTxt}>
+                                          { product.clientPrdNm !== null ? product.clientPrdNm : '제품이름을 입력해주세요.'}
+                                        </Text>
+                                        <Text style={localStyles.myPrdDscTxt}>
+                                          { product.clientPrdDsc !== null ? product.clientPrdDsc : '제품설명을 입력해주세요.' }
+                                        </Text>
                                     </View>
                                 </View>
                                 </TouchableOpacity>

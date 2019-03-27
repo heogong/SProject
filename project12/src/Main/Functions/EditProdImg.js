@@ -10,6 +10,7 @@ function EditProdImgUrl() {
 }
 
 const EditProdImg = async (imgUri, clientPrdImgId) => {
+  console.log(`EditProdImgUrl : , ${EditProdImgUrl()} ${imgUri}, ${clientPrdImgId}`);
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
