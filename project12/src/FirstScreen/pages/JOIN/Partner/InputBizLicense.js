@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Container, Icon,Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -105,12 +105,12 @@ class InputBizLicense extends Component {
             onPress={Actions.JoinTakeBizLicense}
             style={localStyles.photoBoxWrap}>
             <View style={localStyles.photoBox}>
-              <Icon name="ios-camera" style={localStyles.phototIcon} />
+              <Image source={require("~/Common/Image/camera_icon.png")} resizeMode="contain" style={localStyles.phototIconImg}/>
               <Text style={localStyles.photoTxt}>등록하기</Text>
             </View>
           </TouchableOpacity>
 
-          <View style={styles.footerBtnWrap}>
+          <View style={[styles.footerBtnWrap, {marginTop: 16}]}>
             <CustomButton 
               onPress={ this._nextButton }
               disabled={ this.state.btnDisabled }
@@ -148,9 +148,9 @@ const localStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  phototIcon: {
-    color: color.defaultColor,
-    fontSize: 60
+  phototIconImg: {
+    width: 40,
+    height: 40
   },
   photoTxt: {
     fontSize: 16,
