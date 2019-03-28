@@ -131,6 +131,20 @@ export const BStyles = StyleSheet.create({
     textAlign: "center"
   },
 
+  // 흰색 배경색 그레이 테두리색 버튼
+  disableBtnDefaultNoFill: {
+    backgroundColor: color.whiteColor,
+    borderWidth: 1,
+    borderColor: color.greyColor,
+    elevation: 0,
+    shadowOpacity: 0
+  },
+  disableBtnDefaultNoFillTxt: {
+    color: color.greyColor,
+    flex: 1,
+    textAlign: "center"
+  },
+
   // modal
   modalBtnFill: {
     height: 36,

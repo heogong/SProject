@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { BackHandler, Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Badge, Container, H1, Text, Header, Left, Body, Right}  from "native-base";
 
-import { SUCCESS_RETURN_CODE, ARRIVE, DEPARTURE, COMPLETE_MATCH  } from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, APPLY  } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
+import GetPartnerInfo from '~/Main/Functions/GetPartnerInfo';
 import GetAfterService from '~/Main/Functions/GetAfterService';
 import RegAfterServiceMatch from '~/Main/Functions/RegAfterServiceMatch';
 import GetAfterServiceState from '~/Main/Functions/GetAfterServiceState';
@@ -266,7 +266,7 @@ export default class Main extends Component {
         
         BackHandler.addEventListener('hardwareBackPress', () => this.handleBackPress) // Listen for the hardware back button on Android to be pressed
 
-        this._getUserInfo(); //사용자 정보 조회 - 가입 승인 대기 여부 확인
+        this._getPartnerInfo(); 
         this._getAfterServiceState();
         this._getAfterServiceIncompleteCnt();
     }
@@ -275,17 +275,20 @@ export default class Main extends Component {
         return false;
     }
 
-    // 1. 로그인(토큰값 가져온) 사용자 정보 가져오기
-    _getUserInfo = () => {
-        GetUserInfo().then(async result => {
-            GetCommonData(result, this._getUserInfo).then(async resultData => {
+    // 1. 업체 정보를 조회(승인여부)
+    _getPartnerInfo = () => {
+        GetPartnerInfo().then(async result => {
+            GetCommonData(result, this._getPartnerInfo).then(async resultData => {
                 if(resultData !== undefined) {
-                    console.log(resultData);
+                    console.log('_getPartnerInfo - ', resultData);
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
 
                     if(ResultBool) {
                         // 가입 코드 필요
-                        this.setState({wait : false}); // test 승인
+                        //this.setState({wait : false}); // test 승인
+                        if(resultData.data.partnerStatusCd == APPLY) {
+                            this.setState({wait : true}); // test 승인
+                        }
                     } else {
                         this.setState({
                             isAlertModal : true,

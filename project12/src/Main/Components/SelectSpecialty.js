@@ -23,23 +23,23 @@ class SelectSpecialty extends Component {
             (this.state.specialty) ? (
                 <Button 
                     onPress={() => { 
-                        this.props.removeDataArray(this.props.product.prdTypeId), 
+                        this.props.removeDataArray(this.props.product.prdType.prdTypeId), 
                         this.setState({specialty : false})
                     }}
                     style={localStyles.prdBtnOn}>
                     <Text style={localStyles.prdBtnOnTxt}>
-                        {this.props.product.prdTypeKoNm}
+                        {this.props.product.prdType.prdTypeKoNm}
                     </Text>
                 </Button>
             ) : (
                 <Button 
                     onPress={() => { 
-                        this.props.addDataArray(this.props.product.prdTypeId), 
+                        this.props.addDataArray(this.props.product.prdType.prdTypeId), 
                         this.setState({specialty : true})
                     }}
                     style={localStyles.prdBtnOff}>
                     <Text style={localStyles.prdBtnOffTxt}>
-                        {this.props.product.prdTypeKoNm}
+                        {this.props.product.prdType.prdTypeKoNm}
                     </Text>
                 </Button>
             )

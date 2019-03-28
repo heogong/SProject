@@ -359,6 +359,7 @@ class InvaildId extends Component {
                     onPress={ this._checkSmsCertNum }
                     DefaultLineBtn={true}
                     disabled={this.state.disableNextBtn}
+                    CustomBtnStyle={styles.mt13}
                   >
                     확인
                   </CustomButton>
@@ -368,6 +369,7 @@ class InvaildId extends Component {
                   <CustomButton
                     onPress={ () => Actions.popTo("LoginAccountType") }
                     DefaultLineBtn={true}
+                    CustomBtnStyle={styles.mt13}
                   >
                     로그인하기
                   </CustomButton>
@@ -379,7 +381,8 @@ class InvaildId extends Component {
                   <CustomButton
                     onPress={ this._checkPwdSmsCertNum }
                     disabled={ this.state.disablePwdBtn1 }
-                    WhiteLineBtn={true}
+                    DefaultLineBtn={true}
+                    CustomBtnStyle={styles.mt13}
                   >
                     확인
                   </CustomButton>
@@ -390,6 +393,7 @@ class InvaildId extends Component {
                     <CustomButton
                       onPress={ this._changePasswd }
                       DefaultLineBtn={true}
+                      CustomBtnStyle={styles.mt13}
                     >
                       비밀번호 설정
                     </CustomButton>
@@ -399,6 +403,7 @@ class InvaildId extends Component {
                     <CustomButton
                       onPress={ () => Actions.popTo("LoginAccountType") }
                       DefaultLineBtn={true}
+                      CustomBtnStyle={styles.mt13}
                     >
                       로그인 하기
                     </CustomButton>

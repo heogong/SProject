@@ -19,10 +19,9 @@ import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
 
 const USER_EMAIL_LEN = 10;
-const USR_PASSWD_LEN = 1;
-const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
-
-let HISTORY_PAGE;
+const USR_PASSWD_LEN = 8;
+const EMAIL_PATTERN = /(.+)@(.+){2,}\.(.+){2,}/;
+const PASSWD_PATTERN = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 
 class InputEmail extends Component {
   constructor(props) {
@@ -36,7 +35,7 @@ class InputEmail extends Component {
       usrPw: '',
       usrPw2: '',
       btnDisabled: true,
-      equalsPw : false,
+      patternPw : false,
       errMsg : null,
       isAlertModal : false, // alert 용
       resultMsg : null // alert 용
@@ -88,8 +87,19 @@ class InputEmail extends Component {
   _handlePasswdChange = async (text) => {
     await this.setState({usrPw : text});
 
-    if(this.state.usrId !== '' && this.state.usrPw2 !== '') {
+    if(!PASSWD_PATTERN.test(text)) {
+      this.setState({
+        patternPw : false,
+        btnDisabled : true
+      });
+      
+    } else {
+      this.setState({patternPw : true});
+
+      if(this.state.usrId !== '' && this.state.usrPw2 !== '') {
         this.setState({btnDisabled : (this.state.usrPw.length > USR_PASSWD_LEN) ? false : true})
+      }
+
     }
   } 
 
@@ -97,27 +107,24 @@ class InputEmail extends Component {
   _handleChkPasswdChange = async (text) => {
     await this.setState({usrPw2 : text});
 
-    if(this.state.usrId !== '' && this.state.usrPw !== '') {
+    if(!PASSWD_PATTERN.test(text)) {
+      this.setState({
+        btnDisabled : true
+      });
+    } else {
+      if(this.state.usrId !== '' && this.state.usrPw !== '') {
         this.setState({btnDisabled : (this.state.usrPw2.length > USR_PASSWD_LEN) ? false : true})
+      }
     }
   } 
 
-  // 비밀번호 체크 여부 아이콘 - 작동이 안됨 테스트 필요
-  // _checkUsrPasswdIcon = () => {
-  //   const { usrPw, usrPw2 } = this.state;
-
-  //   console.log("usrPwd : ",usrPw);
-  //   console.log("usrPwd222 : ",usrPw2);
-
-  //   this.setState({equalsPw : (usrPw == usrPw2) ? true : false });
-  // }
-
   //이메일 유효성 체크
   _checkUsrEmail = () => {
-    if (!emailPattern.test(this.state.usrId)) {
+    if (!EMAIL_PATTERN.test(this.state.usrId)) {
       this.setState({errMsg : '유효하지 않은 이메일 입력입니다.'});
       return false;
     } else {
+      this.setState({errMsg : ''});
       return true;
     }
   } 
@@ -128,6 +135,7 @@ class InputEmail extends Component {
       this.setState({errMsg : '비밀번호가 맞지 않습니다.'});
       return false;
     } else {
+      this.setState({errMsg : ''});
       return true;
     }
   }
@@ -203,6 +211,7 @@ class InputEmail extends Component {
                   placeholder="비밀번호(영문,숫자,특수문자8-15자)" 
                   onSubmitEditing={() => { this.thirdTextInput._root.focus(); }}
                   />
+                  <Icon name={this.state.patternPw ? "ios-checkmark-circle" : "ios-close-circle"} style={[styles.inputIcon, {color: color.defaultColor}]} />
               </Item>
 
               <Item regular style={[styles.mb10, styles.inputWhBackGreyBo]}>
@@ -216,7 +225,6 @@ class InputEmail extends Component {
                     value={ this.state.text }
                     onBlur={ this._checkUsrPasswd }
                 />
-                <Icon name={this.state.equalsPw ? "ios-checkmark-circle" : "ios-close-circle"} style={[styles.inputIcon, {color: color.defaultColor}]} />
               </Item>
 
               <Text style={{color: color.warningColor, fontSize: 13}}>{this.state.errMsg}</Text>

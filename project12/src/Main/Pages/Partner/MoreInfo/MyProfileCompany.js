@@ -6,7 +6,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
-import GetProdType from '~/Main/Functions/GetProdType';
+import GetProdSpecialty from '~/Main/Functions/GetProdSpecialty';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import SelectSpecialty from "~/Main/Components/SelectSpecialty";
 import SelectWeekDay from "~/Main/Components/SelectWeekDay";
@@ -60,21 +60,6 @@ class MyProfileCompany extends Component {
       stMin : '00',
       edHour : '18',
       edMin : '00',
-      // partner 선택한 전문분야 - TEST
-      selctedSpecialty : [
-        {
-          prdTypeId : 1
-        },
-        {
-          prdTypeId : 5
-        },
-        {
-          prdTypeId : 6
-        },
-        {
-          prdTypeId : 7
-        }
-      ],
       // partner 근무요일 - TEST
       selectedDay : {
         monWorkYn : 'N',
@@ -92,20 +77,21 @@ class MyProfileCompany extends Component {
   }
 
   componentWillMount() {
-    this._drawProductType();
+    this._getProdSpecialty();
     this._drawWorkSchedule();
   }
 
-   // 제품 타입 조회
-   _drawProductType = () => {
-    GetProdType().then(result => {
-        GetCommonData(result, this._drawProductType).then(async resultData => {
+  // 1. 업체 취급 제품 유형 목록 조회
+  _getProdSpecialty = () => {
+    GetProdSpecialty().then(result => {
+        GetCommonData(result, this._getProdSpecialty).then(async resultData => {
             if(resultData !== undefined) {
                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                // console.log(resultData);
+                console.log('업체 취급 제품 유형 목록 조회 - ',resultData);
                 if(ResultBool) {
-                  await this.setState({ data: resultData.data });
-                  await this._selectSpecialty();
+                  this.setState({data : resultData.data});
+                  this._selectSpecialty();
+                  
                 } else {
                   this.setState({
                     isAlertModal : true,
@@ -118,37 +104,52 @@ class MyProfileCompany extends Component {
     });
   }
 
-  // 선택한 전문분야 조회 - api없어 현재는 하드코딩 20190310
-  _selectSpecialty = () => {
-    const { data, selctedSpecialty } = this.state;
+  // 1. 업체 취급 제품 유형 목록 조회
+  _getProdSpecialty = () => {
+    GetProdSpecialty().then(result => {
+        GetCommonData(result, this._getProdSpecialty).then(async resultData => {
+            if(resultData !== undefined) {
+                const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                console.log('업체 취급 제품 유형 목록 조회 - ',resultData);
+                if(ResultBool) {
+                  this.setState({data : resultData.data});
+                  this._selectSpecialty();
+                  
+                } else {
+                  this.setState({
+                    isAlertModal : true,
+                    resultMsg : resultData.resultMsg
+                  })
 
-    ARRAY_SELECT_SPECIALTY = selctedSpecialty;
-
-    const newData = data.map((product) => {
-      let isSpecialty = false;
-
-      isSpecialty = selctedSpecialty.some((Specialty) => { // [function some] 조건이 충족하면 break
-        if(product.prdTypeId == Specialty.prdTypeId) {
-          return true;
-        }
-      })
-      return { ...product, selSpecialty : isSpecialty };
+                }
+            }
+        });
     });
-    
-    // console.log(ARRAY_SELECT_SPECIALTY);
-    this.setState({data : newData});
+  }
+
+
+
+  // 기존 선택된 전문분야 set
+  _selectSpecialty = () => {
+    const { data } = this.state;
+
+    data.map((product) => {
+      if(product.partnerId !== null) {
+        ARRAY_SELECT_SPECIALTY = ARRAY_SELECT_SPECIALTY.concat({ prdTypeId : product.prdTypeId });
+      }
+    })
   }
 
 
    // 선택된 데이터 array 추가
    _addDataArray = (value) => {
-    ARRAY_SELECT_SPECIALTY = ARRAY_SELECT_SPECIALTY.concat({ prdTypeId : value });
+    ARRAY_SELECT_SPECIALTY = ARRAY_SELECT_SPECIALTY.concat({ prdTypeId : parseInt(value) });
       console.log("_addDataArray : ",ARRAY_SELECT_SPECIALTY);
   }
 
   // 해제된 데이터 array 제거
   _removeDataArray = (value) => {
-      ARRAY_SELECT_SPECIALTY = ARRAY_SELECT_SPECIALTY.filter((item, sidx) => item.prdTypeId !== value);
+      ARRAY_SELECT_SPECIALTY = ARRAY_SELECT_SPECIALTY.filter((item, sidx) => item.prdTypeId !== parseInt(value));
       console.log("_removeDataArray : ",ARRAY_SELECT_SPECIALTY);
   }
 
@@ -333,7 +334,7 @@ class MyProfileCompany extends Component {
                 <SelectSpecialty
                   key={idx}
                   product={product}
-                  specialty={product.selSpecialty}
+                  specialty={(product.selectYn == 'Y') ? true : false}
                   addDataArray={ this._addDataArray }
                   removeDataArray={ this._removeDataArray }
                 />

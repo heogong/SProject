@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, TouchableOpacity, ScrollView, View } from 'react-native'
+import { Image, TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native'
 import { Container, Icon, H3, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -38,22 +38,44 @@ const Product = ({report}) => (
           <Text style={styles.listPrdBoxDeTxt}>{report.asItemNm}</Text>
           <View style={styles.fxDirRow}>
             <Text style={[styles.listPrdBoxDeTxt, {paddingTop: 3}]}>만족도</Text>
-            <View style={[styles.fxDirRow, {marginLeft: 6}]}>
-              <Icon style={styles.listPrdBoxStartIcon} name="star"/>
-              <Icon style={styles.listPrdBoxStartIcon} name="star"/>
-              <Icon style={styles.listPrdBoxStartIcon} name="star"/>
-              <Icon style={styles.listPrdBoxStartIcon} name="ios-star-outline"/>
-              <Icon style={styles.listPrdBoxStartIcon} name="ios-star-outline"/>
+            <View style={localStyles.starIconWrap}>
+                {this._drawStarPoint(report.evalPoint)}
             </View>
           </View>
         </View>
 
         <View style={styles.listPrdBoxNextIconWrap}>
-          <Icon style={styles.listPrdBoxNextIcon} name="arrow-round-forward"/>
+          <TouchableOpacity>
+            <Image source={require("~/Common/Image/Next_icon_white.png")} resizeMode="contain" style={{width: 26, height: 26}} />
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>
 );
+
+_drawStarPoint = (point) => {
+    const starPoint = 5;
+    let pointArray = [];
+    let evalPoint = parseInt(point);
+
+    for(let i = 0; i < starPoint; i++) {
+        if(evalPoint > 0) {
+            pointArray.push(
+            <TouchableOpacity>
+                <Image source={require("~/Common/Image/star_icon_100.png")} resizeMode="contain" style={localStyles.starIconImg} />
+            </TouchableOpacity>)
+
+            evalPoint--;
+        } else {
+            pointArray.push(
+            <TouchableOpacity>
+                <Image source={require("~/Common/Image/star_icon_50.png")} resizeMode="contain" style={localStyles.starIconImg} />
+            </TouchableOpacity>)
+        }
+    }
+    return pointArray;
+
+}
 
 
 class ListInCompleteReport extends Component {
@@ -97,35 +119,6 @@ class ListInCompleteReport extends Component {
 
     render() {
         return (
-            // <CustomBlockWrapper
-            //     title="미 작성 보고서 리스트"
-            // >
-            //     {this.state.data.map((report, idx) => 
-            //         <Card key={ idx }>
-            //             <CardItem body>
-            //                 <Thumbnail large source={{ uri: report.prdTypeFileUrl }} />
-            //             </CardItem>
-            //             <CardItem>
-            //                 <View>
-            //                     <Text>
-            //                         사업장 : {report.bplaceNm}
-            //                     </Text>
-            //                     <Text>
-            //                         증상 : {report.asItemNm}
-            //                     </Text>
-            //                     <Text>
-            //                         제품 타입 : {report.prdTypeKoNm}
-            //                     </Text>
-            //                 </View>
-            //             </CardItem>
-            //             <CardItem>
-            //                 <CustomButton onPress={ () => Actions.RegReportBeforePic({asPrgsId : report.asPrgsId}) }>
-            //                     <Text>작성</Text>
-            //                 </CustomButton>
-            //             </CardItem>
-            //         </Card>
-            //     )}
-            // </CustomBlockWrapper>
             <Container style={(this.state.data.length > 0) ? styles.containerScroll : styles.containerInnerPd}>
 
                 <Spinner
@@ -186,5 +179,19 @@ class ListInCompleteReport extends Component {
         )
     }
 }
+
+const localStyles = StyleSheet.create({
+    starIconImg: {
+      width: 13,
+      height: 13,
+      marginLeft: 1,
+      marginRight: 1
+    },
+    starIconWrap: {
+      flexDirection: "row",
+      marginLeft: 6,
+      marginTop: 3
+    }
+});
 
 export default ListInCompleteReport;

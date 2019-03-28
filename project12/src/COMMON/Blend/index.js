@@ -35,6 +35,9 @@ export const ADD_AS = {'TEXT' : 'A/S 추가 진행', 'VALUE' : 'AS_PRGS_STAT_CD_
 export const COMPLETE_AS = {'TEXT' : 'A/S 완료', 'VALUE' : 'AS_PRGS_STAT_CD_08'};
 export const MOVE = {'TEXT' : 'A/S 이동중', 'VALUE' : 'AS_PRGS_STAT_CD_09'};
 
+// 파트너 가입 상태
+export const APPLY = 'PARTNER_STATUS_CD_01'; // 접수
+
 // etc
 export const CLIENT = "CLIENT";
 export const PARTNER = "PARTNER";
