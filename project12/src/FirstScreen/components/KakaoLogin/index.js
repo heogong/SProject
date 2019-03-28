@@ -145,14 +145,10 @@ class KakaoLogin extends Component {
     return (
         <TouchableOpacity onPress={ () => this.kakaoLogin()}>
           {(this.props.loginYn) ? (
-                <Image source={require('~/Common/Image/ico-kakao.png')} 
-                  style={{height : 32, width : 32}}
-                  resizeMode="contain"
-                />
+              <Image source={require('~/Common/Image/kakao-button.png')} style={{height : 60, width : 60}}/>
           ) : (
             <View>
-              <Image source={require('~/Common/Image/ico-kakao.png')} resizeMode='contain' style={localStyles.btnIcon} />
-              <Text style={localStyles.btnTxt}>카카오</Text>
+              <Image source={require('~/Common/Image/Kakao_button_2.png')} resizeMode='contain' style={localStyles.btnIcon} />
             </View>
           )}
         </TouchableOpacity>
@@ -164,14 +160,12 @@ const localStyles = StyleSheet.create({
   bttBoxWrap: {
     flex: 1,
     backgroundColor : color.defaultColor,
-    marginRight : 5,
-    paddingTop : 15,
+    marginRight : 13,
     alignItems : 'center'
   },
   btnIcon: {
-    height: 28,
-    width: 40,
-    paddingTop: 19
+    height: 90,
+    width: 90,
   },
   btnTxt: {
     fontSize: 14,

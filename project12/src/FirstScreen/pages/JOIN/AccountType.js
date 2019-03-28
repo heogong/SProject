@@ -42,7 +42,7 @@ class AccountType extends Component {
               <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
             </View>
             <View style={stylesReg.rightImgWrap}>
-            <Image source={require('~/Common/Image/join-ico01.png')} style={{height : 84, width : 84}} />
+            <Image source={require('~/Common/Image/People_icon.png')} style={{height : 84, width : 84}} />
             </View>
           </View>
 
@@ -54,14 +54,7 @@ class AccountType extends Component {
            <View style={localStyles.btnBottomWrap}>
 
             <TouchableOpacity style={localStyles.bttBoxWrap} onPress={this._selectCustomerTypeAndGoPage}>
-              <View >
-                <Image 
-                  source={require('~/Common/Image/join-email.png')} 
-                  resizeMode='contain' 
-                  style={localStyles.btnIcon} 
-                />
-                <Text style={localStyles.btnTxt}>이메일</Text>
-              </View>
+              <Image source={require('~/Common/Image/E-mail_button_2.png')} resizeMode='contain' style={localStyles.btnIcon} />
             </TouchableOpacity>
 
             <View style={localStyles.bttBoxWrap}>
@@ -99,14 +92,12 @@ const localStyles = StyleSheet.create({
   bttBoxWrap: {
     flex: 1,
     backgroundColor : color.defaultColor,
-    marginRight : 5,
-    paddingTop : 15,
+    marginRight : 13,
     alignItems : 'center'
   },
   btnIcon: {
-    height: 28,
-    width: 40,
-    paddingTop: 19
+    height: 90,
+    width: 90,
   },
   btnTxt: {
     fontSize: 14,

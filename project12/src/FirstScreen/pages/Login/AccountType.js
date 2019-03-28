@@ -165,12 +165,12 @@ class AccountType extends Component {
 
         <View style={styles.fx1}>
 
-          <View style={[styles.fx2, styles.alignItemsCenter, styles.justiConCenter]}>
-            <Image source={this.state.logImg} resizeMode='center' style={{height: logoHeight, flex: 1}} />
+          <View style={localStyles.logoImgWrap}>
+            <Image source={this.state.logImg} resizeMode='contain' style={localStyles.logoImg} />
           </View>
 
-          <View style={styles.fx5}>
-            <Text style={[styles.mb13, {textAlign: "center", fontSize: 13, color: color.modalTxtColor}]}>쿨리닉의 회원이 되시면 다양한 혜택을 누리실 수 있습니다</Text>
+          <View style={styles.fx1}>
+            <Text style={[styles.mb10, {textAlign: "center", fontSize: 13, color: "#8e8e98"}]}>쿨리닉의 회원이 되시면 다양한 혜택을 누리실 수 있습니다</Text>
             <View style={localStyles.inputBoxWrap}>
               <Item regular style={[styles.mb12, styles.inputWhBackWhBo]}>
                 <Icon active name="mail" style={localStyles.inputIcon}/>
@@ -238,10 +238,9 @@ class AccountType extends Component {
                 <Text style={{fontWeight: 'bold', color:'#fff', fontSize: 16, letterSpacing: 0, marginBottom : 14}}>SNS LOGIN</Text>
 
                 <View style={styles.fxDirRow}>
-                  <View style={[localStyles.snsIcon]}>
+                  <View style={[localStyles.snsIcon, {marginRight: 16}]}>
                     <NaverLogin loginYn={ loginYn }/>
                   </View>
-                  <View style={{paddingLeft: 8, paddingRight: 8}}/>
                   <View style={[localStyles.snsIcon]}>
                     <KakaoLogin loginYn={ loginYn }/>
                   </View>
@@ -263,14 +262,11 @@ class AccountType extends Component {
   }
 }
 
-const layoutCount = 5; // 화면 분할 개수 사이즈
-const logoHeight = (viewportHeight / layoutCount);
-
 const localStyles = StyleSheet.create({
   inputIcon: {
     color: color.inputPlaceHodler,
     fontSize: 20,
-    paddingLeft: 17,
+    paddingLeft: 9,
     paddingRight: 7
   },
   inputBoxWrap: {
@@ -285,21 +281,23 @@ const localStyles = StyleSheet.create({
     backgroundColor: color.defaultColor
   },
   inputBottomTxt: {
-    fontSize: 14,
-    color: color.whiteColor
+    fontSize: 13,
+    color: color.whiteColor,
+    marginTop: 2
   },
   snsIcon : {
     justifyContent : 'center',
     alignItems : 'center',
-    borderColor : '#fff',
-    borderBottomWidth : 1, 
-    borderTopWidth : 1,
-    borderLeftWidth : 1,
-    borderRightWidth : 1,
     height: 60,
-    width: 60,
-    borderRadius : 5
+    width: 60
   },
+  logoImgWrap: {
+    paddingTop: 30, paddingBottom: 30, alignItems: "center"
+  },
+  logoImg: {
+    width: 128,
+    height: 128
+  }
 });
 
 

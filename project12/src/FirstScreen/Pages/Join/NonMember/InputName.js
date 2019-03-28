@@ -45,7 +45,7 @@ class InputName extends Component {
               <Input
                 onChangeText={ this._handleChange }
                 value={ this.state.text }
-                placeholder='홍길동'
+                placeholder='이름을 입력해주세요.'
                 autoFocus={ true }
               />
           </Item>

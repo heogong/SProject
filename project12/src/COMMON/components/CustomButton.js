@@ -66,8 +66,8 @@ class CustomButton extends Component {
                         <Text style={[BStyles.btnDefaultTxt, BStyles.disableBtnWhBoderTxt, this.props.CustomFontStyle]}>{this.props.children}</Text>
                     </Button>
                  ) : (
-                    <Button style={[BStyles.btnDefault, BStyles.btnDefaultFillOff]}>
-                        <Text style={[BStyles.btnDefaultTxt, BStyles.btnDefaultFillOffTxt]}>{this.props.children}</Text>
+                    <Button style={[BStyles.btnDefault, BStyles.btnDefaultFillOff, this.props.CustomBtnStyle]}>
+                        <Text style={[BStyles.btnDefaultTxt, BStyles.btnDefaultFillOffTxt, this.props.CustomFontStyle]}>{this.props.children}</Text>
                     </Button>
                  ) }
                 </View>
