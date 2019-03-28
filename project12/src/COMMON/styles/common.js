@@ -73,7 +73,7 @@ export const styles = StyleSheet.create({
     },
     // 상세 헤더
     header: {
-      height: 55,
+      height: 80,
       paddingTop : 0,
       elevation: 0,
       shadowOpacity: 0,
