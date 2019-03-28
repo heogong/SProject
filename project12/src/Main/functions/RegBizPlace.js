@@ -26,15 +26,15 @@ function makeData(bizObj) {
     data.append('addr.subAddressNo', bizObj.addressObj.address.sub_adderss_no);
     data.append('addr.zipCode', bizObj.addressObj.address.zip_code);
   } else {
-    data.append('addr.region1depthName', null);
-    data.append('addr.region2depthName', null);
-    data.append('addr.region3depthHName', null);
-    data.append('addr.hCode', null);
-    data.append('addr.bCode', null);
-    data.append('addr.mountainYn', null);
-    data.append('addr.mainAddressNo', null);
-    data.append('addr.subAddressNo', null);
-    data.append('addr.zipCode', null);
+    // data.append('addr.region1depthName', null);
+    // data.append('addr.region2depthName', null);
+    // data.append('addr.region3depthHName', null);
+    // data.append('addr.hCode', null);
+    // data.append('addr.bCode', null);
+    // data.append('addr.mountainYn', null);
+    // data.append('addr.mainAddressNo', null);
+    // data.append('addr.subAddressNo', null);
+    // data.append('addr.zipCode', null);
   }
 
   if(bizObj.addressObj.road_address !== null) {
@@ -49,16 +49,16 @@ function makeData(bizObj) {
     data.append('road.buildingName', bizObj.addressObj.road_address.building_name);
     data.append('road.zoneNo', bizObj.addressObj.road_address.zone_no);
   } else {
-    data.append('road.addressName', null);
-    data.append('road.region1depthName', null);
-    data.append('road.region2depthName', null);
-    data.append('road.region3depthName', null);
-    data.append('road.roadName', null);
-    data.append('road.undergroundYn', null);
-    data.append('road.mainBuildingNo', null);
-    data.append('road.subBuildingNo', null);
-    data.append('road.buildingName', null);
-    data.append('road.zoneNo', null);
+    // data.append('road.addressName', null);
+    // data.append('road.region1depthName', null);
+    // data.append('road.region2depthName', null);
+    // data.append('road.region3depthName', null);
+    // data.append('road.roadName', null);
+    // data.append('road.undergroundYn', null);
+    // data.append('road.mainBuildingNo', null);
+    // data.append('road.subBuildingNo', null);
+    // data.append('road.buildingName', null);
+    // data.append('road.zoneNo', null);
   }
   data.append('detail.detailAddr1', bizObj.addressDsc);
   data.append('latLng.lat', bizObj.addressObj.y);

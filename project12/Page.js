@@ -216,7 +216,7 @@ const PAGE = () => (
       <Scene key="JoinInputBizLicense" component={JoinInputBizLicense} type={ActionConst.RESET}/>
       <Scene key="JoinTakeBizLicense" component={JoinTakeBizLicense}/>
       <Scene key="JoinInputPartnerInfo" component={JoinInputPartnerInfo}/>
-      <Scene key="JoinSetPartnerAddress" component={JoinSetPartnerAddress} />
+      <Scene key="JoinSetPartnerAddress" component={JoinSetPartnerAddress} type={ActionConst.RESET}/>
       <Scene key="JoinSearchPartnerAddress" component={JoinSearchPartnerAddress} />
       
       <Scene key="JoinInputProdType" component={JoinInputProdType} type={ActionConst.RESET}/>

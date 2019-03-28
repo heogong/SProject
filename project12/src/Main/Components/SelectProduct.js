@@ -49,7 +49,7 @@ class SelectProduct extends Component {
                         height : productCardSize, 
                         width : productCardSize
                     }]}>
-                    <Image source={require("~/Common/Image/license-depart01.png")} 
+                    <Image source={{uri : this.props.imgUri}} 
                         style={[styles.mb10, {
                         height : productCardSize - 60, 
                         width : productCardSize - 60

@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { View } from 'react-native'
 import { Container, Text,  Item, Input } from "native-base";
 
-import { Actions } from 'react-native-router-flux';
-
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+
+import { Actions } from 'react-native-router-flux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import RegPartnerMaster from '~/FirstScreen/Functions/RegPartnerMaster';
@@ -75,94 +76,96 @@ class InputPartnerInfo extends Component {
 
   render() {
     return (
-      <Container style={styles.containerInnerPd}>
-        <CustomHeader />
-        <View style={styles.contentWrap}>
+      <KeyboardAwareScrollView enableOnAndroid={true}>
+        <Container style={styles.containerInnerPd}>
+          <CustomHeader />
+          <View style={styles.contentWrap}>
 
-          <View style={styles.mb10}>
-            <View style={styles.fxDirRow}>
-              <View style={stylesReg.leftGuideTxtWrap}>
-                <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
-                <Text style={stylesReg.leftGuideTxt}>사업자정보를</Text>
-                <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
+            <View style={styles.mb10}>
+              <View style={styles.fxDirRow}>
+                <View style={stylesReg.leftGuideTxtWrap}>
+                  <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
+                  <Text style={stylesReg.leftGuideTxt}>사업자정보를</Text>
+                  <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
+                </View>
+                <View style={stylesReg.rightStepNumWrap}>
+                  <Text style={stylesReg.rightStepNum}>06</Text>
+                </View>
               </View>
-              <View style={stylesReg.rightStepNumWrap}>
-                <Text style={stylesReg.rightStepNum}>06</Text>
-              </View>
-            </View>
 
-            <View style={stylesReg.procBarWrap}>
-              <View style={styles.fx1}>
+              <View style={stylesReg.procBarWrap}>
+                <View style={styles.fx1}>
+                  <View style={stylesReg.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
+                  <View style={stylesReg.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
                 <View style={stylesReg.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
+                </View>
+                <View style={styles.fx1}>
+                <View style={stylesReg.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
                 <View style={stylesReg.procBarOff} />
+                </View>
+                <View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+                </View>
+                <View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+                </View>
               </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
-              </View>
+            </View>
+
+            <View style={[styles.fx3, styles.justiConCenter]}>
+              <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
+                <Input 
+                  onChangeText={async (text) => { await this.setState({companyNm : text}), this._chkNextBtn() }}
+                  value={ this.state.companyNm }
+                  placeholder="업체명" 
+                  placeholderTextColor={color.inputPlaceHodler} 
+                  style={styles.inputDefaultBox}/>
+              </Item>
+              <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
+                <Input 
+                  onChangeText={async (text) => { await this.setState({companyBusinessNum : text}), this._chkNextBtn() }}
+                  value={ this.state.companyBusinessNum }
+                  placeholder="사업자번호 13자리 입력" 
+                  placeholderTextColor={color.inputPlaceHodler} 
+                  style={styles.inputDefaultBox}/>
+              </Item>
+              <Item regular style={styles.inputWhBackGreyBo}>
+                <Input 
+                  onChangeText={async (text) => {await this.setState({ceoNm : text}), this._chkNextBtn() }}
+                  value={ this.state.ceoNm }
+                  placeholder="대표자 명" 
+                  placeholderTextColor={color.inputPlaceHodler} 
+                  style={styles.inputDefaultBox}/>
+              </Item>
+            </View>
+
+            <View style={styles.footerBtnWrap}>
+              <CustomButton 
+                onPress={ this._regPartnerMaster }
+                disabled={ this.state.btnDisabled }
+              >
+                등록완료
+              </CustomButton>
             </View>
           </View>
 
-          <View style={[styles.fx3, styles.justiConCenter]}>
-            <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
-              <Input 
-                onChangeText={async (text) => { await this.setState({companyNm : text}), this._chkNextBtn() }}
-                value={ this.state.companyNm }
-                placeholder="업체명" 
-                placeholderTextColor={color.inputPlaceHodler} 
-                style={styles.inputDefaultBox}/>
-            </Item>
-            <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
-              <Input 
-                onChangeText={async (text) => { await this.setState({companyBusinessNum : text}), this._chkNextBtn() }}
-                value={ this.state.companyBusinessNum }
-                placeholder="사업자번호 13자리 입력" 
-                placeholderTextColor={color.inputPlaceHodler} 
-                style={styles.inputDefaultBox}/>
-            </Item>
-            <Item regular style={styles.inputWhBackGreyBo}>
-              <Input 
-                onChangeText={async (text) => {await this.setState({ceoNm : text}), this._chkNextBtn() }}
-                value={ this.state.ceoNm }
-                placeholder="대표자 명" 
-                placeholderTextColor={color.inputPlaceHodler} 
-                style={styles.inputDefaultBox}/>
-            </Item>
-          </View>
+          {/* alert 메세지 모달 */}
+          <CustomModal
+            modalType="ALERT"
+            isVisible={this.state.isAlertModal}
+            onPress={ () => this.setState({isAlertModal : false})}
+            infoText={this.state.resultMsg}
+            btnText="확인"
+          />
 
-          <View style={styles.footerBtnWrap}>
-            <CustomButton 
-              onPress={ this._regPartnerMaster }
-              disabled={ this.state.btnDisabled }
-            >
-              등록완료
-            </CustomButton>
-          </View>
-        </View>
-
-        {/* alert 메세지 모달 */}
-        <CustomModal
-          modalType="ALERT"
-          isVisible={this.state.isAlertModal}
-          onPress={ () => this.setState({isAlertModal : false})}
-          infoText={this.state.resultMsg}
-          btnText="확인"
-        />
-
-      </Container>
+        </Container>
+      </KeyboardAwareScrollView>
     )
   }
 }

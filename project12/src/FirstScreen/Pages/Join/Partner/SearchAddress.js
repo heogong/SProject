@@ -1,209 +1,236 @@
 import React, { Component } from 'react';
-import { View } from "react-native"
-import { Item, Input, Icon, Text, List, ListItem, Body } from 'native-base';
+import { Image, FlatList, TouchableOpacity, StyleSheet, View } from 'react-native';
+import { Container, Button, Body, List, ListItem, Icon, Input, Item, Text, Header, Left, Right, Title } from 'native-base';
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
-import CustomHeader from '~/Common/Components/CustomHeader';
-import CustomButton from '~/Common/Components/CustomButton';
-import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import { Actions } from 'react-native-router-flux';
-import DrawMap from '../../../../Main/Components/DrawMap';
-import GetAddress from '../../../../Main/Functions/AddressInfo';
-import GetAddressInfo from '../../../Functions/GetAddressInfo';
 
-let REGION = []; // 드래그 후 좌표 데이터 변수
-let RESULT_DATA = [];
+import DrawMap from '~/Main/Components/DrawMap';
+import GetAddress from '~/Main/Functions/AddressInfo';
+import GetCommonData from '~/Common/Functions/GetCommonData';
+
+import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
+import { styles } from '~/Common/Styles/common';
+import { color } from '~/Common/Styles/colors';
+
+let SELECT_ITEM = null;
 
 class SearchAddress extends Component {
   constructor(props) {
     super(props);
+
     this.state = { 
-      strAddress: '대방동 392-14',
+      addressName : (this.props.addressName !== null) ? this.props.addressName : '대방동 392-27',
       data: [],
-      showMap : false,
       region: {
         latitude: 37.566535,
         longitude: 126.97796919999996,
         latitudeDelta: 0.0043,
         longitudeDelta: 0.0034
-      }
+      },
+      marker: {
+        latitude: 37.566535,
+        longitude: 126.97796919999996
+      },
+      showMap : false,
+      makerYn : true,
+      isAlertModal : false, // alert 용
+      resultMsg : null // alert 용
     };
   }
 
-  // 초기 데이터 1. 리덕스 값 조회 2. 현재 위치 조회 3. default 값 조회 
-  async componentDidMount() {
-    if(this.props.addressName !== '') {
-      await this.setState({strAddress : this.props.addressName});
-      await this._setAddressInfoMap();
-    } else {
-      this._getLocation();
-    }
+  componentWillMount () {
+    this._setAddressInfo();
   }
 
-  _getLocation() {
-    navigator.geolocation.getCurrentPosition(
-          (positon) => {
-              this.setState({
-                  latitude : positon.coords.latitude,
-                  longitude : positon.coords.longitude
-              })
-          },
-          (error) => 
-          {console.log(error.message)},
-          {enableHighAccuracy: false, timeout: 10000}
-      );
-  }
-
-  _onPress = (item) => {
-    //console.log(item);
-
-    Actions.pop(); // 뒤로가면서 기존페이지로 이동
-    this.props.onResult({ result: item })
-
-    //({ result: RESULT_DATA, region : REGION });
-  }
-
-  // 지도에서 주소 선택
-  _selectMap = () => {
-    this.setState({ showMap: true, data:[] });
-    //Actions.JoinSearchPartnerMapAddress({onResult : this.props.onResult}) 
-  }
-
-  // 지도에서 주소 선택 해제
-  _unSelectMap = () => {
-    this.setState({ showMap: false });
-  }
-
-  // 주소 정보 가져오기 : 주소 정보 리스트 그리기
-  _setAddressInfo = () => {
-    GetAddress(this.state.strAddress).then(result => {
-      //console.log(result.data.documents);
-
-      this.setState({
-        //data : result.data.documents.filter(address => address.address_type !== "REGION"),
-        data : result.data.documents,
-        showMap : false
-      })
-    })
-  }
-
-  // 주소 정보 가져오기 : 초기(주소값이 존재 할 경우) 백단 좌표 그려놓기
-  _setAddressInfoMap = () => {
-    GetAddress(this.state.strAddress).then(result => {
-      this.setState({
-        region : {
-          ...this.state.region,
-          latitude : Number(result.data.documents[0].y),
-          longitude : Number(result.data.documents[0].x)
-        }
-      })
-    })
-  }
-
-  // 좌표값으로 주소 호출
-  // error : this.state 값 변경 시 맵에 좌표값 초기화로 맵 이동 불가 현상 
-  _GetAddressInfo = async () => {
-    //console.log("_GetAddressInfo");
-    GetAddressInfo(this.state.region).then(result => {
-      GetCommonData(result, this._GetAddressInfo).then(async resultData => {
-          if(resultData !== undefined) {
-              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-              if(ResultBool) {
-                  
-                  RESULT_DATA = resultData.data.documents[0];
-                  this.setState({
-                      strAddress : RESULT_DATA.address.address_name,
-                  })
-              }
-          }
-      });
-    });
-  }
-
-  _renderItem = (item) => (
-    <ListItem onPress={() => this._onPress(item)}>
-      <Body>
-        <Text>{item.address_name}</Text>
-        {(item.road_address !== null) ? (
-          <Text note>{item.road_address.address_name}</Text>
-        ) : (
-          <Text note>도로명 주소가 없습니다.</Text>
-        )}
+  _renderItem = ({item}) => (
+    <ListItem
+      style={localStyles.flatListWrapList}
+      onPress={() => this._onPress(item)}
+    >
+      <Body style={localStyles.flatListWrap}>
+          <Text style={localStyles.flatListTxt}>{item.address_name}</Text>
+          {(item.road_address !== null) ? (
+            <Text style={localStyles.flatListTxt}>{item.road_address.address_name}</Text>
+          ) : (
+            <Text style={localStyles.flatListTxt}>도로명 주소가 없습니다.</Text>
+          )}
       </Body>
     </ListItem>
   );
 
-  // 맵 이동 후 좌표 값
-  _onRegionChangeComplete = async (region) => {
-    await this.setState({region});
-    this._GetAddressInfo();
+  _emptyRenderItem = () => (
+    <ListItem style={localStyles.flatListWrapList}>
+      <Body style={[localStyles.flatListWrap, {paddingTop: 20, paddingBottom: 20}]}>
+        <Text style={localStyles.flatListTxt}>검색정보가 없습니다.</Text>
+      </Body>
+    </ListItem>
+  );
+
+   // 맵 이동 후 좌표 값
+   _onRegionChangeComplete = (region) => {
+    this.setState({region});
   }
 
+  // 주소 정보 가져오기
+  _setAddressInfo = () => {
+    GetAddress(this.state.addressName).then(result => {
+      GetCommonData(result, this._setAddressInfo).then(async resultData => {
+        if(resultData !== undefined) {
+          const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+          console.log(result.data);
+          if(ResultBool) {
+            this.setState({data : resultData.data.documents });
+          } else {
+            this.setState({
+              isAlertModal : true,
+              resultMsg : resultData.resultMsg
+            })
+          }
+        }
+      });
+    });
+  }
+
+
+  _onPress = (item) => {
+    console.log(item)
+    this.setState({
+      showMap : true,
+      region : {
+        ...this.state.region,
+        latitude : Number(item.y),
+        longitude : Number(item.x)
+      },
+      marker: {
+        latitude : Number(item.y),
+        longitude : Number(item.x)
+      },
+      addressName : item.address_name
+    });
+
+    SELECT_ITEM = item;
+  }
+
+
+  _nextButton = () => {
+    Actions.pop(); // 뒤로가면서 기존페이지로 이동
+    this.props.onResult({ result: SELECT_ITEM });
+  }
+  
   render() {
     return (
-      <View style={{ flex : 1}}>
-        <CustomHeader
-            title="주소 검색"
+      <Container style={styles.Container}>
+        <DrawMap
+          region={ this.state.region }
+          onRegionChangeComplete={ this._onRegionChangeComplete }
+          makerYn={ this.state.makerYn }
+          marker={ this.state.marker }
+          showMap={ this.state.showMap }
         />
-        <View style={{ flex : 1, padding: 5 }}>
-          <DrawMap
-            region={ this.state.region }
-            onRegionChangeComplete={ this._onRegionChangeComplete }
-            makerYn={ false }
-            showMap={ this.state.showMap }
-          /> 
-          <View style={ {height : 50} }>
-            <Item 
-              regular 
-              onPress={ this._unSelectMap }
-              style={{backgroundColor:'white'}}
-            >
-              <Icon active name='search' />
-              <Input
-                disabled={ this.state.showMap }
-                placeholder="장소 또는 주소 검색" 
-                value={this.state.strAddress}
-                onChangeText={(text) => this.setState({strAddress : text})}
-                onSubmitEditing={this._setAddressInfo}
-              > 
-                  {this.state.addressName} 
-              </Input>
-            </Item>
-          </View>
-          <View>
-            { (this.state.showMap) ? (
-            <CustomButton
-              styleWidth={ false }
-              full={ true }
-              dark={ true }
-              bordered={ true }
-              icon={ true }
-              onPress={() => this._setAddressInfo()} >
-                <Icon name='md-checkmark-circle-outline' />
-                <Text style={{ color: 'black'}}>주소 선택 하기</Text>
-            </CustomButton>
-            ) : (
-              <CustomButton
-                styleWidth={ false }
-                full={ true }
-                dark={ true }
-                bordered={ true }
-                icon={ true }
-                onPress={() => this._selectMap()} >
-                  <Icon name='md-map' />
-                  <Text style={{ color: 'black'}}>지도로 지정하기</Text>
-              </CustomButton>
-            )}
+        
+        <Header style={[styles.header, styles.noPadding, {backgroundColor: "transparent", paddingLeft: 26, paddingRight: 26, borderBottomWidth: 0}]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding}  transparent onPress={Actions.pop}>
+              <Image source={require("~/Common/Image/btn_back_arrow.png")} style={styles.btnBackArrowIcon}/>
+            </Button>
+          </Left>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}></Title>
+          </Body>
+          <Right style={styles.headerRightWrap}></Right>
+        </Header>
 
-          </View>
-          <View>
-            <List dataArray={this.state.data} renderRow={this._renderItem} />
+        <View style={{flex:1, paddingLeft: 26, paddingRight: 26, borderWidth: 0}}>
+          <Item
+            regular
+            style={[styles.inputWhBackGreyBo, {backgroundColor: color.whiteColor, marginLeft: 0}]}
+            onPress={ () => this.setState({showMap : !this.state.showMap})}
+          >
+            <Input
+              placeholder="주소를 입력해 주세요"
+              placeholderTextColor={color.inputPlaceHodler}
+              style={styles.inputDefaultBox}
+              disabled={ this.state.showMap } 
+              value={this.state.addressName}
+              onChangeText={(text) => this.setState({addressName : text})}
+              onSubmitEditing={this._setAddressInfo}
+              />
+            <Icon 
+              active
+              name="ios-search"
+              style={[styles.inputIcon, {fontSize: 25, marginRight: 0, paddingRight: 0}]}
+              onPress={this._setAddressInfo}
+            />
+            <Icon
+              name="ios-close"
+              style={[styles.inputIcon, {fontSize: 32, color: "#8e8e98"}]}
+            />
+          </Item>
+
+          <View style={[(this.state.showMap) ? localStyles.hide : localStyles.show, 
+            {
+              borderColor : color.inputBoGrey,
+              borderLeftWidth: 1,
+              borderRightWidth: 1,
+              borderBottomWidth: 0,
+              backgroundColor: color.whiteColor}]}>
+            <FlatList 
+              data={this.state.data} 
+              renderItem={this._renderItem} 
+              ListEmptyComponent={this._emptyRenderItem}
+              keyExtractor={(item, index) => index.toString()}
+            />
           </View>
         </View>
-      </View>
+
+        <View style={[
+              (this.state.showMap) ? localStyles.show : localStyles.hide,
+              styles.footerBtnWrap,
+              {paddingLeft: 26, paddingRight: 26, paddingBottom: 26}
+            ]}>
+            <CustomButton
+              onPress={this._nextButton}
+            >
+                확인
+            </CustomButton>
+        </View>
+         {/* alert 메세지 모달 */}
+          <CustomModal
+            modalType="ALERT"
+            isVisible={this.state.isAlertModal}
+            onPress={ () => this.setState({isAlertModal : false})}
+            infoText={this.state.resultMsg}
+            btnText="확인"
+          />
+      </Container>
     )
   }
 }
+
+const localStyles = StyleSheet.create({
+  hide: {
+      display: 'none'
+  },
+  show: {
+      display: 'flex'
+  },
+  flatListTxt: {
+    fontSize: 14, color: "#1e1e32"
+  },
+  flatListWrap: {
+    flex: 1, 
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderColor : color.inputBoGrey,
+    width: "100%"
+  },
+  flatListWrapList: {
+    marginLeft: 0, marginRight: 0, paddingTop: 0, paddingBottom: 0, paddingRight: 0, alignItems: "flex-start", flexDirection: "column"
+  }
+});
 
 export default SearchAddress;

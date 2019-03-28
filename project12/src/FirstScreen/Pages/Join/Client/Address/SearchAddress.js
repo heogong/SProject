@@ -11,6 +11,7 @@ import GetAddress from '~/Main/Functions/AddressInfo';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
@@ -34,7 +35,9 @@ class SearchAddress extends Component {
         longitude: 126.97796919999996
       },
       showMap : false,
-      makerYn : true
+      makerYn : true,
+      isAlertModal : false, // alert 용
+      resultMsg : null // alert 용
     };
   }
 
@@ -82,7 +85,10 @@ class SearchAddress extends Component {
             this.setState({data : resultData.data.documents.filter(address => address.address_type !== "REGION")});
            // this.setState({data : resultData.data.documents.filter(address => address !== null)});
           } else {
-            alert(resultData.resultMsg);
+            this.setState({
+              isAlertModal : true,
+              resultMsg : resultData.resultMsg
+            })
           }
         }
       });
@@ -192,60 +198,14 @@ class SearchAddress extends Component {
                 확인
             </CustomButton>
         </View>
-{/* 
-          <View style={[styles.fx1, styles.mg10]}>
-            <View style={styles.fx1}>
-
-              <Button transparent onPress={Actions.pop}>
-                <Icon name="arrow-back" style={{color : color.defaultColor}} />
-              </Button>
-
-              <Item 
-                regular 
-                onPress={ () => this.setState({showMap : !this.state.showMap}) }
-                style={{height : 48, backgroundColor : color.whiteColor, marginLeft : 0}}>
-
-                <Input
-                  disabled={ this.state.showMap } 
-                  value={this.state.addressName}
-                  onChangeText={(text) => this.setState({addressName : text})}
-                  onSubmitEditing={this._setAddressInfo}
-                  placeholder="주소입력"
-                />
-
-                <TouchableOpacity onPress={this._setAddressInfo}>
-                  <Icon name="ios-search" style={{color : color.defaultColor}}/>
-                </TouchableOpacity>
-
-                
-                <Text style={{color : color.greyColor}}>|</Text>
-                <Icon name="ios-close" style={{color : color.greyColor}}/>
-              </Item>
-
-              <View style={(this.state.showMap) ? localStyles.hide : localStyles.show}>
-                <FlatList 
-                  data={this.state.data} 
-                  renderItem={this._renderItem} 
-                  ListEmptyComponent={this._emptyRenderItem}
-                  keyExtractor={(item) => item.toString()}
-                />
-              </View>
-
-            </View>
-
-
-            <View style={[
-              (this.state.showMap) ? localStyles.show : localStyles.hide,
-              styles.footerBtnWrap
-            ]}>
-                <CustomButton
-                  onPress={this._nextButton}
-                >
-                    확인
-                </CustomButton>
-            </View>
-          </View>
-           */}
+        {/* alert 메세지 모달 */}
+        <CustomModal
+          modalType="ALERT"
+          isVisible={this.state.isAlertModal}
+          onPress={ () => this.setState({isAlertModal : false})}
+          infoText={this.state.resultMsg}
+          btnText="확인"
+        />
       </Container>
     )
   }

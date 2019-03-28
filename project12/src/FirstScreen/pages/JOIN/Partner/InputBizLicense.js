@@ -57,81 +57,79 @@ class InputBizLicense extends Component {
 
   render() {
     return (
-      <Container style={styles.containerInnerPd}>
-        <CustomHeader />
+        <Container style={styles.containerInnerPd}>
+          <CustomHeader resetPage={true}/>
 
-        <View style={styles.contentWrap}>
+          <View style={styles.contentWrap}>
 
-          <View>
-            
-            <View style={styles.fxDirRow}>
-              <View style={stylesReg.leftGuideTxtWrap}>
-                <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
-                <Text style={stylesReg.leftGuideTxt}>사업자등록증을</Text>
-                <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
+            <View>
+              
+              <View style={styles.fxDirRow}>
+                <View style={stylesReg.leftGuideTxtWrap}>
+                  <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
+                  <Text style={stylesReg.leftGuideTxt}>사업자등록증을</Text>
+                  <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
+                </View>
+                <View style={stylesReg.rightStepNumWrap}>
+                  <Text style={stylesReg.rightStepNum}>02</Text>
+                </View>
               </View>
-              <View style={stylesReg.rightStepNumWrap}>
-                <Text style={stylesReg.rightStepNum}>02</Text>
-              </View>
-            </View>
 
-            <View style={stylesReg.procBarWrap}>
-              <View style={styles.fx1}>
-                <View style={stylesReg.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
+              <View style={stylesReg.procBarWrap}>
+                <View style={styles.fx1}>
+                  <View style={stylesReg.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
+                  <View style={stylesReg.procBarOff} />
+                </View>
+                <View style={styles.fx1}>
                 <View style={stylesReg.procBarOff} />
+                </View>
+                <View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+                </View>
+                <View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+                </View>
+                <View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+                </View>
+                <View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+                </View>
               </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
-              </View>
+              
             </View>
-            
-          </View>
 
-          <TouchableOpacity 
-            onPress={Actions.JoinTakeBizLicense}
-            style={localStyles.photoBoxWrap}>
-            <View style={localStyles.photoBox}>
-              <Image source={require("~/Common/Image/camera_icon.png")} resizeMode="contain" style={localStyles.phototIconImg}/>
-              <Text style={localStyles.photoTxt}>등록하기</Text>
+            <TouchableOpacity 
+              onPress={Actions.JoinTakeBizLicense}
+              style={localStyles.photoBoxWrap}>
+              <View style={localStyles.photoBox}>
+                <Image source={require("~/Common/Image/camera_icon.png")} resizeMode="contain" style={localStyles.phototIconImg}/>
+                <Text style={localStyles.photoTxt}>등록하기</Text>
+              </View>
+            </TouchableOpacity>
+
+            <View style={[styles.footerBtnWrap, {marginTop: 16}]}>
+              <CustomButton 
+                onPress={ this._nextButton }
+                disabled={ this.state.btnDisabled }
+              >
+                등록완료
+              </CustomButton>
             </View>
-          </TouchableOpacity>
-
-          <View style={[styles.footerBtnWrap, {marginTop: 16}]}>
-            <CustomButton 
-              onPress={ this._nextButton }
-              disabled={ this.state.btnDisabled }
-              edgeFill={true}
-              fillTxt={true}
-            >
-              등록완료
-            </CustomButton>
           </View>
-        </View>
-        
-        {/* alert 메세지 모달 */}
-        <CustomModal
-          modalType="ALERT"
-          isVisible={this.state.isAlertModal}
-          onPress={ () => this.setState({isAlertModal : false})}
-          infoText={this.state.resultMsg}
-          btnText="확인"
-        />
+          
+          {/* alert 메세지 모달 */}
+          <CustomModal
+            modalType="ALERT"
+            isVisible={this.state.isAlertModal}
+            onPress={ () => this.setState({isAlertModal : false})}
+            infoText={this.state.resultMsg}
+            btnText="확인"
+          />
 
-      </Container>
+        </Container>
     )
   }
 }

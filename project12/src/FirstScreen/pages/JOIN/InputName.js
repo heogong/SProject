@@ -5,6 +5,7 @@ import { Container, Text, Item, Input } from "native-base";
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrNm, setSnsSignYn } from '~/Redux/Actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
@@ -41,58 +42,60 @@ class InputName extends Component {
   
   render() {
     return (
-      <Container style={styles.containerInnerPd}>
-        <CustomHeader />
-        <View style={styles.contentWrap}>
-          <View>
-            <View style={styles.fxDirRow}>
-              <View style={stylesReg.leftGuideTxtWrap}>
-                <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
-                <Text style={stylesReg.leftGuideTxt}>성함을</Text>
-                <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
+      <KeyboardAwareScrollView enableOnAndroid={true}>
+        <Container style={styles.containerInnerPd}>
+          <CustomHeader />
+          <View style={styles.contentWrap}>
+            <View>
+              <View style={styles.fxDirRow}>
+                <View style={stylesReg.leftGuideTxtWrap}>
+                  <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
+                  <Text style={stylesReg.leftGuideTxt}>성함을</Text>
+                  <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
+                </View>
+                <View style={stylesReg.rightStepNumWrap}>
+                  <Text style={stylesReg.rightStepNum}>01</Text>
+                </View>
               </View>
-              <View style={stylesReg.rightStepNumWrap}>
-                <Text style={stylesReg.rightStepNum}>01</Text>
+              
+              <View style={stylesReg.procBarWrap}>
+                <View style={styles.fx1}>
+                  <View style={stylesReg.procBarOn} />
+                </View>
+                <View style={styles.fx1}>
+                  <View style={stylesReg.procBarOff} />
+                </View>
+                <View style={styles.fx1}>
+                  <View style={stylesReg.procBarOff} />
+                </View>
+                <View style={styles.fx1}>
+                  <View style={stylesReg.procBarOff} />
+                </View>
               </View>
             </View>
-            
-            <View style={stylesReg.procBarWrap}>
-              <View style={styles.fx1}>
-                <View style={stylesReg.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-                <View style={stylesReg.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-                <View style={stylesReg.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-                <View style={stylesReg.procBarOff} />
-              </View>
+            <View style={[styles.fx2, styles.justiConCenter]}>
+              <Item regular style={[styles.mb15, {height : 48}]}>
+                <Input 
+                  onChangeText={ this._handleChange }
+                  value={ this.state.text }
+                  autoFocus={ true }
+                  placeholder="이름을 입력해주세요." />
+              </Item>
             </View>
-          </View>
-          <View style={[styles.fx2, styles.justiConCenter]}>
-            <Item regular style={[styles.mb15, {height : 48}]}>
-              <Input 
-                onChangeText={ this._handleChange }
-                value={ this.state.text }
-                autoFocus={ true }
-                placeholder="이름을 입력해주세요." />
-            </Item>
-          </View>
 
-          <View style={styles.footerBtnWrap}>
-            <CustomButton 
-              onPress={ this._nextButton }
-              disabled={ this.state.btnDisabled }
-              edgeFill={true}
-              fillTxt={true}
-            >
-              입력완료
-            </CustomButton>
+            <View style={styles.footerBtnWrap}>
+              <CustomButton 
+                onPress={ this._nextButton }
+                disabled={ this.state.btnDisabled }
+                edgeFill={true}
+                fillTxt={true}
+              >
+                입력완료
+              </CustomButton>
+            </View>
           </View>
-        </View>
-      </Container>
+        </Container>
+      </KeyboardAwareScrollView>
     )
   }
 }

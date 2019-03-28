@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
-import { View } from "react-native"
+import { StyleSheet, View } from 'react-native';
+import { Container, Icon, Text, Item, Input } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
-import { Text, Item, Input, Icon, Toast } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-
 import { connect } from 'react-redux';
 import { setBizId, setBizAddress, setBizAddressDsc } from '~/Redux/Actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import DrawMap from '~/Main/Components/DrawMap';
 import RegPartnerPlace from '~/FirstScreen/Functions/RegPartnerPlace';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
-import CustomBlockWrapper from '~/Common/Components/CustomBlockWrapper';
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomHeader from '~/Common/Components/CustomHeader';
+import CustomModal from '~/Common/Components/CustomModal';
+import { styles } from '~/Common/Styles/common';
+import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from '~/Common/Styles/colors';
 
 class SetAddress extends Component {
     constructor(props) {
@@ -35,7 +38,9 @@ class SetAddress extends Component {
             marker:{
                 latitude: 37.566535,
                 longitude: 126.97796919999996
-            }
+            },
+            isAlertModal : false, // alert 용
+            resultMsg : null // alert 용
         };
     }
 
@@ -52,7 +57,6 @@ class SetAddress extends Component {
                 ...this.state.region,
                 latitude : positon.coords.latitude,
                 longitude : positon.coords.longitude
-
               }
             })
           },
@@ -95,11 +99,6 @@ class SetAddress extends Component {
         });
     }
 
-    // 파트너 사업장 버튼 클릭
-    _saveButton() {
-       this._regPartnerPlace();
-    }
-
     // 사업장 등록
     _regPartnerPlace = async () => {
         await this.props.onSetBizAddress(this.state.addressObj);  // 리덕스 주소 오브젝트 SET
@@ -108,7 +107,7 @@ class SetAddress extends Component {
         console.log(this.props.value);
 
         RegPartnerPlace(this.props.value).then(async result => {
-            GetCommonData(result, this._regBusiness).then(async resultData => {
+            GetCommonData(result, this._regPartnerPlace).then(async resultData => {
                 if(resultData !== undefined) {
                     console.log(resultData.data);
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -116,7 +115,10 @@ class SetAddress extends Component {
                         await this.props.onSetBizId(resultData.bizPlaceId); // 사업장 ID 리덕스 SET
                          Actions.JoinInputProdType();
                     } else {
-                       alert(resultData.resultMsg);
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
                     }
                 }
             });
@@ -129,45 +131,89 @@ class SetAddress extends Component {
 
     render() {
         return (
-            <View style={{ flex : 1}}>
-                <CustomHeader
-                    title="파트너 주소 입력"
-                />
-                <View style={{ flex : 1, padding: 5 }}>
-                    <DrawMap
-                        region={ this.state.region }
-                        onRegionChangeComplete={ this._onRegionChangeComplete }
-                        makerYn={ this.state.makerYn }
-                        marker={ this.state.marker }
+            <KeyboardAwareScrollView enableOnAndroid={true}>
+                <Container style={styles.containerInnerPd}>
+                    <CustomHeader resetPage={true}/>
+            
+                    <View style={styles.contentWrap}>
+                        <View>
+                            <View style={styles.fxDirRow}>
+                                <View style={stylesReg.leftGuideTxtWrap}>
+                                    <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
+                                    <Text style={stylesReg.leftGuideTxt}>사업장주소를</Text>
+                                    <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
+                                </View>
+                                <View style={stylesReg.rightStepNumWrap}>
+                                    <Text style={stylesReg.rightStepNum}>06</Text>
+                                </View>
+                            </View>
 
+                            <View style={stylesReg.procBarWrap}>
+                                <View style={styles.fx1}>
+                                    <View style={stylesReg.procBarOn} />
+                                </View>
+                                <View style={styles.fx1}>
+                                    <View style={stylesReg.procBarOn} />
+                                </View>
+                                <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOn} />
+                                </View>
+                                <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOn} />
+                                </View>
+                                <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOff} />
+                                </View>
+                                <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOff} />
+                                </View>
+                                <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOff} />
+                                </View>
+                            </View>
+                        </View>
+
+                        <View style={[styles.fx3, styles.justiConCenter]}>
+                            <Item regular style={[styles.mb10, {height : 50}]}
+                            >
+                                <Icon active name="ios-search" style={[styles.inputIcon, {marginRight: 0, paddingRight: 0}]} />
+                                <Input
+                                    onChangeText={ (text) => this.setState({addressName : text})}
+                                    placeholder="주소를 입력해 주세요" 
+                                    placeholderTextColor={color.inputPlaceHodler} 
+                                    style={styles.inputDefaultBox}
+                                >
+                                    {this.state.addressName}
+                                </Input>
+                            </Item>
+                        </View>
+
+                        <View style={styles.footerBtnWrap}>
+                            <CustomButton
+                                onPress={this._goSearchAddress}
+                            >
+                                주소검색
+                            </CustomButton>
+
+                            <CustomButton
+                                onPress={ this._regPartnerPlace }
+                                disabled={ this.state.disSaveBtn }
+                            >
+                                입력완료
+                            </CustomButton>
+                        </View>
+                    </View>
+
+                    {/* alert 메세지 모달 */}
+                    <CustomModal
+                        modalType="ALERT"
+                        isVisible={this.state.isAlertModal}
+                        onPress={ () => this.setState({isAlertModal : false})}
+                        infoText={this.state.resultMsg}
+                        btnText="확인"
                     />
-                    <View style={{ height : 50 }}>
-                        <Item 
-                            regular 
-                            onPress={this._goSearchAddress}
-                            style={{backgroundColor:'white'}}
-                        >
-                            <Icon active name='md-home' />
-                            <Input 
-                                disabled
-                                placeholder="주소"
-                            > 
-                                {this.state.addressName} 
-                            </Input>
-                        </Item>
-                    </View>
-                    <View style={{ height : 40 }}>
-                        <CustomButton
-                            styleWidth={ false }
-                            full={ true }
-                            dark={ true }
-                            disabled={ this.state.disSaveBtn }
-                            onPress={() => this._saveButton()} >
-                            <Text>주소 저장</Text>
-                        </CustomButton>
-                    </View>
-                </View>
-            </View>
+                </Container>
+            </KeyboardAwareScrollView>
         )
     }
 }

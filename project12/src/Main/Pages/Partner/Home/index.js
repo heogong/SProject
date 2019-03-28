@@ -21,7 +21,6 @@ import AfterServiceStateCard from '~/Main/Components/AfterServiceStateCard';
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomEtcButton from '~/Common/Components/CustomEtcButton';
 import CustomModal from '~/Common/Components/CustomModal';
-import CustomHeader from "~/Common/Components/CustomHeader";
 import { styles, viewportWidth, viewportHeight } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from "~/Common/Styles/colors";
