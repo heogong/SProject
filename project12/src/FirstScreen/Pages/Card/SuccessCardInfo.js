@@ -24,7 +24,7 @@ class SuccessCardInfo extends Component {
           <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConCenter]}>
             <View>
               <View style={styles.alignItemsCenter}>
-                <Image source={require('~/Common/Image/join-end.png')} resizeMode='center'/>
+                <Image source={require('~/Common/Image/Next_icon.png')} resizeMode='center'/>
               </View>
               <View style={styles.alignItemsCenter}>
                 <H1>카드등록이</H1>

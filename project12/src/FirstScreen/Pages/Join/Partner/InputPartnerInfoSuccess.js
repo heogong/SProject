@@ -25,7 +25,7 @@ class JoinPartnerInfoSuccess extends Component {
           <View style={localStyles.contentTop}>
             <View>
               <View style={[styles.alignItemsCenter, {marginBottom: 38}]}>
-                <Image source={require('~/Common/Image/join-end.png')} style={{width: 48, height: 48}}/>
+                <Image source={require('~/Common/Image/Next_icon.png')} style={{width: 48, height: 48}}/>
               </View>
               <View style={localStyles.topTxtWrap}>
                 <Text style={localStyles.topTxt}>사업자정보가</Text>
