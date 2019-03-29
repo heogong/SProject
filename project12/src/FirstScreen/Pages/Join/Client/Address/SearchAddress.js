@@ -167,7 +167,7 @@ class SearchAddress extends Component {
             />
             <Icon
               name="ios-close"
-              style={[styles.inputIcon, {fontSize: 32, color: "#8e8e98"}]}
+              style={[styles.inputIcon, {fontSize: 38, color: "#8e8e98"}]}
             />
           </Item>
 
