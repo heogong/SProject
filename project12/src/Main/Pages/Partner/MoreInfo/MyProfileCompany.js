@@ -7,6 +7,9 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import GetProdSpecialty from '~/Main/Functions/GetProdSpecialty';
+import EditProdSpecialty from '~/Main/Functions/EditProdSpecialty';
+import GetPartnerWork from '~/Main/Functions/GetPartnerWork';
+import EditPartnerWork from '~/Main/Functions/EditPartnerWork';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import SelectSpecialty from "~/Main/Components/SelectSpecialty";
 import SelectWeekDay from "~/Main/Components/SelectWeekDay";
@@ -17,13 +20,14 @@ import CustomModal from '~/Common/Components/CustomModal';
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from "~/Common/Styles/colors";
 
+let SELECT_BUTTON = []; // 요일 버튼 객체 배열 
 let ARRAY_SELECT_SPECIALTY = []; // 선택된 전문분야 배열
 let ARRAY_SELECT_DATA = []; // 선택된 날짜 배열
 const ST_TYPE = 'work_st'; // 시작 시간 클릭 여부
 const ED_TYPE = 'work_ed'; // 종료 시간 클릭 여부
 let TIME_TYPE = ST_TYPE;
 
-let DAY_DATA = [
+let INIT_DAY_DATA = [
   { text : "월", value : "mon", key : "monWorkYn", workDay : false },
   { text : "화", value : "tue", key : "tueWorkYn", workDay : false },
   { text : "수", value : "wed", key : "wedWorkYn", workDay : false },
@@ -51,34 +55,29 @@ class MyProfileCompany extends Component {
 
     this.DateTimePicker = null;
     this._showDateTimePicker = this._showDateTimePicker.bind(this);
+    this._handleFullBtnClick = this._handleFullBtnClick.bind(this);
 
     this.state = {
       data : [],
+      workData : [],
+      dayData : [],
       isDateTimePickerVisible: false, // 타임 picker 보임 여부
       setTime : '01/01/0000 09:00:00', // 타임 picker 기본 데이터
       stHour : '09',
       stMin : '00',
       edHour : '18',
       edMin : '00',
-      // partner 근무요일 - TEST
-      selectedDay : {
-        monWorkYn : 'N',
-        tueWorkYn : 'N',
-        wedWorkYn : 'Y',
-        thuWorkYn : 'N',
-        friWorkYn : 'Y',
-        satWorkYn : 'Y',
-        sunWorkYn : 'N',
-      },
+      fullWorkYn  : false,
+      holidayWorkYn : false,
       checkBox : false,
       isAlertModal : false, // alert 용
       resultMsg : null// alert 용
     };
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this._getProdSpecialty();
-    this._drawWorkSchedule();
+    this._getPartnerWork();
   }
 
   // 1. 업체 취급 제품 유형 목록 조회
@@ -104,17 +103,16 @@ class MyProfileCompany extends Component {
     });
   }
 
-  // 1. 업체 취급 제품 유형 목록 조회
-  _getProdSpecialty = () => {
-    GetProdSpecialty().then(result => {
-        GetCommonData(result, this._getProdSpecialty).then(async resultData => {
+   // 2 .업체 근무 정보 조회
+   _getPartnerWork = () => {
+    GetPartnerWork().then(result => {
+        GetCommonData(result, this._getPartnerWork).then(async resultData => {
             if(resultData !== undefined) {
                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-                console.log('업체 취급 제품 유형 목록 조회 - ',resultData);
+                console.log('업체 근무 정보 조회 - ',resultData);
                 if(ResultBool) {
-                  this.setState({data : resultData.data});
-                  this._selectSpecialty();
-                  
+                  this.setState({workData : resultData.data});
+                  this._drawWorkSchedule();
                 } else {
                   this.setState({
                     isAlertModal : true,
@@ -127,7 +125,44 @@ class MyProfileCompany extends Component {
     });
   }
 
+  // 업체 취급 제품 유형 목록 수정 - 테스트 진행
+  _editProdSpecialty = () => {
+    EditProdSpecialty(ARRAY_SELECT_SPECIALTY).then(result => {
+        GetCommonData(result, this._editProdSpecialty).then(async resultData => {
+            if(resultData !== undefined) {
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
+            }
+        });
+    });
+  }
 
+  // 업체 근무 정보 수정
+  _editPartnerWork = () => {
+    const { stHour, stMin, edHour, edMin } = this.state;
+    const work = {
+      stHour : stHour,
+      stMin : stMin,
+      edHour : edHour,
+      edMin : edMin
+    };
+    // console.log('BUSINESS_DAY :', BUSINESS_DAY);
+    // console.log('work :', work);
+
+    EditPartnerWork(work, BUSINESS_DAY).then(result => {
+        GetCommonData(result, this._editPartnerWork).then(async resultData => {
+            if(resultData !== undefined) {
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
+            }
+        });
+    });
+  }
+  
 
   // 기존 선택된 전문분야 set
   _selectSpecialty = () => {
@@ -140,96 +175,136 @@ class MyProfileCompany extends Component {
     })
   }
 
-
-   // 선택된 데이터 array 추가
+  // 선택된 전문문야 데이터 array 추가
    _addDataArray = (value) => {
     ARRAY_SELECT_SPECIALTY = ARRAY_SELECT_SPECIALTY.concat({ prdTypeId : parseInt(value) });
       console.log("_addDataArray : ",ARRAY_SELECT_SPECIALTY);
   }
 
-  // 해제된 데이터 array 제거
+  // 해제된 전문문야 데이터 array 제거
   _removeDataArray = (value) => {
       ARRAY_SELECT_SPECIALTY = ARRAY_SELECT_SPECIALTY.filter((item, sidx) => item.prdTypeId !== parseInt(value));
       console.log("_removeDataArray : ",ARRAY_SELECT_SPECIALTY);
   }
 
-  // 진행 중
+  // 근무일 / 근무시간 set
   _drawWorkSchedule = () => {
+    const { workData } = this.state;
 
-    const newData = DAY_DATA.map((day) => {
+    const newData = INIT_DAY_DATA.map((day) => {
       return { ...day, workDay : this._chkWorkDay(day.key) };
     });
 
-    console.log(newData);
+    this.setState({
+      dayData : newData,
+      fullWorkYn : workData.fullWorkYn == 'Y' ?  true : false,
+      holidayWorkYn : workData.holidayWorkYn == 'Y' ?  true : false,
+    });
 
-    DAY_DATA = newData;
+    BUSINESS_DAY.fullWorkYn = workData.fullWorkYn;
+    BUSINESS_DAY.holidayWorkYn = workData.holidayWorkYn;
 
     // 시간 값 가져와서 set
     this.setState({
-      stHour : this.pad('9', 2),
-      stMin : this.pad('30', 2),
-      edHour : this.pad('18', 2),
-      edMin : this.pad('0', 2)
+      stHour : this.pad(workData.workStTime.substring(0, 2), 2),
+      stMin : this.pad(workData.workStTime.substring(2, 4), 2),
+      edHour : this.pad(workData.workEdTime.substring(0, 2), 2),
+      edMin : this.pad(workData.workEdTime.substring(2, 4), 2)
     });
   }
 
+  // 근무요일 set
   _chkWorkDay = (dayKey) => {
-    const { selectedDay } = this.state;
+    const { workData } = this.state;
 
     switch (dayKey) {
       case 'monWorkYn' : 
-        if (selectedDay.monWorkYn == 'Y') {
-          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'mon' }); 
+        if (workData.monWorkYn == 'Y') {
+          // ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'mon' }); 
+          BUSINESS_DAY.monWorkYn = 'Y'
           return true 
         } else {
           return false
         }
       case 'tueWorkYn' : 
-        if (selectedDay.tueWorkYn == 'Y') {
-          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'tue' }); 
+        if (workData.tueWorkYn == 'Y') {
+          // ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'tue' }); 
+          BUSINESS_DAY.tueWorkYn = 'Y';
           return true 
         } else {
           return false
         }
       case 'wedWorkYn' : 
-        if (selectedDay.wedWorkYn == 'Y') {
-          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'wed' }); 
+        if (workData.wedWorkYn == 'Y') {
+          // ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'wed' }); 
+          BUSINESS_DAY.wedWorkYn = 'Y';
           return true 
         } else {
           return false
         }
       case 'thuWorkYn' : 
-        if (selectedDay.thuWorkYn == 'Y') {
-          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'thu' }); 
+        if (workData.thuWorkYn == 'Y') {
+          // ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'thu' }); 
+          BUSINESS_DAY.thuWorkYn = 'Y';
           return true 
         } else {
           return false
         }
       case 'friWorkYn' : 
-        if (selectedDay.friWorkYn == 'Y') {
-          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'fri' }); 
+        if (workData.friWorkYn == 'Y') {
+          // ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'fri' }); 
+          BUSINESS_DAY.friWorkYn = 'Y';
           return true 
         } else {
           return false
         }
       case 'satWorkYn' : 
-        if (selectedDay.satWorkYn == 'Y') {
-          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'sat' }); 
+        if (workData.satWorkYn == 'Y') {
+          // ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'sat' }); 
+          BUSINESS_DAY.satWorkYn = 'Y';
           return true 
         } else {
           return false
         }
       case 'sunWorkYn' : 
-        if (selectedDay.sunWorkYn == 'Y') {
-          ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'sun' }); 
+        if (workData.sunWorkYn == 'Y') {
+          // ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: 'sun' }); 
+          BUSINESS_DAY.sunWorkYn = 'Y';
           return true 
         } else {
           return false
         }
-      default : return (selectedDay.monWorkYn == 'Y') ? true : false;
+      default : return (workData.monWorkYn == 'Y') ? true : false;
     }
   }
 
+  // 풀타임 버튼 클릭
+  async _handleFullBtnClick() {
+    const { fullWorkYn } = await this.state;
+
+    await this.setState({
+        fullWorkYn : !fullWorkYn,
+        holidayWorkYn : false,
+        stHour : '00',
+        stMin : '00',
+        edHour : '24',
+        edMin : '00',
+    });
+
+    BUSINESS_DAY.fullWorkYn = ( BUSINESS_DAY.fullWorkYn == 'Y') ? 'N' : 'Y';
+
+    if(fullWorkYn) {
+        SELECT_BUTTON.map((button) => {
+            button._handleFullRemoveBtn();
+        });
+    } else {
+        SELECT_BUTTON.map((button) => {
+            button._handleFullAddBtn();
+        });
+
+        BUSINESS_DAY.holidayWorkYn = 'N'
+    }
+  }
 
   // 선택된 데이터 값 변경 - 요일:Y
   _setData = (value) => {
@@ -342,7 +417,7 @@ class MyProfileCompany extends Component {
             </View>
 
             <CustomButton 
-                onPress={ this._logOut }
+                onPress={ this._editProdSpecialty }
                 DefaultLineBtn={true}
                 CustomBtnStyle={styles.mt13}
             >
@@ -352,7 +427,7 @@ class MyProfileCompany extends Component {
             <Text style={[styles.inputNbTitleTxt, styles.mb12]}>출장 가능시간</Text>
             <View>
               <View style={localStyles.weekWrap}>
-                  {DAY_DATA.map((data, idx) => (
+                  {this.state.dayData.map((data, idx) => (
                     <SelectWeekDay
                       key={ idx }
                       index={ idx }
@@ -361,6 +436,9 @@ class MyProfileCompany extends Component {
                       workDay={data.workDay}
                       addDataArray={ this._setData }
                       removeDataArray={ this._cancleData }
+                      ref={ ref => {
+                        SELECT_BUTTON[idx] = ref;
+                      }}
                     />
                   ))}
               </View>
@@ -390,23 +468,28 @@ class MyProfileCompany extends Component {
 
               <View style={[styles.fxDirRow, styles.justiConCenter]}>
                 <View style={[styles.checkBoxWrap, {marginRight: 8}]}>
-                  <CheckBox checked={this.state.checkbox}
-                    onPress={() => this.toggleSwitch()}
+                  <CheckBox 
+                    checked={this.state.fullWorkYn}
+                    onPress={ this._handleFullBtnClick }
                     style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                   />
                   <Text style={styles.greyFont}>풀타임</Text>
                 </View>
                 
                 <View style={[styles.checkBoxWrap, {marginLeft: 8}]}>
-                  <CheckBox checked={this.state.checkbox}
-                    onPress={() => this.toggleSwitch()}
+                  <CheckBox checked={this.state.holidayWorkYn}
+                    onPress={async () => {
+                        await this.setState({holidayWorkYn : !this.state.holidayWorkYn}),
+                        BUSINESS_DAY.holidayWorkYn = await this.state.holidayWorkYn ? 'Y' : 'N'
+                      }
+                    }
                     style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                   />
                   <Text style={styles.greyFont}>공휴일</Text>
                 </View>
               </View>
               <CustomButton 
-                onPress={ this._logOut }
+                onPress={ this._editPartnerWork }
                 DefaultLineBtn={true}
                 CustomBtnStyle={{marginTop: 13, marginBottom: 26}}
               >

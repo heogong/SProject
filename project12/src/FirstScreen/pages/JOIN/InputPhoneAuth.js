@@ -171,7 +171,6 @@ class InputPhoneAuth extends Component {
         });
 
         this.authNum._root.clear();
-        this.setState({resultMsg : result.resultMsg});
 
         alert(result.data.certNum);
       } else {

@@ -132,11 +132,11 @@ class InputWorkHours extends Component {
     }
 
     // 풀타임 버튼 클릭
-    _handleFullBtnClick() {
+    async _handleFullBtnClick() {
         // this.setState({spinner : true });
-        const { fullBtnLight, fullBtnWarning, checkBox1 } = this.state;
+        const { fullBtnLight, fullBtnWarning, checkBox1 } = await this.state;
 
-        this.setState({
+        await this.setState({
             checkBox1 : !checkBox1,
             fullBtnLight : !fullBtnLight,
             fullBtnWarning : !fullBtnWarning,
@@ -149,7 +149,7 @@ class InputWorkHours extends Component {
         BUSINESS_DAY.fullWorkYn = ( BUSINESS_DAY.fullWorkYn == 'Y') ? 'N' : 'Y';
         BUSINESS_DAY.holidayWorkYn = ( BUSINESS_DAY.holidayWorkYn == 'Y') ? 'N' : 'Y';
 
-        if(this.state.fullBtnWarning) {
+        if(checkBox1) {
             SELECT_BUTTON.map((button) => {
                 button._handleFullRemoveBtn();
             });
@@ -158,7 +158,6 @@ class InputWorkHours extends Component {
                 button._handleFullAddBtn();
             });
         }
-
         // this.setState({spinner : false });
     }
 
