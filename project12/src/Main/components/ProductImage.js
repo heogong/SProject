@@ -130,6 +130,7 @@ class ProductImage extends Component {
                     }) }>
                     <View style={localStyles.prdCardOffPhotoWrap}>
                         <Image source={require("~/Common/Image/camera_icon.png")}  resizeMode="contain" style={localStyles.prdCardCameraIcon} />
+                        <Text style={{fontSize: 14}}>{this.props.prdTypeImgCateNm}</Text>
                     </View>
                 </TouchableOpacity>
             )

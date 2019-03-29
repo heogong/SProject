@@ -145,6 +145,7 @@ class ProductShowCase extends Component {
                                     key={idx}
                                     clientPrdId={imgType.clientPrdId}
                                     prdTypeImgCateId={imgType.prdTypeImgCateId}
+                                    prdTypeImgCateNm={imgType.prdTypeImgCateNm}
                                     uri={imgType.fileUrl}
                                     clientPrdImgId={imgType.clientPrdImgId}
                                 />

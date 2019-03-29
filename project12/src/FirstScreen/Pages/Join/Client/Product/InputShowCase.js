@@ -69,8 +69,9 @@ class InputShowCase extends Component {
         GetProdImageType(this.props.prodTypeId).then(result => {
             GetCommonData(result, this._drawProductImageType).then(async resultData => {
                 if(resultData !== undefined) {
-                    // console.log(resultData);
+                    console.log(resultData);
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    
                     if(ResultBool) {
                         this.setState({prdTypeImgData : resultData.data});
                     } else {

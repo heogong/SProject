@@ -243,6 +243,7 @@ class EditProdShowCase extends Component {
                                                 key={idx}
                                                 clientPrdId={this.props.clientPrdId}
                                                 prdTypeImgCateId={imgType.prdTypeImgCateId}
+                                                prdTypeImgCateNm={imgType.prdTypeImgCateNm}
                                                 uri={imgType.fileUrl}
                                                 clientPrdImgId={imgType.clientPrdImgId}
                                             />
