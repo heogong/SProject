@@ -192,7 +192,7 @@ const PAGE = () => (
       <Scene key="NonMemberNoticeInfoService" component={NonMemberNoticeInfoService} />
       
       {/* 약관동의 */}
-      <Scene key="PartnerAgreeTermsService" component={PartnerAgreeTermsService} />
+      <Scene key="PartnerAgreeTermsService" initial component={PartnerAgreeTermsService} />
       <Scene key="SuccessJoinPartner" component={SuccessJoinPartner} />
       <Scene key="ClientAgreeTermsService" component={ClientAgreeTermsService} />
       

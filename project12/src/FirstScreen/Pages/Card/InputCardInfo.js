@@ -7,6 +7,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import { Actions } from 'react-native-router-flux';
 import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
 
+import RegCardAgreeTerm from '~/FirstScreen/Functions/RegCardAgreeTerm';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import RegCard from '~/FirstScreen/Functions/Card/RegCard';
 
@@ -63,6 +64,36 @@ export default class InputCardInfo extends Component {
         console.log("exit");
       })
   }
+
+    // 결제 약관 동의 등록
+    _regCardAgreeTerm = () => {
+      const {checkBox1, checkBox2, checkBox3, checkBox4, checkBox5} = this.state;
+
+      const agreeTerms = {
+        checkBox1 : checkBox1,
+        checkBox2 : checkBox2,
+        checkBox3 : checkBox3,
+        checkBox4 : checkBox4,
+        checkBox5 : checkBox5
+      }
+
+      RegCardAgreeTerm(agreeTerms).then(async result => {
+        GetCommonData(result, this._regAgreeTerm).then(async resultData => {
+          if(resultData !== undefined) {
+              console.log(resultData);
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+              if(ResultBool) {
+                  this._cardRegister();
+              } else {
+                  this.setState({
+                    isAlertModal : true,
+                    resultMsg : resultData.resultMsg
+                  })
+                }
+              }
+          });
+      });
+  } 
 
   // 카드 등록
   _cardRegister = () => {

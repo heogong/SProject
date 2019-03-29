@@ -7,8 +7,12 @@ import { PARTNER } from '~/Common/Blend';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
+import RegAgreeTerm from '~/FirstScreen/Functions/RegAgreeTerm';
+import GetCommonData from '~/Common/Functions/GetCommonData';
+
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
@@ -23,21 +27,42 @@ class AgreeTermsService extends Component {
       check3 : false,
       check4 : false,
       check5 : false,
-      disableBtn : true
+      disableBtn : true,
+      isAlertModal : false, // alert 용
+      resultMsg : null // alert 용
     };
     
   }
 
+  // 쿨리닉 약관 동의 등록
+  _regAgreeTerm = () => {
+    const {checkBox1, checkBox2, checkBox3, checkBox4, checkBox5} = this.state;
 
-  // 고객 타입에 따른 페이지 이동
-  _nextPage = () => {
-    // if(this.props.usrObj.usrCustomerType == PARTNER) {
-    //     Actions.PartnerTermsService();
-    // } else {
-    //     Actions.SuccessAgreeTermsService();
-    // }
-    Actions.SuccessAgreeTermsService();
-  }
+    const agreeTerms = {
+      checkBox1 : checkBox1,
+      checkBox2 : checkBox2,
+      checkBox3 : checkBox3,
+      checkBox4 : checkBox4,
+      checkBox5 : checkBox5
+    }
+
+    RegAgreeTerm(agreeTerms).then(async result => {
+      GetCommonData(result, this._regAgreeTerm).then(async resultData => {
+        if(resultData !== undefined) {
+            console.log(resultData);
+            const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+            if(ResultBool) {
+                Actions.SuccessAgreeTermsService();
+            } else {
+                this.setState({
+                    isAlertModal : true,
+                    resultMsg : resultData.resultMsg
+                })
+              }
+            }
+        });
+    });
+  } 
 
   // 확인 버튼 유효성 체크
   _chkNextBtn = () => {
@@ -135,13 +160,22 @@ class AgreeTermsService extends Component {
 
           <View style={styles.footerBtnWrap}>
             <CustomButton 
-              onPress={ this._nextPage }
+              onPress={ this._regAgreeTerm }
               disabled={ this.state.disableBtn }
             >
               약관동의완료
             </CustomButton>
           </View>
         </View>
+
+         {/* alert 메세지 모달 */}
+         <CustomModal
+          modalType="ALERT"
+          isVisible={this.state.isAlertModal}
+          onPress={ () => this.setState({isAlertModal : false})}
+          infoText={this.state.resultMsg}
+          btnText="확인"
+        />
 
       </Container>
     )

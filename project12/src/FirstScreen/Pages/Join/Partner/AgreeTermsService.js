@@ -4,8 +4,12 @@ import { CheckBox, Container, Text } from "native-base";
 
 import { Actions } from 'react-native-router-flux';
 
+import RegAgreeTerm from '~/FirstScreen/Functions/RegAgreeTerm';
+import GetCommonData from '~/Common/Functions/GetCommonData';
+
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
@@ -20,7 +24,9 @@ class AgreeTermsService extends Component {
       checkBox2 : false,
       checkBox3 : false,
       checkBox4 : false,
-      checkBox5 : false
+      checkBox5 : false,
+      isAlertModal : false, // alert 용
+      resultMsg : null // alert 용
     };
   }
 
@@ -33,6 +39,36 @@ class AgreeTermsService extends Component {
       this.setState({disableBtn : true})
     }
   }
+
+  // 쿨리닉 약관 동의 등록
+  _regAgreeTerm = () => {
+    const {checkBox1, checkBox2, checkBox3, checkBox4, checkBox5} = this.state;
+
+    const agreeTerms = {
+      checkBox1 : checkBox1,
+      checkBox2 : checkBox2,
+      checkBox3 : checkBox3,
+      checkBox4 : checkBox4,
+      checkBox5 : checkBox5
+    }
+
+    RegAgreeTerm(agreeTerms).then(async result => {
+      GetCommonData(result, this._regAgreeTerm).then(async resultData => {
+        if(resultData !== undefined) {
+            console.log(resultData);
+            const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+            if(ResultBool) {
+                Actions.SuccessJoinPartner();
+            } else {
+                this.setState({
+                    isAlertModal : true,
+                    resultMsg : resultData.resultMsg
+                })
+              }
+            }
+        });
+    });
+  } 
 
   render() {
     return (
@@ -135,14 +171,21 @@ class AgreeTermsService extends Component {
           <View style={styles.footerBtnWrap}>
             <CustomButton 
               disabled={this.state.disableBtn}
-              onPress={ Actions.SuccessJoinPartner }
-              edgeFill={true}
-              fillTxt={true}
+              onPress={ this._regAgreeTerm }
             >
               약관동의완료
             </CustomButton>
           </View>
         </View>
+
+         {/* alert 메세지 모달 */}
+          <CustomModal
+            modalType="ALERT"
+            isVisible={this.state.isAlertModal}
+            onPress={ () => this.setState({isAlertModal : false})}
+            infoText={this.state.resultMsg}
+            btnText="확인"
+          />
 
       </Container>
     )
