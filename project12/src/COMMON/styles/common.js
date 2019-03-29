@@ -60,8 +60,8 @@ export const styles = StyleSheet.create({
       fontSize : 14
     },
     btnBackArrowIcon: {
-      width: 30,
-      height: 30
+      width: 25,
+      height: 25
     },
     // 메인 헤더
     headerM: {
