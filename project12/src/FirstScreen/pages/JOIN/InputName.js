@@ -11,6 +11,7 @@ import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from "~/Common/Styles/colors";
 
 const USER_NM_LEN = 1;
 class InputName extends Component {
@@ -73,13 +74,15 @@ class InputName extends Component {
                 </View>
               </View>
             </View>
-            <View style={[styles.fx2, styles.justiConCenter]}>
-              <Item regular style={[styles.mb15, {height : 48}]}>
-                <Input 
+            <View style={[styles.fx3, styles.justiConCenter]}>
+              <Item regular style={styles.inputWhBackGreyBo}>
+                <Input  
                   onChangeText={ this._handleChange }
                   value={ this.state.text }
                   autoFocus={ true }
-                  placeholder="이름을 입력해주세요." />
+                  placeholder="이름을 입력해주세요."
+                  placeholderTextColor={color.inputPlaceHodler}
+                  style={styles.inputDefaultBox}/>
               </Item>
             </View>
 

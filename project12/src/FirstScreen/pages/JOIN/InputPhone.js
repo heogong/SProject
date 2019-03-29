@@ -15,6 +15,7 @@ import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomButton from '~/Common/Components/CustomButton';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from "~/Common/Styles/colors";
 
 const USER_PHONE_LEN = 9; //최소 번호 길이
 class InputPhone extends Component {
@@ -100,15 +101,18 @@ class InputPhone extends Component {
                 </View>
               </View>
             </View>
-            <View style={[styles.fx2, styles.justiConCenter]}>
-              <Item regular style={[styles.mb15, {height : 48}]}>
+            <View style={[styles.fx3, styles.justiConCenter]}>
+              <Item regular style={styles.inputWhBackGreyBo}>
                 <Input 
                   onChangeText={ this._handleNumberChange }
                   value={this.state.text}
                   onSubmitEditing={this._getAuthNumber}
                   autoFocus={ true }
                   keyboardType='numeric'
-                  placeholder="핸드폰번호(하이픈 - 빼고 입력)" />
+                  placeholder="핸드폰번호(하이픈 - 빼고 입력)"
+                  placeholderTextColor={color.inputPlaceHodler}
+                  style={styles.inputDefaultBox}
+                />
               </Item>
             </View>
 

@@ -21,6 +21,7 @@ import CustomButton from '~/Common/Components/CustomButton';
 import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
+import { color } from "~/Common/Styles/colors";
 
 const CERT_LEN = 4;
 
@@ -228,11 +229,11 @@ class InputPhoneAuth extends Component {
                 </View>
               </View>
             </View>
-
-            <View style={[styles.fx2, styles.justiConCenter]}>
+            
+            <View style={[styles.fx3, styles.justiConCenter]}>
               <View style={styles.fxDirRow}>
-                <View style={{width : '60%', paddingRight : 5}}>
-                  <Item regular style={{height : 50}}>
+                <View style={[styles.fx3, styles.pr12, styles.justiConCenter]}>
+                  <Item regular style={styles.inputWhBackGreyBo}>
                     <Input
                       ref={(input) => { this.authNum = input; }}
                       onChangeText={this._handleNumberChange}
@@ -241,30 +242,31 @@ class InputPhoneAuth extends Component {
                       maxLength={ CERT_LEN + 2 }
                       autoFocus={ true }
                       keyboardType='numeric'
-                      placeholder="인증번호입력"
+                      placeholder="인증번호 입력"
+                      placeholderTextColor={color.inputPlaceHodler}
+                      style={styles.inputDefaultBox}
                       />
                   </Item>
-
-                  <Text style={styles.greyFont}>{this.state.resultMsg}</Text>
-                  
                 </View>
-                <View style={{width: '40%'}}>
+                <View style={[styles.fx2, styles.justiConCenter]}>
                   <CustomButton 
                     onPress={this._checkSmsCertNum}
                     disabled={ this.state.btnDisabled }
-                    CustomFontStyle={{fontSize: 14, textAlign: "center"}}
+                    CustomFontStyle={{fontSize: 14}}
+                    CustomBtnStyle={{height: 48, marginBottom: -5}}
                   >
-                    인증번호확인
+                    인증번호 확인
                   </CustomButton>
                 </View>
               </View>
 
+              <Text style={{marginTop: 10, color: color.warningColor, fontSize: 13}}>{this.state.resultMsg}</Text>
+
               {(this.state.incorrectAuthNum) ? (
-                <View style={styles.mt13}>
+                <View style={{marginTop: 10}}>
                   <CustomButton 
                     onPress={this._getAuthNumber}
                     DefaultLineBtn={true}
-                    CustomFontStyle={{fontSize: 14, textAlign: "center"}}
                   >
                     인증번호 재전송
                   </CustomButton>
@@ -272,20 +274,21 @@ class InputPhoneAuth extends Component {
               ) : (
                 <View/>
               ) }
-
             </View>
 
-            <View style={styles.footerBtnWrap}>
-              <CustomButton 
-                onPress={this._nextJoinBtn}
-                disabled={ this.state.disabledNextBtn }
-                edgeFill={true}
-                fillTxt={true}
-              >
-                입력완료
-              </CustomButton>
-            </View>
           </View>
+
+          <View style={styles.footerBtnWrap}>
+            <CustomButton 
+              onPress={this._nextJoinBtn}
+              disabled={ this.state.disabledNextBtn }
+              edgeFill={true}
+              fillTxt={true}
+            >
+              입력완료
+            </CustomButton>
+          </View>
+            
 
           <CustomModal
               modalType="CONFIRM"
