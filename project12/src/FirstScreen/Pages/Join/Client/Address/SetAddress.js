@@ -184,13 +184,11 @@ class SetAddress extends Component {
                     </View>
 
                     <View style={[styles.fx3, styles.justiConCenter]}>
-                        <Item regular style={[styles.mb10, {height : 50}]}
-                            // onPress={this._goSearchAddress}
-                        >
+                        <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
                             <Icon active name="ios-search" style={[styles.inputIcon, {marginRight: 0, paddingRight: 0}]} />
                             <Input
                                 onChangeText={ (text) => this.setState({addressName : text})}
-                                placeholder="주소를 입력해 주세요" 
+                                placeholder="주소를 입력해 주세요." 
                                 placeholderTextColor={color.inputPlaceHodler} 
                                 style={styles.inputDefaultBox}
                             >
@@ -198,21 +196,21 @@ class SetAddress extends Component {
                             </Input>
                         </Item>
 
-                        <Item regular style={[
-                            (this.state.detailAddressInput) ? localStyles.show : localStyles.hide, 
-                            {height : 50}]
-                        }>
-                            <Input 
-                                onChangeText={this._handleChange}
-                                placeholder="상세주소입력">
-                                    {this.state.detailAddressName} 
-                                </Input>
+                        <Item regular style={styles.inputWhBackGreyBo}>
+                            <Input
+                                placeholder="상세주소를 입력해주세요."
+                                placeholderTextColor={color.inputPlaceHodler}
+                                style={styles.inputDefaultBox}>
+                                {this.state.detailAddressName} 
+                            </Input>
                         </Item>
                     </View>
 
                     <View style={styles.footerBtnWrap}>
                         <CustomButton
                             onPress={this._goSearchAddress}
+                            DefaultLineBtn={true}
+                            CustomBtnStyle={styles.mb12}
                         >
                             주소검색
                         </CustomButton>

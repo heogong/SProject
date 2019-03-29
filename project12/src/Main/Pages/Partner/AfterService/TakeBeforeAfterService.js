@@ -127,14 +127,15 @@ class TakeBeforeAfterService extends Component {
             <CustomButton 
               onPress={ this.selectPhotoTapped.bind(this) }
               DefaultLineBtn={true}
+              CustomBtnStyle={styles.mb12}
             >
-              앨범에서선택하기
+              앨범에서 선택하기
             </CustomButton>
             
             <CustomButton 
               onPress={ this.takePhotoTapped.bind(this) }
             >
-              사진촬영하기
+              사진 촬영하기
             </CustomButton>
           </View>
         </View>
