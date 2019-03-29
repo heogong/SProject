@@ -20,7 +20,7 @@ export default class CardIndex extends Component {
 
           <View style={[styles.fx1, styles.alignItemsCenter, styles.justiConCenter]}>
             <View style={styles.alignItemsCenter}>
-              <Image source={require('~/Common/Image/Next_icon.png')} resizeMode='center'/>
+              <Image source={require('~/Common/Image/Next_icon.png')} resizeMode='center' style={styles.btnSuccNextIcon}/>
             </View>
             <View style={styles.alignItemsCenter}>
               <H1>회원가입이</H1>

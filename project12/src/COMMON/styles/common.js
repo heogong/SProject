@@ -63,6 +63,11 @@ export const styles = StyleSheet.create({
       width: 25,
       height: 25
     },
+    btnSuccNextIcon: {
+      width: 50,
+      height: 50,
+      marginBottom: 20
+    },
     // 메인 헤더
     headerM: {
       height: 55,

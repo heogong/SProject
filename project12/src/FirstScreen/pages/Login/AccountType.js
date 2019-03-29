@@ -274,6 +274,7 @@ const localStyles = StyleSheet.create({
     paddingRight: 19,
     paddingTop: 35,
     paddingBottom: 25,
+    marginBottom: 26,
     backgroundColor : color.defaultColor
   },
   checkBox: {

@@ -25,7 +25,7 @@ class SuccessRegProduct extends Component {
           <View style={styles.succContentTop}>
             <View>
               <View style={[styles.alignItemsCenter, {marginBottom: 38}]}>
-                <Image source={require('~/Common/Image/Next_icon.png')} style={{width: 48, height: 48}}/>
+                <Image source={require('~/Common/Image/Next_icon.png')}  style={styles.btnSuccNextIcon}/>
               </View>
               <View style={styles.succTopTxtWrap}>
                 <Text style={styles.succTopTxt}>제품등록이</Text>
