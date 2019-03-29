@@ -16,7 +16,7 @@ class DrawMap extends Component {
 
     render() {
         return (
-            <View style={ styles.container }>
+            <View style={[styles.container, {backgroundColor: color.defaultBackColor}]}>
                 { (this.props.showMap) ? (
                 <MapView
                     provider={PROVIDER_GOOGLE} // remove if not using Google Maps

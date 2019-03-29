@@ -51,11 +51,11 @@ class SearchAddress extends Component {
       onPress={() => this._onPress(item)}
     >
       <Body style={localStyles.flatListWrap}>
-          <Text style={localStyles.flatListTxt}>{item.address_name}</Text>
+        <Text style={localStyles.flatListTxt}><Text style={[localStyles.flatListTxt, {color: color.defaultColor}]}>[지번]</Text> {item.address_name}</Text>
           {(item.road_address !== null) ? (
-            <Text style={localStyles.flatListTxt}>{item.road_address.address_name}</Text>
+            <Text style={localStyles.flatListTxt}><Text style={[localStyles.flatListTxt, {color: color.defaultColor}]}>[도로]</Text> {item.road_address.address_name}</Text>
           ) : (
-            <Text style={localStyles.flatListTxt}>도로명 주소가 없습니다.</Text>
+            <Text style={[localStyles.flatListTxt, {color: color.greyColor, marginTop: 2}]}><Text style={[localStyles.flatListTxt, {color: color.defaultColor}]}>[도로]</Text> 주소가 없습니다.</Text>
           )}
       </Body>
     </ListItem>
@@ -64,7 +64,7 @@ class SearchAddress extends Component {
   _emptyRenderItem = () => (
     <ListItem style={localStyles.flatListWrapList}>
       <Body style={[localStyles.flatListWrap, {paddingTop: 20, paddingBottom: 20}]}>
-        <Text style={localStyles.flatListTxt}>검색정보가 없습니다.</Text>
+        <Text style={[localStyles.flatListTxt, {color: color.greyColor}]}>검색정보가 없습니다.</Text>
       </Body>
     </ListItem>
   );
@@ -147,7 +147,7 @@ class SearchAddress extends Component {
         <View style={{flex:1, paddingLeft: 26, paddingRight: 26, borderWidth: 0}}>
           <Item
             regular
-            style={[styles.inputWhBackGreyBo, {backgroundColor: color.whiteColor, marginLeft: 0}]}
+            style={[styles.inputWhBackBuBo, {backgroundColor: color.whiteColor, marginLeft: 0}]}
             onPress={ () => this.setState({showMap : !this.state.showMap})}
           >
             <Input
@@ -219,7 +219,7 @@ const localStyles = StyleSheet.create({
       display: 'flex'
   },
   flatListTxt: {
-    fontSize: 14, color: "#1e1e32"
+    fontSize: 13, color: "#1e1e32"
   },
   flatListWrap: {
     flex: 1, 
