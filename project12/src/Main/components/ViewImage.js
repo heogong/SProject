@@ -1,59 +1,48 @@
-import React, {Component} from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { Icon, Text } from "native-base";
+import React, { Component } from "react";
+import { Keyboard, StyleSheet, TouchableOpacity, ImageBackground, View } from 'react-native'
+import { Button, Container, CheckBox, Text, Item, Input } from "native-base";
 
-import { Actions } from 'react-native-router-flux';
-import CustomButton from '~/Common/Components/CustomButton';
+import CustomHeader from "~/Common/Components/CustomHeader";
+import CustomButton from "~/Common/Components/CustomButton";
+import { styles, viewportWidth } from '~/Common/Styles/common';
+import { color } from "~/Common/Styles/colors";
 
 class ViewImage extends Component {
-  constructor(props) { 
-    super(props); 
-
-    this.state = {
-      imgUri : 'https://i.pinimg.com/originals/b8/29/fd/b829fd8f5df3e09589575e4ca939bc9f.png'
-    };
+  constructor(props) {
+    super(props);
+    this.state = {};
   }
 
-  componentDidMount() {
-    this.setState({imgUri : this.props.imageUri});
+  static defaultProps = {
+    imgUri: 'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png',
   }
 
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: '#fc0', flexDirection: 'column'}}>
-        <Image
-            resizeMode={'center'}
-            style={{ width: '100%', height: '100%', backgroundColor: 'red'} }
-            source={{uri: this.state.imgUri}}
-        /> 
-        <TouchableOpacity style={ styles.exitButton } onPress={() => Actions.pop() } >
-          <Icon name="ios-arrow-dropleft" />
-        </TouchableOpacity>
-      </View>
+      <Container style={styles.containerInnerPd}>
+        <CustomHeader />
+
+        <View style={styles.contentWrap}>
+        
+          <ImageBackground
+            source={{uri : this.props.imgUri}} 
+            resizeMode="contain"
+            style={localStyles.newCardStyle}
+          /> 
+        </View>
+
+      </Container>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+const localStyles = StyleSheet.create({
+  newCardStyle : {
+    width : '100%',
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1
   },
-  avatar: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0
-  },
-  exitButton: {
-    position: 'absolute',
-    left: 10,
-    top: 7,
-    padding : 10
-  }
 });
 
-export default ViewImage;
+export default ViewImage; 

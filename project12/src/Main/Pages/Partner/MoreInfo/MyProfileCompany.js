@@ -20,6 +20,7 @@ import CustomModal from '~/Common/Components/CustomModal';
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from "~/Common/Styles/colors";
 
+let FULL_BTN = false;
 let SELECT_BUTTON = []; // 요일 버튼 객체 배열 
 let ARRAY_SELECT_SPECIALTY = []; // 선택된 전문분야 배열
 let ARRAY_SELECT_DATA = []; // 선택된 날짜 배열
@@ -201,6 +202,8 @@ class MyProfileCompany extends Component {
       holidayWorkYn : workData.holidayWorkYn == 'Y' ?  true : false,
     });
 
+    FULL_BTN = workData.fullWorkYn == 'Y' ?  true : false;
+
     BUSINESS_DAY.fullWorkYn = workData.fullWorkYn;
     BUSINESS_DAY.holidayWorkYn = workData.holidayWorkYn;
 
@@ -280,10 +283,12 @@ class MyProfileCompany extends Component {
 
   // 풀타임 버튼 클릭
   async _handleFullBtnClick() {
+    FULL_BTN = !FULL_BTN;
+
     const { fullWorkYn } = await this.state;
 
     await this.setState({
-        fullWorkYn : !fullWorkYn,
+        fullWorkYn : FULL_BTN,
         holidayWorkYn : false,
         stHour : '00',
         stMin : '00',
@@ -293,16 +298,15 @@ class MyProfileCompany extends Component {
 
     BUSINESS_DAY.fullWorkYn = ( BUSINESS_DAY.fullWorkYn == 'Y') ? 'N' : 'Y';
 
-    if(fullWorkYn) {
-        SELECT_BUTTON.map((button) => {
-            button._handleFullRemoveBtn();
-        });
+    if(FULL_BTN) {
+      SELECT_BUTTON.map((button) => {
+        button._handleFullAddBtn();
+      });
+      BUSINESS_DAY.holidayWorkYn = 'N'
     } else {
-        SELECT_BUTTON.map((button) => {
-            button._handleFullAddBtn();
-        });
-
-        BUSINESS_DAY.holidayWorkYn = 'N'
+      SELECT_BUTTON.map((button) => {
+        button._handleFullRemoveBtn();
+      });
     }
   }
 
@@ -321,6 +325,7 @@ class MyProfileCompany extends Component {
 
     ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.concat({ value: value });
     // console.log(ARRAY_SELECT_DATA)
+    this._chkFullBtn();
   }
 
   // 해제된 데이터 값 변경 - 요일:N
@@ -337,6 +342,18 @@ class MyProfileCompany extends Component {
       }
       ARRAY_SELECT_DATA = ARRAY_SELECT_DATA.filter((item) => item.value !== value);
       // console.log(ARRAY_SELECT_DATA)
+      this._chkFullBtn();
+  }
+
+   // 요일 풀타임 여부 확인
+   _chkFullBtn = () => {
+    if(ARRAY_SELECT_DATA.length == 7) {
+        this.setState({fullWorkYn : true});
+        FULL_BTN = true;
+    } else {
+        this.setState({fullWorkYn : false});
+        FULL_BTN = false;
+    }
   }
 
   // 타임 picker 표시

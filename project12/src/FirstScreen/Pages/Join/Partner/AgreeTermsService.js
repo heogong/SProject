@@ -4,6 +4,8 @@ import { CheckBox, Container, Text } from "native-base";
 
 import { Actions } from 'react-native-router-flux';
 
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+
 import RegAgreeTerm from '~/FirstScreen/Functions/RegAgreeTerm';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 

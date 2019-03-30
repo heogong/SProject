@@ -18,6 +18,7 @@ import { styles, viewportWidth } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from "~/Common/Styles/colors";
 
+let FULL_BTN = false;
 
 const ST_TYPE = 'work_st'; // 시작 시간 클릭 여부
 const ED_TYPE = 'work_ed'; // 종료 시간 클릭 여부
@@ -57,8 +58,8 @@ class InputWorkHours extends Component {
     //   this.SelectButton = []; // 선택된 요일
 
       this.state = {
-          fullBtnLight : true, // 풀타임 비활성화
-          fullBtnWarning : false, // 풀타임 활성화
+        //   fullBtnLight : true, // 풀타임 비활성화
+        //   fullBtnWarning : false, // 풀타임 활성화
           btnDisabled : true, // 다음단계 버튼 활성화 여부
           isDateTimePickerVisible: false, // 타임 picker 보임 여부
           setTime : '01/01/0000 09:00:00', // 타임 picker 기본 데이터
@@ -112,34 +113,57 @@ class InputWorkHours extends Component {
 
         if(SELECT_DATA.length == 7) {
             this.setState({
-                fullBtnLight : false,
-                fullBtnWarning : true,
+                checkBox1 : true,
                 btnDisabled : false
             });
+            FULL_BTN = true;
         } else {
             if(SELECT_DATA.length == 0) {
-                this.setState({
-                    btnDisabled : true
-                });
+                this.setState({btnDisabled : true});
             } else {
                 this.setState({
-                    fullBtnLight : true,
-                    fullBtnWarning : false,
+                    checkBox1 : false,
                     btnDisabled : false
                 });
             }
+            FULL_BTN = false;
         }
+
+        // if(SELECT_DATA.length == 7) {
+        //     this.setState({
+        //         fullBtnLight : false,
+        //         fullBtnWarning : true,
+        //         checkBox1 : false
+        //     });
+        //     FULL_BTN = true;
+        // } else {
+        //     if(SELECT_DATA.length == 0) {
+        //         this.setState({
+        //             checkBox1 : true
+        //         });
+        //         FULL_BTN = false;
+        //     } else {
+        //         this.setState({
+        //             fullBtnLight : true,
+        //             fullBtnWarning : false,
+        //             checkBox1 : false
+        //         });
+        //         FULL_BTN = true;
+        //     }
+        // }
     }
 
     // 풀타임 버튼 클릭
     async _handleFullBtnClick() {
         // this.setState({spinner : true });
-        const { fullBtnLight, fullBtnWarning, checkBox1 } = await this.state;
+        FULL_BTN = !FULL_BTN;
 
-        await this.setState({
-            checkBox1 : !checkBox1,
-            fullBtnLight : !fullBtnLight,
-            fullBtnWarning : !fullBtnWarning,
+        // const { fullBtnLight, fullBtnWarning } = await this.state;
+
+        this.setState({
+            checkBox1 : FULL_BTN,
+            // fullBtnLight : !fullBtnLight,
+            // fullBtnWarning : !fullBtnWarning,
             stHour : '00',
             stMin : '00',
             edHour : '24',
@@ -149,13 +173,13 @@ class InputWorkHours extends Component {
         BUSINESS_DAY.fullWorkYn = ( BUSINESS_DAY.fullWorkYn == 'Y') ? 'N' : 'Y';
         BUSINESS_DAY.holidayWorkYn = ( BUSINESS_DAY.holidayWorkYn == 'Y') ? 'N' : 'Y';
 
-        if(checkBox1) {
+        if(FULL_BTN) {
             SELECT_BUTTON.map((button) => {
-                button._handleFullRemoveBtn();
+                button._handleFullAddBtn();
             });
         } else {
             SELECT_BUTTON.map((button) => {
-                button._handleFullAddBtn();
+                button._handleFullRemoveBtn();
             });
         }
         // this.setState({spinner : false });

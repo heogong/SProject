@@ -10,7 +10,7 @@ import IntroPage from './src';
 import InitPage from './src/FirstScreen/Pages/InitPage';
 import ResetMain from './src/Main/Pages/ResetMain';
 
-import ServiceInfo from './src/FirstScreen/Pages/ServiceInfo';
+import ServiceIntroduce from './src/FirstScreen/Pages/ServiceIntroduce';
 
 import ClientAgreeTermsService from './src/FirstScreen/Pages/Join/Client/AgreeTermsService';
 import PartnerAgreeTermsService from './src/FirstScreen/Pages/Join/Partner/AgreeTermsService';
@@ -88,7 +88,8 @@ import MyProfileModName from './src/Main/Pages/Partner/MoreInfo/MyProfileModName
 import MyProfileExit1 from './src/Main/Pages/Partner/MoreInfo/MyProfileExit1';
 import MyProfileExit2 from './src/Main/Pages/Partner/MoreInfo/MyProfileExit2';
 import MyCalcuList from './src/Main/Pages/Partner/MoreInfo/MyCalcuList';
-import NoticeList from './src/Main/Pages/Partner/MoreInfo/NoticeList';
+import NoticeList from './src/Main/Pages/Partner/MoreInfo/Notice/';
+import NoticeDetail from './src/Main/Pages/Partner/MoreInfo/Notice/NoticeDetail';
 import TermsMenu from './src/Main/Pages/Partner/MoreInfo/TermsMenu';
 import TermsContent1 from './src/Main/Pages/Partner/MoreInfo/TermsContent1';
 import MyProfileCompany from './src/Main/Pages/Partner/MoreInfo/MyProfileCompany';
@@ -171,7 +172,8 @@ import ClientMyProfileModName from './src/Main/Pages/Client/MoreInfo/MyProfileMo
 import ClientMyProfileModPassword1 from './src/Main/Pages/Client/MoreInfo/MyProfileModPassword1';
 import ClientMyProfileModPassword2 from './src/Main/Pages/Client/MoreInfo/MyProfileModPassword2';
 import ClientMyProfileModPhone from './src/Main/Pages/Client/MoreInfo/MyProfileModPhone';
-import ClientNoticeList from './src/Main/Pages/Client/MoreInfo/NoticeList';
+import ClientNoticeList from './src/Main/Pages/Client/MoreInfo/Notice/';
+import ClientNoticeDetail from './src/Main/Pages/Client/MoreInfo/Notice/NoticeDetail';
 import ClientTermsContent1 from './src/Main/Pages/Client/MoreInfo/TermsContent1';
 import ClientTermsMenu from './src/Main/Pages/Client/MoreInfo/TermsMenu';
 
@@ -188,11 +190,11 @@ const PAGE = () => (
       <Scene key="ResetMain"  component={ResetMain} type={ActionConst.RESET} />
       
       {/* 안내페이지 */}
-      <Scene key="ServiceInfo" component={ServiceInfo} />
+      <Scene key="ServiceIntroduce" component={ServiceIntroduce} />
       <Scene key="NonMemberNoticeInfoService" component={NonMemberNoticeInfoService} />
       
       {/* 약관동의 */}
-      <Scene key="PartnerAgreeTermsService" initial component={PartnerAgreeTermsService} />
+      <Scene key="PartnerAgreeTermsService" component={PartnerAgreeTermsService} />
       <Scene key="SuccessJoinPartner" component={SuccessJoinPartner} />
       <Scene key="ClientAgreeTermsService" component={ClientAgreeTermsService} />
       
@@ -215,7 +217,7 @@ const PAGE = () => (
       <Scene key="PartnerIndex" component={PartnerIndex} type={ActionConst.RESET}/>
       <Scene key="JoinInputBizLicense" component={JoinInputBizLicense} type={ActionConst.RESET}/>
       <Scene key="JoinTakeBizLicense" component={JoinTakeBizLicense}/>
-      <Scene key="JoinInputPartnerInfo" component={JoinInputPartnerInfo}/>
+      <Scene key="JoinInputPartnerInfo" component={JoinInputPartnerInfo} type={ActionConst.RESET}/>
       <Scene key="JoinSetPartnerAddress" component={JoinSetPartnerAddress} type={ActionConst.RESET}/>
       <Scene key="JoinSearchPartnerAddress" component={JoinSearchPartnerAddress} />
       
@@ -240,7 +242,7 @@ const PAGE = () => (
       
       {/* 사업장등록 */}
       <Scene key="RegBusinessPlaceIndex" component={RegBusinessPlaceIndex} />
-      <Scene key="RegBusinessPlace"  component={RegBusinessPlace} />
+      <Scene key="RegBusinessPlace" component={RegBusinessPlace} />
       <Scene key="SetBusinessPlace" component={SetBusinessPlace} type={ActionConst.RESET} />
       <Scene key="SetAddress"  component={SetAddress} />
       <Scene key="SearchAddress"  component={SearchAddress} />
@@ -288,6 +290,7 @@ const PAGE = () => (
       <Scene key="MyProfileExit2" component={MyProfileExit2} />
       <Scene key="MyCalcuList"  component={MyCalcuList} />
       <Scene key="NoticeList" component={NoticeList} />
+      <Scene key="NoticeDetail" component={NoticeDetail} />
       <Scene key="TermsMenu" component={TermsMenu} />
       <Scene key="TermsContent1" component={TermsContent1} />
       <Scene key="MyProfileCompany" component={MyProfileCompany} />
@@ -315,6 +318,7 @@ const PAGE = () => (
       <Scene key="ClientMyProfileExit1"  component={ClientMyProfileExit1} />
       <Scene key="ClientMyProfileExit2" component={ClientMyProfileExit2} />
       <Scene key="ClientNoticeList" component={ClientNoticeList} />
+      <Scene key="ClientNoticeDetail" component={ClientNoticeDetail} />
       <Scene key="ClientTermsMenu" component={ClientTermsMenu} />
       <Scene key="ClientTermsContent1" component={ClientTermsContent1} />
 

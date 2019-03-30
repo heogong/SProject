@@ -97,7 +97,7 @@ class MyProfileModName extends Component {
         <CustomHeader title="이름설정"/>
         <View style={styles.contentWrap}>
 
-          <View>
+          <View style={styles.fx1}>
             <View style={styles.tooltipWrap}>
               <Text style={styles.tooltipTxt}>본인의 실명을 입력 후 [설정완료] 버튼을 누러주세요.</Text>
             </View>
@@ -114,7 +114,7 @@ class MyProfileModName extends Component {
           </View>
 
           <View style={styles.footerBtnWrap}>
-          <CustomButton
+            <CustomButton
               onPress={this._changeUsrName}
               disabled={this.state.disableBtn}
             >

@@ -78,7 +78,7 @@ class InputPartnerInfo extends Component {
     return (
       <KeyboardAwareScrollView enableOnAndroid={true}>
         <Container style={styles.containerInnerPd}>
-          <CustomHeader />
+          <CustomHeader resetPage={true} />
           <View style={styles.contentWrap}>
 
             <View style={styles.mb10}>

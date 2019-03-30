@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { Container, Button, Text, Item, Input } from "native-base";
+import { View } from 'react-native'
+import { Container, Text, Item, Input } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -15,13 +15,18 @@ import CustomModal from '~/Common/Components/CustomModal';
 import { styles } from '~/Common/Styles/common';
 import { color } from "~/Common/Styles/colors";
 
+const USR_PASSWD_LEN = 8;
+const PASSWD_PATTERN = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+
 class MyProfileModPassword2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
       passwd1 : '',
       passwd2 : '',
+      patternPw : false,
       disableBtn : true,
+      errMsg : null,
       isAlertModal : false, // alert 용
       resultMsg : null  // alert 용
     };
@@ -50,27 +55,62 @@ class MyProfileModPassword2 extends Component {
     });
   } 
 
-  _chkPasswd = () => {
+  // 비밀번호 변경 버튼 활성화 여부
+  _handlePasswdChange = async (text) => {
     const { passwd1, passwd2 } = this.state;
 
-    if(passwd1 == passwd2) {
-      this._changeMyUsrPasswd();
-    } else {
+    await this.setState({passwd1 : text});
+
+    if(!PASSWD_PATTERN.test(text)) {
       this.setState({
-        isAlertModal : true,
-        resultMsg : '비밀번호가 동일하지 않습니다.'
-      })
+        patternPw : false,
+        disableBtn : true
+      });
+    } else {
+      this.setState({patternPw : true});
+
+      if(passwd2 !== '') {
+        this.setState({disableBtn : (passwd1.length > USR_PASSWD_LEN) ? false : true})
+      }
+    }
+  } 
+
+  // 비밀번호 변경 버튼 활성화 여부
+  _handleChkPasswdChange = async (text) => {
+    const { passwd1, passwd2 } = this.state;
+
+    await this.setState({passwd2 : text});
+
+    if(!PASSWD_PATTERN.test(text)) {
+      this.setState({
+        disableBtn : true
+      });
+    } else {
+      if( passwd1 !== '') {
+        this.setState({disableBtn : (passwd2.length > USR_PASSWD_LEN) ? false : true})
+      }
     }
   }
 
-  _chkButton = () => {
-    const chkLen = 4; // 변경 필요
+  // 비밀번호 체크 여부
+  _checkUsrPasswd = () => {
     const { passwd1, passwd2 } = this.state;
 
-    if(passwd1.length > chkLen && passwd2.length > chkLen) {
-      this.setState({disableBtn : false});
+    if(passwd1 !== passwd2) {
+      this.setState({errMsg : '비밀번호가 맞지 않습니다.'});
+      return false;
     } else {
-      this.setState({disableBtn : true});
+      this.setState({errMsg : ''});
+      return true;
+    }
+  }
+
+  // 최종 체크 후 변경 완료
+  _checkNextButton = async () => {
+    const passwdVaild = await(this._checkUsrPasswd());
+
+    if (passwdVaild) {
+      this._changeMyUsrPasswd();
     }
   }
 
@@ -88,27 +128,30 @@ class MyProfileModPassword2 extends Component {
             <Text style={styles.inputNbTitleTxt}>새 비밀번호 (8자 이상)</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
               <Input 
-                onChangeText={async (text) => { await this.setState({passwd1 : text}), this._chkButton() } }
+                onChangeText={this._handlePasswdChange}
                 placeholder="새로운 비밀번호를 입력해주세요." 
                 placeholderTextColor={color.inputPlaceHodler} 
                 style={styles.inputNbDefaultBox} secureTextEntry={true}
               />
+              <Icon name={this.state.patternPw ? "ios-checkmark-circle" : "ios-close-circle"} style={[styles.inputIcon, {color: color.defaultColor}]} />
             </Item>
             <Text style={styles.inputNbTitleTxt}>새 비밀번호 확인</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
               <Input 
-                onChangeText={async (text) => { await this.setState({passwd2 : text}), this._chkButton() } }
+                onChangeText={this._handleChkPasswdChange}
                 placeholder="새로운 비밀번호를 다시 입력해주세요." 
                 placeholderTextColor={color.inputPlaceHodler} 
                 style={styles.inputNbDefaultBox} 
                 secureTextEntry={true}
+                onBlur={ this._checkUsrPasswd }
               />
             </Item>
+            <Text style={{color: color.warningColor, fontSize: 13}}>{this.state.errMsg}</Text>
           </View>
 
           <View style={styles.footerBtnWrap}>
             <CustomButton 
-              onPress={ this._chkPasswd }
+              onPress={ this._checkNextButton }
               disabled={ this.state.disableBtn }
             >
               설정완료

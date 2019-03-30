@@ -21,8 +21,10 @@ class SearchAddress extends Component {
   constructor(props) {
     super(props);
 
+    this.addressInput = null;
+
     this.state = { 
-      addressName : (this.props.addressName !== null) ? this.props.addressName : '대방동 392-27',
+      addressName : (this.props.addressName !== '') ? this.props.addressName : '강남구 논현동',
       data: [],
       region: {
         latitude: 37.566535,
@@ -76,13 +78,15 @@ class SearchAddress extends Component {
 
   // 주소 정보 가져오기
   _setAddressInfo = () => {
+    if(this.state.addressName !== '') {
     GetAddress(this.state.addressName).then(result => {
       GetCommonData(result, this._setAddressInfo).then(async resultData => {
         if(resultData !== undefined) {
           const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
           console.log(result.data);
           if(ResultBool) {
-            this.setState({data : resultData.data.documents.filter(address => address.address_type !== "REGION")});
+            this.setState({data : resultData.data.documents });
+            // this.setState({data : resultData.data.documents.filter(address => address.address_type !== "REGION")});
            // this.setState({data : resultData.data.documents.filter(address => address !== null)});
           } else {
             this.setState({
@@ -93,6 +97,12 @@ class SearchAddress extends Component {
         }
       });
     });
+    } else {
+      this.setState({
+        isAlertModal : true,
+        resultMsg : '주소를 입력해 주세요.'
+      })
+    }
   }
 
 
@@ -151,6 +161,7 @@ class SearchAddress extends Component {
             onPress={ () => this.setState({showMap : !this.state.showMap})}
           >
             <Input
+              ref={(input) => { this.addressInput = input; }}
               placeholder="주소를 입력해 주세요"
               placeholderTextColor={color.inputPlaceHodler}
               style={styles.inputDefaultBox}
@@ -168,6 +179,13 @@ class SearchAddress extends Component {
             <Icon
               name="ios-close"
               style={[styles.inputIcon, {fontSize: 38, color: "#8e8e98"}]}
+              onPress={ () => {
+                this.addressInput._root.clear(), 
+                this.setState({
+                  data : [], 
+                  addressName : ''
+                })
+              }}
             />
           </Item>
 

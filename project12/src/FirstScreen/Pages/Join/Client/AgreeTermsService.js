@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native'
 import { Container, CheckBox, Text } from "native-base";
 
-import { PARTNER } from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, PARTNER } from '~/Common/Blend';
 
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';

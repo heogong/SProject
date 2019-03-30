@@ -14,6 +14,7 @@ import GetCommonData from '~/Common/Functions/GetCommonData';
 import CustomModal from '~/Common/Components/CustomModal';
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from "~/Common/Styles/colors";
+import { Actions } from 'react-native-router-flux';
 
 
 const DoAfterServiceImage = ({uri, action}) => (
