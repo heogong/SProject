@@ -264,9 +264,10 @@ export const styles = StyleSheet.create({
       paddingRight: 14,
       width: "100%",
       height: 36,
-      borderWidth: 1,
-      borderColor: "#c9cacb",
-      borderRadius: 0
+      borderRadius: 0,
+      borderBottomWidth: 0,
+      fontSize: 13,
+      color: color.defaultColor,
     },
     selectBoxTxt: {
       fontSize: 13,

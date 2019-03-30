@@ -5,6 +5,7 @@ import { ActionSheet, Container, Icon, Item, Picker, Root, Text, Textarea } from
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from "react-native-router-flux";
+import { SelectBox } from "react-native-picker-select";
 
 import GetProduct from '~/Main/Functions/GetProduct'
 import GetCommonData from '~/Common/Functions/GetCommonData';
@@ -258,29 +259,34 @@ class ApplyBusinessProduct extends Component {
                                     borderLeftWidth  :1, 
                                     borderRightWidth : 1,  
                                     borderColor : color.inputBoGrey,
-                                    height : 36
+                                    height : 36,
+                                    width: "100%",
+                                    marginLeft: 0,
                                 }}>
                                     <Picker
                                         mode="dropdown"
                                         iosIcon={<Icon name="arrow-dropdown" style={styles.selectBoxIcon}/>}
-                                        style={[styles.selectBoxWrap, { color : color.defaultColor }]}
-                                        placeholderStyle={{ color: color.inputPlaceHodler }}
+                                        style={styles.selectBoxWrap}
+                                        textStyle={styles.selectBoxTxt}
+                                        itemTextStyle={{fontSize: 13}}
                                         placeholderIconColor={color.defaultColor}
                                         selectedValue={this.state.selected}
                                         onValueChange={this.onValueChange.bind(this)}
                                     >
-                                        <Picker.Item label=" == 증상 선택 == " value={ -1 } style={{}} />
+                                        <Picker.Item label=" == 증상 선택 == " value={ -1 } style={{fontSize: 13}} />
                                         {this.state.asCaseData.map((asCase, idx) => 
                                             <Picker.Item key={idx} label={asCase.asItemNm} value={asCase.asItemId} />
                                         )}
                                     </Picker>
                                 </Item>
 
-                                <Textarea 
+                                <Textarea
                                     value={this.state.bizDsc}
                                     onChangeText={(text) => this.setState({asRecvDsc : text})}
                                     rowSpan={5} 
-                                    bordered placeholder="출장 시 참고사항(ex:주차공간이 협소합니다)" 
+                                    bordered placeholder="상세 AS 증상 및 출장 시 참고사항을 입력해 주세요." 
+                                    style={[styles.textAreaDefault, {marginTop: 12}]} 
+                                    placeholderTextColor="#c9cacb"
                                 />
                             </View>
 
@@ -333,6 +339,7 @@ class ApplyBusinessProduct extends Component {
                                     })
                             }
                             DefaultLineBtn={true}
+                            CustomBtnStyle={styles.mb12}
                         >
                             {this.state.buttonTitle}
                         </CustomButton>
