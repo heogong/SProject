@@ -12,7 +12,8 @@ export const styles = StyleSheet.create({
     containerRightSlide: {
       flex: 1,
       backgroundColor: color.whiteColor,
-      paddingLeft: 26
+      paddingLeft: 26,
+      paddingBottom: 26
     },
     containerInnerPd: {
       flex: 1,

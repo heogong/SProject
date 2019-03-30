@@ -127,7 +127,7 @@ class ListBusinessProductType extends Component {
                                         <Image source={require('~/Common/Image/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
                                     </TouchableOpacity>
                                 ) : (
-                                    <View style={[localStyles.closeIconWrap, localStyles.closeIconImg]}/>
+                                    <View/>
                                 )}
 
                                     <Text style={localStyles.myPrdNumTxt}>{ pad(idx, 2) }</Text>
@@ -187,8 +187,8 @@ function wp (percentage, space) {
       alignItems: "center",
       backgroundColor : color.defaultColor,
       width : productCardSize,
-      height: 280,
-      marginBottom: 10
+      paddingTop: 10,
+      paddingBottom: 10
     },
     myPrdNumTxt: {
       color : color.whiteColor,
@@ -236,7 +236,7 @@ function wp (percentage, space) {
       flexDirection: 'row',
       alignSelf: 'flex-start',
       marginLeft: 10,
-      marginTop: 10
+      marginTop: 0
     }
   });
 

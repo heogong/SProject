@@ -167,7 +167,6 @@ const localStyles = StyleSheet.create({
         margin: 5
       },
       prdCardPhotoBtnEn: {
-        height : 35,
         width : "100%",
         backgroundColor: 'rgba(40, 200, 245, 0.6)'
       },
@@ -175,7 +174,8 @@ const localStyles = StyleSheet.create({
         fontSize: 14,
         color: color.whiteColor,
         textAlign: "center",
-        marginTop: 10
+        paddingTop: 10,
+        paddingBottom: 10
       },
       prdCardCameraIcon: {
         width: 36,

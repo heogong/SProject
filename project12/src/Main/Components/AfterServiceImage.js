@@ -275,7 +275,6 @@ const localStyles = StyleSheet.create({
         width : asCardSize2
     },
     prdPhotoBtnEn: {
-        height : 35,
         width : "100%",
         backgroundColor: 'rgba(40, 200, 245, 0.6)'
     },
@@ -296,7 +295,8 @@ const localStyles = StyleSheet.create({
         fontSize: 14,
         color: color.whiteColor,
         textAlign: "center",
-        marginTop: 10
+        paddingTop: 10,
+        paddingBottom: 10
     },
     photoNoBoxWrap: {
         flex: 5,

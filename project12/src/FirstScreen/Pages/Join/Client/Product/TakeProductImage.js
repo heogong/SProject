@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ImageBackground, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Image } from 'react-native'
 import { Container, H1, Button, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -156,35 +156,15 @@ class TakeProductImage extends Component {
         <CustomHeader/>
 
         <View style={styles.fx1}>
-          <View style={[styles.fx1, styles.justiConStart, styles.alignItemsCenter]}>
-            <H1 style={styles.mb10}>보유제품사진</H1>
-            <Text style={styles.greyFont}>각 제품별 사진 촬영 가이드에 맞추어</Text>
-            <Text style={styles.greyFont}>제품의 특징들이 잘 드러나게 촬영해주세요</Text>
-          </View>
-
-          <View style={[styles.fx3, {marginLeft : 50, marginRight : 50, marginBottom : 50}]}>
-            <ImageBackground
-              source={require("~/Common/Image/license-bg01.png")} 
-              resizeMode="contain"
-              style={[styles.alignItemsCenter, styles.justiConCenter, {height : '100%', width : '100%'}]}
-            >
-
-              <TouchableOpacity 
-                onPress={Actions.TakeProductGuide1}
-                style={[styles.justiConCenter, {
-                  height:'80%', width : '70%', 
-                  borderColor : color.defaultColor, 
-                  borderWidth : 2, 
-                  elevation: 2
-                }]}>
-              <View style={[styles.alignItemsCenter]}>
-                <H1 style={{color:color.defaultColor}}>촬영가이드</H1>
-                <H1 style={{color:color.defaultColor}}>보러가기</H1>
-              </View>
-              </TouchableOpacity>
-            </ImageBackground>
+          <View style={[styles.justiConStart, styles.alignItemsCenter]}>
+            <H1 style={localStyles.topTitleTxt}>보유제품사진</H1>
+            <Text style={localStyles.topTxt}>사업자등록번호와 기업명, 대표이름 등</Text>
+            <Text style={localStyles.topTxt}>글씨가 잘 보이도록 촬영 또는 스캔해주세요</Text>
           </View>
           
+          <TouchableOpacity style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
+            <Image source={require("~/Common/Image/Photo_guide.png")} resizeMode="contain" style={localStyles.photoGuideImg} />
+          </TouchableOpacity>
 
           <View style={styles.footerBtnWrap}>
             <CustomButton 
@@ -216,6 +196,28 @@ class TakeProductImage extends Component {
     );
   }
 }
+
+const localStyles = StyleSheet.create({
+  topTitleTxt: {
+    marginBottom: 19,
+    fontSize: 26,
+    color: "#0b2024",
+    fontWeight: "bold"
+  },
+  topTxt: {
+    fontSize: 14,
+    color: "#8e8e98"
+  },
+  guideGoTxt: {
+    fontSize: 22,
+    color: color.defaultColor,
+    fontWeight: "bold"
+  },
+  photoGuideImg: {
+    width: "80%",
+    height: "80%"
+  }
+});
 
 export default TakeProductImage;
 

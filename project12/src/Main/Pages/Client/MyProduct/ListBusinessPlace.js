@@ -174,12 +174,14 @@ class ListBusinessPlace extends Component {
           </ScrollView>
 
           <View style={[styles.footerBtnWrap, {paddingRight : 26}]}>
-            <CustomButton 
-              onPress={Actions.MyRegBusinessPlace}
-              CustomBtnStyle={styles.mb5}
-            >
-              사업장 추가하기
-            </CustomButton>
+            <View style={styles.footerBtnWra}>
+                <CustomButton 
+                    onPress={Actions.MyRegBusinessPlace}
+                    DefaultLineBtn={true}
+                >
+                    사업장 추가하기
+                </CustomButton>
+            </View>
           </View>
 
         </View>
