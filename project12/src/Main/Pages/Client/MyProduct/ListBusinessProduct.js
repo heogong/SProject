@@ -188,7 +188,7 @@ function wp (percentage, space) {
       backgroundColor : color.defaultColor,
       width : productCardSize,
       paddingTop: 10,
-      paddingBottom: 10
+      marginBottom: 10
     },
     myPrdNumTxt: {
       color : color.whiteColor,
