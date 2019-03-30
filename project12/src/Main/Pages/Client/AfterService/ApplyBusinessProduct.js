@@ -5,7 +5,6 @@ import { ActionSheet, Container, Icon, Item, Picker, Root, Text, Textarea } from
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from "react-native-router-flux";
-import { SelectBox } from "react-native-picker-select";
 
 import GetProduct from '~/Main/Functions/GetProduct'
 import GetCommonData from '~/Common/Functions/GetCommonData';
