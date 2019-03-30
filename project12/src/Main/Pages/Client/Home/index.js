@@ -185,7 +185,7 @@ class ClientHome extends Component {
                 <CustomButton
                   onPress={ () => alert("정보등록하러 이동")}
                   WhiteLineBtn={true}
-                  CustomBtnStyle={{height: 36, width: "90%"}}
+                  CustomBtnStyle={{height: 36, width: "100%"}}
                   CustomFontStyle={{fontSize: 14}}
                 >
                   정보등록하러 이동
@@ -199,7 +199,7 @@ class ClientHome extends Component {
             </View>
             <View style={localStyles.bottomBoxRightWrap}>
                 <View style={localStyles.rightStateCircle}>
-                    <Text style={localStyles.rightStateTxt}>미등록</Text>
+                    <Text style={localStyles.rightStateTxt}>정보 미등록</Text>
                 </View>
             </View>
         </View>
@@ -444,11 +444,12 @@ const localStyles = StyleSheet.create({
   },
   percentTxt: {
       fontSize: 40,
-      fontWeight: "bold"
+      fontWeight: "bold",
+      color: color.whiteColor
   },
   noRegWrap: {
-      marginTop: 10,
-      marginBottom: 5
+      marginTop: 0,
+      marginBottom: 0
   },
   noRegTxt: {
       fontSize: 13

@@ -100,8 +100,8 @@ class ListBusinessPlace extends Component {
           <View style={{marginBottom: 21}}>
             <View style={styles.fxDirRow}>
               <View style={stylesReg.leftGuideTxtWrap}>
-                <Text style={stylesReg.leftGuideTxt}>제품조회를위한</Text>
-                <Text style={stylesReg.leftGuideTxt}>사업장정보를</Text>
+                <Text style={stylesReg.leftGuideTxt}>등록한</Text>
+                <Text style={stylesReg.leftGuideTxt}>사업장을</Text>
                 <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
               </View>
               <View style={stylesReg.rightStepNumWrap}>
@@ -211,17 +211,12 @@ class ListBusinessPlace extends Component {
   }
 }
 
-function wp (percentage) {
-  const value = (percentage * viewportWidth) / 100;
-  return Math.round(value);
-}
-
 const localStyles = StyleSheet.create({
   placeBoxWrap: {
     backgroundColor : color.defaultColor,
     width: 280,
-    height: 300,
-    marginRight: 12
+    marginRight: 12,
+    marginBottom: 26
   },
   prdImgWrap: {
     alignItems : 'center',
