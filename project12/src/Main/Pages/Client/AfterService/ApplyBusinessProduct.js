@@ -256,37 +256,7 @@ class ApplyBusinessProduct extends Component {
                                 
                                 <View>
                                     <Text style={[localStyles.boxDetailSubTitleTxt, {marginTop: 6}]}>증상 및 상세 입력</Text>
-                                    <Item regular style={[styles.inputWhBackGreyBo, {marginLeft: 0}]}
-                                        onPress={() =>
-                                            ActionSheet.show(
-                                                {
-                                                    options: this.state.asCaseData,
-                                                    cancelButtonIndex: this.state.asCaseData.length - 1,
-                                                    title: "A/S 증상"
-                                                },
-                                                buttonIndex => {
-                                                    const { asCaseData, selected } = this.state;
-                                                    //this.setState({ selectIndex : buttonIndex });
-                                                    SELECT_INDEX_1 = buttonIndex;
-            
-                                                    if(cardData[buttonIndex].billingKeyId > 0) {
-                                                        this.setState({ 
-                                                            buttonTitle: cardData[buttonIndex].text,
-                                                            disabledBtn : (selected !== -1) ? false : true
-                                                        });
-                                                        // this._paymentAfterService();
-                                                    } else if(cardData[buttonIndex].billingKeyId == -1) { // 카드 추가
-                                                        Actions.CardInputInfo({regAsCard : true, getListCard: this._getListCard});
-                                                    } else if(cardData[buttonIndex].billingKeyId == 0) { // cancle
-                                                        this.setState({
-                                                            disabledBtn : true,
-                                                            buttonTitle : '결제카드선택'
-                                                        })
-                                                    }
-                                                    
-                                                })
-                                        }
-                                        >
+                                    <Item regular style={[styles.inputWhBackGreyBo, {marginLeft: 0}]}>
                                         <Input
                                         placeholder="증상을 선택해 주세요."
                                         placeholderTextColor={color.inputPlaceHodler}
@@ -298,7 +268,7 @@ class ApplyBusinessProduct extends Component {
                                         />
                                         <Icon name="arrow-dropdown" style={styles.selectBoxIcon} />
                                     </Item>
-{/* 
+
                                     <Item style={{
                                         borderTopWidth : 1, 
                                         borderLeftWidth  :1, 
@@ -324,7 +294,7 @@ class ApplyBusinessProduct extends Component {
                                             )}
                                         </Picker>
                                     </Item>
-                                     */}
+                                     
                                     <Textarea
                                         value={this.state.bizDsc}
                                         onChangeText={(text) => this.setState({asRecvDsc : text})}
