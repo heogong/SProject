@@ -21,7 +21,6 @@ import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
 
 let SELECT_INDEX = null; // 카드 선택 index
-let SELECT_INDEX_1 = null; // A/S 증상 선택 index
 class ApplyBusinessProduct extends Component {
     constructor(props) {
       super(props);
@@ -35,7 +34,7 @@ class ApplyBusinessProduct extends Component {
         }, // 제품 데이터
         asRecvDsc : null,
         etcComment : null,
-        asCaseData: ["Option 0", "Option 1", "Option 2", "Delete", "Cancel"], // 제품 증상 데이터
+        asCaseData: [], // 제품 증상 데이터
         selected: undefined,
         disabledBtn : true,
         cardData : ["Option 0", "Option 1", "Option 2", "Delete", "Cancel"],
@@ -293,8 +292,8 @@ class ApplyBusinessProduct extends Component {
                                                 <Picker.Item key={idx} label={asCase.asItemNm} value={asCase.asItemId} />
                                             )}
                                         </Picker>
-                                    </Item>
-                                      */}
+                                    </Item> */}
+
                                     <Textarea
                                         value={this.state.bizDsc}
                                         onChangeText={(text) => this.setState({asRecvDsc : text})}
