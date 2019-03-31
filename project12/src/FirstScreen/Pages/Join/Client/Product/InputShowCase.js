@@ -336,7 +336,7 @@ class InputShowCase extends Component {
                     </ScrollView>
                 </View>
       
-                <View style={[styles.footerBtnWrap, {flex: 0, paddingRight: 26, paddingBottom: 26}]}>
+                <View style={[styles.footerBtnWrap, {flex: 0, paddingRight: 26}]}>
                     <CustomButton
                         onPress={ () => this._nextButton() }
                         DefaultLineBtn={true}

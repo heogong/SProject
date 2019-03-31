@@ -137,7 +137,7 @@ class ListBusinessProductType extends Component {
                                     </View>
 
                                     <View style={localStyles.myPrdInfoTxtWrap}>
-                                        <Text style={localStyles.myPrdNameTxt}>
+                                        <Text style={localStyles.myPrdNameTxt} numberOfLines={1}>
                                           { product.clientPrdNm !== null ? product.clientPrdNm : '제품이름을 입력해주세요.'}
                                         </Text>
                                         <Text style={localStyles.myPrdDscTxt}>
@@ -211,7 +211,9 @@ function wp (percentage, space) {
       marginBottom: 10,
       color : color.whiteColor,
       fontSize: 16,
-      fontWeight: "bold"
+      fontWeight: "bold",
+      paddingLeft: 10,
+      paddingRight: 10
     },
     myPrdDscTxt: {
       color: color.whiteColor,

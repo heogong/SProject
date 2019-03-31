@@ -84,7 +84,7 @@ class ListBusinessProductType extends Component {
                                         </View>
                             
                                         <View style={localStyles.myPrdInfoTxtWrap}>
-                                            <Text style={localStyles.myPrdNameTxt}>{product.clientPrdNm}</Text>
+                                            <Text style={localStyles.myPrdNameTxt} numberOfLines={1}>{product.clientPrdNm}</Text>
                                             <Text style={localStyles.myPrdDscTxt}>{product.clientPrdDsc}</Text>
                                         </View>
                                     </View>
@@ -135,7 +135,9 @@ function wp (percentage, space) {
       marginBottom: 10,
       color : color.whiteColor,
       fontSize: 16,
-      fontWeight: "bold"
+      fontWeight: "bold",
+      paddingLeft: 10,
+      paddingRight: 10
     },
     myPrdDscTxt: {
       color: color.whiteColor,

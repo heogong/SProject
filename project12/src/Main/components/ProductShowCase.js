@@ -134,7 +134,7 @@ class ProductShowCase extends Component {
                 </View>
     
                 <View style={styles.alignItemsCenter}>
-                    <Text style={styles.whiteFont}>촬영가이드에 따라 제품의 사진을 찍어주세요</Text>
+                    <Text style={styles.whiteFont}>가이드에 따라 제품의 사진을 찍어주세요</Text>
     
                     <View style={localStyles.prdCardPhotoWrap}>
                         <View style={localStyles.prdCardPhoto}>
