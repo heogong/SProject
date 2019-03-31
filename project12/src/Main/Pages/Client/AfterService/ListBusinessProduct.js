@@ -50,7 +50,7 @@ class ListBusinessProductType extends Component {
     
     render() {
         return (
-            <Container style={styles.containerInnerPd}>
+            <Container style={styles.containerInnerPdNoBottom}>
                 <CustomHeader/>
 
                 <View style={styles.contentWrap}>
@@ -59,7 +59,7 @@ class ListBusinessProductType extends Component {
                         <View style={styles.fxDirRow}>
                             <View style={stylesReg.leftGuideTxtWrap}>
                                 <Text style={stylesReg.leftGuideTxt}>수리가</Text>
-                                <Text style={stylesReg.leftGuideTxt}>필요한제품</Text>
+                                <Text style={stylesReg.leftGuideTxt}>필요한제품을</Text>
                                 <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
                             </View>
                         </View>

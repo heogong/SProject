@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Image, StyleSheet, View } from 'react-native'
-import { ActionSheet, Container, Icon, Item, Picker, Root, Text, Textarea } from "native-base";
+import { Image, StyleSheet, View, ScrollView } from 'react-native'
+import { ActionSheet, Container, Icon, Item, Picker, Root, Text, Textarea, Input } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -21,6 +21,7 @@ import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
 
 let SELECT_INDEX = null; // 카드 선택 index
+let SELECT_INDEX_1 = null; // A/S 증상 선택 index
 class ApplyBusinessProduct extends Component {
     constructor(props) {
       super(props);
@@ -34,7 +35,7 @@ class ApplyBusinessProduct extends Component {
         }, // 제품 데이터
         asRecvDsc : null,
         etcComment : null,
-        asCaseData: [], // 제품 증상 데이터
+        asCaseData: ["Option 0", "Option 1", "Option 2", "Delete", "Cancel"], // 제품 증상 데이터
         selected: undefined,
         disabledBtn : true,
         cardData : ["Option 0", "Option 1", "Option 2", "Delete", "Cancel"],
@@ -240,74 +241,120 @@ class ApplyBusinessProduct extends Component {
                     <CustomHeader title={this.props.clientPrdNm} />
 
                     <View style={styles.contentWrap}>
-                        <View>
-                            <View style={[styles.fxDirRow, styles.mb20]}>
-                                <View style={stylesReg.leftGuideTxtWrap}>
-                                    <Text style={stylesReg.leftGuideTxt}>증상 및</Text>
-                                    <Text style={stylesReg.leftGuideTxt}>상세정보를</Text>
-                                    <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
-                                </View>
-                                <View style={stylesReg.rightImgWrap}>
-                                    <Image source={{ uri : this.state.data.prdTypeImg.fileUrl }} style={{width: 76, height: 76}}/>
-                                </View>
-                            </View>
-
-                            <View style={{marginTop: 26}}>
-                                <Item style={{
-                                    borderTopWidth : 1, 
-                                    borderLeftWidth  :1, 
-                                    borderRightWidth : 1,  
-                                    borderColor : color.inputBoGrey,
-                                    height : 36,
-                                    width: "100%",
-                                    marginLeft: 0,
-                                }}>
-                                    <Picker
-                                        mode="dropdown"
-                                        iosIcon={<Icon name="arrow-dropdown" style={styles.selectBoxIcon}/>}
-                                        style={styles.selectBoxWrap}
-                                        textStyle={styles.selectBoxTxt}
-                                        itemTextStyle={{fontSize: 13}}
-                                        placeholderIconColor={color.defaultColor}
-                                        selectedValue={this.state.selected}
-                                        onValueChange={this.onValueChange.bind(this)}
-                                    >
-                                        <Picker.Item label=" == 증상 선택 == " value={ -1 } style={{fontSize: 13}} />
-                                        {this.state.asCaseData.map((asCase, idx) => 
-                                            <Picker.Item key={idx} label={asCase.asItemNm} value={asCase.asItemId} />
-                                        )}
-                                    </Picker>
-                                </Item>
-
-                                <Textarea
-                                    value={this.state.bizDsc}
-                                    onChangeText={(text) => this.setState({asRecvDsc : text})}
-                                    rowSpan={5} 
-                                    bordered placeholder="상세 AS 증상 및 출장 시 참고사항을 입력해 주세요." 
-                                    style={[styles.textAreaDefault, {marginTop: 12}]} 
-                                    placeholderTextColor="#c9cacb"
-                                />
-                            </View>
-
-                            <View style={styles.mb20}>
-                                <Text style={localStyles.boxDetailSubTitleTxt}>쿨리닉 제품분석</Text>
-                                <View style={styles.fxDirRow}>
-                                    <View style={styles.fx1}>
-                                        <Text style={localStyles.boxDetailSubTxt}>용량 :</Text>
-                                        <Text style={localStyles.boxDetailSubTxt}>전기 :</Text>
-                                        <Text style={localStyles.boxDetailSubTxt}>압축기 :</Text>
+                        <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
+                            <View>
+                                <View style={[styles.fxDirRow, styles.mb20]}>
+                                    <View style={stylesReg.leftGuideTxtWrap}>
+                                        <Text style={stylesReg.leftGuideTxt}>증상 및</Text>
+                                        <Text style={stylesReg.leftGuideTxt}>상세정보를</Text>
+                                        <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
                                     </View>
-                                    <View style={styles.fx1}>
-                                        <Text style={localStyles.boxDetailSubTxt}>응축기 :</Text>
-                                        <Text style={localStyles.boxDetailSubTxt}>증발기 :</Text>
-                                        <Text style={localStyles.boxDetailSubTxt}>제조사 :</Text>
+                                    <View style={stylesReg.rightImgWrap}>
+                                        <Image source={{ uri : this.state.data.prdTypeImg.fileUrl }} style={{width: 76, height: 76}}/>
                                     </View>
                                 </View>
+                                
+                                <View>
+                                    <Text style={[localStyles.boxDetailSubTitleTxt, {marginTop: 6}]}>증상 및 상세 입력</Text>
+                                    <Item regular style={[styles.inputWhBackGreyBo, {marginLeft: 0}]}
+                                        onPress={() =>
+                                            ActionSheet.show(
+                                                {
+                                                    options: this.state.asCaseData,
+                                                    cancelButtonIndex: this.state.asCaseData.length - 1,
+                                                    title: "A/S 증상"
+                                                },
+                                                buttonIndex => {
+                                                    const { asCaseData, selected } = this.state;
+                                                    //this.setState({ selectIndex : buttonIndex });
+                                                    SELECT_INDEX_1 = buttonIndex;
+            
+                                                    if(cardData[buttonIndex].billingKeyId > 0) {
+                                                        this.setState({ 
+                                                            buttonTitle: cardData[buttonIndex].text,
+                                                            disabledBtn : (selected !== -1) ? false : true
+                                                        });
+                                                        // this._paymentAfterService();
+                                                    } else if(cardData[buttonIndex].billingKeyId == -1) { // 카드 추가
+                                                        Actions.CardInputInfo({regAsCard : true, getListCard: this._getListCard});
+                                                    } else if(cardData[buttonIndex].billingKeyId == 0) { // cancle
+                                                        this.setState({
+                                                            disabledBtn : true,
+                                                            buttonTitle : '결제카드선택'
+                                                        })
+                                                    }
+                                                    
+                                                })
+                                        }
+                                        >
+                                        <Input
+                                        placeholder="증상을 선택해 주세요."
+                                        placeholderTextColor={color.inputPlaceHodler}
+                                        style={styles.inputDefaultBox}
+                                        ref={(input) => { this.secondTextInput = input; }}
+                                        value={ this.state.text }
+                                        editable={false}
+                                        selectTextOnFocus={false}
+                                        />
+                                        <Icon name="arrow-dropdown" style={styles.selectBoxIcon} />
+                                    </Item>
+{/* 
+                                    <Item style={{
+                                        borderTopWidth : 1, 
+                                        borderLeftWidth  :1, 
+                                        borderRightWidth : 1,  
+                                        borderColor : color.inputBoGrey,
+                                        height : 36,
+                                        width: "100%",
+                                        marginLeft: 0,
+                                    }}>
+                                        <Picker
+                                            mode="dropdown"
+                                            iosIcon={<Icon name="arrow-dropdown" style={styles.selectBoxIcon}/>}
+                                            // style={styles.selectBoxWrap}
+                                            // textStyle={styles.selectBoxTxt}
+                                            itemTextStyle={{fontSize: 13}}
+                                            placeholderIconColor={color.defaultColor}
+                                            selectedValue={this.state.selected}
+                                            onValueChange={this.onValueChange.bind(this)}
+                                        >
+                                            <Picker.Item label=" == 증상 선택 == " value={ -1 } style={{fontSize: 13}} />
+                                            {this.state.asCaseData.map((asCase, idx) => 
+                                                <Picker.Item key={idx} label={asCase.asItemNm} value={asCase.asItemId} />
+                                            )}
+                                        </Picker>
+                                    </Item>
+                                     */}
+                                    <Textarea
+                                        value={this.state.bizDsc}
+                                        onChangeText={(text) => this.setState({asRecvDsc : text})}
+                                        rowSpan={5} 
+                                        bordered placeholder="상세 AS 증상 및 출장 시 참고사항을 입력해 주세요." 
+                                        style={[styles.textAreaDefault, {marginTop: 12}]} 
+                                        placeholderTextColor="#c9cacb"
+                                    />
+                                </View>
+
+                                <View style={styles.mb20}>
+                                    <Text style={localStyles.boxDetailSubTitleTxt}>쿨리닉 제품분석</Text>
+                                    <View style={styles.fxDirRow}>
+                                        <View style={styles.fx1}>
+                                            <Text style={localStyles.boxDetailSubTxt}>용량 :</Text>
+                                            <Text style={localStyles.boxDetailSubTxt}>전기 :</Text>
+                                            <Text style={localStyles.boxDetailSubTxt}>압축기 :</Text>
+                                        </View>
+                                        <View style={styles.fx1}>
+                                            <Text style={localStyles.boxDetailSubTxt}>응축기 :</Text>
+                                            <Text style={localStyles.boxDetailSubTxt}>증발기 :</Text>
+                                            <Text style={localStyles.boxDetailSubTxt}>제조사 :</Text>
+                                        </View>
+                                    </View>
+                                </View>
                             </View>
-                        </View>
+                        </ScrollView>
                     </View>
 
-                    <View style={[styles.footerBtnWrap, {flex: 0}]}>
+                    <View style={styles.footerBtnWrap}>
                         <CustomButton 
                             onPress={() =>
                                 ActionSheet.show(
