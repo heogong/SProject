@@ -1,15 +1,12 @@
-import React, {Component} from 'react';
-import { Dimensions, StyleSheet, Image, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { View, Image, StyleSheet, Text } from 'react-native';
+
 import AppIntroSlider from 'react-native-app-intro-slider';
 
-const { width, height } = Dimensions.get('window');
+import { Actions } from 'react-native-router-flux';
 
-const styles = StyleSheet.create({
-  image: {
-    width: 272,
-    height: 290,
-  }
-});
+import { styles, viewportWidth } from '~/Common/Styles/common';
+import { color } from "~/Common/Styles/colors";
 
 const slides = [
   {
@@ -20,7 +17,7 @@ const slides = [
     '엔지니어의 입장에서 파트너 여러분의 소리를 듣고\n' +
     '현장의 애로사항들을 개선해나가겠습니다.\n\n' +
     '빠른 A/S매칭과 보장된 여러 서비스를 누리세요!\n',
-    image: require('./assets/partner_service_illust1.png'),
+    image: require('~/Common/Image/partner_service_illust1.png'),
     imageStyle: styles.image,
   },
   {
@@ -31,7 +28,7 @@ const slides = [
     '출장비란 현장 도착까지의 이동시간과\n' +
     '기술력을 발휘하여 문제를 진단하는 비용입니다.\n\n' +
     '이제 서비스와 수리하는데에 집중하셔도 됩니다!',
-    image: require('./assets/partner_service_illust2.png'),
+    image: require('~/Common/Image/partner_service_illust2.png'),
     imageStyle: styles.image,
   },
   {
@@ -43,47 +40,37 @@ const slides = [
     '여러분의 서비스와 기술력, 그리고 철저한 A/S보고서는\n' +
     '엔지니어의 대우를 한층 높에 끌어올릴 것입니다.\n' +
     '쿨리닉의 파트너가 되어 주신다면 저희도 노력하겠습니다!\n',
-    image: require('./assets/partner_service_illust3.png'),
+    image: require('~/Common/Image/partner_service_illust3.png'),
     imageStyle: styles.image,
   }
 ];
 
-type Props = {};
-export default class App extends Component<Props> {
-  constructor (Props) {
-    super(Props);
-    this.state = {
-      showRealApp: false
-    }
+export default class ServiceIntroduce extends Component {
+  constructor(props) {
+    super(props);
   }
+
   _renderItem = (item) => {
     return (
-      <View style={{flex : 1, width : width, alignItems : 'center', backgroundColor : '#ffffff'}}>
-        <View style={{flex : 5,  justifyContent : "flex-end"}}>
-          <Image style={styles.image} source={item.image} />
+      <View style={[styles.fx1, styles.alignItemsCenter, {width : viewportWidth, backgroundColor : color.whiteColor}]}>
+        <View style={[styles.fx1, styles.justiConEnd]}>
+          <Image style={localStyles.image} source={item.image} />
         </View>
-        <View style={{flex : 4, justifyContent : "center"}}>
+        <View style={[styles.fx1, styles.justiConCenter]}>
           <Text style={{fontSize : 18, fontWeight: "bold", color : '#28a0f5', textAlign : 'center', marginBottom : 29 }}>{item.title}</Text>
           <Text style={{textAlign : 'center', color: '#8e8e98', fontSize : 12}}>{item.text}</Text>
         </View>
       </View>
     );
   }
-
+  
   render() {
-    _onDone = () => {
-      // User finished the introduction. Show real app through
-      // navigation or simply by controlling state
-      this.setState({ showRealApp: true });
-    }
-    if (this.state.showRealApp) {
-      return <App />;
-    } else {
-      return <AppIntroSlider 
+    return (
+      <AppIntroSlider 
         renderItem={this._renderItem} 
         slides={slides} 
-        onDone={() => alert("done")} 
-        onSkip={() => alert("skip")}
+        onDone={Actions.LoginAccountType} 
+        onSkip={Actions.LoginAccountType}
         showSkipButton={true}
         // showNextButton={false}
         nextLabel="다음"
@@ -91,7 +78,14 @@ export default class App extends Component<Props> {
         buttonTextStyle={{color:'#28c8f5'}}
         activeDotStyle={{backgroundColor: 'rgba(40, 200, 245, 1)'}}
         dotStyle={{backgroundColor: 'rgba(214, 241, 255, 1)'}}
-      />;
-    }
+      />
+    )
   }
 }
+
+const localStyles = StyleSheet.create({
+  image: {
+    width: 272,
+    height: 290,
+  }
+});

@@ -101,7 +101,7 @@ class MoreMenu extends Component {
 
             <TouchableOpacity 
                 style={localStyles.quickBtnBox}
-                onPress={ () => alert("사진조회")}>
+                onPress={ Actions.MyCalcuList }>
                 <Image source={require("~/Common/Image/card_manager_icon.png")} style={localStyles.quickBtnImg} />
             </TouchableOpacity>
           </View>

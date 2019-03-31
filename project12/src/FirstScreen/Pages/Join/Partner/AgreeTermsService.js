@@ -4,6 +4,8 @@ import { CheckBox, Container, Text } from "native-base";
 
 import { Actions } from 'react-native-router-flux';
 
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+
 import RegAgreeTerm from '~/FirstScreen/Functions/RegAgreeTerm';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
@@ -125,7 +127,7 @@ class AgreeTermsService extends Component {
                 <Text style={[styles.blueFont, styles.mb20]}>서비스 이용약관 동의(필수)</Text>
                 <CheckBox 
                   checked={this.state.checkBox1}
-                  onPress={() => { this.setState({checkBox1 : !this.state.checkBox1}) }}
+                  onPress={async () => { await this.setState({checkBox1 : !this.state.checkBox1}), await this.toggleSwitch()}}
                   style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                 />
               </View>
@@ -133,7 +135,7 @@ class AgreeTermsService extends Component {
                 <Text style={[styles.blueFont, styles.mb20]}>위치기반 서비스 이용약관 동의(필수)</Text>
                 <CheckBox 
                   checked={this.state.checkBox2}
-                  onPress={() => { this.setState({checkBox2 : !this.state.checkBox2}) }}
+                  onPress={async () => { await this.setState({checkBox2 : !this.state.checkBox2}), await this.toggleSwitch() }}
                   style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                 />
               </View>
@@ -141,7 +143,7 @@ class AgreeTermsService extends Component {
                 <Text style={[styles.blueFont, styles.mb20]}>개인정보 수집 동의(필수)</Text>
                 <CheckBox 
                   checked={this.state.checkBox3}
-                  onPress={() => { this.setState({checkBox3 : !this.state.checkBox3}) }}
+                  onPress={async () => { await this.setState({checkBox3 : !this.state.checkBox3}), await this.toggleSwitch() }}
                   style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                 />
               </View>
@@ -149,7 +151,7 @@ class AgreeTermsService extends Component {
                 <Text style={[styles.blueFont, styles.mb20]}>개인정보 제 3자 제공 동의서(필수)</Text>
                 <CheckBox 
                   checked={this.state.checkBox4}
-                  onPress={() => { this.setState({checkBox4 : !this.state.checkBox4}) }}
+                  onPress={async () => { await this.setState({checkBox4 : !this.state.checkBox4}), await this.toggleSwitch() }}
                   style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
                 />
               </View>

@@ -24,6 +24,8 @@ class MyProfileModPhone extends Component {
   constructor(props) {
     super(props);
 
+    this.phoneNumInput = null;
+
     this.state = {
       phoneNum : '',
       authNum : '',
@@ -145,13 +147,14 @@ class MyProfileModPhone extends Component {
 
             <Item regular style={[styles.inputNbWhBackGreyBottomBo, styles.mb10]}>
               <Input
+                ref={(input) => { this.phoneNumInput = input; }}
                 onChangeText={ (text) => {this.setState({ phoneNum : text }), this._chkButton1() }}
                 keyboardType={"number-pad"}
                 placeholder="휴대폰 번호를 입력해주세요." 
                 placeholderTextColor={color.inputPlaceHodler} 
                 style={styles.inputNbDefaultBox}
               />
-              <TouchableOpacity onPress={ () => this.setState({ phoneNum : '' })}>
+              <TouchableOpacity onPress={ () => this.phoneNumInput._root.clear() }>
                 <Icon name="close-circle" style={localStyles.phototIcon} style={{color: "#8e8e98"}} />
               </TouchableOpacity>
             </Item>
@@ -166,7 +169,7 @@ class MyProfileModPhone extends Component {
 
             <Text style={styles.inputNbTitleTxt}>인증번호</Text>
 
-            <Item regular style={styles.inputNbWhBackGreyBottomBo}>
+            <Item regular style={[styles.inputNbWhBackGreyBottomBo, styles.mb10]}>
               <Input 
                 onChangeText={ async (text) => {await this.setState({ authNum : text }), this._chkButton2() }}
                 keyboardType={"number-pad"}

@@ -21,8 +21,10 @@ class SearchAddress extends Component {
   constructor(props) {
     super(props);
 
+    this.addressInput = null;
+
     this.state = { 
-      addressName : (this.props.addressName !== null) ? this.props.addressName : '대방동 392-27',
+      addressName : (this.props.addressName !== '') ? this.props.addressName : '강남구 논현동',
       data: [],
       region: {
         latitude: 37.566535,
@@ -51,11 +53,11 @@ class SearchAddress extends Component {
       onPress={() => this._onPress(item)}
     >
       <Body style={localStyles.flatListWrap}>
-          <Text style={localStyles.flatListTxt}>{item.address_name}</Text>
+        <Text style={localStyles.flatListTxt}><Text style={[localStyles.flatListTxt, {color: color.defaultColor}]}>[지번]</Text> {item.address_name}</Text>
           {(item.road_address !== null) ? (
-            <Text style={localStyles.flatListTxt}>{item.road_address.address_name}</Text>
+            <Text style={localStyles.flatListTxt}><Text style={[localStyles.flatListTxt, {color: color.defaultColor}]}>[도로]</Text> {item.road_address.address_name}</Text>
           ) : (
-            <Text style={localStyles.flatListTxt}>도로명 주소가 없습니다.</Text>
+            <Text style={[localStyles.flatListTxt, {color: color.greyColor, marginTop: 2}]}><Text style={[localStyles.flatListTxt, {color: color.defaultColor}]}>[도로]</Text> 주소가 없습니다.</Text>
           )}
       </Body>
     </ListItem>
@@ -76,22 +78,29 @@ class SearchAddress extends Component {
 
   // 주소 정보 가져오기
   _setAddressInfo = () => {
-    GetAddress(this.state.addressName).then(result => {
-      GetCommonData(result, this._setAddressInfo).then(async resultData => {
-        if(resultData !== undefined) {
-          const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-          console.log(result.data);
-          if(ResultBool) {
-            this.setState({data : resultData.data.documents });
-          } else {
-            this.setState({
-              isAlertModal : true,
-              resultMsg : resultData.resultMsg
-            })
+    if(this.state.addressName !== '') {
+      GetAddress(this.state.addressName).then(result => {
+        GetCommonData(result, this._setAddressInfo).then(async resultData => {
+          if(resultData !== undefined) {
+            const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+            console.log(result.data);
+            if(ResultBool) {
+              this.setState({data : resultData.data.documents });
+            } else {
+              this.setState({
+                isAlertModal : true,
+                resultMsg : resultData.resultMsg
+              })
+            }
           }
-        }
+        });
       });
-    });
+    } else {
+      this.setState({
+        isAlertModal : true,
+        resultMsg : '주소를 입력해 주세요.'
+      })
+    }
   }
 
 
@@ -150,6 +159,7 @@ class SearchAddress extends Component {
             onPress={ () => this.setState({showMap : !this.state.showMap})}
           >
             <Input
+              ref={(input) => { this.addressInput = input; }}
               placeholder="주소를 입력해 주세요"
               placeholderTextColor={color.inputPlaceHodler}
               style={styles.inputDefaultBox}
@@ -166,6 +176,13 @@ class SearchAddress extends Component {
             />
             <Icon
               name="ios-close"
+              onPress={ () => {
+                this.addressInput._root.clear(), 
+                this.setState({
+                  data : [], 
+                  addressName : ''
+                })
+              }}
               style={[styles.inputIcon, {fontSize: 32, color: "#8e8e98"}]}
             />
           </Item>

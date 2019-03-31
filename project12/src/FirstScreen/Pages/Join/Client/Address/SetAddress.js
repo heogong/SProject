@@ -198,6 +198,7 @@ class SetAddress extends Component {
 
                         <Item regular style={styles.inputWhBackGreyBo}>
                             <Input
+                                onChangeText={this._handleChange}
                                 placeholder="상세주소를 입력해주세요."
                                 placeholderTextColor={color.inputPlaceHodler}
                                 style={styles.inputDefaultBox}>

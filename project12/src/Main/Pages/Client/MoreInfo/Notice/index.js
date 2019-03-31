@@ -35,7 +35,7 @@ class NoticeList extends Component {
           <View style={{marginTop: 16}}>
 
             <ScrollView showsVerticalScrollIndicator={false}>
-              <TouchableOpacity onPress={ () => alert("사진조회")}>
+              <TouchableOpacity onPress={ Actions.ClientNoticeDetail }>
                 <View style={localStyles.listNoticeWrap}>
                   <View>
                     <Text style={localStyles.listNoticeTitleTxt}>[공지] 쿨리닉 서비스가 시작되었습니다</Text>
@@ -45,7 +45,7 @@ class NoticeList extends Component {
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={ () => alert("사진조회")}>
+              <TouchableOpacity onPress={ Actions.ClientNoticeDetail }>
                 <View style={localStyles.listNoticeWrap}>
                   <View>
                     <Text style={localStyles.listNoticeTitleTxt}>[공지] 쿨리닉 서비스가 시작되었습니다</Text>
@@ -55,7 +55,7 @@ class NoticeList extends Component {
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={ () => alert("사진조회")}>
+              <TouchableOpacity onPress={ Actions.ClientNoticeDetail }>
                 <View style={localStyles.listNoticeWrap}>
                   <View>
                     <Text style={localStyles.listNoticeTitleTxt}>[공지] 쿨리닉 서비스가 시작되었습니다</Text>

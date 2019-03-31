@@ -8,6 +8,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setIsAfterService } from '~/Redux/Actions';
 
+import GetPartnerInfo from '~/Main/Functions/GetPartnerInfo';
 import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
 import GetAfterServiceState from '~/Main/Functions/GetAfterServiceState';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
@@ -52,8 +53,8 @@ class IntroPage extends Component {
 
             // 사용자 구분 페이지 이동
             if(resultData.data.usrTypeCd == PARTNER_USER) {
-              // this._getAfterServiceState(); // 파트너 - 파트너 index 에서 체크로 인해 주석 처리
-              Actions.PartnerMain(); // 파트너
+              // this._getAfterServiceState(); // 파트너 메인 에서 체크로 인해 주석 처리
+              this._getPartnerInfo(); // 파트너 정보 조회를 통한 현재 상태 체크 (가입시 필수값 여부 체크)
             } else {
               this._getClientAfterServiceState(); // 클라이언트
             }
@@ -63,6 +64,33 @@ class IntroPage extends Component {
           }
         }
       });
+    });
+  }
+
+  // 1. 업체 정보를 조회(승인여부)
+  _getPartnerInfo = () => {
+    GetPartnerInfo().then(async result => {
+        GetCommonData(result, this._getPartnerInfo).then(async resultData => {
+            if(resultData !== undefined) {
+                console.log('_getPartnerInfo - ', resultData);
+                const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+
+                if(ResultBool) {
+                  if(resultData.data == null) {
+                    alert("파트너 가입 필수값 체크");
+                    Actions.PartnerMain(); // 메인 : TEST
+                  } else {
+                    Actions.PartnerMain(); // 메인
+                  }
+                    
+                } else {
+                    this.setState({
+                        isAlertModal : true,
+                        resultMsg : resultData.resultMsg
+                    })
+                }
+            }
+        });
     });
   }
 

@@ -323,7 +323,7 @@ class ViewAfterServiceState extends Component {
                           </View>
                           <View>
                             <Text style={[localStyles.topSubTitleTxt, {marginTop: 20, marginBottom: 10}]}>참고사항</Text>
-                            <Text style={localStyles.topInfoTxt}>{ this.state.data.asPrgsMst.asPrgsStatDSC }</Text>
+                            <Text style={localStyles.topInfoTxt}>{ this.state.data.asPrgsMst.asPrgsStatDsc }</Text>
                           </View>
                       </View>
                   )}

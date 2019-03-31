@@ -16,7 +16,13 @@ class InitPage extends Component {
    // 고객 타입 선택 및 페이지 이동
    _selectCustomerTypeAndGoPage = (customer) => () => {
       this.props.onSetCustomerType(customer);  // 리덕스 고객타입 SET
-      Actions.LoginAccountType();
+      
+      // 앱 처음 실행자 인지 체크 후 안내페이 혹은 로그인 페이지 이동
+      if(true) {
+        Actions.ServiceIntroduce();
+      } else {
+        Actions.LoginAccountType();
+      }
     }
 
   render() {

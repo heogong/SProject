@@ -148,6 +148,10 @@ class AccountType extends Component {
     });
   }
 
+  _goToAccountType = () => {
+    Actions.popTo("InitPage");
+  }
+
   render() {
     const loginYn = true; // 진입 경로(로그인/회원가입) 확인
 
@@ -161,7 +165,7 @@ class AccountType extends Component {
             style={{color: color.whiteColor}}
             overlayCologr={"rgba(40, 200, 245, 1)"}
         />
-        <CustomHeader />
+        <CustomHeader  customAction={this._goToAccountType}/>
 
         <View style={styles.fx1}>
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Container, Icon, Text, Item, Input } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -20,6 +20,9 @@ import { color } from "~/Common/Styles/colors";
 class MyProfileModName extends Component {
   constructor(props) {
     super(props);
+
+    this.usrNameInput = null;
+
     this.state = {
       data : [],
       name : '',
@@ -97,24 +100,28 @@ class MyProfileModName extends Component {
         <CustomHeader title="이름설정"/>
         <View style={styles.contentWrap}>
 
-          <View>
+          <View style={styles.fx1}>
             <View style={styles.tooltipWrap}>
               <Text style={styles.tooltipTxt}>본인의 실명을 입력 후 [설정완료] 버튼을 누러주세요.</Text>
             </View>
             <Text style={styles.inputNbTitleTxt}>이름</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
               <Input 
+                ref={(input) => { this.usrNameInput = input; }}
                 onChangeText={ async (text) => { await this.setState({ name : text }), this._chkButton() }}
                 value={this.state.name}
                 placeholder="이름을 입력해주세요." 
                 placeholderTextColor={color.inputPlaceHodler} 
                 style={styles.inputNbDefaultBox}
               />
+              <TouchableOpacity onPress={ async () => { await this.setState({disableBtn : true}), this.usrNameInput._root.clear()} }>
+                <Icon name="close-circle" style={localStyles.phototIcon} style={{color: "#8e8e98"}} />
+              </TouchableOpacity>
             </Item>
           </View>
 
           <View style={styles.footerBtnWrap}>
-          <CustomButton
+            <CustomButton
               onPress={this._changeUsrName}
               disabled={this.state.disableBtn}
             >
@@ -136,5 +143,14 @@ class MyProfileModName extends Component {
     );
   }
 }
+
+const localStyles = StyleSheet.create({
+  inputIcon: {
+    paddingLeft: 0,
+    marginRight: 6,
+    width: 24,
+    height: 24
+  },
+});
 
 export default MyProfileModName; 
