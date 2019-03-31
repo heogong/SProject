@@ -268,7 +268,7 @@ class ApplyBusinessProduct extends Component {
                                         />
                                         <Icon name="arrow-dropdown" style={styles.selectBoxIcon} />
                                     </Item>
-
+{/* 
                                     <Item style={{
                                         borderTopWidth : 1, 
                                         borderLeftWidth  :1, 
@@ -294,7 +294,7 @@ class ApplyBusinessProduct extends Component {
                                             )}
                                         </Picker>
                                     </Item>
-                                     
+                                      */}
                                     <Textarea
                                         value={this.state.bizDsc}
                                         onChangeText={(text) => this.setState({asRecvDsc : text})}
