@@ -273,7 +273,7 @@ class ClientHome extends Component {
                   style={localStyles.topBoxWrap}
                 >
                   <View style={styles.mb10}>
-                      <Text style={localStyles.topBoxNameTxt}>{(business.bplaceNm !== null) ? business.bplaceNm : '사업장 정보를 입력해주세요.'}</Text>
+                      <Text style={localStyles.topBoxNameTxt} numberOfLines={1}>{(business.bplaceNm !== null) ? business.bplaceNm : '사업장 정보를 입력해주세요.'}</Text>
                       <Text style={localStyles.topBoxtAddrTxt}>{(business.addr !== null) ? business.addr.addressName : '사업장 정보를 입력해주세요.'}</Text>
                       <Text style={localStyles.topBoxtAddrTxt}>{(business.detail !== null) ? business.detail.detailAddr1 : '사업장 정보를 입력해주세요.'}</Text>
                   </View>
