@@ -209,7 +209,7 @@ class ClientHome extends Component {
   maching = () => (
     <View style={localStyles.topBoxWrap}>
         <View style={styles.mb5}>
-            <Text style={localStyles.topBoxNameTxt}>{this.state.clientPrdInfo.bplace.bplaceNm}</Text>
+            <Text style={localStyles.topBoxNameTxt} numberOfLines={1}>{this.state.clientPrdInfo.bplace.bplaceNm}</Text>
             <Text style={localStyles.topBoxtAddrTxt}>{this.state.clientPrdInfo.bplace.addr.addressName}</Text>
             <Text style={localStyles.topBoxtAddrTxt}>{this.state.clientPrdInfo.bplace.detail.detailAddr1}</Text>
         </View>
