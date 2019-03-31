@@ -88,7 +88,7 @@ class ListBusinessProductType extends Component {
     
     render() {
         return (
-            <Container style={styles.containerInnerPd}>
+            <Container style={styles.containerInnerPdNoBottom}>
                 <CustomHeader/>
 
                 <View style={styles.contentWrap}>
@@ -138,7 +138,7 @@ class ListBusinessProductType extends Component {
 
                                     <View style={localStyles.myPrdInfoTxtWrap}>
                                         <Text style={localStyles.myPrdNameTxt} numberOfLines={1}>
-                                          { product.clientPrdNm !== null ? product.clientPrdNm : '제품이름을 입력해주세요.'}
+                                          { product.clientPrdNm !== null ? product.clientPrdNm : '제품이름 미입력'}
                                         </Text>
                                         <Text style={localStyles.myPrdDscTxt}>
                                           { product.clientPrdDsc !== null ? product.clientPrdDsc : '제품설명을 입력해주세요.' }

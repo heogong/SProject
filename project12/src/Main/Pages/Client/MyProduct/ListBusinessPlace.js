@@ -158,7 +158,7 @@ class ListBusinessPlace extends Component {
                     </View>
                           
                     <View style={localStyles.txtWrap}>
-                      <Text style={localStyles.placeNameTxt}>{business.bplaceNm}</Text>
+                      <Text style={localStyles.placeNameTxt} numberOfLines={1}>{business.bplaceNm}</Text>
                       <View style={localStyles.infoTxtWrap}>
                         <Text style={localStyles.infoTxt}>
                           {(business.addr != null || business.road != null ?
@@ -234,7 +234,9 @@ const localStyles = StyleSheet.create({
     color: color.whiteColor,
     fontSize: 26,
     fontWeight: "bold",
-    marginBottom: 20
+    marginBottom: 20,
+    paddingLeft: 10,
+    paddingRight: 10
   },
   infoTxtWrap: {
     alignItems : 'center'
