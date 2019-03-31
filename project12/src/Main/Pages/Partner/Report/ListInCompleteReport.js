@@ -61,14 +61,14 @@ _drawStarPoint = (point) => {
     for(let i = 0; i < starPoint; i++) {
         if(evalPoint > 0) {
             pointArray.push(
-            <TouchableOpacity>
+            <TouchableOpacity key={i}>
                 <Image source={require("~/Common/Image/star_icon_100.png")} resizeMode="contain" style={localStyles.starIconImg} />
             </TouchableOpacity>)
 
             evalPoint--;
         } else {
             pointArray.push(
-            <TouchableOpacity>
+            <TouchableOpacity key={i}>
                 <Image source={require("~/Common/Image/star_icon_50.png")} resizeMode="contain" style={localStyles.starIconImg} />
             </TouchableOpacity>)
         }

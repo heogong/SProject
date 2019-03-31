@@ -8,6 +8,7 @@ import { Actions } from 'react-native-router-flux';
 
 import GetAfterServiceActionInfo from '~/Main/Functions/GetAfterServiceActionInfo';
 import RegAfterServiceReport from '~/Main/Functions/RegAfterServiceReport';
+import RegCompleteReport from '~/Main/Functions/RegCompleteReport';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import AfterServiceImage from '~/Main/Components/AfterServiceImage';
 
@@ -29,6 +30,9 @@ class RegReportBeforePic extends Component {
     constructor(props) {
       super(props);
 
+      this.asCauseDsc = null;
+      this.asActionDsc = null;
+
       this.state =  {
         beforeImgData : [],
         afterImgData : [],
@@ -39,7 +43,8 @@ class RegReportBeforePic extends Component {
         },
         asCauseDsc : '',
         asActionDsc : '',
-        btnDisabled : true,
+        btnDisabled : false,
+        isModalVisible : false,
         isAlertModal : false, //alert 용
         resultMsg : null // alert 결과 메세지
       };
@@ -119,20 +124,69 @@ class RegReportBeforePic extends Component {
 
     // AS 보고서 기본 정보 등록
     _regAfterServiceReport = () => {
+        this.setState({isModalVisible : false});
+
         const method ='PUT'; // AS 조치전 정보 조회 정보 여부에 따른 메소드 값
         const { asCauseDsc, asActionDsc } = this.state;
 
-        RegAfterServiceReport(this.props.asPrgsId, asCauseDsc, asActionDsc, method).then(result => {
-            GetCommonData(result, this._regAfterServiceReport).then(async resultData => {
+        if(CURRENT_BEFORE_IMG_CNT > 0 && CURRENT_AFTER_IMG_CNT > 0 && asCauseDsc !== null && asActionDsc !== null) {
+            RegAfterServiceReport(this.props.asPrgsId, asCauseDsc, asActionDsc, method).then(result => {
+                GetCommonData(result, this._regAfterServiceReport).then(async resultData => {
+                    if(resultData !== undefined) {
+                        const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                        console.log(resultData);
+                        if(ResultBool) {
+                            this.setState({
+                                isAlertModal : true,
+                                resultMsg : resultData.resultMsg
+                            });
+                            // 보고서 완료 액션 호출
+                            this._regCompleteReport();
+                        } else {
+                            this.setState({
+                                isAlertModal : true,
+                                resultMsg : resultData.resultMsg
+                            })
+                        }
+                    }
+                });
+            });
+        } else {
+            if(CURRENT_BEFORE_IMG_CNT == 0) {
+                this.setState({
+                    isAlertModal : true,
+                    resultMsg : 'A/S조치전 이미지를 등록해주세요.'
+                })
+            } else if(CURRENT_AFTER_IMG_CNT == 0) {
+                this.setState({
+                    isAlertModal : true,
+                    resultMsg : 'A/S조치후 이미지를 등록해주세요.'
+                })
+            } else if(asCauseDsc == null) {
+                this.setState({
+                    isAlertModal : true,
+                    resultMsg : 'A/S조치전 증상을 입력해주세요.'
+                })
+                this.asCauseDsc.focus();
+            } else {
+                this.setState({
+                    isAlertModal : true,
+                    resultMsg : 'A/S조치후 증상을 입력해주세요.'
+                })
+                this.asActionDsc.focus();
+            }
+        }
+    }
+
+    // AS 보고서 작성 완료
+    _regCompleteReport = () => {
+        RegCompleteReport(this.props.asPrgsId).then(result => {
+            GetCommonData(result, this._regCompleteReport).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        this.setState({
-                            isAlertModal : true,
-                            resultMsg : resultData.resultMsg
-                        })
-                        //Actions.RegAsAfterReport({asPrgsId : this.props.asPrgsId});
+                        Actsion.ResetMain();
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -143,6 +197,7 @@ class RegReportBeforePic extends Component {
             });
         });
     }
+
 
     // 등록된 조치전 이미지 카운트 만큼 제거 후 draw
     _createBeforeAsImg = () => {
@@ -199,13 +254,13 @@ class RegReportBeforePic extends Component {
     // 조치 전 이미지 등록시 카운트
     _addBeforASImg = () => {
        ++CURRENT_BEFORE_IMG_CNT;
-        this._chkInvaildButton();
+        //this._chkInvaildButton();
     }
 
     // 조치 후 이미지 등록시 카운트
     _addAfterASImg = () => {
        ++CURRENT_AFTER_IMG_CNT; 
-        this._chkInvaildButton();
+        //this._chkInvaildButton();
     }
 
 
@@ -215,7 +270,7 @@ class RegReportBeforePic extends Component {
         const dscLen = 5; // 내역 최소 글자 수
         const { asCauseDsc, asActionDsc } = this.state;
 
-        if(CURRENT_BEFORE_IMG_CNT > 0 && CURRENT_AFTER_IMG_CNT > 0 && asCauseDsc.length >= dscLen && asActionDsc.length >= dscLen ) {
+        if(CURRENT_BEFORE_IMG_CNT > 0 && CURRENT_AFTER_IMG_CNT > 0 && asCauseDsc !== null && asActionDsc !== null ) {
             this.setState({btnDisabled : false});
         } else {
             this.setState({btnDisabled : true});
@@ -292,8 +347,9 @@ class RegReportBeforePic extends Component {
                                 </View>
                                 <Item regular style={[styles.mb14, styles.textInputWhBack]}>
                                     <TextInput
+                                        ref={(input) => { this.asCauseDsc = input; }}
                                         value={this.state.asCauseDsc}
-                                        onChangeText={ (text) => {this.setState({asCauseDsc : text}), this._chkInvaildButton() } }
+                                        onChangeText={ (text) => {this.setState({asCauseDsc : text}) } }
                                         placeholder="A/S 조치 전의 증상에 대해 적어주세요."
                                         placeholderTextColor={color.inputPlaceHodler}
                                         numberOfLines={10}
@@ -332,8 +388,9 @@ class RegReportBeforePic extends Component {
                                 </View>
                                 <Item regular style={[styles.mb14, styles.textInputWhBack]}>
                                     <TextInput
+                                        ref={(input) => { this.asActionDsc = input; }}
                                         value={this.state.asActionDsc}
-                                        onChangeText={ (text) => { this.setState({asActionDsc : text}), this._chkInvaildButton() } }
+                                        onChangeText={ (text) => { this.setState({asActionDsc : text}) } }
                                         placeholder="수리한 내역에 대해 적어주세요."
                                         placeholderTextColor={color.inputPlaceHodler}
                                         numberOfLines={10}
@@ -349,12 +406,23 @@ class RegReportBeforePic extends Component {
 
                         <View style={styles.footerBtnWrap}>
                             <CustomButton  
-                                onPress={ this._regAfterServiceReport }
+                                onPress={ () => this.setState({isModalVisible : true}) }
                                 disabled={this.state.btnDisabled}>
                                 등록완료
                             </CustomButton>
                         </View>
                 </View>
+
+                <CustomModal
+                    modalType="CONFIRM"
+                    isVisible={this.state.isModalVisible}
+                    onPress1={ () => this.setState({isModalVisible : false}) }
+                    onPress2={this._regAfterServiceReport}
+                    infoText1="A/S 보고서 완료하시겠습니까?"
+                    infoText2={null}
+                    btnText1="취소"
+                    btnText2="확인"
+                />
                 
                 {/* alert 메세지 모달 */}
                 <CustomModal

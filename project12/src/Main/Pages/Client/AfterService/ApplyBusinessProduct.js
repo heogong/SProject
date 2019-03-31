@@ -21,7 +21,7 @@ import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
 
 let SELECT_INDEX = null; // 카드 선택 index
-let SELECT_INDEX_1 = null; // A/S 증상 선택 index
+let SELECT_AS_INDEX = null; // A/S 증상 선택 index
 class ApplyBusinessProduct extends Component {
     constructor(props) {
       super(props);
@@ -33,6 +33,7 @@ class ApplyBusinessProduct extends Component {
             },
             images : [] // 제품 이미지 데이터
         }, // 제품 데이터
+        asCaseNm : null,
         asRecvDsc : null,
         etcComment : null,
         asCaseData: ["Option 0", "Option 1", "Option 2", "Delete", "Cancel"], // 제품 증상 데이터
@@ -102,7 +103,17 @@ class ApplyBusinessProduct extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData.data);
                     if(ResultBool) {
-                        this.setState({asCaseData : resultData.data});
+                        
+                        const newAsCase = resultData.data.map((asCase) => {
+                            return { ...asCase, text : asCase.asItemNm};
+                        });
+
+                        // this.setState({asCaseData : newAsCase});
+
+                        this.setState({ asCaseData: newAsCase.concat([
+                            { text : 'CANCLE', icon: "close", iconColor: "#fa213b", asItemId : 0 }
+                        ]) });
+
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -142,7 +153,7 @@ class ApplyBusinessProduct extends Component {
     }
 
     _nextButton = () => {
-        // const {asCaseData, selected, asRecvDsc, etcComment, cardData} = this.state;
+        const {asCaseData} = this.state;
 
         // Actions.AfterServiceApplyProductCheck({
         //     clientPrdId: this.props.clientPrdId,
@@ -152,7 +163,22 @@ class ApplyBusinessProduct extends Component {
         //     etcComment : etcComment,
         //     billingKeyId : cardData[SELECT_INDEX].billingKeyId
         // });
-        this._regAfterService();
+
+        if(SELECT_AS_INDEX == null) {
+            this.setState({
+                isAlertModal : true,
+                resultMsg : '증상을 선택은 필수입니다.'
+            })
+        } else {
+            if(asCaseData[SELECT_AS_INDEX].asItemId == 0) {
+                this.setState({
+                    isAlertModal : true,
+                    resultMsg : '증상을 선택은 필수입니다.'
+                })
+            } else {
+                this._regAfterService();
+            }
+        }
     }
 
     // 회원 AS 접수
@@ -161,7 +187,7 @@ class ApplyBusinessProduct extends Component {
 
         RegAfterService(
             this.props.clientPrdId,
-            selected,
+            asCaseData[SELECT_AS_INDEX].asItemId,
             asRecvDsc, 
             etcComment).then(result => {
             GetCommonData(result, this._regAfterService).then(async resultData => {
@@ -170,12 +196,14 @@ class ApplyBusinessProduct extends Component {
                     console.log(resultData);
                     if(ResultBool) {
                         // 증상내역 text
-                        asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm;
+                        // asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm;
                         // 신청 내역 확인 페이지 이동
                         Actions.AfterServiceApplyProductCheck({
                             clientPrdId: this.props.clientPrdId,
-                            asItemNm : asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm,
-                            asItemId : selected,
+                            // asItemNm : asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm,
+                            // asItemId : selected,
+                            asItemNm : asCaseData[SELECT_AS_INDEX].asItemNm,
+                            asItemId  : asCaseData[SELECT_AS_INDEX].asItemId, 
                             asRecvDsc : asRecvDsc,
                             etcComment : etcComment,
                             asRecvId : resultData.data.asRecvId,
@@ -256,15 +284,48 @@ class ApplyBusinessProduct extends Component {
                                 
                                 <View>
                                     <Text style={[localStyles.boxDetailSubTitleTxt, {marginTop: 6}]}>증상 및 상세 입력</Text>
-                                    <Item regular style={[styles.inputWhBackGreyBo, {marginLeft: 0}]}>
+                                    <Item 
+                                        regular 
+                                        style={[styles.inputWhBackGreyBo, {marginLeft: 0}]}
+                                        onPress={() =>
+                                            ActionSheet.show(
+                                                {
+                                                    options: this.state.asCaseData,
+                                                    cancelButtonIndex: this.state.asCaseData.length - 1,
+                                                    title: "증상"
+                                                },
+                                                buttonIndex => {
+                                                    const { asCaseData, cardData } = this.state;
+                                                    SELECT_AS_INDEX = buttonIndex;
+            
+                                                    if(asCaseData[buttonIndex].asItemId > 0) {
+                                                        this.setState({ 
+                                                            asCaseNm: asCaseData[buttonIndex].asItemNm
+                                                        });
+
+                                                        if(SELECT_INDEX !== null) {
+                                                            if(cardData[SELECT_INDEX].billingKeyId > 0) {
+                                                                this.setState({disabledBtn : false})
+                                                            }
+                                                        }
+                                                    } else if(asCaseData[buttonIndex].asItemId == 0) { // cancle
+                                                        this.setState({
+                                                            disabledBtn : true,
+                                                            asCaseNm : null
+                                                        })
+                                                    }
+                                                })
+                                            }
+                                    >
                                         <Input
-                                        placeholder="증상을 선택해 주세요."
-                                        placeholderTextColor={color.inputPlaceHodler}
-                                        style={styles.inputDefaultBox}
-                                        ref={(input) => { this.secondTextInput = input; }}
-                                        value={ this.state.text }
-                                        editable={false}
-                                        selectTextOnFocus={false}
+                                            placeholder="증상을 선택해 주세요."
+                                            placeholderTextColor={color.inputPlaceHodler}
+                                            style={styles.inputDefaultBox}
+                                            ref={(input) => { this.secondTextInput = input; }}
+                                            value={ this.state.asCaseNm }
+                                            editable={false}
+                                            selectTextOnFocus={false}
+                                            disabled={false}
                                         />
                                         <Icon name="arrow-dropdown" style={styles.selectBoxIcon} />
                                     </Item>

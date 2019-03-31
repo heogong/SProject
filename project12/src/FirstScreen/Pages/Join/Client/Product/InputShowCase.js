@@ -109,8 +109,9 @@ class InputShowCase extends Component {
                                 clientPrdNm : resultData.data.clientPrdNm,
                                 prdType : resultData.data.prdType,
                                 prdTypeImg : this.props.prodFileUrl,
-                                imgTypeArray : imgNData
-                            }])
+                                imgTypeArray : imgNData,
+                            }]),
+                            slider1ActiveSlide : showCase.length
                         })
 
                         CLIENT_PRD_ARRAY = CLIENT_PRD_ARRAY.concat({
@@ -213,8 +214,9 @@ class InputShowCase extends Component {
     }
 
    // showCase 카드 추가
-   _handleAddShowCase = () => {
-        this._regProductMst();
+   _handleAddShowCase = async () => {
+       await this._regProductMst();
+        this._carousel.snapToNext();
     }
 
     // showCase 카드 복사
@@ -325,6 +327,7 @@ class InputShowCase extends Component {
                             </View>
                         </View>
                         <Carousel
+                            ref={(c) => { this._carousel = c; }}
                             renderItem={this._renderItem}
                             sliderWidth={viewportWidth}
                             activeSlideAlignment={'start'}
