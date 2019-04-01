@@ -99,8 +99,8 @@ const RequestReport = ({action, count}) => (
         </View>
 
         <View style={[styles.alignItemsCenter, styles.fx2]}>
-            <Text style={localStyles.reportTitleTxt}>A/S 출장시 보고서 작성이 필요해요</Text>
-            <Text style={localStyles.reportTxt}>보고서를 작성해야 비용을 정산받을 수 있어요</Text>
+            <Text style={localStyles.reportTitleTxt} numberOfLines={1}>A/S 출장시 보고서 작성이 필요해요</Text>
+            <Text style={localStyles.reportTxt} numberOfLines={1}>보고서를 작성해야 비용을 정산받을 수 있어요</Text>
             <View style={styles.alignItemsCenter}>
                 <CustomButton
                     onPress={action}
@@ -129,8 +129,8 @@ const GuideReport = () => (
         </View>
 
         <View style={[styles.alignItemsCenter, styles.fx2, {height: 120}]}>
-            <Text style={localStyles.reportTitleTxt}>A/S 출장시 보고서 작성이 필요해요</Text>
-            <Text style={localStyles.reportTxt}>보고서를 작성해야 비용을 정산받을 수 있어요</Text>
+            <Text style={localStyles.reportTitleTxt} numberOfLines={1}>A/S 출장시 보고서 작성이 필요해요</Text>
+            <Text style={localStyles.reportTxt} numberOfLines={1}>보고서를 작성해야 비용을 정산받을 수 있어요</Text>
             <View style={styles.alignItemsCenter}>
                 <CustomButton
                     WhiteLineBtn={true}

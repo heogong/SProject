@@ -292,7 +292,7 @@ class ApplyBusinessProduct extends Component {
                                                 {
                                                     options: this.state.asCaseData,
                                                     cancelButtonIndex: this.state.asCaseData.length - 1,
-                                                    title: "증상"
+                                                    title: "A/S 증상 선택"
                                                 },
                                                 buttonIndex => {
                                                     const { asCaseData, cardData } = this.state;

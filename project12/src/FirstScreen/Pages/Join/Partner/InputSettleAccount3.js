@@ -186,7 +186,7 @@ class InputSettleAccount3 extends Component {
                     {
                         options: this.state.bankInfo,
                         cancelButtonIndex: SELECT_IDX,
-                        title: "은행 명"
+                        title: "입금 은행 선택"
                     },
                     buttonIndex => {
                       this.setState({ buttonTitle: this.state.bankInfo[buttonIndex].text });
