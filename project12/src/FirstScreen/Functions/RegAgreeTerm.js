@@ -13,6 +13,8 @@ const RegAgreeTerm = async (agreeTerms) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`;
 
+  console.log(RegAgreeTermUrl(agreeTerms));
+
   return fetch(RegAgreeTermUrl(agreeTerms), {
     method: 'POST',
     headers: {

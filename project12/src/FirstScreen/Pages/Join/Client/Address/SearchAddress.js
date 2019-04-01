@@ -79,24 +79,24 @@ class SearchAddress extends Component {
   // 주소 정보 가져오기
   _setAddressInfo = () => {
     if(this.state.addressName !== '') {
-    GetAddress(this.state.addressName).then(result => {
-      GetCommonData(result, this._setAddressInfo).then(async resultData => {
-        if(resultData !== undefined) {
-          const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-          console.log(result.data);
-          if(ResultBool) {
-            this.setState({data : resultData.data.documents });
-            // this.setState({data : resultData.data.documents.filter(address => address.address_type !== "REGION")});
-           // this.setState({data : resultData.data.documents.filter(address => address !== null)});
-          } else {
-            this.setState({
-              isAlertModal : true,
-              resultMsg : resultData.resultMsg
-            })
+      GetAddress(this.state.addressName).then(result => {
+        GetCommonData(result, this._setAddressInfo).then(async resultData => {
+          if(resultData !== undefined) {
+            const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+            console.log(result.data);
+            if(ResultBool) {
+              this.setState({data : resultData.data.documents });
+              // this.setState({data : resultData.data.documents.filter(address => address.address_type !== "REGION")});
+            // this.setState({data : resultData.data.documents.filter(address => address !== null)});
+            } else {
+              this.setState({
+                isAlertModal : true,
+                resultMsg : resultData.resultMsg
+              })
+            }
           }
-        }
+        });
       });
-    });
     } else {
       this.setState({
         isAlertModal : true,

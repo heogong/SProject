@@ -47,11 +47,11 @@ class AgreeTermsService extends Component {
     const {checkBox1, checkBox2, checkBox3, checkBox4, checkBox5} = this.state;
 
     const agreeTerms = {
-      checkBox1 : checkBox1,
-      checkBox2 : checkBox2,
-      checkBox3 : checkBox3,
-      checkBox4 : checkBox4,
-      checkBox5 : checkBox5
+      checkBox1 : checkBox1 ? 'Y' : 'N',
+      checkBox2 : checkBox2 ? 'Y' : 'N',
+      checkBox3 : checkBox3 ? 'Y' : 'N',
+      checkBox4 : checkBox4 ? 'Y' : 'N',
+      checkBox5 : checkBox5 ? 'Y' : 'N'
     }
 
     RegAgreeTerm(agreeTerms).then(async result => {

@@ -36,14 +36,14 @@ class AgreeTermsService extends Component {
 
   // 쿨리닉 약관 동의 등록
   _regAgreeTerm = () => {
-    const {checkBox1, checkBox2, checkBox3, checkBox4, checkBox5} = this.state;
+    const {check1, check2, check3, check4, check5} = this.state;
 
     const agreeTerms = {
-      checkBox1 : checkBox1,
-      checkBox2 : checkBox2,
-      checkBox3 : checkBox3,
-      checkBox4 : checkBox4,
-      checkBox5 : checkBox5
+      checkBox1 : check1 ? 'Y' : 'N',
+      checkBox2 : check2 ? 'Y' : 'N',
+      checkBox3 : check3 ? 'Y' : 'N',
+      checkBox4 : check4 ? 'Y' : 'N',
+      checkBox5 : check5 ? 'Y' : 'N'
     }
 
     RegAgreeTerm(agreeTerms).then(async result => {

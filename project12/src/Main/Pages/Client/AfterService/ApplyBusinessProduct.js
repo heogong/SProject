@@ -21,10 +21,7 @@ import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
 
 let SELECT_INDEX = null; // 카드 선택 index
-<<<<<<< HEAD
 let SELECT_AS_INDEX = null; // A/S 증상 선택 index
-=======
->>>>>>> faf8972fc5b73325a1431ae1789714c5fe2c48a7
 class ApplyBusinessProduct extends Component {
     constructor(props) {
       super(props);
