@@ -281,7 +281,7 @@ class ClientHome extends Component {
                   <View style={localStyles.bottomBoxWrap}>
       
                       <View style={localStyles.bottomBoxLeftWrap}>
-                          <Image source={require("~/Common/Image/license-depart01.png")} style={localStyles.leftImg}  />
+                          <Image source={require("~/Common/Image/company_illust.png")} style={localStyles.leftImg}  />
                       </View>
 
                         <View style={localStyles.bottomBoxRightWrap}>

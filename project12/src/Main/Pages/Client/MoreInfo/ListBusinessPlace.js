@@ -119,7 +119,7 @@ class ListBusinessPlace extends Component {
                 )}
 
                 <View style={localStyles.prdImgWrap}>
-                  <Image source={require('~/Common/Image/product/01_icon_white.png')} style={localStyles.prdImg}/>
+                  <Image source={require('~/Common/Image/company_illust.png')} style={localStyles.prdImg}/>
                 </View>
                 <TouchableOpacity onPress={ () => alert("사업장 등록")}>
                   <View style={localStyles.txtWrap}>

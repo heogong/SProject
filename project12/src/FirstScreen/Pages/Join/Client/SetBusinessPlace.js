@@ -80,7 +80,7 @@ class SetBusinessPlace extends Component {
 
           <View style={localStyles.placeBoxWrap}>
             <View style={localStyles.btnPlusWrap}>
-              <Image source={require('~/Common/Image/product/01_icon_white.png')} style={localStyles.btnPlus} />
+              <Image source={require('~/Common/Image/company_illust.png')} style={localStyles.btnPlus} />
             </View>
             <View style={localStyles.txtWrap}>
               <Text style={localStyles.placeNameTxt}>{this.state.data.bplaceNm}</Text>
