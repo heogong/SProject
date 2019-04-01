@@ -199,13 +199,13 @@ export default class Main extends Component {
                 key={index}
                 onPress={() => Actions[item.link].call()}>
                 <View style={[styles.pd10, styles.alignItemsCenter, {backgroundColor : color.whiteColor, height : cardHeight}]}>
-                    <View style={{marginTop: 30}}>
+                    <View style={{marginTop: 10}}>
                         <Text style={{fontSize: 24, color: "#038dbd", fontWeight: "bold"}}>{item.title}</Text>
                     </View>
                     <View style={[styles.fx1, styles.justiConCenter]}>
-                        <Text style={localStyles.guideBoxTxt}>{item.guideTxt1}</Text>
-                        <Text style={localStyles.guideBoxTxt}>{item.guideTxt2}</Text>
-                        <Text style={localStyles.guideBoxTxt}>{item.guideTxt3}</Text>
+                        <Text style={localStyles.guideBoxTxt} numberOfLines={1}>{item.guideTxt1}</Text>
+                        <Text style={localStyles.guideBoxTxt} numberOfLines={1}>{item.guideTxt2}</Text>
+                        <Text style={localStyles.guideBoxTxt} numberOfLines={1}>{item.guideTxt3}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -220,13 +220,13 @@ export default class Main extends Component {
                     key={index}
                     onPress={() => Actions[item.link].call()}>
                     <View style={[styles.pd10, styles.alignItemsCenter, {backgroundColor : color.whiteColor, height : cardHeight}]}>
-                        <View style={{marginTop: 30}}>
+                        <View style={{marginTop: 10}}>
                             <Text style={{fontSize: 24, color: "#038dbd", fontWeight: "bold"}}>{item.title}</Text>
                         </View>
                         <View style={[styles.fx1, styles.justiConCenter]}>
-                            <Text style={localStyles.guideBoxTxt}>{item.guideTxt1} 승인후</Text>
-                            <Text style={localStyles.guideBoxTxt}>{item.guideTxt2}</Text>
-                            <Text style={localStyles.guideBoxTxt}>{item.guideTxt3}</Text>
+                            <Text style={localStyles.guideBoxTxt} numberOfLines={1}>{item.guideTxt1} 승인후</Text>
+                            <Text style={localStyles.guideBoxTxt} numberOfLines={1}>{item.guideTxt2}</Text>
+                            <Text style={localStyles.guideBoxTxt} numberOfLines={1}>{item.guideTxt3}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -235,8 +235,8 @@ export default class Main extends Component {
                     key={index}
                     onPress={ this._selectAfterService(index) }>
                     <View style={[styles.pd10, styles.alignItemsCenter, {backgroundColor : color.whiteColor, height : cardHeight}]}>
-                        <View style={{marginTop: 20}}>
-                            <Text style={{fontSize: 16, color: "#038dbd", fontWeight: "bold"}}>{item.bplaceAddr}</Text>
+                        <View style={{marginTop: 5, marginBottom: 5}}>
+                            <Text style={{fontSize: 16, color: "#038dbd", fontWeight: "bold"}} numberOfLines={1}>{item.bplaceAddr}</Text>
                         </View>
                         <View style={[styles.fx4, styles.justiConCenter]}>
                             <Image 
