@@ -28,7 +28,7 @@ const Product = ({index, afterService, toggelAction}) => (
           />
         </View>
         <View style={styles.listPrdBoxRightTxtWrap}>
-          <H3 style={styles.listPrdBoxRightTitleTxt}>{ afterService.prdTypeKoNm }</H3>
+          <H3 style={styles.listPrdBoxRightTitleTxt} numberOfLines={1}>{ afterService.prdTypeKoNm }</H3>
           <Text style={styles.listPrdBoxDeTxt}>{ afterService.bplaceAddr }</Text>
           <Text style={styles.listPrdBoxDeTxt}>{ afterService.bplaceAddrDtl }</Text>
         </View>

@@ -33,7 +33,7 @@ const Product = ({report}) => (
           <Text style={styles.listPrdBoxImgTxt}>{report.prdTypeKoNm}</Text>
         </View>
         <View style={styles.listPrdBoxRightTxtWrap}>
-          <H3 style={styles.listPrdBoxRightTitleTxt}>{report.bplaceNm}</H3>
+          <H3 style={styles.listPrdBoxRightTitleTxt} numberOfLines={1}>{report.bplaceNm}</H3>
           <Text style={[styles.listPrdBoxDeTxt, styles.mb12, {fontWeight: "500"}]}>{report.asComplteDt}</Text>
           <Text style={styles.listPrdBoxDeTxt}>{report.asItemNm}</Text>
           <View style={styles.fxDirRow}>
