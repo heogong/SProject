@@ -229,63 +229,80 @@ function wp (percentage, space) {
   
   const localStyles = StyleSheet.create({
     topBoxTxt: {
-      fontSize: 21,
-      color: "#1e1e32",
-      fontWeight: "bold"
-    },
-    topBoxDeTxt: {
-      fontSize: 13,
-      color: "#8e8e98"
-    },
-    bottomBoxWrap: {
-      paddingLeft: 16,
-      paddingRight: 16,
-      paddingBottom: 24,
-      backgroundColor: "#fff"
-    },
-    boxDetailTitleWrap: {
-      marginBottom: 24,
-      borderColor: color.defaultColor,
-      borderBottomWidth : 1
-    },
-    boxDetailTitleTxt: {
-      fontSize: 18,
-      color : color.defaultColor,
-      paddingTop : 26,
-      paddingBottom : 26,
-      fontWeight: "bold"
-    },
-    boxDetailSubTitleTxt: {
-      fontSize: 14,
-      color: "#1e1e32",
-      paddingBottom: 10
-    },
-    boxDetailSubTxt: {
-      fontSize: 13,
-      color: "#8e8e98"
-    },
-    prdPhotoWrap: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      flexWrap : 'wrap'
-    },
-    prdPhoto: {
-      marginBottom : 10,
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor : color.defaultColor, 
-      height : asCardSize, 
-      width : asCardSize
-    },
-    prdPhotoBtnEn: {
-      height : 32,
-      width : 32,
-      backgroundColor: 'rgba(0, 0, 0, 0.6)'
-    },
-    prdPhotoBtnEnIcon: {
-      textAlign: "center",
-      color: color.whiteColor
-    }
+        fontSize: 21,
+        color: "#1e1e32",
+        fontWeight: "bold"
+      },
+      topBoxDeTxt: {
+        fontSize: 13,
+        color: "#8e8e98"
+      },
+      bottomBoxWrap: {
+        paddingLeft: 16,
+        paddingRight: 16,
+        paddingBottom: 24,
+        backgroundColor: "#fff"
+      },
+      boxDetailTitleWrap: {
+        marginBottom: 24,
+        borderColor: color.defaultColor,
+        borderBottomWidth : 1
+      },
+      boxDetailTitleTxt: {
+        fontSize: 18,
+        color : color.defaultColor,
+        paddingTop : 26,
+        paddingBottom : 26,
+        fontWeight: "bold"
+      },
+      boxDetailSubTitleTxt: {
+        fontSize: 14,
+        color: "#1e1e32",
+        paddingBottom: 10,
+        fontWeight: "bold"
+      },
+      boxDetailSubTxt: {
+        fontSize: 13,
+        color: "#8e8e98"
+      },
+      prdPhotoWrap: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        flexWrap : 'wrap'
+      },
+      prdPhoto: {
+        marginBottom : 10,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor : color.defaultColor, 
+        height : asCardSize, 
+        width : asCardSize
+      },
+      prdPhotoBtnEnIcon: {
+        textAlign: "center",
+        width: 32,
+        height: 32
+      },
+      photoNoBoxWrap: {
+        borderColor : "#c9cacb",
+        borderWidth : 1,
+        marginBottom : 10,
+        alignItems: "center",
+        justifyContent: "center",
+        height : asCardSize, 
+        width : asCardSize
+      },
+      photoNoBox: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: color.whiteColor
+      },
+      prdCardCameraIcon: {
+        color: color.defaultColor,
+        width: 36,
+        height: 36
+      },
 });
 
 

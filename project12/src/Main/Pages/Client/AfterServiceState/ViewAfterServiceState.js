@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View, ScrollView } from 'react-native'
 import { Container,Header,Title, Button,Left,Right,Body,Text} from "native-base";
 
 import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, PROGRESS, COMPLETE_MATCH, ADD_AS, COMPLETE_AS} from '~/Common/Blend';
@@ -293,7 +293,7 @@ class ViewAfterServiceState extends Component {
                 </Body>
                 <Right style={styles.headerRightWrap}></Right>
               </Header>
-      
+              <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.fx1}>
       
                   { (this.state.showMap) ? (
@@ -373,31 +373,32 @@ class ViewAfterServiceState extends Component {
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_complete_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_complete_icon.png')}
                           />
-                        </View>
-                     </View>
+                          </View>
+                      </View>
+                    </View>
+        
+                    <View style={localStyles.serviceBoxWrap}>
+                      <View style={[localStyles.serviceBox, {marginRight : 20}]}>
+                          <TouchableOpacity onPress={this._checkGrade}>
+                              <Image source={require("~/Common/Image/service_rating.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
+                          </TouchableOpacity>
+                      </View>
+                      <View style={[localStyles.serviceBox, {marginRight : 20}]}>
+                          <TouchableOpacity>
+                              <Image source={require("~/Common/Image/recent_report.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
+                          </TouchableOpacity>
+                      </View>
+                      <View style={[localStyles.serviceBox]}>
+                          <TouchableOpacity onPress={() => {
+                              clearInterval(this.props.afterService.intervalId), 
+                              Actions.AfterServiceHistory() 
+                            }}>
+                              <Image source={require("~/Common/Image/previous_as.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
+                          </TouchableOpacity>
+                      </View>
                   </View>
-      
-                  <View style={localStyles.serviceBoxWrap}>
-                    <View style={[localStyles.serviceBox, {marginRight : 20}]}>
-                        <TouchableOpacity onPress={this._checkGrade}>
-                            <Image source={require("~/Common/Image/service_rating.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[localStyles.serviceBox, {marginRight : 20}]}>
-                        <TouchableOpacity>
-                            <Image source={require("~/Common/Image/recent_report.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[localStyles.serviceBox]}>
-                        <TouchableOpacity onPress={() => {
-                            clearInterval(this.props.afterService.intervalId), 
-                            Actions.AfterServiceHistory() 
-                          }}>
-                            <Image source={require("~/Common/Image/previous_as.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
-                        </TouchableOpacity>
-                    </View>
                 </View>
-              </View>
+              </ScrollView>
 
               <Modal isVisible={this.state.isModalVisible} onBackdropPress={() => this.setState({ isModalVisible: false })}>
                 <View style={[styles.modalWrap, {height: 150}]}>
@@ -541,6 +542,7 @@ const localStyles = StyleSheet.create({
       alignItems: "center",
       marginLeft : 26, 
       marginRight : 26, 
+      marginBottom: 26
   },
   topTxtWrap: {
       flexDirection: "row"
