@@ -215,6 +215,7 @@ class RegReportBeforePic extends Component {
                 asPrgsId={ this.props.asPrgsId }
                 beforeAction={ true }
                 takeBeforeImageAction={ this._addBeforASImg }
+                imgSizeType={1}
             />); 
         }
         return imageCompArray;
@@ -235,6 +236,7 @@ class RegReportBeforePic extends Component {
                 asPrgsId={ this.props.asPrgsId }
                 beforeAction={ false }
                 takeAfterImageAction={ this._addAfterASImg }
+                imgSizeType={1}
             />); 
         }
         return imageCompArray;
@@ -339,6 +341,7 @@ class RegReportBeforePic extends Component {
                                             imgId={ beforeImg.imgId }
                                             asPrgsId={ this.props.asPrgsId }
                                             takeBeforeImageAction={ this._addBeforASImg }
+                                            imgSizeType={1}
                                         />
                                     )}
                                     
@@ -380,6 +383,7 @@ class RegReportBeforePic extends Component {
                                             beforeAction={ false }
                                             asPrgsId={ this.props.asPrgsId }
                                             takeAfterImageAction={ this._addAfterASImg }
+                                            imgSizeType={1}
                                         />
                                     )}
                                     
