@@ -166,8 +166,8 @@ class InputWorkHours extends Component {
             // fullBtnWarning : !fullBtnWarning,
             stHour : '00',
             stMin : '00',
-            edHour : '24',
-            edMin : '00',
+            edHour : '23',
+            edMin : '59',
         });
 
         BUSINESS_DAY.fullWorkYn = ( BUSINESS_DAY.fullWorkYn == 'Y') ? 'N' : 'Y';

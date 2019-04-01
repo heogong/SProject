@@ -24,11 +24,16 @@ class TermsMenu extends Component {
   render() {
     return (
       <Container style={styles.container}>
-        <CustomHeader title="약관 및 정책"/>
+        <View style={{
+          paddingLeft : styles.containerInnerPd.paddingLeft, 
+          paddingRight : styles.containerInnerPd.paddingRight
+        }}>
+          <CustomHeader title="약관 및 정책"/>
+        </View>
 
         <View style={[styles.fx1, { backgroundColor: color.defaultColor}]}>
           <View style={{marginTop: 16}}>
-            <TouchableOpacity onPress={ () => alert("사진조회")}>
+            <TouchableOpacity onPress={ Actions.TermsContent1 }>
               <View style={localStyles.listMenuWrap}>
                 <Text style={localStyles.listMenuTxt}>이용약관</Text>
               </View>

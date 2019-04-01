@@ -333,7 +333,7 @@ class ViewAfterServiceState extends Component {
                           </View>
                           <View>
                             <Text style={[localStyles.topSubTitleTxt, {marginTop: 20, marginBottom: 10}]}>참고사항</Text>
-                            <Text style={localStyles.topInfoTxt}>{ this.state.data.asPrgsMst.asRecvDsc }</Text>
+                            <Text style={localStyles.topInfoTxt}>{ this.state.data.asPrgsMst.asRecvDsc !== 'null' ?  this.state.data.asPrgsMst.asRecvDsc : '입력된 참고사항이 없습니다.'}</Text>
                           </View>
                       </View>
                   )}

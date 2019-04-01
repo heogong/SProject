@@ -6,7 +6,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 
-import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
+import ChkUsrPasswd from '~/Main/Functions/ChkUsrPasswd';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from "~/Common/Components/CustomHeader";
@@ -27,20 +27,28 @@ class MyProfileExit1 extends Component {
     };
   }
 
-  _chkPasswd = () => {
-    
-    //비밀번호 인증 api
-    if(true) {
-      Actions.MyProfileExit2();
-    } else {
-      this.setState({
-        isAlertModal : true,
-        resultMsg : resultData.resultMsg
-      })
-    }
-  }
-
-
+    //  비밀번호 확인
+    _chkUsrPasswd = () => {
+      const { passwd } = this.state;
+      
+      ChkUsrPasswd(passwd).then(async result => {
+          GetCommonData(result, this._chkUsrPasswd).then(async resultData => {
+              if(resultData !== undefined) {
+                  console.log(resultData);
+                  const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+  
+                  if(ResultBool) {
+                      Actions.MyProfileExit2();
+                  } else {
+                      this.setState({
+                        isAlertModal : true,
+                        resultMsg : resultData.resultMsg
+                      })
+                  }
+              }
+          });
+      });
+    } 
 
   _chkButton = () => {
     const chkLen = 3;
@@ -59,7 +67,7 @@ class MyProfileExit1 extends Component {
         <CustomHeader title="회원탈퇴"/>
         <View style={styles.contentWrap}>
 
-          <View>
+          <View style={styles.fx1}>
             <View style={styles.tooltipWrap}>
               <Text style={styles.tooltipTxt}>개인정보를 안전하게 보호하기 위해 비밀번호를 입력해주세요.</Text>
             </View>
@@ -77,7 +85,7 @@ class MyProfileExit1 extends Component {
 
           <View style={styles.footerBtnWrap}>
             <CustomButton 
-              onPress={ this._chkPasswd }
+              onPress={ this._chkUsrPasswd }
               disabled={ this.state.disableBtn }
             >
               다음

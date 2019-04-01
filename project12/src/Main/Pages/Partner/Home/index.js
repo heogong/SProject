@@ -240,7 +240,7 @@ export default class Main extends Component {
                         </View>
                         <View style={[styles.fx4, styles.justiConCenter]}>
                             <Image 
-                                source={require("~/Common/Image/license-depart02.png")} 
+                                source={{uri : item.prdTypeImgUrl}} 
                                 resizeMode="contain" 
                                 style={{height : 80, width : 80}} />
                         </View>

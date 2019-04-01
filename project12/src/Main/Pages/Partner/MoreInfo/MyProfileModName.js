@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Container, Icon, Text, Item, Input } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';

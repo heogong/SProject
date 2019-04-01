@@ -17,7 +17,10 @@ class TermsContent1 extends Component {
   render() {
     return (
       <Container style={styles.container}>
-        <View style={{paddingLeft : 26, paddingRight: 26}}>
+        <View style={{
+          paddingLeft : styles.containerInnerPd.paddingLeft, 
+          paddingRight : styles.containerInnerPd.paddingRight
+        }}>
           <CustomHeader title="이용약관"/>
         </View>
 
