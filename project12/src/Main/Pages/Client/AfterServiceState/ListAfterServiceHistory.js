@@ -82,7 +82,9 @@ class ListAfterServiceHistory extends Component {
                 <Spinner
                     visible={this.state.spinner}
                     textContent={'A/S 내역을 불러오고 있습니다.'}
-                    style={{color: '#FFF'}}
+                    textStyle={styles.whiteFont}
+                    style={{color: color.whiteColor}}
+                    overlayColor={"rgba(40, 200, 245, 1)"}
                 />
                 <CustomHeader 
                     customAction={this._goToMain}

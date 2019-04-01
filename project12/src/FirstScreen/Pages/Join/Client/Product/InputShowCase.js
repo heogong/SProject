@@ -181,7 +181,8 @@ class InputShowCase extends Component {
                             showCase: this.state.showCase.filter((s, sidx) => DEL_IDX !== sidx),
                             isModalVisible : false
                         })
-                        CLIENT_PRD_ARRAY = CLIENT_PRD_ARRAY.filter((s, sidx) => DEL_IDX !== sidx)
+                        CLIENT_PRD_ARRAY = CLIENT_PRD_ARRAY.filter((s, sidx) => DEL_IDX !== sidx);
+                        this._carousel.snapToPrev();
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -216,20 +217,27 @@ class InputShowCase extends Component {
 
    // showCase 카드 추가
    _handleAddShowCase = async () => {
-       await this._regProductMst();
+       this._regProductMst();
        
-       // 타임아웃 clear 필요할듯
-    //    let nextCard = setTimeout(() => {
-    //         this._carousel.snapToNext();
-    //     }, 500);
-
-    //     clearTimeout(nextCard);
+       // 옆으로 이동 (추가된 카드로 이동)
+       let nextCard = setTimeout(() => {
+            // this._carousel.snapToNext();
+            this._carousel.snapToItem(this.state.showCase.length);
+            clearTimeout(nextCard);
+        }, 500);
     }
 
     // showCase 카드 복사
     _handleCopyShowCase = (idx) => () => {
         CLIENT_PRODUCT_ID = this.state.showCase[idx].clientPrdId;
         this._copyProductMst();
+
+        // 옆으로 이동 (추가된 카드로 이동)
+        let nextCard = setTimeout(() => {
+            // this._carousel.snapToNext();
+            this._carousel.snapToItem(this.state.showCase.length);
+            clearTimeout(nextCard);
+        }, 500);
     }
 
      // showCase 카드 제거

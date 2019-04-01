@@ -73,6 +73,7 @@ export default class ServiceIntroduce extends Component {
         onSkip={Actions.LoginAccountType}
         showSkipButton={true}
         // showNextButton={false}
+        skipLabel="건너뛰기"
         nextLabel="다음"
         doneLabel="쿨리닉의세계로"
         buttonTextStyle={{color:'#28c8f5'}}

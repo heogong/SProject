@@ -26,7 +26,7 @@ class SetAddress extends Component {
         super(props);
 
         this.state = {
-            addressName : null,
+            addressName : '',
             detailAddressName : '',
             makerYn : false,
             disSaveBtn : true,

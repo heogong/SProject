@@ -159,7 +159,7 @@ class ViewAfterServiceMatch extends Component {
                                 <View style={styles.mb20}>
                                     <Text style={localStyles.boxDetailSubTitleTxt}>참고사항</Text>
                                     <Text style={localStyles.boxDetailSubTxt}>
-                                        {this.state.data.asItemDsc}
+                                        {this.state.data.asRecvDsc}
                                     </Text>
                                 </View>
 

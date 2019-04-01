@@ -12,6 +12,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 import GetBizList from '~/Main/Functions/GetBizList';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
+import CancleAfterServicePartner from '~/Main/Functions/CancleAfterServicePartner';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomModal from '~/Common/Components/CustomModal';
@@ -63,10 +64,13 @@ class ClientHome extends Component {
       },
       asPrgsYn : 'N', // AS 여부
       asPrgsStatCd : null,
+      asPrgsId : null,
       asPrgsStatNm : null,
       asPrgsStatDSC : null,
       slider1ActiveSlide: 0,
       spinner : false,
+      isModalVisible : false,
+      isAlertConfirmModal : false,
       isAlertModal : false, // alert 용
       resultMsg : null // alert 용
     };
@@ -148,6 +152,7 @@ class ClientHome extends Component {
                 if(resultData.data.asPrgsMst !== null) {
                   this.setState({
                     asPrgsStatCd : resultData.data.asPrgsMst.asPrgsStatCd,
+                    asPrgsId : resultData.data.asPrgsMst.asPrgsId,
                     asPrgsStatNm : resultData.data.asPrgsMst.asPrgsStatNm,
                     asPrgsStatDSC : resultData.data.asPrgsMst.asPrgsStatDsc,
                     clientPrdInfo : resultData.data.clinePrdInfo
@@ -168,6 +173,34 @@ class ClientHome extends Component {
               this.setState({spinner : false});
           }
       });
+    });
+  }
+
+  // 고객 AS 매칭(진행)중 취소
+  _cancleAfterServicePartner = () => {
+    this.setState({isModalVisible : false});
+
+    CancleAfterServicePartner(this.state.asPrgsId).then(result => {
+        GetCommonData(result, this._cancleAfterServicePartner).then(async resultData => {
+            if(resultData !== undefined) {
+                const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                console.log(resultData);
+
+                if(ResultBool) {
+                  this.setState({
+                    isAlertConfirmModal : true,
+                    resultMsg : resultData.resultMsg
+                  })
+
+                  // this._getClientAfterServiceState();
+                } else {
+                    this.setState({
+                      isAlertModal : true,
+                      resultMsg : ' 매칭(진행)중 취소 - ' + resultData.resultMsg
+                    })
+                }
+            }
+        });
     });
   }
 
@@ -225,9 +258,11 @@ class ClientHome extends Component {
             </View>
 
             <View style={localStyles.bottomBoxRightWrap}>
+              <TouchableOpacity onPress={ () => this.setState({isModalVisible : true})}>
                 <View style={[localStyles.rightStateCircle, {backgroundColor: "#0397bd"}]}>
-                    <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>{this.state.asPrgsStatNm}</Text>
+                    <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>{`${this.state.asPrgsStatNm}[취소]`}</Text>
                 </View>
+              </TouchableOpacity>
             </View>
         </View>
     </View>
@@ -240,8 +275,7 @@ class ClientHome extends Component {
             visible={this.state.spinner}
             textContent={'데이터를 불러오고 있습니다.'}
             textStyle={styles.whiteFont}
-            style={{color: color.whiteColor}}
-            overlayCologr={"rgba(40, 200, 245, 1)"}
+            overlayColor={"rgba(40, 200, 245, 1)"}
           />
           <Header style={[styles.headerM, styles.noPadding]}>
             <Left style={styles.headerLeftWrap}/>
@@ -361,6 +395,26 @@ class ClientHome extends Component {
                   <Text>aaaaaaaaaaaaaaa</Text>
               </View>
           </ScrollView>
+
+          <CustomModal
+              modalType="CONFIRM"
+              isVisible={this.state.isModalVisible}
+              onPress1={ ()=> this.setState({isModalVisible : false}) }
+              onPress2={this._cancleAfterServicePartner}
+              infoText1="A/S 매칭을 취소하시겠습니까?"
+              infoText2={null}
+              btnText1="아니오"
+              btnText2="예"
+          />
+
+           {/* alert 메세지 모달 */}
+           <CustomModal
+            modalType="ALERT"
+            isVisible={this.state.isAlertConfirmModal}
+            onPress={ async () => {await this.setState({isAlertConfirmModal : false}), this._getClientAfterServiceState() } }
+            infoText={this.state.resultMsg}
+            btnText="확인"
+          />
 
           {/* alert 메세지 모달 */}
           <CustomModal

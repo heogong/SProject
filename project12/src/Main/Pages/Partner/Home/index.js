@@ -460,7 +460,7 @@ export default class Main extends Component {
                     textContent={'A/S 데이터를 불러오고 있습니다.'}
                     textStyle={styles.whiteFont}
                     style={{color: color.whiteColor}}
-                    overlayCologr={"rgba(40, 200, 245, 1)"}
+                    overlayColor={"rgba(40, 200, 245, 1)"}
                 />
                 <Header style={[styles.headerM, styles.noPadding]}>
                     <Left style={styles.headerLeftWrap}/>

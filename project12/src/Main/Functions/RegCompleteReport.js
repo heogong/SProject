@@ -6,14 +6,14 @@ const API_URL = `${DOMAIN}coolinic/as/prgs/report/complete?asPrgsId=`;
 
 // AS 보고서 작성 완료
 function RegCompleteReportUrl(asPrgsId) {
-  return `${API_URL}${asPrgsId}&asCauseDsc=${asCauseDsc}&asActionDsc=${asActionDsc}`;
+  return `${API_URL}${asPrgsId}`;
 }
 const RegCompleteReport = async (asPrgsId) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
   return fetch(RegCompleteReportUrl(asPrgsId), {
-    method: methodType,
+    method: 'POST',
     headers: {
       "Authorization": ACCESS_TOKEN,
       //"Authorization": TEST_ACCESS_TOKEN,

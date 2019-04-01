@@ -63,7 +63,7 @@ class InputPartnerInfo extends Component {
     const ceoNmLen = 2;
 
     const { companyNm, companyBusinessNum, ceoNm } = this.state;
-
+    
     if(companyNm.length >= companyNmLen 
       && companyBusinessNum.length >= companyBusinessNumLen 
       && ceoNm.length >= ceoNmLen ) {

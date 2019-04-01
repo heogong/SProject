@@ -163,7 +163,6 @@ class AccountType extends Component {
             textContent={'로그인중입니다.'}
             textStyle={styles.whiteFont}
             style={{color: color.whiteColor}}
-            overlayCologr={"rgba(40, 200, 245, 1)"}
         />
         <CustomHeader  customAction={this._goToAccountType}/>
 

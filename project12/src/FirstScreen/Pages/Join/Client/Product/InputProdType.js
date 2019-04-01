@@ -59,7 +59,7 @@ class InputProdType extends Component {
                         </H1>
                     </View>
                     <View style={[styles.fx2, styles.justiConEnd, styles.alignItemsEnd]}>
-                        <Image source={require("~/Common/Image/license-depart02.png")} style={{height : itemWidth/2, width : itemWidth/2}} />
+                        <Image source={{uri : item.image.fileUrl}} style={{height : itemWidth/2, width : itemWidth/2}} />
                     </View>
         
                 </View>

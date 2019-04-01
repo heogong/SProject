@@ -186,7 +186,7 @@ class RegReportBeforePic extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
-                        Actsion.ResetMain();
+                        Actions.ResetMain();
                     } else {
                         this.setState({
                             isAlertModal : true,

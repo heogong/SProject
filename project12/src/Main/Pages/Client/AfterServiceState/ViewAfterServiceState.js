@@ -48,7 +48,8 @@ class ViewAfterServiceState extends Component {
       data: {
         asPrgsMst : {
           asPrgsStatNm : null,
-          asPrgsStatDSC : null
+          asPrgsStatDSC : null,
+          asPrgsStatCd : null
         },
         clinePrdInfo : {
           bplace : {
@@ -138,6 +139,15 @@ class ViewAfterServiceState extends Component {
                   AS_PRGS_STAT_CD = resultData.data.asPrgsMst.asPrgsStatCd;
 
                 } else {
+                  this.setState({
+                    data : {
+                      ...this.state.data,
+                      asPrgsMst : {
+                        ...this.state.data.asPrgsMst,
+                        asPrgsStatCd : null
+                      }
+                    }
+                  })
                   AS_PRGS_STAT_CD = null;
                   this.props.onSetIsAfterService(false);
                   clearInterval(this.props.afterService.intervalId);
@@ -323,7 +333,7 @@ class ViewAfterServiceState extends Component {
                           </View>
                           <View>
                             <Text style={[localStyles.topSubTitleTxt, {marginTop: 20, marginBottom: 10}]}>참고사항</Text>
-                            <Text style={localStyles.topInfoTxt}>{ this.state.data.asPrgsMst.asPrgsStatDsc }</Text>
+                            <Text style={localStyles.topInfoTxt}>{ this.state.data.asPrgsMst.asRecvDsc }</Text>
                           </View>
                       </View>
                   )}
@@ -334,31 +344,31 @@ class ViewAfterServiceState extends Component {
                       </Text>
                       <View style={styles.fxDirRow}>
                           <AfterServiceState
-                            asPrgsStatCd={AS_PRGS_STAT_CD}
+                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
                             status={{'code1' : MATCH, 'code2' : COMPLETE_MATCH}}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_wait_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_wait_icon.png')}
                           />
                           <AfterServiceState
-                            asPrgsStatCd={AS_PRGS_STAT_CD}
+                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
                             status={{'code1' : DEPARTURE, 'code2' : DEPARTURE}}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_start_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_start_icon.png')}
                           />
                           <AfterServiceState
-                            asPrgsStatCd={AS_PRGS_STAT_CD}
+                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
                             status={{'code1' : ARRIVE, 'code2' : ARRIVE}}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_arrive_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_arrive_icon.png')}
                           />
                           <AfterServiceState
-                            asPrgsStatCd={AS_PRGS_STAT_CD}
+                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
                             status={{'code1' : PROGRESS, 'code2' : ADD_AS}}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_progress_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_progress_icon.png')}
                           />
                           <AfterServiceState
-                            asPrgsStatCd={AS_PRGS_STAT_CD}
+                            asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
                             status={{'code1' : COMPLETE_AS, 'code2' : COMPLETE_AS}}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_complete_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_complete_icon.png')}

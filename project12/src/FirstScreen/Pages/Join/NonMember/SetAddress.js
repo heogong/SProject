@@ -51,8 +51,11 @@ class SetAddress extends Component {
         navigator.geolocation.getCurrentPosition(
             (positon) => {
                 this.setState({
-                    latitude : positon.coords.latitude,
-                    longitude : positon.coords.longitude
+                    region : {
+                        ...this.state.region,
+                        latitude : positon.coords.latitude,
+                        longitude : positon.coords.longitude
+                    }
                 })
             },
             (error) => 

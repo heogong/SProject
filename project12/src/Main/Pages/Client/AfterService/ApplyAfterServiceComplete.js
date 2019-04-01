@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { setIsAfterService } from '~/Redux/Actions';
 
 import DrawMap from '~/Main/Components/DrawMap';
-import FindAfterServicePartner from '~/Main/Functions/FindAfterServicePartner'
+import FindAfterServicePartner from '~/Main/Functions/FindAfterServicePartner';
 import CancleAfterServicePartner from '~/Main/Functions/CancleAfterServicePartner'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
@@ -40,9 +40,9 @@ class ApplyAfterServiceComplete extends Component {
       };
     }
 
-    componentDidMount() {
-        this._getLocation();
-        this._findAfterServicePartner();
+    async componentDidMount() {
+        await this._getLocation();
+        await this._findAfterServicePartner();
     }
 
     // 현재 위치 조회
@@ -50,9 +50,13 @@ class ApplyAfterServiceComplete extends Component {
         navigator.geolocation.getCurrentPosition(
             (positon) => {
                 this.setState({
-                    latitude : positon.coords.latitude,
-                    longitude : positon.coords.longitude
+                    region : {
+                        ...this.state.region,
+                        latitude : positon.coords.latitude,
+                        longitude : positon.coords.longitude
+                    }
                 })
+                
             },
             (error) => 
             {console.log(error.message)},
@@ -139,23 +143,24 @@ class ApplyAfterServiceComplete extends Component {
                     marker={ this.state.marker }
                     showMap={ true }
                 />
-                <ImageBackground 
+                {/* <ImageBackground 
                     style={[styles.succContentWrap, {backgroundColor: "rgba(40, 200, 245, 0.3)"}]}
-                    source={require('~/Common/Image/Matching_effect.gif')}>
+                    source={require('~/Common/Image/Matching_effect.gif')}> */}
+                <ImageBackground style={[styles.succContentWrap, {backgroundColor: "rgba(40, 200, 245, 0.3)"}]}>
                 
-                <Image source={require("~/Common/Image/GPS_match_icon.png")} resizeMode="contain" style={{width: 17, alignSelf: "center", top: "50%", position: "absolute", marginTop: -40}} />
+                    <Image source={require("~/Common/Image/GPS_match_icon.png")} resizeMode="contain" style={{width: 17, alignSelf: "center", top: "50%", position: "absolute", marginTop: -40}} />
 
-                <View style={localStyles.topTxtWrap}>
-                    <Text style={localStyles.topTxt}>쿨리닉 A/S업체</Text>
-                    <Text style={localStyles.topTxt}>매칭을</Text>
-                    <Text style={localStyles.topTxt}>시작합니다</Text>
-                </View>
+                    <View style={localStyles.topTxtWrap}>
+                        <Text style={localStyles.topTxt}>쿨리닉 A/S업체</Text>
+                        <Text style={localStyles.topTxt}>매칭을</Text>
+                        <Text style={localStyles.topTxt}>시작합니다</Text>
+                    </View>
 
-                <View style={localStyles.bottomTxtWrap}>
-                    <Text style={localStyles.bottomTxt}>주변지역 A/S업체에게</Text>
-                    <Text style={localStyles.bottomTxt}>매칭연락을 보내는 중입니다.</Text>
-                    <Text style={localStyles.bottomTxt}>매칭 성공시 문자로 알려드립니다.</Text>
-                </View>
+                    <View style={localStyles.bottomTxtWrap}>
+                        <Text style={localStyles.bottomTxt}>주변지역 A/S업체에게</Text>
+                        <Text style={localStyles.bottomTxt}>매칭연락을 보내는 중입니다.</Text>
+                        <Text style={localStyles.bottomTxt}>매칭 성공시 문자로 알려드립니다.</Text>
+                    </View>
                 
                 </ImageBackground>
 

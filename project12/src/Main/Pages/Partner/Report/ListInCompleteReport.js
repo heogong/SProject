@@ -122,11 +122,11 @@ class ListInCompleteReport extends Component {
             <Container style={(this.state.data.length > 0) ? styles.containerScroll : styles.containerInnerPd}>
 
                 <Spinner
-                    overlayCologr={"rgba(40, 200, 245, 1)"}
                     visible={this.state.spinner}
                     textContent={'미작성 보고서를 불러오고 있습니다.'}
                     textStyle={styles.whiteFont}
                     style={{color: color.whiteColor}}
+                    overlayColor={"rgba(40, 200, 245, 1)"}
                 />
 
                 <CustomHeader />
