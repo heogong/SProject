@@ -17,8 +17,11 @@ import { color } from "~/Common/Styles/colors";
 import { Actions } from 'react-native-router-flux';
 
 
-const DoAfterServiceImage = ({uri, action}) => (
-    <View style={localStyles.prdPhoto}>
+const DoAfterServiceImage = ({uri, action, sizeType}) => (
+    <View style={[localStyles.prdPhoto, {
+        height: (sizeType === 0 ? asCardSize : asCardSize_1),
+        width: (sizeType === 0 ? asCardSize : asCardSize_1)
+    }]}>
         <ImageBackground 
             style={[styles.alignItemsEnd, styles.justiConEnd, {width: '100%', height: '100%'}]}
             source={{uri: uri}}>
@@ -32,19 +35,25 @@ const DoAfterServiceImage = ({uri, action}) => (
     </View>
   )
 
-const EmptyAfterServiceImage = ({action}) => (
+const EmptyAfterServiceImage = ({action, sizeType}) => (
     <TouchableOpacity 
         onPress={action}
-        style={localStyles.photoNoBoxWrap}>
+        style={[localStyles.photoNoBoxWrap, {
+            height: (sizeType === 0 ? asCardSize : asCardSize_1),
+            width: (sizeType === 0 ? asCardSize : asCardSize_1)
+        }]}>
         <View style={localStyles.photoNoBox}>
-            <Icon name="ios-camera" style={localStyles.phototNoIcon} />
+            <Image source={require("~/Common/Image/camera_icon.png")}  resizeMode="contain" style={localStyles.prdCardCameraIcon} />
         </View>
     </TouchableOpacity>
 )
 
 // 이미지 단순 조회 - 이미지 있을경우
-const ViewAfterServiceImage = ({uri}) => (
-    <View style={localStyles.prdVPhoto}>
+const ViewAfterServiceImage = ({uri, sizeType}) => (
+    <View style={[localStyles.prdVPhoto, {
+        height: (sizeType === 0 ? asCardSize2 : asCardSize_2),
+        width: (sizeType === 0 ? asCardSize2 : asCardSize_2)
+    }]}>
         <ImageBackground 
             style={[styles.alignItemsEnd, styles.justiConEnd, {width: '100%', height: '100%'}]}
             source={{uri: uri}}
@@ -64,8 +73,11 @@ const ViewAfterServiceImage = ({uri}) => (
 )
 
 // 이미지 단순 조회 - 이미지 없을경우
-const ViewAfterServiceEmptyImage = () => (
-    <TouchableOpacity style={localStyles.photoVNoBoxWrap}>
+const ViewAfterServiceEmptyImage = ({sizeType}) => (
+    <TouchableOpacity style={[localStyles.photoVNoBoxWrap, {
+        height: (sizeType === 0 ? asCardSize2 : asCardSize_2),
+        width: (sizeType === 0 ? asCardSize2 : asCardSize_2)
+    }]}>
         <View style={localStyles.photoNoBox}>
             <Image 
                 source={require("~/Common/Image/camera_icon.png")} 
@@ -79,6 +91,10 @@ const ViewAfterServiceEmptyImage = () => (
 let SOURCE = null;
 let IMG_ID = null;
 
+let IMG_SIZE_TYPE = null;
+let PHOTO_SIZE = null;
+let PHOTO_SIZE_1 = null;
+
 class AfterServiceImage extends Component {
     constructor(props) { 
         super(props); 
@@ -91,12 +107,15 @@ class AfterServiceImage extends Component {
             isAlertModal : false, //alert 용
             resultMsg : null // alert 결과 메세지
         };
+
+        IMG_SIZE_TYPE = this.props.imgSizeType;
     }
 
     static defaultProps = {
         beforeAction : true, // 조치전/후 여부
         viewImage : false,
         asPrgsId : 5, //test
+        imgSizeType : 0 // 화면별 이미지 사이즈 설정(0: / 1: 보고서 등)
     }
 
     // 촬영
@@ -221,17 +240,19 @@ class AfterServiceImage extends Component {
             <View key={this.props.index}>
                 { 
                     (this.props.viewImage) ? (
-                        (this.props.imgUri) ? <ViewAfterServiceImage uri={this.props.imgUri}/> : <ViewAfterServiceEmptyImage/>
+                        (this.props.imgUri) ? <ViewAfterServiceImage uri={this.props.imgUri} sizeType={this.props.imgSizeType}/> : <ViewAfterServiceEmptyImage sizeType={this.props.imgSizeType} />
                     ) : (
                         (!this.state.isImage) ? (
                             <EmptyAfterServiceImage
                                 key={ this.props.index }
                                 action={ this.takePhotoTapped.bind(this) } 
+                                sizeType={ this.props.imgSizeType }
                             />
                         ) : (
                             <DoAfterServiceImage
                                 action={ this.takePhotoTapped.bind(this) }
                                 uri={ this.state.imgUri }
+                                sizeType={ this.props.imgSizeType }
                             />
                         ) 
                     )
@@ -252,11 +273,17 @@ class AfterServiceImage extends Component {
 
 function wp (percentage, space) {
     const value = (percentage * (viewportWidth - space)) / 100;
+    console.log(IMG_SIZE_TYPE);
     return Math.round(value);
-  }
+}
   
-const asCardSize = wp(40, 96);
+// 매칭 상세정보 조치 사진 사이즈.
+const asCardSize = wp(46, 96);
 const asCardSize2 = wp(46, 96);
+
+// 보고서 조치 사진 사이즈.
+const asCardSize_1 = wp(48, 72);
+const asCardSize_2 = wp(48, 72);
 
 const localStyles = StyleSheet.create({
     prdPhoto: {
@@ -264,16 +291,16 @@ const localStyles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor : color.defaultColor, 
-        height : asCardSize, 
-        width : asCardSize
+        height : PHOTO_SIZE, 
+        width : PHOTO_SIZE
     },
     prdVPhoto: {
         margin: 5,
         alignItems: "center",
         justifyContent: "center",
         backgroundColor : color.defaultColor, 
-        height : asCardSize2, 
-        width : asCardSize2
+        height : PHOTO_SIZE_1, 
+        width : PHOTO_SIZE_1
     },
     prdPhotoBtnEn: {
         width : "100%",
@@ -304,16 +331,16 @@ const localStyles = StyleSheet.create({
         borderColor : "#c9cacb",
         borderWidth : 1,
         margin: 5,
-        height : asCardSize, 
-        width : asCardSize
+        height : PHOTO_SIZE, 
+        width : PHOTO_SIZE
     },
     photoVNoBoxWrap: {
         flex: 5,
         borderColor : "#c9cacb",
         borderWidth : 1,
         margin: 5,
-        height : asCardSize2, 
-        width : asCardSize2
+        height : PHOTO_SIZE_1, 
+        width : PHOTO_SIZE_1
     },
     photoNoBox: {
         flex: 1,
