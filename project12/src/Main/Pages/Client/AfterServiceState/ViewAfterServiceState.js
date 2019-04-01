@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View, ScrollView } from 'react-native'
 import { Container,Header,Title, Button,Left,Right,Body,Text} from "native-base";
 
 import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, PROGRESS, COMPLETE_MATCH, ADD_AS, COMPLETE_AS} from '~/Common/Blend';
@@ -283,111 +283,113 @@ class ViewAfterServiceState extends Component {
                 </Body>
                 <Right style={styles.headerRightWrap}></Right>
               </Header>
-      
-              <View style={styles.fx1}>
-      
-                  { (this.state.showMap) ? (
-                      <View style={{height : mapSize}}>
-                        <DrawMap
-                          region={ this.state.region }
-                          onRegionChangeComplete={ this._onRegionChangeComplete }
-                          makerYn={ this.state.makerYn }
-                          marker={ this.state.marker }
-                          showMap={ this.state.showMap }
-                        />
-                      </View>
-                  ) : (
-                      <View style={localStyles.descBox}>
-                          <View style={localStyles.topTxtWrap}>
-                              <View style={styles.fx2}>
-                                  <Text style={localStyles.topTilteTxt}>
-                                    {this.state.data.clinePrdInfo.bplace.bplaceNm} A/S
-                                  </Text>
-                                  <Text style={localStyles.topSubTitleTxt}>
-                                    {this.state.data.clinePrdInfo.clientPrdNm}
-                                  </Text>
-                                  <Text style={localStyles.topInfoTxt}>
-                                    {this.state.data.asPrgsMst.regDt}
-                                  </Text>
-                                  <Text style={localStyles.topInfoTxt}>
-                                    {this.state.data.asPrgsMst.asItemNm}
-                                  </Text>
-                              </View>
-                              <View style={localStyles.topboxImgWrap}>
-                                  <Image 
-                                    source={{uri : this.state.data.clinePrdInfo.prdTypeImg.fileUrl}} 
-                                    style={localStyles.topBoxImg}
-                                    resizeMode="contain" 
-                                  />
-                              </View>
-                          </View>
-                          <View>
-                            <Text style={[localStyles.topSubTitleTxt, {marginTop: 20, marginBottom: 10}]}>참고사항</Text>
-                            <Text style={localStyles.topInfoTxt}>{ this.state.data.asPrgsMst.asPrgsStatDsc }</Text>
-                          </View>
-                      </View>
-                  )}
-                  <View>
-                      <View style={localStyles.secondBox}>
-                      <Text style={localStyles.asMatchStateDscTxt}>
-                        { (this.state.asPrgsYn == 'Y') ? this.state.data.asPrgsMst.asPrgsStatDsc : "A/S 상태가 아닙니다." }
-                      </Text>
-                      <View style={styles.fxDirRow}>
-                          <AfterServiceState
-                            asPrgsStatCd={AS_PRGS_STAT_CD}
-                            status={{'code1' : MATCH, 'code2' : COMPLETE_MATCH}}
-                            statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_wait_icon.png')}
-                            statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_wait_icon.png')}
-                          />
-                          <AfterServiceState
-                            asPrgsStatCd={AS_PRGS_STAT_CD}
-                            status={{'code1' : DEPARTURE, 'code2' : DEPARTURE}}
-                            statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_start_icon.png')}
-                            statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_start_icon.png')}
-                          />
-                          <AfterServiceState
-                            asPrgsStatCd={AS_PRGS_STAT_CD}
-                            status={{'code1' : ARRIVE, 'code2' : ARRIVE}}
-                            statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_arrive_icon.png')}
-                            statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_arrive_icon.png')}
-                          />
-                          <AfterServiceState
-                            asPrgsStatCd={AS_PRGS_STAT_CD}
-                            status={{'code1' : PROGRESS, 'code2' : ADD_AS}}
-                            statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_progress_icon.png')}
-                            statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_progress_icon.png')}
-                          />
-                          <AfterServiceState
-                            asPrgsStatCd={AS_PRGS_STAT_CD}
-                            status={{'code1' : COMPLETE_AS, 'code2' : COMPLETE_AS}}
-                            statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_complete_icon.png')}
-                            statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_complete_icon.png')}
+
+              <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={styles.fx1}>
+        
+                    { (this.state.showMap) ? (
+                        <View style={{height : mapSize}}>
+                          <DrawMap
+                            region={ this.state.region }
+                            onRegionChangeComplete={ this._onRegionChangeComplete }
+                            makerYn={ this.state.makerYn }
+                            marker={ this.state.marker }
+                            showMap={ this.state.showMap }
                           />
                         </View>
-                     </View>
+                    ) : (
+                        <View style={localStyles.descBox}>
+                            <View style={localStyles.topTxtWrap}>
+                                <View style={styles.fx2}>
+                                    <Text style={localStyles.topTilteTxt}>
+                                      {this.state.data.clinePrdInfo.bplace.bplaceNm} A/S
+                                    </Text>
+                                    <Text style={localStyles.topSubTitleTxt}>
+                                      {this.state.data.clinePrdInfo.clientPrdNm}
+                                    </Text>
+                                    <Text style={localStyles.topInfoTxt}>
+                                      {this.state.data.asPrgsMst.regDt}
+                                    </Text>
+                                    <Text style={localStyles.topInfoTxt}>
+                                      {this.state.data.asPrgsMst.asItemNm}
+                                    </Text>
+                                </View>
+                                <View style={localStyles.topboxImgWrap}>
+                                    <Image 
+                                      source={{uri : this.state.data.clinePrdInfo.prdTypeImg.fileUrl}} 
+                                      style={localStyles.topBoxImg}
+                                      resizeMode="contain" 
+                                    />
+                                </View>
+                            </View>
+                            <View>
+                              <Text style={[localStyles.topSubTitleTxt, {marginTop: 20, marginBottom: 10}]}>참고사항</Text>
+                              <Text style={localStyles.topInfoTxt}>{ this.state.data.asPrgsMst.asPrgsStatDsc }</Text>
+                            </View>
+                        </View>
+                    )}
+                    <View>
+                        <View style={localStyles.secondBox}>
+                        <Text style={localStyles.asMatchStateDscTxt}>
+                          { (this.state.asPrgsYn == 'Y') ? this.state.data.asPrgsMst.asPrgsStatDsc : "A/S 상태가 아닙니다." }
+                        </Text>
+                        <View style={styles.fxDirRow}>
+                            <AfterServiceState
+                              asPrgsStatCd={AS_PRGS_STAT_CD}
+                              status={{'code1' : MATCH, 'code2' : COMPLETE_MATCH}}
+                              statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_wait_icon.png')}
+                              statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_wait_icon.png')}
+                            />
+                            <AfterServiceState
+                              asPrgsStatCd={AS_PRGS_STAT_CD}
+                              status={{'code1' : DEPARTURE, 'code2' : DEPARTURE}}
+                              statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_start_icon.png')}
+                              statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_start_icon.png')}
+                            />
+                            <AfterServiceState
+                              asPrgsStatCd={AS_PRGS_STAT_CD}
+                              status={{'code1' : ARRIVE, 'code2' : ARRIVE}}
+                              statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_arrive_icon.png')}
+                              statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_arrive_icon.png')}
+                            />
+                            <AfterServiceState
+                              asPrgsStatCd={AS_PRGS_STAT_CD}
+                              status={{'code1' : PROGRESS, 'code2' : ADD_AS}}
+                              statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_progress_icon.png')}
+                              statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_progress_icon.png')}
+                            />
+                            <AfterServiceState
+                              asPrgsStatCd={AS_PRGS_STAT_CD}
+                              status={{'code1' : COMPLETE_AS, 'code2' : COMPLETE_AS}}
+                              statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_complete_icon.png')}
+                              statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_complete_icon.png')}
+                            />
+                          </View>
+                      </View>
+                    </View>
+        
+                    <View style={localStyles.serviceBoxWrap}>
+                      <View style={[localStyles.serviceBox, {marginRight : 20}]}>
+                          <TouchableOpacity onPress={this._checkGrade}>
+                              <Image source={require("~/Common/Image/service_rating.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
+                          </TouchableOpacity>
+                      </View>
+                      <View style={[localStyles.serviceBox, {marginRight : 20}]}>
+                          <TouchableOpacity>
+                              <Image source={require("~/Common/Image/recent_report.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
+                          </TouchableOpacity>
+                      </View>
+                      <View style={[localStyles.serviceBox]}>
+                          <TouchableOpacity onPress={() => {
+                              clearInterval(this.props.afterService.intervalId), 
+                              Actions.AfterServiceHistory() 
+                            }}>
+                              <Image source={require("~/Common/Image/previous_as.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
+                          </TouchableOpacity>
+                      </View>
                   </View>
-      
-                  <View style={localStyles.serviceBoxWrap}>
-                    <View style={[localStyles.serviceBox, {marginRight : 20}]}>
-                        <TouchableOpacity onPress={this._checkGrade}>
-                            <Image source={require("~/Common/Image/service_rating.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[localStyles.serviceBox, {marginRight : 20}]}>
-                        <TouchableOpacity>
-                            <Image source={require("~/Common/Image/recent_report.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[localStyles.serviceBox]}>
-                        <TouchableOpacity onPress={() => {
-                            clearInterval(this.props.afterService.intervalId), 
-                            Actions.AfterServiceHistory() 
-                          }}>
-                            <Image source={require("~/Common/Image/previous_as.png")} resizeMode="contain" style={localStyles.serviceBoxImg} />
-                        </TouchableOpacity>
-                    </View>
                 </View>
-              </View>
+              </ScrollView>
 
               <Modal isVisible={this.state.isModalVisible} onBackdropPress={() => this.setState({ isModalVisible: false })}>
                 <View style={[styles.modalWrap, {height: 150}]}>
@@ -531,6 +533,7 @@ const localStyles = StyleSheet.create({
       alignItems: "center",
       marginLeft : 26, 
       marginRight : 26, 
+      marginBottom: 26
   },
   topTxtWrap: {
       flexDirection: "row"
