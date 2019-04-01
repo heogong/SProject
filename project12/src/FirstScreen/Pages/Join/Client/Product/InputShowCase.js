@@ -111,7 +111,7 @@ class InputShowCase extends Component {
                                 prdTypeImg : this.props.prodFileUrl,
                                 imgTypeArray : imgNData,
                             }]),
-                            slider1ActiveSlide : showCase.length
+                            // slider1ActiveSlide : showCase.length
                         })
 
                         CLIENT_PRD_ARRAY = CLIENT_PRD_ARRAY.concat({
@@ -143,7 +143,7 @@ class InputShowCase extends Component {
                             return { ...prodImgType, clientPrdId: resultData.data.clientPrdId };
                         });
 
-                        this.setState({ 
+                        await this.setState({ 
                             showCase: this.state.showCase.concat([{ 
                                 clientPrdId : resultData.data.clientPrdId,
                                 clientPrdNm : resultData.data.clientPrdNm,
@@ -164,6 +164,7 @@ class InputShowCase extends Component {
                             resultMsg : resultData.resultMsg
                         })
                     }
+
                 }
             });
         });
@@ -216,7 +217,13 @@ class InputShowCase extends Component {
    // showCase 카드 추가
    _handleAddShowCase = async () => {
        await this._regProductMst();
-        this._carousel.snapToNext();
+       
+       // 타임아웃 clear 필요할듯
+    //    let nextCard = setTimeout(() => {
+    //         this._carousel.snapToNext();
+    //     }, 500);
+
+    //     clearTimeout(nextCard);
     }
 
     // showCase 카드 복사
@@ -260,7 +267,10 @@ class InputShowCase extends Component {
      // 모달 '아니오' Action
     _onPress1Action = () => {
         if(ON_PRESS_ACTION_TYPE == ACTION_TYPE.regAction) {
-            Actions.SuccessRegProduct();
+            Actions.SuccessRegProduct({
+                bizId : this.props.value.bizId,
+                prodTypeId : this.props.prodTypeId
+            });
         }
         this.setState({isModalVisible : false})
     }

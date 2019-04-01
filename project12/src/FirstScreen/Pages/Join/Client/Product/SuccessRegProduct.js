@@ -48,7 +48,10 @@ class SuccessRegProduct extends Component {
               </CustomButton>
 
               <CustomButton
-                onPress={ () => alert("등록제품확인??")}
+                onPress={ () => Actions.MyListBusinessProduct({
+                  bizId : this.props.bizId,
+                  prodTypeId : this.props.prodTypeId
+                }) }
               >
                 등록제품 확인하기
               </CustomButton>

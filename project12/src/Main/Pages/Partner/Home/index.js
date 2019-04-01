@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BackHandler, Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Badge, Container, H1, Text, Header, Left, Body, Right}  from "native-base";
 
-import { SUCCESS_RETURN_CODE, APPLY  } from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, APPLY, UN_APPROVED, APPROVED } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
@@ -286,8 +286,10 @@ export default class Main extends Component {
                     if(ResultBool) {
                         // 가입 코드 필요
                         //this.setState({wait : false}); // test 승인
-                        if(resultData.data.partnerStatusCd == APPLY) {
-                            this.setState({wait : true}); // test 승인
+                        if(resultData.data.partnerStatusCd !== APPROVED) {
+                            this.setState({wait : true}); // 접수, 미승인
+                        } else {
+                            this.setState({wait : false}); // 승인
                         }
                     } else {
                         this.setState({

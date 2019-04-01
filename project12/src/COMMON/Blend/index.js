@@ -37,6 +37,8 @@ export const MOVE = {'TEXT' : 'A/S 이동중', 'VALUE' : 'AS_PRGS_STAT_CD_09'};
 
 // 파트너 가입 상태
 export const APPLY = 'PARTNER_STATUS_CD_01'; // 접수
+export const UN_APPROVED = 'PARTNER_STATUS_CD_02'; // 미승인
+export const APPROVED = 'PARTNER_STATUS_CD_03'; // 승인
 
 // etc
 export const CLIENT = "CLIENT";
