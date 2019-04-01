@@ -165,7 +165,7 @@ class ViewAfterServiceHistory extends Component {
         for( let i = 0 ; i < AFTER_SERVICE_IMG_CNT; i++ ) {
             if(afterImgCnt > 0) {
                 afterImgArray.push( 
-                    <AfterServiceImage key={i} viewImage={true} imgUri={beforeData.images[i].fileUrl} />
+                    <AfterServiceImage key={i} viewImage={true} imgUri={afterData.images[i].fileUrl} />
                 )
                 afterImgCnt--;
             } else {

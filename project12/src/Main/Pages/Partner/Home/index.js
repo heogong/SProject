@@ -286,11 +286,12 @@ export default class Main extends Component {
                     if(ResultBool) {
                         // 가입 코드 필요
                         //this.setState({wait : false}); // test 승인
-                        if(resultData.data.partnerStatusCd !== APPROVED) {
-                            this.setState({wait : true}); // 접수, 미승인
-                        } else {
-                            this.setState({wait : false}); // 승인
-                        }
+                        // if(resultData.data.partnerStatusCd !== APPROVED) {
+                        //     this.setState({wait : true}); // 접수, 미승인
+                        // } else {
+                        //     this.setState({wait : false}); // 승인
+                        // }
+                        this.setState({wait : false}); // 승인
                     } else {
                         this.setState({
                             isAlertModal : true,

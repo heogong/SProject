@@ -259,7 +259,7 @@ class ClientHome extends Component {
 
             <View style={localStyles.bottomBoxRightWrap}>
 
-              {this.state.asPrgsStatCd == MATCH ? ( //매칭 중일 경우 취소 버튼 추가
+              {this.state.asPrgsStatCd == MATCH.VALUE ? ( //매칭 중일 경우 취소 버튼 추가
                 <TouchableOpacity onPress={ () => this.setState({isModalVisible : true})}>
                   <View style={[localStyles.rightStateCircle, {backgroundColor: "#0397bd"}]}>
                       <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>{`${this.state.asPrgsStatNm}[취소]`}</Text>
