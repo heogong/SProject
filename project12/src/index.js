@@ -6,7 +6,7 @@ import { SUCCESS_RETURN_CODE, PARTNER_USER, ARRIVE} from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { setIsAfterService } from '~/Redux/Actions';
+import { setBizId, setIsAfterService } from '~/Redux/Actions';
 
 import GetPartnerInfo from '~/Main/Functions/GetPartnerInfo';
 import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
@@ -56,6 +56,9 @@ class IntroPage extends Component {
               // this._getAfterServiceState(); // 파트너 메인 에서 체크로 인해 주석 처리
               this._getPartnerInfo(); // 파트너 정보 조회를 통한 현재 상태 체크 (가입시 필수값 여부 체크)
             } else {
+
+              // this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 값이 필요 할듯
+
               this._getClientAfterServiceState(); // 클라이언트
             }
             
@@ -165,6 +168,7 @@ const localStyles = StyleSheet.create({
 
 let mapDispatchToProps = (dispatch) => {
   return {
+      onSetBizId: (value) => dispatch(setBizId(value)),
       onSetIsAfterService: (value) => dispatch(setIsAfterService(value))
   }
 }

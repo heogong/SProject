@@ -12,6 +12,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 import GetBizList from '~/Main/Functions/GetBizList';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
+import GetClientInputState from '~/Main/Functions/GetClientInputState';
 import CancleAfterServicePartner from '~/Main/Functions/CancleAfterServicePartner';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
@@ -48,6 +49,12 @@ class ClientHome extends Component {
     super(props);
     this.state = { 
       data: [],
+      unRegData : {
+        isData : false,
+        action : '',
+        infoPercent : '',
+        state : null
+      },
       clientPrdInfo : {
         bplace : {
           bplaceNm : null,
@@ -88,7 +95,7 @@ class ClientHome extends Component {
 
     clearInterval(this.props.afterService.intervalId);
     this.setState({spinner : true});
-    this._startFn();
+    this._getClientInputState();
   }
 
   handleBackPress = () => {
@@ -102,18 +109,39 @@ class ClientHome extends Component {
     this._chkIsAfterService(); 
   }
 
-  // AS 신청 여부 확인
-  _chkIsAfterService = () => {
-    console.log("AS 신청 여부 확인  : ", this.props.afterService.isAfterService);
-    if(this.props.afterService.isAfterService) {
-      console.log("인터벌 확인")
-      // A/S 상태 갱신
-      const INTERVAL_ID = setInterval(() => {
-        this._getClientAfterServiceState();
-      }, 20000);
+  // 나의 정보 입력 상태 조회
+  _getClientInputState = () => {
+    GetClientInputState().then(async result => {
+      GetCommonData(result, this._getBizList).then(async resultData => {
+          if(resultData !== undefined) {
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+              console.log(resultData.data);
+              if(ResultBool) {
+                // this.setState({unRegData : resultData.data});
 
-      this.props.onSetIntervalId(INTERVAL_ID);
-    }
+                if(resultData.data.clientPaymYn == 'Y') {
+                  if(resultData.data.clientBplaceYn == 'Y') {
+                    if(resultData.data.clientPrdYn == 'Y') {
+                      this._startFn();
+                    } else {
+                      this.setState({unRegData : { isData : true, action : 'InputProdType', infoPercent : resultData.data.infoPercent, state : 0 }} );
+                    }
+                  } else {
+                    this.setState({unRegData : { isData : true, action : 'RegBusinessPlaceIndex', infoPercent : resultData.data.infoPercent, state : 1 }} );
+                  }
+                } else {
+                  this.setState({unRegData : { isData : true, action : 'CardInputInfo', infoPercent : resultData.data.infoPercent, state : 2 }} );
+                }
+              } else {
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
+              }
+              this.setState({spinner : false});
+          }
+      });
+    });
   }
 
    // 사업장 목록 가져오기
@@ -176,6 +204,20 @@ class ClientHome extends Component {
     });
   }
 
+  // AS 신청 여부 확인
+  _chkIsAfterService = () => {
+    console.log("AS 신청 여부 확인  : ", this.props.afterService.isAfterService);
+    if(this.props.afterService.isAfterService) {
+      console.log("인터벌 확인")
+      // A/S 상태 갱신
+      const INTERVAL_ID = setInterval(() => {
+        this._getClientAfterServiceState();
+      }, 20000);
+
+      this.props.onSetIntervalId(INTERVAL_ID);
+    }
+  }
+
   // 고객 AS 매칭(진행)중 취소
   _cancleAfterServicePartner = () => {
     this.setState({isModalVisible : false});
@@ -216,7 +258,7 @@ class ClientHome extends Component {
             <View style={styles.fx1}>
 
                 <CustomButton
-                  onPress={ () => alert("정보등록하러 이동")}
+                  onPress={ () => Actions[this.state.unRegData.action].call()}
                   WhiteLineBtn={true}
                   CustomBtnStyle={{height: 36, width: "100%"}}
                   CustomFontStyle={{fontSize: 14}}
@@ -225,10 +267,26 @@ class ClientHome extends Component {
                 </CustomButton>
 
                 <View style={localStyles.noRegWrap}>
-                    <Text style={localStyles.noRegTxt}>· 사업장 미등록</Text>
-                    <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
+                  {(this.state.unRegData.state == 2 ) ? (
+                    <View>
+                      <Text style={localStyles.noRegTxt}>· 결제정보 미등록</Text>
+                      <Text style={localStyles.noRegTxt}>· 사업장 미등록</Text>
+                      <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
+                    </View>
+                  ) : (
+                    (this.state.unRegData.state == 1) ? (
+                      <View>
+                        <Text style={localStyles.noRegTxt}>· 사업장 미등록</Text>
+                        <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
+                      </View>
+                    ) : (
+                      <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
+                    )
+                  )}
+
+
                 </View>
-                <Text style={localStyles.percentTxt}>50%</Text>
+                <Text style={localStyles.percentTxt}>{this.state.unRegData.infoPercent}</Text>
             </View>
             <View style={localStyles.bottomBoxRightWrap}>
                 <View style={localStyles.rightStateCircle}>
@@ -296,54 +354,53 @@ class ClientHome extends Component {
 
           <ScrollView showsVerticalScrollIndicator={false}>
 
-          { (this.state.asPrgsYn == 'Y') ? (
-            this.maching()
+          { (this.state.unRegData.isData) ? (
+            this.unRegister()
           ) :(
-            (this.state.data.length > 0) ? (
-              <Swiper 
-                style={localStyles.topBoxSwiperWrap}
-                paginationStyle={{
-                    bottom: 10
-                }} 
-                dot={<View style={[localStyles.swiperDot, {backgroundColor: 'rgba(3,151,189, 0.4)'}]} />}
-                activeDot={<View style={[localStyles.swiperDot, {backgroundColor: color.whiteColor}]} />}
-            >
-              {this.state.data.map((business, index) => (
-                <View 
-                  key={index}
-                  style={localStyles.topBoxWrap}
-                >
-                  <View style={styles.mb10}>
-                      <Text style={localStyles.topBoxNameTxt} numberOfLines={1}>{(business.bplaceNm !== null) ? business.bplaceNm : '사업장 정보를 입력해주세요.'}</Text>
-                      <Text style={localStyles.topBoxtAddrTxt}>{(business.addr !== null) ? business.addr.addressName : '사업장 정보를 입력해주세요.'}</Text>
-                      <Text style={localStyles.topBoxtAddrTxt}>{(business.detail !== null) ? business.detail.detailAddr1 : '사업장 정보를 입력해주세요.'}</Text>
-                  </View>
-      
-                  <View style={localStyles.bottomBoxWrap}>
-      
-                      <View style={localStyles.bottomBoxLeftWrap}>
-                          <Image source={require("~/Common/Image/company_illust.png")} style={localStyles.leftImg}  />
-                      </View>
-
-                        <View style={localStyles.bottomBoxRightWrap}>
-                          <TouchableOpacity
-                            onPress={() => {
-                              Actions.AfterServiceProdTypeList({bizId : business.clientBplaceId});
-                              clearInterval(INTEVER_ID);
-                            }}
-                          >
-                            <View style={localStyles.rightStateCircle}>
-                                <Text style={localStyles.rightStateTxt}>A/S 신청</Text>
-                            </View>
-                          </TouchableOpacity>
+            (this.state.asPrgsYn == 'Y') ? (
+              this.maching()
+            ) :(
+                <Swiper 
+                  style={localStyles.topBoxSwiperWrap}
+                  paginationStyle={{
+                      bottom: 10
+                  }} 
+                  dot={<View style={[localStyles.swiperDot, {backgroundColor: 'rgba(3,151,189, 0.4)'}]} />}
+                  activeDot={<View style={[localStyles.swiperDot, {backgroundColor: color.whiteColor}]} />}
+              >
+                {this.state.data.map((business, index) => (
+                  <View 
+                    key={index}
+                    style={localStyles.topBoxWrap}
+                  >
+                    <View style={styles.mb10}>
+                        <Text style={localStyles.topBoxNameTxt} numberOfLines={1}>{(business.bplaceNm !== null) ? business.bplaceNm : '사업장 정보를 입력해주세요.'}</Text>
+                        <Text style={localStyles.topBoxtAddrTxt}>{(business.addr !== null) ? business.addr.addressName : '사업장 정보를 입력해주세요.'}</Text>
+                        <Text style={localStyles.topBoxtAddrTxt}>{(business.detail !== null) ? business.detail.detailAddr1 : '사업장 정보를 입력해주세요.'}</Text>
+                    </View>
+        
+                    <View style={localStyles.bottomBoxWrap}>
+        
+                        <View style={localStyles.bottomBoxLeftWrap}>
+                            <Image source={require("~/Common/Image/company_illust.png")} style={localStyles.leftImg}  />
                         </View>
+  
+                          <View style={localStyles.bottomBoxRightWrap}>
+                            <TouchableOpacity
+                              onPress={() => {
+                                Actions.AfterServiceProdTypeList({bizId : business.clientBplaceId});
+                                clearInterval(INTEVER_ID);
+                              }}
+                            >
+                              <View style={localStyles.rightStateCircle}>
+                                  <Text style={localStyles.rightStateTxt}>A/S 신청</Text>
+                              </View>
+                            </TouchableOpacity>
+                          </View>
+                    </View>
                   </View>
-                </View>
-              ))}
-            </Swiper>
-
-            ) : (
-              this.unRegister()
+                ))}
+              </Swiper>
             )
           )}
              
