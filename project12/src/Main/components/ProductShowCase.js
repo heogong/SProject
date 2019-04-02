@@ -25,7 +25,6 @@ class ProductShowCase extends Component {
         super(); 
 
         this.state = {
-            setProductName : false, // 제품명 입력 여부
             productName : '',
             productDsc : ''
         };
@@ -36,23 +35,9 @@ class ProductShowCase extends Component {
         viewProduct : false // 단순 조회 여부
     }
 
-    componentDidMount() {
-        if(this.props.clientPrdNm !== null) {
-            this.setState({ setProductName : true });
-        } else {
-            this.setState({ setProductName : false});
-        }
-    }
-
      // 제품명 입력 여부
     _setProductNm = (text)  => {
         this.setState({productName : text});
-
-        if(text.length > 0) {
-            this.setState({ setProductName : true});
-        } else{
-            this.setState({ setProductName : false});
-        }
     }
 
     // 제품명 업데이트
@@ -87,7 +72,7 @@ class ProductShowCase extends Component {
                     </View>
 
                     <View style={{flex:3, justifyContent : 'center', alignItems : 'center'}}>
-                        <Text style={localStyles.prdCardTopNumTxt}>{pad(++this.props.index, 2)}</Text>
+                        <Text style={localStyles.prdCardTopNumTxt}>{pad(this.props.index, 2)}</Text>
                         <Image source={{uri : this.props.item.prdTypeImg}} style={{height : imageSize, width : imageSize}} />
                     </View>
 
@@ -107,10 +92,9 @@ class ProductShowCase extends Component {
                         regular 
                         style={[localStyles.prdCardInputBox, {width: "70%"}]}
                         error 
-                        success={ this.state.setProductName }
                     >
                         <Input 
-                            onChangeText={(text) => this._setProductNm(text) }
+                            onChangeText={(text) => this.setState({productName : text})}
                             onBlur={this._submitProductNm}
                             placeholder="제품이름" 
                             style={localStyles.prdCardNameInput}

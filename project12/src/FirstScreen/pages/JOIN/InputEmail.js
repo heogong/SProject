@@ -90,11 +90,15 @@ class InputEmail extends Component {
     if(!PASSWD_PATTERN.test(text)) {
       this.setState({
         patternPw : false,
-        btnDisabled : true
+        btnDisabled : true,
+        errMsg : '비밀번호(영문,숫자,특수문자8-15자) 으로 입력해주세요.'
       });
       
     } else {
-      this.setState({patternPw : true});
+      this.setState({
+        patternPw : true,
+        errMsg : ''
+      });
 
       if(this.state.usrId !== '' && this.state.usrPw2 !== '') {
         this.setState({btnDisabled : (this.state.usrPw.length > USR_PASSWD_LEN) ? false : true})
@@ -201,7 +205,6 @@ class InputEmail extends Component {
 
               <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
                 <Input
-                  placeholder="비밀번호(영문+숫자+특수문자조합 8~16자리)"
                   placeholderTextColor={color.inputPlaceHodler}
                   style={styles.inputDefaultBox}
                   ref={(input) => { this.secondTextInput = input; }}

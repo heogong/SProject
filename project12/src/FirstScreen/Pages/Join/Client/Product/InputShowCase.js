@@ -177,12 +177,12 @@ class InputShowCase extends Component {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
+                        this._carousel.snapToPrev();
                         this.setState({ 
                             showCase: this.state.showCase.filter((s, sidx) => DEL_IDX !== sidx),
                             isModalVisible : false
                         })
                         CLIENT_PRD_ARRAY = CLIENT_PRD_ARRAY.filter((s, sidx) => DEL_IDX !== sidx);
-                        this._carousel.snapToPrev();
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -218,9 +218,8 @@ class InputShowCase extends Component {
    // showCase 카드 추가
    _handleAddShowCase = async () => {
        this._regProductMst();
-       
-       // 옆으로 이동 (추가된 카드로 이동)
-       let nextCard = setTimeout(() => {
+        // 옆으로 이동 (추가된 카드로 이동)
+        let nextCard = setTimeout(() => {
             // this._carousel.snapToNext();
             this._carousel.snapToItem(this.state.showCase.length);
             clearTimeout(nextCard);
