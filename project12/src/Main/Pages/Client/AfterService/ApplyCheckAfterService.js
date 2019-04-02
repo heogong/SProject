@@ -160,7 +160,7 @@ class ApplyCheckAfterService extends Component {
                         <Text style={localStyles.histBoxInfoTxt}>{ this.props.asRecvDsc }</Text>
 
                         <Text style={localStyles.histBoxSubTitleTxt}>A/S 출장 비용</Text>
-                        <Text style={localStyles.histBoxInfoTxt}>120,000원</Text>
+                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asPayAmount}</Text>
                         </View>
 
                     </View>
