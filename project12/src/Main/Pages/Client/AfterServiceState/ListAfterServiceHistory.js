@@ -126,8 +126,8 @@ class ListAfterServiceHistory extends Component {
                                             <Text style={styles.listPrdBoxImgTxt}>{afterService.prdTypeKoNm}</Text>
                                         </View>
                                         <View style={styles.listPrdBoxRightTxtWrap}>
-                                            <H3 style={styles.listPrdBoxRightTitleTxt} numberOfLines={1}>{afterService.bplaceNm}</H3>
-                                            <Text style={[styles.listPrdBoxDeTxt, styles.mb12, {fontWeight: "500"}]}>{afterService.regDt}</Text>
+                                            <H3 style={[styles.listPrdBoxRightTitleTxt, {marginBottom: 10}]} numberOfLines={1}>{afterService.bplaceNm}</H3>
+                                            <Text style={[styles.listPrdBoxDeTxt, styles.mb10, {fontWeight: "500"}]}>{afterService.regDt}</Text>
                                             <Text style={styles.listPrdBoxDeTxt}>{afterService.asItemNm}</Text>
                                             <View style={styles.fxDirRow}>
                                                 <Text style={[styles.listPrdBoxDeTxt, {paddingTop: 3}]}>만족도</Text>
