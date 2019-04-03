@@ -7,6 +7,7 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 import { Actions } from "react-native-router-flux";
 
 import GetProduct from '~/Main/Functions/GetProduct'
+import GetAfterServiceApplyInfo from '~/Main/Functions/GetAfterServiceApplyInfo'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import ListCard from '~/FirstScreen/Functions/Card/ListCard';
 import RegAfterService from '~/Main/Functions/RegAfterService';
@@ -49,14 +50,38 @@ class ApplyCheckAfterService extends Component {
     }
 
     componentWillMount() {
-        this._getProduct();
+        // this._getProduct();
         //this._getListCard();
+        this._getAsRecvInfo();
     }
    
     // 등록된 사업장 제품 조회
-    _getProduct = () => {
-        GetProduct(this.props.clientPrdId).then(result => {
-            GetCommonData(result, this._getProduct).then(async resultData => {
+
+    // _getProduct = () => {
+    //     GetProduct(this.props.clientPrdId).then(result => {
+    //         GetCommonData(result, this._getProduct).then(async resultData => {
+    //             if(resultData !== undefined) {
+    //                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+    //                 console.log(resultData);
+    //                 if(ResultBool) {
+    //                     this.setState({ 
+    //                         data: resultData.data,
+    //                     });
+    //                 } else {
+    //                     this.setState({
+    //                         isAlertModal : true,
+    //                         resultMsg : resultData.resultMsg
+    //                     })
+    //                 }
+    //             }
+    //         });
+    //     });
+    // }
+
+    // AS 접수 정보 조회
+    _getAsRecvInfo = () => {
+        GetAfterServiceApplyInfo(this.props.asRecvId).then(result => {
+            GetCommonData(result, this._getAsRecvInfo).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
@@ -141,8 +166,8 @@ class ApplyCheckAfterService extends Component {
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={localStyles.contentWrap}>
                         <View style={localStyles.titleWrap}>
-                        <Image source={{uri : this.state.data.prdTypeImg.fileUrl}} style={localStyles.titleImg}/>
-                        <Text style={localStyles.titleNameTxt}>{this.state.data.bplace.bplaceNm}</Text>
+                        <Image source={{uri : this.state.data.prdTypeImgUrl}} style={localStyles.titleImg}/>
+                        <Text style={localStyles.titleNameTxt}>{this.state.data.bplaceNm}</Text>
                         <Text style={localStyles.subNameTxt}>{this.state.data.clientPrdNm}</Text>
                         </View>
 
@@ -150,17 +175,17 @@ class ApplyCheckAfterService extends Component {
                         <Text style={localStyles.histBoxTitleTxt}>A/S신청내역</Text>
 
                         <Text style={localStyles.histBoxSubTitleTxt}>{this.state.data.clientPrdNm}</Text>
-                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.bplace.addr.addressName}</Text>
-                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.bplace.detail.detailAddr1}</Text>
+                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.bplaceAddr}</Text>
+                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.bplaceAddrDtl}</Text>
 
                         <Text style={localStyles.histBoxSubTitleTxt}>A/S 증상</Text>
-                        <Text style={localStyles.histBoxInfoTxt}>{ this.props.asItemNm }</Text>
+                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asItemNm}</Text>
 
                         <Text style={localStyles.histBoxSubTitleTxt}>참고사항</Text>
-                        <Text style={localStyles.histBoxInfoTxt}>{ this.props.asRecvDsc }</Text>
+                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asRecvDsc}</Text>
 
                         <Text style={localStyles.histBoxSubTitleTxt}>A/S 출장 비용</Text>
-                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asPayAmount}</Text>
+                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asTripPaymAmount}</Text>
                         </View>
 
                     </View>
