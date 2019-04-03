@@ -22,7 +22,11 @@ import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from "~/Common/Styles/colors";
 
 let BEFORE_IMG_CNT = 4; // 등록할 A/S 조치전 이미지 카운트
+let AFTER_IMG_CNT = 4; // 등록할 A/S 조치 후 이미지 카운트
 let ALREADY_IMG_CNT = 0; // 이미 등록된 A/S 조치전 이미지 카운트
+let ALREADY_AFTER_IMG_CNT = 0; // 이미 등록된 A/S 조치 후 이미지 카운트
+
+const AS_PROCESS_PERCENT = 25; // 조치전/후 이미지 등록시 percent
 
 class RegReportBeforePic extends Component {
     constructor(props) {
@@ -30,11 +34,13 @@ class RegReportBeforePic extends Component {
 
       this.state =  {
         imgData : [],
+        afterImgData : [],
         asData : {
             asPrgsMst : {
                 asPrgsStatDSC : null
             }
         },
+        reportPercent : 0,
         asCauseDsc : '',
         asActionDsc : '',
         btnDisabled : true,
@@ -51,6 +57,7 @@ class RegReportBeforePic extends Component {
     componentDidMount() {
         this._getAfterServiceState();
         this._getAfterServiceBeforeInfo();
+        this._getAfterServiceAfterInfo();
     }
 
      // 현재 나의(파트너) AS 진행 상태 체크
@@ -87,12 +94,42 @@ class RegReportBeforePic extends Component {
                         // 조치전 이미지 존재 시 A/S완료 버튼 활성화
                         if(ALREADY_IMG_CNT > 0) {
                             this._addBeforASImg();
+                            this.setState({reportPercent : this.state.reportPercent+=AS_PROCESS_PERCENT});
                         }
 
                         this.setState({
-                            data : resultData.data,
-                            imgData : resultData.data.images
+                            // data : resultData.data,
+                            imgData : resultData.data.images,
                         });
+                    } else {
+                        this.setState({
+                            isAlertModal : true,
+                            resultMsg : resultData.resultMsg
+                        })
+                    }
+                }
+            });
+        });
+    }
+
+    // AS 조치후 정보 조회
+    _getAfterServiceAfterInfo = () => {
+        GetAfterServiceActionInfo(false, this.props.asPrgsId).then(result => {
+            GetCommonData(result, this._getAfterServiceAfterInfo).then(async resultData => {
+                if(resultData !== undefined) {
+                    const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                    console.log("AS 조치후 정보 조회 : ", resultData);
+                    if(ResultBool) {
+                        ALREADY_AFTER_IMG_CNT = resultData.data.images.length; // 등록된 조치전 이미지 카운트
+
+                        if(ALREADY_AFTER_IMG_CNT > 0) {
+                            this.setState({reportPercent : this.state.reportPercent+=AS_PROCESS_PERCENT});
+                        }
+                        
+                        this.setState({
+                            afterImgData : resultData.data.images,
+                        });
+
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -171,6 +208,27 @@ class RegReportBeforePic extends Component {
         return imageCompArray;
     }
 
+    // 등록된 조치후 이미지 카운트 만큼 제거 후 draw
+    _createAfterAsImg = () => {
+        let afterImgCnt = AFTER_IMG_CNT;
+
+        afterImgCnt -= ALREADY_AFTER_IMG_CNT; 
+        let imageCompArray = [];
+
+        for (let i = 0; i < afterImgCnt; i++) {
+            imageCompArray.push(<AfterServiceImage 
+                key={i + ALREADY_AFTER_IMG_CNT} 
+                imgUrl={ null }
+                imgId={ null }
+                asPrgsId={ this.props.asPrgsId }
+                beforeAction={ false }
+                takeAfterImageAction={ this._addAfterASImg }
+                imgSizeType={1}
+            />); 
+        }
+        return imageCompArray;
+    }
+
 
     // 이미지 등록시 next 버튼 활성화
     _addBeforASImg = () => {
@@ -199,13 +257,14 @@ class RegReportBeforePic extends Component {
                             </View>
                             <View style={stylesReg.rigthTxtWrap}>
                                 <Text style={[stylesReg.rightTxt, {fontWeight: "bold"}]}>
-                                    0<Text style={stylesReg.rightTxtSmall}>%</Text>
+                                    {this.state.reportPercent}<Text style={stylesReg.rightTxtSmall}>%</Text>
                                 </Text>
                             </View>
                         </View>
                         <View style={stylesReg.procBarWrap}>
+
                             <View style={styles.fx1}>
-                                <View style={stylesReg.procBarOn} />
+                                <View style={stylesReg.procBarOff} />
                                 <Text style={stylesReg.procBarTxt}>조치전사진</Text>
                             </View>
                             <View style={styles.fx1}>
@@ -215,11 +274,12 @@ class RegReportBeforePic extends Component {
                             <View style={styles.fx1}>
                                 <View style={stylesReg.procBarOff} />
                                 <Text style={stylesReg.procBarTxt}>조치후사진</Text>
-                                </View>
+                            </View>
                             <View style={styles.fx1}>
                                 <View style={stylesReg.procBarOff} />
                                 <Text style={stylesReg.procBarTxt}>수리한내역</Text>
                             </View>
+
                         </View>
                     </View>
 
@@ -329,7 +389,23 @@ class RegReportBeforePic extends Component {
                             <View style={styles.boxShadow}>
                                 <View style={localStyles.prdPhotoWrap}>
 
-                                    <AfterServiceImage 
+                                    {/* 미리 등록된 조치후 이미지 있을 경우 */}
+                                    {this.state.afterImgData.map((afterImg, idx) => 
+                                        <AfterServiceImage
+                                            key={ idx }
+                                            index={ idx }
+                                            imgUrl={ afterImg.fileUrl }
+                                            imgId={ afterImg.imgId }
+                                            beforeAction={ false }
+                                            asPrgsId={ this.props.asPrgsId }
+                                            takeAfterImageAction={ this._addAfterASImg }
+                                            imgSizeType={1}
+                                        />
+                                    )}
+
+                                    { this._createAfterAsImg() }
+
+                                    {/* <AfterServiceImage 
                                         imgUrl={ null }
                                         imgId={ null }
                                         asPrgsId={ this.props.asPrgsId }
@@ -360,7 +436,7 @@ class RegReportBeforePic extends Component {
                                         beforeAction={ false }
                                         takeAfterImageAction={ this._addAfterASImg }
                                         imgSizeType={1}
-                                    />
+                                    /> */}
 
                                 </View>
                                 <Item regular style={[styles.mb14, styles.textInputWhBack]}>

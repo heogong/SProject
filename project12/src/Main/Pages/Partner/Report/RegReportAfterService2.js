@@ -26,6 +26,8 @@ let ALREADY_AFTER_IMG_CNT = 0; // 이미 등록된 A/S 조치 후 이미지 카�
 let CURRENT_BEFORE_IMG_CNT = 0; // 화면에 등록된 A/S 조치 전 이미지 카운트(유효성 체크용 변수)
 let CURRENT_AFTER_IMG_CNT = 0; // 화면에 등록된 A/S 조치 후 이미지 카운트(유효성 체크용 변수)
 
+const AS_PROCESS_PERCENT = 25; // 조치전/후 이미지 등록시 percent
+
 class RegReportBeforePic extends Component {
     constructor(props) {
       super(props);
@@ -41,6 +43,7 @@ class RegReportBeforePic extends Component {
                 asPrgsStatDSC : null
             }
         },
+        reportPercent : 0,
         asCauseDsc : '',
         asActionDsc : '',
         btnDisabled : false,
@@ -70,19 +73,18 @@ class RegReportBeforePic extends Component {
                         ALREADY_BEFORE_IMG_CNT = resultData.data.images.length; // 등록된 조치전 이미지 카운트
                         CURRENT_BEFORE_IMG_CNT = ALREADY_BEFORE_IMG_CNT;
 
+                        if(ALREADY_BEFORE_IMG_CNT > 0) {
+                            this.setState({reportPercent : this.state.reportPercent+=AS_PROCESS_PERCENT});
+                            if(resultData.data.info.asCauseDsc !== null) {
+                                this.setState({reportPercent : this.state.reportPercent+=AS_PROCESS_PERCENT});
+                            } 
+                        }
+
                         this.setState({
                             beforeData : resultData.data,
                             beforeImgData : resultData.data.images,
                             asCauseDsc : resultData.data.info.asCauseDsc
                         });
-
-                        // if(resultData.data.info !== null) {
-                        //     this.setState({
-                        //         asCauseDsc : resultData.data.info.asCauseDsc,
-                        //         method : 'PUT',
-                        //         btnDisabled : (resultData.data.images.length > 0) ? false : true
-                        //     })
-                        // }
                     } else {
                         this.setState({
                             isAlertModal : true,
@@ -105,8 +107,15 @@ class RegReportBeforePic extends Component {
                         ALREADY_AFTER_IMG_CNT = resultData.data.images.length; // 등록된 조치전 이미지 카운트
                         CURRENT_AFTER_IMG_CNT = ALREADY_AFTER_IMG_CNT;
 
+                        if(ALREADY_AFTER_IMG_CNT > 0) {
+                            this.setState({reportPercent : this.state.reportPercent+=AS_PROCESS_PERCENT});
+                            if(resultData.data.info.asActionDsc !== null) {
+                                this.setState({reportPercent : this.state.reportPercent+=AS_PROCESS_PERCENT});
+                            } 
+                        }
+
                         this.setState({
-                            afterData : resultData.data,
+                            //afterData : resultData.data,
                             afterImgData : resultData.data.images,
                             asActionDsc : resultData.data.info.asActionDsc
                         });
@@ -129,7 +138,7 @@ class RegReportBeforePic extends Component {
         const method ='PUT'; // AS 조치전 정보 조회 정보 여부에 따른 메소드 값
         const { asCauseDsc, asActionDsc } = this.state;
 
-        if(CURRENT_BEFORE_IMG_CNT > 0 && CURRENT_AFTER_IMG_CNT > 0 && asCauseDsc !== null && asActionDsc !== null) {
+        if(CURRENT_BEFORE_IMG_CNT > 0 && CURRENT_AFTER_IMG_CNT > 0 && (asCauseDsc !== '' && asCauseDsc !== null) && (asActionDsc !== '' && asActionDsc !== null))  {
             RegAfterServiceReport(this.props.asPrgsId, asCauseDsc, asActionDsc, method).then(result => {
                 GetCommonData(result, this._regAfterServiceReport).then(async resultData => {
                     if(resultData !== undefined) {
@@ -162,7 +171,7 @@ class RegReportBeforePic extends Component {
                     isAlertModal : true,
                     resultMsg : 'A/S조치후 이미지를 등록해주세요.'
                 })
-            } else if(asCauseDsc == null) {
+            } else if(asCauseDsc == '' || asCauseDsc == null) {
                 this.setState({
                     isAlertModal : true,
                     resultMsg : 'A/S조치전 증상을 입력해주세요.'
@@ -242,15 +251,23 @@ class RegReportBeforePic extends Component {
         return imageCompArray;
     }
 
-    // _checkAsCauseDsc = async (text) => {
-    //     await this.setState({asCauseDsc : text});
+    _createProcBar = () => {
+        let imageCompArray = [];
 
-    //     if(this.state.asCauseDsc.length > 3) {
-    //         this.setState({btnDisabled : (this.state.imgData.length > 0) ? false : true});
-    //     } else {
-    //         this.setState({btnDisabled : true});
-    //     }
-    // }
+        if(this.state.beforeImgData.length > 0) {
+            imageCompArray.push(<View style={styles.fx1}>
+                <View style={stylesReg.procBarOn} />
+                <Text style={stylesReg.procBarTxt}>조치전사진</Text>
+            </View>); 
+        } else {
+            imageCompArray.push(<View style={styles.fx1}>
+                <View style={stylesReg.procBarOff} />
+                <Text style={stylesReg.procBarTxt}>조치전사진</Text>
+            </View>); 
+        }
+        
+        return imageCompArray;
+    }
 
 
     // 조치 전 이미지 등록시 카운트
@@ -296,27 +313,29 @@ class RegReportBeforePic extends Component {
                             </View>
                             <View style={stylesReg.rigthTxtWrap}>
                                 <Text style={[stylesReg.rightTxt, {fontWeight: "bold"}]}>
-                                    25<Text style={stylesReg.rightTxtSmall}>%</Text>
+                                    {this.state.reportPercent}<Text style={stylesReg.rightTxtSmall}>%</Text>
                                 </Text>
                             </View>
                         </View>
                         <View style={stylesReg.procBarWrap}>
+
                             <View style={styles.fx1}>
                                 <View style={stylesReg.procBarOn} />
                                 <Text style={stylesReg.procBarTxt}>조치전사진</Text>
                             </View>
-                        <View style={styles.fx1}>
-                            <View style={stylesReg.procBarOff} />
-                            <Text style={stylesReg.procBarTxt}>조치전증상</Text>
-                        </View>
-                        <View style={styles.fx1}>
-                            <View style={stylesReg.procBarOff} />
-                            <Text style={stylesReg.procBarTxt}>조치후사진</Text>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOff} />
+                                <Text style={stylesReg.procBarTxt}>조치전증상</Text>
                             </View>
-                        <View style={styles.fx1}>
-                        <View style={stylesReg.procBarOff} />
-                            <Text style={stylesReg.procBarTxt}>수리한내역</Text>
-                        </View>
+                            <View style={styles.fx1}>
+                                <View style={stylesReg.procBarOff} />
+                                <Text style={stylesReg.procBarTxt}>조치후사진</Text>
+                                </View>
+                            <View style={styles.fx1}>
+                            <View style={stylesReg.procBarOff} />
+                                <Text style={stylesReg.procBarTxt}>수리한내역</Text>
+                            </View>
+
                         </View>
                         
                     </View>
