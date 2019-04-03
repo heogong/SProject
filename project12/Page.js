@@ -129,7 +129,6 @@ import TakeProductImage from './src/FirstScreen/Pages/Join/Client/Product/TakePr
 import TakeProductGuide1 from './src/FirstScreen/Pages/Join/Client/Product/TakeProductGuide1' // 보유제품 사진 촬영
 import SuccessRegProduct from './src/FirstScreen/Pages/Join/Client/Product/SuccessRegProduct' // 제품등록완료
 
-import InputProdInfo from './src/FirstScreen/Pages/Join/Client/Product/InputProdInfo' // 제품 등록 (?)
 import InputProdImage from './src/FirstScreen/Pages/Join/Client/Product/InputProdImage' // 제품 이미지 등록 (?)
 
 

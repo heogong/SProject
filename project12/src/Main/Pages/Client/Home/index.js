@@ -124,7 +124,7 @@ class ClientHome extends Component {
                     if(resultData.data.clientPrdYn == 'Y') {
                       this._startFn();
                     } else {
-                      this.setState({unRegData : { isData : true, action : 'InputProdType', infoPercent : resultData.data.infoPercent, state : 0 }} );
+                      this.setState({unRegData : { isData : true, action : 'MyListBusinessPlace', infoPercent : resultData.data.infoPercent, state : 0 }} );
                     }
                   } else {
                     this.setState({unRegData : { isData : true, action : 'RegBusinessPlaceIndex', infoPercent : resultData.data.infoPercent, state : 1 }} );

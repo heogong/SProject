@@ -199,7 +199,7 @@ class RegReportBeforePic extends Component {
                             </View>
                             <View style={stylesReg.rigthTxtWrap}>
                                 <Text style={[stylesReg.rightTxt, {fontWeight: "bold"}]}>
-                                    25<Text style={stylesReg.rightTxtSmall}>%</Text>
+                                    0<Text style={stylesReg.rightTxtSmall}>%</Text>
                                 </Text>
                             </View>
                         </View>

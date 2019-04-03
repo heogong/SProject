@@ -56,9 +56,6 @@ class IntroPage extends Component {
               // this._getAfterServiceState(); // 파트너 메인 에서 체크로 인해 주석 처리
               this._getPartnerInfo(); // 파트너 정보 조회를 통한 현재 상태 체크 (가입시 필수값 여부 체크)
             } else {
-
-              // this.props.onSetBizId(resultData.data.clientBplaceId); // 사업장 ID 값이 필요 할듯
-
               this._getClientAfterServiceState(); // 클라이언트
             }
             

@@ -11,6 +11,7 @@ import Modal from "react-native-modal";
 
 import DrawMap from '~/Main/Components/DrawMap';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
+import GetPartnerLocation from '~/Main/Functions/GetPartnerLocation';
 import RegEvalPoint from '~/Main/Functions/RegEvalPoint';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
@@ -138,6 +139,12 @@ class ViewAfterServiceState extends Component {
 
                   AS_PRGS_STAT_CD = resultData.data.asPrgsMst.asPrgsStatCd;
 
+                  // 파트너 출발일 경우 맵으로 변경 후 좌표값 찍기
+                  if(AS_PRGS_STAT_CD == DEPARTURE.VALUE) {
+                    this._getPartnerLocation();
+                  } else {
+                    this.setState({showMap : false});
+                  }
                 } else {
                   this.setState({
                     data : {
@@ -162,12 +169,46 @@ class ViewAfterServiceState extends Component {
       });
     });
   }
+
+  // 업체 현재 위치 위경도 조회
+  _getPartnerLocation = () => {
+    const { data } = this.state;
+    GetPartnerLocation(data.asPrgsMst.asPrgsId).then(async result => {
+      GetCommonData(result, this._getPartnerLocation).then(async resultData => {
+          if(resultData !== undefined) {
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+              console.log("업체 현재 위치 위경도 조회 - ", resultData);
+              if(ResultBool) {
+                this.setState({
+
+                  region : {
+                    ...this.state.region,
+                    latitude  : Number(resultData.data.lat),
+                    longitude : Number(resultData.data.lng)
+                  },
+                  marker: {
+                    latitude: Number(resultData.data.lat),
+                    longitude: Number(resultData.data.lng)
+                  },
+                  showMap : true,
+                });
+               
+              } else {
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
+              }
+          }
+      });
+    });
+  }
  
   //  AS 평가 정보 등록 - 테스트 asPrgsId 필요 
   _regEvalPoint = () => {
     const { data, evalPoint } = this.state;
 
-    RegEvalPoint(data.asPrgsId, evalPoint).then(async result => {
+    RegEvalPoint(data.asPrgsMst.asPrgsId, evalPoint).then(async result => {
       GetCommonData(result, this._regEvalPoint).then(async resultData => {
           if(resultData !== undefined) {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
