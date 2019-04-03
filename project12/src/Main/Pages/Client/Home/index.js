@@ -320,7 +320,7 @@ class ClientHome extends Component {
               {this.state.asPrgsStatCd == MATCH.VALUE ? ( //매칭 중일 경우 취소 버튼 추가
                 <TouchableOpacity onPress={ () => this.setState({isModalVisible : true})}>
                   <View style={[localStyles.rightStateCircle, {backgroundColor: "#0397bd"}]}>
-                      <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>{`${this.state.asPrgsStatNm}[취소]`}</Text>
+                      <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>A/S 신청취소</Text>
                   </View>
                 </TouchableOpacity>
               ) : (
@@ -465,7 +465,7 @@ class ClientHome extends Component {
               isVisible={this.state.isModalVisible}
               onPress1={ ()=> this.setState({isModalVisible : false}) }
               onPress2={this._cancleAfterServicePartner}
-              infoText1="A/S 매칭을 취소하시겠습니까?"
+              infoText1="A/S 신청을 취소하시겠습니까?"
               infoText2={null}
               btnText1="아니오"
               btnText2="예"
