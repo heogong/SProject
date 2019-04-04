@@ -14,20 +14,16 @@ import CertSnsLogInfo from '../../Functions/CertSnsLogInfo';
 import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
+import CustomModal from '~/Common/Components/CustomModal';
+
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
 const initials = {
-  kConsumerKey: 'HEZ2CaOwmSPvw18HCB4c',
-  kConsumerSecret: 'hVQH0djpGH',
-  kServiceAppName: 'espresso',
+  kConsumerKey: '5ArLHh18G6qIdjodJAko',
+  kConsumerSecret: '67t5HOioai',
+  kServiceAppName: '쿨리닉',
   kServiceAppUrlScheme: 'dooboolaburlscheme', // only for iOS
-};
-const naverInit = {
-  kConsumerKey: 'jyvqXeaVOVmV',
-  kConsumerSecret: '527300A0_COq1_XV33cf',
-  kServiceAppName: '네이버 아이디로 로그인하기',
-  kServiceAppUrlScheme: 'thirdparty20samplegame', // only for iOS
 };
 
 class Page extends Component {
@@ -42,7 +38,8 @@ class Page extends Component {
       isNaverLoggingin: false,
       theToken: 'token has not fetched',
       usrId: '',
-      usrNm: ''
+      usrNm: '',
+      isModalVisible: false
     };
   }
 
@@ -63,20 +60,25 @@ class Page extends Component {
         // 사용자 정보 가져오기
         this._getUserInfo()
       } else {
-        Alert.alert(
-          '',
-          `${result.resultMsg} - 회원가입 페이지로 이동하시겠습니까?`,
-          [
-            // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-            {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: '네', onPress: () => Actions.JoinCustomerType()},
-          ],
-          { cancelable: false }
-        )
+        if(result.resultCode == FAIL_RETURN_CODE_9072){
+        // 네이버 인증이 실패하면(서버측에서)
+          // 네이버 로그아웃 요청
+          this._naverLogout();
+          // 네이버에서 재인증을 시도한다.
+          this.naverLoginStart();
+        } else {
+          this.setState({
+            isModalVisible : true,
+            resultMsg : result.resultMsg
+          })
+        }
       }
     });
   }
 
+  _naverLogout = () => {
+    NaverLogin.logout();
+  }
    // 로그인(토큰값 가져온) 사용자 정보 가져오기
    _getUserInfo = () => {
     GetUserInfo().then(async result => {
@@ -95,6 +97,11 @@ class Page extends Component {
           }
       });
     });
+  }
+
+  // SNS 회원가입 페이지로 이동
+  _goSnsJoinFirst = () => {
+    this._certSnsLogInfo();
   }
 
   // 네이버 로그인 정보 - 시스템 회원가입 여부 확인
@@ -120,6 +127,9 @@ class Page extends Component {
     NaverLogin.login(initials, async (err, token) => {
       console.log(`\n\n  Token is fetched  :: ${token} \n\n`);
 
+      // Naver Token 값 state 설정.
+      await this.setState({ theToken: token });
+
       // 로그인 페이지에서 접근 시
       if(this.props.loginYn) {
         this.props.onSetSnsSignYn('Y');     // 리덕스 SNS 로그인 여부 SET
@@ -130,7 +140,6 @@ class Page extends Component {
       
       // 시스템 회원가입
       } else {
-        await this.setState({ theToken: token });
         this._certSnsLogInfo();
       }
 
@@ -152,6 +161,17 @@ class Page extends Component {
             <Image source={require('~/Common/Image/Naver_button_2.png')} resizeMode='contain' style={localStyles.btnIcon} />
           </View>
         )}
+
+        <CustomModal
+          modalType="CONFIRM"
+          isVisible={this.state.isModalVisible}
+          onPress1={() => this.setState({isModalVisible : false})}
+          onPress2={() => { this.setState({isModalVisible : false}), this._goSnsJoinFirst() } }
+          infoText1={this.state.resultMsg}
+          infoText2="회원가입 페이지로 이동하시겠습니까?"
+          btnText1="아니요"
+          btnText2="네"
+        />
       </TouchableOpacity>
     );
   }

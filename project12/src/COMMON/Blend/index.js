@@ -17,6 +17,8 @@ export const OVER_LAP_RETURN_CODE = '0010'; // 동일한 이메일의 사용자�
 export const FAIL_RETURN_CODE_9020 = '9020'; // API 인증이 실패하였습니다.
 export const FAIL_RETURN_CODE_9021 = '9021'; // 결제 카드 등록이 실패하였습니다.
 export const FAIL_RETURN_CODE_9024 = '9024'; // 유효하지 않은 카드정보입니다.
+export const FAIL_RETURN_CODE_9043 = '9043'; // 카카오 인증이 실패하였습니다.
+export const FAIL_RETURN_CODE_9072 = '9072'; // 네이버 인증이 실패하였습니다.
 
 // SNS 구분 코드
 export const NAVER_CODE = 'SNS_SITE_CD_01'; // 네이버

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { AsyncStorage, Alert, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from "native-base";
 
-import { KAKAO_CODE, SUCCESS_RETURN_CODE, CLIENT_USER } from '~/Common/Blend';
+import { KAKAO_CODE, SUCCESS_RETURN_CODE, CLIENT_USER, FAIL_RETURN_CODE_9043 } from '~/Common/Blend';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { setUsrId, setUsrNm, setSnsSignYn, setSnsToken, setSnsType } from '~/Redux/Actions';
@@ -13,6 +13,8 @@ import SnsLogin from '../../Functions/SnsLogin';
 import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
+import CustomModal from '~/Common/Components/CustomModal';
+
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
@@ -22,6 +24,7 @@ class KakaoLogin extends Component {
     this.state = {
       isKakaoLogging: false,
       theToken: 'token has not fetched',
+      isModalVisible : false, // Modal On/Off 상태
     };
   }
 
@@ -53,17 +56,20 @@ class KakaoLogin extends Component {
 
         // 사용자 정보 
         this._getUserInfo();
+
       } else {
-        Alert.alert(
-          '',
-          `${result.resultMsg} - 회원가입 페이지로 이동하시겠습니까?`,
-          [
-            // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-            {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: '네', onPress: () => Actions.JoinCustomerType()},
-          ],
-          { cancelable: false }
-        )
+        if(result.resultCode == FAIL_RETURN_CODE_9043){
+        // 카카오 인증이 실패하면(서버측에서)
+          // 카카오 로그아웃 요청
+          this.kakaoLogout();
+          // 카카오에서 재인증을 시도한다.
+          this.kakaoLoginStart();
+        } else {
+          this.setState({
+            isModalVisible : true,
+            resultMsg : result.resultMsg
+          })
+        }
       }
     });
   }
@@ -88,12 +94,21 @@ class KakaoLogin extends Component {
     });
   }
 
+  // SNS 회원가입 페이지로 이동
+  _goSnsJoinFirst = () => {
+    this._certSnsLogInfo();
+  }
+
   // 카카오 로그인 시작.
-  kakaoLogin() {
+  kakaoLoginStart() {
     console.log('   kakaoLogin   ');
     RNKakaoLogins.login(async (err, result) => {
       console.log(err,'/////',result);
       console.log(`\n\n  Token is fetched  :: ${result.token} \n\n`);
+
+      // KAKAO Token 값 state 설정.
+      await this.setState({ theToken: result.token });
+
       // 로그인 페이지에서 접근 시
       if(this.props.loginYn) {
         this.props.onSetSnsSignYn('Y');     // 리덕스 SNS 로그인 여부 SET
@@ -104,8 +119,6 @@ class KakaoLogin extends Component {
 
       // 시스템 회원가입
       } else {
-        //Alert.alert('result', result);
-        await this.setState({ theToken: result.token });
         this._certSnsLogInfo();
 
       }
@@ -143,7 +156,7 @@ class KakaoLogin extends Component {
 
   render() {
     return (
-        <TouchableOpacity onPress={ () => this.kakaoLogin()}>
+        <TouchableOpacity onPress={ () => this.kakaoLoginStart()}>
           {(this.props.loginYn) ? (
               <Image source={require('~/Common/Image/kakao-button.png')} style={{height : 60, width : 60}}/>
           ) : (
@@ -151,6 +164,17 @@ class KakaoLogin extends Component {
               <Image source={require('~/Common/Image/Kakao_button_2.png')} resizeMode='contain' style={localStyles.btnIcon} />
             </View>
           )}
+
+          <CustomModal
+          modalType="CONFIRM"
+          isVisible={this.state.isModalVisible}
+          onPress1={() => this.setState({isModalVisible : false})}
+          onPress2={() => { this.setState({isModalVisible : false}), this._goSnsJoinFirst() } }
+          infoText1={this.state.resultMsg}
+          infoText2="회원가입 페이지로 이동하시겠습니까?"
+          btnText1="아니요"
+          btnText2="네"
+        />
         </TouchableOpacity>
     );
   }
