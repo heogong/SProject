@@ -8,7 +8,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, Image, View} from 'react-native';
+import {Alert, Platform, StyleSheet, Text, Image, View, TouchableOpacity} from 'react-native';
 
 import transform from "css-to-react-native-transform";
 
@@ -18,6 +18,7 @@ import { layout } from "./layout";
 import { main } from "./main";
 import { member } from "./member";
 import {styleDefault } from "./styleDefault";
+import Permissions from 'react-native-permissions'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -29,13 +30,58 @@ const instructions = Platform.select({
 export default class App extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      photoPermission : null,
+      cameraPermission : null,
+      locationPermission : null
+    }
 }
 
-componentWillMount() {
-  console.log(member);
-  console.log(common);
-  console.log(layout);
+componentDidMount() {
+  Permissions.check('photo').then(response => {
+    // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+    console.log(response);
+    this.setState({ photoPermission: response })
+  })
+}
 
+_requestPermission = () => {
+  Permissions.request('location').then(response => {
+    console.log("_requestPermission :", response)
+    // Returns once the user has chosen to 'allow' or to 'not allow' access
+    // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+    this.setState({ locationPermission: response })
+  })
+}
+
+// Check the status of multiple permissions
+_checkCameraAndPhotos = () => {
+  Permissions.checkMultiple(['camera', 'photo', 'location']).then(response => {
+    //response is an object mapping type to permission
+    alert(response.location)
+    this.setState({
+      cameraPermission: response.camera,
+      photoPermission: response.photo,
+    })
+  })
+}
+
+_alertForPhotosPermission = () => {
+  Alert.alert(
+    'Can we access your photos?',
+    'We need access so you can set your profile pic',
+    [
+      {
+        text: 'No way',
+        onPress: () => console.log('Permission denied'),
+        style: 'cancel',
+      },
+      this.state.photoPermission == 'undetermined'
+        ? { text: 'OK', onPress: this._requestPermission }
+        : { text: 'Open Settings', onPress: Permissions.openSettings },
+    ],
+  )
 }
 
   render() {
@@ -67,6 +113,13 @@ componentWillMount() {
                     <Text style={member.stxt}>A/S 서비스를 이용하시겠어요?</Text>
                 </View>
               </View>
+              <TouchableOpacity onPress={this._requestPermission}>
+                <Text>aaaaaaaaaaaaaa</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this._alertForPhotosPermission}>
+                <Text>bbbbbbbb</Text>
+              </TouchableOpacity>
+
 
               {/* <li>
                 <a href="#">
