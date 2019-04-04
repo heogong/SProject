@@ -83,7 +83,12 @@ class MoreMenu extends Component {
           <View style={localStyles.profileWrap}>
             <View style={localStyles.profileTxtWrap}>
               <Text style={[localStyles.profileTitleTxt, styles.mb10]}>{this.state.data.usrNm}</Text>
-              <Text style={localStyles.profileSubTxt}>{this.state.data.usrId}</Text>
+              <Text style={localStyles.profileSubTxt}>
+                {
+                  this.state.data.snsSignupYn == "N" ? this.state.data.usrId // SNS 가입자가 아니면
+                  : this.state.data.snsSiteCd == "SNS_SITE_CD_01" ? "네이버로 로그인 하셨습니다." : "카카오로 로그인 하셨습니다."  
+                }
+              </Text>
             </View>
 
             <View style={[localStyles.btnProfileModWrap]}>

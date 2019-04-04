@@ -2,7 +2,9 @@ import { AsyncStorage } from "react-native"
 //const AccessToken = await AsyncStorage.getItem('AccessToken');
 
 // API domain 관련
+// 개발서버
 export const DOMAIN = 'http://54.180.175.29:8180/';
+// export const DOMAIN = 'http://192.168.1.120:8180/';
 export const OAUTH_DOMAIN = 'http://54.180.175.29:8280/';
 export const DEV_SNS_DOMAIN = 'http://54.180.175.29:8180/';
 
