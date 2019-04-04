@@ -184,8 +184,19 @@ class ApplyCheckAfterService extends Component {
                         <Text style={localStyles.histBoxSubTitleTxt}>참고사항</Text>
                         <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asRecvDsc}</Text>
 
-                        <Text style={localStyles.histBoxSubTitleTxt}>A/S 출장 비용</Text>
-                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asTripPaymAmount}</Text>
+                        <Text style={localStyles.histBoxSubTitleTxt}>{this.state.data.orderNm}</Text>
+                        <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                            <Text style={localStyles.histBoxInfoTxt}>공급가액</Text>
+                            <Text style={localStyles.histBoxInfoTxt}>￦{this.state.data.valueAmount}</Text>
+                        </View>
+                        <View style={{flexDirection: "row", justifyContent: "space-between", paddingBottom: 5}}>
+                            <Text style={localStyles.histBoxInfoTxt}>부가세</Text>
+                            <Text style={localStyles.histBoxInfoTxt}>￦{this.state.data.texAmount}</Text>
+                        </View>
+                        <View style={{flexDirection: "row", justifyContent: "space-between", borderTopWidth: 1, borderColor: "#c9cacb", paddingTop: 5}}>
+                            <Text style={localStyles.histBoxInfoTxt}>결제금액</Text>
+                            <Text style={[localStyles.histBoxInfoTxt, {color: color.defaultColor}]}>￦{this.state.data.totalAmount}</Text>
+                        </View>
                         </View>
 
                     </View>
