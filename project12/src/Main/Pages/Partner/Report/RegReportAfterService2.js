@@ -28,6 +28,20 @@ let CURRENT_AFTER_IMG_CNT = 0; // 화면에 등록된 A/S 조치 후 이미지 �
 
 const AS_PROCESS_PERCENT = 25; // 조치전/후 이미지 등록시 percent
 
+export const ProcessOn = ({processTxt}) => (
+    <View style={styles.fx1}>
+        <View style={stylesReg.procBarOn} />
+        <Text style={stylesReg.procBarTxt}>{processTxt}</Text>
+    </View>
+)
+
+export const ProcessOff = ({processTxt}) => (
+    <View style={styles.fx1}>
+        <View style={stylesReg.procBarOff} />
+        <Text style={stylesReg.procBarTxt}>{processTxt}</Text>
+    </View>
+)
+
 class RegReportBeforePic extends Component {
     constructor(props) {
       super(props);
@@ -251,22 +265,39 @@ class RegReportBeforePic extends Component {
         return imageCompArray;
     }
 
+    // 진행상태 BAR 생성
     _createProcBar = () => {
-        let imageCompArray = [];
+        let processOnArray = [];
+        let processOffArray = [];
+
 
         if(this.state.beforeImgData.length > 0) {
-            imageCompArray.push(<View style={styles.fx1}>
-                <View style={stylesReg.procBarOn} />
-                <Text style={stylesReg.procBarTxt}>조치전사진</Text>
-            </View>); 
+            processOnArray.push(<ProcessOn key={0} processTxt='조치전사진'/>);
         } else {
-            imageCompArray.push(<View style={styles.fx1}>
-                <View style={stylesReg.procBarOff} />
-                <Text style={stylesReg.procBarTxt}>조치전사진</Text>
-            </View>); 
+            processOffArray.push(<ProcessOff key={0} processTxt='조치전사진'/>);
         }
+
+        if(this.state.afterImgData.length > 0) { 
+            processOnArray.push(<ProcessOn key={1} processTxt='조치후사진'/>);
+        } else {
+            processOffArray.push(<ProcessOff key={1} processTxt='조치후사진'/>);
+        }
+
+        if(this.state.asCauseDsc !== null) { 
+            processOnArray.push(<ProcessOn key={2} processTxt='조치전증상'/>);
+        } else {
+            processOffArray.push(<ProcessOff key={2} processTxt='조치전증상'/>);
+        }
+
+        if(this.state.asActionDsc !== null) { 
+            processOnArray.push(<ProcessOn key={3} processTxt='조치후증상'/>);
+        } else {
+            processOffArray.push(<ProcessOff key={3} processTxt='조치후증상'/>);
+        }
+
+        const resultArray = processOnArray.concat(processOffArray);
         
-        return imageCompArray;
+        return resultArray;
     }
 
 
@@ -318,26 +349,8 @@ class RegReportBeforePic extends Component {
                             </View>
                         </View>
                         <View style={stylesReg.procBarWrap}>
-
-                            <View style={styles.fx1}>
-                                <View style={stylesReg.procBarOn} />
-                                <Text style={stylesReg.procBarTxt}>조치전사진</Text>
-                            </View>
-                            <View style={styles.fx1}>
-                                <View style={stylesReg.procBarOff} />
-                                <Text style={stylesReg.procBarTxt}>조치전증상</Text>
-                            </View>
-                            <View style={styles.fx1}>
-                                <View style={stylesReg.procBarOff} />
-                                <Text style={stylesReg.procBarTxt}>조치후사진</Text>
-                                </View>
-                            <View style={styles.fx1}>
-                            <View style={stylesReg.procBarOff} />
-                                <Text style={stylesReg.procBarTxt}>수리한내역</Text>
-                            </View>
-
+                            {this._createProcBar()}
                         </View>
-                        
                     </View>
                     <View>
                         <View>

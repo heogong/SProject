@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, StyleSheet, Image, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, Image, Linking, View } from 'react-native';
 import { Badge, Container, H1, Button,  Text}  from "native-base";
 
 import { SUCCESS_RETURN_CODE, COMPLETE_MATCH, DEPARTURE, MOVE, ARRIVE, COMPLETE_AS } from '~/Common/Blend';
@@ -302,7 +302,7 @@ class AfterServiceStateCard extends Component {
                     modalType="CONFIRM"
                     isVisible={this.state.isArriveModal}
                     onPress1={this._progressAfterService}
-                    onPress2={() => alert("전화연결 - 개발중")}
+                    onPress2={() => Linking.openURL(`tel:01000000000`)}
                     infoText1="A/S 진행 또는 업체와 전화연결을 선택하세요"
                     btnText1="A/S 진행"
                     btnText2="전화연결"

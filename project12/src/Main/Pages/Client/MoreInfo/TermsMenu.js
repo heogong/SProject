@@ -33,7 +33,7 @@ class TermsMenu extends Component {
 
         <View style={[styles.fx1, { backgroundColor: color.defaultColor}]}>
           <View style={{marginTop: 16}}>
-            <TouchableOpacity onPress={ () => alert("사진조회")}>
+            <TouchableOpacity onPress={ Actions.ClientTermsContent1 }>
               <View style={localStyles.listMenuWrap}>
                 <Text style={localStyles.listMenuTxt}>이용약관</Text>
               </View>

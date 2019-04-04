@@ -2,82 +2,98 @@ import React, { Component } from "react";
 import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import {Container, Text } from "native-base";
 
+import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+
 import HTML from 'react-native-render-html';
 
-import CustomHeader from "~/Common/Components/CustomHeader";
+import GetNoticeDetail from '~/Main/Functions/GetNoticeDetail';
+import GetCommonData from '~/Common/Functions/GetCommonData';
 
+import CustomHeader from "~/Common/Components/CustomHeader";
+import CustomModal from '~/Common/Components/CustomModal';
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from "~/Common/Styles/colors";
-
-const htmlContent = `
-    <h1>This HTML snippet is now rendered with native components !</h1>
-    <h2>Enjoy a webview-free and blazing fast application</h2>
-    <img src="https://i.imgur.com/dHLmxfO.jpg?2" />
-    <em style="textAlign: center;">Look at how happy this native cat is</em>
-    <h1>Hello world!</h1>
-
-<p>I&#39;m an instance of <a href="https://ckeditor.com">CKEditor</a>.</p>
-
-<p>&nbsp;</p>
-
-<p>I&#39;m an instance of <a href="https://ckeditor.com">CKEditor</a>.</p>
-
-<p>&nbsp;</p>
-
-<p>I&#39;m an instance of <a href="https://ckeditor.com">CKEditor</a>.</p>
-
-<p>&nbsp;</p>
-
-<ol>
-	<li>11123123123123</li>
-	<li>23232322</li>
-	<li>ㅅㅏㅁ</li>
-</ol>
-
-<p>&nbsp;</p>
-
-<ul>
-	<li>111ㅋㅋㅋㅋㅋ</li>
-	<li>구부점입니다.</li>
-</ul>
-
-<p>감사합니다</p>
-    `;
 
 class NoticeDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkBox : false
+      data : {
+        notiCont : '<html/>'
+      },
+      isAlertModal : false, // alert 용
+      resultMsg : null // alert 용
     };
+  }
+
+  componentWillMount() {
+    this._getNoticeDetail();
+  }
+
+  // 공지사항 단건 조회
+  _getNoticeDetail = () => {
+    GetNoticeDetail(this.props.notiId).then(async result => {
+        GetCommonData(result, this._getNoticeDetail).then(async resultData => {
+            if(resultData !== undefined) {
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+              console.log(resultData);
+              if(ResultBool) {
+                    this.setState({data : resultData.data})
+                } else {
+                    this.setState({
+                        isAlertModal : true,
+                        resultMsg : resultData.resultMsg
+                    })
+                }
+            }
+        });
+    });
+  }
+
+  _goToTop = () => {
+    this.scroll.scrollTo({x:0, y:0, animated : true});
   }
   
   render() {
     return (
       <Container style={styles.container}>
-        <View style={{paddingLeft : styles.containerInnerPd.paddingLeft}}>
+        <View style={{
+          paddingLeft : styles.containerInnerPd.paddingLeft,
+          paddingRight : styles.containerInnerPd.paddingRight
+        }}>
           <CustomHeader title="공지사항"/>
         </View>
 
         <View style={styles.contentWrap}>
 
           <View style={localStyles.titleTxtWrap}>
-            <Text style={localStyles.titleTxt}>[공지] 쿨리닉 서비스가 시작되었습니다.</Text>
+            <Text style={localStyles.titleTxt}>{this.state.data.notiTitle}</Text>
           </View>
-          <ScrollView>
+          <ScrollView
+            ref={(c) => {this.scroll = c}}
+          >
             <View style={localStyles.noticeWrap}>
-              <HTML html={htmlContent} imagesMaxWidth={viewportWidth - 52} />
+              <HTML html={this.state.data.notiCont} imagesMaxWidth={viewportWidth - 52} />
             </View>
           </ScrollView>
           <View style={localStyles.noticeFooterWrap}>
             <View style={localStyles.noticeFooterCont}>
               <Text style={{fontSize: 13, color: "#8e8e98"}}>ⓒ COOLINIC Corp.</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this._goToTop}>
                 <Image source={require("~/Common/Image/top_button_blue.png")} resizeMode="contain" style={{width: 72, height: 28}} />
               </TouchableOpacity>
             </View>
           </View>
         </View>
+
+        {/* alert 메세지 모달 */}
+        <CustomModal
+          modalType="ALERT"
+          isVisible={this.state.isAlertModal}
+          onPress={ () => this.setState({isAlertModal : false})}
+          infoText={this.state.resultMsg}
+          btnText="확인"
+        />
 
       </Container>
     );
