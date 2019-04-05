@@ -41,6 +41,13 @@ class SuccessCardInfo extends Component {
 
             <View style={styles.footerBtnWrap}>
               <CustomButton 
+                onPress={Actions.ClientMain}
+                DefaultLineBtn={true}
+                CustomBtnStyle={styles.mb12}
+              >
+                메인화면으로
+              </CustomButton>
+              <CustomButton 
               onPress={Actions.ClientAgreeTermsService}
             >
               약관동의하러가기

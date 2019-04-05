@@ -40,9 +40,10 @@ class SuccessRegProduct extends Component {
             </View>
 
             <View style={styles.footerBtnWrap}>
-              <CustomButton
+              <CustomButton 
                 onPress={Actions.ClientMain}
                 DefaultLineBtn={true}
+                CustomBtnStyle={styles.mb12}
               >
                 메인화면으로
               </CustomButton>

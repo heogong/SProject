@@ -40,6 +40,13 @@ class SuccessAgreeTermsService extends Component {
 
             <View style={styles.footerBtnWrap}>
               <CustomButton 
+                onPress={Actions.ClientMain}
+                DefaultLineBtn={true}
+                CustomBtnStyle={styles.mb12}
+              >
+                메인화면으로
+              </CustomButton>
+              <CustomButton 
                 onPress={Actions.RegBusinessPlaceIndex}
                 style={[styles.btnDefault, styles.btnDefaultFill]}>
                 제품등록 하러가기
