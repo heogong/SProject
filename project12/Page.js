@@ -231,7 +231,7 @@ const PAGE = () => (
       <Scene key="LoginInputAccount" component={LoginInputAccount} />
 
       <Scene key="CardIndex"  component={CardIndex} type={ActionConst.RESET}/>
-      <Scene key="CardInputInfo"  component={CardInputInfo} type={ActionConst.RESET}/>
+      <Scene key="CardInputInfo"  component={CardInputInfo}/>
       <Scene key="SuccessCardInfo"  component={SuccessCardInfo} type={ActionConst.RESET} />
       <Scene key="CardListInfo"  component={CardListInfo} />
 

@@ -188,7 +188,7 @@ export default class InputCardInfo extends Component {
     return (
 
       <Container style={styles.containerInnerPd}>
-          <CustomHeader resetPage={true}/>
+          <CustomHeader/>
           <View style={styles.fxDirRow}>
             <View style={stylesReg.leftGuideTxtWrap}>
               <Text style={stylesReg.leftGuideTxt}>쿨리닉</Text>
