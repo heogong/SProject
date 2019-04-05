@@ -8,7 +8,7 @@
  */
 
 import React, {Component} from 'react';
-import {Alert, Platform, StyleSheet, Text, Image, View, TouchableOpacity} from 'react-native';
+import {Alert, Platform, StyleSheet, Text, Image, View, TouchableOpacity, PermissionsAndroid} from 'react-native';
 
 import transform from "css-to-react-native-transform";
 
@@ -27,6 +27,31 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+async function requestCameraPermission() {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      // {
+      //   title: 'Cool Photo App Camera Permission',
+      //   message:
+      //     'Cool Photo App needs access to your camera ' +
+      //     'so you can take awesome pictures.',
+      //   buttonNeutral: 'Ask Me Later',
+      //   buttonNegative: 'Cancel',
+      //   buttonPositive: 'OK',
+      // },
+    );
+    
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log('You can use the camera');
+    } else {
+      console.log('Camera permission denied');
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+}
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -38,12 +63,16 @@ export default class App extends Component {
     }
 }
 
+
+
 componentDidMount() {
-  Permissions.check('photo').then(response => {
-    // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-    console.log(response);
-    this.setState({ photoPermission: response })
-  })
+  // Permissions.check('photo').then(response => {
+  //   // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+  //   console.log(response);
+  //   this.setState({ photoPermission: response })
+  // })
+
+  requestCameraPermission();
 }
 
 _requestPermission = () => {
