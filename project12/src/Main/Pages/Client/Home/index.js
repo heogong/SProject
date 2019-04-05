@@ -283,14 +283,11 @@ class ClientHome extends Component {
                       <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
                     )
                   )}
-
-
                 </View>
-                <Text style={localStyles.percentTxt}>{this.state.unRegData.infoPercent}</Text>
             </View>
             <View style={localStyles.bottomBoxRightWrap}>
                 <View style={localStyles.rightStateCircle}>
-                    <Text style={localStyles.rightStateTxt}>정보 미등록</Text>
+                    <Text style={[localStyles.rightStateTxt, {fontSize: 40}]}>{this.state.unRegData.infoPercent}</Text>
                 </View>
             </View>
         </View>
@@ -566,11 +563,13 @@ const localStyles = StyleSheet.create({
       color: color.whiteColor
   },
   noRegWrap: {
-      marginTop: 0,
+      marginTop: 10,
       marginBottom: 0
   },
   noRegTxt: {
-      fontSize: 13
+      fontSize: 13,
+      color: color.whiteColor,
+      fontWeight: "bold"
   },
   dotsStyle: {
       borderRadius: 12,

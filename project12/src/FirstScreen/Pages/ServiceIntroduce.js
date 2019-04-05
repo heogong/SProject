@@ -75,7 +75,7 @@ export default class ServiceIntroduce extends Component {
         // showNextButton={false}
         skipLabel="건너뛰기"
         nextLabel="다음"
-        doneLabel="쿨리닉의세계로"
+        doneLabel="로그인 하기"
         buttonTextStyle={{color:'#28c8f5'}}
         activeDotStyle={{backgroundColor: 'rgba(40, 200, 245, 1)'}}
         dotStyle={{backgroundColor: 'rgba(214, 241, 255, 1)'}}

@@ -144,12 +144,12 @@ class ViewAfterServiceHistory extends Component {
         for( let i = 0 ; i < AFTER_SERVICE_IMG_CNT; i++ ) {
             if(beforeImgCnt > 0) {
                 beforeImgArray.push( 
-                    <AfterServiceImage key={i} viewImage={true} imgUri={beforeData.images[i].fileUrl} />
+                    <AfterServiceImage key={i} viewImage={true} imgUri={beforeData.images[i].fileUrl} imgSizeType={1}/>
                 )
                 beforeImgCnt--;
             } else {
                 beforeImgArray.push( 
-                    <AfterServiceImage key={i} viewImage={true} imgUri={null} />
+                    <AfterServiceImage key={i} viewImage={true} imgUri={null} imgSizeType={1}/>
                 )
             }
         }
@@ -165,12 +165,12 @@ class ViewAfterServiceHistory extends Component {
         for( let i = 0 ; i < AFTER_SERVICE_IMG_CNT; i++ ) {
             if(afterImgCnt > 0) {
                 afterImgArray.push( 
-                    <AfterServiceImage key={i} viewImage={true} imgUri={afterData.images[i].fileUrl} />
+                    <AfterServiceImage key={i} viewImage={true} imgUri={afterData.images[i].fileUrl} imgSizeType={1}/>
                 )
                 afterImgCnt--;
             } else {
                 afterImgArray.push( 
-                    <AfterServiceImage key={i} viewImage={true} imgUri={null} />
+                    <AfterServiceImage key={i} viewImage={true} imgUri={null} imgSizeType={1}/>
                 )
             }
         }

@@ -111,7 +111,7 @@ class InvaildPasswd extends Component {
           </Item>
 
           <View style={[styles.fxDirRow, styles.mb12]}>
-            <View style={[styles.fx3, styles.pr12]}>
+            <View style={[styles.fx4, styles.pr12]}>
               <Item regular style={styles.inputWhBackWhBo}>
                 <Input 
                   onChangeText={ (text) => this.props.authAction(text)}
@@ -122,7 +122,7 @@ class InvaildPasswd extends Component {
                 />
               </Item>
             </View>
-            <View style={styles.fx2}>
+            <View style={styles.fx3}>
               <CustomButton
                 onPress={this._sendSmsCertNum}
                 // disabled={this.state.disableAuthBtn}
