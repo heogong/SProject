@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { setBizId, setIsAfterService } from '~/Redux/Actions';
 
 import GetPartnerInfo from '~/Main/Functions/GetPartnerInfo';
+import GetPartnerInputState from '~/Main/Functions/GetPartnerInputState';
 import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
 import GetAfterServiceState from '~/Main/Functions/GetAfterServiceState';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
@@ -77,8 +78,7 @@ class IntroPage extends Component {
 
                 if(ResultBool) {
                   if(resultData.data == null) {
-                    alert("파트너 가입 필수값 체크");
-                    Actions.PartnerMain(); // 메인 : TEST
+                    this._getPartnerInputState();
                   } else {
                     Actions.PartnerMain(); // 메인
                   }
@@ -93,6 +93,44 @@ class IntroPage extends Component {
         });
     });
   }
+
+
+  
+  // 업체 정보 등록 상태 조회
+  _getPartnerInputState = () => {
+    GetPartnerInputState().then(result => {
+        GetCommonData(result, this._getPartnerInputState).then(async resultData => {
+            if(resultData !== undefined) {
+                const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                if(ResultBool) {
+                  console.log('업체 정보 등록 상태 조회1 : ',resultData.data);
+
+                  const checkPage = [
+                    [{'value' : resultData.data.partnerBusiCertYn}, {'action' : 'JoinInputBizLicense'}], 
+                    [{'value' : resultData.data.partnerAccountYn}, {'action' : 'JoinInputSettleAccount'}], 
+                    [{'value' : resultData.data.partnerHandleYn}, {'action' : 'JoinInputWorkHours'}], 
+                    [{'value' : resultData.data.partnerWorkTimeYn}, {'action' : 'JoinInputWorkHours'}]
+                  ];
+
+                  const resultVaildPage = checkPage.filter((page) => page[0].value !== 'Y');
+
+                  // console.log('업체 정보 등록 상태 조회2 : ',resultVaildPage);
+
+                  if(resultVaildPage.length > 0) {
+                    Actions[resultVaildPage[0][1].action].call();
+                  } else {
+                    Actions.PartnerMain(); // 메인
+                  }
+
+                } else {
+                    alert(resultData.resultMsg);
+                }
+            }
+        });
+    });
+  } 
+
+
 
   // 현재 나의(파트너) AS 진행 상태 체크
   _getAfterServiceState = () => {

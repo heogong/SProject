@@ -214,15 +214,15 @@ const PAGE = () => (
       
       {/* 파트너 회원가입 */}
       <Scene key="PartnerIndex" component={PartnerIndex} type={ActionConst.RESET}/>
-      <Scene key="JoinInputBizLicense" component={JoinInputBizLicense} type={ActionConst.RESET}/>
       <Scene key="JoinTakeBizLicense" component={JoinTakeBizLicense}/>
+      <Scene key="JoinInputBizLicense" component={JoinInputBizLicense} type={ActionConst.RESET}/>
       <Scene key="JoinInputPartnerInfo" component={JoinInputPartnerInfo} type={ActionConst.RESET}/>
       <Scene key="JoinSetPartnerAddress" component={JoinSetPartnerAddress} type={ActionConst.RESET}/>
       <Scene key="JoinSearchPartnerAddress" component={JoinSearchPartnerAddress} />
       
-      <Scene key="JoinInputProdType" component={JoinInputProdType} type={ActionConst.RESET}/>
-      <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} />
-      <Scene key="JoinInputSettleAccount"  component={JoinInputSettleAccount1} />
+      <Scene key="JoinInputProdType" component={JoinInputProdType} type={ActionConst.RESET} />
+      <Scene key="JoinInputWorkHours" component={JoinInputWorkHours} type={ActionConst.RESET} />
+      <Scene key="JoinInputSettleAccount"  component={JoinInputSettleAccount1} type={ActionConst.RESET}/>
       <Scene key="JoinInputSettleAccount2" component={JoinInputSettleAccount2} />
       <Scene key="JoinInputSettleAccount3" component={JoinInputSettleAccount3} />
       <Scene key="JoinInputPartnerInfoSuccess" component={JoinInputPartnerInfoSuccess} />

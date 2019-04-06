@@ -119,19 +119,39 @@ class ClientHome extends Component {
               if(ResultBool) {
                 // this.setState({unRegData : resultData.data});
 
-                if(resultData.data.clientPaymYn == 'Y') {
-                  if(resultData.data.clientBplaceYn == 'Y') {
-                    if(resultData.data.clientPrdYn == 'Y') {
-                      this._startFn();
-                    } else {
-                      this.setState({unRegData : { isData : true, action : 'MyListBusinessPlace', infoPercent : resultData.data.infoPercent, state : 0 }} );
+                const checkPage = [
+                  [{'value' : resultData.data.clientPaymYn}, {'action' : 'MyListBusinessPlace'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 0}], 
+                  [{'value' : resultData.data.clientBplaceYn}, {'action' : 'RegBusinessPlaceIndex'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 1}], 
+                  [{'value' : resultData.data.clientPrdYn}, {'action' : 'CardInputInfo'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 2}] 
+                ];
+                const resultVaildPage = checkPage.filter((page) => page[0].value !== 'Y');
+
+                if(resultVaildPage.length > 0) {
+                  this.setState({
+                    unRegData : { 
+                      isData : true, 
+                      action : resultVaildPage[0][1].action, 
+                      infoPercent : resultVaildPage[0][2].infoPercent, 
+                      state : resultVaildPage[0][3].state 
                     }
-                  } else {
-                    this.setState({unRegData : { isData : true, action : 'RegBusinessPlaceIndex', infoPercent : resultData.data.infoPercent, state : 1 }} );
-                  }
+                  });
                 } else {
-                  this.setState({unRegData : { isData : true, action : 'CardInputInfo', infoPercent : resultData.data.infoPercent, state : 2 }} );
+                  this._startFn();
                 }
+
+                // if(resultData.data.clientPaymYn == 'Y') {
+                //   if(resultData.data.clientBplaceYn == 'Y') {
+                //     if(resultData.data.clientPrdYn == 'Y') {
+                //       this._startFn();
+                //     } else {
+                //       this.setState({unRegData : { isData : true, action : 'MyListBusinessPlace', infoPercent : resultData.data.infoPercent, state : 0 }} );
+                //     }
+                //   } else {
+                //     this.setState({unRegData : { isData : true, action : 'RegBusinessPlaceIndex', infoPercent : resultData.data.infoPercent, state : 1 }} );
+                //   }
+                // } else {
+                //   this.setState({unRegData : { isData : true, action : 'CardInputInfo', infoPercent : resultData.data.infoPercent, state : 2 }} );
+                // }
               } else {
                 this.setState({
                   isAlertModal : true,

@@ -20,7 +20,7 @@ class InputSettleAccount1 extends Component {
   render() {
     return (
       <Container style={styles.containerInnerPd}>
-        <CustomHeader />
+        <CustomHeader resetPage={true}/>
         <View style={styles.contentWrap}>
 
           <View style={styles.mb10}>
