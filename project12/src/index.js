@@ -109,7 +109,8 @@ class IntroPage extends Component {
                     [{'value' : resultData.data.partnerBusiCertYn}, {'action' : 'JoinInputBizLicense'}], 
                     [{'value' : resultData.data.partnerAccountYn}, {'action' : 'JoinInputSettleAccount'}], 
                     [{'value' : resultData.data.partnerHandleYn}, {'action' : 'JoinInputWorkHours'}], 
-                    [{'value' : resultData.data.partnerWorkTimeYn}, {'action' : 'JoinInputWorkHours'}]
+                    [{'value' : resultData.data.partnerWorkTimeYn}, {'action' : 'JoinInputWorkHours'}],
+                    [{'value' : resultData.data.partnerSvcAgreeYn}, {'action' : 'JoinInputWorkHours'}],
                   ];
 
                   const resultVaildPage = checkPage.filter((page) => page[0].value !== 'Y');

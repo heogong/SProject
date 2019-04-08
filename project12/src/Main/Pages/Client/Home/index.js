@@ -123,6 +123,7 @@ class ClientHome extends Component {
                   [{'value' : resultData.data.clientPaymYn}, {'action' : 'MyListBusinessPlace'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 0}], 
                   [{'value' : resultData.data.clientBplaceYn}, {'action' : 'RegBusinessPlaceIndex'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 1}], 
                   [{'value' : resultData.data.clientPrdYn}, {'action' : 'CardInputInfo'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 2}] 
+                  [{'value' : resultData.data.clientSvcAgreeYn}, {'action' : 'CardInputInfo'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 3}] 
                 ];
                 const resultVaildPage = checkPage.filter((page) => page[0].value !== 'Y');
 
@@ -287,22 +288,31 @@ class ClientHome extends Component {
                 </CustomButton>
 
                 <View style={localStyles.noRegWrap}>
-                  {(this.state.unRegData.state == 2 ) ? (
-                    <View>
-                      <Text style={localStyles.noRegTxt}>· 결제정보 미등록</Text>
-                      <Text style={localStyles.noRegTxt}>· 사업장 미등록</Text>
-                      <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
-                    </View>
-                  ) : (
-                    (this.state.unRegData.state == 1) ? (
-                      <View>
-                        <Text style={localStyles.noRegTxt}>· 사업장 미등록</Text>
-                        <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
-                      </View>
-                    ) : (
-                      <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
-                    )
-                  )}
+                {(this.state.unRegData.state == 3 ) ? (
+                  <View>
+                    <Text style={localStyles.noRegTxt}>· 결제정보 미등록</Text>
+                    <Text style={localStyles.noRegTxt}>· 사업장 미등록</Text>
+                    <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
+                    <Text style={localStyles.noRegTxt}>· 약관동의 미등록</Text>
+                  </View>
+                ) :(
+                  (this.state.unRegData.state == 2 ) ? (
+                     <View>
+                       <Text style={localStyles.noRegTxt}>· 결제정보 미등록</Text>
+                       <Text style={localStyles.noRegTxt}>· 사업장 미등록</Text>
+                       <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
+                     </View>
+                   ) : (
+                     (this.state.unRegData.state == 1) ? (
+                       <View>
+                         <Text style={localStyles.noRegTxt}>· 사업장 미등록</Text>
+                         <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
+                       </View>
+                     ) : (
+                       <Text style={localStyles.noRegTxt}>· 보유제품 미등록</Text>
+                     )
+                   )
+                )}
                 </View>
             </View>
             <View style={localStyles.bottomBoxRightWrap}>
