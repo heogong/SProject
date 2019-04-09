@@ -122,7 +122,7 @@ class ClientHome extends Component {
                 const checkPage = [
                   [{'value' : resultData.data.clientPaymYn}, {'action' : 'MyListBusinessPlace'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 0}], 
                   [{'value' : resultData.data.clientBplaceYn}, {'action' : 'RegBusinessPlaceIndex'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 1}], 
-                  [{'value' : resultData.data.clientPrdYn}, {'action' : 'CardInputInfo'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 2}] 
+                  [{'value' : resultData.data.clientPrdYn}, {'action' : 'CardInputInfo'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 2}], 
                   [{'value' : resultData.data.clientSvcAgreeYn}, {'action' : 'CardInputInfo'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 3}] 
                 ];
                 const resultVaildPage = checkPage.filter((page) => page[0].value !== 'Y');
