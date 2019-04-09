@@ -73,22 +73,35 @@ class MyProfileInfo extends Component {
             <Text style={styles.inputNbTitleTxt}>이메일</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
               <Image source={require('~/Common/Image/intro-logo.png')} style={localStyles.inputIcon} />
-              <Input value={this.state.data.usrId} style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false}/>
+              <Input
+                value={
+                  this.state.data.snsSignupYn == "N" ? this.state.data.usrId // SNS 가입자가 아니면
+                  : this.state.data.snsSiteCd == "SNS_SITE_CD_01" ? "네이버로 로그인 하셨습니다." : "카카오로 로그인 하셨습니다."  
+                }
+                style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false}/>
             </Item>
 
-            <Text style={styles.inputNbTitleTxt}>비밀번호</Text>
-            <Item regular style={styles.inputNbWhBackGreyBottomBo}>
-              <Input value="1234" style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false} secureTextEntry={true}/>
+            {
+              // SNS 가입자는 비밀번호 변경 기능 제거
+              this.state.data.snsSignupYn == "N"
+              ? // SNS 가입자가 아니면
+                <View>
+                  <Text style={styles.inputNbTitleTxt}>비밀번호</Text>
+                  <Item regular style={styles.inputNbWhBackGreyBottomBo}>
+                    <Input value="1234" style={styles.inputNbDefaultBox} editable={false} selectTextOnFocus={false} secureTextEntry={true}/>
 
-              <CustomEtcButton
-                onPress={ Actions.MyProfileModPassword1 }
-                SmallBtn={true}
-                customStyle={{width: 80, marginTop: 10}}
-              >
-                변경
-              </CustomEtcButton>
+                    <CustomEtcButton
+                      onPress={ Actions.MyProfileModPassword1 }
+                      SmallBtn={true}
+                      customStyle={{width: 80, marginTop: 10}}
+                    >
+                      변경
+                    </CustomEtcButton>
 
-            </Item>
+                  </Item>
+                </View>
+              : <View />
+            }
 
             <Text style={styles.inputNbTitleTxt}>이름</Text>
 
