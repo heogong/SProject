@@ -57,7 +57,7 @@ class IntroPage extends Component {
               // this._getAfterServiceState(); // 파트너 메인 에서 체크로 인해 주석 처리
               this._getPartnerInfo(); // 파트너 정보 조회를 통한 현재 상태 체크 (가입시 필수값 여부 체크)
             } else {
-              this._getClientAfterServiceState(); // 클라이언트
+              this._getClientAgreeState(); // 클라이언트 약관동의 여부
             }
             
           } else {
@@ -131,8 +131,6 @@ class IntroPage extends Component {
     });
   } 
 
-
-
   // 현재 나의(파트너) AS 진행 상태 체크
   _getAfterServiceState = () => {
     GetAfterServiceState().then(result => {
@@ -157,6 +155,29 @@ class IntroPage extends Component {
         });
     });
   } 
+
+  // 고객 약관 동의 여부
+  _getClientAgreeState = () => {
+    GetClientAgreeState().then(result => {
+        GetCommonData(result, this._getClientAgreeState).then(async resultData => {
+            if(resultData !== undefined) {
+                const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+                console.log(resultData);
+                if(ResultBool) {
+                  if(resultData.data.clientSvcAgreeYn == 'Y') {
+                    this._getClientAfterServiceState(); 
+                  } else {
+                    Actions.ClientAgreeTermsService();
+                  }
+                } else {
+                    alert(resultData.resultMsg);
+                }
+            }
+        });
+    });
+  } 
+
+
 
   // 현재 나의(클라이언트) AS 진행 상태 체크
   _getClientAfterServiceState = () => {

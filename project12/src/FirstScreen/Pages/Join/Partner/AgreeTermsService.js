@@ -75,7 +75,7 @@ class AgreeTermsService extends Component {
   render() {
     return (
       <Container style={styles.containerInnerPd}>
-        <CustomHeader />
+        <CustomHeader resetPage={true}/>
         <View style={styles.contentWrap}>
           <View>
             
