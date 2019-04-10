@@ -132,7 +132,7 @@ class InputSettleAccount2 extends Component {
             <CustomButton 
               onPress={ this.selectPhotoTapped.bind(this) }
               DefaultLineBtn={true}
-              CustomBtnStyle={styles.mb12}
+              CustomBtnStyle={styles.mb5}
             >
               앨범에서 선택하기
             </CustomButton>

@@ -188,7 +188,7 @@ class SetAddress extends Component {
                         <CustomButton
                             onPress={this._goSearchAddress}
                             DefaultLineBtn={true}
-                            CustomBtnStyle={styles.mb12}
+                            CustomBtnStyle={styles.mb5}
                         >
                             주소검색
                         </CustomButton>

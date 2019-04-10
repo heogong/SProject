@@ -42,7 +42,7 @@ class SuccessAgreeTermsService extends Component {
               <CustomButton 
                 onPress={Actions.ClientMain}
                 DefaultLineBtn={true}
-                CustomBtnStyle={styles.mb12}
+                CustomBtnStyle={styles.mb5}
               >
                 메인화면으로
               </CustomButton>

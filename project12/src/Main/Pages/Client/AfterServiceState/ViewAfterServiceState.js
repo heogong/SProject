@@ -15,6 +15,7 @@ import GetPartnerLocation from '~/Main/Functions/GetPartnerLocation';
 import RegEvalPoint from '~/Main/Functions/RegEvalPoint';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
+import CustomButton from '~/Common/Components/CustomButton';
 import CustomHeader from '~/Common/Components/CustomHeader';
 import CustomEtcButton from '~/Common/Components/CustomEtcButton';
 import CustomModal from '~/Common/Components/CustomModal';
@@ -318,6 +319,12 @@ class ViewAfterServiceState extends Component {
     Actions.ResetMain({client : true});
   }
 
+  _goPaymentAddAfterService = () => {
+    // 추가 AS 결제로 이동
+    Actions.AfterServiceAddPayment({
+        asPrgsMst: this.state.data.asPrgsMst
+    });
+  }
   render() {
     return (
           <Container style={[styles.fx1, {   
@@ -375,6 +382,38 @@ class ViewAfterServiceState extends Component {
                             </Text>
                             <Text style={[localStyles.topSubTitleTxt, {marginTop: 20, marginBottom: 10}]}>참고사항</Text>
                             <Text style={localStyles.topInfoTxt}>{ this.state.data.asPrgsMst.asRecvDsc !== 'null' ?  this.state.data.asPrgsMst.asRecvDsc : '입력된 참고사항이 없습니다.'}</Text>
+
+                            {(this.state.data.asPrgsMst.asAddYn == "Y") ? (
+                                <View>
+                                    <Text style={[localStyles.topSubTitleTxt, {marginTop: 20, marginBottom: 10}]}>추가 A/S 내역</Text>
+                                    <Text style={localStyles.topInfoTxt}>{this.state.data.asPrgsMst.asAddTitle}</Text>
+
+                                    <Text style={[localStyles.topSubTitleTxt, {marginTop: 20, marginBottom: 10}]}>추가 A/S 사유</Text>
+                                    <Text style={localStyles.topInfoTxt}>{this.state.data.asPrgsMst.asAddComment}</Text>
+
+                                    <Text style={[localStyles.topSubTitleTxt, {marginTop: 20, marginBottom: 10}]}>추가 A/S 비용({this.state.data.asPrgsMst.asAddStatNm})</Text>
+
+                                    <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                                        <Text style={localStyles.topInfoTxt}>결제금액</Text>
+                                        <Text style={[localStyles.topInfoTxt, {color: color.defaultColor}]}>￦{this.state.data.asPrgsMst.totalAmount}</Text>
+                                    </View>
+
+                                    {(this.state.data.asPrgsMst.asAddStatCd == "AS_ADD_STAT_CD_02") ? 
+                                        <View/>
+                                    : 
+                                        <CustomButton 
+                                            onPress={this._goPaymentAddAfterService}
+                                            DefaultLineBtn={true}
+                                            CustomBtnStyle={{height: 40, marginTop: 15, marginBottom: 0}}
+                                            CustomFontStyle={{fontSize: 14}}
+                                        >
+                                            추가 A/S 결제 하러 가기
+                                        </CustomButton>
+                                    }
+                                </View>
+                          ) : (
+                              <View/>
+                          )}
                           </View>
                       </View>
                   )}

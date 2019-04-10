@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Image, ImageBackground, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { Container, Text} from "native-base";
+import { Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -11,6 +11,7 @@ import GetAfterServiceActionInfo from '~/Main/Functions/GetAfterServiceActionInf
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import AfterServiceImage from '~/Main/Components/AfterServiceImage';
 
+import CustomButton from '~/Common/Components/CustomButton';
 import CustomModal from '~/Common/Components/CustomModal';
 import CustomHeader from '~/Common/Components/CustomHeader';
 import { styles, viewportWidth } from '~/Common/Styles/common';
@@ -64,8 +65,12 @@ class ViewAfterServiceHistory extends Component {
             }
         },
         isAlertModal : false, // alert 용
-        resultMsg : null // alert 용
+        resultMsg : null, // alert 용
       };
+    }
+
+    componentWillMount() {
+        
     }
 
     componentDidMount() {
@@ -178,6 +183,12 @@ class ViewAfterServiceHistory extends Component {
         return afterImgArray;
     }
 
+    _goPaymentAddAfterService = () => {
+        // 추가 AS 결제로 이동
+        Actions.AfterServiceAddPayment({
+            asPrgsMst: this.state.data.asPrgsMst
+        });
+    }
     
 
     render() {
@@ -235,6 +246,46 @@ class ViewAfterServiceHistory extends Component {
 
                             </View>
                         </View>
+                        
+                        {(this.state.data.asPrgsMst.asAddYn == "Y") ? (
+                            <View>
+                                <View style={[localStyles.boxTitleWrap]}>
+                                    <Text style={localStyles.boxTitleTxt}>추가 A/S</Text>
+                                    <View style={[styles.line, {flex: 2, borderColor: color.whiteColor}]}></View>
+                                </View>
+                                <View style={[styles.boxShadow, localStyles.histBoxWrap]}>
+                                    <Text style={localStyles.histBoxTitleTxt}>청구비용</Text>
+
+                                    <Text style={[localStyles.histBoxSubTitleTxt, {marginTop: 0}]}>추가 A/S 내역</Text>
+                                    <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asPrgsMst.asAddTitle}</Text>
+
+                                    <Text style={localStyles.histBoxSubTitleTxt}>추가 A/S 사유</Text>
+                                    <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asPrgsMst.asAddComment}</Text>
+
+                                    <Text style={localStyles.histBoxSubTitleTxt}>추가 A/S 비용({this.state.data.asPrgsMst.asAddStatNm})</Text>
+
+                                    <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                                        <Text style={localStyles.histBoxInfoTxt}>결제금액</Text>
+                                        <Text style={[localStyles.histBoxInfoTxt, {color: color.defaultColor}]}>￦{this.state.data.asPrgsMst.totalAmount}</Text>
+                                    </View>
+
+                                    {(this.state.data.asPrgsMst.asAddStatCd == "AS_ADD_STAT_CD_02") ? 
+                                        <View/>
+                                    : 
+                                        <CustomButton 
+                                            onPress={this._goPaymentAddAfterService}
+                                            DefaultLineBtn={true}
+                                            CustomBtnStyle={{height: 40, marginTop: 15, marginBottom: 0}}
+                                            CustomFontStyle={{fontSize: 14}}
+                                        >
+                                            결제 하러 가기
+                                        </CustomButton>
+                                    }
+                                </View>
+                            </View>
+                        ) : (
+                            <View/>
+                        )}
 
                         <View>
                             <View>
@@ -269,7 +320,7 @@ class ViewAfterServiceHistory extends Component {
                                 <View style={[styles.boxShadow, {backgroundColor: color.whiteColor}]}>
                                     <View style={localStyles.prdPhotoWrap}>
 
-                                       {this._drawAfterImg()}
+                                    {this._drawAfterImg()}
 
                                     </View>
                                     <View style={localStyles.prdPhotoTxtWrap}>
@@ -285,34 +336,11 @@ class ViewAfterServiceHistory extends Component {
                             </View>
                         </View>
 
-                        {(this.state.data.asPrgsMst.asAddYn == "Y") ? (
-                             <View>
-                                <View style={[localStyles.boxTitleWrap]}>
-                                    <Text style={localStyles.boxTitleTxt}>추가 A/S</Text>
-                                    <View style={[styles.line, {flex: 2, borderColor: color.whiteColor}]}></View>
-                                </View>
-                                <View style={[styles.boxShadow, localStyles.histBoxWrap]}>
-                                    <Text style={localStyles.histBoxTitleTxt}>청구비용</Text>
-    
-                                    <Text style={localStyles.histBoxSubTitleTxt}>추가 A/S 비용</Text>
-                                    <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asPrgsMst.asAddCost} 원</Text>
-    
-                                    <Text style={localStyles.histBoxSubTitleTxt}>추가A/S내역</Text>
-                                    <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asPrgsMst.asAddTitle}</Text>
-    
-                                    <Text style={localStyles.histBoxSubTitleTxt}>추가A/S사유</Text>
-                                    <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asPrgsMst.asAddComment}</Text>
-                                </View>
-                            </View>
-                        ) : (
-                            <View/>
-                        )}
-
                     </View>
                 </ScrollView>
 
-                 {/* alert 메세지 모달 */}
-                 <CustomModal
+                {/* alert 메세지 모달 */}
+                <CustomModal
                     modalType="ALERT"
                     isVisible={this.state.isAlertModal}
                     onPress={ () => this.setState({isAlertModal : false})}

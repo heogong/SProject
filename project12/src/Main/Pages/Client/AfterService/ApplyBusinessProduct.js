@@ -416,7 +416,7 @@ class ApplyBusinessProduct extends Component {
                                     })
                             }
                             DefaultLineBtn={true}
-                            CustomBtnStyle={styles.mb12}
+                            CustomBtnStyle={styles.mb5}
                         >
                             {this.state.buttonTitle}
                         </CustomButton>

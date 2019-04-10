@@ -138,6 +138,7 @@ import AfterServiceProdList from './src/Main/Pages/Client/AfterService/ListBusin
 import AfterServiceApplyProduct from './src/Main/Pages/Client/AfterService/ApplyBusinessProduct'
 import AfterServiceApplyProductCheck from './src/Main/Pages/Client/AfterService/ApplyCheckAfterService'
 import AfterServiceApplyProductComplete from './src/Main/Pages/Client/AfterService/ApplyAfterServiceComplete'
+import AfterServiceAddPayment from './src/Main/Pages/Client/AfterService/AfterServiceAddPayment'
 
 // import ViewBusinessProduct from './src/Main/Pages/Client/MyProduct/ViewBusinessProduct'
 
@@ -262,7 +263,8 @@ const PAGE = () => (
       <Scene key="AfterServiceApplyProduct" component={AfterServiceApplyProduct} />
       <Scene key="AfterServiceApplyProductCheck"  component={AfterServiceApplyProductCheck} />
       <Scene key="AfterServiceApplyProductComplete" component={AfterServiceApplyProductComplete} />
-
+      <Scene key="AfterServiceAddPayment" component={AfterServiceAddPayment} />
+      
       {/* <Scene key="InputProdInfo" component={InputProdInfo} onRight={()=>{}} rightTitle={'Save'}/>
       <Scene key="InputProdImage" component={InputProdImage} type={ActionConst.RESET} /> */}
       
