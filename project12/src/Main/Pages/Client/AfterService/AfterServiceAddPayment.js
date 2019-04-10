@@ -317,7 +317,8 @@ class AfterServiceAddPayment extends Component {
                     <CustomModal
                         modalType="ALERT"
                         isVisible={this.state.isAlertModal1}
-                        onPress={ () => Actions.ResetMain({client : true})}
+                        //onPress={ () => Actions.ResetMain({client : true})}
+                        onPress={ () => Actions.ClientMain()}
                         infoText={this.state.resultMsg}
                         btnText="확인"
                     />
