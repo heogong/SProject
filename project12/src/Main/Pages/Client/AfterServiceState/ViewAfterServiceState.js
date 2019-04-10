@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View, ScrollView } from 'react-native'
 import { Container,Header,Title, Button,Left,Right,Body,Text} from "native-base";
 
-import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, PROGRESS, COMPLETE_MATCH, ADD_AS, COMPLETE_AS} from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, MATCH, DEPARTURE, ARRIVE, PROGRESS, COMPLETE_MATCH, ADD_AS, COMPLETE_AS, MOVE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -431,7 +431,7 @@ class ViewAfterServiceState extends Component {
                           />
                           <AfterServiceState
                             asPrgsStatCd={this.state.data.asPrgsMst.asPrgsStatCd}
-                            status={{'code1' : DEPARTURE, 'code2' : DEPARTURE}}
+                            status={{'code1' : DEPARTURE, 'code2' : MOVE}}
                             statusOnImg={require('~/Common/Image/user_as_step_icon/Step_on/as_start_icon.png')}
                             statusOffImg={require('~/Common/Image/user_as_step_icon/Default/as_start_icon.png')}
                           />

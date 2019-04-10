@@ -1,17 +1,16 @@
 import React, { Component } from "react";
-import { Keyboard, StyleSheet, ScrollView, TouchableOpacity, View } from 'react-native'
-import { Button, Container, CheckBox, Text, Item, Input } from "native-base";
-
+import { StyleSheet, ScrollView, View, RefreshControl } from 'react-native'
+import { Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 
-import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
+import GetSettlementDetail from '~/Main/Functions/GetSettlementDetail';
+import GetSettlementDetailPage from '~/Main/Functions/GetSettlementDetailPage';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomHeader from "~/Common/Components/CustomHeader";
-import CustomButton from "~/Common/Components/CustomButton";
 import CustomModal from '~/Common/Components/CustomModal';
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
@@ -20,9 +19,9 @@ import { color } from "~/Common/Styles/colors";
 
 export const AccountHistory = ({account}) => (
   <View style={localStyles.moneyList}>
-    <Text style={localStyles.dateTxt}>{account.date}</Text>
+    <Text style={localStyles.dateTxt}>{account.asOrderNm}</Text>
     <Text style={localStyles.nameTxt}>{account.bplaceNm}</Text>
-    <Text style={localStyles.momeyTxt}>{account.money}원</Text>
+    <Text style={localStyles.momeyTxt}>{account.asAmount}원</Text>
   </View>
 )
 
@@ -30,64 +29,73 @@ class MyCalcuList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data : [
-        {
-          date: '01.16',
-          bplaceNm: '세나정육점1',
-          money: '50,000'
-        },
-        {
-          date: '01.17',
-          bplaceNm: '세나정육점2',
-          money: '60,000'
-        },
-        {
-          date: '01.18',
-          bplaceNm: '세나정육점3',
-          money: '70,000'
-        },
-        {
-          date: '01.19',
-          bplaceNm: '세나정육점4',
-          money: '80,000'
-        },
-        {
-          date: '01.20',
-          bplaceNm: '세나정육점5',
-          money: '90,000'
-        },
-        {
-          date: '01.21',
-          bplaceNm: '세나정육점6',
-          money: '20,000'
-        },
-        {
-          date: '01.22',
-          bplaceNm: '세나정육점7',
-          money: '30,000'
-        },
-        {
-          date: '01.22',
-          bplaceNm: '세나정육점8',
-          money: '30,000'
-        },
-        {
-          date: '01.22',
-          bplaceNm: '세나정육점8',
-          money: '30,000'
-        },
-        {
-          date: '01.22',
-          bplaceNm: '세나정육점8',
-          money: '30,000'
-        }
-      ]
+      data : {
+        calcHist : []
+      },
+      refreshing: false,
+      isAlertModal : false, // alert 용
+      resultMsg : null // alert 용
     };
   }
 
   componentDidMount() {
-    // 계좌 정보 조회
+    this._getSettlementDetail();
   }
+
+  // 업체 정산 내역 조회
+  _getSettlementDetail = () => {
+    GetSettlementDetail().then(result => {
+      GetCommonData(result, this._getSettlementDetail).then(async resultData => {
+          if(resultData !== undefined) {
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+              console.log('업체 정산 내역 조회 - ', resultData);
+              if(ResultBool) {
+                this.setState({data : resultData.data});
+              } else {
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
+              }
+            }
+        });
+    });
+  }
+
+   // 업체 정산 내역 조회 - 페이지
+   _getSettlementDetailPage = () => {
+    GetSettlementDetailPage().then(result => {
+      GetCommonData(result, this._getSettlementDetailPage).then(async resultData => {
+          if(resultData !== undefined) {
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+              console.log('업체 정산 내역 조회 - ', resultData);
+              if(ResultBool) {
+
+                this.setState({
+                  data : {
+                    ...this.state.data,
+                    calcHist : resultData.data
+                  }
+                })
+              } else {
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
+              }
+              this.setState({refreshing: false});
+            }
+        });
+    });
+  }
+
+  
+
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    this._getSettlementDetailPage();
+  }
+
 
   render() {
     return (
@@ -98,7 +106,7 @@ class MyCalcuList extends Component {
             <View style={styles.fxDirRow}>
               <View style={stylesReg.leftGuideTxtWrap}>
                 <Text style={stylesReg.leftGuideTxt}>이번달</Text>
-                <Text style={stylesReg.leftGuideTxt}>총 <Text style={localStyles.moneyTxt}>200,000원</Text>이</Text>
+                <Text style={stylesReg.leftGuideTxt}>총 <Text style={localStyles.moneyTxt}>{this.state.data.totalAmount}원</Text>이</Text>
                 <Text style={stylesReg.leftGuideTxt}>입금될 예정입니다</Text>
               </View>
             </View>
@@ -108,14 +116,22 @@ class MyCalcuList extends Component {
             <View style={{borderBottomColor: color.defaultColor, borderBottomWidth: 2, paddingBottom: 30}}>
               <Text style={{color: "#1e1e32", fontSize: 16, fontWeight: "bold", marginBottom: 5}}>내 계좌번호</Text>
               <View style={[styles.fxDirRow, styles.justiConBetween]}>
-                <Text style={{fontSize: 14, color: color.defaultColor, fontWeight: "bold"}}>카카오뱅크(정진씨)</Text>
-                <Text style={{fontSize: 13}}>000-0000-0000-0000-0000</Text>
+                <Text style={{fontSize: 14, color: color.defaultColor, fontWeight: "bold"}}>{this.state.data.backCdNm}</Text>
+                <Text style={{fontSize: 13}}>{this.state.data.accountNum}</Text>
               </View>
             </View>
 
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView 
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._onRefresh}
+                />
+              }
+            >
 
-              {this.state.data.map((account, idx) => 
+              {this.state.data.calcHist.map((account, idx) => 
                 <AccountHistory
                   key={idx}
                   account={account}
@@ -125,6 +141,15 @@ class MyCalcuList extends Component {
             </ScrollView>
 
         </View>
+
+        {/* alert 메세지 모달 */}
+        <CustomModal
+          modalType="ALERT"
+          isVisible={this.state.isAlertModal}
+          onPress={ () => this.setState({isAlertModal : false})}
+          infoText={this.state.resultMsg}
+          btnText="확인"
+        />
 
       </Container>
     );
