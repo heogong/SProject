@@ -134,7 +134,7 @@ class ListAfterServiceHistory extends Component {
                                                 <Text style={[styles.listPrdBoxDeTxt, {paddingTop: 3}]}>만족도</Text>
                                                     <View style={localStyles.starIconWrap}>
                                                         {
-                                                            this.state.data.evalYn == 'Y' ? (
+                                                            afterService.evalYn == 'Y' ? (
                                                                 this._drawStarPoint(parseInt(afterService.evalPoint))
                                                             ) : (
                                                                 <Text style={[styles.listPrdBoxDeTxt]}>: 상세에서 평가해주세요!</Text>

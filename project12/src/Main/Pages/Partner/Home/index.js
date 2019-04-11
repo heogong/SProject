@@ -182,7 +182,9 @@ export default class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data : [],
+            data : {
+                asPrgsMst : []
+            },
             displayData : [],
             afterServiceData : [],
             reportCount : 0,
@@ -324,12 +326,12 @@ export default class Main extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log("현재 나의(파트너) AS 진행 상태 체크 : ", resultData);
                     if(ResultBool) {
-                        CLIENT_PHONE_NUM = resultData.data.clientPhoneNum; 
                         // A/S 상태일 경우
                         if(resultData.data.asPrgsMst !== null) { 
                             AS_RECV_ID = resultData.data.asPrgsMst.asRecvId;
                             AS_PRGS_ID = resultData.data.asPrgsMst.asPrgsId;
-
+                            CLIENT_PHONE_NUM = resultData.data.asPrgsMst.clientPhoneNum; 
+                            
                             this._getAfterServiceDetail();
                             
                         // A/S 상태가 아닐경우 A/S 목록 조회
