@@ -10,6 +10,7 @@ import { setBizId, setIsAfterService } from '~/Redux/Actions';
 
 import GetPartnerInfo from '~/Main/Functions/GetPartnerInfo';
 import GetPartnerInputState from '~/Main/Functions/GetPartnerInputState';
+import GetClientAgreeState from '~/Main/Functions/GetClientAgreeState';
 import GetUserInfo from '~/FirstScreen/Functions/GetUserInfo';
 import GetAfterServiceState from '~/Main/Functions/GetAfterServiceState';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';

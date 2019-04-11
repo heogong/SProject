@@ -27,7 +27,7 @@ import { color } from "~/Common/Styles/colors";
 
 let AS_PRGS_ID = null; // 
 let AS_RECV_ID = null; // 
-
+let CLIENT_PHONE_NUM = null; // 클라이언트 전화번호
 
 // 가입신청승인대기
 const PartnerWait = () => (
@@ -310,7 +310,8 @@ export default class Main extends Component {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log("현재 나의(파트너) AS 진행 상태 체크 : ", resultData);
-                    if(ResultBool) { 
+                    if(ResultBool) {
+                        CLIENT_PHONE_NUM = resultData.data.clientPhoneNum; 
                         // A/S 상태일 경우
                         if(resultData.data.asPrgsMst !== null) { 
                             AS_RECV_ID = resultData.data.asPrgsMst.asRecvId;
@@ -524,6 +525,7 @@ export default class Main extends Component {
                         <AfterServiceStateCard
                             data={ this.state.afterServiceData }
                             asPrgsId={ AS_PRGS_ID }
+                            clientPhoneNum={CLIENT_PHONE_NUM}
                             getAfterServiceDetail={this._getAfterServiceDetail}
                         />
                     ) : (

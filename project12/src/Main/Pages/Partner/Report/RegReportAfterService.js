@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Image, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, TextInput, Linking, View } from 'react-native'
 import { Button, Container, Icon, Text, Item } from "native-base";
 
-import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
+import { SUCCESS_RETURN_CODE, ADD_AS } from '~/Common/Blend';
 
 import { Actions, ActionConst} from 'react-native-router-flux';
 
@@ -339,6 +339,7 @@ class RegReportBeforePic extends Component {
                                     <View style={[styles.modalBtnTwinWrap, styles.fx1, styles.justiConCenter, {marginTop: 18, marginBottom: 18}]}>
                                         <View style={{marginRight: 9}}>
                                             <CustomEtcButton
+                                                action={() => Linking.openURL(`tel:${this.state.asData.clientPhoneNum}`)}
                                                 WhiteBackBtn={true}
                                             >
                                                 업체전화연결
@@ -346,6 +347,7 @@ class RegReportBeforePic extends Component {
                                         </View>
 
                                         <View style={{marginLeft: 9}}>
+                                        {this.state.asData.asPrgsMst.asPrgsStatCd !== ADD_AS.VALUE ? (
                                             <CustomEtcButton 
                                                 onPress={() => Actions.RegAddAfterService({
                                                     asPrgsId : this.props.asPrgsId,
@@ -355,6 +357,19 @@ class RegReportBeforePic extends Component {
                                                 modalCustomStyle={{backgroundColor: "#0397bd"}}>
                                                 추가A/S진행
                                             </CustomEtcButton>
+
+                                        ) : (
+                                            <CustomEtcButton 
+                                                onPress={() => Actions.ViewAfterServiceMatch({
+                                                    asRecvId : this.state.asData.asPrgsMst.asRecvId,
+                                                    isReport : true
+                                                })}
+                                                ModalDefaultBtn={true}
+                                                modalCustomStyle={{backgroundColor: "#0397bd"}}>
+                                                제품 상세정보
+                                            </CustomEtcButton>
+                                        )}
+
                                         </View>
                                     </View>
 

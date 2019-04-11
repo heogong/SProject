@@ -302,7 +302,7 @@ class AfterServiceStateCard extends Component {
                     modalType="CONFIRM"
                     isVisible={this.state.isArriveModal}
                     onPress1={this._progressAfterService}
-                    onPress2={() => Linking.openURL(`tel:01000000000`)}
+                    onPress2={() => Linking.openURL(`tel:${this.props.clientPhoneNum}`)}
                     infoText1="A/S 진행 또는 업체와 전화연결을 선택하세요"
                     btnText1="A/S 진행"
                     btnText2="전화연결"

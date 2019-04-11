@@ -17,25 +17,6 @@ import { styles, viewportWidth, viewportHeight } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from "~/Common/Styles/colors";
 
-// const AfterServiceImage = ({AfterService}) => (
-//     <View style={localStyles.prdPhoto}>
-//       <ImageBackground 
-//         style={[styles.alignItemsEnd, styles.justiConEnd, {width: '100%', height: '100%', backgroundColor:color.whiteColor}]}
-//         source={{ uri: AfterService.fileUrl }}>
-
-//         {(AfterService.fileUrl !== null) ? (
-//             <TouchableOpacity 
-//                 style={localStyles.prdPhotoBtnEn}
-//                 onPress={ () => alert("사진조회")}>
-//                 <Icon name="expand" style={localStyles.prdPhotoBtnEnIcon}/>
-//             </TouchableOpacity>
-//         ) : (
-//             <View/>
-//         )}
-
-//       </ImageBackground>
-//     </View>
-// )
 
 class ViewAfterServiceMatch extends Component {
     constructor(props) {
@@ -57,6 +38,10 @@ class ViewAfterServiceMatch extends Component {
         },
         isAlertModal : false, // alert 용
       };
+    }
+
+    static defaultProps = {
+        isReport : false // 접근페이지(보고서 : true, 메인 : false)
     }
 
     componentDidMount() {
@@ -97,7 +82,11 @@ class ViewAfterServiceMatch extends Component {
 
     // 메인페이지 이동 - 그냥 pop 하면 index페이지로 이동 함
     _goToMain = () => {
-        Actions.PartnerMain();
+        if(this.props.isReport) {
+            Actions.pop();
+        } else {
+            Actions.PartnerMain();
+        }
     }
 
     render() {
