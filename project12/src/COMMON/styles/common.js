@@ -153,8 +153,7 @@ export const styles = StyleSheet.create({
     },
     listPrdBoxNextIconWrap: {
       flex: 1,
-      alignItems: "flex-end",
-      marginTop: -5
+      alignItems: "flex-end"
     },
     listPrdBoxNextIcon: {
       color: color.whiteColor

@@ -32,12 +32,13 @@ const Product = ({index, afterService, toggelAction}) => (
           <Text style={styles.listPrdBoxDeTxt}>{ afterService.bplaceAddr }</Text>
           <Text style={styles.listPrdBoxDeTxt}>{ afterService.bplaceAddrDtl }</Text>
         </View>
-
+        {/* 삭제 기능 필요 없음(매칭 되면 자동 사라짐)         
         <View style={styles.listPrdBoxNextIconWrap}>
           <TouchableOpacity>
             <Image source={require("~/Common/Image/card_delete_2.png")} resizeMode="contain" style={{width: 22, height: 22}}/>
           </TouchableOpacity>
         </View>
+         */}
       </View>
     </TouchableOpacity>
 );

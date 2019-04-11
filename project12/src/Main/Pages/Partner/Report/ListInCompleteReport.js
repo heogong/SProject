@@ -33,21 +33,23 @@ const Product = ({report}) => (
           <Text style={styles.listPrdBoxImgTxt}>{report.prdTypeKoNm}</Text>
         </View>
         <View style={styles.listPrdBoxRightTxtWrap}>
-          <H3 style={styles.listPrdBoxRightTitleTxt} numberOfLines={1}>{report.bplaceNm}</H3>
-          <Text style={[styles.listPrdBoxDeTxt, styles.mb12, {fontWeight: "500"}]}>{report.asComplteDt}</Text>
-          <Text style={styles.listPrdBoxDeTxt}>{report.asItemNm}</Text>
-          <View style={styles.fxDirRow}>
-            <Text style={[styles.listPrdBoxDeTxt, {paddingTop: 3}]}>만족도</Text>
-            <View style={localStyles.starIconWrap}>
-                {this._drawStarPoint(report.evalPoint)}
-            </View>
-          </View>
-        </View>
+            <View style={styles.fxDirRow}>
+                <H3 style={[styles.listPrdBoxRightTitleTxt, {flex: 4}]} numberOfLines={1}>{report.bplaceNm}</H3>
 
-        <View style={styles.listPrdBoxNextIconWrap}>
-          <TouchableOpacity>
-            <Image source={require("~/Common/Image/Next_icon_white.png")} resizeMode="contain" style={{width: 26, height: 26}} />
-          </TouchableOpacity>
+                <View style={styles.listPrdBoxNextIconWrap}>
+                    <TouchableOpacity>
+                        <Image source={require("~/Common/Image/Next_icon_white.png")} resizeMode="contain" style={{width: 26, height: 26}} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <Text style={[styles.listPrdBoxDeTxt, styles.mb12, {fontWeight: "500"}]}>{report.asComplteDt}</Text>
+            <Text style={styles.listPrdBoxDeTxt}>{report.asItemNm}</Text>
+            <View style={styles.fxDirRow}>
+                <Text style={[styles.listPrdBoxDeTxt, {paddingTop: 3}]}>만족도</Text>
+                <View style={localStyles.starIconWrap}>
+                    {this._drawStarPoint(report.evalPoint)}
+                </View>
+            </View>
         </View>
       </View>
     </TouchableOpacity>

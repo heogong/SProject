@@ -19,8 +19,11 @@ import { color } from "~/Common/Styles/colors";
 
 export const AccountHistory = ({account}) => (
   <View style={localStyles.moneyList}>
-    <Text style={localStyles.dateTxt}>{account.asOrderNm}</Text>
-    <Text style={localStyles.nameTxt}>{account.bplaceNm}</Text>
+    <Text style={localStyles.dateTxt}>{account.asPrgsDt}</Text>
+    <View style={localStyles.nameTxtWrap}>
+      <Text style={localStyles.nameTxt} numberOfLines={1}>{account.bplaceNm}</Text>
+      <Text style={localStyles.name1Txt} numberOfLines={1}>{account.asOrderNm}</Text>
+    </View>
     <Text style={localStyles.momeyTxt}>{account.asAmount}원</Text>
   </View>
 )
@@ -113,10 +116,13 @@ class MyCalcuList extends Component {
 
             <View style={[styles.line, {marginTop: 16, marginBottom: 16}]}></View>
 
-            <View style={{borderBottomColor: color.defaultColor, borderBottomWidth: 2, paddingBottom: 30}}>
-              <Text style={{color: "#1e1e32", fontSize: 16, fontWeight: "bold", marginBottom: 5}}>내 계좌번호</Text>
+            <View style={{borderBottomColor: color.defaultColor, borderBottomWidth: 2, paddingBottom: 20}}>
               <View style={[styles.fxDirRow, styles.justiConBetween]}>
-                <Text style={{fontSize: 14, color: color.defaultColor, fontWeight: "bold"}}>{this.state.data.backCdNm}</Text>
+                <Text style={{color: "#1e1e32", fontSize: 16, fontWeight: "bold", marginBottom: 5}}>내 계좌번호</Text>
+                <Text style={{fontSize: 13, color: color.greyColor}}>{this.state.data.accountHolder}</Text>
+              </View>
+              <View style={[styles.fxDirRow, styles.justiConBetween]}>
+                <Text style={{fontSize: 14, color: color.defaultColor}}>{this.state.data.backCdNm}</Text>
                 <Text style={{fontSize: 13}}>{this.state.data.accountNum}</Text>
               </View>
             </View>
@@ -182,13 +188,19 @@ const localStyles = StyleSheet.create({
     color: "#8e8e98",
     width: 50,
   },
+  nameTxtWrap: {
+    flex: 2
+  },
   nameTxt: {
     fontSize: 16,
-    color: "#1e1e32",
-    flex: 1
+    color: "#1e1e32"
+  },
+  name1Txt: {
+    fontSize: 13,
+    color: color.greyColor
   },
   momeyTxt: {
-    fontSize: 18,
+    fontSize: 16,
     color: color.defaultColor,
     fontWeight: "bold",
     flex: 1,

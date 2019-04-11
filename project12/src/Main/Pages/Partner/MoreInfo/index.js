@@ -102,7 +102,7 @@ class MoreMenu extends Component {
             <TouchableOpacity 
                 style={localStyles.quickBtnBox}
                 onPress={ Actions.MyCalcuList }>
-                <Image source={require("~/Common/Image/card_manager_icon.png")} style={localStyles.quickBtnImg} />
+                <Image source={require("~/Common/Image/bank_icon.png")} style={localStyles.quickBtnImg} />
             </TouchableOpacity>
           </View>
 
