@@ -17,6 +17,7 @@ import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from '~/Common/Styles/colors';
 
 const STAR_POINT_CNT = 5;
+let IS_POINT = false;
 class ListAfterServiceHistory extends Component {
     constructor(props) {
       super(props);
@@ -132,7 +133,13 @@ class ListAfterServiceHistory extends Component {
                                             <View style={styles.fxDirRow}>
                                                 <Text style={[styles.listPrdBoxDeTxt, {paddingTop: 3}]}>만족도</Text>
                                                     <View style={localStyles.starIconWrap}>
-                                                        {this._drawStarPoint(parseInt(afterService.evalPoint))}
+                                                        {
+                                                            this.state.data.evalYn == 'Y' ? (
+                                                                this._drawStarPoint(parseInt(afterService.evalPoint))
+                                                            ) : (
+                                                                <Text style={[styles.listPrdBoxDeTxt]}>서비스평가 미등록</Text>
+                                                            )
+                                                        }
                                                     </View>
                                             </View>
                                         </View>
