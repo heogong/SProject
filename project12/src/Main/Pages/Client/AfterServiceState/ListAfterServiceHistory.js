@@ -127,17 +127,7 @@ class ListAfterServiceHistory extends Component {
                                             <Text style={styles.listPrdBoxImgTxt}>{afterService.prdTypeKoNm}</Text>
                                         </View>
                                         <View style={styles.listPrdBoxRightTxtWrap}>
-                                            <View style={styles.fxDirRow}>
-                                                <H3 style={[styles.listPrdBoxRightTitleTxt, {marginBottom: 10, flex: 4}]} numberOfLines={1}>{afterService.bplaceNm}</H3>
-
-                                                <View style={styles.listPrdBoxNextIconWrap}>
-                                                    <TouchableOpacity 
-                                                        onPress={() => Actions.ViewAfterServiceHistory({asPrgsId : afterService.asPrgsId})} 
-                                                    >
-                                                        <Image source={require("~/Common/Image/Next_icon_white.png")} resizeMode="contain" style={{width: 26, height: 26}} />
-                                                    </TouchableOpacity>
-                                                </View>
-                                            </View>
+                                            <H3 style={[styles.listPrdBoxRightTitleTxt, {marginBottom: 10, paddingRight: 110}]} numberOfLines={1}>{afterService.bplaceNm}</H3>
                                             <Text style={[styles.listPrdBoxDeTxt, styles.mb10, {fontWeight: "500"}]}>{afterService.regDt}</Text>
                                             <Text style={styles.listPrdBoxDeTxt} numberOfLines={1}>{afterService.asItemNm}</Text>
                                             <View style={styles.fxDirRow}>
@@ -147,11 +137,19 @@ class ListAfterServiceHistory extends Component {
                                                             this.state.data.evalYn == 'Y' ? (
                                                                 this._drawStarPoint(parseInt(afterService.evalPoint))
                                                             ) : (
-                                                                <Text style={[styles.listPrdBoxDeTxt]}>서비스평가 미등록</Text>
+                                                                <Text style={[styles.listPrdBoxDeTxt]}>: 상세에서 평가해주세요!</Text>
                                                             )
                                                         }
                                                     </View>
                                             </View>
+                                        </View>
+
+                                        <View style={styles.listPrdBoxNextIconWrap}>
+                                            <TouchableOpacity 
+                                                onPress={() => Actions.ViewAfterServiceHistory({asPrgsId : afterService.asPrgsId})} 
+                                            >
+                                                <Image source={require("~/Common/Image/Next_icon_white.png")} resizeMode="contain" style={{width: 26, height: 26}} />
+                                            </TouchableOpacity>
                                         </View>
                                     </View>
                                 </TouchableOpacity>

@@ -232,7 +232,13 @@ class AfterServiceStateCard extends Component {
             <View style={localStyles.topAsYesWrap}>
                 <View style={[styles.justiConStart, styles.alignItemsCenter, styles.mb10]}>
                     <H1 style={localStyles.topTitleTxt}>{this.props.data.asPrgsStatDsc}</H1>
-                    <Text style={localStyles.topTxt}>{this.props.data.bplaceAddr}</Text>
+                    <Text style={localStyles.topTxt}>
+                        {
+                            this.props.data.bplaceAddr == "" && this.props.data.bplaceAddr == null 
+                            ? this.props.data.bplaceAddrRoad
+                            : this.props.data.bplaceAddr
+                        }
+                    </Text>
                     <Text style={localStyles.topTxt}>{this.props.data.bplaceAddrDtl}</Text>
                 </View>
                 <View style={[styles.justiConStart, styles.alignItemsCenter]}>

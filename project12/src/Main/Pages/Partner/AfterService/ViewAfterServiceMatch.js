@@ -121,16 +121,24 @@ class ViewAfterServiceMatch extends Component {
                                     />
                                 </View>
                                 <View style={[styles.justiConCenter, {paddingLeft: 10}]}>
-                                    <H3 style={[styles.mb15, localStyles.topBoxTxt]}>{this.state.data.bplaceNm}</H3>
-                                    <Text style={localStyles.topBoxDeTxt}>{this.state.data.bplaceAddr}</Text>
-                                    <Text style={localStyles.topBoxDeTxt}>{this.state.data.bplaceAddrDtl}</Text>
+                                    <H3 style={[styles.mb15, localStyles.topBoxTxt]} numberOfLines={1}>{this.state.data.bplaceNm}</H3>
+                                    <Text style={localStyles.topBoxDeTxt} numberOfLines={1}>
+                                        {
+                                            this.state.data.bplaceAddr == "" && this.state.data.bplaceAddr == null 
+                                            ? this.state.data.bplaceAddrRoad
+                                            : this.state.data.bplaceAddr
+                                        }    
+                                    </Text>
+                                    <Text style={localStyles.topBoxDeTxt} numberOfLines={1}>{this.state.data.bplaceAddrDtl}</Text>
                                 </View>
-                        
+                                
+                                {/* 카카오 버트 네비 기능 제거
                                 <View style={[styles.fx1, styles.alignItemsEnd]}>
                                     <TouchableOpacity>
                                         <Image source={require("~/Common/Image/Kakao_navi_Link_icon.png")} resizeMode="contain" style={{height : 27, width : 27}}/>
                                     </TouchableOpacity>
                                 </View>
+                                 */}
                             </View>
                         </View>
                         

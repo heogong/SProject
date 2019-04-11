@@ -114,7 +114,6 @@ export const styles = StyleSheet.create({
     },
     listPrdBoxFillWrap: {
       flexDirection: "row",
-      justifyContent: "center",
       marginBottom: 12,
       padding: 14, 
       backgroundColor : color.defaultColor
@@ -143,7 +142,7 @@ export const styles = StyleSheet.create({
     },
     listPrdBoxRightTxtWrap: {
       justifyContent : "center",
-      paddingLeft: 20
+      paddingLeft: 20,
     },
     listPrdBoxRightTitleTxt: {
       marginBottom: 12,
@@ -152,8 +151,10 @@ export const styles = StyleSheet.create({
       color : color.whiteColor
     },
     listPrdBoxNextIconWrap: {
-      flex: 1,
-      alignItems: "flex-end"
+      marginTop: 7,
+      marginRight: 10,
+      position: "absolute",
+      right: 0
     },
     listPrdBoxNextIcon: {
       color: color.whiteColor

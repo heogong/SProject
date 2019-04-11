@@ -309,7 +309,12 @@ class ViewAfterServiceState extends Component {
                 <View>
                     <Thumbnail large source={{ uri: this.state.data.prdTypeImgUrl }} />
                     <Text>사업장 : {this.state.data.bplaceNm}</Text>
-                    <Text>주소 : {this.state.data.bplaceAddr} {this.state.data.bplaceAddrDtl}</Text>
+                    <Text>주소 : {
+                                    this.state.data.bplaceAddr == "" && this.state.data.bplaceAddr == null 
+                                    ? this.state.data.bplaceAddrRoad
+                                    : this.state.data.bplaceAddr
+                                } {this.state.data.bplaceAddrDtl}
+                    </Text>
                 </View>
 
                 <CustomButton onPress={ this._arriveAfterServiceConfirm }>

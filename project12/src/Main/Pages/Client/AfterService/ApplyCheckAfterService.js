@@ -175,7 +175,13 @@ class ApplyCheckAfterService extends Component {
                         <Text style={localStyles.histBoxTitleTxt}>A/S신청내역</Text>
 
                         <Text style={localStyles.histBoxSubTitleTxt}>{this.state.data.clientPrdNm}</Text>
-                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.bplaceAddr}</Text>
+                        <Text style={localStyles.histBoxInfoTxt}>
+                            {
+                                this.state.data.bplaceAddr == "" && this.props.state.bplaceAddr == null 
+                                ? this.state.data.bplaceAddrRoad
+                                : this.state.data.bplaceAddr
+                            }    
+                        </Text>
                         <Text style={localStyles.histBoxInfoTxt}>{this.state.data.bplaceAddrDtl}</Text>
 
                         <Text style={localStyles.histBoxSubTitleTxt}>A/S 증상</Text>

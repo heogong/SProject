@@ -75,7 +75,7 @@ class NoticeList extends Component {
                     <Text style={localStyles.listNoticeDateTxt}>{notice.regDt}</Text>
                   </View>
                   {notice.newYn == 'Y' ? (
-                    <Image source={require('~/Common/Image/intro-logo.png')} style={localStyles.newIcon} />
+                    <Image source={require('~/Common/Image/New_icon.png')} style={localStyles.newIcon} />
                   ) : (
                     <View/>
                   )}

@@ -22,15 +22,27 @@ const Product = ({index, afterService, toggelAction}) => (
       <View style={[styles.listPrdBoxFillWrap, {height: 108}]}>
         <View style={styles.listPrdBoxImgWrap}>
           <Image 
-            source={{ uri: afterService.prdTypeFileUrl }} 
+            source={{ uri: afterService.prdTypeImgUrl }} 
             resizeMode="contain" 
             style={styles.listPrdBoxImg} 
           />
         </View>
         <View style={styles.listPrdBoxRightTxtWrap}>
-          <H3 style={styles.listPrdBoxRightTitleTxt} numberOfLines={1}>{ afterService.prdTypeKoNm }</H3>
-          <Text style={styles.listPrdBoxDeTxt}>{ afterService.bplaceAddr }</Text>
+          <H3 style={[styles.listPrdBoxRightTitleTxt, {paddingRight: 110}]} numberOfLines={1}>{ afterService.prdTypeKoNm }</H3>
+          <Text style={styles.listPrdBoxDeTxt}>
+            {
+                afterService.bplaceAddr == "" && afterService.bplaceAddr == null 
+                ? afterService.bplaceAddrRoad
+                : afterService.bplaceAddr
+            }    
+        </Text>
           <Text style={styles.listPrdBoxDeTxt}>{ afterService.bplaceAddrDtl }</Text>
+        </View>
+
+        <View style={[styles.listPrdBoxNextIconWrap, {marginTop: 10}]}>
+            <TouchableOpacity>
+                <Image source={require("~/Common/Image/Next_icon_white.png")} resizeMode="contain" style={{width: 26, height: 26}} />
+            </TouchableOpacity>
         </View>
         {/* 삭제 기능 필요 없음(매칭 되면 자동 사라짐)         
         <View style={styles.listPrdBoxNextIconWrap}>
