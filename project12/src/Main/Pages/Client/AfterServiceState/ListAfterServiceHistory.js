@@ -153,15 +153,6 @@ class ListAfterServiceHistory extends Component {
                                                     </View>
                                             </View>
                                         </View>
-{/* 
-                                        <View style={styles.listPrdBoxNextIconWrap}>
-                                        <TouchableOpacity 
-                                            onPress={() => Actions.ViewAfterServiceHistory({asPrgsId : afterService.asPrgsId})} 
-                                        >
-                                            <Image source={require("~/Common/Image/Next_icon_white.png")} resizeMode="contain" style={{width: 26, height: 26}} />
-                                        </TouchableOpacity>
-                                        </View>
-                                         */}
                                     </View>
                                 </TouchableOpacity>
                             )}
