@@ -24,7 +24,8 @@ class ViewAfterServiceMatch extends Component {
 
       this.state = {
         data : {
-            clientPrdImgs : [] // 제품 이미지 데이터
+            clientPrdImgs : [], // 제품 이미지 데이터
+            clientPrdParts : [] // 부속품 데이터
         },
         region: {
             latitude: 37.566535,
@@ -110,17 +111,16 @@ class ViewAfterServiceMatch extends Component {
 
                             <View style={[
                                 styles.fxDirRow, 
-                                styles.justiConCenter, 
                                 styles.pd15, 
                                 {backgroundColor : color.whiteColor}]}>
-                                <View style={[styles.alignItemsStart, styles.justiConCenter]}>
+                                <View style={[styles.alignItemsStart, styles.justiConCenter,]}>
                                     <Image 
                                         source={{ uri: this.state.data.prdTypeImgUrl }} 
                                         resizeMode="contain" 
                                         style={{height : productImgSize, width : productImgSize}} 
                                     />
                                 </View>
-                                <View style={[styles.justiConCenter, {paddingLeft: 10}]}>
+                                <View style={[styles.justiConCenter, {paddingLeft: 15}]}>
                                     <H3 style={[styles.mb15, localStyles.topBoxTxt]} numberOfLines={1}>{this.state.data.bplaceNm}</H3>
                                     <Text style={localStyles.topBoxDeTxt} numberOfLines={1}>
                                         {
@@ -160,21 +160,21 @@ class ViewAfterServiceMatch extends Component {
                                     </Text>
                                 </View>
 
-                                <View style={styles.mb20}>
-                                    <Text style={localStyles.boxDetailSubTitleTxt}>쿨리닉 제품분석</Text>
-                                    <View style={styles.fxDirRow}>
-                                        <View style={styles.fx1}>
-                                            <Text style={localStyles.boxDetailSubTxt}>용량 :</Text>
-                                            <Text style={localStyles.boxDetailSubTxt}>전기 :</Text>
-                                            <Text style={localStyles.boxDetailSubTxt}>압축기 :</Text>
-                                        </View>
-                                        <View style={styles.fx1}>
-                                            <Text style={localStyles.boxDetailSubTxt}>응축기 :</Text>
-                                            <Text style={localStyles.boxDetailSubTxt}>증발기 :</Text>
-                                            <Text style={localStyles.boxDetailSubTxt}>제조사 :</Text>
+                                {this.state.data.clientPrdParts.length > 0 
+                                ?
+                                    <View style={styles.mb20}>
+                                        <Text style={localStyles.boxDetailSubTitleTxt}>쿨리닉 제품분석</Text>
+                                        <View style={[styles.fxDirRow, {flexWrap: "wrap"}]}>
+                                            {this.state.data.clientPrdParts.map((info, idx) =>
+                                                <View  key={idx} style={{width: "50%"}}>
+                                                    <Text style={localStyles.boxDetailSubTxt} numberOfLines={1}>{info.rootPrdPartKoNm} : {info.prdPartKoNm}</Text>
+                                                </View>
+                                            )}
                                         </View>
                                     </View>
-                                </View>
+                                : 
+                                    <View/>
+                                }
 
                                 <View>
                                     <Text style={localStyles.boxDetailSubTitleTxt}>제품상세사진</Text>
@@ -228,7 +228,8 @@ function wp (percentage, space) {
     topBoxTxt: {
         fontSize: 21,
         color: "#1e1e32",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        paddingRight: 70
       },
       topBoxDeTxt: {
         fontSize: 13,

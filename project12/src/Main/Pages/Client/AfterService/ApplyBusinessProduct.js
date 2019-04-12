@@ -31,7 +31,8 @@ class ApplyBusinessProduct extends Component {
             prdTypeImg : {
                 fileUrl : null
             },
-            images : [] // 제품 이미지 데이터
+            images : [], // 제품 이미지 데이터
+            clientPrdParts : [] // 부속품 데이터
         }, // 제품 데이터
         asCaseNm : null,
         asRecvDsc : null,
@@ -366,21 +367,21 @@ class ApplyBusinessProduct extends Component {
                                     />
                                 </View>
 
-                                <View style={styles.mb20}>
-                                    <Text style={localStyles.boxDetailSubTitleTxt}>쿨리닉 제품분석</Text>
-                                    <View style={styles.fxDirRow}>
-                                        <View style={styles.fx1}>
-                                            <Text style={localStyles.boxDetailSubTxt}>용량 :</Text>
-                                            <Text style={localStyles.boxDetailSubTxt}>전기 :</Text>
-                                            <Text style={localStyles.boxDetailSubTxt}>압축기 :</Text>
-                                        </View>
-                                        <View style={styles.fx1}>
-                                            <Text style={localStyles.boxDetailSubTxt}>응축기 :</Text>
-                                            <Text style={localStyles.boxDetailSubTxt}>증발기 :</Text>
-                                            <Text style={localStyles.boxDetailSubTxt}>제조사 :</Text>
+                                {this.state.data.clientPrdParts.length > 0 
+                                ?
+                                    <View style={styles.mb20}>
+                                        <Text style={localStyles.boxDetailSubTitleTxt}>쿨리닉 제품분석</Text>
+                                        <View style={[styles.fxDirRow, {flexWrap: "wrap"}]}>
+                                            {this.state.data.clientPrdParts.map((info, idx) =>
+                                                <View  key={idx} style={{width: "50%"}}>
+                                                    <Text style={localStyles.boxDetailSubTxt} numberOfLines={1}>{info.rootPrdPartKoNm} : {info.prdPartKoNm}</Text>
+                                                </View>
+                                            )}
                                         </View>
                                     </View>
-                                </View>
+                                : 
+                                    <View/>
+                                }
                             </View>
                         </ScrollView>
                     </View>

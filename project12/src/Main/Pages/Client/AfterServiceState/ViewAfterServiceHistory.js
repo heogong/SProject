@@ -223,28 +223,22 @@ class ViewAfterServiceHistory extends Component {
                                     (this.state.data.asPrgsMst.asRecvDsc == "null") ? '입력된 내용이 없습니다.' : this.state.data.asPrgsMst.asRecvDsc
                                 }
                             </Text>
-
-                            <Text style={localStyles.histBoxSubTitleTxt}>쿨리닉데이터</Text>
-                            <View style={styles.fxDirRow}>
-                                
-                                {/* <View style={styles.fx1}>
-                                    <Text style={localStyles.histBoxInfoTxt}>용량 : </Text>
-                                    <Text style={localStyles.histBoxInfoTxt}>전기 : </Text>
-                                    <Text style={localStyles.histBoxInfoTxt}>압축기 :</Text>
+                            
+                            {this.state.data.clientPrdParts.length > 0 
+                            ?
+                                <View>
+                                    <Text style={localStyles.histBoxSubTitleTxt}>쿨리닉 제품분석</Text>
+                                    <View style={[styles.fxDirRow, {flexWrap: "wrap"}]}>
+                                        {this.state.data.clientPrdParts.map((info, idx) =>
+                                            <View  key={idx} style={{width: "50%"}}>
+                                                <Text style={localStyles.histBoxInfoTxt} numberOfLines={1}>{info.rootPrdPartKoNm} : {info.prdPartKoNm}</Text>
+                                            </View>
+                                        )}
+                                    </View>
                                 </View>
-                                <View style={styles.fx1}>
-                                    <Text style={localStyles.histBoxInfoTxt}>응축기 :</Text>
-                                    <Text style={localStyles.histBoxInfoTxt}>증발기 :</Text>
-                                    <Text style={localStyles.histBoxInfoTxt}>제조사 :</Text>
-                                </View> */}
-
-                                <View style={styles.fx1}>
-                                    {this.state.data.clientPrdParts.map((info, idx) =>
-                                        <Text key={idx} style={localStyles.histBoxInfoTxt}>{info.rootPrdPartKoNm} : {info.prdPartKoNm}</Text>
-                                    )}
-                                </View>
-
-                            </View>
+                            : 
+                                <View/>
+                            }
                         </View>
                         
                         {(this.state.data.asPrgsMst.asAddYn == "Y") ? (
