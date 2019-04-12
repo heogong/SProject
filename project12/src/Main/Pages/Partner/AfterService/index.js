@@ -10,6 +10,9 @@ import ReactTimeout from 'react-timeout'
 import GetAfterServiceState from '~/Main/Functions/GetAfterServiceState'
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
+import { styles } from '~/Common/Styles/common';
+import { color } from "~/Common/Styles/colors";
+
 class AfterService extends Component {
     constructor(props) {
       super(props);
@@ -64,7 +67,9 @@ class AfterService extends Component {
                 <Spinner
                     visible={this.state.spinner}
                     textContent={'파트너 A/S 상태를 확인중입니다.'}
-                    style={{color: '#FFF'}}
+                    textStyle={styles.whiteFont}
+                    style={{color: color.whiteColor}}
+                    overlayColor={"rgba(40, 200, 245, 1)"}
                 />
             </View>
         )

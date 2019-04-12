@@ -160,7 +160,7 @@ class AccountType extends Component {
       <KeyboardAwareScrollView enableOnAndroid={true} style={styles.containerInnerPd}>
         <Spinner
             visible={this.state.spinner}
-            textContent={'로그인중입니다.'}
+            textContent={'로그인 중입니다.'}
             textStyle={styles.whiteFont}
             style={{color: color.whiteColor}}
         />

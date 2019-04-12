@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Image, ScrollView, StyleSheet, TextInput, Linking, View } from 'react-native'
-import { Button, Container, Icon, Text, Item } from "native-base";
+import { Image, ScrollView, StyleSheet, Linking, View } from 'react-native'
+import { Textarea, Button, Container, Icon, Text, Item } from "native-base";
 
 import { SUCCESS_RETURN_CODE, ADD_AS } from '~/Common/Blend';
 
@@ -406,13 +406,12 @@ class RegReportBeforePic extends Component {
 
                                 </View>
                                 <Item regular style={[styles.mb14, styles.textInputWhBack]}>
-                                    <TextInput
+                                    <Textarea
                                         value={this.state.asCauseDsc}
                                         onChangeText={ (text) => this.setState({asCauseDsc : text}) }
                                         placeholder="A/S 조치 전의 증상에 대해 적어주세요."
                                         placeholderTextColor={color.inputPlaceHodler}
-                                        numberOfLines={10}
-                                        multiline={true}
+                                        rowSpan={10} 
                                         style={styles.textInputBox1}
                                     />
                                 </Item>
@@ -447,13 +446,12 @@ class RegReportBeforePic extends Component {
 
                                 </View>
                                 <Item regular style={[styles.mb14, styles.textInputWhBack]}>
-                                    <TextInput
+                                    <Textarea
                                         value={this.state.asActionDsc}
                                         onChangeText={ (text) => this.setState({asActionDsc : text}) }
                                         placeholder="수리한 내역에 대해 적어주세요."
                                         placeholderTextColor={color.inputPlaceHodler}
-                                        numberOfLines={10}
-                                        multiline={true}
+                                        rowSpan={10}
                                         style={styles.textInputBox1}
                                     />
                                 </Item>

@@ -175,7 +175,6 @@ export const styles = StyleSheet.create({
     },
     textInputBox1: {
       padding: 14,
-      paddingTop: 14,
       fontSize: 14,
       height : 170,
       width: "100%",
@@ -199,7 +198,7 @@ export const styles = StyleSheet.create({
       },
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
-      elevation: 5,
+      elevation: 2,
       borderWidth: 1,
       borderRadius: 2,
       borderColor: '#ddd',

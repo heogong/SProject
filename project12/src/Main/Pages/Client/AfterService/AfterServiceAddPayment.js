@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Image, ScrollView, StyleSheet, View } from 'react-native'
 import { Root, ActionSheet, Container, Text } from "native-base";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -69,7 +70,8 @@ class AfterServiceAddPayment extends Component {
         buttonTitle : '결제카드선택',
         buttonTitle_1 : '할부선택',
         // 카드 할부가 5만원 이상만 가능하므로 아래 여부 검사
-        isCardQuota: (this.props.asPrgsMst.totalAmount).replace(/,/gi, "") >= 50000 ? true : false
+        isCardQuota: (this.props.asPrgsMst.totalAmount).replace(/,/gi, "") >= 50000 ? true : false,
+        spinner : false
       };
     }
 
@@ -131,6 +133,7 @@ class AfterServiceAddPayment extends Component {
     _paymentAddAfterService = () => {
 
         this.setState({isModalVisible : false})
+        this.setState({spinner : true}); // 로딩 모달 시작
 
         PaymentAddAfterService(this.state.cardData[SELECT_INDEX].billingKeyId, this.props.asPrgsMst.asPrgsId, this.state.selCardQuota).then(result => {
             GetCommonData(result, this.PaymentAddAfterService).then(async resultData => {
@@ -141,12 +144,14 @@ class AfterServiceAddPayment extends Component {
                         // 성골 Alert 표시
                         this.setState({
                             isAlertModal1 : true,
-                            resultMsg : "결제가 완료되었습니다."
+                            resultMsg : "결제가 완료되었습니다.",
+                            spinner : false
                         })
                     } else {
                         this.setState({
                             isAlertModal1 : true,
-                            resultMsg : resultData.resultMsg
+                            resultMsg : resultData.resultMsg,
+                            spinner : false
                         })
                     }
                 }
@@ -157,6 +162,12 @@ class AfterServiceAddPayment extends Component {
     render() {
         return (
             <Root>
+                <Spinner
+                    visible={this.state.spinner}
+                    textContent={'결제 중입니다.'}
+                    textStyle={styles.whiteFont}
+                    style={{color: color.whiteColor}}
+                />
                 <Container style={styles.container}>
                     <View style={{
                         paddingLeft : styles.containerInnerPd.paddingLeft,

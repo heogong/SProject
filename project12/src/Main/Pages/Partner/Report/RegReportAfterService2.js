@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { ImageBackground, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import { Container, Icon, Text, Item } from "native-base";
+import { ImageBackground, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Container, Icon, Text, Item, Textarea } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -196,7 +196,6 @@ class RegReportBeforePic extends Component {
                     isAlertModal : true,
                     resultMsg : 'A/S조치후 증상을 입력해주세요.'
                 })
-                this.asActionDsc.focus();
             }
         }
     }
@@ -381,14 +380,13 @@ class RegReportBeforePic extends Component {
 
                                 </View>
                                 <Item regular style={[styles.mb14, styles.textInputWhBack]}>
-                                    <TextInput
+                                    <Textarea
                                         ref={(input) => { this.asCauseDsc = input; }}
                                         value={this.state.asCauseDsc}
                                         onChangeText={ (text) => {this.setState({asCauseDsc : text}) } }
                                         placeholder="A/S 조치 전의 증상에 대해 적어주세요."
                                         placeholderTextColor={color.inputPlaceHodler}
-                                        numberOfLines={10}
-                                        multiline={true}
+                                        rowSpan={10}
                                         style={styles.textInputBox1}
                                     />
                                 </Item>
@@ -423,14 +421,13 @@ class RegReportBeforePic extends Component {
 
                                 </View>
                                 <Item regular style={[styles.mb14, styles.textInputWhBack]}>
-                                    <TextInput
+                                    <Textarea
                                         ref={(input) => { this.asActionDsc = input; }}
                                         value={this.state.asActionDsc}
                                         onChangeText={ (text) => { this.setState({asActionDsc : text}) } }
                                         placeholder="수리한 내역에 대해 적어주세요."
                                         placeholderTextColor={color.inputPlaceHodler}
-                                        numberOfLines={10}
-                                        multiline={true}
+                                        rowSpan={10}
                                         style={styles.textInputBox1}
                                     />
                                 </Item>

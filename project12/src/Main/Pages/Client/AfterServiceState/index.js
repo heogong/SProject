@@ -11,6 +11,9 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import GetClientAfterServiceState from '~/Main/Functions/GetClientAfterServiceState';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
+import { styles } from '~/Common/Styles/common';
+import { color } from "~/Common/Styles/colors";
+
 class AfterServiceState extends Component {
   constructor(props) {
     super(props);
@@ -65,7 +68,9 @@ class AfterServiceState extends Component {
             <Spinner
                 visible={this.state.spinner}
                 textContent={'클라이언트 A/S 상태를 확인중입니다.'}
-                style={{color: '#FFF'}}
+                textStyle={styles.whiteFont}
+                style={{color: color.whiteColor}}
+                overlayColor={"rgba(40, 200, 245, 1)"}
             />
         </View>
     )
