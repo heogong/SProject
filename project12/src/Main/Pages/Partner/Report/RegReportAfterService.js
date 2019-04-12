@@ -366,7 +366,7 @@ class RegReportBeforePic extends Component {
                                                 })}
                                                 ModalDefaultBtn={true}
                                                 modalCustomStyle={{backgroundColor: "#0397bd"}}>
-                                                제품 상세정보
+                                                매칭상세정보
                                             </CustomEtcButton>
                                         )}
 
