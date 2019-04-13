@@ -385,6 +385,8 @@ class ClientHome extends Component {
                   }} 
                   dot={<View style={[localStyles.swiperDot, {backgroundColor: 'rgba(3,151,189, 0.4)'}]} />}
                   activeDot={<View style={[localStyles.swiperDot, {backgroundColor: color.whiteColor}]} />}
+                  // map으로 동적으로 Item을 생성하면 Dot가 이동을 안하는 문제가 발생하여 해당 속성을 설정함
+                  key={this.state.data.length}
               >
                 {this.state.data.map((business, index) => (
                   <View 
