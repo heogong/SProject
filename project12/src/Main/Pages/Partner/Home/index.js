@@ -630,10 +630,10 @@ const localStyles = StyleSheet.create({
         paddingVertical: 14
     },
     paginationDot: {
-        borderRadius: 4,
         marginHorizontal: 0,
-        height: 10,
-        width: 10
+        width: 12,
+        height: 12,
+        borderRadius: 5,
     },
     secondBox : {
         marginBottom : 20,

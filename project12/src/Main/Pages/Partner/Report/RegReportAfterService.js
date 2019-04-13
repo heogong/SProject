@@ -29,14 +29,14 @@ let ALREADY_AFTER_IMG_CNT = 0; // 이미 등록된 A/S 조치 후 이미지 카�
 const AS_PROCESS_PERCENT = 25; // 조치전/후 이미지 등록시 percent
 
 export const ProcessOn = ({processTxt}) => (
-    <View style={styles.fx1}>
+    <View style={[styles.fx1, {borderRightWidth: 0, borderLeftWidth: 0}]}>
         <View style={stylesReg.procBarOn} />
         <Text style={stylesReg.procBarTxt}>{processTxt}</Text>
     </View>
 )
 
 export const ProcessOff = ({processTxt}) => (
-    <View style={styles.fx1}>
+    <View style={[styles.fx1, {borderRightWidth: 0, borderLeftWidth: 0}]}>
         <View style={stylesReg.procBarOff} />
         <Text style={stylesReg.procBarTxt}>{processTxt}</Text>
     </View>
@@ -283,7 +283,7 @@ class RegReportBeforePic extends Component {
     render() {
         return (
             <Container style={styles.containerScroll}>
-                <CustomHeader resetPage={true} />
+                <CustomHeader />
                 <View style={styles.contentWrap}>
                 <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
 
@@ -303,7 +303,22 @@ class RegReportBeforePic extends Component {
                         </View>
                         <View style={stylesReg.procBarWrap}>
 
-                            {this._createProcBar()}
+                            {/* {this._createProcBar()} */}
+                            {this.state.imgData.length > 0
+                            ? <ProcessOn processTxt='조치전사진'/>
+                            :<ProcessOff processTxt='조치전사진'/>}
+
+                            {this.state.asCauseDsc !== null && this.state.asCauseDsc != ""
+                            ? <ProcessOn processTxt='조치전증상'/>
+                            :<ProcessOff processTxt='조치전증상'/>}
+
+                            {this.state.afterImgData.length > 0
+                            ? <ProcessOn processTxt='조치후사진'/>
+                            :<ProcessOff processTxt='조치후사진'/>}
+
+                            {this.state.asActionDsc !== null && this.state.asActionDsc != ""
+                            ? <ProcessOn processTxt='조치후증상'/>
+                            :<ProcessOff processTxt='조치후증상'/>}
 
                         </View>
                     </View>
@@ -476,7 +491,7 @@ class RegReportBeforePic extends Component {
                     onPress1={() => this.setState({isArriveModal : false})}
                     onPress2={this._regAfterServiceReport}
                     infoText1="A/S 완료하시겠습니까?"
-                    infoText2="미작성된 보고서는 '보고서' 탭에서 작성하실 수 있습니다."
+                    infoText2="'보고서' 탭에서 작성완료를 해주세요."
                     btnText1="취소"
                     btnText2="완료"
                 />

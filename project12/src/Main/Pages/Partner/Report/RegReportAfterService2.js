@@ -29,14 +29,14 @@ let CURRENT_AFTER_IMG_CNT = 0; // 화면에 등록된 A/S 조치 후 이미지 �
 const AS_PROCESS_PERCENT = 25; // 조치전/후 이미지 등록시 percent
 
 export const ProcessOn = ({processTxt}) => (
-    <View style={styles.fx1}>
+    <View style={[styles.fx1, {borderRightWidth: 0, borderLeftWidth: 0}]}>
         <View style={stylesReg.procBarOn} />
         <Text style={stylesReg.procBarTxt}>{processTxt}</Text>
     </View>
 )
 
 export const ProcessOff = ({processTxt}) => (
-    <View style={styles.fx1}>
+    <View style={[styles.fx1, {borderRightWidth: 0, borderLeftWidth: 0}]}>
         <View style={stylesReg.procBarOff} />
         <Text style={stylesReg.procBarTxt}>{processTxt}</Text>
     </View>
@@ -264,42 +264,6 @@ class RegReportBeforePic extends Component {
         return imageCompArray;
     }
 
-    // 진행상태 BAR 생성
-    _createProcBar = () => {
-        let processOnArray = [];
-        let processOffArray = [];
-
-
-        if(this.state.beforeImgData.length > 0) {
-            processOnArray.push(<ProcessOn key={0} processTxt='조치전사진'/>);
-        } else {
-            processOffArray.push(<ProcessOff key={0} processTxt='조치전사진'/>);
-        }
-
-        if(this.state.afterImgData.length > 0) { 
-            processOnArray.push(<ProcessOn key={1} processTxt='조치후사진'/>);
-        } else {
-            processOffArray.push(<ProcessOff key={1} processTxt='조치후사진'/>);
-        }
-
-        if(this.state.asCauseDsc !== null) { 
-            processOnArray.push(<ProcessOn key={2} processTxt='조치전증상'/>);
-        } else {
-            processOffArray.push(<ProcessOff key={2} processTxt='조치전증상'/>);
-        }
-
-        if(this.state.asActionDsc !== null) { 
-            processOnArray.push(<ProcessOn key={3} processTxt='조치후증상'/>);
-        } else {
-            processOffArray.push(<ProcessOff key={3} processTxt='조치후증상'/>);
-        }
-
-        const resultArray = processOnArray.concat(processOffArray);
-        
-        return resultArray;
-    }
-
-
     // 조치 전 이미지 등록시 카운트
     _addBeforASImg = () => {
        ++CURRENT_BEFORE_IMG_CNT;
@@ -348,7 +312,22 @@ class RegReportBeforePic extends Component {
                             </View>
                         </View>
                         <View style={stylesReg.procBarWrap}>
-                            {this._createProcBar()}
+                            {this.state.beforeImgData.length > 0
+                            ? <ProcessOn processTxt='조치전사진'/>
+                            :<ProcessOff processTxt='조치전사진'/>}
+
+                            {this.state.asCauseDsc !== null && this.state.asCauseDsc != ""
+                            ? <ProcessOn processTxt='조치전증상'/>
+                            :<ProcessOff processTxt='조치전증상'/>}
+
+                            {this.state.afterImgData.length > 0
+                            ? <ProcessOn processTxt='조치후사진'/>
+                            :<ProcessOff processTxt='조치후사진'/>}
+
+
+                            {this.state.asActionDsc !== null && this.state.asActionDsc != ""
+                            ? <ProcessOn processTxt='조치후증상'/>
+                            :<ProcessOff processTxt='조치후증상'/>}
                         </View>
                     </View>
                     <View>
@@ -451,7 +430,7 @@ class RegReportBeforePic extends Component {
                     isVisible={this.state.isModalVisible}
                     onPress1={ () => this.setState({isModalVisible : false}) }
                     onPress2={this._regAfterServiceReport}
-                    infoText1="A/S 보고서 완료하시겠습니까?"
+                    infoText1="A/S 보고서 작성을 완료하시겠습니까?"
                     infoText2={null}
                     btnText1="취소"
                     btnText2="확인"
