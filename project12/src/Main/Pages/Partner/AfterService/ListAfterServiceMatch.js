@@ -22,7 +22,7 @@ const Product = ({index, afterService, toggelAction}) => (
       <View style={[styles.listPrdBoxFillWrap, {height: 108}]}>
         <View style={styles.listPrdBoxImgWrap}>
           <Image 
-            source={{ uri: afterService.prdTypeImgUrl }} 
+            source={{ uri: (afterService.prdTypeImgUrl) ? afterService.prdTypeImgUrl : 'insert404' }} 
             resizeMode="contain" 
             style={styles.listPrdBoxImg} 
           />

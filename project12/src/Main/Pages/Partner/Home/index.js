@@ -255,7 +255,7 @@ export default class Main extends Component {
                         </View>
                         <View style={[styles.fx4, styles.justiConCenter]}>
                             <Image 
-                                source={{uri : item.prdTypeImgUrl}} 
+                                source={{uri : (item.prdTypeImgUrl) ? item.prdTypeImgUrl : 'insert404'}} 
                                 resizeMode="contain" 
                                 style={{height : 80, width : 80}} />
                         </View>

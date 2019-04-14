@@ -49,7 +49,7 @@ class SelectProduct extends Component {
                         height : productCardSize, 
                         width : productCardSize
                     }]}>
-                    <Image source={{uri : this.props.imgUri}} 
+                    <Image source={{uri : (this.props.imgUri) ? this.props.imgUri : 'insert404'}} 
                         style={[styles.mb10, {
                         height : productCardSize - 60, 
                         width : productCardSize - 60

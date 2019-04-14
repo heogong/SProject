@@ -73,7 +73,7 @@ class ProductShowCase extends Component {
 
                     <View style={{flex:3, justifyContent : 'center', alignItems : 'center'}}>
                         <Text style={localStyles.prdCardTopNumTxt}>{pad(this.props.index, 2)}</Text>
-                        <Image source={{uri : this.props.item.prdTypeImg}} style={{height : imageSize, width : imageSize}} />
+                        <Image source={{uri : (this.props.item.prdTypeImg) ? this.props.item.prdTypeImg : 'this.props.data.prdTypeImgUrl'}} style={{height : imageSize, width : imageSize}} />
                     </View>
 
                     <View>

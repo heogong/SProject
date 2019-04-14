@@ -83,7 +83,6 @@ class IntroPage extends Component {
                   } else {
                     Actions.PartnerMain(); // 메인
                   }
-                    
                 } else {
                     this.setState({
                         isAlertModal : true,

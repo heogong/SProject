@@ -26,7 +26,7 @@ const Product = ({report}) => (
       <View style={[styles.listPrdBoxFillWrap, {height: 120}]}>
         <View style={[styles.listPrdBoxImgWrap ,{marginTop: 4}]}>
           <Image 
-            source={{uri : report.prdTypeFileUrl}} 
+            source={{uri : (report.prdTypeFileUrl) ? report.prdTypeFileUrl : 'insert404'}} 
             resizeMode="contain" 
             style={styles.listPrdBoxImg} 
           />

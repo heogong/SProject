@@ -80,7 +80,7 @@ class ListBusinessProductType extends Component {
                                         <Text style={localStyles.myPrdNumTxt}>{ pad(++idx, 2) }</Text>
                             
                                         <View style={localStyles.myPrdImgWrap}>
-                                            <Image source={{ uri: product.prdTypeImg.fileUrl }} style={localStyles.myPrdImg} />
+                                            <Image source={{ uri: (product.prdTypeImg.fileUrl) ? product.prdTypeImg.fileUrl : 'insert404' }} style={localStyles.myPrdImg} />
                                         </View>
                             
                                         <View style={localStyles.myPrdInfoTxtWrap}>

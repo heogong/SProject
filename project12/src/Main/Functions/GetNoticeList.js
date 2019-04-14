@@ -3,17 +3,19 @@ import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '~/Commo
 import GetAccessToken from '~/Common/Functions/GetAccessToken';
 
 // 
-const API_URL = `${DOMAIN}coolinic/notices?p=1`;
+const API_URL = `${DOMAIN}coolinic/notices?p=`;
 
-function GetNoticeListUrl() {
-  return `${API_URL}`;
+function GetNoticeListUrl(pageNum) {
+  return `${API_URL}${pageNum}`;
 }
 
-const GetNoticeList = async () => {
+const GetNoticeList = async (pageNum) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  return fetch(GetNoticeListUrl(), {
+  console.log(GetNoticeListUrl(pageNum))
+
+  return fetch(GetNoticeListUrl(pageNum), {
     method: 'GET',
     headers: {
       "Authorization": ACCESS_TOKEN

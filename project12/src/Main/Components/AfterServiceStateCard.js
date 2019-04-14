@@ -248,7 +248,7 @@ class AfterServiceStateCard extends Component {
                             styles.alignItemsCenter,
                             styles.justiConCenter]}>
                         <Image 
-                            source={ {uri: this.props.data.prdTypeImgUrl} } 
+                            source={ {uri: (this.props.data.prdTypeImgUrl) ? this.props.data.prdTypeImgUrl : 'insert404' } } 
                             resizeMode="contain"
                             style={[styles.mb10, {
                             height : 100, 

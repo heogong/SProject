@@ -166,7 +166,7 @@ class ApplyCheckAfterService extends Component {
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={localStyles.contentWrap}>
                         <View style={localStyles.titleWrap}>
-                        <Image source={{uri : this.state.data.prdTypeImgUrl}} style={localStyles.titleImg}/>
+                        <Image source={{uri : (this.state.data.prdTypeImgUrl) ? this.state.data.prdTypeImgUrl : 'insert404'}} style={localStyles.titleImg}/>
                         <Text style={localStyles.titleNameTxt}>{this.state.data.bplaceNm}</Text>
                         <Text style={localStyles.subNameTxt}>{this.state.data.clientPrdNm}</Text>
                         </View>

@@ -196,7 +196,7 @@ class EditProdShowCase extends Component {
                             <View style={localStyles.prdCardTopWrap}>
                                 <View style={{flex:3, justifyContent : 'center', alignItems : 'center'}}>
                                     <Text style={localStyles.prdCardTopNumTxt}>{ pad(this.props.number, 2) }</Text>
-                                    <Image source={{uri : this.state.data.prdTypeImg.fileUrl}} style={{height : imageSize, width : imageSize}} />
+                                    <Image source={{uri : (this.state.data.prdTypeImg.fileUrl) ? this.state.data.prdTypeImg.fileUrl : 'insert404'}} style={{height : imageSize, width : imageSize}} />
                                 </View>
                                 <View/>
                             </View>

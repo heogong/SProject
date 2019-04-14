@@ -107,7 +107,7 @@ class ListBusinessProductType extends Component {
                                         height : productCardSize, 
                                         width : productCardSize
                                 }]}>
-                                    <Image source={{ uri: item.prdTypeImg.fileUrl }}
+                                    <Image source={{ uri: (item.prdTypeImg.fileUrl) ? item.prdTypeImg.fileUrl : 'insert404' }}
                                         style={[styles.mb10, {
                                             height : productCardSize - 60, 
                                             width : productCardSize - 60

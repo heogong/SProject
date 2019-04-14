@@ -59,7 +59,7 @@ class InputProdType extends Component {
                         </H1>
                     </View>
                     <View style={[styles.fx2, styles.justiConEnd, styles.alignItemsEnd]}>
-                        <Image source={{uri : item.image.fileUrl}} style={{height : itemWidth/2, width : itemWidth/2}} />
+                        <Image source={{uri : (item.image.fileUrl) ? item.image.fileUrl : 'insert404'}} style={{height : itemWidth/2, width : itemWidth/2}} />
                     </View>
         
                 </View>
@@ -144,7 +144,7 @@ class InputProdType extends Component {
                                     height : productCardSize, 
                                     width : productCardSize
                                 }]}>
-                                <Image source={{uri : item.image.fileUrl}} 
+                                <Image source={{uri : (item.image.fileUrl) ? item.image.fileUrl : 'insert404'}} 
                                     style={[styles.mb10, {
                                     height : productCardSize - 60, 
                                     width : productCardSize - 60

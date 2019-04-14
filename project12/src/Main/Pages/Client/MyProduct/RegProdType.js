@@ -99,7 +99,7 @@ class InputProdType extends Component {
                                     height : productCardSize, 
                                     width : productCardSize
                                 }]}>
-                                <Image source={{uri : item.image.fileUrl}} 
+                                <Image source={{uri : (item.image.fileUrl) ? item.image.fileUrl : 'insert404'}} 
                                     style={[styles.mb10, {
                                     height : productCardSize - 60, 
                                     width : productCardSize - 60

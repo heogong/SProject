@@ -120,7 +120,7 @@ class ListAfterServiceHistory extends Component {
                                     <View style={[styles.listPrdBoxFillWrap, {height: 120}]}>
                                         <View style={[styles.listPrdBoxImgWrap, {marginTop: 4}]}>
                                             <Image 
-                                                source={{ uri: afterService.prdTypeFileUrl }} 
+                                                source={{ uri: (afterService.prdTypeFileUrl) ? afterService.prdTypeFileUrl : 'insert404' }} 
                                                 resizeMode="contain" 
                                                 style={styles.listPrdBoxImg} 
                                             />

@@ -115,7 +115,7 @@ class ViewAfterServiceMatch extends Component {
                                 {backgroundColor : color.whiteColor}]}>
                                 <View style={[styles.alignItemsStart, styles.justiConCenter,]}>
                                     <Image 
-                                        source={{ uri: this.state.data.prdTypeImgUrl }} 
+                                        source={{ uri: (this.state.data.prdTypeImgUrl) ? this.state.data.prdTypeImgUrl : 'insert404' }} 
                                         resizeMode="contain" 
                                         style={{height : productImgSize, width : productImgSize}} 
                                     />

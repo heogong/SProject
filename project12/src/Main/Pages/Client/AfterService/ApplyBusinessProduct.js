@@ -279,7 +279,7 @@ class ApplyBusinessProduct extends Component {
                                         <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
                                     </View>
                                     <View style={stylesReg.rightImgWrap}>
-                                        <Image source={{ uri : this.state.data.prdTypeImg.fileUrl }} style={{width: 76, height: 76}}/>
+                                        <Image source={{ uri : (this.state.data.prdTypeImg.fileUrl) ? this.state.data.prdTypeImg.fileUrl :'insert404' }} style={{width: 76, height: 76}}/>
                                     </View>
                                 </View>
                                 
