@@ -311,12 +311,12 @@ class InputShowCase extends Component {
 
     render() {
         return (
-            <Container style={styles.containerRightSlide}>
-              <CustomHeader customAction={this._handleBackAction}/>
-
+            <Container style={styles.containerSlide}>
+              <CustomHeader customAction={this._handleBackAction} customStyle={{paddingLeft: 26}} />
+            
                 <View style={styles.contentWrap}>
                     <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
-                        <View>
+                        <View style={{paddingLeft: 26, paddingRight: 26}}>
                             <View style={styles.fxDirRow}>
                                 <View style={stylesReg.leftGuideTxtWrap}>
                                     <Text style={stylesReg.leftGuideTxt}>제품의</Text>
@@ -329,7 +329,7 @@ class InputShowCase extends Component {
                             </View>
                         </View>
 
-                        <View style={[stylesReg.procBarWrap, {paddingRight: 26, marginBottom: 47}]}>
+                        <View style={[stylesReg.procBarWrap, {paddingRight: 26, marginBottom: 47, paddingLeft: 26}]}>
                             <View style={styles.fx1}>
                                 <View style={stylesReg.procBarOn} />
                             </View>
@@ -352,11 +352,12 @@ class InputShowCase extends Component {
                             data={this.state.showCase}
                             firstItem={this.state.slider1ActiveSlide}
                             onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
+                            containerCustomStyle={{ paddingLeft: 26 }}
                         />
                     </ScrollView>
                 </View>
       
-                <View style={[styles.footerBtnWrap, {flex: 0, paddingRight: 26}]}>
+                <View style={[styles.footerBtnWrap, {flex: 0, paddingRight: 26, paddingLeft: 26}]}>
                     <CustomButton
                         onPress={ () => this._nextButton() }
                         DefaultLineBtn={true}

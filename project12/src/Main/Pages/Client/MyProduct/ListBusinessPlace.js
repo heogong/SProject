@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Image, TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native'
-import { Container, Text, Header, Button, Left, Right, Body, Title } from "native-base";
+import { Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -93,17 +93,8 @@ class ListBusinessPlace extends Component {
   render() {
     return (
       <Container style={styles.containerSlide}>
-        <Header style={[styles.header, styles.noPadding, {paddingLeft : 26, paddingRight : 26}]}>
-          <Left style={styles.headerLeftWrap}>
-            <Button style={styles.noPadding} transparent onPress={this._goToMain}>
-              <Image source={require("~/Common/Image/btn_back_arrow.png")} style={styles.btnBackArrowIcon}/>
-            </Button>
-          </Left>
-          <Body style={styles.headerCenterWrap}>
-            <Title style={styles.headerTitleTxt}>A/S 현황</Title>
-          </Body>
-          <Right style={styles.headerRightWrap}></Right>
-        </Header>
+        <CustomHeader customAction={this._goToMain} customStyle={{paddingLeft: 26}} />
+
         <View style={styles.contentWrap}>
           <View style={{marginBottom: 21, paddingLeft: 26}}>
             <View style={styles.fxDirRow}>

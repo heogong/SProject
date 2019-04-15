@@ -16,7 +16,8 @@ class CustomHeader extends Component {
         rightBtn : false,
         menuBtn : false,
         closeBtn : false,
-        customAction: null
+        customAction: null,
+        customStyle: ''
     }
 
     // 뒤로가기 버튼
@@ -34,7 +35,7 @@ class CustomHeader extends Component {
 
     render() {
         return (
-            <Header style={[HStyles.header, styles.noPadding]}>
+            <Header style={[HStyles.header, styles.noPadding, this.props.customStyle]}>
                 <Left style={[HStyles.headerLeftWrap, (this.props.resetPage) ? localStyles.hide : localStyles.show ]}>
                     <Button 
                         transparent 
