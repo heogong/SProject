@@ -120,13 +120,14 @@ class ClientHome extends Component {
                 // this.setState({unRegData : resultData.data});
 
                 const checkPage = [
-                  [{'value' : resultData.data.clientPaymYn}, {'action' : 'MyListBusinessPlace'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 0}], 
+                  [{'value' : resultData.data.clientPaymYn}, {'action' : 'CardInputInfo'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 0}], 
                   [{'value' : resultData.data.clientBplaceYn}, {'action' : 'RegBusinessPlaceIndex'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 1}], 
-                  [{'value' : resultData.data.clientPrdYn}, {'action' : 'CardInputInfo'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 2}] 
+                  [{'value' : resultData.data.clientPrdYn}, {'action' : 'MyListBusinessPlace'}, {'infoPercent' : resultData.data.infoPercent}, {'state' : 2}] 
                 ];
                 const resultVaildPage = checkPage.filter((page) => page[0].value !== 'Y');
-
+                // clientPaymYn: "Y", clientPrdYn: "N", clientBplaceYn: "Y",
                 if(resultVaildPage.length > 0) {
+                  console.log(resultVaildPage);
                   this.setState({
                     unRegData : { 
                       isData : true, 
@@ -138,20 +139,6 @@ class ClientHome extends Component {
                 } else {
                   this._startFn();
                 }
-
-                // if(resultData.data.clientPaymYn == 'Y') {
-                //   if(resultData.data.clientBplaceYn == 'Y') {
-                //     if(resultData.data.clientPrdYn == 'Y') {
-                //       this._startFn();
-                //     } else {
-                //       this.setState({unRegData : { isData : true, action : 'MyListBusinessPlace', infoPercent : resultData.data.infoPercent, state : 0 }} );
-                //     }
-                //   } else {
-                //     this.setState({unRegData : { isData : true, action : 'RegBusinessPlaceIndex', infoPercent : resultData.data.infoPercent, state : 1 }} );
-                //   }
-                // } else {
-                //   this.setState({unRegData : { isData : true, action : 'CardInputInfo', infoPercent : resultData.data.infoPercent, state : 2 }} );
-                // }
               } else {
                 this.setState({
                   isAlertModal : true,
@@ -287,7 +274,7 @@ class ClientHome extends Component {
                 </CustomButton>
 
                 <View style={localStyles.noRegWrap}>
-                {(this.state.unRegData.state == 2 ) ? (
+                {(this.state.unRegData.state == 0 ) ? (
                   <View>
                     <Text style={localStyles.noRegTxt}>· 결제정보 미등록</Text>
                     <Text style={localStyles.noRegTxt}>· 사업장 미등록</Text>

@@ -214,7 +214,11 @@ class InputEmail extends Component {
                   placeholder="비밀번호(영문,숫자,특수문자8-15자)" 
                   onSubmitEditing={() => { this.thirdTextInput._root.focus(); }}
                   />
-                  <Icon name={this.state.patternPw ? "ios-checkmark-circle" : "ios-close-circle"} style={[styles.inputIcon, {color: color.defaultColor}]} />
+                  {this.state.patternPw 
+                    // 패턴이 맞으면
+                    ? <Icon name="ios-checkmark-circle" style={[styles.inputIcon, {color: color.defaultColor}]} />
+                    // 패턴이 틀리면
+                    : <Icon name="ios-checkmark-circle" style={[styles.inputIcon, {color: color.greyColor}]} />}
               </Item>
 
               <Item regular style={[styles.mb10, styles.inputWhBackGreyBo]}>

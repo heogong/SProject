@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Image, TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native'
-import { Container, Text } from "native-base";
+import { Container, Text, Header, Button, Left, Right, Body, Title } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
@@ -92,12 +92,20 @@ class ListBusinessPlace extends Component {
 
   render() {
     return (
-      <Container style={styles.containerRightSlide}>
-        <CustomHeader 
-          customAction={this._goToMain}
-        />
+      <Container style={styles.containerSlide}>
+        <Header style={[styles.header, styles.noPadding, {paddingLeft : 26, paddingRight : 26}]}>
+          <Left style={styles.headerLeftWrap}>
+            <Button style={styles.noPadding} transparent onPress={this._goToMain}>
+              <Image source={require("~/Common/Image/btn_back_arrow.png")} style={styles.btnBackArrowIcon}/>
+            </Button>
+          </Left>
+          <Body style={styles.headerCenterWrap}>
+            <Title style={styles.headerTitleTxt}>A/S 현황</Title>
+          </Body>
+          <Right style={styles.headerRightWrap}></Right>
+        </Header>
         <View style={styles.contentWrap}>
-          <View style={{marginBottom: 21}}>
+          <View style={{marginBottom: 21, paddingLeft: 26}}>
             <View style={styles.fxDirRow}>
               <View style={stylesReg.leftGuideTxtWrap}>
                 <Text style={stylesReg.leftGuideTxt}>등록한</Text>
@@ -111,69 +119,71 @@ class ListBusinessPlace extends Component {
             <View style={stylesReg.procBarWrap}></View>
 
           </View>
+          <View style={{height: 300}}>
+            <ScrollView
+              horizontal={true}
+              pagingEnabled={false} // animates ScrollView to nearest multiple of it's own width
+              showsHorizontalScrollIndicator={true}
+              style={{paddingLeft: 26, paddingRight: 26}}>
 
-          <ScrollView
-            horizontal={true}
-            pagingEnabled={false} // animates ScrollView to nearest multiple of it's own width
-            showsHorizontalScrollIndicator={false}>
+              {this.state.data.map((business, idx) =>
+                <TouchableOpacity 
+                  key={idx} 
+                  onPress={ async () => {
+                    await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
+                    Actions.MyListBusinessProductType({ 
+                      bizId : business.clientBplaceId
+                  }) } }
+                  style={localStyles.placeBoxWrap}
+                  >
+                  <View>
+                      <View style={localStyles.closeIconWrap}>
 
-            {this.state.data.map((business, idx) =>
-              <TouchableOpacity 
-                key={idx} 
-                onPress={ async () => {
-                  await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
-                  Actions.MyListBusinessProductType({ 
-                    bizId : business.clientBplaceId
-                }) } }
-                style={localStyles.placeBoxWrap}
-                >
-                <View>
-                    <View style={localStyles.closeIconWrap}>
-
-                      {(this.state.data.length > LEAST_COUNT) ? (
-                        <TouchableOpacity onPress={() => {
-                          SELECT_IDX = idx,
-                          this._toggleModal()
-                        }} >
-                          <Image source={require('~/Common/Image/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
-                        </TouchableOpacity>
-                      ) : (
-                        <View style={localStyles.closeIconImg}/>
-                      )}
-                        <TouchableOpacity 
-                          onPress={ async () => {
-                            await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
-                            Actions.MyRegBusinessPlace({
-                              editBiz : true,
-                              refreshAction : this._getBizList
-                            }) 
-                          }} 
-                        >
-                          <Image source={require('~/Common/Image/card_mod_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={localStyles.prdImgWrap}>
-                      <Image source={require('~/Common/Image/company_illust.png')} style={localStyles.prdImg}/>
-                    </View>
-                          
-                    <View style={localStyles.txtWrap}>
-                      <Text style={localStyles.placeNameTxt} numberOfLines={1}>{business.bplaceNm}</Text>
-                      <View style={localStyles.infoTxtWrap}>
-                        <Text style={localStyles.infoTxt}>
-                          {(business.addr != null || business.road != null ?
-                            (business.addr != null ? business.addr.addressName : business.road.addressName)
-                            : "사업자 주소를 등록해주세요.")}
-                        </Text>
-                        <Text style={localStyles.infoTxt}>{(business.detail != null ? business.detail.detailAddr1 : "사업장 상세주소를 입력해주세요.")}</Text>
+                        {(this.state.data.length > LEAST_COUNT) ? (
+                          <TouchableOpacity onPress={() => {
+                            SELECT_IDX = idx,
+                            this._toggleModal()
+                          }} >
+                            <Image source={require('~/Common/Image/card_delete_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
+                          </TouchableOpacity>
+                        ) : (
+                          <View style={localStyles.closeIconImg}/>
+                        )}
+                          <TouchableOpacity 
+                            onPress={ async () => {
+                              await this.props.onSetBizId(business.clientBplaceId); // 사업장 ID 리덕스 SET  
+                              Actions.MyRegBusinessPlace({
+                                editBiz : true,
+                                refreshAction : this._getBizList
+                              }) 
+                            }} 
+                          >
+                            <Image source={require('~/Common/Image/card_mod_2.png')} resizeMode="contain" style={localStyles.closeIconImg}/>
+                          </TouchableOpacity>
                       </View>
-                    </View>
-                </View>
-              </TouchableOpacity>
-            )}
-          </ScrollView>
 
-          <View style={[styles.footerBtnWrap, {paddingRight : 26}]}>
+                      <View style={localStyles.prdImgWrap}>
+                        <Image source={require('~/Common/Image/company_illust.png')} style={localStyles.prdImg}/>
+                      </View>
+                            
+                      <View style={localStyles.txtWrap}>
+                        <Text style={localStyles.placeNameTxt} numberOfLines={1}>{business.bplaceNm}</Text>
+                        <View style={localStyles.infoTxtWrap}>
+                          <Text style={localStyles.infoTxt}>
+                            {(business.addr != null || business.road != null ?
+                              (business.addr != null ? business.addr.addressName : business.road.addressName)
+                              : "사업자 주소를 등록해주세요.")}
+                          </Text>
+                          <Text style={localStyles.infoTxt}>{(business.detail != null ? business.detail.detailAddr1 : "사업장 상세주소를 입력해주세요.")}</Text>
+                        </View>
+                      </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+            </ScrollView>
+          </View>
+
+          <View style={[styles.footerBtnWrap, {flex: 1, paddingRight : 26, paddingLeft: 26}]}>
             <View style={styles.footerBtnWra}>
                 <CustomButton 
                     onPress={Actions.MyRegBusinessPlace}
@@ -216,7 +226,8 @@ const localStyles = StyleSheet.create({
     backgroundColor : color.defaultColor,
     width: 280,
     marginRight: 12,
-    marginBottom: 26
+    marginBottom: 26,
+    height: 300
   },
   prdImgWrap: {
     alignItems : 'center',

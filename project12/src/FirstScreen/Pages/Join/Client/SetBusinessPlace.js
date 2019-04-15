@@ -92,9 +92,15 @@ class SetBusinessPlace extends Component {
           </View>
 
           <View style={styles.footerBtnWrap}>
+            <CustomButton 
+              onPress={Actions.ClientMain}
+              DefaultLineBtn={true}
+              CustomBtnStyle={styles.mb5}
+            >
+              메인화면으로
+            </CustomButton>
             <CustomButton
                 onPress={Actions.InputProdType}
-                DefaultLineBtn={true}
             >
                 제품등록하러가기
             </CustomButton>
@@ -111,7 +117,7 @@ function wp (percentage) {
   return Math.round(value);
 }
 
-const imageSize = wp(50);
+const imageSize = wp(35);
 
 const localStyles = StyleSheet.create({
   topTxt: {
@@ -122,29 +128,28 @@ const localStyles = StyleSheet.create({
     width : '100%',
     backgroundColor : color.defaultColor,
     flex: 1,
-    marginBottom: 16
+    marginBottom: 16,
+    justifyContent: "center"
   },
   btnPlusWrap: {
-    flex: 3,
     alignItems : 'center',
-    justifyContent:'center'
+    justifyContent:'center',
+    marginBottom: 16
   },
   btnPlus: {
     width: imageSize,
     height: imageSize
   },
   txtWrap: {
-    flex: 2,
     alignItems : 'center'
   },
   placeNameTxt: {
     color: color.whiteColor,
     fontSize: 27,
     fontWeight: "bold",
-    marginBottom: 22
+    marginBottom: 16
   },
   infoTxtWrap: {
-    flex: 1,
     alignItems : 'center'
   },
   infoTxt: {
