@@ -5,14 +5,17 @@ import { Container, Text } from "native-base";
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
+import Modal from "react-native-modal";
 
 import GetAfterServiceReport from '~/Main/Functions/GetAfterServiceReport';
 import GetAfterServiceActionInfo from '~/Main/Functions/GetAfterServiceActionInfo';
 import GetCommonData from '~/Common/Functions/GetCommonData';
+import RegEvalPoint from '~/Main/Functions/RegEvalPoint';
 import AfterServiceImage from '~/Main/Components/AfterServiceImage';
 
 import CustomButton from '~/Common/Components/CustomButton';
 import CustomModal from '~/Common/Components/CustomModal';
+import CustomEtcButton from '~/Common/Components/CustomEtcButton';
 import CustomHeader from '~/Common/Components/CustomHeader';
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
@@ -64,6 +67,14 @@ class ViewAfterServiceHistory extends Component {
                 asActionDsc : null
             }
         },
+        star1 : false,
+        star2 : false,
+        star3 : false,
+        star4 : false,
+        star5 : false,
+        evalPoint : 0,
+        disableBtn : true,
+        isModalVisible : false,
         isAlertModal : false, // alert 용
         resultMsg : null, // alert 용
       };
@@ -141,6 +152,40 @@ class ViewAfterServiceHistory extends Component {
         });
     }
 
+    //  AS 평가 정보 등록 - 테스트 asPrgsId 필요 
+  _regEvalPoint = () => {
+    const { evalPoint } = this.state;
+
+    RegEvalPoint(this.props.asPrgsId, evalPoint).then(async result => {
+      GetCommonData(result, this._regEvalPoint).then(async resultData => {
+          if(resultData !== undefined) {
+              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+              console.log(resultData);
+              
+              if(ResultBool) {
+                this.setState({
+                  isModalVisible : false,
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                });
+
+              } else {
+                this.setState({
+                  isModalVisible : false,
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg,
+                  star1 : false,
+                  star2 : false,
+                  star3 : false, 
+                  star4 : false, 
+                  star5 : false
+                });
+              }
+          }
+      });
+    });
+  }
+
     _drawBeforeImg = () => {
         let beforeImgArray = [];
         const { beforeData } = this.state;
@@ -189,6 +234,67 @@ class ViewAfterServiceHistory extends Component {
             asPrgsMst: this.state.data.asPrgsMst
         });
     }
+
+     // 별점 클릭 호출
+  _clickStar = (clickStar) => {
+    switch (clickStar) {
+      case 'star1' : 
+        this.setState({
+          star1 : true,
+          star2 : false,
+          star3 : false, 
+          star4 : false, 
+          star5 : false,
+          evalPoint : 1,
+          disableBtn : false
+        }); 
+      break;
+      case 'star2' : 
+        this.setState({
+          star1 : true,
+          star2 : true,
+          star3 : false, 
+          star4 : false, 
+          star5 : false,
+          evalPoint : 2,
+          disableBtn : false
+        }); 
+      break;
+      case 'star3' : 
+        this.setState({
+          star1 : true,
+          star2 : true,
+          star3 : true, 
+          star4 : false, 
+          star5 : false,
+          evalPoint : 3,
+          disableBtn : false
+        }); 
+      break;
+      case 'star4' : 
+        this.setState({
+          star1 : true,
+          star2 : true,
+          star3 : true, 
+          star4 : true, 
+          star5 : false,
+          evalPoint : 4,
+          disableBtn : false
+        }); 
+      break;
+      default : 
+        this.setState({
+          star1 : true,
+          star2 : true,
+          star3 : true, 
+          star4 : true, 
+          star5 : true,
+          evalPoint : 5,
+          disableBtn : false
+        }); 
+      break;
+    }
+  }
     
 
     render() {
@@ -205,7 +311,7 @@ class ViewAfterServiceHistory extends Component {
         
                     <View style={localStyles.contentWrap}>
                         <View style={localStyles.titleWrap}>
-                            <Image source={require('~/Common/Image/product/01_icon_white.png')} style={localStyles.titleImg}/>
+                            <Image source={{uri : (this.props.prdTypeFileUrl) ? this.props.prdTypeFileUrl : 'insert404'}} style={localStyles.titleImg}/>
                             <Text style={localStyles.titleNameTxt}>{this.state.data.clinePrdInfo.bplace.bplaceNm}</Text>
                             <Text style={localStyles.subNameTxt}>{this.state.data.clinePrdInfo.prdType.prdTypeKoNm}</Text>
                         </View>
@@ -224,8 +330,7 @@ class ViewAfterServiceHistory extends Component {
                                 }
                             </Text>
                             
-                            {this.state.data.clientPrdParts.length > 0 
-                            ?
+                            {this.state.data.clientPrdParts.length > 0 ?
                                 <View>
                                     <Text style={localStyles.histBoxSubTitleTxt}>쿨리닉 제품분석</Text>
                                     <View style={[styles.fxDirRow, {flexWrap: "wrap"}]}>
@@ -239,6 +344,20 @@ class ViewAfterServiceHistory extends Component {
                             : 
                                 <View/>
                             }
+
+                            {this.state.data.asPrgsMst.evalYn == 'N' ? (
+                                 <CustomButton 
+                                    onPress={() => this.setState({isModalVisible : true})}
+                                    DefaultLineBtn={true}
+                                    CustomBtnStyle={{marginTop: 10}}
+                                    CustomFontStyle={{fontSize: 14}}
+                                >
+                                    평가하기
+                                </CustomButton>
+                            ) : (
+                                <View/>
+                            )}
+
                         </View>
                         
                         {(this.state.data.asPrgsMst.asAddYn == "Y") ? (
@@ -332,6 +451,56 @@ class ViewAfterServiceHistory extends Component {
 
                     </View>
                 </ScrollView>
+
+                <Modal isVisible={this.state.isModalVisible} onBackdropPress={() => this.setState({ isModalVisible: false })}>
+                    <View style={[styles.modalWrap, {height: 150}]}>
+                        <View style={styles.modalContent}>
+                            <View style={[styles.modalTop2LTxtWrap, {flex: 2}]}>
+                                <Text style={styles.modalTopTxt}>A/S업체의 서비스를 평가해주세요!</Text>
+                                <View style={[styles.fxDirRow, styles.justiConCenter]}>
+                                    <TouchableOpacity onPress={ () => this._clickStar("star1") }>
+                                        <Image source={(this.state.star1) ? require("~/Common/Image/Big_bluestar_icon.png") : require("~/Common/Image/Big_graystar_icon.png")} 
+                                        resizeMode="contain" 
+                                        style={localStyles.starIconImg} 
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={ () => this._clickStar("star2") }>
+                                        <Image source={(this.state.star2) ? require("~/Common/Image/Big_bluestar_icon.png") : require("~/Common/Image/Big_graystar_icon.png")} 
+                                        resizeMode="contain" 
+                                        style={localStyles.starIconImg} 
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={ () => this._clickStar("star3") }>
+                                        <Image source={(this.state.star3) ? require("~/Common/Image/Big_bluestar_icon.png") : require("~/Common/Image/Big_graystar_icon.png")} 
+                                        resizeMode="contain" 
+                                        style={localStyles.starIconImg} 
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={ () => this._clickStar("star4") }>
+                                        <Image source={(this.state.star4) ? require("~/Common/Image/Big_bluestar_icon.png") : require("~/Common/Image/Big_graystar_icon.png")} 
+                                        resizeMode="contain" 
+                                        style={localStyles.starIconImg} 
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={ () => this._clickStar("star5") }>
+                                        <Image source={(this.state.star5) ? require("~/Common/Image/Big_bluestar_icon.png") : require("~/Common/Image/Big_graystar_icon.png")} 
+                                        resizeMode="contain" 
+                                        style={localStyles.starIconImg} 
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <View style={[styles.modalBtnWrap, styles.mb5]}>
+                                <CustomEtcButton
+                                disabled={this.state.disableBtn}
+                                onPress={this._regEvalPoint}
+                                >
+                                평가완료!
+                                </CustomEtcButton>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
 
                 {/* alert 메세지 모달 */}
                 <CustomModal
@@ -442,6 +611,17 @@ function wp (percentage, space) {
       borderTopWidth: 1,
       borderColor: "#c9cacb"
     },
+    starIconImg: {
+        width: 32,
+        height: 32,
+        marginLeft: 2,
+        marginRight: 2
+    },
+    starIconWrap: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 10
+    }
   });
 
 export default ViewAfterServiceHistory;

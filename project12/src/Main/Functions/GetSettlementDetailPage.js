@@ -2,17 +2,17 @@ import { AsyncStorage } from 'react-native'
 import { TEST_ACCESS_TOKEN, DOMAIN, INVAILD_TOKEN, REFRESH_TOKEN } from '../../Common/Blend';
 import GetAccessToken from '../../Common/Functions/GetAccessToken';
 
-const API_URL = `${DOMAIN}coolinic/partners/calculate/tmonth/me/hist?p=1`;
+const API_URL = `${DOMAIN}coolinic/partners/calculate/tmonth/me/hist?p=`;
 
-function GetSettlementDetailPageUrl() {
-  return `${API_URL}`;
+function GetSettlementDetailPageUrl(pageNum) {
+  return `${API_URL}${pageNum}`;
 }
 
-const GetSettlementDetailPage = async () => {
+const GetSettlementDetailPage = async (pageNum) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  return fetch(GetSettlementDetailPageUrl(), {
+  return fetch(GetSettlementDetailPageUrl(pageNum), {
     method: 'GET',
     headers: {
       "Authorization": ACCESS_TOKEN

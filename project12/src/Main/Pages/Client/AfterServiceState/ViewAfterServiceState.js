@@ -241,13 +241,25 @@ class ViewAfterServiceState extends Component {
 
   // 평가 여부
   _checkGrade = () => {
-    // this._toggleModal();
-    if(AS_PRGS_STAT_CD == COMPLETE_AS.VALUE) {
+    let statCd = null;
+
+    switch (AS_PRGS_STAT_CD) {
+      case MATCH.VALUE : statCd = MATCH; break;
+      case DEPARTURE.VALUE : statCd = DEPARTURE; break;
+      case ARRIVE.VALUE : statCd = ARRIVE; break;
+      case PROGRESS.VALUE : statCd = PROGRESS; break;
+      case COMPLETE_MATCH.VALUE : statCd = COMPLETE_MATCH; break;
+      case ADD_AS.VALUE : statCd = ADD_AS; break;
+      case MOVE.VALUE : statCd = MOVE; break;
+      default : statCd = MOVE; break;
+    }
+    
+    if(ARRIVE.ORDER <= statCd.ORDER) {
       this._toggleModal();
     } else {
       this.setState({
         isAlertModal : true,
-        resultMsg : "A/S완료 후 평가 하실 수 있습니다."
+        resultMsg : "A/S도착 후 평가 하실 수 있습니다."
       })
     }
   }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, ScrollView, View, RefreshControl } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -16,21 +16,14 @@ import { styles, viewportWidth } from '~/Common/Styles/common';
 import { stylesReg } from '~/Common/Styles/stylesReg';
 import { color } from "~/Common/Styles/colors";
 
-
-export const AccountHistory = ({account}) => (
-  <View style={localStyles.moneyList}>
-    <Text style={localStyles.dateTxt}>{account.asPrgsDt}</Text>
-    <View style={localStyles.nameTxtWrap}>
-      <Text style={localStyles.nameTxt} numberOfLines={1}>{account.bplaceNm}</Text>
-      <Text style={localStyles.name1Txt} numberOfLines={1}>{account.asOrderNm}</Text>
-    </View>
-    <Text style={localStyles.momeyTxt}>{account.asAmount}원</Text>
-  </View>
-)
+const FIRST_PAGE_NUM = 2;
 
 class MyCalcuList extends Component {
   constructor(props) {
     super(props);
+    
+    this.initPageNum = FIRST_PAGE_NUM;
+
     this.state = {
       data : {
         calcHist : []
@@ -67,19 +60,23 @@ class MyCalcuList extends Component {
 
    // 업체 정산 내역 조회 - 페이지
    _getSettlementDetailPage = () => {
-    GetSettlementDetailPage().then(result => {
+    GetSettlementDetailPage(this.initPageNum).then(result => {
       GetCommonData(result, this._getSettlementDetailPage).then(async resultData => {
           if(resultData !== undefined) {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
               console.log('업체 정산 내역 조회 - ', resultData);
               if(ResultBool) {
 
-                this.setState({
-                  data : {
-                    ...this.state.data,
-                    calcHist : resultData.data
-                  }
-                })
+                if(result.data.calcHist.length > 0) {
+                  this.setState({
+                    data : {
+                      ...this.state.data,
+                      calcHist : this.state.data.calcHist.concat(resultData.data.calcHist)
+                    }
+                  })
+                  this.initPageNum++;
+                }
+
               } else {
                 this.setState({
                   isAlertModal : true,
@@ -92,13 +89,16 @@ class MyCalcuList extends Component {
     });
   }
 
-  
-
-  _onRefresh = () => {
-    this.setState({refreshing: true});
-    this._getSettlementDetailPage();
-  }
-
+  _renderItem = ({item}) => (
+    <View style={localStyles.moneyList}>
+      <Text style={localStyles.dateTxt}>{item.asPrgsDt}</Text>
+      <View style={localStyles.nameTxtWrap}>
+        <Text style={localStyles.nameTxt} numberOfLines={1}>{item.bplaceNm}</Text>
+        <Text style={localStyles.name1Txt} numberOfLines={1}>{item.asOrderNm}</Text>
+      </View>
+      <Text style={localStyles.momeyTxt}>{item.asAmount}원</Text>
+    </View>
+  )
 
   render() {
     return (
@@ -127,25 +127,13 @@ class MyCalcuList extends Component {
               </View>
             </View>
 
-            <ScrollView 
-              showsVerticalScrollIndicator={false}
-              refreshControl={
-                <RefreshControl
-                  refreshing={this.state.refreshing}
-                  onRefresh={this._onRefresh}
-                />
-              }
-            >
-
-              {this.state.data.calcHist.map((account, idx) => 
-                <AccountHistory
-                  key={idx}
-                  account={account}
-                />
-              )}
-
-            </ScrollView>
-
+            <FlatList 
+              data={this.state.data.calcHist} 
+              renderItem={this._renderItem} 
+              keyExtractor={(item, index) => index.toString()}
+              onEndReachedThreshold={0.01}
+              onEndReached={this._getSettlementDetailPage}
+            />
         </View>
 
         {/* alert 메세지 모달 */}

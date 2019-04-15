@@ -115,7 +115,10 @@ class ListAfterServiceHistory extends Component {
                             {this.state.data.map((afterService, idx) => 
                                 <TouchableOpacity 
                                     key={idx}
-                                    onPress={() => Actions.ViewAfterServiceHistory({asPrgsId : afterService.asPrgsId})}
+                                    onPress={() => Actions.ViewAfterServiceHistory({
+                                        asPrgsId : afterService.asPrgsId,
+                                        prdTypeFileUrl : afterService.prdTypeFileUrl
+                                    })}
                                 >
                                     <View style={[styles.listPrdBoxFillWrap, {height: 120}]}>
                                         <View style={[styles.listPrdBoxImgWrap, {marginTop: 4}]}>
