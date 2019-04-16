@@ -6,10 +6,12 @@ import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
 import { CardIOModule, CardIOUtilities } from 'react-native-awesome-card-io';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import RegCardAgreeTerm from '~/FirstScreen/Functions/RegCardAgreeTerm';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 import RegCard from '~/FirstScreen/Functions/Card/RegCard';
+import GetClientPaymAgreeState from '~/Main/Functions/GetClientPaymAgreeState';
 
 import CustomModal from '~/Common/Components/CustomModal';
 import CustomHeader from '~/Common/Components/CustomHeader';
@@ -37,7 +39,9 @@ export default class InputCardInfo extends Component {
         check4 : false,
         check5 : false,
         isAlertModal : false, // alert 용
-        resultMsg : null
+        resultMsg : null,
+        isPaymAgree : false, // 결제 약관 동의 여부
+        spinner : false
     };
   }
 
@@ -46,6 +50,10 @@ export default class InputCardInfo extends Component {
     morePage : false // 더보기 페이지 접근 시
   }
   
+  componentWillMount() {
+    this._paymAgreeCheck();
+  }
+
   scanCard() {
     const config = {
       hideCardIOLogo : true,
@@ -65,16 +73,26 @@ export default class InputCardInfo extends Component {
       })
   }
 
-    // 결제 약관 동의 등록
-    _regCardAgreeTerm = () => {
-      const {checkBox1, checkBox2, checkBox3, checkBox4, checkBox5} = this.state;
+  // 결제 약관 동의 등록
+  _regCardAgreeTerm = () => {
+    
+    this.setState({spinner : true}); // 로딩 모달 시작
+
+    if(this.state.isPaymAgree) {
+    // 결제 약관에 동의했으면
+      // 바로 가트 등록
+      this._cardRegister();
+    } else {
+    // 결제 약관에 동의 안했으면
+      // 약관 등록 후 카드 등록
+      const {check1, check2, check3, check4, check5} = this.state;
 
       const agreeTerms = {
-        checkBox1 : checkBox1,
-        checkBox2 : checkBox2,
-        checkBox3 : checkBox3,
-        checkBox4 : checkBox4,
-        checkBox5 : checkBox5
+        checkBox1 : check1 ? 'Y' : 'N',
+        checkBox2 : check2 ? 'Y' : 'N',
+        checkBox3 : check3 ? 'Y' : 'N',
+        checkBox4 : check4 ? 'Y' : 'N',
+        checkBox5 : check5 ? 'Y' : 'N'
       }
 
       RegCardAgreeTerm(agreeTerms).then(async result => {
@@ -93,6 +111,7 @@ export default class InputCardInfo extends Component {
               }
           });
       });
+    }
   } 
 
   // 카드 등록
@@ -101,6 +120,9 @@ export default class InputCardInfo extends Component {
       GetCommonData(result, this._cardRegister).then(async resultData => {
         if(resultData !== undefined) {
           console.log(resultData);
+
+          this.setState({spinner : false}); // 로딩 모달 시작
+
           const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
           if(ResultBool) {
             if(this.props.regAsCard) { // A/S 신청 페이지에서 접근 시
@@ -120,6 +142,28 @@ export default class InputCardInfo extends Component {
           }
         }
       });
+    });
+  }
+
+  // 결제 약관 동의 여부 체크
+  _paymAgreeCheck = () => {
+    GetClientPaymAgreeState().then(result => {
+      GetCommonData(result, this._paymAgreeCheck).then(async resultData => {
+        if(resultData !== undefined) {
+            console.log(resultData);
+            const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+            if(ResultBool) {
+                let flag = resultData.data.clientPaymYn == 'Y' ? true : false;
+                this.setState({isPaymAgree  : flag}); // 결제 여부 갱신
+                
+            } else {
+                this.setState({
+                  isAlertModal : true,
+                  resultMsg : resultData.resultMsg
+                })
+              }
+            }
+        });
     });
   }
 
@@ -168,27 +212,43 @@ export default class InputCardInfo extends Component {
     const birthDayLen = 6
     const passwdLen = 2;
 
-    const { cardNumber, vaildTermMonth, vaildTermYear, passwd, birthDay, check2, check3, check4 } = this.state;
+    const { cardNumber, vaildTermMonth, vaildTermYear, passwd, birthDay, check2, check3, check4, check5, isPaymAgree } = this.state;
 
+    // 입력값 검사
     if(cardNumber.length >= cardNumLen 
       && vaildTermMonth.length >= vaildTermMonthLen 
       && vaildTermYear.length >= vaildTermYearLen 
       && passwd.length >= passwdLen
-      && birthDay.length >= birthDayLen
-      && check2
-      && check3
-      && check4
-      && check5 ) {
+      && birthDay.length >= birthDayLen) {
+    // 입력값이 충족하면
+      if(isPaymAgree) {
+      // 약관 동의한 사애이면
         this.setState({disableBtn : false});
       } else {
-        this.setState({disableBtn : true});
+      // 약관 동의를 안한 상태이면
+        // 약관 동의 여부 체크
+        if(check2 && check3 && check4 && check5) {
+          this.setState({disableBtn : false});
+        } else {
+          this.setState({disableBtn : true});
+        }
       }
+    } else {
+    // 입력값이 불충족하면
+      this.setState({disableBtn : true});
+    }
   }
   
   render() {
     return (
 
       <Container style={styles.containerInnerPd}>
+          <Spinner
+            visible={this.state.spinner}
+            textContent={'카드를 등록중입니다.'}
+            textStyle={styles.whiteFont}
+            style={{color: color.whiteColor}}
+          />
           <CustomHeader/>
           <View style={styles.fxDirRow}>
             <View style={stylesReg.leftGuideTxtWrap}>
@@ -290,6 +350,12 @@ export default class InputCardInfo extends Component {
                 </Item>
               </View>
 
+              {this.state.isPaymAgree 
+              ?
+              // 결제 약관에 동의 안했으면
+              <View />
+              :
+              //결제 약관에 동의 했으면
               <View style={localStyles.termsWrap}>
                 <View style={styles.fx5}>
                   <View style={styles.alignItemsEnd}>
@@ -393,11 +459,12 @@ export default class InputCardInfo extends Component {
                     </View>
                 </View>
               </View>
+              }
             </View>
           </ScrollView>
           <View style={styles.footerBtnWrap}>
             <CustomButton 
-              onPress={this._cardRegister}
+              onPress={this._regCardAgreeTerm}
               disabled={this.state.disableBtn}
             >
               등록완료
