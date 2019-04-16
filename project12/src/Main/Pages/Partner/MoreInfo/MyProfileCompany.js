@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, ScrollView, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, ScrollView, TouchableOpacity, View, Image } from 'react-native'
 import { CheckBox, Container, Text } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -485,23 +485,38 @@ class MyProfileCompany extends Component {
 
               <View style={[styles.fxDirRow, styles.justiConCenter]}>
                 <View style={[styles.checkBoxWrap, {marginRight: 8}]}>
-                  <CheckBox 
-                    checked={this.state.fullWorkYn}
-                    onPress={ this._handleFullBtnClick }
-                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                  />
+                  {this.state.fullWorkYn
+                  ?
+                    <TouchableOpacity
+                      onPress={async () => { await this.setState({fullWorkYn : false}), await this._handleFullBtnClick()}}
+                    >
+                      <Image source={require("~/Common/Image/check_circle_on.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                    </TouchableOpacity>
+                  :
+                    <TouchableOpacity
+                      onPress={async () => { await this.setState({fullWorkYn : true}), await this._handleFullBtnClick()}}
+                    >
+                      <Image source={require("~/Common/Image/check_circle_off.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                    </TouchableOpacity>
+                  }
                   <Text style={styles.greyFont}>풀타임</Text>
                 </View>
                 
                 <View style={[styles.checkBoxWrap, {marginLeft: 8}]}>
-                  <CheckBox checked={this.state.holidayWorkYn}
-                    onPress={async () => {
-                        await this.setState({holidayWorkYn : !this.state.holidayWorkYn}),
-                        BUSINESS_DAY.holidayWorkYn = await this.state.holidayWorkYn ? 'Y' : 'N'
-                      }
-                    }
-                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                  />
+                  {this.state.holidayWorkYn
+                  ?
+                    <TouchableOpacity
+                      onPress={async () => { await this.setState({holidayWorkYn : false}), BUSINESS_DAY.holidayWorkYn = await this.state.holidayWorkYn ? 'Y' : 'N'}}
+                    >
+                      <Image source={require("~/Common/Image/check_circle_on.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                    </TouchableOpacity>
+                  :
+                    <TouchableOpacity
+                      onPress={async () => { await this.setState({holidayWorkYn : true}), BUSINESS_DAY.holidayWorkYn = await this.state.holidayWorkYn ? 'Y' : 'N'}}
+                    >
+                      <Image source={require("~/Common/Image/check_circle_off.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                    </TouchableOpacity>
+                  }
                   <Text style={styles.greyFont}>공휴일</Text>
                 </View>
               </View>

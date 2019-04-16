@@ -342,28 +342,41 @@ class InputWorkHours extends Component {
                             <Text style={styles.greyFont}>취약시간 기준 : 18시 ~ 09시, 일요일 및 공휴일 포함</Text>
                         </View>
 
-                        <View style={[styles.fxDirRow, styles.fx1, styles.justiConCenter]}>
+                        <View style={[styles.fxDirRow, styles.justiConCenter, {marginBottom: 5}]}>
 
-                            <View style={[styles.fxDirRow, {marginRight: 8}]}>
-                                <CheckBox 
-                                    checked={this.state.checkBox1}
-                                    onPress={ this._handleFullBtnClick }
-                                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                                />
+                            <View style={[styles.checkBoxWrap, {marginRight: 8}]}>
+                                {this.state.checkBox1
+                                ?
+                                    <TouchableOpacity
+                                    onPress={async () => { await this.setState({checkBox1 : false}), await this._handleFullBtnClick()}}
+                                    >
+                                    <Image source={require("~/Common/Image/check_circle_on.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                                    </TouchableOpacity>
+                                :
+                                    <TouchableOpacity
+                                    onPress={async () => { await this.setState({checkBox1 : true}), await this._handleFullBtnClick()}}
+                                    >
+                                    <Image source={require("~/Common/Image/check_circle_off.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                                    </TouchableOpacity>
+                                }
                                 <Text style={styles.greyFont}>풀타임</Text>
                             </View>
 
-                            <View style={[styles.fxDirRow, {marginLeft: 8}]}>
-                                <CheckBox 
-                                    checked={this.state.checkbox2}
-                                    onPress={ 
-                                        async () => {
-                                            await this.setState({checkbox2 : !this.state.checkbox2})
-                                            BUSINESS_DAY.holidayWorkYn = ( this.state.checkbox2 ) ? 'Y' : 'N';
-                                        }
-                                    }
-                                    style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                                />
+                            <View style={[styles.checkBoxWrap, {marginRight: 8}]}>
+                                {this.state.checkbox2
+                                ?
+                                    <TouchableOpacity
+                                    onPress={async () => { await this.setState({checkbox2 : false}), BUSINESS_DAY.holidayWorkYn = ( this.state.checkbox2 ) ? 'Y' : 'N'}}
+                                    >
+                                    <Image source={require("~/Common/Image/check_circle_on.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                                    </TouchableOpacity>
+                                :
+                                    <TouchableOpacity
+                                    onPress={async () => { await this.setState({checkbox2 : true}), BUSINESS_DAY.holidayWorkYn = ( this.state.checkbox2 ) ? 'Y' : 'N'}}
+                                    >
+                                    <Image source={require("~/Common/Image/check_circle_off.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                                    </TouchableOpacity>
+                                }
                                 <Text style={styles.greyFont}>공휴일</Text>
                             </View>
                         </View>
@@ -411,7 +424,7 @@ const localStyles = StyleSheet.create({
     bottomTxtWrap: {
       alignItems: "center",
       marginTop: 35,
-      marginBottom: 17
+      marginBottom: 5
     },
     timeTxtWrap: {
       flex: 2,

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { ScrollView, Keyboard, StyleSheet, TouchableOpacity, View, Image } from 'react-native'
 import { Button, Container, CheckBox, Text, Item, Input } from "native-base";
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -81,46 +81,57 @@ class MyProfileExit2 extends Component {
               <Input 
                 onChangeText={ (text) => {this.setState({desc : text}), this._chkBtn() }}
                 placeholder="탈퇴 사유를 입력해주세요." 
-                placeholderTextColor="#626270" 
                 style={styles.inputDefaultBox}
+                placeholderTextColor={color.inputPlaceHodler} 
               />
             </Item>
           </View>
 
           <View style={localStyles.reasonWrap}>
             <Text style={localStyles.subTitleTxt}>탈퇴 전 꼭 확인 하세요!</Text>
+            <View style={{height: 200}}>
+              <ScrollView showsVerticalScrollIndicator={true}>
+                <View style={localStyles.infoWrap}>
+                  <Text style={localStyles.dotTxt}>·</Text>
+                  <Text style={localStyles.infoTxt}>쿨리닉 회원 탈퇴 시, 즉시 탈퇴 처리되며 서비스 이용이 불가합니다.</Text>
+                </View>
 
-            <View style={localStyles.infoWrap}>
-              <Text style={localStyles.dotTxt}>·</Text>
-              <Text style={localStyles.infoTxt}>쿨리닉 회원 탈퇴 시, 즉시 탈퇴 처리되며 서비스 이용이 불가합니다.</Text>
-            </View>
+                <View style={localStyles.infoWrap}>
+                  <Text style={localStyles.dotTxt}>·</Text>
+                  <Text style={localStyles.infoTxt}>회원정보는 회원 탈퇴 시 즉시 삭제됩니다. 다만, 부정 이용·거래 방지 및 전자상거래법 등 관련 법령에 따라 보관이 필요한 경우 해당 기간동안 회원정보가 보관됩니다.</Text>
+                </View>
 
-            <View style={localStyles.infoWrap}>
-              <Text style={localStyles.dotTxt}>·</Text>
-              <Text style={localStyles.infoTxt}>회원정보는 회원 탈퇴 시 즉시 삭제됩니다. 다만, 부정 이용·거래 방지 및 전자상거래법 등 관련 법령에 따라 보관이 필요한 경우 해당 기간동안 회원정보가 보관됩니다.</Text>
-            </View>
+                <View style={localStyles.infoWrap}>
+                  <Text style={localStyles.dotTxt}>·</Text>
+                  <Text style={localStyles.infoTxt}>동일한 이메일 주소로 회원 탈퇴 후 5일 동안 가입이 불가합니다. (다른 이메일 주소로는 가입이 가능합니다.)</Text>
+                </View>
 
-            <View style={localStyles.infoWrap}>
-              <Text style={localStyles.dotTxt}>·</Text>
-              <Text style={localStyles.infoTxt}>동일한 이메일 주소로 회원 탈퇴 후 5일 동안 가입이 불가합니다. (다른 이메일 주소로는 가입이 가능합니다.)</Text>
+                <View style={localStyles.infoWrap}>
+                  <Text style={localStyles.dotTxt}>·</Text>
+                  <Text style={localStyles.infoTxt}>자세한 사항은 개인정보처리방침을 확인하시기 바랍니다.</Text>
+                </View>
+              </ScrollView>
             </View>
-
-            <View style={localStyles.infoWrap}>
-              <Text style={localStyles.dotTxt}>·</Text>
-              <Text style={localStyles.infoTxt}>자세한 사항은 개인정보처리방침을 확인하시기 바랍니다.</Text>
-            </View>
-            
-            <View style={[styles.fxDirRow, {marginLeft: 3}]}>
-              <CheckBox checked={this.state.checkbox}
-                onPress={ async () => { await this.setState({checkbox: !this.state.checkbox}), this._chkBtn() } }
-                style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-              />
-              <Text style={{fontSize: 14, color: "#1e1e32"}}>동의합니다.</Text>
-            </View>
-
           </View>
 
-          <View style={styles.footerBtnWrap}>
+          <View style={[styles.footerBtnWrap, {flex: 1}]}>
+            <View style={[styles.fxDirRow, styles.alignItemsCenter, styles.justiConEnd]}>
+              {this.state.checkbox
+              ?
+                <TouchableOpacity
+                  onPress={async () => { await this.setState({checkbox : false}), await this._chkBtn()}}
+                >
+                  <Image source={require("~/Common/Image/check_circle_on.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                </TouchableOpacity>
+              :
+                <TouchableOpacity
+                  onPress={async () => { await this.setState({checkbox : true}), await this._chkBtn()}}
+                >
+                  <Image source={require("~/Common/Image/check_circle_off.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                </TouchableOpacity>
+              }
+              <Text style={{fontSize: 14, color: "#1e1e32"}}>동의합니다.</Text>
+            </View>
              <CustomButton 
                 onPress={ this._exitChk }
                 disabled={ this.state.disableBtn }
