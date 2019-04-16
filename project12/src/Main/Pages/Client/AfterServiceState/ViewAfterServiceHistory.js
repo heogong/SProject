@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, ImageBackground, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Container, Text } from 'native-base';
 
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
@@ -20,9 +20,9 @@ import CustomHeader from '~/Common/Components/CustomHeader';
 import { styles, viewportWidth } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
-let BEFORE_DATA = [];
-let AFTER_DATA = [];
 const AFTER_SERVICE_IMG_CNT = 4;
+const STAR_POINT = [ 1, 2, 3, 4, 5 ];
+let EVAL_POINT = 0;
 
 class ViewAfterServiceHistory extends Component {
 	constructor(props) {
@@ -72,15 +72,12 @@ class ViewAfterServiceHistory extends Component {
 			star3: false,
 			star4: false,
 			star5: false,
-			evalPoint: 0,
 			disableBtn: true,
 			isModalVisible: false,
 			isAlertModal: false, // alert 용
 			resultMsg: null // alert 용
 		};
 	}
-
-	componentWillMount() {}
 
 	componentDidMount() {
 		this._getAfterServiceReport();
@@ -152,9 +149,7 @@ class ViewAfterServiceHistory extends Component {
 
 	//  AS 평가 정보 등록 - 테스트 asPrgsId 필요
 	_regEvalPoint = () => {
-		const { evalPoint } = this.state;
-
-		RegEvalPoint(this.props.asPrgsId, evalPoint).then(async (result) => {
+		RegEvalPoint(this.props.asPrgsId, EVAL_POINT).then(async (result) => {
 			GetCommonData(result, this._regEvalPoint).then(async (resultData) => {
 				if (resultData !== undefined) {
 					const ResultBool = (await (resultData.resultCode == SUCCESS_RETURN_CODE)) ? true : false; // API 결과 여부 확인
@@ -229,73 +224,22 @@ class ViewAfterServiceHistory extends Component {
 	};
 
 	// 별점 클릭 호출
-	_clickStar = (clickStar) => {
+	_clickStar = (clickPoint) => {
+		EVAL_POINT = clickPoint;
 
-        let one = 'star1';
+		STAR_POINT.map((point) => {
+			this.setState({
+				['star' + point]: point <= clickPoint ? true : false
+			});
+		});
 
-		switch (clickStar) {
-			case 'star1':
-				this.setState({
-					[one]: true,
-					star2: false,
-					star3: false,
-					star4: false,
-					star5: false,
-					evalPoint: 1,
-					disableBtn: false
-				});
-				break;
-			case 'star2':
-				this.setState({
-					star1: true,
-					star2: true,
-					star3: false,
-					star4: false,
-					star5: false,
-					evalPoint: 2,
-					disableBtn: false
-				});
-				break;
-			case 'star3':
-				this.setState({
-					star1: true,
-					star2: true,
-					star3: true,
-					star4: false,
-					star5: false,
-					evalPoint: 3,
-					disableBtn: false
-				});
-				break;
-			case 'star4':
-				this.setState({
-					star1: true,
-					star2: true,
-					star3: true,
-					star4: true,
-					star5: false,
-					evalPoint: 4,
-					disableBtn: false
-				});
-				break;
-			default:
-				this.setState({
-					star1: true,
-					star2: true,
-					star3: true,
-					star4: true,
-					star5: true,
-					evalPoint: 5,
-					disableBtn: false
-				});
-				break;
-		}
-    };
-    
-    // 뒤로가면서 리스트 리플레쉬
+		this.setState({ disableBtn: false });
+	};
+
+	// 뒤로가면서 리스트 리플레쉬
 	_goActions = () => {
-        this.props.refreshActions();
-        Actions.pop();
+		this.props.refreshActions();
+		Actions.pop();
 	};
 
 	render() {
@@ -307,10 +251,7 @@ class ViewAfterServiceHistory extends Component {
 						paddingRight: styles.containerScroll.paddingRight
 					}}
 				>
-                    <CustomHeader 
-                        title="A/S 보고서" 
-                        customAction={this._goActions}
-                    />
+					<CustomHeader title="A/S 보고서" customAction={this._goActions} />
 				</View>
 
 				<ScrollView showsVerticalScrollIndicator={false}>
@@ -369,10 +310,10 @@ class ViewAfterServiceHistory extends Component {
 								<CustomButton
 									onPress={() => this.setState({ isModalVisible: true })}
 									DefaultLineBtn={true}
-									CustomBtnStyle={{ marginTop: 10 }}
+									CustomBtnStyle={{ height: 40, marginTop: 15, marginBottom: 0 }}
 									CustomFontStyle={{ fontSize: 14 }}
 								>
-									평가하기
+									서비스평가 하러 가기
 								</CustomButton>
 							) : (
 								<View />
@@ -482,71 +423,21 @@ class ViewAfterServiceHistory extends Component {
 							<View style={[ styles.modalTop2LTxtWrap, { flex: 2 } ]}>
 								<Text style={styles.modalTopTxt}>A/S업체의 서비스를 평가해주세요!</Text>
 								<View style={[ styles.fxDirRow, styles.justiConCenter ]}>
-									<TouchableOpacity onPress={() => this._clickStar('star1')}>
-										<Image
-											source={
-												this.state.star1 ? (
-													require('~/Common/Image/Big_bluestar_icon.png')
-												) : (
-													require('~/Common/Image/Big_graystar_icon.png')
-												)
-											}
-											resizeMode="contain"
-											style={localStyles.starIconImg}
-										/>
-									</TouchableOpacity>
-									<TouchableOpacity onPress={() => this._clickStar('star2')}>
-										<Image
-											source={
-												this.state.star2 ? (
-													require('~/Common/Image/Big_bluestar_icon.png')
-												) : (
-													require('~/Common/Image/Big_graystar_icon.png')
-												)
-											}
-											resizeMode="contain"
-											style={localStyles.starIconImg}
-										/>
-									</TouchableOpacity>
-									<TouchableOpacity onPress={() => this._clickStar('star3')}>
-										<Image
-											source={
-												this.state.star3 ? (
-													require('~/Common/Image/Big_bluestar_icon.png')
-												) : (
-													require('~/Common/Image/Big_graystar_icon.png')
-												)
-											}
-											resizeMode="contain"
-											style={localStyles.starIconImg}
-										/>
-									</TouchableOpacity>
-									<TouchableOpacity onPress={() => this._clickStar('star4')}>
-										<Image
-											source={
-												this.state.star4 ? (
-													require('~/Common/Image/Big_bluestar_icon.png')
-												) : (
-													require('~/Common/Image/Big_graystar_icon.png')
-												)
-											}
-											resizeMode="contain"
-											style={localStyles.starIconImg}
-										/>
-									</TouchableOpacity>
-									<TouchableOpacity onPress={() => this._clickStar('star5')}>
-										<Image
-											source={
-												this.state.star5 ? (
-													require('~/Common/Image/Big_bluestar_icon.png')
-												) : (
-													require('~/Common/Image/Big_graystar_icon.png')
-												)
-											}
-											resizeMode="contain"
-											style={localStyles.starIconImg}
-										/>
-									</TouchableOpacity>
+									{STAR_POINT.map((point, idx) => (
+										<TouchableOpacity key={idx} onPress={() => this._clickStar(point)}>
+											<Image
+												source={
+													this.state['star' + point] ? (
+														require('~/Common/Image/Big_bluestar_icon.png')
+													) : (
+														require('~/Common/Image/Big_graystar_icon.png')
+													)
+												}
+												resizeMode="contain"
+												style={localStyles.starIconImg}
+											/>
+										</TouchableOpacity>
+									))}
 								</View>
 							</View>
 							<View style={[ styles.modalBtnWrap, styles.mb5 ]}>
@@ -570,14 +461,6 @@ class ViewAfterServiceHistory extends Component {
 		);
 	}
 }
-
-function wp(percentage, space) {
-	const value = percentage * (viewportWidth - space) / 100;
-	return Math.round(value);
-
-}
-
-const asCardSize = wp(50, styles.containerScroll.paddingLeft * 2);
 
 const localStyles = StyleSheet.create({
 	titleWrap: {
