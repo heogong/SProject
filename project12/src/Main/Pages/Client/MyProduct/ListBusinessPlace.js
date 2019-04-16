@@ -103,12 +103,7 @@ class ListBusinessPlace extends Component {
                 <Text style={stylesReg.leftGuideTxt}>사업장을</Text>
                 <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
               </View>
-              <View style={stylesReg.rightStepNumWrap}>
-                  <Text style={stylesReg.rightStepNum}></Text>
-              </View>
             </View>
-            <View style={stylesReg.procBarWrap}></View>
-
           </View>
           <View style={{height: 300}}>
             <ScrollView

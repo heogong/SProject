@@ -316,7 +316,7 @@ class InputShowCase extends Component {
             
                 <View style={styles.contentWrap}>
                     <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
-                        <View style={{paddingLeft: 26, paddingRight: 26, marginBottom: 36}}>
+                        <View style={{paddingLeft: 26, paddingRight: 26, marginBottom: 21}}>
                             <View style={styles.fxDirRow}>
                                 <View style={stylesReg.leftGuideTxtWrap}>
                                     <Text style={stylesReg.leftGuideTxt}>제품의</Text>

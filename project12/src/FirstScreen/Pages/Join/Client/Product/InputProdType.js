@@ -106,28 +106,7 @@ class InputProdType extends Component {
                                 <Text style={stylesReg.leftGuideTxt}>제품종류를</Text>
                                 <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
                             </View>
-                            {/* 선택사항이므로 주석처리 
-                            <View style={stylesReg.rightStepNumWrap}>
-                                <Text style={stylesReg.rightStepNum}>04</Text>
-                            </View>
-                             */}
                         </View>
-                        {/* 선택사항이므로 주석처리
-                        <View style={stylesReg.procBarWrap}>
-                            <View style={styles.fx1}>
-                                <View style={stylesReg.procBarOn} />
-                            </View>
-                            <View style={styles.fx1}>
-                                <View style={stylesReg.procBarOn} />
-                            </View>
-                            <View style={styles.fx1}>
-                                <View style={stylesReg.procBarOn} />
-                            </View>
-                            <View style={styles.fx1}>
-                                <View style={stylesReg.procBarOn} />
-                            </View>
-                        </View>
-                         */}
                     </View>
 
                     <ScrollView showsVerticalScrollIndicator={false}>

@@ -93,7 +93,7 @@ class ListBusinessProductType extends Component {
 
                 <View style={styles.contentWrap}>
 
-                    <View style={{marginBottom: 36}}>
+                    <View style={{marginBottom: 21}}>
                         <View style={styles.fxDirRow}>
                             <View style={stylesReg.leftGuideTxtWrap}>
                                 <Text style={stylesReg.leftGuideTxt}>조회할</Text>

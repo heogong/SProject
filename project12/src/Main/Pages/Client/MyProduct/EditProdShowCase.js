@@ -180,7 +180,7 @@ class EditProdShowCase extends Component {
 
                 <View style={styles.contentWrap}>
                     <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
-                        <View style={{marginBottom: 36}}>
+                        <View style={{marginBottom: 21}}>
                             <View style={styles.fxDirRow}>
                                 <View style={stylesReg.leftGuideTxtWrap}>
                                     <Text style={stylesReg.leftGuideTxt}>제품의</Text>
