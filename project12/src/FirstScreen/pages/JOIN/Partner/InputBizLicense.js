@@ -97,15 +97,6 @@ class InputBizLicense extends Component {
                 <Text style={localStyles.photoTxt}>등록하기</Text>
               </View>
             </TouchableOpacity>
-
-            <View style={[styles.footerBtnWrap, {marginTop: 16}]}>
-              <CustomButton 
-                onPress={ this._nextButton }
-                disabled={ this.state.btnDisabled }
-              >
-                등록완료
-              </CustomButton>
-            </View>
           </View>
           
           {/* alert 메세지 모달 */}

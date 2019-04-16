@@ -42,8 +42,6 @@ class JoinPartnerInfoSuccess extends Component {
             <View style={styles.footerBtnWrap}>
               <CustomButton 
                   onPress={ Actions.JoinInputBizLicense() }
-                  edgeFill={true}
-                  fillTxt={true}
                 >
                 사업자 정보 등록
               </CustomButton>
