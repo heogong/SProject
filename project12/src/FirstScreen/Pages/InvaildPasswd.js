@@ -42,8 +42,8 @@ class InvaildPasswd extends Component {
       if(ResultBool) {
         this.setState({
           isAlertModal : true,
-          resultMsg : `${phoneNum}로 6자리 인증번호를`,
-          resultMsg2 : `보내드렸습니다. 5분 내 인증번호를 입력해주세요!${result.data.certNum}`,
+          resultMsg : `${phoneNum}로 인증번호를 보내드렸습니다.`,
+          resultMsg2 : `인증번호를 입력해주세요!${result.data.certNum}`,
         })
 
         let data = { 

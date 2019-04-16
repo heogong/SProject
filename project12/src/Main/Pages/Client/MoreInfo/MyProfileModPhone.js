@@ -52,8 +52,8 @@ class MyProfileModPhone extends Component {
       if(ResultBool) {
         this.setState({
           isAlertModal : true,
-          resultMsg : `${phoneNum}로 6자리 인증번호를`,
-          resultMsg2 : `보내드렸습니다. 5분 내 인증번호를 입력해주세요!${result.data.certNum}`
+          resultMsg : `${phoneNum}로 인증번호를 보내드렸습니다.`,
+          resultMsg2 : `인증번호를 입력해주세요!${result.data.certNum}`
         })
 
         SMS_SEND_ID = result.data.smsSendId;
@@ -139,7 +139,7 @@ class MyProfileModPhone extends Component {
 
         <View style={styles.contentWrap}>
 
-          <View>
+          <View style={styles.fx1}>
             <View style={styles.tooltipWrap}>
               <Text style={styles.tooltipTxt}>휴대폰 번호를 입력하신 후 [인증번호 받기] 버튼을 눌러주세요.</Text>
             </View>

@@ -133,7 +133,11 @@ class MyProfileModPassword2 extends Component {
                 placeholderTextColor={color.inputPlaceHodler} 
                 style={styles.inputNbDefaultBox} secureTextEntry={true}
               />
-              <Icon name={this.state.patternPw ? "ios-checkmark-circle" : "ios-close-circle"} style={[styles.inputIcon, {color: color.defaultColor}]} />
+              {this.state.patternPw 
+              // 패턴이 맞으면
+              ? <Icon name="ios-checkmark-circle" style={[styles.inputIcon, {color: color.defaultColor}]} />
+              // 패턴이 틀리면
+              : <Icon name="ios-checkmark-circle" style={[styles.inputIcon, {color: color.greyColor}]} />}
             </Item>
             <Text style={styles.inputNbTitleTxt}>새 비밀번호 확인</Text>
             <Item regular style={styles.inputNbWhBackGreyBottomBo}>
