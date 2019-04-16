@@ -323,6 +323,7 @@ class ViewAfterServiceState extends Component {
 					</Body>
 					<Right style={styles.headerRightWrap} />
 				</Header>
+        
 				<ScrollView showsVerticalScrollIndicator={false}>
 					<View style={styles.fx1}>
 						{this.state.showMap ? (
