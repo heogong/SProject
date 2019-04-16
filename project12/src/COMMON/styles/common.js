@@ -470,6 +470,7 @@ export const styles = StyleSheet.create({
     checkBoxWrap: {flexDirection: "row", alignItems: "center"},
     checkboxReset: {paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, marginLeft: -10, marginRight: 15, marginTop: 0, marginBottom: 0},
     checkboxTxt: {fontSize: 14, fontWeight: 'normal'},
+    checkboxIcon: {width: 35, height: 35},
 
     ftWe500: {fontWeight: "500"},
     ftWeBold: {fontWeight: "bold"}

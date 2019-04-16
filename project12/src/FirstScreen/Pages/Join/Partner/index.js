@@ -30,14 +30,15 @@ export default class SuccessRegMember extends Component {
 
           <View style={styles.fx1}>
             <View style={[styles.fx1, styles.alignItemsCenter]}>
-              <Text style={styles.greyFont}>귀하의 사업자정보를 등록하고</Text>
-              <Text style={styles.greyFont}>쿨리닉 매칭 서비스를 이용해보세요</Text>
+              <Text style={styles.greyFont}>쿨리닉 서비스 이용약관에 동의해 주세요.</Text>
             </View>
             <View style={styles.footerBtnWrap}>
               <CustomButton 
-                onPress={Actions.JoinInputBizLicense}
-              >
-                입력완료
+                  onPress={ Actions.PartnerAgreeTermsService }
+                  edgeFill={true}
+                  fillTxt={true}
+                >
+                약관동의하러가기
               </CustomButton>
             </View>
 

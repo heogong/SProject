@@ -34,12 +34,13 @@ class SuccessAgreeTermsService extends Component {
           </View>
           <View style={styles.fx1}>
             <View style={[styles.fx1, styles.alignItemsCenter]}>
-              <Text style={styles.greyFont}>제품을 등록하면 빠른 서비스를 받을 수 있어요!</Text>
+              <Text style={styles.greyFont}>결제카드를 등록하시면</Text>
+              <Text style={styles.greyFont}>빠르게 A/S 신청이 가능합니다.</Text>
               <Text style={styles.greyFont}>지금 등록하러 가시겠어요?</Text>
             </View>
 
             <View style={styles.footerBtnWrap}>
-              <CustomButton 
+	            <CustomButton 
                 onPress={Actions.ClientMain}
                 DefaultLineBtn={true}
                 CustomBtnStyle={styles.mb5}
@@ -47,9 +48,9 @@ class SuccessAgreeTermsService extends Component {
                 메인화면으로
               </CustomButton>
               <CustomButton 
-                onPress={Actions.RegBusinessPlaceIndex}
-                style={[styles.btnDefault, styles.btnDefaultFill]}>
-                제품등록 하러가기
+                onPress={Actions.CardInputInfo}
+              >
+                결제카드등록
               </CustomButton>
             </View>
 

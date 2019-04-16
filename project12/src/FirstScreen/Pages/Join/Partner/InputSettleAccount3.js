@@ -119,7 +119,7 @@ class InputSettleAccount3 extends Component {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
               console.log(resultData);
               if(ResultBool) {
-                Actions.JoinInputPartnerInfoSuccess();
+                Actions.SuccessJoinPartner();
               } else {
                 this.setState({
                   isAlertModal : true,
@@ -148,7 +148,7 @@ class InputSettleAccount3 extends Component {
                     <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
                   </View>
                   <View style={stylesReg.rightStepNumWrap}>
-                    <Text style={stylesReg.rightStepNum}>06</Text>
+                    <Text style={stylesReg.rightStepNum}>03</Text>
                   </View>
                 </View>
 
@@ -160,19 +160,7 @@ class InputSettleAccount3 extends Component {
                     <View style={stylesReg.procBarOn} />
                   </View>
                   <View style={styles.fx1}>
-                  <View style={stylesReg.procBarOn} />
-                  </View>
-                  <View style={styles.fx1}>
-                  <View style={stylesReg.procBarOn} />
-                  </View>
-                  <View style={styles.fx1}>
-                  <View style={stylesReg.procBarOn} />
-                  </View>
-                  <View style={styles.fx1}>
-                  <View style={stylesReg.procBarOn} />
-                  </View>
-                  <View style={styles.fx1}>
-                  <View style={stylesReg.procBarOff} />
+                    <View style={stylesReg.procBarOn} />
                   </View>
                 </View>
               </View>
@@ -201,6 +189,7 @@ class InputSettleAccount3 extends Component {
                     placeholder="은행명" 
                     placeholderTextColor={color.inputPlaceHodler} 
                     style={styles.inputDefaultBox}/>
+                    <Icon name="arrow-dropdown" style={styles.selectBoxIcon} />
                 </Item>
                 <Item regular style={[styles.mb20, styles.inputWhBackGreyBo]}>
                   <Input 

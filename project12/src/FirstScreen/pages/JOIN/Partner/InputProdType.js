@@ -114,35 +114,23 @@ class InputProdType extends Component {
                     <View style={stylesReg.leftGuideTxtWrap}>
                         <Text style={stylesReg.leftGuideTxt}>전문분야를</Text>
                         <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
-                        <Text style={stylesReg.leftGuideTxt}>(복수선택가능)</Text>
+                        <Text style={stylesReg.leftGuideTxt}>(복수선택)</Text>
                     </View>
                     <View style={stylesReg.rightStepNumWrap}>
-                        <Text style={stylesReg.rightStepNum}>03</Text>
-                    </View>
+                            <Text style={stylesReg.rightStepNum}>03</Text>
+                        </View>
                     </View>
 
                     <View style={stylesReg.procBarWrap}>
-                    <View style={styles.fx1}>
-                        <View style={stylesReg.procBarOn} />
-                    </View>
-                    <View style={styles.fx1}>
-                        <View style={stylesReg.procBarOn} />
-                    </View>
-                    <View style={styles.fx1}>
-                    <View style={stylesReg.procBarOn} />
-                    </View>
-                    <View style={styles.fx1}>
-                    <View style={stylesReg.procBarOff} />
-                    </View>
-                    <View style={styles.fx1}>
-                    <View style={stylesReg.procBarOff} />
-                    </View>
-                    <View style={styles.fx1}>
-                    <View style={stylesReg.procBarOff} />
-                    </View>
-                    <View style={styles.fx1}>
-                    <View style={stylesReg.procBarOff} />
-                    </View>
+                        <View style={styles.fx1}>
+                            <View style={stylesReg.procBarOn} />
+                        </View>
+                        <View style={styles.fx1}>
+                            <View style={stylesReg.procBarOn} />
+                        </View>
+                        <View style={styles.fx1}>
+                            <View style={stylesReg.procBarOn} />
+                        </View>
                     </View>
                 </View>
 

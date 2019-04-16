@@ -277,14 +277,14 @@ class InputWorkHours extends Component {
 
                     <View style={styles.mb10}>
                         <View style={styles.fxDirRow}>
-                        <View style={stylesReg.leftGuideTxtWrap}>
-                            <Text style={stylesReg.leftGuideTxt}>일하실</Text>
-                            <Text style={stylesReg.leftGuideTxt}>시간대를</Text>
-                            <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
-                        </View>
-                        <View style={stylesReg.rightStepNumWrap}>
-                            <Text style={stylesReg.rightStepNum}>04</Text>
-                        </View>
+                            <View style={stylesReg.leftGuideTxtWrap}>
+                                <Text style={stylesReg.leftGuideTxt}>일하실</Text>
+                                <Text style={stylesReg.leftGuideTxt}>시간대를</Text>
+                                <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
+                            </View>
+                            <View style={stylesReg.rightStepNumWrap}>
+                                <Text style={stylesReg.rightStepNum}>03</Text>
+                            </View>
                         </View>
 
                         <View style={stylesReg.procBarWrap}>
@@ -296,18 +296,6 @@ class InputWorkHours extends Component {
                             </View>
                             <View style={styles.fx1}>
                                 <View style={stylesReg.procBarOn} />
-                            </View>
-                            <View style={styles.fx1}>
-                                <View style={stylesReg.procBarOn} />
-                            </View>
-                            <View style={styles.fx1}>
-                                <View style={stylesReg.procBarOff} />
-                            </View>
-                            <View style={styles.fx1}>
-                                <View style={stylesReg.procBarOff} />
-                            </View>
-                            <View style={styles.fx1}>
-                                <View style={stylesReg.procBarOff} />
                             </View>
                         </View>
                     </View>

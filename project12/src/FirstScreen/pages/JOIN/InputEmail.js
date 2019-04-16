@@ -185,9 +185,6 @@ class InputEmail extends Component {
                 <View style={styles.fx1}>
                   <View style={stylesReg.procBarOff} />
                 </View>
-                <View style={styles.fx1}>
-                  <View style={stylesReg.procBarOff} />
-                </View>
               </View>
             </View>
             <View style={[styles.fx3, styles.justiConCenter]}>

@@ -70,7 +70,7 @@ class InputProdType extends Component {
                         <View style={styles.fxDirRow}>
                             <View style={stylesReg.leftGuideTxtWrap}>
                                 <Text style={stylesReg.leftGuideTxt}>등록할</Text>
-                                <Text style={stylesReg.leftGuideTxt}>제품정보를</Text>
+                                <Text style={stylesReg.leftGuideTxt}>제품유형를</Text>
                                 <Text style={stylesReg.leftGuideTxt}>선택해주세요</Text>
                             </View>
                             <View style={stylesReg.rightStepNumWrap}>

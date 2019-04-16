@@ -31,7 +31,7 @@ class InputSettleAccount1 extends Component {
                 <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
               </View>
               <View style={stylesReg.rightStepNumWrap}>
-                <Text style={stylesReg.rightStepNum}>05</Text>
+                <Text style={stylesReg.rightStepNum}>03</Text>
               </View>
             </View>
 
@@ -43,19 +43,7 @@ class InputSettleAccount1 extends Component {
                 <View style={stylesReg.procBarOn} />
               </View>
               <View style={styles.fx1}>
-               <View style={stylesReg.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
-              </View>
-              <View style={styles.fx1}>
-               <View style={stylesReg.procBarOff} />
+                <View style={stylesReg.procBarOn} />
               </View>
             </View>
           </View>

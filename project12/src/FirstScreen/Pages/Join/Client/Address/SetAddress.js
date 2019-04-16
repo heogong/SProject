@@ -158,15 +158,17 @@ class SetAddress extends Component {
                     <View>
                         <View style={styles.fxDirRow}>
                             <View style={stylesReg.leftGuideTxtWrap}>
-                                <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
-                                <Text style={stylesReg.leftGuideTxt}>업체주소를</Text>
+                                <Text style={stylesReg.leftGuideTxt}>사업장</Text>
+                                <Text style={stylesReg.leftGuideTxt}>주소를</Text>
                                 <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
                             </View>
+                            {/* 선택사항이므로 주석처리
                             <View style={stylesReg.rightStepNumWrap}>
                                 <Text style={stylesReg.rightStepNum}>04</Text>
                             </View>
+                             */}
                         </View>
-
+                        {/* 선택사항이므로 주석처리
                         <View style={stylesReg.procBarWrap}>
                             <View style={styles.fx1}>
                                 <View style={stylesReg.procBarOn} />
@@ -181,6 +183,7 @@ class SetAddress extends Component {
                                 <View style={stylesReg.procBarOn} />
                             </View>
                         </View>
+                         */}
                     </View>
 
                     <View style={[styles.fx3, styles.justiConCenter]}>

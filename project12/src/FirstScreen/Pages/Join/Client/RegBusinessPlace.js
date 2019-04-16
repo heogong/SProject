@@ -57,11 +57,13 @@ class RegBusinessPlace extends Component {
                                 <Text style={stylesReg.leftGuideTxt}>사업장정보를</Text>
                                 <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
                             </View>
+                            {/* 선택사항이므로 주석처리
                             <View style={stylesReg.rightStepNumWrap}>
                                 <Text style={stylesReg.rightStepNum}>04</Text>
                             </View>
+                             */}
                         </View>
-
+                        {/* 선택사항이므로 주석처리
                         <View style={stylesReg.procBarWrap}>
                             <View style={styles.fx1}>
                                 <View style={stylesReg.procBarOn} />
@@ -76,6 +78,7 @@ class RegBusinessPlace extends Component {
                                 <View style={stylesReg.procBarOn} />
                             </View>
                         </View>
+                         */}
                     </View>
         
                     <View style={[styles.fx3, styles.justiConCenter]}>

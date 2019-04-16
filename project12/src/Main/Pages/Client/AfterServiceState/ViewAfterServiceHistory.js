@@ -162,6 +162,9 @@ class ViewAfterServiceHistory extends Component {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
               console.log(resultData);
               
+              // 신청내역 리로드
+              this._getAfterServiceReport();
+
               if(ResultBool) {
                 this.setState({
                   isModalVisible : false,
@@ -349,10 +352,10 @@ class ViewAfterServiceHistory extends Component {
                                  <CustomButton 
                                     onPress={() => this.setState({isModalVisible : true})}
                                     DefaultLineBtn={true}
-                                    CustomBtnStyle={{marginTop: 10}}
+                                    CustomBtnStyle={{height: 40, marginTop: 15, marginBottom: 0}}
                                     CustomFontStyle={{fontSize: 14}}
                                 >
-                                    평가하기
+                                    서비스평가 하러 가기
                                 </CustomButton>
                             ) : (
                                 <View/>

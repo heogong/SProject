@@ -316,19 +316,21 @@ class InputShowCase extends Component {
             
                 <View style={styles.contentWrap}>
                     <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
-                        <View style={{paddingLeft: 26, paddingRight: 26}}>
+                        <View style={{paddingLeft: 26, paddingRight: 26, marginBottom: 36}}>
                             <View style={styles.fxDirRow}>
                                 <View style={stylesReg.leftGuideTxtWrap}>
                                     <Text style={stylesReg.leftGuideTxt}>제품의</Text>
                                     <Text style={stylesReg.leftGuideTxt}>상세정보를</Text>
                                     <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
                                 </View>
-                                <View style={[stylesReg.rightStepNumWrap, {paddingRight: 26}]}>
+                                {/* 선택사항이므로 주석처리
+                                <View style={[stylesReg.rightStepNumWrap]}>
                                     <Text style={stylesReg.rightStepNum}>04</Text>
                                 </View> 
+                                 */}
                             </View>
                         </View>
-
+                        {/* 선택사항이므로 주석처리              
                         <View style={[stylesReg.procBarWrap, {paddingRight: 26, marginBottom: 47, paddingLeft: 26}]}>
                             <View style={styles.fx1}>
                                 <View style={stylesReg.procBarOn} />
@@ -343,6 +345,7 @@ class InputShowCase extends Component {
                                 <View style={stylesReg.procBarOn} />
                             </View>
                         </View>
+                         */}
                         <Carousel
                             ref={(c) => { this._carousel = c; }}
                             renderItem={this._renderItem}

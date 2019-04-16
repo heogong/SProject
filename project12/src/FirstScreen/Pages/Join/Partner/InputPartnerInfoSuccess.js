@@ -28,24 +28,24 @@ class JoinPartnerInfoSuccess extends Component {
                 <Image source={require('~/Common/Image/Next_icon.png')}  style={styles.btnSuccNextIcon}/>
               </View>
               <View style={localStyles.topTxtWrap}>
-                <Text style={localStyles.topTxt}>사업자정보가</Text>
-                <Text style={localStyles.topTxt}>등록되었어요!</Text>
+                <Text style={localStyles.topTxt}>약관동의가</Text>
+                <Text style={localStyles.topTxt}>완료되었어요!</Text>
               </View>
             </View>
           </View>
           <View style={styles.fx1}>
             <View style={[styles.fx1, styles.alignItemsCenter]}>
-              <Text style={styles.greyFont}>이제쿨리닉 이용약관에 동의하고</Text>
-              <Text style={styles.greyFont}>A/S 매칭 서비스를 받으러 가볼까요? </Text>
+              <Text style={styles.greyFont}>이제 사업자 정보를 등록해 주세요.</Text>
+              <Text style={styles.greyFont}>A/S 매칭 및 정산을 위한 정보입니다.</Text>
             </View>
 
             <View style={styles.footerBtnWrap}>
               <CustomButton 
-                  onPress={ Actions.PartnerAgreeTermsService }
+                  onPress={ Actions.JoinInputBizLicense() }
                   edgeFill={true}
                   fillTxt={true}
                 >
-                약관동의하러가기
+                사업자 정보 등록
               </CustomButton>
             </View>
 

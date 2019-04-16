@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Image } from 'react-native'
 import { CheckBox, Container, Text } from "native-base";
 
 import { Actions } from 'react-native-router-flux';
@@ -60,7 +60,7 @@ class AgreeTermsService extends Component {
             console.log(resultData);
             const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
             if(ResultBool) {
-                Actions.SuccessJoinPartner();
+                Actions.JoinInputPartnerInfoSuccess();
             } else {
                 this.setState({
                     isAlertModal : true,
@@ -86,7 +86,7 @@ class AgreeTermsService extends Component {
                 <Text style={stylesReg.leftGuideTxt}>동의해주세요</Text>
               </View>
               <View style={stylesReg.rightStepNumWrap}>
-                <Text style={stylesReg.rightStepNum}>07</Text>
+                <Text style={stylesReg.rightStepNum}>02</Text>
               </View>
             </View>
 
@@ -98,22 +98,9 @@ class AgreeTermsService extends Component {
                 <View style={stylesReg.procBarOn} />
               </View>
               <View style={styles.fx1}>
-              <View style={stylesReg.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-              <View style={stylesReg.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-              <View style={stylesReg.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-              <View style={stylesReg.procBarOn} />
-              </View>
-              <View style={styles.fx1}>
-              <View style={stylesReg.procBarOn} />
+                <View style={stylesReg.procBarOff} />
               </View>
             </View>
-            
           </View>
 
           <View style={[styles.alignItemsCenter, {paddingTop: 30, paddingBottom: 30, borderBottomWidth: 1, borderBottomColor: "#c9cacb"}]}>
@@ -123,45 +110,90 @@ class AgreeTermsService extends Component {
 
           <View style={localStyles.termsWrap}>
             <View style={styles.fx5}>
-              <View style={[styles.fxDirRow, styles.justiConBetween]}>
-                <Text style={[styles.blueFont, styles.mb20]}>서비스 이용약관 동의(필수)</Text>
-                <CheckBox 
-                  checked={this.state.checkBox1}
-                  onPress={async () => { await this.setState({checkBox1 : !this.state.checkBox1}), await this.toggleSwitch()}}
-                  style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                />
+              <View style={[styles.fxDirRow, styles.justiConBetween, styles.alignItemsCenter]}>
+                <Text style={styles.blueFont}>서비스 이용약관 동의(필수)</Text>
+                {this.state.checkBox1
+                ?
+                  <TouchableOpacity
+                    onPress={async () => { await this.setState({checkBox1 : false}), await this.toggleSwitch()}}
+                  >
+                    <Image source={require("~/Common/Image/check_circle_on.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                  </TouchableOpacity>
+                :
+                  <TouchableOpacity
+                    onPress={async () => { await this.setState({checkBox1 : true}), await this.toggleSwitch()}}
+                  >
+                    <Image source={require("~/Common/Image/check_circle_off.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                  </TouchableOpacity>
+                }
               </View>
-              <View style={[styles.fxDirRow, styles.justiConBetween]}>
-                <Text style={[styles.blueFont, styles.mb20]}>위치기반 서비스 이용약관 동의(필수)</Text>
-                <CheckBox 
-                  checked={this.state.checkBox2}
-                  onPress={async () => { await this.setState({checkBox2 : !this.state.checkBox2}), await this.toggleSwitch() }}
-                  style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                />
+              <View style={[styles.fxDirRow, styles.justiConBetween, styles.alignItemsCenter]}>
+                <Text style={styles.blueFont}>위치기반 서비스 이용약관 동의(필수)</Text>
+                {this.state.checkBox2
+                ?
+                  <TouchableOpacity
+                    onPress={async () => { await this.setState({checkBox2 : false}), await this.toggleSwitch()}}
+                  >
+                    <Image source={require("~/Common/Image/check_circle_on.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                  </TouchableOpacity>
+                :
+                  <TouchableOpacity
+                    onPress={async () => { await this.setState({checkBox2 : true}), await this.toggleSwitch()}}
+                  >
+                    <Image source={require("~/Common/Image/check_circle_off.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                  </TouchableOpacity>
+                }
               </View>
-              <View style={[styles.fxDirRow, styles.justiConBetween]}>
-                <Text style={[styles.blueFont, styles.mb20]}>개인정보 수집 동의(필수)</Text>
-                <CheckBox 
-                  checked={this.state.checkBox3}
-                  onPress={async () => { await this.setState({checkBox3 : !this.state.checkBox3}), await this.toggleSwitch() }}
-                  style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                />
+              <View style={[styles.fxDirRow, styles.justiConBetween, styles.alignItemsCenter]}>
+                <Text style={styles.blueFont}>개인정보 수집 동의(필수)</Text>
+                {this.state.checkBox3
+                ?
+                  <TouchableOpacity
+                    onPress={async () => { await this.setState({checkBox3 : false}), await this.toggleSwitch()}}
+                  >
+                    <Image source={require("~/Common/Image/check_circle_on.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                  </TouchableOpacity>
+                :
+                  <TouchableOpacity
+                    onPress={async () => { await this.setState({checkBox3 : true}), await this.toggleSwitch()}}
+                  >
+                    <Image source={require("~/Common/Image/check_circle_off.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                  </TouchableOpacity>
+                }
               </View>
-              <View style={[styles.fxDirRow, styles.justiConBetween]}>
-                <Text style={[styles.blueFont, styles.mb20]}>개인정보 제 3자 제공 동의서(필수)</Text>
-                <CheckBox 
-                  checked={this.state.checkBox4}
-                  onPress={async () => { await this.setState({checkBox4 : !this.state.checkBox4}), await this.toggleSwitch() }}
-                  style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                />
+              <View style={[styles.fxDirRow, styles.justiConBetween, styles.alignItemsCenter]}>
+                <Text style={styles.blueFont}>개인정보 제 3자 제공 동의서(필수)</Text>
+                {this.state.checkBox4
+                ?
+                  <TouchableOpacity
+                    onPress={async () => { await this.setState({checkBox4 : false}), await this.toggleSwitch()}}
+                  >
+                    <Image source={require("~/Common/Image/check_circle_on.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                  </TouchableOpacity>
+                :
+                  <TouchableOpacity
+                    onPress={async () => { await this.setState({checkBox4 : true}), await this.toggleSwitch()}}
+                  >
+                    <Image source={require("~/Common/Image/check_circle_off.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                  </TouchableOpacity>
+                }
               </View>
-              <View style={[styles.fxDirRow, styles.justiConBetween]}>
-                <Text style={[styles.blueFont, styles.mb20]}>마케팅 전체 수신동의(선택)</Text>
-                <CheckBox 
-                  checked={this.state.checkBox5}
-                  onPress={() => { this.setState({checkBox5 : !this.state.checkBox5}) }}
-                  style={[styles.checkboxReset, {borderColor: color.defaultColor}]}
-                />
+              <View style={[styles.fxDirRow, styles.justiConBetween, styles.alignItemsCenter]}>
+                <Text style={styles.blueFont}>마케팅 전체 수신동의(선택)</Text>
+                {this.state.checkBox5
+                ?
+                  <TouchableOpacity
+                    onPress={async () => { await this.setState({checkBox5 : false}), await this.toggleSwitch()}}
+                  >
+                    <Image source={require("~/Common/Image/check_circle_on.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                  </TouchableOpacity>
+                :
+                  <TouchableOpacity
+                    onPress={async () => { await this.setState({checkBox5 : true}), await this.toggleSwitch()}}
+                  >
+                    <Image source={require("~/Common/Image/check_circle_off.png")} resizeMode="contain" style={styles.checkboxIcon} />
+                  </TouchableOpacity>
+                }
               </View>
             </View>
 

@@ -30,15 +30,15 @@ export default class CardIndex extends Component {
 
           <View style={styles.fx1}>
             <View style={[styles.fx1, styles.alignItemsCenter]}>
-              <Text style={styles.greyFont}>결제카드를 등록하고 A/S를 신청해보세요</Text>
+              <Text style={styles.greyFont}>쿨리닉 서비스 이용약관에 동의해 주세요.</Text>
             </View>
 
             <View style={styles.footerBtnWrap}>
               <CustomButton 
-                onPress={Actions.CardInputInfo}
+              onPress={Actions.ClientAgreeTermsService}
               >
-                결제카드등록
-              </CustomButton>
+              약관동의하러가기
+            </CustomButton>
             </View>
 
           </View>

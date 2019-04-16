@@ -106,11 +106,11 @@ class IntroPage extends Component {
                   console.log('업체 정보 등록 상태 조회1 : ',resultData.data);
 
                   const checkPage = [
+                    [{'value' : resultData.data.partnerSvcAgreeYn}, {'action' : 'PartnerAgreeTermsService'}],
                     [{'value' : resultData.data.partnerBusiCertYn}, {'action' : 'JoinInputBizLicense'}], 
-                    [{'value' : resultData.data.partnerAccountYn}, {'action' : 'JoinInputSettleAccount'}], 
-                    [{'value' : resultData.data.partnerHandleYn}, {'action' : 'JoinInputWorkHours'}], 
+                    [{'value' : resultData.data.partnerHandleYn}, {'action' : 'JoinInputProdType'}], 
                     [{'value' : resultData.data.partnerWorkTimeYn}, {'action' : 'JoinInputWorkHours'}],
-                    [{'value' : resultData.data.partnerSvcAgreeYn}, {'action' : 'JoinInputWorkHours'}],
+                    [{'value' : resultData.data.partnerAccountYn}, {'action' : 'JoinInputSettleAccount'}], 
                   ];
 
                   const resultVaildPage = checkPage.filter((page) => page[0].value !== 'Y');

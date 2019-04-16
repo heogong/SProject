@@ -35,8 +35,8 @@ class SuccessCardInfo extends Component {
 
           <View style={styles.fx1}>
             <View style={[styles.fx1, styles.alignItemsCenter]}>
-              <Text style={styles.greyFont}>1,000원 카드결제에 놀라지 마세요!</Text>
-              <Text style={styles.greyFont}>10분 이내로 결제가 취소됩니다.</Text>
+              <Text style={styles.greyFont}>제품을 등록하면 빠른 서비스를 받을 수 있어요!</Text>
+              <Text style={styles.greyFont}>지금 등록하러 가시겠어요?</Text>
             </View>
 
             <View style={styles.footerBtnWrap}>
@@ -48,10 +48,10 @@ class SuccessCardInfo extends Component {
                 메인화면으로
               </CustomButton>
               <CustomButton 
-              onPress={Actions.ClientAgreeTermsService}
-            >
-              약관동의하러가기
-            </CustomButton>
+                onPress={Actions.RegBusinessPlaceIndex}
+                style={[styles.btnDefault, styles.btnDefaultFill]}>
+                제품등록 하러가기
+              </CustomButton>
             </View>
           </View>
         </View>

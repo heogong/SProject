@@ -84,12 +84,12 @@ class InputPartnerInfo extends Component {
             <View style={styles.mb10}>
               <View style={styles.fxDirRow}>
                 <View style={stylesReg.leftGuideTxtWrap}>
-                  <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
-                  <Text style={stylesReg.leftGuideTxt}>사업자정보를</Text>
+                  <Text style={stylesReg.leftGuideTxt}>사업자</Text>
+                  <Text style={stylesReg.leftGuideTxt}>상세정보를</Text>
                   <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
                 </View>
                 <View style={stylesReg.rightStepNumWrap}>
-                  <Text style={stylesReg.rightStepNum}>06</Text>
+                  <Text style={stylesReg.rightStepNum}>03</Text>
                 </View>
               </View>
 
@@ -101,19 +101,7 @@ class InputPartnerInfo extends Component {
                   <View style={stylesReg.procBarOn} />
                 </View>
                 <View style={styles.fx1}>
-                <View style={stylesReg.procBarOn} />
-                </View>
-                <View style={styles.fx1}>
-                <View style={stylesReg.procBarOn} />
-                </View>
-                <View style={styles.fx1}>
-                <View style={stylesReg.procBarOff} />
-                </View>
-                <View style={styles.fx1}>
-                <View style={stylesReg.procBarOff} />
-                </View>
-                <View style={styles.fx1}>
-                <View style={stylesReg.procBarOff} />
+                  <View style={stylesReg.procBarOn} />
                 </View>
               </View>
             </View>

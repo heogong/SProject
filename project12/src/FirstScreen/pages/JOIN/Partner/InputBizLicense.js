@@ -66,12 +66,12 @@ class InputBizLicense extends Component {
               
               <View style={styles.fxDirRow}>
                 <View style={stylesReg.leftGuideTxtWrap}>
-                  <Text style={stylesReg.leftGuideTxt}>귀하의</Text>
-                  <Text style={stylesReg.leftGuideTxt}>사업자등록증을</Text>
+                  <Text style={stylesReg.leftGuideTxt}>사업자</Text>
+                  <Text style={stylesReg.leftGuideTxt}>등록증을</Text>
                   <Text style={stylesReg.leftGuideTxt}>등록해주세요</Text>
                 </View>
                 <View style={stylesReg.rightStepNumWrap}>
-                  <Text style={stylesReg.rightStepNum}>02</Text>
+                  <Text style={stylesReg.rightStepNum}>03</Text>
                 </View>
               </View>
 
@@ -80,22 +80,10 @@ class InputBizLicense extends Component {
                   <View style={stylesReg.procBarOn} />
                 </View>
                 <View style={styles.fx1}>
-                  <View style={stylesReg.procBarOff} />
+                  <View style={stylesReg.procBarOn} />
                 </View>
                 <View style={styles.fx1}>
-                <View style={stylesReg.procBarOff} />
-                </View>
-                <View style={styles.fx1}>
-                <View style={stylesReg.procBarOff} />
-                </View>
-                <View style={styles.fx1}>
-                <View style={stylesReg.procBarOff} />
-                </View>
-                <View style={styles.fx1}>
-                <View style={stylesReg.procBarOff} />
-                </View>
-                <View style={styles.fx1}>
-                <View style={stylesReg.procBarOff} />
+                  <View style={stylesReg.procBarOn} />
                 </View>
               </View>
               
