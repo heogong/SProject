@@ -192,6 +192,7 @@ class InputEmail extends Component {
                 <Input 
                   placeholder="이메일주소" 
                   placeholderTextColor={color.inputPlaceHodler} 
+                  autoCapitalize={"none"}
                   style={styles.inputDefaultBox}
                   onChangeText={this._handleEmailChange}
                   value={this.state.text}

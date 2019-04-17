@@ -22,6 +22,7 @@ class MoreMenu extends Component {
 
     this.state = {
         data : [],
+        isModalVisible : false,
         isAlertModal : false, // alert 용
     }
   }
@@ -118,7 +119,7 @@ class MoreMenu extends Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={ this._logOut }>
+          <TouchableOpacity onPress={ () => this.setState({isModalVisible : true}) }>
             <View style={localStyles.listMenuWrap}>
               <Text style={localStyles.listMenuTxt}>로그아웃</Text>
             </View>
@@ -140,6 +141,17 @@ class MoreMenu extends Component {
             infoText={this.state.resultMsg}
             btnText="확인"
         />
+
+        <CustomModal
+					modalType="CONFIRM"
+					isVisible={this.state.isModalVisible}
+					onPress1={() => this.setState({isModalVisible : false})}
+					onPress2={this._logOut}
+					infoText1="로그아웃 하시겠습니까?"
+					infoText2={null}
+					btnText1="취소"
+					btnText2="확인"
+				/>
       </Container>
     );
   }

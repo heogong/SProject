@@ -27,6 +27,7 @@ let PWD_NAME = null; // 패스워드 찾기 이름
 let PWD_PHONE_NUM = null; // 패스워드 찾기 폰번호 
 let PASSWD1 = null; // 패스워드 탭 비밀번호1
 let PASSWD2 = null; // 패스워드 탭 비밀번호1
+const PASSWD_PATTERN = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 
 class InvaildId extends Component {
   constructor(props) {
@@ -208,7 +209,7 @@ class InvaildId extends Component {
 
    _changePasswd = () => {
     //패스워드 유효성 검사 필요(null 여부 / 패턴 여부)
-    if(PASSWD1 == '') {
+    if(PASSWD1 == '' || PASSWD2 == '') {
       this.setState({
         isAlertModal : true,
         resultMsg : '비밀번호를 입력해주세요.',
@@ -217,13 +218,12 @@ class InvaildId extends Component {
       return;
     }
 
-    if(PASSWD2 == '') {
+    if(!PASSWD_PATTERN.test(PASSWD1)) {
       this.setState({
         isAlertModal : true,
-        resultMsg : '비밀번호를 입력해주세요.',
+        resultMsg : '비밀번호(영문,숫자,특수문자8-15자) 으로 입력해주세요.',
         resultMsg2 : null
-      })
-      return;
+      });
     }
 
     if(PASSWD1 == PASSWD2) {

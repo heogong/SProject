@@ -294,11 +294,13 @@ class ViewAfterServiceHistory extends Component {
 									<Text style={localStyles.histBoxSubTitleTxt}>쿨리닉 제품분석</Text>
 									<View style={[ styles.fxDirRow, { flexWrap: 'wrap' } ]}>
 										{this.state.data.clientPrdParts.map((info, idx) => (
+
 											<View key={idx} style={{ width: '50%' }}>
 												<Text style={localStyles.histBoxInfoTxt} numberOfLines={1}>
 													{info.rootPrdPartKoNm} : {info.prdPartKoNm}
 												</Text>
 											</View>
+											
 										))}
 									</View>
 								</View>
