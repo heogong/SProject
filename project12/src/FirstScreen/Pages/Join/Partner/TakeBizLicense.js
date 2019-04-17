@@ -109,7 +109,7 @@ class TakeBizLicense extends Component {
           <View style={[styles.justiConStart, styles.alignItemsCenter]}>
             <H1 style={localStyles.topTitleTxt}>사업자등록증사진</H1>
             <Text style={localStyles.topTxt}>사업자등록번호와 기업명, 대표이름 등</Text>
-            <Text style={localStyles.topTxt}>글씨가 잘 보이도록 촬영 또는 스캔해주세요</Text>
+            <Text style={localStyles.topTxt}>글씨가 잘 보이도록 촬영해주세요</Text>
           </View>
 
           <View style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
