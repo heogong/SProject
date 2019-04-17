@@ -164,7 +164,7 @@ class AfterServiceAddPayment extends Component {
             <Root>
                 <Spinner
                     visible={this.state.spinner}
-                    textContent={'결제 중입니다.'}
+                    textContent={'추가 A/S 결제중입니다.'}
                     textStyle={styles.whiteFont}
                     style={{color: color.whiteColor}}
                 />

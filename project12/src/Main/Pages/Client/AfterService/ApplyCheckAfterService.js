@@ -5,6 +5,7 @@ import { Container, Text } from "native-base";
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from "react-native-router-flux";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import GetProduct from '~/Main/Functions/GetProduct'
 import GetAfterServiceApplyInfo from '~/Main/Functions/GetAfterServiceApplyInfo'
@@ -45,7 +46,8 @@ class ApplyCheckAfterService extends Component {
         asRecvDsc : null,
         isAlertModal : false, // alert 용
         resultMsg : null, // alert 용
-        isModalVisible : false
+        isModalVisible : false,
+        spinner : false,
       };
     }
 
@@ -54,29 +56,6 @@ class ApplyCheckAfterService extends Component {
         //this._getListCard();
         this._getAsRecvInfo();
     }
-   
-    // 등록된 사업장 제품 조회
-
-    // _getProduct = () => {
-    //     GetProduct(this.props.clientPrdId).then(result => {
-    //         GetCommonData(result, this._getProduct).then(async resultData => {
-    //             if(resultData !== undefined) {
-    //                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-    //                 console.log(resultData);
-    //                 if(ResultBool) {
-    //                     this.setState({ 
-    //                         data: resultData.data,
-    //                     });
-    //                 } else {
-    //                     this.setState({
-    //                         isAlertModal : true,
-    //                         resultMsg : resultData.resultMsg
-    //                     })
-    //                 }
-    //             }
-    //         });
-    //     });
-    // }
 
     // AS 접수 정보 조회
     _getAsRecvInfo = () => {
@@ -100,39 +79,11 @@ class ApplyCheckAfterService extends Component {
         });
     }
 
-    // 회원 AS 접수
-    // _regAfterService = () => {
-    //     this.setState({isModalVisible : false})
-
-    //     RegAfterService(
-    //         this.props.clientPrdId,
-    //         this.props.asItemId,
-    //         this.props.asRecvDsc, 
-    //         this.props.etcComment).then(result => {
-    //         GetCommonData(result, this._regAfterService).then(async resultData => {
-    //             if(resultData !== undefined) {
-    //                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-    //                 console.log(resultData);
-    //                 if(ResultBool) {
-    //                     // // 증상내역 text
-    //                     // asCaseData[asCaseData.findIndex(x => x.asItemId === selected)].asItemNm;
-    //                     // 신청 내역 확인 페이지 이동
-    //                     this._paymentAfterService(resultData.data.asRecvId);
-    //                 } else {
-    //                     this.setState({
-    //                         isAlertModal : true,
-    //                         resultMsg : resultData.resultMsg
-    //                     })
-    //                 }
-    //             }
-    //         });
-    //     });
-    // }
-
     // AS 결제 요청
     _paymentAfterService = () => {
 
-        this.setState({isModalVisible : false})
+        this.setState({isModalVisible : false});
+        this.setState({spinner : true}); // 로딩 모달 시작
 
         PaymentAfterService(this.props.billingKeyId, this.props.asRecvId).then(result => {
             GetCommonData(result, this._paymentAfterService).then(async resultData => {
@@ -140,13 +91,15 @@ class ApplyCheckAfterService extends Component {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
                     if(ResultBool) {
+                        this.setState({spinner : false});
                         Actions.AfterServiceApplyProductComplete({
                             asRecvId : this.props.asRecvId
                         })
                     } else {
                         this.setState({
                             isAlertModal : true,
-                            resultMsg : resultData.resultMsg
+                            resultMsg : resultData.resultMsg,
+                            spinner : false
                         })
                     }
                 }
@@ -157,6 +110,12 @@ class ApplyCheckAfterService extends Component {
     render() {
         return (
             <Container style={styles.container}>
+                <Spinner
+                    visible={this.state.spinner}
+                    textContent={'A/S 출장비 결제중입니다.'}
+                    textStyle={styles.whiteFont}
+                    style={{color: color.whiteColor}}
+                />
                 <View style={{
                     paddingLeft : styles.containerInnerPd.paddingLeft,
                     paddingRight : styles.containerInnerPd.paddingRight
@@ -221,7 +180,7 @@ class ApplyCheckAfterService extends Component {
                         edgeFill={true}
                         fillTxt={true}
                     >
-                        매칭시작
+                        A/S 가능한 업체 찾기
                     </CustomButton>
 
                 </View>
