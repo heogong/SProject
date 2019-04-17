@@ -127,6 +127,7 @@ import InputProdType from './src/FirstScreen/Pages/Join/Client/Product/InputProd
 import InputShowCase from './src/FirstScreen/Pages/Join/Client/Product/InputShowCase' // 쇼케이스 등록
 import TakeProductImage from './src/FirstScreen/Pages/Join/Client/Product/TakeProductImage' // 보유제품 사진 촬영
 import TakeProductGuide1 from './src/FirstScreen/Pages/Join/Client/Product/TakeProductGuide1' // 보유제품 사진 촬영
+import TakeProductGuide2 from './src/FirstScreen/Pages/Join/Client/Product/TakeProductGuide2' // 보유제품 사진 촬영
 import SuccessRegProduct from './src/FirstScreen/Pages/Join/Client/Product/SuccessRegProduct' // 제품등록완료
 
 import InputProdImage from './src/FirstScreen/Pages/Join/Client/Product/InputProdImage' // 제품 이미지 등록 (?)
@@ -254,6 +255,7 @@ const PAGE = () => (
       <Scene key="InputShowCase" component={InputShowCase} /> 
       <Scene key="TakeProductImage"  component={TakeProductImage} />
       <Scene key="TakeProductGuide1" component={TakeProductGuide1} />
+      <Scene key="TakeProductGuide2" component={TakeProductGuide2} />
       <Scene key="SuccessRegProduct" component={SuccessRegProduct} type={ActionConst.RESET}/>
 
 

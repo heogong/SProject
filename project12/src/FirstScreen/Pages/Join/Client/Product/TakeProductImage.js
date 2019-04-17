@@ -162,7 +162,9 @@ class TakeProductImage extends Component {
             <Text style={localStyles.topTxt}>글씨가 잘 보이도록 촬영 또는 스캔해주세요</Text>
           </View>
           
-          <TouchableOpacity style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
+          <TouchableOpacity 
+            onPress={Actions.TakeProductGuide1}
+            style={[styles.fx1, styles.justiConCenter, styles.alignItemsCenter]}>
             <Image source={require("~/Common/Image/Photo_guide.png")} resizeMode="contain" style={localStyles.photoGuideImg} />
           </TouchableOpacity>
 
