@@ -158,7 +158,7 @@ export const ENTRIES1 = [
         guideTxt1 : 'A/S 출발에서',
         guideTxt2 : 'A/S 완료까지',
         guideTxt3 : '진행가이드',
-        link : 'PartnerGuide1'
+        link : 'PartnerGuide1Sub'
     },
     {
         title: 'STEP.2',
@@ -166,7 +166,7 @@ export const ENTRIES1 = [
         guideTxt1 : 'A/S업체',
         guideTxt2 : '상세정보',
         guideTxt3 : '보는방법',
-        link : 'PartnerGuide2'
+        link : 'PartnerGuide2Sub'
     },
     {
         title: 'STEP.3',
@@ -174,7 +174,7 @@ export const ENTRIES1 = [
         guideTxt1 : 'A/S정산',
         guideTxt2 : '보고서',
         guideTxt3 : '작성방법',
-        link : 'PartnerGuide3'
+        link : 'PartnerGuide3Sub'
     }
 ];
 

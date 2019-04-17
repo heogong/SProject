@@ -226,7 +226,7 @@ const PAGE = () => (
       <Scene key="JoinInputSettleAccount"  component={JoinInputSettleAccount1} type={ActionConst.RESET}/>
       <Scene key="JoinInputSettleAccount2" component={JoinInputSettleAccount2} />
       <Scene key="JoinInputSettleAccount3" component={JoinInputSettleAccount3} />
-      <Scene key="JoinInputPartnerInfoSuccess" component={JoinInputPartnerInfoSuccess} />
+      <Scene key="JoinInputPartnerInfoSuccess" component={JoinInputPartnerInfoSuccess} type={ActionConst.RESET}/>
       
       <Scene key="LoginAccountType" component={LoginAccountType} back onBack={() => Actions.InitPage()}/>
       <Scene key="LoginInputAccount" component={LoginInputAccount} />

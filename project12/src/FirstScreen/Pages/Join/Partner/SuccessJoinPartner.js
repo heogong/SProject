@@ -19,16 +19,16 @@ class SuccessJoinPartner extends Component {
       <Container style={styles.containerInnerPd}>
         <CustomHeader resetPage={true} />
 
-        <View style={localStyles.contentWrap}>
-          <View style={localStyles.contentTop}>
+        <View style={styles.succContentWrap}>
+          <View style={styles.succContentTop}>
             <View>
               <View style={[styles.alignItemsCenter, {marginBottom: 38}]}>
-                <Image source={require('~/Common/Image/input-able.png')} style={{width: 48, height: 48}}/>
+                <Image source={require('~/Common/Image/input-able.png')} style={styles.btnSuccNextIcon}/>
               </View>
-              <View style={localStyles.topTxtWrap}>
-                <Text style={localStyles.topTxt}>축하합니다!</Text>
-                <Text style={localStyles.topTxt}>파트너신청이</Text>
-                <Text style={localStyles.topTxt}>완료되었어요</Text>
+              <View style={styles.succTopTxtWrap}>
+                <Text style={styles.succTopTxt}>축하합니다!</Text>
+                <Text style={styles.succTopTxt}>파트너신청이</Text>
+                <Text style={styles.succTopTxt}>완료되었어요</Text>
               </View>
             </View>
           </View>

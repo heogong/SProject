@@ -139,8 +139,8 @@ class SetAddress extends Component {
                         <View>
                             <View style={styles.fxDirRow}>
                                 <View style={stylesReg.leftGuideTxtWrap}>
-                                    <Text style={stylesReg.leftGuideTxt}>A/S 대기</Text>
-                                    <Text style={stylesReg.leftGuideTxt}>(사엄장)주소를</Text>
+                                    <Text style={stylesReg.leftGuideTxt}>사업장</Text>
+                                    <Text style={stylesReg.leftGuideTxt}>주소를</Text>
                                     <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
                                 </View>
                                 <View style={stylesReg.rightStepNumWrap}>

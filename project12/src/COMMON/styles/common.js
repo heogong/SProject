@@ -71,8 +71,7 @@ export const styles = StyleSheet.create({
     },
     btnSuccNextIcon: {
       width: 50,
-      height: 50,
-      marginBottom: 20
+      height: 50
     },
     // 메인 헤더
     headerM: {

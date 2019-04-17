@@ -11,25 +11,21 @@ import { styles } from '~/Common/Styles/common';
 class JoinPartnerInfoSuccess extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      checkBox : false
-    };
   }
 
   render() {
     return (
       <Container style={styles.containerInnerPd}>
         <CustomHeader resetPage={true} />
-
-        <View style={localStyles.contentWrap}>
-          <View style={localStyles.contentTop}>
+        <View style={styles.succContentWrap}>
+          <View style={styles.succContentTop}>
             <View>
               <View style={[styles.alignItemsCenter, {marginBottom: 38}]}>
                 <Image source={require('~/Common/Image/Next_icon.png')}  style={styles.btnSuccNextIcon}/>
               </View>
-              <View style={localStyles.topTxtWrap}>
-                <Text style={localStyles.topTxt}>약관동의가</Text>
-                <Text style={localStyles.topTxt}>완료되었어요!</Text>
+              <View style={styles.succTopTxtWrap}>
+                <Text style={styles.succTopTxt}>약관동의가</Text>
+                <Text style={styles.succTopTxt}>완료되었어요!</Text>
               </View>
             </View>
           </View>
@@ -41,7 +37,7 @@ class JoinPartnerInfoSuccess extends Component {
 
             <View style={styles.footerBtnWrap}>
               <CustomButton 
-                  onPress={ Actions.JoinInputBizLicense() }
+                  onPress={ Actions.JoinInputBizLicense }
                 >
                 사업자 정보 등록
               </CustomButton>
