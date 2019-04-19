@@ -41,6 +41,9 @@ class ViewAfterServiceHistory extends Component {
 						addr: {
 							addressName: null
 						},
+						road: {
+							addressName: null
+						},
 						detail: {
 							detailAddr1: null
 						}
@@ -274,10 +277,11 @@ class ViewAfterServiceHistory extends Component {
 								{this.state.data.clinePrdInfo.clientPrdNm}
 							</Text>
 							<Text style={localStyles.histBoxInfoTxt}>
-								{this.state.data.clinePrdInfo.bplace.addr.addressName}
-							</Text>
-							<Text style={localStyles.histBoxInfoTxt}>
-								{this.state.data.clinePrdInfo.bplace.detail.detailAddr1}
+								{
+									this.state.data.clinePrdInfo.bplace.road == "" && this.state.data.clinePrdInfo.bplace.road == null 
+									? this.state.data.clinePrdInfo.bplace.addr.addressName
+									: this.state.data.clinePrdInfo.bplace.road.addressName
+								} {this.state.data.clinePrdInfo.bplace.detail.detailAddr1}
 							</Text>
 
 							<Text style={localStyles.histBoxSubTitleTxt}>참고사항</Text>

@@ -305,8 +305,13 @@ class ClientHome extends Component {
     <View style={localStyles.topBoxWrap}>
         <View style={styles.mb5}>
             <Text style={localStyles.topBoxNameTxt} numberOfLines={1}>{this.state.clientPrdInfo.bplace.bplaceNm}</Text>
-            <Text style={localStyles.topBoxtAddrTxt}>{this.state.clientPrdInfo.bplace.addr.addressName}</Text>
-            <Text style={localStyles.topBoxtAddrTxt}>{this.state.clientPrdInfo.bplace.detail.detailAddr1}</Text>
+            <Text style={localStyles.topBoxtAddrTxt}>
+            {
+                this.state.clientPrdInfo.bplace.road == "" && this.state.clientPrdInfo.bplace.road == null 
+                ? this.state.clientPrdInfo.bplace.addr.addressName
+                : this.state.clientPrdInfo.bplace.road.addressName
+            } {this.state.clientPrdInfo.bplace.detail.detailAddr1}
+            </Text>
         </View>
 
         <View style={localStyles.bottomBoxWrap}>
@@ -382,8 +387,7 @@ class ClientHome extends Component {
                   >
                     <View style={styles.mb10}>
                         <Text style={localStyles.topBoxNameTxt} numberOfLines={1}>{(business.bplaceNm !== null) ? business.bplaceNm : '사업장 정보를 입력해주세요.'}</Text>
-                        <Text style={localStyles.topBoxtAddrTxt}>{(business.addr !== null) ? business.addr.addressName : '사업장 정보를 입력해주세요.'}</Text>
-                        <Text style={localStyles.topBoxtAddrTxt}>{(business.detail !== null) ? business.detail.detailAddr1 : '사업장 정보를 입력해주세요.'}</Text>
+                        <Text style={localStyles.topBoxtAddrTxt}>{(business.road !== null) ? business.road.addressName + " " + business.detail.detailAddr1 : (business.addr !== null) ? business.addr.addressName + " " + business.detail.detailAddr1 : '사업장 정보를 입력해주세요.'}</Text>
                     </View>
         
                     <View style={localStyles.bottomBoxWrap}>

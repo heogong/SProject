@@ -54,14 +54,14 @@ const NoAfterService = () => (
 // A/S 요청
 const MatchingReq = ({toggleModal, data}) => (
     <View style={{paddingLeft: 27, paddingRight: 27, paddingTop: 16, paddingBottom: 15}}>
-        <View style={{backgroundColor: color.whiteColor, height: 128, width: "100%"}}>
+        <View style={{backgroundColor: color.whiteColor, height: 128, width: "100%", paddingLeft: 10, paddingRight: 10}}>
             <View style={styles.modalContent}>
                 <View style={{justifyContent: "center"}}>
                     <Text style={[styles.modalTopTxt, {fontWeight: "bold", color: "#038dbd", fontSize: 15}]} numberOfLines={1}>
                         {
-                            data.bplaceAddr == "" && data.bplaceAddr == null 
-                            ? data.bplaceAddrRoad
-                            : data.bplaceAddr
+                            data.bplaceAddrRoad == "" && data.bplaceAddrRoad == null 
+                            ? data.bplaceAddr
+                            : data.bplaceAddrRoad
                         }
                     </Text>
                     <Text style={styles.modalTopTxt}>에서 A/S 요청이 있습니다.</Text>
@@ -247,9 +247,9 @@ export default class Main extends Component {
                         <View style={{marginTop: 5, marginBottom: 5}}>
                             <Text style={{fontSize: 16, color: "#038dbd", fontWeight: "bold"}} numberOfLines={1}>
                                 {
-                                    item.bplaceAddr == "" && item.bplaceAddr == null 
-                                    ? item.bplaceAddrRoad
-                                    : item.bplaceAddr
+                                    item.bplaceAddrRoad == "" && item.bplaceAddrRoad == null 
+                                    ? item.bplaceAddr
+                                    : item.bplaceAddrRoad
                                 }    
                             </Text>
                         </View>

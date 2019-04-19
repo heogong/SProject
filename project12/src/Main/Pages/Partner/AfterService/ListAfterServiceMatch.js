@@ -29,14 +29,14 @@ const Product = ({index, afterService, toggelAction}) => (
         </View>
         <View style={styles.listPrdBoxRightTxtWrap}>
           <H3 style={[styles.listPrdBoxRightTitleTxt, {paddingRight: 110}]} numberOfLines={1}>{ afterService.prdTypeKoNm }</H3>
-          <Text style={styles.listPrdBoxDeTxt}>
+          <Text style={[styles.listPrdBoxDeTxt, {paddingRight: 73}]}>
             {
-                afterService.bplaceAddr == "" && afterService.bplaceAddr == null 
-                ? afterService.bplaceAddrRoad
-                : afterService.bplaceAddr
-            }    
+                afterService.bplaceAddrRoad == "" && afterService.bplaceAddrRoad == null 
+                ? afterService.bplaceAddr
+                : afterService.bplaceAddrRoad
+            } { afterService.bplaceAddrDtl }  
         </Text>
-          <Text style={styles.listPrdBoxDeTxt}>{ afterService.bplaceAddrDtl }</Text>
+          {/* <Text style={styles.listPrdBoxDeTxt}>{ afterService.bplaceAddrDtl }</Text> */}
         </View>
 
         <View style={[styles.listPrdBoxNextIconWrap, {marginTop: 10}]}>

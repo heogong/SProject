@@ -420,7 +420,7 @@ class RegReportBeforePic extends Component {
                             <CustomButton  
                                 onPress={ () => this.setState({isModalVisible : true}) }
                                 disabled={this.state.btnDisabled}>
-                                등록완료
+                                작성완료
                             </CustomButton>
                         </View>
                 </View>

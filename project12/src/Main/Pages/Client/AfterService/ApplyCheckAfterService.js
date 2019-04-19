@@ -136,13 +136,12 @@ class ApplyCheckAfterService extends Component {
                         <Text style={localStyles.histBoxSubTitleTxt}>{this.state.data.clientPrdNm}</Text>
                         <Text style={localStyles.histBoxInfoTxt}>
                             {
-                                this.state.data.bplaceAddr == "" && this.props.state.bplaceAddr == null 
-                                ? this.state.data.bplaceAddrRoad
-                                : this.state.data.bplaceAddr
-                            }    
+                                this.state.data.bplaceAddrRoad == "" && this.props.state.bplaceAddrRoad == null 
+                                ? this.state.data.bplaceAddr
+                                : this.state.data.bplaceAddrRoad
+                            } {this.state.data.bplaceAddrDtl}
                         </Text>
-                        <Text style={localStyles.histBoxInfoTxt}>{this.state.data.bplaceAddrDtl}</Text>
-
+                        
                         <Text style={localStyles.histBoxSubTitleTxt}>A/S 증상</Text>
                         <Text style={localStyles.histBoxInfoTxt}>{this.state.data.asItemNm}</Text>
 
@@ -180,7 +179,7 @@ class ApplyCheckAfterService extends Component {
                         edgeFill={true}
                         fillTxt={true}
                     >
-                        A/S 가능한 업체 찾기
+                        A/S 업체 매칭시작
                     </CustomButton>
 
                 </View>

@@ -121,15 +121,14 @@ class ViewAfterServiceMatch extends Component {
                                     />
                                 </View>
                                 <View style={[styles.justiConCenter, {paddingLeft: 15}]}>
-                                    <H3 style={[styles.mb15, localStyles.topBoxTxt]} numberOfLines={1}>{this.state.data.bplaceNm}</H3>
-                                    <Text style={localStyles.topBoxDeTxt} numberOfLines={1}>
+                                    <H3 style={[styles.mb10, localStyles.topBoxTxt]} numberOfLines={1}>{this.state.data.bplaceNm}</H3>
+                                    <Text style={[localStyles.topBoxDeTxt, {paddingRight: 73}]}>
                                         {
-                                            this.state.data.bplaceAddr == "" && this.state.data.bplaceAddr == null 
-                                            ? this.state.data.bplaceAddrRoad
-                                            : this.state.data.bplaceAddr
-                                        }    
+                                            this.state.data.bplaceAddrRoad == "" && this.state.data.bplaceAddrRoad == null 
+                                            ? this.state.data.bplaceAddr
+                                            : this.state.data.bplaceAddrRoad
+                                        } {this.state.data.bplaceAddrDtl}  
                                     </Text>
-                                    <Text style={localStyles.topBoxDeTxt} numberOfLines={1}>{this.state.data.bplaceAddrDtl}</Text>
                                 </View>
                                 
                                 {/* 카카오 버트 네비 기능 제거

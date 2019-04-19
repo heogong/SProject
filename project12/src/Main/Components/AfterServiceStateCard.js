@@ -234,12 +234,11 @@ class AfterServiceStateCard extends Component {
                     <H1 style={localStyles.topTitleTxt}>{this.props.data.asPrgsStatDsc}</H1>
                     <Text style={localStyles.topTxt}>
                         {
-                            this.props.data.bplaceAddr == "" && this.props.data.bplaceAddr == null 
-                            ? this.props.data.bplaceAddrRoad
-                            : this.props.data.bplaceAddr
-                        }
+                            this.props.data.bplaceAddrRoad == "" && this.props.data.bplaceAddrRoad == null 
+                            ? this.props.data.bplaceAddr
+                            : this.props.data.bplaceAddrRoad
+                        } {this.props.data.bplaceAddrDtl}
                     </Text>
-                    <Text style={localStyles.topTxt}>{this.props.data.bplaceAddrDtl}</Text>
                 </View>
                 <View style={[styles.justiConStart, styles.alignItemsCenter]}>
                     <View 
@@ -350,7 +349,8 @@ const localStyles = StyleSheet.create({
     },
     topTxt: {
         fontSize: 14,
-        color: "#8e8e98"
+        color: "#8e8e98",
+        textAlign: "center"
     },
     topTxt2: {
         fontSize: 14,
