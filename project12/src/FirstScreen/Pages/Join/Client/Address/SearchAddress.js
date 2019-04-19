@@ -8,6 +8,7 @@ import { Actions } from 'react-native-router-flux';
 
 import DrawMap from '~/Main/Components/DrawMap';
 import GetAddress from '~/Main/Functions/AddressInfo';
+import GetAddressKakao from '~/Main/Functions/AddressInfoKakao';
 import GetCommonData from '~/Common/Functions/GetCommonData';
 
 import CustomButton from '~/Common/Components/CustomButton';
@@ -16,16 +17,21 @@ import { styles } from '~/Common/Styles/common';
 import { color } from '~/Common/Styles/colors';
 
 let SELECT_ITEM = null;
+const FIRST_PAGE_NUM = 1;
 
 class SearchAddress extends Component {
   constructor(props) {
     super(props);
 
+    this.initPageNum = FIRST_PAGE_NUM;
     this.addressInput = null;
 
     this.state = { 
-      addressName : (this.props.addressName !== '') ? this.props.addressName : '강남구 논현동',
-      data: [],
+      addressName : (this.props.addressName !== '' && this.props.addressName != undefined) ? this.props.addressName : '기흥',
+      data: {
+        juso : []
+      },
+      data1: [],
       region: {
         latitude: 37.566535,
         longitude: 126.97796919999996,
@@ -43,7 +49,7 @@ class SearchAddress extends Component {
     };
   }
 
-  componentWillMount () {
+  componentWillMount () { 
     this._setAddressInfo();
   }
 
@@ -53,11 +59,17 @@ class SearchAddress extends Component {
       onPress={() => this._onPress(item)}
     >
       <Body style={localStyles.flatListWrap}>
-        <Text style={localStyles.flatListTxt}><Text style={[localStyles.flatListTxt, {color: color.defaultColor}]}>[지번]</Text> {item.address_name}</Text>
-          {(item.road_address !== null) ? (
-            <Text style={localStyles.flatListTxt}><Text style={[localStyles.flatListTxt, {color: color.defaultColor}]}>[도로]</Text> {item.road_address.address_name}</Text>
+        <View style={localStyles.flatListTxtWrap}>
+          <Text style={localStyles.flatListTxt1}>[지번]</Text><Text style={localStyles.flatListTxt}>{item.jibunAddr}</Text>
+        </View>
+          {(item.roadAddr !== null && item.roadAddr != '') ? (
+            <View style={localStyles.flatListTxtWrap}>
+              <Text style={localStyles.flatListTxt1}>[도로]</Text><Text style={localStyles.flatListTxt}>{item.roadAddr}</Text>
+            </View>
           ) : (
-            <Text style={[localStyles.flatListTxt, {color: color.greyColor, marginTop: 2}]}><Text style={[localStyles.flatListTxt, {color: color.defaultColor}]}>[도로]</Text> 주소가 없습니다.</Text>
+            <View style={localStyles.flatListTxtWrap}>
+              <Text style={localStyles.flatListTxt1}>[도로]</Text><Text style={localStyles.flatListTxt}>주소가 없습니다.</Text>
+            </View>
           )}
       </Body>
     </ListItem>
@@ -66,7 +78,7 @@ class SearchAddress extends Component {
   _emptyRenderItem = () => (
     <ListItem style={localStyles.flatListWrapList}>
       <Body style={[localStyles.flatListWrap, {paddingTop: 20, paddingBottom: 20}]}>
-        <Text style={[localStyles.flatListTxt, {color: color.greyColor}]}>검색정보가 없습니다.</Text>
+        <Text style={[localStyles.flatListTxt, {color: color.greyColor, paddingLeft: 15}]}>검색정보가 없습니다.</Text>
       </Body>
     </ListItem>
   );
@@ -79,15 +91,29 @@ class SearchAddress extends Component {
   // 주소 정보 가져오기
   _setAddressInfo = () => {
     if(this.state.addressName !== '') {
-      GetAddress(this.state.addressName).then(result => {
+      GetAddress(this.state.addressName, this.initPageNum).then(result => {
         GetCommonData(result, this._setAddressInfo).then(async resultData => {
           if(resultData !== undefined) {
             const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-            console.log(result.data);
+            console.log(result.data.results);
             if(ResultBool) {
-              this.setState({data : resultData.data.documents });
-              // this.setState({data : resultData.data.documents.filter(address => address.address_type !== "REGION")});
-            // this.setState({data : resultData.data.documents.filter(address => address !== null)});
+              if(result.data.results.juso.length > 0) {
+                if(this.initPageNum == 1) {
+                // 첫번쨰 페이지 이면
+                  // 최초 데이터 SET
+                  this.setState({data : result.data.results});
+                } else {
+                // 첫번쨰 페이지가 아니면
+                  // DATA를 Append
+                  this.setState({
+                    data : {
+                      ...this.state.data,
+                      juso : this.state.data.juso.concat(result.data.results.juso)
+                    }
+                  })
+                }
+                this.initPageNum++; // 페이지 번호 증가
+              }
             } else {
               this.setState({
                 isAlertModal : true,
@@ -107,22 +133,48 @@ class SearchAddress extends Component {
 
 
   _onPress = (item) => {
-    console.log(item)
-    this.setState({
-      showMap : true,
-      region : {
-        ...this.state.region,
-        latitude : Number(item.y),
-        longitude : Number(item.x)
-      },
-      marker: {
-        latitude : Number(item.y),
-        longitude : Number(item.x)
-      },
-      addressName : item.address_name
-    });
+    /**
+     * 위경도 조회를 위하여 카카오 API를 호출
+     * 도로명 API Return 값의 roadAddrPart1 값으로 KAKAO API를 호출한다.
+     */
+    GetAddressKakao(item.roadAddrPart1).then(result => {
+      GetCommonData(result, this._onPress).then(async resultData => {
+        if(resultData !== undefined) {
+          const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
+          console.log(item);
+          console.log(resultData.data);
+          if(ResultBool) {
+            // 도로명, 지번주소 변경(도로명 API로)
+            resultData.data.documents[0].address.address_name = item.jibunAddr;
+            resultData.data.documents[0].road_address.address_name = item.roadAddr;
+            resultData.data.documents[0].address_name = item.roadAddr;
 
-    SELECT_ITEM = item;
+            this.setState({
+              data1 : resultData.data.documents[0],
+              showMap : true,
+              region : {
+                ...this.state.region,
+                latitude : Number(resultData.data.documents.y),
+                longitude : Number(resultData.data.documents.x)
+              },
+              marker: {
+                latitude : Number(resultData.data.documents.y),
+                longitude : Number(resultData.data.documents.x)
+              },
+              addressName : item.roadAddr
+            });
+
+            // 변화된 Kakao API Object를 셋팅
+            SELECT_ITEM = this.state.data1;
+          } else {
+            this.setState({
+              isAlertModal : true,
+              resultMsg : resultData.resultMsg
+            })
+          }
+        }
+      });
+    });
   }
 
 
@@ -194,13 +246,16 @@ class SearchAddress extends Component {
               borderColor : color.inputBoGrey,
               borderLeftWidth: 1,
               borderRightWidth: 1,
-              borderBottomWidth: 0,
+              borderBottomWidth: 1,
+              marginBottom: 100,
               backgroundColor: color.whiteColor}]}>
             <FlatList 
-              data={this.state.data} 
+              data={this.state.data.juso}  
               renderItem={this._renderItem} 
               ListEmptyComponent={this._emptyRenderItem}
               keyExtractor={(item, index) => index.toString()}
+              onEndReachedThreshold={0.01}
+              onEndReached={this._setAddressInfo}
             />
           </View>
         </View>
@@ -236,14 +291,23 @@ const localStyles = StyleSheet.create({
   show: {
       display: 'flex'
   },
+  flatListTxtWrap : {
+    marginLeft: 15,
+    marginRight: 15,
+    flexDirection: "row",
+    flex: 1
+  },
   flatListTxt: {
-    fontSize: 13, color: "#1e1e32"
+    fontSize: 12, color: "#1e1e32", marginLeft: 0, marginRight: 0, flex: 1
+  },
+  flatListTxt1: {
+    fontSize: 11, marginLeft: 0, marginRight: 0, color: color.defaultColor, width: 40
   },
   flatListWrap: {
     flex: 1, 
     paddingTop: 10,
     paddingBottom: 10,
-    borderBottomWidth: 1,
+    borderTopWidth: 1,
     borderColor : color.inputBoGrey,
     width: "100%"
   },

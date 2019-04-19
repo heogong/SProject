@@ -154,7 +154,8 @@ const localStyles = StyleSheet.create({
   },
   infoTxt: {
     fontSize: 15,
-    color: color.whiteColor
+    color: color.whiteColor,
+    textAlign: "center"
   }
 });
 

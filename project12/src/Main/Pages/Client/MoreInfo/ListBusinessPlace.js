@@ -127,7 +127,7 @@ class ListBusinessPlace extends Component {
                     <View style={localStyles.infoTxtWrap}>
                       <Text style={localStyles.infoTxt}>
                             {(business.addr != null || business.road != null ?
-                              (business.addr != null ? business.addr.addressName : business.road.addressName)
+                              (business.road != null ? business.road.addressName : business.addr.addressName)
                               : "사업자 주소를 등록해주세요.")}
                       </Text>
                       <Text style={localStyles.infoTxt}>{(business.detail != null ? business.detail.detailAddr1 : "사업장 상세주소를 입력해주세요.")}</Text>

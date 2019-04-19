@@ -13,7 +13,7 @@ function makeData(bizObj) {
 
   data.append('bplaceNm', bizObj.bizNm);
   data.append('bplaceDsc', bizObj.bizDsc);
-  data.append('addr.addressName', bizObj.addressObj.address_name);
+  data.append('addr.addressName', bizObj.addressObj.address.address_name);
 
   if(bizObj.addressObj.address !== null) {
     data.append('addr.region1depthName', bizObj.addressObj.address.region_1depth_name);
