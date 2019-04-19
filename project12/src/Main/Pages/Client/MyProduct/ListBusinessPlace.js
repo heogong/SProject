@@ -158,9 +158,8 @@ class ListBusinessPlace extends Component {
                           <Text style={localStyles.infoTxt}>
                             {(business.addr != null || business.road != null ?
                               (business.road != null ? business.road.addressName : business.addr.addressName)
-                              : "사업자 주소를 등록해주세요.")}
+                              : "[사업자 주소를 등록해주세요.]")} {(business.detail != null ? business.detail.detailAddr1 : "[상세주소를 입력해주세요.]")}
                           </Text>
-                          <Text style={localStyles.infoTxt}>{(business.detail != null ? business.detail.detailAddr1 : "사업장 상세주소를 입력해주세요.")}</Text>
                         </View>
                       </View>
                   </View>
@@ -241,7 +240,9 @@ const localStyles = StyleSheet.create({
   infoTxt: {
     fontSize: 14,
     color: color.whiteColor,
-    textAlign: "center"
+    textAlign: "center",
+    paddingLeft: 10,
+    paddingRight: 10
   },
   closeIconImg: {
     width: 24,
