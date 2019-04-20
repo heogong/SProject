@@ -43,7 +43,7 @@ class PartnerGuide1Sub extends Component {
           <Swiper 
             style={localStyles.swiperWrap}
             pagingEnabled={true} 
-            dot={<View style={[localStyles.swiperDot, {backgroundColor: 'rgba(3,151,189, 0.4)'}]} />}
+            dot={<View style={[localStyles.swiperDot, {backgroundColor: 'rgba(3,151,189, 0.2)'}]} />}
             activeDot={<View style={[localStyles.swiperDot, {backgroundColor: color.defaultColor}]} />}
           >
             <View>

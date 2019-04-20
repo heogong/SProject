@@ -20,51 +20,61 @@ class TakeProductGuide2 extends Component {
         <ScrollView showsVerticalScrollIndicator={false}>
 
           <View style={localStyles.takeGuideCateWrap}>
-            <View style={localStyles.takeGuideCateTxtWrap}>
-              <Text style={localStyles.takeGuideCateNumTxt}>02</Text>
-              <Text style={localStyles.takeGuideCateTxt}>분리형타입</Text>
-              <Text style={localStyles.takeGuideCateTxt}>제품군</Text>
-            </View>
-            <View style={localStyles.takeGuideBarWrap}>
-              <View style={localStyles.takeGuideBar}/>
-            </View>
+            <Text style={localStyles.takeGuideCateNumTxt}>02</Text>
+            <Text style={localStyles.takeGuideCateTxt}>분리형타입 촬영가이드</Text>
+            <Text style={localStyles.takeGuideInfoTxt}>쿨리닉의 제품사진은 총 4장이 등록가능합니다.</Text>
+
             <View style={localStyles.takeGuideTypeWrap}>
-              <Text style={localStyles.takeGuideTypeTxt}>쇼케이스</Text>
-              <Text style={localStyles.takeGuideTypeTxt}>제빙기</Text>
-              <Text style={localStyles.takeGuideTypeTxt}>항온항습기</Text>
-              <Text style={localStyles.takeGuideTypeTxt}>냉각기</Text>
-              <Text style={localStyles.takeGuideTypeTxt}>저온냉동기</Text>
-              <Text style={localStyles.takeGuideTypeTxt}>냉풍건조기</Text>
-              <Text style={localStyles.takeGuideTypeTxt}>초저온</Text>
+              <Text style={localStyles.takeGuideTypeTxt}>[해당제품]</Text>
+              <Text style={localStyles.takeGuideTypeTxt}>쇼케이스 · 제빙기 · 항온항습기 · 냉각기</Text>
+              <Text style={localStyles.takeGuideTypeTxt}>저온저장고 · 냉풍건조기 · 초저온냉동고</Text>
             </View>
           </View>
 
           <View style={localStyles.takeGuideContentWrap}>
-            <Text style={localStyles.takeGuideTitleTxt}>1.제품의 전체사진</Text>
-            <Text style={localStyles.takeGuideDscTxt}>예시처럼 화면에 꽉차게 전체사진을 찍어주세요</Text>
+            <Text style={localStyles.takeGuideTitleTxt}>첫번째,</Text>
+            <Text style={localStyles.takeGuideTitleTxt1}>제품의 전체사진</Text>
+            <Text style={localStyles.takeGuideDscTxt}>다음 예시처럼 제품의 외부모습 전체사진을</Text>
+            <Text style={localStyles.takeGuideDscTxt}>화면에 꽉차게 하여 찍어주세요.</Text>
 
             <View style={localStyles.takeGuideImgWrap}>
-              <Image source={require("~/Common/Image/license-depart01.png")} resizeMode="contain" style={localStyles.takeGuideImg}  />
+              <Image source={require("~/Common/Image/photoGuide/guide2_1.png")} resizeMode="cover" style={localStyles.takeGuideImg}  />
             </View>
           </View>
 
           <View style={localStyles.takeGuideContentWrap}>
-            <Text style={localStyles.takeGuideTitleTxt}>2. 기계실 사진</Text>
-            <Text style={localStyles.takeGuideDscTxt}>가능하면 콤프레샤 명판이 보이게 찍어주세요</Text>
+            <Text style={localStyles.takeGuideTitleTxt}>두번째,</Text>
+            <Text style={localStyles.takeGuideTitleTxt1}>실외기 전체사진</Text>
+            <Text style={localStyles.takeGuideDscTxt}>다음 예시처럼 실외기의 전체모습을</Text>
+            <Text style={localStyles.takeGuideDscTxt}>화면에 꽉차게 하여 찍어주세요.</Text>
 
             <View style={localStyles.takeGuideImgWrap}>
-              <Image source={require("~/Common/Image/license-depart01.png")} resizeMode="contain" style={localStyles.takeGuideImg}  />
+              <Image source={require("~/Common/Image/photoGuide/guide2_2.png")} resizeMode="cover" style={localStyles.takeGuideImg}  />
             </View>
           </View>
 
           <View style={localStyles.takeGuideContentWrap}>
-            <Text style={localStyles.takeGuideTitleTxt}>3. 제어부 사진</Text>
-            <Text style={localStyles.takeGuideDscTxt}>온도 조절하는 부분을 모델명이 보이게 찍어주세요</Text>
+            <Text style={localStyles.takeGuideTitleTxt}>세번째,</Text>
+            <Text style={localStyles.takeGuideTitleTxt1}>실내기 전체사진</Text>
+            <Text style={localStyles.takeGuideDscTxt}>다음 예시처럼 실내기 전체모습을</Text>
+            <Text style={localStyles.takeGuideDscTxt}>화면에 꽉차게 하여 찍어주세요. (많을수록 좋아요!)</Text>
 
             <View style={localStyles.takeGuideImgWrap}>
-              <Image source={require("~/Common/Image/license-depart01.png")} resizeMode="contain" style={localStyles.takeGuideImg}  />
+              <Image source={require("~/Common/Image/photoGuide/guide2_3.png")} resizeMode="cover" style={localStyles.takeGuideImg}  />
             </View>
           </View>
+
+          <View style={localStyles.takeGuideContentWrap}>
+            <Text style={localStyles.takeGuideTitleTxt}>네번째,</Text>
+            <Text style={localStyles.takeGuideTitleTxt1}>제어부 외관사진</Text>
+            <Text style={localStyles.takeGuideDscTxt}>제어부의 콘트롤박스를</Text>
+            <Text style={localStyles.takeGuideDscTxt}>화면에 꽉차게 하여 찍어주세요.</Text>
+
+            <View style={localStyles.takeGuideImgWrap}>
+              <Image source={require("~/Common/Image/photoGuide/guide2_4.png")} resizeMode="cover" style={localStyles.takeGuideImg}  />
+            </View>
+          </View>
+
         </ScrollView>
       </Container>
     );
@@ -73,67 +83,66 @@ class TakeProductGuide2 extends Component {
 
 const localStyles = StyleSheet.create({
   takeGuideCateWrap: {
-    flexDirection: "row",
-    padding: 20,
+    paddingTop: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 20,
     backgroundColor : color.defaultColor,
-    flex: 1,
-    marginBottom: 26
-  },
-  takeGuideCateTxtWrap: {
-    flex: 5,
-    alignItems: "flex-end",
-    justifyContent: "center"
+    marginBottom: 26,
+    textAlign: "center",
+    alignItems: "center"
   },
   takeGuideCateNumTxt: {
-    fontSize: 48,
+    fontSize: 45,
     color: color.whiteColor,
     fontWeight: "bold"
   },
   takeGuideCateTxt: {
     fontSize: 21,
-    color: color.whiteColor
+    color: color.whiteColor,
+    fontWeight: "500"
   },
-  takeGuideBarWrap: {
-    flex: 1,
-    alignItems: "center",
-    marginTop : 5,
-    marginBottom : 5
-  },
-  takeGuideBar: {
-    flex: 1,
-    backgroundColor : color.whiteColor,
-    width : '10%'
+  takeGuideInfoTxt: {
+    fontSize: 12,
+    color: color.whiteColor,
+    paddingTop: 5,
+    paddingBottom: 15
   },
   takeGuideTypeWrap: {
-    flex: 5,
-    justifyContent: "center"
+    
   },
   takeGuideTypeTxt: {
-    fontSize: 14,
-    color: color.whiteColor,
-    lineHeight: 18
+    fontSize: 13,
+    color: "#1e1e1e",
+    lineHeight: 18,
+    textAlign: "center",
+    fontWeight: "500"
   },
   takeGuideTitleTxt: {
-    fontSize: 16,
-    color: "#1e1e32",
-    marginBottom: 7,
-    textAlign: "center",
-    fontWeight: "bold"
+    fontSize: 22,
+    color: "#000",
+    fontWeight: "bold",
+    color: color.defaultColor
+  },
+  takeGuideTitleTxt1: {
+    fontSize: 22,
+    color: "#000",
+    fontWeight: "bold",
+    marginBottom: 15
   },
   takeGuideDscTxt: {
-    fontSize: 14,
-    color: "#8e8e98",
-    marginBottom: 15,
-    textAlign: "center"
+    fontSize: 13,
+    color: "#626270",
   },
   takeGuideImg: {
-    height: 270,
-    width: 270
+    height: 387,
+    width: 196
   },
   takeGuideImgWrap: {
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 28
+    marginBottom: 25,
+    marginTop: 25
   }
 });
 

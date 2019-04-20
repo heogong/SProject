@@ -375,7 +375,7 @@ class ClientHome extends Component {
                   paginationStyle={{
                       bottom: 10
                   }} 
-                  dot={<View style={[localStyles.swiperDot, {backgroundColor: 'rgba(3,151,189, 0.4)'}]} />}
+                  dot={<View style={[localStyles.swiperDot, {backgroundColor: 'rgba(3,151,189, 0.2)'}]} />}
                   activeDot={<View style={[localStyles.swiperDot, {backgroundColor: color.whiteColor}]} />}
                   // map으로 동적으로 Item을 생성하면 Dot가 이동을 안하는 문제가 발생하여 해당 속성을 설정함
                   key={this.state.data.length}
@@ -457,17 +457,39 @@ class ClientHome extends Component {
               </View>
               
               <View style={localStyles.guideWrap}>
-                  <Text style={localStyles.guideTitleTxt}>쿨리닉</Text>
-                  <Text style={localStyles.guideTitleTxt}>사용자 가이드</Text>
-                  <Text>aaaaaaaaaaaaaaa</Text>
-                  <Text>aaaaaaaaaaaaaaa</Text>
-                  <Text>aaaaaaaaaaaaaaa</Text>
-                  <Text>aaaaaaaaaaaaaaa</Text>
-                  <Text>aaaaaaaaaaaaaaa</Text>
-                  <Text>aaaaaaaaaaaaaaa</Text>
-                  <Text>aaaaaaaaaaaaaaa</Text>
-                  <Text>aaaaaaaaaaaaaaa</Text>
-                  <Text>aaaaaaaaaaaaaaa</Text>
+                <Text style={[localStyles.guideTitleTxt, {paddingTop: 22}]}>쿨리닉</Text>
+                <Text style={[localStyles.guideTitleTxt, {paddingBottom: 10}]}>사용자 가이드</Text>
+                
+                <View style={localStyles.guideImgWrap}>
+                  <Swiper showsPagination={false}>
+                    <TouchableOpacity onPress={Actions.MainGuideClientDetail1}>
+                      <Image source={require("~/Common/Image/main/client/banner/Main_01.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Image source={require("~/Common/Image/main/client/banner/Main_02.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Image source={require("~/Common/Image/main/client/banner/Main_03.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Image source={require("~/Common/Image/main/client/banner/Main_04.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Image source={require("~/Common/Image/main/client/banner/Main_05.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Image source={require("~/Common/Image/main/client/banner/Main_06.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Image source={require("~/Common/Image/main/client/banner/Main_07.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Image source={require("~/Common/Image/main/client/banner/Main_08.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                    </TouchableOpacity>
+                  </Swiper>
+                 </View>
+
+
               </View>
           </ScrollView>
 
@@ -509,7 +531,6 @@ function wp (percentage, space) {
   return Math.round(value);
 }
 
-const afterServiceBtnSize = wp(33, 30);
 const stateImgSize = wp(15, 52);
 
 const localStyles = StyleSheet.create({
@@ -632,13 +653,20 @@ const localStyles = StyleSheet.create({
       marginTop: 10
   },
   guideWrap: {
-      padding: 22,
       backgroundColor : color.whiteColor
   },
   guideTitleTxt: {
       fontSize: 22,
+      paddingLeft: 22,
+      paddingRight: 22,
       color: "#0397db",
       fontWeight: "bold",
+  },
+  guideImgWrap: {
+    width: viewportWidth, height: viewportWidth/2
+  },
+  guideImg: {
+    width: viewportWidth, height: viewportWidth/2
   },
 });
 
