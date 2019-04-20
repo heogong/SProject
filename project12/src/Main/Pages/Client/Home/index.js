@@ -488,8 +488,6 @@ class ClientHome extends Component {
                     </TouchableOpacity>
                   </Swiper>
                  </View>
-
-
               </View>
           </ScrollView>
 

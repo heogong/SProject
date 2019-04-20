@@ -7,6 +7,7 @@ import { SUCCESS_RETURN_CODE, APPLY, UN_APPROVED, APPROVED } from '~/Common/Blen
 import { Actions } from 'react-native-router-flux';
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Swiper from 'react-native-swiper';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import GetPartnerInfo from '~/Main/Functions/GetPartnerInfo';
@@ -125,7 +126,7 @@ const RequestReport = ({action, count}) => (
 // A/S 보고서 가이드
 const GuideReport = () => (
     <View style={[styles.mb10, styles.pd10, styles.fxDirRow, {backgroundColor : color.defaultColor}]}>
-        <View style={{flex: 1, marginTop: 25}}>
+        <View style={{flex: 1, marginTop: 15}}>
             <View style={[styles.alignItemsCenter, styles.justiConEnd]}>
                 <Image 
                     source={require("~/Common/Image/Report_illust.png")} 
@@ -135,7 +136,7 @@ const GuideReport = () => (
             </View>
         </View>
 
-        <View style={[styles.alignItemsCenter, styles.fx2, {height: 120}]}>
+        <View style={[styles.alignItemsCenter, styles.fx2]}>
             <Text style={localStyles.reportTitleTxt} numberOfLines={1}>A/S 출장시 보고서 작성이 필요해요</Text>
             <Text style={localStyles.reportTxt} numberOfLines={1}>보고서를 작성해야 비용을 정산받을 수 있어요</Text>
             <View style={styles.alignItemsCenter}>
@@ -191,6 +192,7 @@ export default class Main extends Component {
             isModalVisible: false,
             isModalVisible1: false,
             slider1ActiveSlide: 0,
+            snapIndex: 0,
             wait : true, // test 
             isASreq : true, // test
             isAlertModal : false, // alert 용
@@ -469,6 +471,21 @@ export default class Main extends Component {
         AS_RECV_ID = data[idx].asRecvId;
     }
 
+    /**
+     * Top Carousel Snap Callback Function
+     */
+    _snapAfterService = (index) => {
+        
+        if(this.state.displayData[index].asRecvId != null
+            && this.state.displayData[index].asRecvId != ''
+            && this.state.displayData[index].asRecvId != undefined) {
+        // snap 대상이 AS 매칭 항목이면
+            // 매칭수락 팝업 상태 변경
+            this.setState({ snapIndex: index });
+        }
+        this.setState({ slider1ActiveSlide: index });
+    }
+
     render() {
         return (
             <Container style={[styles.fx1, {backgroundColor: color.defaultColor}]}>
@@ -496,7 +513,8 @@ export default class Main extends Component {
                     ) : (
                         // AS 요청 여부
                         this.state.data.length > 0 ? (
-                            <MatchingReq toggleModal={this._toggleModal} data={this.state.data[0]} /> 
+                            // snamIndex가 바뀌면 매칭수락 팝업 상태 변경
+                            <MatchingReq toggleModal={this._toggleModal} data={this.state.data[this.state.snapIndex]} /> 
                         ) : (
                             (this.state.afterServiceData.length !== 0) ? (
                                 <View/>
@@ -516,7 +534,7 @@ export default class Main extends Component {
                             itemWidth={cardWidth}
                             data={ (this.state.wait) ?  ENTRIES1 : this.state.displayData }
                             firstItem={this.state.slider1ActiveSlide}
-                            onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
+                            onSnapToItem={(index) => this._snapAfterService(index)}
                         />
                     </View>
                     <View style={[styles.alignItemsCenter, styles.justiConStart]}>
@@ -554,8 +572,11 @@ export default class Main extends Component {
                         /> */}
 
                     <View style={{backgroundColor : color.whiteColor}}>
+                                 
                         <View style={[styles.alignItemsCenter, {backgroundColor : color.whiteColor, paddingVertical : 10}]}>
+                            {/* 해당 기능 사용 안함    
                             <Text style={[{color: "#038dbd", fontSize : 14}]}>서울시 천호동에서 A/S 매칭이 완료되었습니다</Text>
+                            */}
                         </View>
 
                         {/* 미작성 보고서 여부 */}
@@ -566,18 +587,38 @@ export default class Main extends Component {
                         )}
                         
                         
-                        <View style={[styles.pd20, {backgroundColor : color.defaultColor}]}>
-                            <H1 style={{color : color.whiteColor}}>쿨리닉</H1>
-                            <H1 style={{color : color.whiteColor}}>사용자 가이드</H1>
-                            <Text>aaaaaaaaaaaaaaa</Text>
-                            <Text>aaaaaaaaaaaaaaa</Text>
-                            <Text>aaaaaaaaaaaaaaa</Text>
-                            <Text>aaaaaaaaaaaaaaa</Text>
-                            <Text>aaaaaaaaaaaaaaa</Text>
-                            <Text>aaaaaaaaaaaaaaa</Text>
-                            <Text>aaaaaaaaaaaaaaa</Text>
-                            <Text>aaaaaaaaaaaaaaa</Text>
-                            <Text>aaaaaaaaaaaaaaa</Text>
+                        <View style={localStyles.guideWrap}>
+                            <Text style={[localStyles.guideTitleTxt, {paddingTop: 22}]}>쿨리닉</Text>
+                            <Text style={[localStyles.guideTitleTxt, {paddingBottom: 10}]}>사용자 가이드</Text>
+                            
+                            <View style={localStyles.guideImgWrap}>
+                            <Swiper showsPagination={false}>
+                                <TouchableOpacity onPress={Actions.MainGuideClientDetail1}>
+                                <Image source={require("~/Common/Image/main/client/banner/Main_01.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                <Image source={require("~/Common/Image/main/client/banner/Main_02.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                <Image source={require("~/Common/Image/main/client/banner/Main_03.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                <Image source={require("~/Common/Image/main/client/banner/Main_04.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                <Image source={require("~/Common/Image/main/client/banner/Main_05.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                <Image source={require("~/Common/Image/main/client/banner/Main_06.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                <Image source={require("~/Common/Image/main/client/banner/Main_07.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                <Image source={require("~/Common/Image/main/client/banner/Main_08.png")} resizeMode="contain" style={localStyles.guideImg}/>
+                                </TouchableOpacity>
+                            </Swiper>
+                            </View>
                         </View>
                     </View>
                 </ScrollView>
@@ -655,7 +696,7 @@ const localStyles = StyleSheet.create({
     reportTitleTxt: {
         marginTop: 7,
         marginBottom: 7,
-        fontSize: 16,
+        fontSize: 15,
         color: "#038dbd",
         fontWeight: "bold"
     },
@@ -673,5 +714,21 @@ const localStyles = StyleSheet.create({
         color: "#1e1e32",
         marginTop: 10,
         marginBottom: 13
-    }
+    },
+    guideWrap: {
+        backgroundColor : color.whiteColor
+    },
+    guideTitleTxt: {
+        fontSize: 22,
+        paddingLeft: 22,
+        paddingRight: 22,
+        color: "#0397db",
+        fontWeight: "bold",
+    },
+    guideImgWrap: {
+      width: viewportWidth, height: viewportWidth/2
+    },
+    guideImg: {
+      width: viewportWidth, height: viewportWidth/2
+    },
 });
