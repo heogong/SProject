@@ -242,7 +242,7 @@ class SearchAddress extends Component {
 
           <View style={[(this.state.showMap) ? localStyles.hide : localStyles.show, 
             {
-              borderColor : color.inputBoGrey,
+              borderColor : color.defaultColor,
               borderLeftWidth: 1,
               borderRightWidth: 1,
               borderBottomWidth: 1,
@@ -300,14 +300,14 @@ const localStyles = StyleSheet.create({
     fontSize: 12, color: "#1e1e32", marginLeft: 0, marginRight: 0, flex: 1
   },
   flatListTxt1: {
-    fontSize: 11, marginLeft: 0, marginRight: 0, color: color.defaultColor, width: 40
+    fontSize: 11, marginLeft: 0, marginRight: 0, color: color.defaultColor, width: 35
   },
   flatListWrap: {
     flex: 1, 
     paddingTop: 10,
     paddingBottom: 10,
-    borderBottomWidth: 1,
-    borderColor : color.inputBoGrey,
+    borderTopWidth: 1,
+    borderColor : color.defaultColor,
     width: "100%"
   },
   flatListWrapList: {
