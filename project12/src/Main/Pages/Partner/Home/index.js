@@ -58,7 +58,7 @@ const MatchingReq = ({toggleModal, data}) => (
         <View style={{backgroundColor: color.whiteColor, height: 128, width: "100%", paddingLeft: 10, paddingRight: 10}}>
             <View style={styles.modalContent}>
                 <View style={{justifyContent: "center"}}>
-                    <Text style={[styles.modalTopTxt, {fontWeight: "bold", color: "#038dbd", fontSize: 15}]} numberOfLines={1}>
+                    <Text style={[styles.modalTopTxt, {fontWeight: "bold", color: "#038dbd", fontSize: 14}]} numberOfLines={1}>
                         {
                             data.bplaceAddrRoad == "" && data.bplaceAddrRoad == null 
                             ? data.bplaceAddr
@@ -247,7 +247,7 @@ export default class Main extends Component {
                     onPress={ this._selectAfterService(index) }>
                     <View style={[styles.pd10, styles.alignItemsCenter, {backgroundColor : color.whiteColor, height : cardHeight}]}>
                         <View style={{marginTop: 5, marginBottom: 5}}>
-                            <Text style={{fontSize: 16, color: "#038dbd", fontWeight: "bold"}} numberOfLines={1}>
+                            <Text style={{fontSize: 15, color: "#038dbd", fontWeight: "bold"}} numberOfLines={1}>
                                 {
                                     item.bplaceAddrRoad == "" && item.bplaceAddrRoad == null 
                                     ? item.bplaceAddr
@@ -353,7 +353,7 @@ export default class Main extends Component {
 
     // 3. 나의 AS 매칭 목록 조회
     _getAfterService = () => {
-        GetAfterService().then(result => {
+        GetAfterService(1).then(result => {
             GetCommonData(result, this._getAfterService).then(async resultData => {
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
@@ -546,7 +546,7 @@ export default class Main extends Component {
                             dotStyle={localStyles.paginationDot}
                             inactiveDotColor={color.whiteColor}
                             inactiveDotOpacity={0.4}
-                            inactiveDotScale={0.6}
+                            inactiveDotScale={1}
                             carouselRef={this._slider1Ref}
                             tappableDots={!!this._slider1Ref}
                         />
@@ -674,7 +674,7 @@ const localStyles = StyleSheet.create({
         marginHorizontal: 0,
         width: 12,
         height: 12,
-        borderRadius: 5,
+        borderRadius: 12,
     },
     secondBox : {
         marginBottom : 20,

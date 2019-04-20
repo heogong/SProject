@@ -5,15 +5,22 @@ import GetAccessToken from '~/Common/Functions/GetAccessToken';
 // 나의 AS 매칭 목록 조회
 const API_URL = `${DOMAIN}coolinic/as/prgs/matchs/partners/me`;
 
-function GetAfterServiceUrl() {
-  return `${API_URL}`;
+function GetAfterServiceUrl(p) {
+  if(p != null && p != '') {
+  // Param이 있으면
+    // Limit(메인용) 제한
+    return `${API_URL}?p=` + p;
+  } else {
+    return `${API_URL}`;
+  }
+
 }
 
-const GetAfterService = async () => {
+const GetAfterService = async (p) => {
   // 토큰값 가져오기
   const ACCESS_TOKEN = `Bearer ${await AsyncStorage.getItem('AccessToken')}`; 
 
-  return fetch(GetAfterServiceUrl(), {
+  return fetch(GetAfterServiceUrl(p), {
     method: 'GET',
     headers: {
       "Authorization": ACCESS_TOKEN
