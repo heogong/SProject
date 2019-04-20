@@ -163,6 +163,13 @@ export const styles = StyleSheet.create({
     listPrdBoxNextIcon: {
       color: color.whiteColor
     },
+    // Loading
+    loadingImgWrap: {
+      alignItems: "center", height: 30
+    },
+    loadingImg: {
+      width: 30, height: 30
+    },
     // TextInput
     textInputBox: {
       paddingLeft: 9,

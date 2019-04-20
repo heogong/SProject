@@ -45,7 +45,8 @@ class SearchAddress extends Component {
       showMap : false,
       makerYn : true,
       isAlertModal : false, // alert 용
-      resultMsg : null // alert 용
+      resultMsg : null, // alert 용
+      isLoading: false
     };
   }
 
@@ -242,7 +243,7 @@ class SearchAddress extends Component {
 
           <View style={[(this.state.showMap) ? localStyles.hide : localStyles.show, 
             {
-              borderColor : color.defaultColor,
+              borderColor : "#c9cacb",
               borderLeftWidth: 1,
               borderRightWidth: 1,
               borderBottomWidth: 1,
@@ -256,6 +257,14 @@ class SearchAddress extends Component {
               onEndReachedThreshold={0.01}
               onEndReached={this._setAddressInfo}
             />
+            {this.state.isLoading
+              ?
+              <View style={styles.loadingImgWrap}>
+                <Image source={require("~/Common/Image/loading-list.gif")} style={styles.loadingImg}/>
+              </View>
+              :
+              <View style={{height: 30}}/>
+            }
           </View>
         </View>
 
@@ -307,7 +316,7 @@ const localStyles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     borderTopWidth: 1,
-    borderColor : color.defaultColor,
+    borderColor : "#c9cacb",
     width: "100%"
   },
   flatListWrapList: {
