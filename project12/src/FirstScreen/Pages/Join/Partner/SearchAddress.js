@@ -98,7 +98,7 @@ class SearchAddress extends Component {
             const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
             console.log(result.data.results);
             if(ResultBool) {
-              if(result.data.results.juso.length > 0) {
+              if(result.data.results.common.totalCount > 0) {
                 if(this.initPageNum == 1) {
                 // 첫번쨰 페이지 이면
                   // 최초 데이터 SET
@@ -114,6 +114,10 @@ class SearchAddress extends Component {
                   })
                 }
                 this.initPageNum++; // 페이지 번호 증가
+              } else {
+                // 목록 초기화
+                this.setState({data : []});
+                this.initPageNum = 1;
               }
             } else {
               this.setState({
@@ -263,7 +267,7 @@ class SearchAddress extends Component {
                 <Image source={require("~/Common/Image/loading-list.gif")} style={styles.loadingImg}/>
               </View>
               :
-              <View style={{height: 30}}/>
+              <View/>
             }
           </View>
         </View>
