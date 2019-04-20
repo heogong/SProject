@@ -178,6 +178,8 @@ import ClientNoticeDetail from './src/Main/Pages/Client/MoreInfo/Notice/NoticeDe
 import ClientTermsContent1 from './src/Main/Pages/Client/MoreInfo/TermsContent1';
 import ClientTermsMenu from './src/Main/Pages/Client/MoreInfo/TermsMenu';
 
+// 메인 - 가이드
+import MainGuideClientDetail1 from './src/Main/Pages/Client/Guide/MainGuideDetail1';
 
 const PAGE = () => ( 
   
@@ -334,6 +336,9 @@ const PAGE = () => (
       <Scene key="MyRegBusinessProdType" component={MyRegBusinessProdType}/>
       <Scene key="EditBusinessAddress" component={EditBusinessAddress} />
       
+      {/* 클라이언트 메인가이드 */}
+      <Scene key="MainGuideClientDetail1" component={MainGuideClientDetail1} />
+
       <Drawer
         hideNavBar
         key="drawer"
