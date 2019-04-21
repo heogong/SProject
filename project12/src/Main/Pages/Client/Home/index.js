@@ -61,6 +61,9 @@ class ClientHome extends Component {
           addr : {
             addressName : null
           },
+          road : {
+            addressName : null
+          },
           detail : {
             detailAddr1 : null
           }
@@ -69,17 +72,20 @@ class ClientHome extends Component {
           fileUrl : null
         }
       },
+      asPrgsMst : null,
       asPrgsYn : 'N', // AS 여부
       asPrgsStatCd : null,
       asPrgsId : null,
       asPrgsStatNm : null,
       asPrgsStatDSC : null,
+      asAddStatCd : null,
       slider1ActiveSlide: 0,
       spinner : false,
       isModalVisible : false,
       isAlertConfirmModal : false,
       isAlertModal : false, // alert 용
-      resultMsg : null // alert 용
+      resultMsg : null, // alert 용
+      spinner1 : false
     };
   }
 
@@ -190,7 +196,9 @@ class ClientHome extends Component {
                     asPrgsId : resultData.data.asPrgsMst.asPrgsId,
                     asPrgsStatNm : resultData.data.asPrgsMst.asPrgsStatNm,
                     asPrgsStatDSC : resultData.data.asPrgsMst.asPrgsStatDsc,
-                    clientPrdInfo : resultData.data.clinePrdInfo
+                    clientPrdInfo : resultData.data.clinePrdInfo,
+                    asAddStatCd : resultData.data.asPrgsMst.asAddStatCd,
+                    asPrgsMst : resultData.data.asPrgsMst
                   });
                 } else {
                   this.setState({
@@ -227,10 +235,16 @@ class ClientHome extends Component {
 
   // 고객 AS 매칭(진행)중 취소
   _cancleAfterServicePartner = () => {
-    this.setState({isModalVisible : false});
+    this.setState({
+      isModalVisible : false,
+      spinner1: true
+    });
 
     CancleAfterServicePartner(this.state.asPrgsId).then(result => {
         GetCommonData(result, this._cancleAfterServicePartner).then(async resultData => {
+
+            this.setState({ spinner1: false });
+
             if(resultData !== undefined) {
                 const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                 console.log(resultData);
@@ -333,9 +347,37 @@ class ClientHome extends Component {
                   </View>
                 </TouchableOpacity>
               ) : (
-                <View style={[localStyles.rightStateCircle, {backgroundColor: "#0397bd"}]}>
-                    <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>{this.state.asPrgsStatNm}</Text>
-                </View>
+                this.state.asPrgsStatCd == "AS_PRGS_STAT_CD_07"
+                ? (
+                // 추가 A/S 중이면
+                  this.state.asAddStatCd == "AS_ADD_STAT_CD_01"
+                  ?
+                  // 미결제 상태이면
+                    <TouchableOpacity onPress={ () => Actions.AfterServiceAddPayment({asPrgsMst: this.state.asPrgsMst})}>
+                      <View style={[localStyles.rightStateCircle, {backgroundColor: "#0397bd"}]}>
+                          <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>추가 A/S</Text>
+                          <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>결제 하러하기</Text>
+                      </View>
+                    </TouchableOpacity>
+                  :(
+                    this.state.asAddStatCd == "AS_ADD_STAT_CD_02"
+                    ?
+                    // 결제 완료 상태이면
+                      <View style={[localStyles.rightStateCircle, {backgroundColor: "#0397bd"}]}>
+                          <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>추가 A/S</Text>
+                          <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>결제완료</Text>
+                      </View>
+                    :
+                      <View style={[localStyles.rightStateCircle, {backgroundColor: "#0397bd"}]}>
+                          <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>{this.state.asPrgsStatNm}</Text>
+                      </View>
+                  )
+                )
+                : (
+                  <View style={[localStyles.rightStateCircle, {backgroundColor: "#0397bd"}]}>
+                      <Text style={[localStyles.rightStateTxt, {color: color.whiteColor}]}>{this.state.asPrgsStatNm}</Text>
+                  </View>
+                )
               )}
             </View>
         </View>
@@ -351,6 +393,12 @@ class ClientHome extends Component {
             textStyle={styles.whiteFont}
             style={{color: color.whiteColor}}
             overlayColor={"rgba(40, 200, 245, 1)"}
+          />
+          <Spinner
+              visible={this.state.spinner1}
+              textContent={'A/S 상태를 갱신중입니다.'}
+              textStyle={styles.whiteFont}
+              style={{color: color.whiteColor}}
           />
           <Header style={[styles.headerM, styles.noPadding]}>
             <Left style={styles.headerLeftWrap}/>

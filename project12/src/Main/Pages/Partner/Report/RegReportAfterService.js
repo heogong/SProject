@@ -5,6 +5,7 @@ import { Textarea, Button, Container, Icon, Text, Item } from "native-base";
 import { SUCCESS_RETURN_CODE, ADD_AS } from '~/Common/Blend';
 
 import { Actions, ActionConst} from 'react-native-router-flux';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import GetAfterServiceActionInfo from '~/Main/Functions/GetAfterServiceActionInfo';
 import GetAfterServiceState from '~/Main/Functions/GetAfterServiceState';
@@ -60,7 +61,8 @@ class RegReportBeforePic extends Component {
         btnDisabled : true,
         isArriveModal : false,
         isAlertModal : false, //alert 용
-        resultMsg : null // alert 결과 메세지
+        resultMsg : null, // alert 결과 메세지
+        spinner : false
       };
     }
 
@@ -157,7 +159,10 @@ class RegReportBeforePic extends Component {
 
     // AS 보고서 기본 정보 등록
     _regAfterServiceReport = () => {
-        this.setState({isArriveModal : false});
+        this.setState({
+            isArriveModal : false,
+            spinner: true
+        });
 
         const method ='POST'; // AS 조치전 정보 조회 정보 여부에 따른 메소드 값
         const { asCauseDsc, asActionDsc } = this.state;
@@ -173,7 +178,8 @@ class RegReportBeforePic extends Component {
                     } else {
                         this.setState({
                             isAlertModal : true,
-                            resultMsg : resultData.resultMsg
+                            resultMsg : resultData.resultMsg,
+                            spinner: false
                         })
                     }
                 }
@@ -185,6 +191,9 @@ class RegReportBeforePic extends Component {
      _completeAfterService = () => {
         CompleteAfterService(this.props.asPrgsId).then(result => {
             GetCommonData(result, this._completeAfterService).then(async resultData => {
+
+                this.setState({ spinner: false });
+
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     if(ResultBool) {
@@ -283,6 +292,12 @@ class RegReportBeforePic extends Component {
     render() {
         return (
             <Container style={styles.containerScroll}>
+                <Spinner
+                    visible={this.state.spinner}
+                    textContent={'A/S 완료 및 보고서 저장중입니다.'}
+                    textStyle={styles.whiteFont}
+                    style={{color: color.whiteColor}}
+                />
                 <CustomHeader />
                 <View style={styles.contentWrap}>
                 <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>

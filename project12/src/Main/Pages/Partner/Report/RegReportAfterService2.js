@@ -5,6 +5,7 @@ import { Container, Icon, Text, Item, Textarea } from "native-base";
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import GetAfterServiceActionInfo from '~/Main/Functions/GetAfterServiceActionInfo';
 import RegAfterServiceReport from '~/Main/Functions/RegAfterServiceReport';
@@ -63,7 +64,8 @@ class RegReportBeforePic extends Component {
         btnDisabled : false,
         isModalVisible : false,
         isAlertModal : false, //alert 용
-        resultMsg : null // alert 결과 메세지
+        resultMsg : null, // alert 결과 메세지
+        spinner : false
       };
     }
 
@@ -147,7 +149,10 @@ class RegReportBeforePic extends Component {
 
     // AS 보고서 기본 정보 등록
     _regAfterServiceReport = () => {
-        this.setState({isModalVisible : false});
+        this.setState({
+            isModalVisible : false,
+            spinner: true
+        });
 
         const method ='PUT'; // AS 조치전 정보 조회 정보 여부에 따른 메소드 값
         const { asCauseDsc, asActionDsc } = this.state;
@@ -155,6 +160,7 @@ class RegReportBeforePic extends Component {
         if(CURRENT_BEFORE_IMG_CNT > 0 && CURRENT_AFTER_IMG_CNT > 0 && (asCauseDsc !== '' && asCauseDsc !== null) && (asActionDsc !== '' && asActionDsc !== null))  {
             RegAfterServiceReport(this.props.asPrgsId, asCauseDsc, asActionDsc, method).then(result => {
                 GetCommonData(result, this._regAfterServiceReport).then(async resultData => {
+
                     if(resultData !== undefined) {
                         const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                         console.log(resultData);
@@ -168,13 +174,17 @@ class RegReportBeforePic extends Component {
                         } else {
                             this.setState({
                                 isAlertModal : true,
-                                resultMsg : resultData.resultMsg
+                                resultMsg : resultData.resultMsg,
+                                spinner: false
                             })
                         }
                     }
                 });
             });
         } else {
+
+            this.setState({ spinner: false });
+
             if(CURRENT_BEFORE_IMG_CNT == 0) {
                 this.setState({
                     isAlertModal : true,
@@ -190,7 +200,6 @@ class RegReportBeforePic extends Component {
                     isAlertModal : true,
                     resultMsg : 'A/S조치전 증상을 입력해주세요.'
                 })
-                this.asCauseDsc.focus();
             } else {
                 this.setState({
                     isAlertModal : true,
@@ -204,6 +213,9 @@ class RegReportBeforePic extends Component {
     _regCompleteReport = () => {
         RegCompleteReport(this.props.asPrgsId).then(result => {
             GetCommonData(result, this._regCompleteReport).then(async resultData => {
+
+                this.setState({ spinner: false });
+
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
@@ -293,6 +305,12 @@ class RegReportBeforePic extends Component {
     render() {
         return (
             <Container style={styles.containerScroll}>
+                <Spinner
+                    visible={this.state.spinner}
+                    textContent={'A/S 보고서를 저장중입니다.'}
+                    textStyle={styles.whiteFont}
+                    style={{color: color.whiteColor}}
+                />
                 <CustomHeader />
                 <View style={styles.contentWrap}>
                 <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: 1}}>
@@ -416,13 +434,13 @@ class RegReportBeforePic extends Component {
 
                     </ScrollView>
 
-                        <View style={styles.footerBtnWrap}>
-                            <CustomButton  
-                                onPress={ () => this.setState({isModalVisible : true}) }
-                                disabled={this.state.btnDisabled}>
-                                작성완료
-                            </CustomButton>
-                        </View>
+                    <View style={styles.footerBtnWrap}>
+                        <CustomButton  
+                            onPress={ () => this.setState({isModalVisible : true}) }
+                            disabled={this.state.btnDisabled}>
+                            작성완료
+                        </CustomButton>
+                    </View>
                 </View>
 
                 <CustomModal

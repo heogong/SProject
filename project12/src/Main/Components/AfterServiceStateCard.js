@@ -6,6 +6,7 @@ import { SUCCESS_RETURN_CODE, COMPLETE_MATCH, DEPARTURE, MOVE, ARRIVE, COMPLETE_
 
 import { Actions } from 'react-native-router-flux';
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import ArriveAfterService from '~/Main/Functions/ArriveAfterService';
 import DepartureAfterService from '~/Main/Functions/DepartureAfterService';
@@ -27,7 +28,8 @@ class AfterServiceStateCard extends Component {
 
             isArriveModal : false,
             isAlertModal : false, //alert 용
-            resultMsg : null // alert 결과 메세지
+            resultMsg : null, // alert 결과 메세지
+            spinner : false
         };
     }
 
@@ -147,10 +149,16 @@ class AfterServiceStateCard extends Component {
 
     // 업체 AS 매칭(진행) 출발
     _departureAfterService = () => {
+
+        this.setState({ spinner: true });
+
         const { latitude, longitude } = this.state;
         
         DepartureAfterService(this.props.asPrgsId, latitude, longitude).then(result => {
             GetCommonData(result, this._departureAfterService).then(async resultData => {
+
+                this.setState({ spinner: false });
+
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
@@ -170,12 +178,18 @@ class AfterServiceStateCard extends Component {
 
     // 업체 AS 매칭(진행) 도착
     _arriveAfterService = async () => {
+
+        this.setState({ spinner: true });
+
         await this._getLocation();
 
         const {latitude, longitude} = await this.state;
 
         ArriveAfterService(this.props.asPrgsId, latitude, longitude).then(result => {
             GetCommonData(result, this._arriveAfterService).then(async resultData => {
+
+                this.setState({ spinner: false });
+
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
@@ -196,9 +210,17 @@ class AfterServiceStateCard extends Component {
 
     // 업체 AS 매칭(진행) 진행
     _progressAfterService = async () => {
-        this.setState({isArriveModal : false});
+        
+        this.setState({
+            isArriveModal : false,
+            spinner: true
+        });
+
         ProgressAfterService(this.props.asPrgsId).then(result => {
             GetCommonData(result, this._progressAfterService).then(async resultData => {
+
+                this.setState({ spinner: false });
+                
                 if(resultData !== undefined) {
                     const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
                     console.log(resultData);
@@ -230,6 +252,12 @@ class AfterServiceStateCard extends Component {
     render() {
         return (
             <View style={localStyles.topAsYesWrap}>
+                <Spinner
+                    visible={this.state.spinner}
+                    textContent={'A/S 상태를 갱신중입니다.'}
+                    textStyle={styles.whiteFont}
+                    style={{color: color.whiteColor}}
+                />
                 <View style={[styles.justiConStart, styles.alignItemsCenter, styles.mb10]}>
                     <H1 style={localStyles.topTitleTxt}>{this.props.data.asPrgsStatDsc}</H1>
                     <Text style={localStyles.topTxt}>
