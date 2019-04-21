@@ -5,6 +5,7 @@ import { Container, Text } from "native-base";
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import GetSettlementDetail from '~/Main/Functions/GetSettlementDetail';
 import GetSettlementDetailPage from '~/Main/Functions/GetSettlementDetailPage';
@@ -30,7 +31,8 @@ class MyCalcuList extends Component {
       },
       refreshing: false,
       isAlertModal : false, // alert 용
-      resultMsg : null // alert 용
+      resultMsg : null, // alert 용
+      spinner: false
     };
   }
 
@@ -40,8 +42,14 @@ class MyCalcuList extends Component {
 
   // 업체 정산 내역 조회
   _getSettlementDetail = () => {
+
+    this.setState({ spinner: true });
+
     GetSettlementDetail().then(result => {
       GetCommonData(result, this._getSettlementDetail).then(async resultData => {
+
+        this.setState({ spinner: false });
+
           if(resultData !== undefined) {
               const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
               console.log('업체 정산 내역 조회 - ', resultData);
@@ -103,6 +111,12 @@ class MyCalcuList extends Component {
   render() {
     return (
       <Container style={styles.containerScroll}>
+        <Spinner
+					visible={this.state.spinner}
+					textContent={'정산내역을 불러오고 있습니다.'}
+					textStyle={styles.whiteFont}
+					style={{ color: color.whiteColor }}
+				/>
         <CustomHeader title="정산 예정금액"/>
         <View style={styles.contentWrap}>
               

@@ -5,6 +5,7 @@ import { Container, Button, Body, List, ListItem, Icon, Input, Item, Text, Heade
 import { SUCCESS_RETURN_CODE } from '~/Common/Blend';
 
 import { Actions } from 'react-native-router-flux';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import DrawMap from '~/Main/Components/DrawMap';
 import GetAddress from '~/Main/Functions/AddressInfo';
@@ -46,7 +47,7 @@ class SearchAddress extends Component {
       makerYn : true,
       isAlertModal : false, // alert 용
       resultMsg : null, // alert 용
-      isLoading: false
+      spinner: false
     };
   }
 
@@ -91,9 +92,15 @@ class SearchAddress extends Component {
 
   // 주소 정보 가져오기
   _setAddressInfo = () => {
+
+    this.setState({ spinner: true });
+
     if(this.state.addressName !== '') {
       GetAddress(this.state.addressName, this.initPageNum).then(result => {
         GetCommonData(result, this._setAddressInfo).then(async resultData => {
+
+          this.setState({ spinner: false });
+
           if(resultData !== undefined) {
             const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
             console.log(result.data.results);
@@ -190,6 +197,12 @@ class SearchAddress extends Component {
   render() {
     return (
       <Container style={styles.Container}>
+        <Spinner
+					visible={this.state.spinner}
+					textContent={'주소를 불러오고 있습니다.'}
+					textStyle={styles.whiteFont}
+					style={{ color: color.whiteColor }}
+				/>
         <DrawMap
           region={ this.state.region }
           onRegionChangeComplete={ this._onRegionChangeComplete }
@@ -261,14 +274,6 @@ class SearchAddress extends Component {
               onEndReachedThreshold={0.01}
               onEndReached={this._setAddressInfo}
             />
-            {this.state.isLoading
-              ?
-              <View style={styles.loadingImgWrap}>
-                <Image source={require("~/Common/Image/loading-list.gif")} style={styles.loadingImg}/>
-              </View>
-              :
-              <View/>
-            }
           </View>
         </View>
 

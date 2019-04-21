@@ -347,7 +347,7 @@ class ClientHome extends Component {
                   </View>
                 </TouchableOpacity>
               ) : (
-                this.state.asPrgsStatCd == "AS_PRGS_STAT_CD_07"
+                this.state.asPrgsStatCd == ADD_AS.VALUE
                 ? (
                 // 추가 A/S 중이면
                   this.state.asAddStatCd == "AS_ADD_STAT_CD_01"
