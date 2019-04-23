@@ -28,7 +28,7 @@ class SearchAddress extends Component {
     this.addressInput = null;
 
     this.state = { 
-      addressName : (this.props.addressName !== '' && this.props.addressName != undefined) ? this.props.addressName : '기흥',
+      addressName : (this.props.addressName !== '' && this.props.addressName != undefined) ? this.props.addressName : 'GS 타워',
       data: {
         juso : []
       },

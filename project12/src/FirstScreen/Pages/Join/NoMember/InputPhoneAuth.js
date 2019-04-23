@@ -73,19 +73,25 @@ class InputPhoneAuth extends Component {
 
             // 회원 가입X  : true
             if (UsrResultBool) {
-              this.setState({disabledNextBtn : false}); // 입력완료 버튼 활성화
+              this.setState({
+                disabledNextBtn : false, // 입력완료 버튼 활성화
+                resultMsg : '핸드폰 인증이 완료되었습니다.'
+              });
             } else {
               this._toggleModal();
-              this.setState({btnDisabled : true});
+              this.setState({
+                btnDisabled : true,
+                resultMsg : result.resultMsg
+              });
             }
         });
       } else {
         this.setState({
           disabledNextBtn : true,
-          incorrectAuthNum : true
+          incorrectAuthNum : true,
+          resultMsg : result.resultMsg
         });
       }
-      this.setState({resultMsg : result.resultMsg});
     });
   }
 
