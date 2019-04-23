@@ -51,7 +51,7 @@ class InitPage extends Component {
             </TouchableOpacity>
 
             <View>
-              <TouchableOpacity onPress={ () => alert("비회원으로 A/S 신청하기")}>
+              <TouchableOpacity onPress={ () => Actions.NoMemberInputName()}>
                 <Text style={localStyles.outsidelTxt}>비회원으로 A/S 신청하기</Text>
               </TouchableOpacity>
             </View>

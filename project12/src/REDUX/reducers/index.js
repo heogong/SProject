@@ -15,7 +15,11 @@ import {
     SET_BIZ_ADDRESS,
     SET_BIZ_ADDRESS_DSC,
     SET_INTERVAL_ID,
-    SET_IS_AS
+    SET_IS_AS,
+    SET_NOMEM_USRNM,
+    SET_NOMEM_USRPHONE_NUM,
+    SET_NOMEM_ADDRESS,
+    SET_NOMEM_ADDRESS_DSC
 } from '../Actions';
 import { combineReducers } from 'redux';
 import { PARTNER } from '../../Common/Blend';
@@ -30,6 +34,13 @@ const InitialUserState = {
     usrCustomerType: PARTNER,
     snsType: '',
     snsSignupYn: 'N'
+};
+
+const InitialNoMemberUserState = {
+    usrNm: '',
+    usrPhoneNum: '',
+    addressObj: [],
+    addressDsc: ''
 };
 
 const InitialTokenState = {
@@ -51,6 +62,28 @@ const InitialASState = {
     isAfterService: false,
 };
 
+const NO_USER = (state = InitialNoMemberUserState, action) => {
+    switch(action.type) {
+        case SET_NOMEM_USRNM:
+            return Object.assign({}, state, {
+                usrNm: action.value
+            });
+        case SET_NOMEM_USRPHONE_NUM:
+            return Object.assign({}, state, {
+                usrPhoneNum: action.value
+            });
+        case SET_NOMEM_ADDRESS:
+            return Object.assign({}, state, {
+                addressObj: action.value
+            });
+        case SET_NOMEM_ADDRESS_DSC:
+            return Object.assign({}, state, {
+                addressDsc: action.value
+            });
+        default:
+            return state;
+    }
+}
 
 const USER = (state = InitialUserState, action) => {
     switch(action.type) {
@@ -152,7 +185,8 @@ const userInfo = combineReducers({
     USER,
     TOKEN,
     BIZ,
-    AFTERSERVICE
+    AFTERSERVICE,
+    NO_USER
 });
 
 export default userInfo;

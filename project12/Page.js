@@ -25,13 +25,17 @@ import JoinInputName from './src/FirstScreen/Pages/Join/InputName';
 import JoinInputPhone from './src/FirstScreen/Pages/Join/InputPhone';
 import JoinInputPhoneAuth from './src/FirstScreen/Pages/Join/InputPhoneAuth';
 
+import NoMemberInputName from './src/FirstScreen/Pages/Join/NoMember/InputName';
+import NoMemberInputPhone from './src/FirstScreen/Pages/Join/NoMember/InputPhone';
+import NoMemberInputPhoneAuth from './src/FirstScreen/Pages/Join/NoMember/InputPhoneAuth';
+import NoMemberSetAddress from './src/FirstScreen/Pages/Join/NoMember/SetAddress';
+import NoMemberSearchAddress from './src/FirstScreen/Pages/Join/NoMember/SearchAddress'
+import NoMemberSuccessAfterService from './src/FirstScreen/Pages/Join/NoMember/SuccessAfterService'
+
 import LoginAccountType from './src/FirstScreen/Pages/Login/AccountType';
 import LoginInputAccount from './src/FirstScreen/Pages/Login/InputAccount';
 
 import InvaildId from './src/FirstScreen/Pages/InvaildId';
-
-// 비회원
-import NonMemberNoticeInfoService from './src/FirstScreen/Pages/Join/NonMember/NoticeInfoService';
 
 // 파트너
 import PartnerIndex from './src/FirstScreen/Pages/Join/Partner'; // 파트너 사업장 등록
@@ -194,7 +198,6 @@ const PAGE = () => (
       
       {/* 안내페이지 */}
       <Scene key="ServiceIntroduce" component={ServiceIntroduce} />
-      <Scene key="NonMemberNoticeInfoService" component={NonMemberNoticeInfoService} />
       
       {/* 약관동의 */}
       <Scene key="PartnerAgreeTermsService" component={PartnerAgreeTermsService} type={ActionConst.RESET} />
@@ -215,6 +218,14 @@ const PAGE = () => (
       <Scene key="JoinInputName"  component={JoinInputName} />
       <Scene key="JoinInputPhone"  component={JoinInputPhone} />
       <Scene key="JoinInputPhoneAuth"  component={JoinInputPhoneAuth} />
+
+      {/* 비회원 */}
+      <Scene key="NoMemberInputName"  component={NoMemberInputName} />
+      <Scene key="NoMemberInputPhone"  component={NoMemberInputPhone} />
+      <Scene key="NoMemberInputPhoneAuth"  component={NoMemberInputPhoneAuth} />
+      <Scene key="NoMemberSetAddress"  component={NoMemberSetAddress} />
+      <Scene key="NoMemberSearchAddress"  component={NoMemberSearchAddress} />
+      <Scene key="NoMemberSuccessAfterService"  component={NoMemberSuccessAfterService} type={ActionConst.RESET} />
       
       {/* 파트너 회원가입 */}
       <Scene key="PartnerIndex" component={PartnerIndex} type={ActionConst.RESET}/>

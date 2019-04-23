@@ -19,6 +19,11 @@ export const SET_BIZ_ADDRESS_DSC = 'SET_BIZ_ADDRESS_DSC';
 export const SET_INTERVAL_ID = 'SET_INTERVAL_ID';
 export const SET_IS_AS = 'SET_IS_AS';
 
+export const SET_NOMEM_USRNM = "SET_NOMEM_USRNM";
+export const SET_NOMEM_USRPHONE_NUM = "SET_NOMEM_USRPHONE_NUM";
+export const SET_NOMEM_ADDRESS = 'SET_NOMEM_ADDRESS';
+export const SET_NOMEM_ADDRESS_DSC = 'SET_NOMEM_ADDRESS_DSC';
+
 export function setUsrId(value) {
     return {
         type: SET_USRID,
@@ -121,6 +126,33 @@ export function setIntervalId(value) {
 export function setIsAfterService(value) {
     return {
         type: SET_IS_AS,
+        value: value
+    };
+}
+
+export function setNoMemberUsrNm(value) {
+    return {
+        type: SET_NOMEM_USRNM,
+        value: value
+    };
+}
+
+export function setNoMemberUsrPhoneNum(value) {
+    return {
+        type: SET_NOMEM_USRPHONE_NUM,
+        value: value
+    };
+}
+
+export function setNoMemberAddress(value) {
+    return {
+        type: SET_NOMEM_ADDRESS,
+        value: value
+    };
+}
+export function setNoMemberAddressDsc(value) {
+    return {
+        type: SET_NOMEM_ADDRESS_DSC,
         value: value
     };
 }

@@ -51,7 +51,7 @@ class SearchAddress extends Component {
     };
   }
 
-  componentWillMount () {
+  componentWillMount () { 
     this._setAddressInfo();
   }
 
@@ -189,6 +189,7 @@ class SearchAddress extends Component {
     });
   }
 
+
   _nextButton = () => {
     Actions.pop(); // 뒤로가면서 기존페이지로 이동
     this.props.onResult({ result: SELECT_ITEM });
@@ -226,7 +227,7 @@ class SearchAddress extends Component {
         <View style={{flex:1, paddingLeft: 26, paddingRight: 26, borderWidth: 0}}>
           <Item
             regular
-            style={[styles.inputWhBackGreyBo, {backgroundColor: color.whiteColor, marginLeft: 0}]}
+            style={[styles.inputWhBackBuBo, {backgroundColor: color.whiteColor, marginLeft: 0}]}
             onPress={ () => this.setState({showMap : !this.state.showMap})}
           >
             <Input
@@ -247,6 +248,7 @@ class SearchAddress extends Component {
             />
             <Icon
               name="ios-close"
+              style={[styles.inputIcon, {fontSize: 38, color: "#8e8e98"}]}
               onPress={ () => {
                 this.addressInput._root.clear(), 
                 this.setState({
@@ -254,7 +256,6 @@ class SearchAddress extends Component {
                   addressName : ''
                 })
               }}
-              style={[styles.inputIcon, {fontSize: 32, color: "#8e8e98"}]}
             />
           </Item>
 
@@ -264,10 +265,10 @@ class SearchAddress extends Component {
               borderLeftWidth: 1,
               borderRightWidth: 1,
               borderBottomWidth: 1,
-              marginBottom: 100,
+              marginBottom: 130,
               backgroundColor: color.whiteColor}]}>
             <FlatList 
-              data={this.state.data.juso} 
+              data={this.state.data.juso}  
               renderItem={this._renderItem} 
               ListEmptyComponent={this._emptyRenderItem}
               keyExtractor={(item, index) => index.toString()}
@@ -288,14 +289,14 @@ class SearchAddress extends Component {
                 확인
             </CustomButton>
         </View>
-         {/* alert 메세지 모달 */}
-          <CustomModal
-            modalType="ALERT"
-            isVisible={this.state.isAlertModal}
-            onPress={ () => this.setState({isAlertModal : false})}
-            infoText={this.state.resultMsg}
-            btnText="확인"
-          />
+        {/* alert 메세지 모달 */}
+        <CustomModal
+          modalType="ALERT"
+          isVisible={this.state.isAlertModal}
+          onPress={ () => this.setState({isAlertModal : false})}
+          infoText={this.state.resultMsg}
+          btnText="확인"
+        />
       </Container>
     )
   }

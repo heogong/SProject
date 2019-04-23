@@ -89,71 +89,10 @@ class InputPhoneAuth extends Component {
     });
   }
 
-  // 입력완료 - 회원가입
-  _nextJoinBtn = () => {
-    // SNS 가입 시
-    if(this.props.usrObj.snsSignupYn == 'Y') {
-
-      // 회원가입
-      SnsSignUp(this.props.usrObj, this.props.tokenObj).then(async result => {
-        console.log(result);
-        const SignUpResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-        if (SignUpResultBool) {
-        
-          // 사용자 정보 가져오기
-          this._getUserInfo();
-
-        } else {
-          this.setState({
-            isAlertModal : true,
-            resultMsg : resultData.resultMsg
-          })
-        }
-      });
-    } else {
-      //회원가입
-      SignUp(this.props.usrObj).then(async result => {
-        const ResultBool = await (result.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-
-        if (ResultBool) {
-          // console.log(result);
-
-          // 고객 타입에 따른 페이지 이동
-          if(this.props.usrObj.usrCustomerType == PARTNER) {
-            Actions.PartnerIndex(); // 사업자 등록 페이지
-          } else {
-            Actions.CardIndex(); // 클라이언트 카드 정보 입력
-          }
-
-        } else {
-          this.setState({
-            isAlertModal : true,
-            resultMsg : resultData.resultMsg
-          })
-        }
-      });
-    }
+  // 입력완료
+  _nextButton = () => {
+    Actions.NoMemberSetAddress();
   };
-
-   // 로그인(토큰값 가져온) 사용자 정보 가져오기
-   _getUserInfo = () => {
-    GetUserInfo().then(async result => {
-      GetCommonData(result, this._getUserInfo).then(async resultData => {
-          if(resultData !== undefined) {
-              const ResultBool = await (resultData.resultCode == SUCCESS_RETURN_CODE) ? true : false; // API 결과 여부 확인
-
-              if(ResultBool) {
-                // 클라이언트 사용자
-                if(resultData.data.usrTypeCd == CLIENT_USER) {
-                  Actions.CardIndex(); // 클라이언트 카드 정보 입력
-                } else { // 파트너 사용자
-                  Actions.PartnerIndex();
-                }
-              }
-          }
-      });
-    });
-  }
 
   // 인증번호 API 호출 : 인증번호 틀렸을시 재전송
   _getAuthNumber = () => {
@@ -209,7 +148,7 @@ class InputPhoneAuth extends Component {
                   <Text style={stylesReg.leftGuideTxt}>입력해주세요</Text>
                 </View>
                 <View style={stylesReg.rightStepNumWrap}>
-                  <Text style={stylesReg.rightStepNum}>01</Text>
+                  <Text style={stylesReg.rightStepNum}>02</Text>
                 </View>
               </View>
               
@@ -218,7 +157,7 @@ class InputPhoneAuth extends Component {
                   <View style={stylesReg.procBarOn} />
                 </View>
                 <View style={styles.fx1}>
-                  <View style={stylesReg.procBarOff} />
+                  <View style={stylesReg.procBarOn} />
                 </View>
                 <View style={styles.fx1}>
                   <View style={stylesReg.procBarOff} />
@@ -276,7 +215,7 @@ class InputPhoneAuth extends Component {
 
           <View style={styles.footerBtnWrap}>
             <CustomButton 
-              onPress={this._nextJoinBtn}
+              onPress={this._nextButton}
               disabled={ this.state.disabledNextBtn }
               edgeFill={true}
               fillTxt={true}
@@ -315,9 +254,7 @@ class InputPhoneAuth extends Component {
 
 let mapStateToProps = (state) => {
   return {
-      usrObj: state.USER,
-      tokenObj: state.TOKEN
-
+      usrObj: state.NO_USER
   };
 }
 

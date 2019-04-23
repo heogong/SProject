@@ -20,6 +20,7 @@ function makeData(bizObj) {
     if(bizObj.addressObj.address !== null) {
       data.append('addr.region1depthName', bizObj.addressObj.address.region_1depth_name);
       data.append('addr.region2depthName', bizObj.addressObj.address.region_2depth_name);
+      data.append('addr.region3depthName', bizObj.addressObj.address.region_3depth_name);
       data.append('addr.region3depthHName', bizObj.addressObj.address.region_3depth_h_name);
       data.append('addr.hCode', bizObj.addressObj.address.h_code);
       data.append('addr.bCode', bizObj.addressObj.address.b_code);
